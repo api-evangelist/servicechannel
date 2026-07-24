@@ -1,0 +1,145 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours TemplateFilesHistory API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: TemplateFilesHistory
+paths:
+  /TemplateFilesHistory/GetHistory:
+    get:
+      tags:
+      - TemplateFilesHistory
+      operationId: GETv3_TemplateFilesHistory_GetHistory
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: fileTypeIds
+        in: query
+        description: Gets or sets FileTypeId.
+        required: false
+        type: array
+        items:
+          type: integer
+          format: int32
+      - name: templateIds
+        in: query
+        required: false
+        type: array
+        items:
+          type: integer
+          format: int32
+      - name: sort
+        in: query
+        description: Sort resources by the specified property in the response.
+        required: false
+        type: string
+      - name: page
+        in: query
+        description: Results page number.
+        required: false
+        type: integer
+        format: int32
+      - name: pageSize
+        in: query
+        description: Number of objects on the results page. The default and maximum per page is 50.
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Template.GetTemplateFilesHistoriesResponse'
+      deprecated: false
+      x-access: Subscribers
+definitions:
+  ServiceChannel.Services.Messaging.Template.GetTemplateFilesHistoriesResponse:
+    description: holds response
+    type: object
+    properties:
+      TemplateFilesHistories:
+        description: Gets or sets Trades.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Template.TemplateFilesHistory'
+      ItemsCount:
+        format: int32
+        description: Gets or sets ItemsCount.
+        type: integer
+      ErrorCode:
+        format: int32
+        description: 'Numeric identifier that determines the nature of an error. Possible values: `0` - success, otherwise - error.'
+        type: integer
+      Message:
+        description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
+        type: string
+  ServiceChannel.Services.Messaging.Template.TemplateFilesHistory:
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Gets or sets Id.
+        type: integer
+      FilePath:
+        description: Gets or sets FilePath.
+        type: string
+      FileName:
+        description: Gets or sets FileName.
+        type: string
+      Description:
+        description: Gets or sets Description.
+        type: string
+      ErrorMessage:
+        description: Gets or sets ErrorMessage.
+        type: string
+      FileStatus:
+        format: int32
+        description: Gets or sets FileStatus. 0 - started 1 - processing; 2 - completed;
+        type: integer
+      FileType:
+        format: int32
+        description: Gets or sets FileType. 0  - pm_Template file
+        type: integer
+      ModifiedDate:
+        format: date-time
+        description: Gets or sets ModifiedDate.
+        type: string
+      ModifiedBy:
+        description: Gets or sets ModifiedBy.
+        type: string
+      CreatedRecords:
+        format: int32
+        description: Gets or sets CreatedRecords.
+        type: integer
+      UpdatedRecords:
+        format: int32
+        description: Gets or sets UpdatedRecords.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Gets or sets SubscriberId.
+        type: integer
+      DeletedRecords:
+        format: int32
+        description: Gets or sets DeletedRecords.
+        type: integer
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

@@ -1,0 +1,116 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours DoNotDispatch API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: DoNotDispatch
+paths:
+  /doNotDispatch/addProvider/{providerId}:
+    post:
+      tags:
+      - DoNotDispatch
+      summary: Add a provider
+      description: "Adds the specified provider to the *Do Not Dispatch* list, which prevents dispatching new work orders to this provider.\r\n            <br />You can remove providers from the *Do Not Dispatch* list by using the [DELETE /doNotDispatch/removeProvider/{providerId}](https://developer.servicechannel.com/swagger/ui/index?version=3#/DoNotDispatch/DoNotDispatch_RemoveProvider) method. To retrieve the list of providers with the *Do Not Dispatch* flag, send the [GET /DoNotDispatch/getProviders](https://developer.servicechannel.com/swagger/ui/index?version=3#/DoNotDispatch/DoNotDispatch_GetProviders) request.\r\n            <br />Refer to ServiceChannel University to learn [how to manage “Do Not Dispatch” providers](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/812548755/Managing+Do+Not+Dispatch+Providers)."
+      operationId: DoNotDispatch_AddProvider
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: providerId
+        in: path
+        description: Unique provider identifier.
+        required: true
+        type: integer
+        format: int32
+      - name: doNotDispatchReason
+        in: query
+        description: (*Optional*) Reason for assigning a provider the *Do Not Dispatch* status.
+        required: false
+        type: string
+      responses:
+        '200':
+          description: The provider is successfully added to the **Do Not Dispatch** list.
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+        '401':
+          description: The request is not authorized.
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+      deprecated: false
+      x-access: Subscribers
+  /doNotDispatch/removeProvider/{providerId}:
+    delete:
+      tags:
+      - DoNotDispatch
+      summary: Remove a provider
+      description: "Removes the specified provider from the *Do Not Dispatch* list. You can remove one provider at a time.\r\n            <br />To add a provider to this list, send the [POST /doNotDispatch/addProvider/{providerId}](https://developer.servicechannel.com/swagger/ui/index?version=3#/DoNotDispatch/DoNotDispatch_AddProvider) request.\r\n            <br />Refer to ServiceChannel University to learn [how to manage “Do Not Dispatch” providers](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/812548755/Managing+Do+Not+Dispatch+Providers)."
+      operationId: DoNotDispatch_RemoveProvider
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: providerId
+        in: path
+        description: Unique provider identifier.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The provider is successfully removed from the **Do Not Dispatch** list.
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+        '401':
+          description: The request is not authorized.
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+      deprecated: false
+      x-access: Subscribers
+  /doNotDispatch/getProviders:
+    get:
+      tags:
+      - DoNotDispatch
+      summary: Retrieve providers
+      description: "Returns a list of providers included in the *Do Not Dispatch* list. Use the `trade` parameter to specify your request.\r\n            <br />You can use the [POST /doNotDispatch/addProvider/{providerId}](https://developer.servicechannel.com/swagger/ui/index?version=3#/DoNotDispatch/DoNotDispatch_AddProvider) method to add a provider to the *Do Not Dispatch* list or the  [DELETE /doNotDispatch/removeProvider/{providerId}](https://developer.servicechannel.com/swagger/ui/index?version=3#/DoNotDispatch/DoNotDispatch_RemoveProvider) method to remove a provider from it.\r\n            <br />Refer to ServiceChannel University to learn [how to manage “Do Not Dispatch” providers](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/812548755/Managing+Do+Not+Dispatch+Providers)."
+      operationId: DoNotDispatch_GetProviders
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: trade
+        in: query
+        description: (*Optional*) Type of work a provider performs.
+        required: false
+        type: string
+      responses:
+        '200':
+          description: The providers included in the **Do Not Dispatch** list are in the response.
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+        '401':
+          description: The request is not authorized.
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+      deprecated: false
+      x-access: Subscribers
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

@@ -1,0 +1,128 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours SingleSignOn API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: SingleSignOn
+paths:
+  /sso/clients/register:
+    post:
+      tags:
+      - SingleSignOn
+      operationId: POSTv3_sso_clients_register
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SingleSignOn.RegisterSsoClientRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /sso/clients/{clientIdentifier}/delete:
+    delete:
+      tags:
+      - SingleSignOn
+      operationId: DELETEv3_sso_clients_{clientIdentifier}_delete
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: clientIdentifier
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /sso/clients/{clientIdentifier}/deactivate:
+    put:
+      tags:
+      - SingleSignOn
+      operationId: PUTv3_sso_clients_{clientIdentifier}_deactivate
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: clientIdentifier
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /sso/clients/{clientIdentifier}/activate:
+    put:
+      tags:
+      - SingleSignOn
+      operationId: PUTv3_sso_clients_{clientIdentifier}_activate
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: clientIdentifier
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+definitions:
+  ServiceChannel.Services.Messaging.SingleSignOn.RegisterSsoClientRequest:
+    type: object
+    properties:
+      InvitationKey:
+        description: SSO invitation key to identify user
+        type: string
+      ClientIdentifier:
+        description: Unique client id, for. ex. IMEI of the mobile device
+        type: string
+      ClientDescription:
+        description: Description, for ex. mobile device description(Brand, Model, Number)
+        type: string
+  System.Object:
+    type: object
+    properties: {}
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

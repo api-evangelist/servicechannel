@@ -1,0 +1,71 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours Eula API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: Eula
+paths:
+  /eula/agreement:
+    get:
+      tags:
+      - Eula
+      summary: Method to retrieve the EULA agreement
+      operationId: GETv3_eula_agreement
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      responses:
+        '200':
+          description: The request succeeded and the eula agreement is returned.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Eula.EulaAgreement'
+        '403':
+          description: The user doesn't have permissions to view the agreement text.
+        '502':
+          description: No agreement was found.
+      deprecated: false
+      x-access: Any
+  /eula/accept:
+    post:
+      tags:
+      - Eula
+      summary: Method to accept the EULA agreement
+      operationId: POSTv3_eula_accept
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      responses:
+        '200':
+          description: The request succeeded and the eula agreement is accepted.
+        '403':
+          description: The user doesn't have permissions to accept the agreement.
+      deprecated: false
+      x-access: Any
+definitions:
+  ServiceChannel.Services.Messaging.Eula.EulaAgreement:
+    description: Represents an EULA agreement
+    type: object
+    properties:
+      Text:
+        description: EULA agreement text
+        type: string
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

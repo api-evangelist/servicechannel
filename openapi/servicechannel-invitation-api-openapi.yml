@@ -1,0 +1,148 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours Invitation API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: Invitation
+paths:
+  /invitation:
+    post:
+      tags:
+      - Invitation
+      summary: Create Invitation for provider for subscriber
+      operationId: Invitation_Create
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: model
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/CreateInvitationModel'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/Object'
+      deprecated: false
+      x-access: Subscribers
+definitions:
+  PaymentTermsModel:
+    type: object
+    properties:
+      Period:
+        format: int32
+        type: integer
+      Description:
+        maxLength: 50
+        minLength: 0
+        type: string
+  InvitationModel:
+    type: object
+    properties:
+      LanguageCulture:
+        maxLength: 5
+        minLength: 0
+        type: string
+      ExpirationDate:
+        format: date-time
+        type: string
+      SenderEmail:
+        maxLength: 255
+        minLength: 0
+        pattern: ^[\w!#$%&'*+\-\/=?\^_`{|}~]+(\.[\w!#$%&'*+\-\/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,63})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$
+        type: string
+  AddressInformationModel:
+    type: object
+    properties:
+      Address1:
+        maxLength: 50
+        minLength: 0
+        type: string
+      Address2:
+        maxLength: 50
+        minLength: 0
+        type: string
+      City:
+        maxLength: 50
+        minLength: 0
+        type: string
+      Country:
+        maxLength: 50
+        minLength: 0
+        type: string
+      State:
+        maxLength: 100
+        minLength: 0
+        type: string
+      PostalCode:
+        maxLength: 10
+        minLength: 0
+        type: string
+  CreateInvitationModel:
+    required:
+    - ScSubscriberId
+    type: object
+    properties:
+      ScSubscriberId:
+        format: int32
+        maximum: 2147483647
+        minimum: 1
+        type: integer
+      Provider:
+        $ref: '#/definitions/CompanyModel'
+      VendorId:
+        maxLength: 50
+        minLength: 0
+        type: string
+      Invitation:
+        $ref: '#/definitions/InvitationModel'
+      PaymentTerms:
+        $ref: '#/definitions/PaymentTermsModel'
+  Object:
+    type: object
+    properties: {}
+  CompanyModel:
+    required:
+    - Email
+    type: object
+    properties:
+      CompanyName:
+        maxLength: 100
+        minLength: 0
+        type: string
+      Email:
+        maxLength: 255
+        minLength: 0
+        pattern: ^[\w!#$%&'*+\-\/=?\^_`{|}~]+(\.[\w!#$%&'*+\-\/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,63})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$
+        type: string
+      TaxId:
+        maxLength: 100
+        minLength: 0
+        type: string
+      IsActive:
+        type: boolean
+      AddressInformation:
+        $ref: '#/definitions/AddressInformationModel'
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

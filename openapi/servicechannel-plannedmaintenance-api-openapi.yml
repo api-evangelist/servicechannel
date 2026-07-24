@@ -1,0 +1,127 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours PlannedMaintenance API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: PlannedMaintenance
+paths:
+  /PlannedMaintenance/LocationPmSummary:
+    get:
+      tags:
+      - PlannedMaintenance
+      operationId: GETv3_PlannedMaintenance_LocationPmSummary?startDate={startDate}&endDate={endDate}&locationId={locationId}&pageSize={pageSize}&pageIndex={pageIndex}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: startDate
+        in: query
+        required: true
+        type: string
+        format: date-time
+      - name: endDate
+        in: query
+        required: true
+        type: string
+        format: date-time
+      - name: locationId
+        in: query
+        required: true
+        type: integer
+        format: int32
+      - name: pageSize
+        in: query
+        required: true
+        type: integer
+        format: int32
+      - name: pageIndex
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Api.Model.PreventiveMaintenance.PlannedMaintenanceSummaryItemResponse'
+      deprecated: false
+      x-access: Any
+  /PlannedMaintenance/ServicesByLocation:
+    get:
+      tags:
+      - PlannedMaintenance
+      operationId: GETv3_PlannedMaintenance_ServicesByLocation?locationId={locationId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: query
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+definitions:
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Api.Model.PreventiveMaintenance.PlannedMaintenanceSummaryItemResponse:
+    type: object
+    properties:
+      ServiceDescription:
+        type: string
+      FrequencyDescription:
+        type: string
+      RecurrenceDescription:
+        type: string
+      TradeId:
+        format: int32
+        type: integer
+      TradeName:
+        type: string
+      CategoryId:
+        format: int32
+        type: integer
+      CategoryName:
+        type: string
+      ProviderId:
+        format: int32
+        type: integer
+      ProviderName:
+        type: string
+      Priority:
+        type: string
+      ServiceId:
+        format: int32
+        type: integer
+      FrequencyId:
+        format: int32
+        type: integer
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

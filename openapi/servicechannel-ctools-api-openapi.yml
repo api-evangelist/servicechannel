@@ -1,0 +1,379 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours Ctools API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: Ctools
+paths:
+  /ctools/workorder/{workOrderId}/assignedtechnicians:
+    get:
+      tags:
+      - Ctools
+      summary: Retrieve technicians assigned to a work order
+      description: "Returns technicians assigned to the specified work order.\r\n            <br />***Note:*** This method is only available to provider admins."
+      operationId: GETv3_ctools_workorder_{workOrderId}_assignedtechnicians
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workOrderId
+        in: path
+        description: The unique numeric identifier of the work order to retrieve assigned technicians for.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The technicians assigned to the specified work order are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.ContractorTools.TechnicianDto'
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+        '401':
+          description: The request is not authorized.
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+      deprecated: false
+      x-access: Any
+  /ctools/workorder/{workOrderId}/acceptedtechnicians:
+    get:
+      tags:
+      - Ctools
+      summary: Retrieve technicians who accepted a work order
+      description: "Returns technicians who accepted the specified work order. Note that only Field Tech Manager (FTM) technicians can accept work orders.\r\n            <br />***Note:*** This method is only available to provider admins."
+      operationId: GETv3_ctools_workorder_{workOrderId}_acceptedtechnicians
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workOrderId
+        in: path
+        description: The unique numeric identifier of the work order for which you want to retrieve technicians who accepted it.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The technicians who accepted the specified work order are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.ContractorTools.TechnicianDto'
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+        '401':
+          description: The request is not authorized.
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+      deprecated: false
+      x-access: Any
+  /ctools/workorder/{workOrderId}/assigntechnician:
+    post:
+      tags:
+      - Ctools
+      summary: Assign a technician to a work order
+      description: "Assigns a technician to the specified work order.\r\n            <br />***Note:*** This method is only available to provider admins."
+      operationId: POSTv3_ctools_workorder_{workOrderId}_assigntechnician?userId={userId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workOrderId
+        in: path
+        description: The unique numeric identifier of the work order to assign to a technician.
+        required: true
+        type: integer
+        format: int32
+      - name: userId
+        in: query
+        description: The ID of the technician in the Authentication service to assign the work order to.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '201':
+          description: The technician is successfully assigned to the specified work order.
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+        '401':
+          description: The request is not authorized.
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+      deprecated: false
+      x-access: Any
+  /ctools/workorder/{workOrderId}/unassigntechnician:
+    delete:
+      tags:
+      - Ctools
+      summary: Unassign a technician from a work order
+      description: "Unassigns a technician from the specified work order.\r\n            <br />***Note:*** This method is only available to provider admins."
+      operationId: DELETEv3_ctools_workorder_{workOrderId}_unassigntechnician?userId={userId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workOrderId
+        in: path
+        description: The unique numeric identifier of the work order to unassign a technician from.
+        required: true
+        type: integer
+        format: int32
+      - name: userId
+        in: query
+        description: The ID of the technician in the Authentication service to unassign the work order from.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The technician is successfully unassigned from the specified work order.
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+        '401':
+          description: The request is not authorized.
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+      deprecated: false
+      x-access: Any
+  /ctools/workorder/{workOrderId}/accept:
+    put:
+      tags:
+      - Ctools
+      summary: Accept a work order on behalf of a technician
+      description: "Accepts a work order on behalf of the specified technician. Only Field Tech Manager (FTM) technicians can accept work orders.\r\n            <br />Once the work order is accepted, its status changes to *In Progress/Dispatch Confirmed*.\r\n            <br />***Note:*** This method is only available to provider admins."
+      operationId: PUTv3_ctools_workorder_{workOrderId}_accept?userId={userId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workOrderId
+        in: path
+        description: The unique numeric identifier of the work order you want to accept on behalf of a technician.
+        required: true
+        type: integer
+        format: int32
+      - name: userId
+        in: query
+        description: The ID of the technician — who accepts the work order — in the Authentication service.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '201':
+          description: The work order is successfully accepted by the specified technician. The response is intentionally blank.
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+        '401':
+          description: The request is not authorized.
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+      deprecated: false
+      x-access: Any
+  /ctools/workorder/{workOrderId}/decline:
+    put:
+      tags:
+      - Ctools
+      summary: Decline a work order on behalf of a technician
+      description: "Declines a work order on behalf of the specified technician. Only Field Tech Manager (FTM) technicians can decline work orders.\r\n            <br />If additional technician permissions are enabled for your company — “Technician”, “Supervising Tech”, and “Regional Manager” — the work order declined by a technician is automatically assigned to a Supervising Tech or Regional Manager or forwarded to the next ranked provider based on the configured auto-assignment rules. If these permissions are not enabled, the work order is either forwarded to the next ranked provider or moved to the *Open/Declined* status, depending on the setup. Learn more about [automating work order assignments and setting up forwarding rules](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/640582807/Automating+Work+Order+Assignments+and+Forwarding+Work+Orders) in ServiceChannel University.\r\n            <br />***Note:*** This method is only available to provider admins."
+      operationId: PUTv3_ctools_workorder_{workOrderId}_decline?userId={userId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workOrderId
+        in: path
+        description: The unique numeric identifier of the work order you want to decline on behalf of a technician.
+        required: true
+        type: integer
+        format: int32
+      - name: userId
+        in: query
+        description: The ID of the technician — who declines the work order — in the Authentication service.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '201':
+          description: The work order is successfully declined by the specified technician. The response is intentionally blank.
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+        '401':
+          description: The request is not authorized.
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+      deprecated: false
+      x-access: Any
+  /ctools/workorder/{workOrderId}/rescindacceptance:
+    put:
+      tags:
+      - Ctools
+      summary: Cancel the acceptance of a work order on behalf of a technician
+      description: "Removes a technician as accepted on the specified work order. Note that only Field Tech Manager (FTM) technicians can accept work orders.\r\n            <br />If the technician is currently checked into the work order, the request will fail.\r\n            <br />***Note:*** This method is only available to provider admins."
+      operationId: PUTv3_ctools_workorder_{workOrderId}_rescindacceptance?userId={userId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workOrderId
+        in: path
+        description: The unique numeric identifier of the work order for which you want to cancel acceptance on behalf of a technician.
+        required: true
+        type: integer
+        format: int32
+      - name: userId
+        in: query
+        description: The ID of the technician in the Authentication service to cancel the work order acceptance for.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The technician is removed as accepted on the specified work order. The response is intentionally blank.
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+        '401':
+          description: The request is not authorized.
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+      deprecated: false
+      x-access: Any
+  /ctools/refrigerantcertifications:
+    get:
+      tags:
+      - Ctools
+      summary: Get refrigerant certifications
+      description: Returns all refrigerant certifications for the specified provider for EPA compliance. You can also retrieve certifications for one technician only by specifying their `authUserId`.
+      operationId: GETv3_ctools_refrigerantcertifications?providerId={providerId}&authUserId={authUserId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: providerId
+        in: query
+        description: Unique provider identifier.
+        required: true
+        type: integer
+        format: int32
+      - name: authUserId
+        in: query
+        description: Technician’s single sign-on (SSO) ID.
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The requested refrigerant certifications are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.ContractorTools.ExtendedRefrigerantCertificationDTO'
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+      deprecated: false
+      x-access: Any
+definitions:
+  ServiceChannel.Services.Messaging.ContractorTools.ExtendedRefrigerantCertificationDTO:
+    description: Object containing the details of a refrigerant certification.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Numeric identifier of the certificate in the system.
+        type: integer
+      CertificationNumber:
+        description: Unique certificate number given by the party that granted the certificate.
+        type: string
+      CertificationExpirationDateTime:
+        format: date-time
+        description: Date and time when the certificate expires.
+        type: string
+      Description:
+        description: Comment added to the attached file.
+        type: string
+      FileUrl:
+        description: Path of the attached file.
+        type: string
+      FileName:
+        description: Name of the attached file.
+        type: string
+      TechnicianFullName:
+        description: First and last name of the technician who received the refrigerant certification.
+        type: string
+      AuthUserId:
+        format: int64
+        description: Single sign-on (SSO) ID of the technician who received the refrigerant certification.
+        type: integer
+      CertificationDateTime:
+        format: date-time
+        description: Date and time when the refrigerant certification becomes valid.
+        type: string
+      CertificationLevelId:
+        format: int32
+        description: 'Type ID of EPA 608 Technician Certification. Possible values: 1 - Type I, 2 - Type II , 3 - Type III, 4 - Universal.'
+        type: integer
+      CertificationLevel:
+        description: 'Type of EPA Section 608 Technician Certification. Possible values: Type Ⅰ - service of small appliances containing 5 lbs or less of refrigerant; Type Ⅱ - service or disposal of high- or very high-pressure appliances (containing more than 5 lbs of refrigerant); Type Ⅲ - service or disposal of low-pressure appliances; Universal - service of refrigerated appliances of all types.'
+        type: string
+  ServiceChannel.Services.Messaging.ContractorTools.TechnicianDto:
+    description: The technician details object.
+    type: object
+    properties:
+      FirstName:
+        description: The first name of the technician.
+        type: string
+      LoginName:
+        description: The login name of the technician.
+        type: string
+      LastName:
+        description: The last name of the technician.
+        type: string
+      UserId:
+        format: int64
+        description: The ID of the technician in the Authentication service.
+        type: integer
+      Email:
+        description: The email address of the technician.
+        type: string
+      MobileNumber:
+        description: The mobile phone number of the technician.
+        type: string
+      TechnicianAccessLevel:
+        description: The access level of the technician.
+        type: array
+        items:
+          type: string
+      EmployeeId:
+        description: The employee ID of the technician.
+        type: string
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

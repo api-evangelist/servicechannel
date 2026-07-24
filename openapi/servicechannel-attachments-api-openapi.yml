@@ -1,0 +1,3522 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours Attachments API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: Attachments
+paths:
+  /workorders/{workorderId}/notes/{noteId}/attachments:
+    post:
+      tags:
+      - Attachments
+      summary: Add Attachments to Work Order Note
+      description: <para>Add Attachments to Work Order Note. Returns list of attachments Id for successful request.</para>
+      operationId: POSTv3_workorders_{workorderId}_notes_{noteId}_attachments
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workorderId
+        in: path
+        description: Numeric Id of the Work order to perform action with.
+        required: true
+        type: integer
+        format: int32
+      - name: noteId
+        in: path
+        description: Numeric Id of the Note to perform action with.
+        required: true
+        type: integer
+        format: int64
+      - name: AddAttachmentsRequest
+        in: formData
+        description: Optional Descriptor for file(s)
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.AddAttachmentRequest'
+        type: application/json
+      - name: file
+        in: formData
+        description: File to attach to note
+        required: true
+        type: file
+      responses:
+        '201':
+          description: Created indicates that the request resulted in a new resource created before the response was sent.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 503 - Validation fails;\r\n            <br/> 917 - InvalidWoIdentifier;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /rfps/{id}/attachments:
+    post:
+      tags:
+      - Attachments
+      summary: Add attchment to RFP
+      description: <para>Adds attchment to RFP. Returns RFP attachment Id for successful request.</para>
+      operationId: POSTv3_rfps_{id}_attachments
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: id
+        in: path
+        description: Rfp ID to perform action with.
+        required: true
+        type: integer
+        format: int32
+      - name: file
+        in: formData
+        description: File to attach to RFP
+        required: true
+        type: file
+      responses:
+        '201':
+          description: Created indicates that the request resulted in a new resource created before the response was sent.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 501 - Failed to upload attachment;\r\n            <br/> 502 - Data not found. Returned if target Rfp is not found;\r\n            <br/> 503 - Request data is empty;\r\n            <br/>Invalid Attachment Request;\r\n            <br/>User info should not be null;\r\n            <br/>SubscriberId is null;\r\n            <br/>Cannot accept file(s) of this type;\r\n            <br/>The file that you're trying to attach has name that exceed the maximum allowable name length;\r\n            <br/>The file that you're trying to attach has length that exceed the maximum allowable length;\r\n            <br/>Empty Location or Store ID;\r\n            <br/>Empty Provider ID;\r\n            <br/>Provider is not valid;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /siteaudit/comments/{commentId}/attachments:
+    get:
+      tags:
+      - Attachments
+      summary: Returns list of attachment ids and urls.
+      operationId: GETv3_siteaudit_comments_{commentId}_attachments
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: commentId
+        in: path
+        description: Numeric Id of the Comment which Attachment belongs to.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Api.Model.SiteAudit.AttachmentInComment'
+        '400':
+          description: "Bad Request - the request could not be executed or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 503 - validation fails;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\r\n            <br/>Error codes:\r\n            502 — Data not found"
+      deprecated: false
+      x-access: Any
+    post:
+      tags:
+      - Attachments
+      summary: Add attchment to Comment
+      description: Adds attchment to Comment. If Comment is not created yet specify {commentId} = -1.
+      operationId: POSTv3_siteaudit_comments_{commentId}_attachments
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: commentId
+        in: path
+        description: Numeric Id of the Comment to perform action with.
+        required: true
+        type: integer
+        format: int32
+      - name: file
+        in: formData
+        description: File to attach to Comment
+        required: true
+        type: file
+      responses:
+        '201':
+          description: Created indicates that the request resulted in a new resource created before the response was sent.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 501 - Failed to upload attachment;\r\n            <br/> 502 - Data not found. Returned if target Comment is not found;\r\n            <br/> 503 - Request data is empty;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /siteaudit/comments/{commentId}/attachments/{attachmentId}:
+    get:
+      tags:
+      - Attachments
+      summary: Retrieve original attchment from Comment
+      operationId: GETv3_siteaudit_comments_{commentId}_attachments_{attachmentId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: commentId
+        in: path
+        description: Numeric Id of the Comment which Attachment belongs to.
+        required: true
+        type: integer
+        format: int32
+      - name: attachmentId
+        in: path
+        description: Numeric Id of the Attachment to perform action with.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /siteaudit/comments/{commentId}/attachments/{attachmentId}/thumbnail:
+    get:
+      tags:
+      - Attachments
+      summary: Retrieve resized attchment from Comment
+      operationId: GETv3_siteaudit_comments_{commentId}_attachments_{attachmentId}_thumbnail?width={width}&height={height}&mode={mode}&imageFormat={imageFormat}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: commentId
+        in: path
+        description: Numeric Id of the Comment which Attachment belongs to.
+        required: true
+        type: integer
+        format: int32
+      - name: attachmentId
+        in: path
+        description: Numeric Id of the Attachment to perform action with.
+        required: true
+        type: integer
+        format: int32
+      - name: width
+        in: query
+        description: Width of the output file.
+        required: false
+        type: integer
+        format: int32
+      - name: height
+        in: query
+        description: Height of the output file.
+        required: false
+        type: integer
+        format: int32
+      - name: mode
+        in: query
+        description: "How to resolve aspect ratio differences between the requested size and the \r\n            original image's size: Max = 1, Pad = 2, Crop = 3, Carve = 4, Stretch = 5."
+        required: false
+        type: string
+        enum:
+        - None
+        - Max
+        - Pad
+        - Crop
+        - Carve
+        - Stretch
+      - name: imageFormat
+        in: query
+        description: "The desired image format, like 'jpg', 'gif', or 'png'. Do not specify \r\n            if you want to preserve the original format."
+        required: false
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /assets/{assetId}/attachments:
+    get:
+      tags:
+      - Attachments
+      summary: Get Asset Attachments
+      description: ''
+      operationId: GETv3_assets_{assetId}_attachments?providerId={providerId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: assetId
+        in: path
+        description: Asset Identifier
+        required: true
+        type: integer
+        format: int32
+      - name: providerId
+        in: query
+        description: The provider identifier. Required for sub-contractor request. [Required Special permissions]
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetAttachment'
+        '400':
+          description: "Bad Request - the request could not be executed or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 503 - User info should not be null;\r\n            <br/>SubscriberId is null;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+    post:
+      tags:
+      - Attachments
+      summary: Add Attachments to Asset
+      operationId: POSTv3_assets_{assetId}_attachments?isDefault={isDefault}
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: assetId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      - name: isDefault
+        in: query
+        required: false
+        type: boolean
+        default: false
+      - name: AddAttachmentsRequest
+        in: formData
+        description: Required Descriptor for file(s)
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetAttachment'
+        type: application/json
+      - name: file
+        in: formData
+        description: File to attach to workorder
+        required: true
+        type: file
+      responses:
+        '200':
+          description: Created indicates that the request resulted in a new resource created before the response was sent.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AddAssetAttachmentResponse'
+        '400':
+          description: "Bad Request - the request could not be executed or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 502 - Asset Not found;\r\n            < br/> 503 - Bad Request;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /assets/{assetAttachmentId}/deleteAttachment:
+    post:
+      tags:
+      - Attachments
+      summary: Delete Asset Attachment
+      operationId: POSTv3_assets_{assetAttachmentId}_deleteAttachment
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: assetAttachmentId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            $ref: '#/definitions/System.Object'
+        '400':
+          description: "Bad Request - the request could not be executed or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 503 - User info should not be null;\r\n            <br/>SubscriberId is null;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /assets/getattachmentsbyassetids:
+    post:
+      tags:
+      - Attachments
+      summary: Get Asset Attachments
+      operationId: POSTv3_assets_getattachmentsbyassetids
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: assetIds
+        in: body
+        required: true
+        schema:
+          type: array
+          items:
+            format: int32
+            type: integer
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetAttachment'
+        '400':
+          description: "Bad Request - the request could not be executed or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 503 - User info should not be null;\r\n            <br/>SubscriberId is null;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /assets/getattachmentsbyassetids_v1:
+    post:
+      tags:
+      - Attachments
+      summary: Get Asset Attachments
+      operationId: POSTv3_assets_getattachmentsbyassetids_v1
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: assetAttachmentsRequest
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.AssetAttachmentsRequest'
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetAttachment'
+        '400':
+          description: "Bad Request - the request could not be executed or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 503 - User info should not be null;\r\n            <br/>SubscriberId is null;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /assets/updateAssetAttachment:
+    put:
+      tags:
+      - Attachments
+      summary: Update asset attachment by id
+      description: ''
+      operationId: PUTv3_assets_updateAssetAttachment?attachmentId={attachmentId}&fileName={fileName}&description={description}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: attachmentId
+        in: query
+        description: Attachment identifier
+        required: true
+        type: integer
+        format: int32
+      - name: fileName
+        in: query
+        description: New file name
+        required: false
+        type: string
+      - name: description
+        in: query
+        description: New file description(comment)
+        required: false
+        type: string
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            $ref: '#/definitions/System.Object'
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 503 - FileName or Description is required;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /workrequest/{workRequestId}/attachments:
+    get:
+      tags:
+      - Attachments
+      summary: Get WorkRequest Attachments
+      description: '*In limited availability phase.*'
+      operationId: GETv3_workrequest_{workRequestId}_attachments
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workRequestId
+        in: path
+        description: WorkRequest Identifier
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.Attachment'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+    post:
+      tags:
+      - Attachments
+      summary: Add attachments to a WorkRequest
+      description: "*In limited availability phase.*\r\n            <br />Adds attachments to the specified WorkRequest."
+      operationId: POSTv3_workrequest_{workRequestId}_attachments?actor={actor}
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workRequestId
+        in: path
+        description: Numeric ID of the WorkRequest to add attachments to.
+        required: true
+        type: integer
+        format: int32
+      - name: actor
+        in: query
+        description: Name of the person on whose behalf you are performing the action
+        required: false
+        type: string
+      - name: AddAttachmentsRequest
+        in: formData
+        description: ''
+        required: false
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.AddAttachmentsRequest'
+        type: application/json
+      - name: file
+        in: formData
+        description: File to attach to the work request.
+        required: true
+        type: file
+      responses:
+        '201':
+          description: Created indicates that the request resulted in a new resource created before the response was sent.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 502 - Work Request not found;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /workrequest/{workRequestId}/notes/{noteId}/attachments:
+    post:
+      tags:
+      - Attachments
+      summary: Add Attachments to Work Request Note
+      description: "*In limited availability phase.*\r\n            <br />Add Attachments to Work Request Note. Returns list of attachments Id for successful request."
+      operationId: POSTv3_workrequest_{workRequestId}_notes_{noteId}_attachments
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workRequestId
+        in: path
+        description: Numeric Id of the Work Request to perform action with.
+        required: true
+        type: integer
+        format: int32
+      - name: noteId
+        in: path
+        description: Numeric Id of the Note to perform action with.
+        required: true
+        type: integer
+        format: int32
+      - name: AddAttachmentsRequest
+        in: formData
+        description: Optional Descriptor for file(s)
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.AddAttachmentRequest'
+        type: application/json
+      - name: file
+        in: formData
+        description: File to attach to note
+        required: true
+        type: file
+      responses:
+        '201':
+          description: Created indicates that the request resulted in a new resource created before the response was sent.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 503 - Validation fails;\r\n            <br/> 8020 - InvalidWorkRequestIdentifier;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /workrequest({workRequestId})/notes({noteId})/attachments:
+    get:
+      tags:
+      - Attachments
+      summary: Get WorkRequest Note Attachments
+      description: '*In limited availability phase.*'
+      operationId: GETv3_workrequest({workRequestId})_notes({noteId})_attachments
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workRequestId
+        in: path
+        description: WorkRequest Identifier
+        required: true
+        type: integer
+        format: int32
+      - name: noteId
+        in: path
+        description: Note Identifier
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.Attachment'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /refrigeranttracking/uploadplanattachmentsonblob:
+    post:
+      tags:
+      - Attachments
+      summary: Upload Attachments To Storage
+      operationId: POSTv3_refrigeranttracking_uploadplanattachmentsonblob
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: file
+        in: formData
+        description: File to upload
+        required: true
+        type: file
+      - name: UploadRetrofitRetireAttachmentsRequest
+        in: formData
+        description: Required Descriptor for file(s)
+        required: false
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.UploadRetrofitRetireAttachmentsRequest'
+        type: application/json
+      responses:
+        '200':
+          description: Created indicates that the request resulted in a new resource created before the response was sent.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Attachments.UploadRetrofitRetireAttachmentsResponse'
+        '400':
+          description: "Bad Request - the request could not be executed or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 502 - Asset Not found;\r\n            < br/> 503 - Bad Request;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /refrigeranttracking/RetrofitRetirePlanAttachments:
+    get:
+      tags:
+      - Attachments
+      summary: Get retrofit retire plan attachments
+      description: Returns list of attachments for the specific plan.
+      operationId: GETv3_refrigeranttracking_RetrofitRetirePlanAttachments?planId={planId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: planId
+        in: query
+        description: Request
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The request succeeded and the requested information is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.RefrigerantTracking.RetrofitRetireDoc'
+        '400':
+          description: The request was not accepted due to bad syntax, missing parameters, insufficient data, etc.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br>Error codes:\r\n            <br> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Something went wrong, and the server was unable to complete your request.\r\n            <br>Error codes:\r\n            501 - Internal Error"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /refrigeranttracking/linkPlanAttachments:
+    post:
+      tags:
+      - Attachments
+      summary: Add file link to the specific retrofit retire plan
+      operationId: POSTv3_refrigeranttracking_linkPlanAttachments
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: ''
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.RefrigerantTracking.AddRetrofitRetirePlanDocsRequest'
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          schema:
+            $ref: '#/definitions/System.Object'
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:            \r\n            <br/> 502 - No Update/Insert Leak Tracking Preferences;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br>Error codes:\r\n            <br> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /refrigeranttracking/removeattachments:
+    post:
+      tags:
+      - Attachments
+      summary: Delete retrofit retire plan attachments
+      operationId: POSTv3_refrigeranttracking_removeattachments
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: ''
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.RemoveRetrofitRetireDocsRequest'
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            $ref: '#/definitions/System.Object'
+        '400':
+          description: "Bad Request - the request could not be executed or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 503 - User info should not be null;\r\n            <br/>SubscriberId is null;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /workorders/{workorderId}/attachments:
+    post:
+      tags:
+      - Attachments
+      summary: Add attachments to a work order
+      description: Adds attachments to the specified work order.
+      operationId: POSTv3_workorders_{workorderId}_attachments?actor={actor}
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workorderId
+        in: path
+        description: "Numeric ID of the work order to add attachments to.\r\n            You can upload a file without binding it to a Work Order. To do this, you need to set -1 instead of WorkOrderId. \r\n            In the response, you will receive Path for further uploading of the file from Remote Storage."
+        required: true
+        type: integer
+        format: int32
+      - name: actor
+        in: query
+        required: false
+        type: string
+      - name: AddAttachmentsRequest
+        in: formData
+        description: "<br />Pass the following parameters in the request:\r\n             • **Name**: Attachment Name.\r\n             • **Description**: Attachment Description.\r\n             • **Path**: Attachment Path.\r\n             • **Type**: Attachment Type.\r\n              ◦ **File - 1**.\r\n              ◦ **Remote Storage - 2**.\r\n             • **MediaType**: Mime type of the attachment.\r\n             • **Visibility**: Note visibility - valid values: null, 1, 2, 3.\r\n             • **IsInvoiceDigitalCopy**: Mark attachment as Invoice Digital Copy.\r\n            <br />**Example Object for the Add Attachments Request**\r\n            \r\n                {\r\n                  \"Attachments\": [\r\n                  {\r\n                    \"Name\": \"\", \r\n                    \"Description\": \"\",\r\n                    \"Path\": \"\",\r\n                    \"Type\": 2,\r\n                    \"MediaType\": \"\",\r\n                    \"Visibility\": 1,\r\n                    \"IsInvoiceDigitalCopy\": false\r\n                  }]\r\n                }"
+        required: false
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.AddAttachmentsRequest'
+        type: application/json
+      - name: file
+        in: formData
+        description: File to attach to the work order.
+        required: false
+        type: file
+      responses:
+        '201':
+          description: Created indicates that the request resulted in a new resource created before the response was sent.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 502 - Work Order not found;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /workorders/{poNumber}/attachmentsByPoNumber:
+    post:
+      tags:
+      - Attachments
+      summary: Add attachments to a work order by PO number. Only for Subscriber.
+      operationId: POSTv3_workorders_{poNumber}_attachmentsByPoNumber?actor={actor}
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: poNumber
+        in: path
+        description: Purchase Order
+        required: true
+        type: string
+      - name: actor
+        in: query
+        description: On whose behalf the attachment is adding
+        required: false
+        type: string
+      - name: AddAttachmentsRequest
+        in: formData
+        description: "<br />Pass the following parameters in the request:\r\n             • **Name**: Attachment Name.\r\n             • **Description**: Attachment Description.\r\n             • **Path**: Attachment Path.\r\n             • **Type**: Attachment Type.\r\n              ◦ **File - 1**.\r\n              ◦ **Remote Storage - 2**.\r\n             • **MediaType**: Mime type of the attachment.\r\n             • **Visibility**: Note visibility - valid values: null, 1, 2, 3.\r\n             • **IsInvoiceDigitalCopy**: Mark attachment as Invoice Digital Copy.\r\n            <br />**Example Object for the Add Attachments Request**\r\n            \r\n                {\r\n                  \"Attachments\": [\r\n                  {\r\n                    \"Name\": \"\", \r\n                    \"Description\": \"\",\r\n                    \"Path\": \"\",\r\n                    \"Type\": 2,\r\n                    \"MediaType\": \"\",\r\n                    \"Visibility\": 1,\r\n                    \"IsInvoiceDigitalCopy\": false\r\n                  }]\r\n                }"
+        required: false
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.AddAttachmentsRequest'
+        type: application/json
+      - name: file
+        in: formData
+        description: File to attach to the work order.
+        required: false
+        type: file
+      responses:
+        '201':
+          description: Created indicates that the request resulted in a new resource created before the response was sent.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 502 - Work Order not found;\r\n            <br/> 503 - Only for subscribers usage;        \r\n            <br/> 920 - Purchase number cannot be empty;\r\n            <br/> 9100 - There are multiple work orders with the same PO number;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /workorders/attachmentAsBase64:
+    post:
+      tags:
+      - Attachments
+      operationId: POSTv3_workorders_attachmentAsBase64
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.AddBase64AttachmentsRequest'
+      responses:
+        '201':
+          description: Created indicates that the request resulted in a new resource created before the response was sent.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 502 - Work Order not found;\r\n            <br/> 503 - Only for subscribers usage;        \r\n            <br/> 920 - Purchase number cannot be empty;\r\n            <br/> 946 - Work Order attachments size exceeded;\r\n            <br/> 9100 - There are multiple work orders with the same PO number;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /workorders/{workorderId}/attachments/{attachmentId}/thumbnail:
+    get:
+      tags:
+      - Attachments
+      operationId: GETv3_workorders_{workorderId}_attachments_{attachmentId}_thumbnail?width={width}&height={height}&mode={mode}&imageFormat={imageFormat}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workorderId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      - name: attachmentId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      - name: width
+        in: query
+        required: false
+        type: integer
+        format: int32
+      - name: height
+        in: query
+        required: false
+        type: integer
+        format: int32
+      - name: mode
+        in: query
+        required: false
+        type: string
+        enum:
+        - None
+        - Max
+        - Pad
+        - Crop
+        - Carve
+        - Stretch
+      - name: imageFormat
+        in: query
+        required: false
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /workorders/{workOrderId}/attachments/{attachmentId}:
+    delete:
+      tags:
+      - Attachments
+      summary: Delete a work order attachment
+      description: "Removes an attachment from the specified work order. Returns the work order ID in the response. Removing an attachment from the work order using this method creates a system note for this work order. \r\n            <br />This method is available for subscribers and providers.\r\n            <br />***Note***: Deleting an attachment from the work order doesn’t remove this attachment from the ServiceChannel database."
+      operationId: DELETEv3_workorders_{workOrderId}_attachments_{attachmentId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workOrderId
+        in: path
+        description: Unique numeric identifier of the work order.
+        required: true
+        type: integer
+        format: int32
+      - name: attachmentId
+        in: path
+        description: "Unique numeric identifier of the attachment to be removed from the work order.\r\n            <br />To get the attachment ID, use the [GET /odata/workorders({workorderId})/attachments](https://developer.servicechannel.com/swagger/index.html#/Attachments/Attachments_GetWorkOrderAttachments)."
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Attachment is successfully removed from the work order.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Attachments.DeleteWorkOrderAttachmentResponse'
+        '400':
+          description: "The request was not accepted due to bad syntax, missing parameters, insufficient data, etc.  \r\n            <br/>Error codes:\r\n            503 — Data not found. The work order or attachment are not found in the database"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The requested resource requires authentication. \r\n            <br/>Error codes:\r\n            504 - API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/>Error codes: \r\n            100 — User has no rights to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Something went wrong, and the server was unable to complete your request.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /odata/workorders({workorderId})/attachments:
+    get:
+      tags:
+      - Attachments
+      summary: Get a work order attachment
+      description: Retrieves attachment(s) added to the specified work order.
+      operationId: Attachments_GetWorkOrderAttachments
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: workorderId
+        in: path
+        description: Unique numeric identifier of the work order.
+        required: true
+        type: integer
+        format: int32
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: Information about attachments is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.Attachment'
+        '401':
+          description: "The requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: The requested resource does not exist on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /odata/workorders({workorderId})/notes({noteId})/attachments:
+    get:
+      tags:
+      - Attachments
+      summary: Get a work order note attachment
+      description: Retrieves attachments added to the note of the specified work order.
+      operationId: Attachments_GetWorkOrderNotesAttachments
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: noteId
+        in: path
+        description: Unique numeric identifier of the note.
+        required: true
+        type: integer
+        format: int64
+      - name: workorderId
+        in: path
+        description: Unique numeric identifier of the work order.
+        required: true
+        type: integer
+        format: int32
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: Information about the attachment is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.Attachment'
+        '401':
+          description: "The requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\r\n            <br/>Error code:\r\n            502 — Work order is not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Something went wrong, and the server was unable to complete your request. \r\n            <br/>Error codes:\r\n            501 — Internal Error"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  ? /odata/workorders({workorderId})/attachments({attachmentId})/Service.GetThumbnail(width={width},height={height},mode={mode},imageFormat={imageFormat})
+  : get:
+      tags:
+      - Attachments
+      summary: Retrieve Attachment Thumbnail
+      description: Retrieve Attachment Thumbnail
+      operationId: Attachments_GetWorkorderAttachmentThumbnail
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: imageFormat
+        in: path
+        description: ''
+        required: true
+        type: string
+      - name: mode
+        in: path
+        description: ''
+        required: true
+        type: string
+        default: Max
+      - name: height
+        in: path
+        description: ''
+        required: true
+        type: integer
+        format: int32
+        default: 150
+      - name: width
+        in: path
+        description: ''
+        required: true
+        type: integer
+        format: int32
+        default: 150
+      - name: attachmentId
+        in: path
+        description: Attachment Identifier
+        required: true
+        type: integer
+        format: int32
+      - name: workorderId
+        in: path
+        description: Workorder Identifier
+        required: true
+        type: integer
+        format: int32
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          schema:
+            $ref: '#/definitions/System.Net.Http.ByteArrayContent'
+      deprecated: false
+      x-access: Any
+  /odata/proposals({proposalId})/attachments:
+    get:
+      tags:
+      - Attachments
+      summary: Retrieve Proposal Attachments
+      description: Retrieve Proposal Attachments
+      operationId: Attachments_GetProposalAttachments
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: proposalId
+        in: path
+        description: Proposal Identifier
+        required: true
+        type: integer
+        format: int32
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.Attachment'
+      deprecated: false
+      x-access: Any
+  ? /odata/proposals({proposalId})/attachments({attachmentId})/Service.GetThumbnail(width={width},height={height},mode={mode},imageFormat={imageFormat})
+  : get:
+      tags:
+      - Attachments
+      summary: Retrieve Attachment Thumbnail
+      description: Retrieve Attachment Thumbnail
+      operationId: Attachments_GetProposalAttachmentThumbnail
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: imageFormat
+        in: path
+        description: ''
+        required: true
+        type: string
+      - name: mode
+        in: path
+        description: ''
+        required: true
+        type: string
+        default: Max
+      - name: height
+        in: path
+        description: ''
+        required: true
+        type: integer
+        format: int32
+        default: 150
+      - name: width
+        in: path
+        description: ''
+        required: true
+        type: integer
+        format: int32
+        default: 150
+      - name: attachmentId
+        in: path
+        description: Attachment Identifier
+        required: true
+        type: integer
+        format: int32
+      - name: proposalId
+        in: path
+        description: Proposal Identifier
+        required: true
+        type: integer
+        format: int32
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          schema:
+            $ref: '#/definitions/System.Net.Http.ByteArrayContent'
+      deprecated: false
+      x-access: Any
+  /odata/rfps({rfpId})/attachments:
+    get:
+      tags:
+      - Attachments
+      summary: Retrieve Rfp Attachments
+      description: Retrieve Rfp Attachments
+      operationId: Attachments_GetRFPAttachments
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: rfpId
+        in: path
+        description: Rfp Identifier
+        required: true
+        type: integer
+        format: int32
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.Attachment'
+      deprecated: false
+      x-access: Any
+definitions:
+  System.IO.Stream:
+    type: object
+    properties:
+      CanRead:
+        default: false
+        type: boolean
+        readOnly: true
+      CanSeek:
+        default: false
+        type: boolean
+        readOnly: true
+      CanTimeout:
+        default: false
+        type: boolean
+        readOnly: true
+      CanWrite:
+        default: false
+        type: boolean
+        readOnly: true
+      Length:
+        format: int64
+        type: integer
+        readOnly: true
+      Position:
+        format: int64
+        type: integer
+      ReadTimeout:
+        format: int32
+        type: integer
+      WriteTimeout:
+        format: int32
+        type: integer
+  ServiceChannel.Services.Messaging.Attachments.UploadRetrofitRetireAttachmentResponse:
+    type: object
+    properties:
+      FileName:
+        type: string
+      FilePath:
+        type: string
+  System.Collections.Generic.KeyValuePair[System.String,System.Collections.Generic.IEnumerable[System.String]]:
+    type: object
+    properties:
+      Key:
+        type: string
+        readOnly: true
+      Value:
+        type: array
+        items:
+          type: string
+        readOnly: true
+  ServiceChannel.Services.Messaging.Attachments.AddAttachmentRequest:
+    type: object
+    properties:
+      Name:
+        type: string
+      Description:
+        type: string
+      Path:
+        type: string
+      Type:
+        enum:
+        - File
+        - RemoteStorage
+        type: string
+      MediaType:
+        description: Mime type of the attachment
+        type: string
+      Visibility:
+        format: int32
+        description: 'Note visibility - valid values: null, 1, 2, 3'
+        type: integer
+      IsInvoiceDigitalCopy:
+        description: Mark attachment as Invoice Digital Copy
+        default: false
+        type: boolean
+      IsLocationAttachment:
+        description: Indicates if the attachment is copied from location
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Attachments.AddAttachmentsRequest:
+    required:
+    - Attachments
+    type: object
+    properties:
+      Attachments:
+        description: Required, Attachments
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.AddAttachmentRequest'
+  ServiceChannel.Services.Messaging.Attachments.UploadRetrofitRetireAttachmentRequest:
+    type: object
+    properties:
+      FileName:
+        type: string
+      Stream:
+        $ref: '#/definitions/System.IO.Stream'
+      ContentType:
+        type: string
+  ServiceChannel.Services.Messaging.Assets.AddAssetAttachmentResponse:
+    type: object
+    properties:
+      IsSuccess:
+        default: false
+        type: boolean
+      Message:
+        type: string
+      Id:
+        format: int32
+        type: integer
+      AssetId:
+        format: int32
+        type: integer
+      FileName:
+        type: string
+      Comment:
+        type: string
+      Date:
+        format: date-time
+        type: string
+      FilePath:
+        type: string
+      IsPrimary:
+        default: false
+        type: boolean
+      Uri:
+        type: string
+      ThumbnailPath:
+        type: string
+      ThumbnailUri:
+        type: string
+      UpladedByUserId:
+        format: int32
+        type: integer
+      UpladedByUserName:
+        type: string
+  ServiceChannel.Services.Messaging.Assets.AssetAttachment:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      AssetId:
+        format: int32
+        type: integer
+      FileName:
+        type: string
+      Comment:
+        type: string
+      Date:
+        format: date-time
+        type: string
+      FilePath:
+        type: string
+      IsPrimary:
+        default: false
+        type: boolean
+      Uri:
+        type: string
+      ThumbnailPath:
+        type: string
+      ThumbnailUri:
+        type: string
+      UpladedByUserId:
+        format: int32
+        type: integer
+      UpladedByUserName:
+        type: string
+  ServiceChannel.Services.Messaging.Attachments.AddBase64AttachmentsRequest:
+    type: object
+    properties:
+      poNumber:
+        description: Purchase Order. Required.
+        type: string
+      file:
+        description: File as a base64 encoded value.
+        type: string
+      fileName:
+        description: File name with extension. Optional. GUID value by default.
+        type: string
+      extension:
+        description: File extension. Ignored if fileName is passed. Optional.
+        type: string
+      description:
+        description: Description for file. Optional.
+        type: string
+      actor:
+        description: Name of the person on whose behalf you are performing the action. Optional.
+        type: string
+      isInvoiceDigitalCopy:
+        description: Mark attachment as Invoice Digital Copy
+        default: false
+        type: boolean
+  ServiceChannel.Services.WebApi.Models.Response.Attachments.UploadRetrofitRetireAttachmentsResponse:
+    type: object
+    properties:
+      Attachments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.UploadRetrofitRetireAttachmentResponse'
+  ServiceChannel.Services.Messaging.ErrorResponse:
+    description: The error response object
+    type: object
+    properties:
+      ErrorCodes:
+        description: The list of error codes. Go to /basics/general/response-codes/#internal-error-codes-and-messages to map error codes to error reasons.
+        type: array
+        items:
+          enum:
+          - NotAllowed
+          - EmptyProvider
+          - InvalidProviderId
+          - UnknownProvider
+          - ProviderAlreadyExists
+          - ProviderIdNotExists
+          - TimeoutExpiredError
+          - EmptyContract
+          - ContractUndefined
+          - EmptySubscriber
+          - InvalidSubscriberId
+          - UnknownSubscriber
+          - InactiveSubscriber
+          - EmptySubscriberId
+          - SubscriberIdNotExists
+          - InternalError
+          - DataNotFound
+          - BadRequest
+          - UnAuthorized
+          - UnSupportedApplication
+          - SubsidiaryUserDisabled
+          - EmptyLocation
+          - InvalidLocationId
+          - UnknownLocation
+          - LocationNotBelongsToSubscriber
+          - EmptyLocationCountry
+          - LocationAlreadyExists
+          - InvalidStoreId
+          - LocationEmptyState
+          - NoAccessToLocation
+          - LocationAddressValidationError
+          - LocationAddressRequestValidationError
+          - InvalidLocationNoteHeader
+          - NoAccessToUpdateProtectedNote
+          - InvalidBusinessHoursFormat
+          - WorkingHoursIntersect
+          - InvalidDayOfWeek
+          - DuplicateDayOfWeek
+          - InvalidBusinessHoursInitialSetup
+          - BusinessHoursIsEmpty
+          - InvalidHolidayRepeatByType
+          - EmptyHolidayListOfDays
+          - EmptyHolidayListOfMonths
+          - InvalidHolidayMonthName
+          - InvalidHolidayNameLength
+          - InvalidHolidayRepeatEvery
+          - DuplicateMonth
+          - InvalidHolidayFrequency
+          - InvalidHolidayStartDate
+          - InvalidCloseAllDay
+          - HolidayDoesNotExist
+          - InvalidFormatParameter
+          - InvalidLocationCity
+          - InvalidLocationZip
+          - InvalidLocationLatitude
+          - InvalidLocationLongitude
+          - InvalidLocationEmail
+          - InvalidLocationName
+          - InvalidLocationState
+          - InvalidLocationAddlAddress
+          - InvalidLocationMainAddress
+          - InvalidLocationCountry
+          - InvalidLocationRegion
+          - InvalidLocationDistrict
+          - InvalidLocationPhone
+          - InvalidLocationContact
+          - InvalidLocationFaxNumber
+          - LocationCountryNotFound
+          - LocationStateNotFound
+          - LocationCityNotFound
+          - LocationIdNotExists
+          - InvalidLocationEmailLength
+          - LocationStateIdNotFound
+          - IncorrectCombinationStateAndStateId
+          - InvalidSubscriberIds
+          - InvalidLocalizationSettings
+          - LandlordResponsibilityNotFound
+          - LandlordResponsibilityAlreadyExists
+          - EmptyLocationIds
+          - AttachmentNotExist
+          - InvalidTradeId
+          - InvalidCategoryId
+          - InvalidOverrideCategoryId
+          - InvalidOverridePriorityId
+          - LeaseNoteExceedMaxLength
+          - InvalidOverrideProviderRank
+          - InvalidOverrideNTE
+          - DuplicateRows
+          - InvalidPriorityId
+          - LocationNotFound
+          - EmptyTrade
+          - InvalidTrade
+          - TradeNotBelongsToSubscriber
+          - InvalidPrimaryTrade
+          - InvalidTradeForSubscriber
+          - InvalidCategoryForSubscriber
+          - GlCodeAlreadyExists
+          - GlCodeNotExists
+          - InvalidGlCodeUpdate
+          - EmptyGlCode
+          - TradeAlreadyExists
+          - InvalidNTETrade
+          - TradeNotExists
+          - TradeAlreadyInUse
+          - TradeWithTheSameNameHasBeenDeleted
+          - TradeInUsePMServices
+          - TradeInUseProposalError
+          - TradeInUseRFPError
+          - TradeInUseChecklistError
+          - TradeInUseBudgetControl
+          - TradeInUseGlCode
+          - TradeInUseDynamicProviderAssignments
+          - TradeInUseInvoice
+          - TradeInUseLandlordResponsibilities
+          - TradeInUseWO
+          - TradeInUseEquipmentType
+          - TradeInUseRFP
+          - TradeInUseConnector
+          - TradeInUseContractedService
+          - TradeInUseIVR
+          - TradeInUseSiteAccess
+          - TradeInUseGLCodes
+          - TradeInUseCIWO
+          - TradeInUseOrganizationPermissions
+          - TradeСreationError
+          - EmptyUser
+          - EmptyCreatedBy
+          - InvalidUserName
+          - NotProviderUser
+          - UserHasNoPermissions
+          - RestrictedAccount
+          - UserAlreadyExists
+          - UserHasNoPermissionsEditWO
+          - UserEmailAddressIsMissing
+          - UserIsNotRTAdmin
+          - InvalidSubsriberProviderId
+          - LanguageNameNotFound
+          - InvalidLanguageId
+          - LanguageIdNotFound
+          - UseBothSubscriberIdProviderId
+          - EmptyWoProblem
+          - InvalidWoProblemSource
+          - InvalidWoProblemDescription
+          - InvalidWoProblemCode
+          - InvalidWoStatus
+          - InvalidWoNte
+          - InvalidWoCaller
+          - InvalidWoCallDate
+          - InvalidWoScheduledDate
+          - InvalidWoScheduledDateGreaterThanMaxAllowed
+          - EmptyWoCategory
+          - InvalidWoCategory
+          - EmptyWoPriority
+          - InvalidWoPriority
+          - InvalidWoCurrency
+          - InvalidWoSetupId
+          - AttachmentsRequired
+          - InvalidWoIdentifier
+          - EquipmentRequired
+          - WoNteOverflow
+          - InvalidWoPurchaseNumber
+          - InvalidWoStateForUpdate
+          - InvalidPagingParameter
+          - InvalidWoNumber
+          - CheckInDenied
+          - CheckOutDenied
+          - WoScheduledDateLessThenReassignDate
+          - WoScheduledDateLessThenCallDate
+          - InvalidWoActionReason
+          - EmptySubscriberProperty
+          - WorkOrderUpdateError
+          - MissedWoNteDetails
+          - InvalidLinkedWoIdentifier
+          - WoIsOnHold
+          - InvalidWoTrade
+          - InvalidStarScore
+          - WorkOrderAlreadyRated
+          - AttachmentThumbnailNotAvailable
+          - InvalidWoIdentifierOrPin
+          - InvalidTimeZoneHeader
+          - RefrigerantWasUsedShouldBeYesOrNo
+          - CheckInDeniedOutsideGeolocation
+          - CheckOutDeniedOutsideGeolocation
+          - LeakDetectorAuditShouldBeCreated
+          - CheckInOutPremature
+          - WorkOrderAttachmentsSizeExceeded
+          - WorkOrderNotFound
+          - WorkOrderCreateError
+          - InvalidWoProjectedCompletionDate
+          - InvalidFollowUpWo
+          - InvalidWeatherEventId
+          - InvalidSiteAuditLinkedWo
+          - InvalidSetupId
+          - IssueListNotFound
+          - InvalidIssueListField
+          - SiteAuditCompleted
+          - CheckSiteAuditError
+          - SaveSiteAuditError
+          - RemoveSiteAuditError
+          - InactiveTemplateType
+          - SiteAuditNotFound
+          - SiteAuditUpdateError
+          - InvalidSiteAuditParameters
+          - InvalidAdditionalApprovalCode
+          - InvalidAdditionalApprovalCodeValue
+          - AdditionalApprovalCodeIsDisabled
+          - InvalidOtherDesc
+          - InvalidTax2Name
+          - InvoiceInconsistentAmounts
+          - InvoiceInvalidTotal
+          - InvoiceTotalGreaterNte
+          - InvoiceExists
+          - CreatingInvoiceError
+          - DuplInvNumber
+          - InvoiceTotalNull
+          - InvComplDateNull
+          - InvDateLessComplDate
+          - InvoiceNotAuto
+          - ESignatureRequired
+          - InvWoNotFound
+          - InvWrongWoCurr
+          - InvWoCurrNotFound
+          - InvoicingDisabled
+          - InvCreationUnexpectedRes
+          - InvoiceInvalidLaborAmount
+          - InvoiceInvalidMaterialAmount
+          - InvDateOld
+          - InvDateGreater
+          - InvoiceMaterialDescriptionLengthOverflow
+          - InvoiceTaxNotValidated
+          - InvoiceMaterialPartNumberLengthOverflow
+          - TaxValidationError
+          - TaxExemptionError
+          - InvalidInvoiceNumber
+          - GetApprovalLevelsError
+          - InvoiceAddUsersToMliLevelsError
+          - InvoiceAddDeleteLocationsToMliLevelUserError
+          - InvoiceUpdateMLiLevelError
+          - InvoiceDeleteMliLevelError
+          - InvoiceDeleteUsersFromMliLevelError
+          - ApprovalLevelNameLengthOverflow
+          - GstTaxError
+          - Tax2Error
+          - GetApprovalLevelsAndLocationsByUserError
+          - GetAssignedUserShortInfoError
+          - AssignAllLocationsToApprovalLevelAndUserError
+          - GetLocationsForApprovalLevelAndAssignedUserError
+          - GetLocationsBySubscriberError
+          - AssignUserWithLocationsToApprovalLevelError
+          - ReAssignUserWithLocationsToNewApprovalLevelError
+          - ReAssignLocationsToApprovalLevelAndUserError
+          - OutstandingBalance
+          - InvoiceTaxDetailsEmpty
+          - InvoiceTaxDetailsIncorrectSum
+          - MultipleUsersForLocationIsNotAllowed
+          - UserAssignedToOtherLevel
+          - UserDoesNotExist
+          - LaborLineItemRequired
+          - MaterialLineItemRequired
+          - InvoiceDoesntExist
+          - InvoiceStarUnstarFailed
+          - InvoiceBatchUpdateInvalidInvoiceStatusError
+          - InvoiceBatchUpdateLimitExceededError
+          - InvoiceNotAvailableForCurrentUser
+          - InvoiceBatchUpdateInvalidRuleSetStructure
+          - InvoiceBatchUpdateInvalidMliStructure
+          - InvoiceBatchUpdateStatusError
+          - InvoiceMaterialUnitTypeInvalid
+          - ExistingBatchNumber
+          - InvoiceResolutionTextRequired
+          - GetInvoiceDefaultApprovalCodesError
+          - InvoiceInvalidTravelAmount
+          - InvoiceTravelDescriptionLengthOverflow
+          - InvoiceTravelUnitTypeInvalid
+          - TravelLineItemRequired
+          - TravelDetailsDisabled
+          - OnOffShoreDisabled
+          - InvoiceInvalidLaborCount
+          - InvoiceInvalidMaterialCount
+          - InvoiceInvalidTravelCount
+          - SubscriberNotRegisteredForTaxValidation
+          - ManyDecimalsInAmountError
+          - DecimalPartQstTaxError
+          - LaborRatesDiscrepancy
+          - PayInvoicesError
+          - InvoiceNumberRequirementsError
+          - InvoiceNumberIncorrect
+          - InvoiceNumberRegExPatternError
+          - GetInvoicesPendingApprovalByLocationError
+          - ReAssignInvoicesToUsersFailed
+          - ReAssignInvoicesUsersMatched
+          - GetUsersForReassignInvoiceError
+          - InvalidTimeRangeActivity
+          - OutsourcedSourceInvoiceNotFound
+          - OthersLineItemsDisabled
+          - InvoiceInvalidOtherAmount
+          - InvoiceInvalidOtherCount
+          - InvoiceOtherDescriptionLengthOverflow
+          - OtherLineItemRequired
+          - OtherLineItemsNotNegativeValueRequired
+          - InvalidLaborSkillLevel
+          - InvalidLaborType
+          - InvalidTechnicianQuantity
+          - GetInvoicesCommonCategoriesError
+          - InvoiceExplainDisputeEmpty
+          - InvoiceAdditionalApprovalCodeHeaderError
+          - TemplateParseSuccess
+          - TemplateIncorrectHeaderError
+          - TemplateEmptyTemplateError
+          - TemplateWrongFieldsCountError
+          - TemplateFieldNotFoundError
+          - TemplateFieldRequiredError
+          - TemplateParseIntError
+          - TemplateFieldSizeError
+          - TemplateInvalidValueError
+          - TemplateFieldFormatError
+          - TemplateFieldMaxRangeError
+          - TemplateFieldMinRangeError
+          - TemplateProviderNotEntered
+          - TemplateInvalidSubscriberError
+          - TemplateVendorNotFoundError
+          - TemplateMissedProviderError
+          - TemplateProviderNotFoundError
+          - TemplateProviderSubsccriberLinkError
+          - TemplateTradeDispatchRankError
+          - TemplateInvalidTradeForSubscriberError
+          - TemplateStoreNotFoundError
+          - TemplateNotStoresForStateError
+          - TemplateNotStoresForCountryError
+          - TemplateNotStoresForDistrictError
+          - TemplateNotStoresForRegionError
+          - TemplateMultiplePimaryProvidersForTradeStoreError
+          - TemplateDuplicatePrimaryRelationshipError
+          - TemplateAmbiguousDataError
+          - TemplateIncorrectSubscriber
+          - TemplateDuplicateRanking
+          - TemplateLongitudeRangeError
+          - TemplateLatitudeRangeError
+          - InvoiceMaterialPartNameLengthOverflow
+          - TemplateTradeLocationExclusion
+          - TemplateInvalidStateError
+          - TemplateMissedSubscriberError
+          - TemplateMissedStoreIdError
+          - TemplateInvalidSubscriberIdError
+          - TemplateOpenCloseDateError
+          - TemplateInvalidCountryError
+          - TemplateInvalidStateForCountryError
+          - TemplateInvalidLocationTypeError
+          - TemplateMissingFullAndShortNameError
+          - TemplateMissingCountryError
+          - TemplateDuplicatedDataError
+          - TemplateParentLocationNotFoundError
+          - TemplateParseDateTimeError
+          - TemplateParseDecimalError
+          - TemplateSquareValueRangeError
+          - TemplateInvalidSquareMeasureError
+          - TemplateTypeLabelCanNotBeUpdatedError
+          - TemplateTypeLabelHaveToBeLocationForNotInventory
+          - TemplateInvalidPrimarySupplyLocation
+          - TemplateInvalidHomestoreLocationNumber
+          - TemplateErrorDuringCreation
+          - TemplateLocationNotFoundError
+          - TemplateDuplicatedLocationFoundError
+          - TemplateInvalidLocationHeaderError
+          - TemplateDuplicatedLocationHeaderError
+          - TemplateHeaderContainsEmptyFieldsError
+          - TemplateLocHeadersShortHeaderError
+          - TemplateHeaderContainsDuplicatesError
+          - TemplateLocationNotesStoreIdFieldLengthError
+          - TemplateLocationNotesNoteValueFieldLengthError
+          - TemplateErrorInvalidZipCode
+          - TemplateMissingLocationNoteHeader
+          - TemplateMissingLocationNoteIdHeader
+          - TemplateInvalidSecondarySupplyLocation
+          - TemplateLocationWasNotCreated
+          - TemplateTruckNameIsEmpty
+          - TemplateWrongFormat
+          - TemplateSubscriberNotFound
+          - TemplateDuplicatedLocationHeaders
+          - TemplateInvalidHeaders
+          - TemplateInvalidPhoneError
+          - TemplateDuplicateTelecomRecordError
+          - TemplateTelecomRecordExistsError
+          - TemplateInvalidCategory
+          - TemplateDifferentRanksForProviderAssignments
+          - TemplateDuplicateRankError
+          - TemplateProviderNonCompliant
+          - TemplateLocationIsClosed
+          - TemplateProviderWarning
+          - TemplateMultipleProvidersForTradeStoreError
+          - EmptyRequest
+          - InvalidNumberOfParameters
+          - InvoiceOtherUnitTypeInvalid
+          - EmptyLocationOrTradeList
+          - RequestSubscriberIdDoesntMatchUserSubscriberId
+          - StoreIdRequiredError
+          - InvalidUserIdError
+          - InvalidStoreIdError
+          - AmbigiousError
+          - MliHierarchyFiledsCountError
+          - MliHierarchyMaxUserNameError
+          - MliHierarchyDuplicateUserError
+          - MLiHirarchyUserExistInOtherLevelError
+          - MissingLevelsError
+          - DuplicateApprovalLevelsError
+          - InvalidMliLocations
+          - InvalidMlpLocations
+          - ApprovalLevelUsedInRulsetError
+          - GLCodeAmbiguous
+          - GlCodeInvalidResponce
+          - GetRuleSetListError
+          - RuleSetDuplicateNameError
+          - RuleSetDuplicateActionError
+          - RuleSetConflictedActionError
+          - RuleSetRuleSetDoesNotExistsError
+          - RuleSetTradeDoesNotExistError
+          - RuleSetCategoryDoesNotExistError
+          - RuleSetMliLevelDoesNotExistError
+          - GetRuleSet
+          - CreateUpdateRuleSetError
+          - DeleteRuleSet
+          - GetRuleSetCategoriesTradesCountError
+          - GetRuleSetByInvoice
+          - GetCategoryTradeIdsAreSelectedError
+          - ProposalAboveMlpLimitError
+          - ProposalNextLevelHasNoAvailableActionsError
+          - DefaultRuleSetError
+          - RuleSetActionEndStatusError
+          - RuleSetRejectActionEmptyForwardToError
+          - UserFilterGetError
+          - UserFilterCreateUpdateError
+          - UserFilterDeleteError
+          - UserFilterSetAsDefaultError
+          - InvoiceFilterFromAlpProviderError
+          - RegionFilterNotAllowedError
+          - LocationIdFilterNotAllowedError
+          - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+          - PaymenowBannersForProvidersOnly
+          - PaymenowFeatureDisabled
+          - PaymenowBannerInfoNotFound
+          - PaymenowBannerInvalidNavigationUrl
+          - PaymenowRequestedProvidersIsNotAssigned
+          - PaymenowEmptyRequestedProviders
+          - PaymentManagerFeatureDisabled
+          - PaymentManagerFeatureDisabledForSubscriber
+          - PaymentSystemCurrentlyUnavailable
+          - CurrencyNotSupported
+          - PaymentSystemAccountNotFound
+          - FeatureIsOff
+          - EarlyPayFeatureWithoutPaymentManagetFeatureError
+          - FtpTestError
+          - AcceptTermsAndConditionsRequestInvalid
+          - PaymentSystemAccountError
+          - SendReportToFTP
+          - SchedulingError
+          - BadPaymentData
+          - InvoicesCanNotBeRepaid
+          - InvoicesCanNotBeRescheduled
+          - InvalidBillingAddress
+          - PaymentManagerGeneralSettingsNotFound
+          - PaymentManagerEInvoiceSettingsNotFound
+          - BadgeVerificationFailed
+          - BadgeTempPassEmpty
+          - BadgeScanRequired
+          - SolvedIssueSubmitFailed
+          - SolvedIssueInvalidLocationId
+          - SolvedIssueInvalidCategoryId
+          - SolvedIssueInvalidTradeId
+          - SolvedIssueInvalidPriorityId
+          - SolvedIssueInvalidSource
+          - SolvedIssueInvalidProblemCode
+          - SolvedIssueInvalidType
+          - SubmitFeedbackErrorWoStatus
+          - SubmitFeedbackInvalidAnswer
+          - SubmitFeedbackInvalidTrackingNumber
+          - SubmitFeedbackInvalidSubscriber
+          - SubmitFeedbackInvalidScore
+          - SubmitFeedbackUnsatisfactoryCommentRequired
+          - SubmitFeedbackInvalidReviewId
+          - SubmitFeedbackInvalidSetupId
+          - FeedbackSetupInvalidSetupId
+          - S3SaveError
+          - AbsSaveError
+          - GoodDataLoginFailed
+          - GoodDataElementUriError
+          - GoodDataReportResultUriError
+          - GoodDataReportResultEmpty
+          - GoodDataDesReportResCountError
+          - GoodDataDesReportResConvertError
+          - GoodDataDesDisplayFormAttributeEmpty
+          - InvalidProposalAmountLimit
+          - GetApprovalProposalReasonsError
+          - GetEmailRecipientsError
+          - GetAssignProposalReasonsError
+          - ProposalHasBeenVoided
+          - AssetTypeDuplicateNameError
+          - AssetTypeDoesntExistError
+          - AssetTypeFailUpdateRefrigerantPurpose
+          - AssetTypeDeleteFailed
+          - ExistingAssetsFoundForAssetType
+          - CantModifyAssetTypeParentId
+          - InvalidAssetTypeName
+          - AssetTypeInheritanceError
+          - ExistingProposalsFoundForAssetType
+          - InstallPurchaseDateOverflow
+          - WOexistsWithSomeAssets
+          - PartsChangeFailed
+          - PartsReasonCodeError
+          - PartsUseDateError
+          - PartsRefrigerantAlreadyExists
+          - PartsChargeHistoryAlreadyExists
+          - PartsNotFound
+          - BulkPartUseIncorrectWorkOrder
+          - BulkPartsByIdsNotFound
+          - BulkPartsMultipleWosError
+          - BulkPartsIncorrectIsRefrigerantParam
+          - BulkPartsIsRefrigerantCanNotbeChanged
+          - BulkPartsReasonCodeChangeError
+          - BulkPartsInvalidAssetAndReasonCodeParams
+          - BulkPartsInvalidAssetId
+          - BulkPartsInvalidInitialChargeCode
+          - BulkPartsAssetDoesntContainCharge
+          - BulkPartsIsInventoryFlagError
+          - BulkPartsLeakAlreadyInProcessError
+          - BulkPartsInvalidDateRangeError
+          - BulkPartsMoeNumberRequiredError
+          - BulkPartsSystemChargeExceeded
+          - BulkRefrigerantuUageBlocked
+          - BulkIDsNotBeNull
+          - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+          - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+          - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+          - BulkInitialChargeSystemExpansionNotAllowed
+          - BulkInventoryPartIdCanNotBeChanged
+          - BulkInventoryLocationIdCanNotBeChanged
+          - BulkPartsDuplicatedRequest
+          - BulkChangePartsIncorrectRefrigerantType
+          - BulkPartsRetroRetireIsInProgressOnThisDate
+          - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+          - RetrofitRetireCanNotBeRemoved
+          - RetroRetirePartsCantbeChanged
+          - BulkPartsInventoryApiFailed
+          - BulkPartsDuplicated
+          - BulkPartsWorkOrderInProcessing
+          - BadNotificationSubscriptionEventType
+          - RefrigerantUseDateOutOfTheLeakProcessDateRange
+          - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+          - BulkExternalWoCurrentlyDoesntExists
+          - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+          - BulkConnectorOnlyClientAssetsCouldBeProcessed
+          - LeakRecordHasWrongDateValue
+          - HasUncompliedLeakRecordInAnoutherWO
+          - HasUncompletedWOOnAnotherLeakRecord
+          - OnlyOneAssetWorkOrderPair
+          - OneLeakRecordMustBeOnCompletedWO
+          - LeakRecordNotFound
+          - AssetIDWoIdIsRequired
+          - BulkPartsReasonCodeRetrofit
+          - RetrofitRetireWasCancelledNoLeak
+          - FailedToUpdateLeakEvent
+          - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+          - LeakPartUseOnZeroChargeNotAllowed
+          - BulkLeakRecordsAndAuditRequest
+          - LeakRecordsDuplicateRequestDetected
+          - AllLeakRecordFieldsAreRequired
+          - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+          - MlpImportLevelError
+          - UpdateMlpUserLevelError
+          - InvalidHolidayName
+          - DuplicateHolidayName
+          - HolidaysDeleteFailed
+          - HolidaysExcludeInsertFailed
+          - HolidaysUpdateFailed
+          - HolidaysInsertFailed
+          - HolidaysExcludeDeleteFailed
+          - BusinessHoursDeleteFailed
+          - BusinessHoursUpdateFailed
+          - BusinessHoursInsertFailed
+          - InvalidTime
+          - HolidayForDeleteNotFound
+          - InvalidChecklistId
+          - ChecklistNotPopulated
+          - ChecklistNotAssignedForTransfersWO
+          - NoLinkBetweenSubscriberAndProvider
+          - WorkforceCreateContractorError
+          - InvalidCertificateId
+          - MaxThresholdExceeded
+          - MaxTriggerRateExceeded
+          - LeakPriorityIsRequired
+          - MissingRTSettings
+          - ResolutionCodesLimitExceeded
+          - ResolutionCodesAreRequired
+          - RootCauseIsRequired
+          - RootCauseTextIsRequired
+          - NoAccessToSetRootCauseText
+          - RootCauseTextMaxLengthExceeded
+          - ResolutionCodeTextIsRequired
+          - NoAccessToSetResolutionCodeText
+          - ResolutionCodeTextMaxLengthExceeded
+          - ResolutionCodeTextMustBeUnique
+          - ResolutionCodeWithoutFreeTextMustBeUnique
+          - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+          - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+          - AssetCategoriesLimitExceeded
+          - NoAccessToAssetCategories
+          - AssetCategoriesAreRequired
+          - InvalidAssetCategoryId
+          - NoAssetCategoriesOnWorkOrder
+          - RootCausesMustBeForAllWorkOrderAssetCategories
+          - RootCauseTextMustBeUnique
+          - AssetCategoryIsRequired
+          - MultipleRootCausesMethodMustBeUsed
+          - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+          - AssetFilterLocationsLimitExceeded
+          - UnknownStoreId
+          - UsesRefrigerantAttributeNotChanged
+          - AssetTagDuplicate
+          - AssetTagIdDuplicate
+          - UnknownEquipmentType
+          - ParentIdInOtherLocation
+          - UnknownBrandName
+          - CARBRequiredManufacturedDate
+          - CARBRequiredInstallDate
+          - TradeNotFound
+          - AssetDoesntExist
+          - AssetIsNotRefrigerant
+          - AssetCantContainRefrigerant
+          - OnlyRackAssetsContainingCircuits
+          - ConnectorAssetTagIdCanNotBeChanged
+          - ConnectorAssetLocationIdCanNotBeChanged
+          - AssetTagCantBeUpdated
+          - AssetTypeIsNotСonfiguredToManageRTAssets
+          - RefrigerantTrackingNotAvailableForLocation
+          - UsesRefrigerantRequiredByAssetTypeSettings
+          - AssetLocationTradeDoesntCorrespondToWO
+          - AssetLocationSelectedPMmodule
+          - UpdateAssetRepairStatusValidation
+          - HasCircuitsCantBeChange
+          - HasComponentsCantBeChange
+          - CircuitCanNotBeConnectedToCircuit
+          - RTCircuitCanNotBeConnectedToNonRTAsset
+          - RTComponentCanNotBeConnectedToNonRTAsset
+          - ComponentCanNotBeConnectedToComponent
+          - NonRTComponentCanNotBeConnectedToRtAsset
+          - NonRTCircuitCanNotBeConnectedToRtAsset
+          - ComponentCanNotBeConnectedToCircuit
+          - ParentAssetShouldHaveEitherComponentsNorCircuits
+          - ParentAssetCantHaveComponents
+          - ParentAssetCantHaveCircuits
+          - MultipleAssetsFoundForTheRequestedTagId
+          - InvalidBrandName
+          - UnknownBrandId
+          - BrandRestrictedByAssetType
+          - BrandRestrictedBySubscriber
+          - BrandsRestrictedBySubscriber
+          - DeclineWorkOrderFailed
+          - AcceptWorkOrderFailed
+          - WorkOrderWasAccepted
+          - AssetAttachmentsSizeExceeded
+          - SaveMliAuditReportSetting
+          - GetMliAuditReportSetting
+          - SaveMliAuditReportResult
+          - SaveMliAuditReportSendEmailStatus
+          - SaveMliAuditReportFilePath
+          - GetSubscribersEnabledSchedule
+          - SaveMliAuditInfoError
+          - TaxValidationAddNewCompanySettingsError
+          - TaxValidationUpdateCompanySettingsError
+          - ProjectAssociationError
+          - GetProjectsInvoiceAmountsError
+          - TaxCodeNotUniqueError
+          - FieldLengthIsTooLongError
+          - SetTaxCodesBulkError
+          - InvoiceAdditionalApprovalCodeValueError
+          - BulkUpdateInvoicePaymentError
+          - InvoiceLineItemFilterDisabled
+          - InvoiceStatusToRejectProviderNotificationFailed
+          - SortFieldNotAvailableError
+          - ContractServiceExist
+          - ContractServiceCantChangeTrade
+          - ContractServiceCantChangeCategory
+          - ContractServiceCantChangeProvider
+          - ContractServicePMServiceCantChangeTrade
+          - ContractServicePMServiceCantChangeCategory
+          - ContractedServiceNameAlreadyExists
+          - ContractedServiceNameLinkedToRates
+          - WorkRequestDescriptionIsRequired
+          - WorkRequestCallDateIsRequired
+          - WorkRequestIssueIsRequired
+          - WorkRequestCallDateHasWrongFormat
+          - WorkRequestScheduledDateHasWrongFormat
+          - InvalidWorkRequestStatus
+          - InvalidWorkRequestExtendedStatus
+          - InvalidWorkRequestCategory
+          - InvalidWorkRequestPriority
+          - InvalidWorkRequestCurrency
+          - InvalidWorkRequestIssueSetup
+          - InvalidWorkRequestIssueArea
+          - InvalidWorkRequestAsset
+          - WorkRequestAttachmentFileNameIsRequired
+          - WorkRequestAttachmentOriginalNameIsRequired
+          - WorkRequestIssueProblemCodeIsRequired
+          - WorkRequestIssueProblemTypeIsRequired
+          - WorkRequestScheduledDateMustBeGreaterThanCallDate
+          - InvalidWorkRequestId
+          - WorkRequestSearchCallDateFromHasWrongFormat
+          - WorkRequestSearchCallDateToHasWrongFormat
+          - WorkRequestSearchScheduledDateFromHasWrongFormat
+          - WorkRequestSearchScheduledDateToHasWrongFormat
+          - WorkRequestSearchClosedDateFromHasWrongFormat
+          - WorkRequestSearchClosedDateToHasWrongFormat
+          - WorkOrderIsAlreadyCreatedForWorkRequest
+          - WorkRequestIsClosed
+          - WorkRequestClosedReasonIsRequiredForClosedStatus
+          - WorkOrderIdIsRequiredForThisClosedReason
+          - InvalidWorkRequestClosedReason
+          - WorkRequestClosedReasonIsOnlyForClosedStatus
+          - InvalidWorkRequestWorkOrderId
+          - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+          - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+          - InvalidWorkOrderSourceType
+          - DeclineReasonIdIsRequired
+          - DeclineReasonDoesntAllowCustomText
+          - InvalidDeclineReasonId
+          - MultipleWorkOrdersForPurchaseNumber
+          - InvoiceMaterialMakupInvalid
+          - MaterialMarkUpDiscrepancyReasonShouldBeStated
+          - MaterialPriceDiscrepancyReasonShouldBeStated
+          - OtherPriceDiscrepancyReasonShouldBeStated
+          - SubscriberIdIsNotValid
+          - FiscalPeriodIsNotValid
+          - AmountIsNotValid
+          - AmountFormatIsNotValid
+          - CategoryMustBeEmpty
+          - CategoryIsNotValid
+          - TradeMustBeEmpty
+          - TradeIsNotValid
+          - GlCodeMustBeEmpty
+          - GlCodeIsNotValid
+          - LocationMustBeEmpty
+          - LocationIsNotValid
+          - RegionMustBeEmpty
+          - RegionIsNotValid
+          - DistrictMustBeEmpty
+          - DistrictIsNotValid
+          - DuplicateData
+          - PrimaryCategoryMustBeEmpty
+          - PrimaryCategoryIsNotValid
+          - CategoryAndExcludedCategoryCannotSimultaneously
+          - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+          - TradeAndExcludedTradeCannotSimultaneously
+          - GlCodeAndExcludedGlCodeCannotSimultaneously
+          - DuplicateCategories
+          - DuplicateTrades
+          - DuplicateGlCodes
+          - DuplicatePrimaryCategories
+          - LocationNoteMustBeEmpty
+          - LocationNoteIsNotValid
+          - OverlappingCategories
+          - OverlappingPrimaryCategories
+          - OverlappingTrades
+          - OverlappingPrimaryTrades
+          - OverlappingGlCodes
+          - OverlappingLocations
+          - OverlappingRegions
+          - OverlappingDistricts
+          - OverlappingLocationNotes
+          - TaxExemptionErrorApi
+          - OtherLineItemZeroAmount
+          - TravelLineItemsNotNegativeValueRequired
+          - MaterialLineItemsNotNegativeValueRequired
+          - LaborLineItemsNotNegativeValueRequired
+          - AdditionalApprovalCodeSetupIdInvalid
+          - VendorIdIsNotValid
+          - InvalidBatchId
+          - InvalidBatchStatusId
+          - CategoryInUsePMServiceError
+          - CategoryInUseChecklistError
+          - CategoryInUseETAMissedAlertError
+          - CategoryInUseBudgetControl
+          - CategoryInUseConnector
+          - CategoryInUseContractedService
+          - CategoryInUseEDI
+          - CategoryInUseIVR
+          - CategoryInUseFeedbackV2
+          - CategoryInUseProposalApproveReasons
+          - CategoryInUsePaymentManager
+          - CategoryInUseProviderAssignments
+          - CategoryInUseSiteAccess
+          - CategoryInUseAlerts
+          - CategoryInUseOpenWOAlert
+          - CategoryInUseWOAutocopy
+          - CategoryInUseWorkRequest
+          - CategoryInUseWO
+          - CategoryInUseDashboardOverride
+          - CategoryInUseInvoiceAttributes
+          - FeatureIsOn
+          - LocationHierarchyNotFound
+          - LocationHierarchyLevelNotFound
+          - LocationHierarchyParentLevelNotFound
+          - LocationSpaceTypeNotFound
+          - DuplicateRowByValueKey
+          - ParentNotFound
+          - DuplicateSequenceAmongSiblings
+          - SequenceConflictsWithExistingData
+          - SequenceMustBeGreaterThanZero
+          - ValueContainsPathDelimiter
+          - InitializationWarmupError
+          type: string
+      ErrorCode:
+        description: The code of the first error found
+        enum:
+        - NotAllowed
+        - EmptyProvider
+        - InvalidProviderId
+        - UnknownProvider
+        - ProviderAlreadyExists
+        - ProviderIdNotExists
+        - TimeoutExpiredError
+        - EmptyContract
+        - ContractUndefined
+        - EmptySubscriber
+        - InvalidSubscriberId
+        - UnknownSubscriber
+        - InactiveSubscriber
+        - EmptySubscriberId
+        - SubscriberIdNotExists
+        - InternalError
+        - DataNotFound
+        - BadRequest
+        - UnAuthorized
+        - UnSupportedApplication
+        - SubsidiaryUserDisabled
+        - EmptyLocation
+        - InvalidLocationId
+        - UnknownLocation
+        - LocationNotBelongsToSubscriber
+        - EmptyLocationCountry
+        - LocationAlreadyExists
+        - InvalidStoreId
+        - LocationEmptyState
+        - NoAccessToLocation
+        - LocationAddressValidationError
+        - LocationAddressRequestValidationError
+        - InvalidLocationNoteHeader
+        - NoAccessToUpdateProtectedNote
+        - InvalidBusinessHoursFormat
+        - WorkingHoursIntersect
+        - InvalidDayOfWeek
+        - DuplicateDayOfWeek
+        - InvalidBusinessHoursInitialSetup
+        - BusinessHoursIsEmpty
+        - InvalidHolidayRepeatByType
+        - EmptyHolidayListOfDays
+        - EmptyHolidayListOfMonths
+        - InvalidHolidayMonthName
+        - InvalidHolidayNameLength
+        - InvalidHolidayRepeatEvery
+        - DuplicateMonth
+        - InvalidHolidayFrequency
+        - InvalidHolidayStartDate
+        - InvalidCloseAllDay
+        - HolidayDoesNotExist
+        - InvalidFormatParameter
+        - InvalidLocationCity
+        - InvalidLocationZip
+        - InvalidLocationLatitude
+        - InvalidLocationLongitude
+        - InvalidLocationEmail
+        - InvalidLocationName
+        - InvalidLocationState
+        - InvalidLocationAddlAddress
+        - InvalidLocationMainAddress
+        - InvalidLocationCountry
+        - InvalidLocationRegion
+        - InvalidLocationDistrict
+        - InvalidLocationPhone
+        - InvalidLocationContact
+        - InvalidLocationFaxNumber
+        - LocationCountryNotFound
+        - LocationStateNotFound
+        - LocationCityNotFound
+        - LocationIdNotExists
+        - InvalidLocationEmailLength
+        - LocationStateIdNotFound
+        - IncorrectCombinationStateAndStateId
+        - InvalidSubscriberIds
+        - InvalidLocalizationSettings
+        - LandlordResponsibilityNotFound
+        - LandlordResponsibilityAlreadyExists
+        - EmptyLocationIds
+        - AttachmentNotExist
+        - InvalidTradeId
+        - InvalidCategoryId
+        - InvalidOverrideCategoryId
+        - InvalidOverridePriorityId
+        - LeaseNoteExceedMaxLength
+        - InvalidOverrideProviderRank
+        - InvalidOverrideNTE
+        - DuplicateRows
+        - InvalidPriorityId
+        - LocationNotFound
+        - EmptyTrade
+        - InvalidTrade
+        - TradeNotBelongsToSubscriber
+        - InvalidPrimaryTrade
+        - InvalidTradeForSubscriber
+        - InvalidCategoryForSubscriber
+        - GlCodeAlreadyExists
+        - GlCodeNotExists
+        - InvalidGlCodeUpdate
+        - EmptyGlCode
+        - TradeAlreadyExists
+        - InvalidNTETrade
+        - TradeNotExists
+        - TradeAlreadyInUse
+        - TradeWithTheSameNameHasBeenDeleted
+        - TradeInUsePMServices
+        - TradeInUseProposalError
+        - TradeInUseRFPError
+        - TradeInUseChecklistError
+        - TradeInUseBudgetControl
+        - TradeInUseGlCode
+        - TradeInUseDynamicProviderAssignments
+        - TradeInUseInvoice
+        - TradeInUseLandlordResponsibilities
+        - TradeInUseWO
+        - TradeInUseEquipmentType
+        - TradeInUseRFP
+        - TradeInUseConnector
+        - TradeInUseContractedService
+        - TradeInUseIVR
+        - TradeInUseSiteAccess
+        - TradeInUseGLCodes
+        - TradeInUseCIWO
+        - TradeInUseOrganizationPermissions
+        - TradeСreationError
+        - EmptyUser
+        - EmptyCreatedBy
+        - InvalidUserName
+        - NotProviderUser
+        - UserHasNoPermissions
+        - RestrictedAccount
+        - UserAlreadyExists
+        - UserHasNoPermissionsEditWO
+        - UserEmailAddressIsMissing
+        - UserIsNotRTAdmin
+        - InvalidSubsriberProviderId
+        - LanguageNameNotFound
+        - InvalidLanguageId
+        - LanguageIdNotFound
+        - UseBothSubscriberIdProviderId
+        - EmptyWoProblem
+        - InvalidWoProblemSource
+        - InvalidWoProblemDescription
+        - InvalidWoProblemCode
+        - InvalidWoStatus
+        - InvalidWoNte
+        - InvalidWoCaller
+        - InvalidWoCallDate
+        - InvalidWoScheduledDate
+        - InvalidWoScheduledDateGreaterThanMaxAllowed
+        - EmptyWoCategory
+        - InvalidWoCategory
+        - EmptyWoPriority
+        - InvalidWoPriority
+        - InvalidWoCurrency
+        - InvalidWoSetupId
+        - AttachmentsRequired
+        - InvalidWoIdentifier
+        - EquipmentRequired
+        - WoNteOverflow
+        - InvalidWoPurchaseNumber
+        - InvalidWoStateForUpdate
+        - InvalidPagingParameter
+        - InvalidWoNumber
+        - CheckInDenied
+        - CheckOutDenied
+        - WoScheduledDateLessThenReassignDate
+        - WoScheduledDateLessThenCallDate
+        - InvalidWoActionReason
+        - EmptySubscriberProperty
+        - WorkOrderUpdateError
+        - MissedWoNteDetails
+        - InvalidLinkedWoIdentifier
+        - WoIsOnHold
+        - InvalidWoTrade
+        - InvalidStarScore
+        - WorkOrderAlreadyRated
+        - AttachmentThumbnailNotAvailable
+        - InvalidWoIdentifierOrPin
+        - InvalidTimeZoneHeader
+        - RefrigerantWasUsedShouldBeYesOrNo
+        - CheckInDeniedOutsideGeolocation
+        - CheckOutDeniedOutsideGeolocation
+        - LeakDetectorAuditShouldBeCreated
+        - CheckInOutPremature
+        - WorkOrderAttachmentsSizeExceeded
+        - WorkOrderNotFound
+        - WorkOrderCreateError
+        - InvalidWoProjectedCompletionDate
+        - InvalidFollowUpWo
+        - InvalidWeatherEventId
+        - InvalidSiteAuditLinkedWo
+        - InvalidSetupId
+        - IssueListNotFound
+        - InvalidIssueListField
+        - SiteAuditCompleted
+        - CheckSiteAuditError
+        - SaveSiteAuditError
+        - RemoveSiteAuditError
+        - InactiveTemplateType
+        - SiteAuditNotFound
+        - SiteAuditUpdateError
+        - InvalidSiteAuditParameters
+        - InvalidAdditionalApprovalCode
+        - InvalidAdditionalApprovalCodeValue
+        - AdditionalApprovalCodeIsDisabled
+        - InvalidOtherDesc
+        - InvalidTax2Name
+        - InvoiceInconsistentAmounts
+        - InvoiceInvalidTotal
+        - InvoiceTotalGreaterNte
+        - InvoiceExists
+        - CreatingInvoiceError
+        - DuplInvNumber
+        - InvoiceTotalNull
+        - InvComplDateNull
+        - InvDateLessComplDate
+        - InvoiceNotAuto
+        - ESignatureRequired
+        - InvWoNotFound
+        - InvWrongWoCurr
+        - InvWoCurrNotFound
+        - InvoicingDisabled
+        - InvCreationUnexpectedRes
+        - InvoiceInvalidLaborAmount
+        - InvoiceInvalidMaterialAmount
+        - InvDateOld
+        - InvDateGreater
+        - InvoiceMaterialDescriptionLengthOverflow
+        - InvoiceTaxNotValidated
+        - InvoiceMaterialPartNumberLengthOverflow
+        - TaxValidationError
+        - TaxExemptionError
+        - InvalidInvoiceNumber
+        - GetApprovalLevelsError
+        - InvoiceAddUsersToMliLevelsError
+        - InvoiceAddDeleteLocationsToMliLevelUserError
+        - InvoiceUpdateMLiLevelError
+        - InvoiceDeleteMliLevelError
+        - InvoiceDeleteUsersFromMliLevelError
+        - ApprovalLevelNameLengthOverflow
+        - GstTaxError
+        - Tax2Error
+        - GetApprovalLevelsAndLocationsByUserError
+        - GetAssignedUserShortInfoError
+        - AssignAllLocationsToApprovalLevelAndUserError
+        - GetLocationsForApprovalLevelAndAssignedUserError
+        - GetLocationsBySubscriberError
+        - AssignUserWithLocationsToApprovalLevelError
+        - ReAssignUserWithLocationsToNewApprovalLevelError
+        - ReAssignLocationsToApprovalLevelAndUserError
+        - OutstandingBalance
+        - InvoiceTaxDetailsEmpty
+        - InvoiceTaxDetailsIncorrectSum
+        - MultipleUsersForLocationIsNotAllowed
+        - UserAssignedToOtherLevel
+        - UserDoesNotExist
+        - LaborLineItemRequired
+        - MaterialLineItemRequired
+        - InvoiceDoesntExist
+        - InvoiceStarUnstarFailed
+        - InvoiceBatchUpdateInvalidInvoiceStatusError
+        - InvoiceBatchUpdateLimitExceededError
+        - InvoiceNotAvailableForCurrentUser
+        - InvoiceBatchUpdateInvalidRuleSetStructure
+        - InvoiceBatchUpdateInvalidMliStructure
+        - InvoiceBatchUpdateStatusError
+        - InvoiceMaterialUnitTypeInvalid
+        - ExistingBatchNumber
+        - InvoiceResolutionTextRequired
+        - GetInvoiceDefaultApprovalCodesError
+        - InvoiceInvalidTravelAmount
+        - InvoiceTravelDescriptionLengthOverflow
+        - InvoiceTravelUnitTypeInvalid
+        - TravelLineItemRequired
+        - TravelDetailsDisabled
+        - OnOffShoreDisabled
+        - InvoiceInvalidLaborCount
+        - InvoiceInvalidMaterialCount
+        - InvoiceInvalidTravelCount
+        - SubscriberNotRegisteredForTaxValidation
+        - ManyDecimalsInAmountError
+        - DecimalPartQstTaxError
+        - LaborRatesDiscrepancy
+        - PayInvoicesError
+        - InvoiceNumberRequirementsError
+        - InvoiceNumberIncorrect
+        - InvoiceNumberRegExPatternError
+        - GetInvoicesPendingApprovalByLocationError
+        - ReAssignInvoicesToUsersFailed
+        - ReAssignInvoicesUsersMatched
+        - GetUsersForReassignInvoiceError
+        - InvalidTimeRangeActivity
+        - OutsourcedSourceInvoiceNotFound
+        - OthersLineItemsDisabled
+        - InvoiceInvalidOtherAmount
+        - InvoiceInvalidOtherCount
+        - InvoiceOtherDescriptionLengthOverflow
+        - OtherLineItemRequired
+        - OtherLineItemsNotNegativeValueRequired
+        - InvalidLaborSkillLevel
+        - InvalidLaborType
+        - InvalidTechnicianQuantity
+        - GetInvoicesCommonCategoriesError
+        - InvoiceExplainDisputeEmpty
+        - InvoiceAdditionalApprovalCodeHeaderError
+        - TemplateParseSuccess
+        - TemplateIncorrectHeaderError
+        - TemplateEmptyTemplateError
+        - TemplateWrongFieldsCountError
+        - TemplateFieldNotFoundError
+        - TemplateFieldRequiredError
+        - TemplateParseIntError
+        - TemplateFieldSizeError
+        - TemplateInvalidValueError
+        - TemplateFieldFormatError
+        - TemplateFieldMaxRangeError
+        - TemplateFieldMinRangeError
+        - TemplateProviderNotEntered
+        - TemplateInvalidSubscriberError
+        - TemplateVendorNotFoundError
+        - TemplateMissedProviderError
+        - TemplateProviderNotFoundError
+        - TemplateProviderSubsccriberLinkError
+        - TemplateTradeDispatchRankError
+        - TemplateInvalidTradeForSubscriberError
+        - TemplateStoreNotFoundError
+        - TemplateNotStoresForStateError
+        - TemplateNotStoresForCountryError
+        - TemplateNotStoresForDistrictError
+        - TemplateNotStoresForRegionError
+        - TemplateMultiplePimaryProvidersForTradeStoreError
+        - TemplateDuplicatePrimaryRelationshipError
+        - TemplateAmbiguousDataError
+        - TemplateIncorrectSubscriber
+        - TemplateDuplicateRanking
+        - TemplateLongitudeRangeError
+        - TemplateLatitudeRangeError
+        - InvoiceMaterialPartNameLengthOverflow
+        - TemplateTradeLocationExclusion
+        - TemplateInvalidStateError
+        - TemplateMissedSubscriberError
+        - TemplateMissedStoreIdError
+        - TemplateInvalidSubscriberIdError
+        - TemplateOpenCloseDateError
+        - TemplateInvalidCountryError
+        - TemplateInvalidStateForCountryError
+        - TemplateInvalidLocationTypeError
+        - TemplateMissingFullAndShortNameError
+        - TemplateMissingCountryError
+        - TemplateDuplicatedDataError
+        - TemplateParentLocationNotFoundError
+        - TemplateParseDateTimeError
+        - TemplateParseDecimalError
+        - TemplateSquareValueRangeError
+        - TemplateInvalidSquareMeasureError
+        - TemplateTypeLabelCanNotBeUpdatedError
+        - TemplateTypeLabelHaveToBeLocationForNotInventory
+        - TemplateInvalidPrimarySupplyLocation
+        - TemplateInvalidHomestoreLocationNumber
+        - TemplateErrorDuringCreation
+        - TemplateLocationNotFoundError
+        - TemplateDuplicatedLocationFoundError
+        - TemplateInvalidLocationHeaderError
+        - TemplateDuplicatedLocationHeaderError
+        - TemplateHeaderContainsEmptyFieldsError
+        - TemplateLocHeadersShortHeaderError
+        - TemplateHeaderContainsDuplicatesError
+        - TemplateLocationNotesStoreIdFieldLengthError
+        - TemplateLocationNotesNoteValueFieldLengthError
+        - TemplateErrorInvalidZipCode
+        - TemplateMissingLocationNoteHeader
+        - TemplateMissingLocationNoteIdHeader
+        - TemplateInvalidSecondarySupplyLocation
+        - TemplateLocationWasNotCreated
+        - TemplateTruckNameIsEmpty
+        - TemplateWrongFormat
+        - TemplateSubscriberNotFound
+        - TemplateDuplicatedLocationHeaders
+        - TemplateInvalidHeaders
+        - TemplateInvalidPhoneError
+        - TemplateDuplicateTelecomRecordError
+        - TemplateTelecomRecordExistsError
+        - TemplateInvalidCategory
+        - TemplateDifferentRanksForProviderAssignments
+        - TemplateDuplicateRankError
+        - TemplateProviderNonCompliant
+        - TemplateLocationIsClosed
+        - TemplateProviderWarning
+        - TemplateMultipleProvidersForTradeStoreError
+        - EmptyRequest
+        - InvalidNumberOfParameters
+        - InvoiceOtherUnitTypeInvalid
+        - EmptyLocationOrTradeList
+        - RequestSubscriberIdDoesntMatchUserSubscriberId
+        - StoreIdRequiredError
+        - InvalidUserIdError
+        - InvalidStoreIdError
+        - AmbigiousError
+        - MliHierarchyFiledsCountError
+        - MliHierarchyMaxUserNameError
+        - MliHierarchyDuplicateUserError
+        - MLiHirarchyUserExistInOtherLevelError
+        - MissingLevelsError
+        - DuplicateApprovalLevelsError
+        - InvalidMliLocations
+        - InvalidMlpLocations
+        - ApprovalLevelUsedInRulsetError
+        - GLCodeAmbiguous
+        - GlCodeInvalidResponce
+        - GetRuleSetListError
+        - RuleSetDuplicateNameError
+        - RuleSetDuplicateActionError
+        - RuleSetConflictedActionError
+        - RuleSetRuleSetDoesNotExistsError
+        - RuleSetTradeDoesNotExistError
+        - RuleSetCategoryDoesNotExistError
+        - RuleSetMliLevelDoesNotExistError
+        - GetRuleSet
+        - CreateUpdateRuleSetError
+        - DeleteRuleSet
+        - GetRuleSetCategoriesTradesCountError
+        - GetRuleSetByInvoice
+        - GetCategoryTradeIdsAreSelectedError
+        - ProposalAboveMlpLimitError
+        - ProposalNextLevelHasNoAvailableActionsError
+        - DefaultRuleSetError
+        - RuleSetActionEndStatusError
+        - RuleSetRejectActionEmptyForwardToError
+        - UserFilterGetError
+        - UserFilterCreateUpdateError
+        - UserFilterDeleteError
+        - UserFilterSetAsDefaultError
+        - InvoiceFilterFromAlpProviderError
+        - RegionFilterNotAllowedError
+        - LocationIdFilterNotAllowedError
+        - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+        - PaymenowBannersForProvidersOnly
+        - PaymenowFeatureDisabled
+        - PaymenowBannerInfoNotFound
+        - PaymenowBannerInvalidNavigationUrl
+        - PaymenowRequestedProvidersIsNotAssigned
+        - PaymenowEmptyRequestedProviders
+        - PaymentManagerFeatureDisabled
+        - PaymentManagerFeatureDisabledForSubscriber
+        - PaymentSystemCurrentlyUnavailable
+        - CurrencyNotSupported
+        - PaymentSystemAccountNotFound
+        - FeatureIsOff
+        - EarlyPayFeatureWithoutPaymentManagetFeatureError
+        - FtpTestError
+        - AcceptTermsAndConditionsRequestInvalid
+        - PaymentSystemAccountError
+        - SendReportToFTP
+        - SchedulingError
+        - BadPaymentData
+        - InvoicesCanNotBeRepaid
+        - InvoicesCanNotBeRescheduled
+        - InvalidBillingAddress
+        - PaymentManagerGeneralSettingsNotFound
+        - PaymentManagerEInvoiceSettingsNotFound
+        - BadgeVerificationFailed
+        - BadgeTempPassEmpty
+        - BadgeScanRequired
+        - SolvedIssueSubmitFailed
+        - SolvedIssueInvalidLocationId
+        - SolvedIssueInvalidCategoryId
+        - SolvedIssueInvalidTradeId
+        - SolvedIssueInvalidPriorityId
+        - SolvedIssueInvalidSource
+        - SolvedIssueInvalidProblemCode
+        - SolvedIssueInvalidType
+        - SubmitFeedbackErrorWoStatus
+        - SubmitFeedbackInvalidAnswer
+        - SubmitFeedbackInvalidTrackingNumber
+        - SubmitFeedbackInvalidSubscriber
+        - SubmitFeedbackInvalidScore
+        - SubmitFeedbackUnsatisfactoryCommentRequired
+        - SubmitFeedbackInvalidReviewId
+        - SubmitFeedbackInvalidSetupId
+        - FeedbackSetupInvalidSetupId
+        - S3SaveError
+        - AbsSaveError
+        - GoodDataLoginFailed
+        - GoodDataElementUriError
+        - GoodDataReportResultUriError
+        - GoodDataReportResultEmpty
+        - GoodDataDesReportResCountError
+        - GoodDataDesReportResConvertError
+        - GoodDataDesDisplayFormAttributeEmpty
+        - InvalidProposalAmountLimit
+        - GetApprovalProposalReasonsError
+        - GetEmailRecipientsError
+        - GetAssignProposalReasonsError
+        - ProposalHasBeenVoided
+        - AssetTypeDuplicateNameError
+        - AssetTypeDoesntExistError
+        - AssetTypeFailUpdateRefrigerantPurpose
+        - AssetTypeDeleteFailed
+        - ExistingAssetsFoundForAssetType
+        - CantModifyAssetTypeParentId
+        - InvalidAssetTypeName
+        - AssetTypeInheritanceError
+        - ExistingProposalsFoundForAssetType
+        - InstallPurchaseDateOverflow
+        - WOexistsWithSomeAssets
+        - PartsChangeFailed
+        - PartsReasonCodeError
+        - PartsUseDateError
+        - PartsRefrigerantAlreadyExists
+        - PartsChargeHistoryAlreadyExists
+        - PartsNotFound
+        - BulkPartUseIncorrectWorkOrder
+        - BulkPartsByIdsNotFound
+        - BulkPartsMultipleWosError
+        - BulkPartsIncorrectIsRefrigerantParam
+        - BulkPartsIsRefrigerantCanNotbeChanged
+        - BulkPartsReasonCodeChangeError
+        - BulkPartsInvalidAssetAndReasonCodeParams
+        - BulkPartsInvalidAssetId
+        - BulkPartsInvalidInitialChargeCode
+        - BulkPartsAssetDoesntContainCharge
+        - BulkPartsIsInventoryFlagError
+        - BulkPartsLeakAlreadyInProcessError
+        - BulkPartsInvalidDateRangeError
+        - BulkPartsMoeNumberRequiredError
+        - BulkPartsSystemChargeExceeded
+        - BulkRefrigerantuUageBlocked
+        - BulkIDsNotBeNull
+        - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+        - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+        - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+        - BulkInitialChargeSystemExpansionNotAllowed
+        - BulkInventoryPartIdCanNotBeChanged
+        - BulkInventoryLocationIdCanNotBeChanged
+        - BulkPartsDuplicatedRequest
+        - BulkChangePartsIncorrectRefrigerantType
+        - BulkPartsRetroRetireIsInProgressOnThisDate
+        - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+        - RetrofitRetireCanNotBeRemoved
+        - RetroRetirePartsCantbeChanged
+        - BulkPartsInventoryApiFailed
+        - BulkPartsDuplicated
+        - BulkPartsWorkOrderInProcessing
+        - BadNotificationSubscriptionEventType
+        - RefrigerantUseDateOutOfTheLeakProcessDateRange
+        - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+        - BulkExternalWoCurrentlyDoesntExists
+        - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+        - BulkConnectorOnlyClientAssetsCouldBeProcessed
+        - LeakRecordHasWrongDateValue
+        - HasUncompliedLeakRecordInAnoutherWO
+        - HasUncompletedWOOnAnotherLeakRecord
+        - OnlyOneAssetWorkOrderPair
+        - OneLeakRecordMustBeOnCompletedWO
+        - LeakRecordNotFound
+        - AssetIDWoIdIsRequired
+        - BulkPartsReasonCodeRetrofit
+        - RetrofitRetireWasCancelledNoLeak
+        - FailedToUpdateLeakEvent
+        - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+        - LeakPartUseOnZeroChargeNotAllowed
+        - BulkLeakRecordsAndAuditRequest
+        - LeakRecordsDuplicateRequestDetected
+        - AllLeakRecordFieldsAreRequired
+        - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+        - MlpImportLevelError
+        - UpdateMlpUserLevelError
+        - InvalidHolidayName
+        - DuplicateHolidayName
+        - HolidaysDeleteFailed
+        - HolidaysExcludeInsertFailed
+        - HolidaysUpdateFailed
+        - HolidaysInsertFailed
+        - HolidaysExcludeDeleteFailed
+        - BusinessHoursDeleteFailed
+        - BusinessHoursUpdateFailed
+        - BusinessHoursInsertFailed
+        - InvalidTime
+        - HolidayForDeleteNotFound
+        - InvalidChecklistId
+        - ChecklistNotPopulated
+        - ChecklistNotAssignedForTransfersWO
+        - NoLinkBetweenSubscriberAndProvider
+        - WorkforceCreateContractorError
+        - InvalidCertificateId
+        - MaxThresholdExceeded
+        - MaxTriggerRateExceeded
+        - LeakPriorityIsRequired
+        - MissingRTSettings
+        - ResolutionCodesLimitExceeded
+        - ResolutionCodesAreRequired
+        - RootCauseIsRequired
+        - RootCauseTextIsRequired
+        - NoAccessToSetRootCauseText
+        - RootCauseTextMaxLengthExceeded
+        - ResolutionCodeTextIsRequired
+        - NoAccessToSetResolutionCodeText
+        - ResolutionCodeTextMaxLengthExceeded
+        - ResolutionCodeTextMustBeUnique
+        - ResolutionCodeWithoutFreeTextMustBeUnique
+        - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+        - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+        - AssetCategoriesLimitExceeded
+        - NoAccessToAssetCategories
+        - AssetCategoriesAreRequired
+        - InvalidAssetCategoryId
+        - NoAssetCategoriesOnWorkOrder
+        - RootCausesMustBeForAllWorkOrderAssetCategories
+        - RootCauseTextMustBeUnique
+        - AssetCategoryIsRequired
+        - MultipleRootCausesMethodMustBeUsed
+        - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+        - AssetFilterLocationsLimitExceeded
+        - UnknownStoreId
+        - UsesRefrigerantAttributeNotChanged
+        - AssetTagDuplicate
+        - AssetTagIdDuplicate
+        - UnknownEquipmentType
+        - ParentIdInOtherLocation
+        - UnknownBrandName
+        - CARBRequiredManufacturedDate
+        - CARBRequiredInstallDate
+        - TradeNotFound
+        - AssetDoesntExist
+        - AssetIsNotRefrigerant
+        - AssetCantContainRefrigerant
+        - OnlyRackAssetsContainingCircuits
+        - ConnectorAssetTagIdCanNotBeChanged
+        - ConnectorAssetLocationIdCanNotBeChanged
+        - AssetTagCantBeUpdated
+        - AssetTypeIsNotСonfiguredToManageRTAssets
+        - RefrigerantTrackingNotAvailableForLocation
+        - UsesRefrigerantRequiredByAssetTypeSettings
+        - AssetLocationTradeDoesntCorrespondToWO
+        - AssetLocationSelectedPMmodule
+        - UpdateAssetRepairStatusValidation
+        - HasCircuitsCantBeChange
+        - HasComponentsCantBeChange
+        - CircuitCanNotBeConnectedToCircuit
+        - RTCircuitCanNotBeConnectedToNonRTAsset
+        - RTComponentCanNotBeConnectedToNonRTAsset
+        - ComponentCanNotBeConnectedToComponent
+        - NonRTComponentCanNotBeConnectedToRtAsset
+        - NonRTCircuitCanNotBeConnectedToRtAsset
+        - ComponentCanNotBeConnectedToCircuit
+        - ParentAssetShouldHaveEitherComponentsNorCircuits
+        - ParentAssetCantHaveComponents
+        - ParentAssetCantHaveCircuits
+        - MultipleAssetsFoundForTheRequestedTagId
+        - InvalidBrandName
+        - UnknownBrandId
+        - BrandRestrictedByAssetType
+        - BrandRestrictedBySubscriber
+        - BrandsRestrictedBySubscriber
+        - DeclineWorkOrderFailed
+        - AcceptWorkOrderFailed
+        - WorkOrderWasAccepted
+        - AssetAttachmentsSizeExceeded
+        - SaveMliAuditReportSetting
+        - GetMliAuditReportSetting
+        - SaveMliAuditReportResult
+        - SaveMliAuditReportSendEmailStatus
+        - SaveMliAuditReportFilePath
+        - GetSubscribersEnabledSchedule
+        - SaveMliAuditInfoError
+        - TaxValidationAddNewCompanySettingsError
+        - TaxValidationUpdateCompanySettingsError
+        - ProjectAssociationError
+        - GetProjectsInvoiceAmountsError
+        - TaxCodeNotUniqueError
+        - FieldLengthIsTooLongError
+        - SetTaxCodesBulkError
+        - InvoiceAdditionalApprovalCodeValueError
+        - BulkUpdateInvoicePaymentError
+        - InvoiceLineItemFilterDisabled
+        - InvoiceStatusToRejectProviderNotificationFailed
+        - SortFieldNotAvailableError
+        - ContractServiceExist
+        - ContractServiceCantChangeTrade
+        - ContractServiceCantChangeCategory
+        - ContractServiceCantChangeProvider
+        - ContractServicePMServiceCantChangeTrade
+        - ContractServicePMServiceCantChangeCategory
+        - ContractedServiceNameAlreadyExists
+        - ContractedServiceNameLinkedToRates
+        - WorkRequestDescriptionIsRequired
+        - WorkRequestCallDateIsRequired
+        - WorkRequestIssueIsRequired
+        - WorkRequestCallDateHasWrongFormat
+        - WorkRequestScheduledDateHasWrongFormat
+        - InvalidWorkRequestStatus
+        - InvalidWorkRequestExtendedStatus
+        - InvalidWorkRequestCategory
+        - InvalidWorkRequestPriority
+        - InvalidWorkRequestCurrency
+        - InvalidWorkRequestIssueSetup
+        - InvalidWorkRequestIssueArea
+        - InvalidWorkRequestAsset
+        - WorkRequestAttachmentFileNameIsRequired
+        - WorkRequestAttachmentOriginalNameIsRequired
+        - WorkRequestIssueProblemCodeIsRequired
+        - WorkRequestIssueProblemTypeIsRequired
+        - WorkRequestScheduledDateMustBeGreaterThanCallDate
+        - InvalidWorkRequestId
+        - WorkRequestSearchCallDateFromHasWrongFormat
+        - WorkRequestSearchCallDateToHasWrongFormat
+        - WorkRequestSearchScheduledDateFromHasWrongFormat
+        - WorkRequestSearchScheduledDateToHasWrongFormat
+        - WorkRequestSearchClosedDateFromHasWrongFormat
+        - WorkRequestSearchClosedDateToHasWrongFormat
+        - WorkOrderIsAlreadyCreatedForWorkRequest
+        - WorkRequestIsClosed
+        - WorkRequestClosedReasonIsRequiredForClosedStatus
+        - WorkOrderIdIsRequiredForThisClosedReason
+        - InvalidWorkRequestClosedReason
+        - WorkRequestClosedReasonIsOnlyForClosedStatus
+        - InvalidWorkRequestWorkOrderId
+        - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+        - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+        - InvalidWorkOrderSourceType
+        - DeclineReasonIdIsRequired
+        - DeclineReasonDoesntAllowCustomText
+        - InvalidDeclineReasonId
+        - MultipleWorkOrdersForPurchaseNumber
+        - InvoiceMaterialMakupInvalid
+        - MaterialMarkUpDiscrepancyReasonShouldBeStated
+        - MaterialPriceDiscrepancyReasonShouldBeStated
+        - OtherPriceDiscrepancyReasonShouldBeStated
+        - SubscriberIdIsNotValid
+        - FiscalPeriodIsNotValid
+        - AmountIsNotValid
+        - AmountFormatIsNotValid
+        - CategoryMustBeEmpty
+        - CategoryIsNotValid
+        - TradeMustBeEmpty
+        - TradeIsNotValid
+        - GlCodeMustBeEmpty
+        - GlCodeIsNotValid
+        - LocationMustBeEmpty
+        - LocationIsNotValid
+        - RegionMustBeEmpty
+        - RegionIsNotValid
+        - DistrictMustBeEmpty
+        - DistrictIsNotValid
+        - DuplicateData
+        - PrimaryCategoryMustBeEmpty
+        - PrimaryCategoryIsNotValid
+        - CategoryAndExcludedCategoryCannotSimultaneously
+        - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+        - TradeAndExcludedTradeCannotSimultaneously
+        - GlCodeAndExcludedGlCodeCannotSimultaneously
+        - DuplicateCategories
+        - DuplicateTrades
+        - DuplicateGlCodes
+        - DuplicatePrimaryCategories
+        - LocationNoteMustBeEmpty
+        - LocationNoteIsNotValid
+        - OverlappingCategories
+        - OverlappingPrimaryCategories
+        - OverlappingTrades
+        - OverlappingPrimaryTrades
+        - OverlappingGlCodes
+        - OverlappingLocations
+        - OverlappingRegions
+        - OverlappingDistricts
+        - OverlappingLocationNotes
+        - TaxExemptionErrorApi
+        - OtherLineItemZeroAmount
+        - TravelLineItemsNotNegativeValueRequired
+        - MaterialLineItemsNotNegativeValueRequired
+        - LaborLineItemsNotNegativeValueRequired
+        - AdditionalApprovalCodeSetupIdInvalid
+        - VendorIdIsNotValid
+        - InvalidBatchId
+        - InvalidBatchStatusId
+        - CategoryInUsePMServiceError
+        - CategoryInUseChecklistError
+        - CategoryInUseETAMissedAlertError
+        - CategoryInUseBudgetControl
+        - CategoryInUseConnector
+        - CategoryInUseContractedService
+        - CategoryInUseEDI
+        - CategoryInUseIVR
+        - CategoryInUseFeedbackV2
+        - CategoryInUseProposalApproveReasons
+        - CategoryInUsePaymentManager
+        - CategoryInUseProviderAssignments
+        - CategoryInUseSiteAccess
+        - CategoryInUseAlerts
+        - CategoryInUseOpenWOAlert
+        - CategoryInUseWOAutocopy
+        - CategoryInUseWorkRequest
+        - CategoryInUseWO
+        - CategoryInUseDashboardOverride
+        - CategoryInUseInvoiceAttributes
+        - FeatureIsOn
+        - LocationHierarchyNotFound
+        - LocationHierarchyLevelNotFound
+        - LocationHierarchyParentLevelNotFound
+        - LocationSpaceTypeNotFound
+        - DuplicateRowByValueKey
+        - ParentNotFound
+        - DuplicateSequenceAmongSiblings
+        - SequenceConflictsWithExistingData
+        - SequenceMustBeGreaterThanZero
+        - ValueContainsPathDelimiter
+        - InitializationWarmupError
+        type: string
+        readOnly: true
+      ErrorMessage:
+        description: The description of all errors.
+        type: string
+      Data:
+        $ref: '#/definitions/System.Object'
+        description: "Optional\r\n            Gets or Sets the Data object."
+  ServiceChannel.Services.Messaging.Attachments.Attachment:
+    description: Object containing information about an attachment.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the attachment.
+        type: integer
+      Description:
+        description: Optional text that a user added when uploading the attachment. The maximum character count is 200.
+        type: string
+      Name:
+        description: Attachment name.
+        type: string
+      TimeStamp:
+        format: date-time
+        description: Date and time when the attachment was uploaded. The format is `YYYY-MM-DDThh:mm:ss.sss±hh:mm`, where `±hh:mm` represents the time zone offset from UTC.
+        type: string
+      Uri:
+        description: Link address to the attachment in the ServiceChannel system.
+        type: string
+      NoteId:
+        format: int64
+        description: Unique numeric identifier of the note to which a user added the attachment.
+        type: integer
+      Visibility:
+        format: int32
+        description: "Visibility status of the attachment. Defines which parties can view the attachment. The *PrivateProviderNotesAndAttachments* feature should be enabled. For subscribers who are using Universal Connector, the *PrivateClientNotesAndAttachments* feature should be enabled.\r\n            <br />Possible values:\r\n             • `0`: No restrictions on visibility. Visible to everyone.\r\n             • `1`: Not visible to the client. The subscriber deselected the “Visible to Client” checkmark when uploading an attachment or adding a note with an attachment. \r\n             • `2`: Not visible to the provider. The subscriber deselected the “Visible to Provider” checkmark when uploading an attachment or adding a note with an attachment. \r\n             • `3`: Visible to the subscriber only. The subscriber deselected the “Visible to Client” and “Visible to Provider” checkmarks when uploading an attachment or adding a note with an attachment."
+        type: integer
+      IsInvoiceDigitalCopy:
+        description: "Defines if the attachment is a digital copy of the provider’s invoice. According to subscriber configurations, some providers should attach digital copies of invoices.\r\n            Possible values: \r\n             • `true`: The attachment is an invoice digital copy. \r\n             • `false`: The attachment is not an invoice digital copy. \r\n            <br />***Note:*** Subscribers can set the requirement of a digital invoice copy from providers when the *InvoiceRequireDigitalCopy* feature is turned on."
+        default: false
+        type: boolean
+      UploadBy:
+        description: User who uploaded the attachment.
+        type: string
+  ServiceChannel.Services.Messaging.Attachments.RemoveRetrofitRetireDocRequest:
+    type: object
+    properties:
+      AttachmentId:
+        format: int32
+        type: integer
+  ServiceChannel.Services.Messaging.RefrigerantTracking.RetrofitRetireDoc:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      PlanId:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      Path:
+        type: string
+      Description:
+        type: string
+      CreatedDate:
+        format: date-time
+        type: string
+      UploadedBy:
+        type: string
+  ServiceChannel.Services.Messaging.Attachments.RemoveRetrofitRetireDocsRequest:
+    type: object
+    properties:
+      Attachments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.RemoveRetrofitRetireDocRequest'
+  System.Net.Http.ByteArrayContent:
+    type: object
+    properties:
+      Headers:
+        type: array
+        items:
+          $ref: '#/definitions/System.Collections.Generic.KeyValuePair[System.String,System.Collections.Generic.IEnumerable[System.String]]'
+        readOnly: true
+  ServiceChannel.Services.Messaging.Attachments.UploadRetrofitRetireAttachmentsRequest:
+    type: object
+    properties:
+      Attachments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.UploadRetrofitRetireAttachmentRequest'
+  ServiceChannel.Services.Messaging.RefrigerantTracking.AddRetrofitRetirePlanDocsRequest:
+    type: object
+    properties:
+      PlanId:
+        format: int32
+        type: integer
+      Description:
+        type: string
+      UploadedFileLinks:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Attachments.UploadRetrofitRetireAttachmentResponse'
+  ServiceChannel.Services.WebApi.Models.Response.Attachments.DeleteWorkOrderAttachmentResponse:
+    type: object
+    properties:
+      WorkOrderId:
+        format: int32
+        description: Unique numeric identifier of the work order the attachment was removed from.
+        type: integer
+  ServiceChannel.Api.Model.SiteAudit.AttachmentInComment:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Url:
+        type: string
+      UrlResized:
+        type: string
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Services.WebApi.Models.AssetAttachmentsRequest:
+    type: object
+    properties:
+      AssetIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

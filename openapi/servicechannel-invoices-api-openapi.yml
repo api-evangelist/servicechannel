@@ -1,0 +1,4944 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours Invoices API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: Invoices
+paths:
+  /invoices/{subscriberId}/InvoiceRequirements:
+    get:
+      tags:
+      - Invoices
+      summary: Retrieve general invoice settings for a subscriber
+      description: "Returns general invoice settings for the specified subscriber.\r\n            <br />Both subscribers and providers can use this method.\r\n             • **Subscribers** should enter their subscriber ID.\r\n             • **Providers** need to pass the ID of the subscriber they have a contract with.\r\n            <br />Subscriber users with the *Super Admin* secondary role set up general invoice parameters in **Admin** &gt; **Invoices** &gt; **General**, where they configure when invoices can be created, if providers should enter a resolution before submitting invoices, and whether any restrictions should apply to invoice numbers. Other parameters may be available if the corresponding features are turned on for the subscriber. Learn more about [configuring general invoice settings](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/557220138/General+Invoice+Configuration) in ServiceChannel University."
+      operationId: GETv3_invoices_{subscriberId}_InvoiceRequirements
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: subscriberId
+        in: path
+        description: Unique numeric identifier of the subscriber to return general invoice settings for.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: General invoice settings for the specified subscriber are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceSettingsGeneral'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 - The provider has no contract with the requested subscriber\r\n            503 - No access. Please check if the SubscriberId is valid"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /invoices/{subscriberId}/OtherChargeOptions/{category}:
+    get:
+      tags:
+      - Invoices
+      summary: Retrieve invoice other descriptions for selected category and subscriber
+      description: "Returns invoice other descriptions for the specified subscriber and category.\r\n            <br />Both subscribers and providers can use this method.\r\n             • **Subscribers** should enter their subscriber ID.\r\n             • **Providers** need to pass the ID of the subscriber they have a contract with."
+      operationId: GETv3_invoices_{subscriberId}_OtherChargeOptions_{category}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: subscriberId
+        in: path
+        description: Unique numeric identifier of the subscriber
+        required: true
+        type: integer
+        format: int32
+      - name: category
+        in: path
+        description: Category name
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Invoice other descriptions for the specified subscriber and the category are in the response.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 - The provider has no contract with the requested subscriber\r\n            503 - Invalid category name\r\n            503 - No access. Please check if the SubscriberId is valid"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /invoices/{subscriberId}/InvoiceRejectionReasons:
+    get:
+      tags:
+      - Invoices
+      summary: Retrieve invoice rejection reasons for a subscriber
+      description: "Returns invoice rejection reasons for a subscriber\r\n            <br />Both subscribers and providers can use this method.\r\n             • **Subscribers** should enter their subscriber ID.\r\n             • **Providers** need to pass the ID of the subscriber they have a contract with."
+      operationId: GETv3_invoices_{subscriberId}_InvoiceRejectionReasons
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: subscriberId
+        in: path
+        description: Unique numeric identifier of the subscriber to return invoice rejection reasons for.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Invoice rejection reasons for the specified subscriber are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceRejectionReasonResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 - The provider has no contract with the requested subscriber\r\n            503 - No access. Please check if the SubscriberId is valid"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /invoices/{invoiceId}/reject:
+    put:
+      tags:
+      - Invoices
+      summary: Allows reject non-MLI(Multilevel Invoice Approval) invoice
+      description: <para>Allows reject non-MLI(Multilevel Invoice Approval) invoice</para>
+      operationId: PUTv3_invoices_{invoiceId}_reject?comments={comments}&isNotifyProvider={isNotifyProvider}&additionalEmails={additionalEmails}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: invoiceId
+        in: path
+        description: Invoice Identifier
+        required: true
+        type: integer
+        format: int32
+      - name: comments
+        in: query
+        description: Comments
+        required: true
+        type: string
+      - name: isNotifyProvider
+        in: query
+        description: Request to notify provider
+        required: false
+        type: boolean
+        default: false
+      - name: additionalEmails
+        in: query
+        description: Additional Emails
+        required: false
+        type: string
+      responses:
+        '204':
+          description: Indicates that the request succeeded
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 502 - Wrong Invoice Id \r\n            <br/> 503 - MLI(Multilevel Invoice Approval) enabled"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '409':
+          description: "Indicates that the request could not carry out notification due to internal error or invalid argument.\r\n            <br/>Error codes:\r\n            <br/> 6018 - Email was not sent"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /invoices/{invoiceId}/onhold:
+    put:
+      tags:
+      - Invoices
+      summary: Allows put invoice on hold for non-MLI(Multilevel Invoice Approval) invoice
+      description: <para>Allows put invoice on hold for non-MLI(Multilevel Invoice Approval) invoice</para>
+      operationId: PUTv3_invoices_{invoiceId}_onhold?comments={comments}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: invoiceId
+        in: path
+        description: Invoice Identifier
+        required: true
+        type: integer
+        format: int32
+      - name: comments
+        in: query
+        description: Comments
+        required: true
+        type: string
+      responses:
+        '204':
+          description: Indicates that the request succeeded
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 502 - Wrong Invoice Id \r\n            <br/> 503 - MLI(Multilevel Invoice Approval) enabled"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /invoices/{invoiceId}/approve:
+    put:
+      tags:
+      - Invoices
+      summary: Allows approve non-MLI(Multilevel Invoice Approval) invoice
+      description: <para>Allows approve non-MLI(Multilevel Invoice Approval) invoice</para>
+      operationId: PUTv3_invoices_{invoiceId}_approve?approvalCode={approvalCode}&comments={comments}&category={category}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: invoiceId
+        in: path
+        description: Invoice Identifier
+        required: true
+        type: integer
+        format: int32
+      - name: approvalCode
+        in: query
+        description: Approval Code
+        required: true
+        type: string
+      - name: comments
+        in: query
+        description: Comments
+        required: true
+        type: string
+      - name: category
+        in: query
+        description: Category
+        required: true
+        type: string
+      responses:
+        '204':
+          description: Indicates that the request succeeded
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 502 - Wrong Invoice Id\r\n            <br/> 503 - MLI(Multilevel Invoice Approval) enabled"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: Indicates that the requested resource requires authentication.<br>Error codes:<br> 504 - API call rejected by security permissions;
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /invoices/statistics:
+    get:
+      tags:
+      - Invoices
+      summary: Retrieve statistics of all invoices
+      description: "Retrieves statistics of all invoices. Returns the statistics of all invoices for successful request.\r\n            <br /><br />Only for providers usage."
+      operationId: GETv3_invoices_statistics?daysPeriod={daysPeriod}&approvedInThePastDaysPeriod={approvedInThePastDaysPeriod}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: daysPeriod
+        in: query
+        description: Period in days, last X days for which Invoices statistics was collected (30 by Default).
+        required: false
+        type: integer
+        format: int32
+      - name: approvedInThePastDaysPeriod
+        in: query
+        description: Period in days, last X days during which Invoices are approved (3 by Default).
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceStatisticsResponse'
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 503 - Only for providers usage;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /invoices:
+    post:
+      tags:
+      - Invoices
+      summary: Add an invoice to a work order
+      description: "Creates an invoice in the *Open* status for the specified work order.\r\n            <br />Find out more about [creating an invoice](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/2205811424/Creating+an+Invoice) in ServiceChannel University."
+      operationId: POSTv3_invoices
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: "Request model to create an invoice for the specified work order.\r\n            <br />**Required parameters**:\r\n             • **InvoiceNumber**. Invoice number created by a user.\r\n             • **WoIdentifier**. Unique work order identifier (can be *TrackingNumber* or *WorkOrderNumber* for Contractor and *TrackingNumber* or *PurchaseNumber* for Client).\r\n            <br />If there is no need to specify any details in *Labors*, *Materials*, *Travels*, and *Others* objects, you can send the request without them. \r\n            <br />**Note**: Work Order should be in the *Completed* status to successfully create an invoice."
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Invoices.CreateInvoiceRequest'
+      responses:
+        '201':
+          description: The ID of the created invoice is in the response.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 - Request should not be null\r\n            601 - Location not found\r\n            607 - Empty Location State\r\n            904 - Invalid WO Status. WO must be in 'COMPLETED' status with empty extended status or 'COMPLETED' status with 'CONFIRMED' extended status\r\n            914 - Invalid 'Currency' value\r\n            917 - Invalid Tracking Number\r\n            1100 - Invalid Other Amount Description\r\n            1101 - Invalid Tax2 name\r\n            1103 - Invalid Total\r\n            1104 - Invoice Total > NTE\r\n            1105 - Invoice exists\r\n            1106 - Invoice Creation Error\r\n            1107 - Duplicate Invoice number\r\n            1108 - Total is null\r\n            1109 - Completed Date is null\r\n            1110 - Invoice Date < Completed Date\r\n            1111 - This invoice is set to auto-invoice\r\n            1112 - Electronic Signature Agreement Required\r\n            1113 - Work order not found\r\n            1114 - Wrong Work Order currency\r\n            1115 - Work order currency not found\r\n            1116 - Invoicing is disabled. Invoicing might be disabled if your company account is currently in an inactive state in Fixxbook\r\n            1117 - Invoice creation Unexpected Result\r\n            1119 - Invoice labor amount is not equals summary labor items \r\n            1120 - Invoice material amount is not equals summary material items amounts\r\n            1121 - Invoice Date is older than X day(s) from today\r\n            1122 - Invoice Date is greater than X day(s) from today\r\n            1123 - Invoice material description length overflow\r\n            1124 - Invoice material part number length overflow\r\n            1125 - Tax validation error: X\r\n            1126 - Sales Tax should be 0 - X location\r\n            1127 - Invalid Invoice Number\r\n            1135 - Locations can't have GST tax\r\n            1136 - Locations can't have tax2. Only invoices for Canadian Locations can have the Tax2Details array. Tax2Details is only applicable for invoices of locations in countries that have some form of a value-added tax\r\n            1145 - You have an outstanding balance with ServiceChannel. In order to invoice, please login to Fixxbook.com and update your Payment Method. Once your payment Method is updated you will be able to invoice\r\n            1146 - Invoice doesn't have Taxes Breakdown\r\n            1147 - Invoice Taxes Breakdown has incorrect sum\r\n            1151 - Labor Line Items Required\r\n            1152 - Material Line Items Required\r\n            1159 - Invoice material unit type is invalid (should be from 1 to 7)\r\n            1163 - Resolution text required in Invoice Text field\r\n            1180 - Invoice Number is not correct\r\n            1193 - Negative amounts in Other Line Items not allowed\r\n            1194 - Invoice labor skill level is invalid (should be from 1 to 3)\r\n            1195 - Invoice labor type is invalid (should be from 1 to 3)\r\n            1196 - Invoice technician quantity is invalid (should be > 0)\r\n            1198 - The explanation of Dispute status is empty\r\n            11260 - Tax not supported for this client. For exceptions use ServiceChannel website\r\n            11931 - Negative amounts in Travel Line Items not allowed\r\n            11932 - Negative amounts in Material Line Items not allowed\r\n            11933 - Negative amounts in Labor Line Items not allowed\r\n            11992 - Vendor Id is not valid"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /invoices/{invoiceId}:
+    get:
+      tags:
+      - Invoices
+      summary: Get an invoice
+      description: Returns the details of the specified invoice.
+      operationId: GETv3_invoices_{invoiceId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: invoiceId
+        in: path
+        description: Numeric identifier of the invoice to get the details for.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The specified invoice is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.ApiGetInvoiceResponse'
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: The requested resource does not exist on the server.
+      deprecated: false
+      x-access: Any
+  /invoices/{invoiceId}/discrepancy:
+    get:
+      tags:
+      - Invoices
+      summary: Get rates discrepancy
+      description: Retrieves Invoice rates discrepancy information. Returns the labor list with rates discrepancy for the specified invoice.
+      operationId: GETv3_invoices_{invoiceId}_discrepancy
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: invoiceId
+        in: path
+        description: Invoice identifier.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.RateDiscrepancy'
+        '400':
+          description: Bad Request - the request could not be understood or was missing required parameters.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.RateDiscrepancy'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: Indicates that the requested resource does not exist on the server.
+      deprecated: false
+      x-access: Any
+  /invoices/{invoiceId}/discrepancyExtended:
+    get:
+      tags:
+      - Invoices
+      summary: Get rates discrepancy
+      description: Retrieves Invoice rates discrepancy information. Returns the labor list with rates discrepancy for the specified invoice.
+      operationId: GETv3_invoices_{invoiceId}_discrepancyExtended
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: invoiceId
+        in: path
+        description: Invoice identifier.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceDiscrepancy'
+        '400':
+          description: Bad Request - the request could not be understood or was missing required parameters.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceDiscrepancy'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: Indicates that the requested resource does not exist on the server.
+      deprecated: false
+      x-access: Any
+  /invoices/{invoiceId}/Payment:
+    post:
+      tags:
+      - Invoices
+      summary: Add a payment to an invoice
+      description: "Creates a payment record for the specified invoice in the *Approved* status.\r\n            <br />Send this request [GET/odata/invoices](/swagger/ui/index?version=3#/Invoices/Invoices_GetInvoices) to get the invoice ID.\r\n            <br />Learn [how subscribers can mark invoices as paid](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/621936646/Marking+Invoices+as+Paid) in ServiceChannel University.\r\n            <br />**Example Request**\r\n            \r\n                POST /invoices/{invoiceId}/Payment\r\n                {\r\n                 \"PaymentDate\": \"2021-06-10T07:40:47.881Z\",\r\n                 \"PaymentNumber\": \"25469833\",\r\n                 \"PaymentAmount\": 850\r\n                }"
+      operationId: POSTv3_invoices_{invoiceId}_Payment
+      consumes:
+      - application/json
+      - text/json
+      produces: []
+      parameters:
+      - name: invoiceId
+        in: path
+        description: Unique numeric identifier of the invoice to add a payment to.
+        required: true
+        type: integer
+        format: int32
+      - name: payment
+        in: body
+        description: Request to add a payment to the specified invoice.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoicePaymentRequest'
+      responses:
+        '204':
+          description: 'A payment record is added to the specified invoice. '
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/> Error codes:\r\n            503 - Request is invalid\r\n            1178 - Invoice cannot be paid before invoice dates\r\n            1178 - Invoice has already  paid\r\n            1178 - Only approved invoices may pay\r\n            1178 - Payment amount exceeds the actual amount\r\n            1178 - Payment amount should be more than zero\r\n            1178 - Pay not allowed for this subscriber"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/> Error codes:\r\n            504 - API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/> Error codes:\r\n            100 - User has no rights to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /invoices/Payments:
+    post:
+      tags:
+      - Invoices
+      summary: Add payment records to invoices
+      description: "Creates payment records for the invoices in the *Approved* status in bulk.\r\n             <br />**Note**: This method is available to users with the *Invoice Admin* role and with the *InvoiceChangeToPaid* feature flag enabled.\r\n             <br />**Example Request**\r\n             \r\n                 POST /invoices/Payments\r\n                 {\r\n                   \"Payments\": [\r\n                     {\r\n                       \"InvoiceId\": 96814318,\r\n                       \"PaymentDate\": \"2021-12-13T06:12:22.820Z\",\r\n                       \"PaymentNumber\": \"456858\",\r\n                       \"PaymentAmount\": 756\r\n                     },\r\n                     {\r\n                       \"InvoiceId\": 4988659,\r\n                       \"PaymentDate\": \"2021-12-13T06:12:22.820Z\",\r\n                       \"PaymentNumber\": \"97027818\",\r\n                       \"PaymentAmount\": 1250.55\r\n                     }  \r\n                   ]\r\n                 }"
+      operationId: POSTv3_invoices_Payments
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: Request model to add payment records in bulk.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoicePaymentBulkRequest'
+      responses:
+        '201':
+          description: "The payments are successfully added.\r\n            <br/>Error codes:\r\n            503 - Request is invalid\r\n            1178 - Invoice cannot be paid before the invoice creation date\r\n            1178 - Invoice has already been paid\r\n            1178 - No invoice ID\r\n            1178 - Only approved invoices may be paid\r\n            1178 - Payment amount exceeds the actual invoice amount\r\n            1178 - Payment amount should be more than zero\r\n            1178 - Payment is not allowed for this subscriber\r\n            1178 - Payment number cannot exceed 100 characters"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoicePaymentBulkResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 - Request is empty or null"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/>Error codes:\r\n            100 - User has no permissions to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Error updating invoices payments in bulk mode"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /invoices/Workorders/{trackingNumber}/Payment:
+    post:
+      tags:
+      - Invoices
+      summary: Add a payment record to an invoice by a tracking number
+      description: "Creates a payment record for the invoice in the *Approved* status by specifying the tracking number of the work order the invoice was created for.\r\n            <br />Learn [how subscribers can mark invoices as paid](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/621936646/Marking+Invoices+as+Paid) in ServiceChannel University."
+      operationId: POSTv3_invoices_Workorders_{trackingNumber}_Payment
+      consumes:
+      - application/json
+      - text/json
+      produces: []
+      parameters:
+      - name: trackingNumber
+        in: path
+        description: Tracking number of the work order you want to add the invoice payment record for.
+        required: true
+        type: integer
+        format: int32
+      - name: payment
+        in: body
+        description: Invoice payment record request model.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoicePaymentRequest'
+      responses:
+        '204':
+          description: 'The payment record is added to a particular invoice created for the specified work order. '
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/> Error codes:\r\n            503 - Request is invalid\r\n            1178 - Invoice cannot be paid before invoice dates\r\n            1178 - Invoice has already  paid\r\n            1178 - Only approved invoices may pay\r\n            1178 - Payment amount exceeds the actual amount\r\n            1178 - Payment amount should be more than zero\r\n            1178 - Pay not allowed for this subscriber\r\n            2602 - Invalid WO Tracking Number"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/> Error codes:\r\n            504 - API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/> Error codes:\r\n            100 - User has no rights to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /invoices/GetProjectsInvoicesIgnoreAccessRights:
+    post:
+      tags:
+      - Invoices
+      summary: Get Projects Invoices
+      description: Retrieve All Invoices for Projects Cost Info Ignoring User Access Rights
+      operationId: POSTv3_invoices_GetProjectsInvoicesIgnoreAccessRights
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.ProjectsInvoicesIgnoreAccessRightsRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.ProjectsInvoices'
+      deprecated: false
+      x-access: Any
+  /invoices/ping/{serviceName}:
+    get:
+      tags:
+      - Invoices
+      summary: Checks state of a service for invoice.
+      description: 'The method allow check some service for invoice for availability state.<br />Responses: ''Success'' or ''Fail''.'
+      operationId: GETv3_invoices_ping_{serviceName}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: serviceName
+        in: path
+        description: 'Service Name identifier: The value of parameter is ''TWUtilityManager'' or ''TWCalculationManager''  in currently.'
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Indicates that the request succeeded. Specified service is available.
+          schema:
+            $ref: '#/definitions/System.Object'
+        '400':
+          description: Indicates that the request failed. Action parameter is mismatched or missed.
+          schema:
+            $ref: '#/definitions/System.Object'
+        '401':
+          description: An unauthorized request.
+        '503':
+          description: Indicates that the request failed. Specified service is unavailable.
+      deprecated: false
+      x-access: Any
+  /invoices/{invoiceId}/GlCode:
+    patch:
+      tags:
+      - Invoices
+      summary: Update GlCode
+      operationId: PATCHv3_invoices_{invoiceId}_GlCode
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: invoiceId
+        in: path
+        description: Invoice Id
+        required: true
+        type: integer
+        format: int32
+      - name: request
+        in: body
+        description: ''
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.Api.SingleUpdateGlCodeRequest'
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+        '400':
+          description: Bad Request - the request could not be understood or was missing required parameters.
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /odata/invoices:
+    get:
+      tags:
+      - Invoices
+      summary: Retrieve Invoices
+      description: Returns a list of invoices posted within the last 90 days if not specified otherwise in `$filter`. The maximum date range between the invoice `PostedDate` and the current date is 365 days.
+      operationId: Invoices_GetInvoices
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: The requested invoices are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.OData.ODataInvoice'
+      deprecated: false
+      x-access: Subscribers
+definitions:
+  ServiceChannel.Services.Messaging.Invoices.InvoiceTaxesDetails:
+    description: Object containing the list of taxes. You can add taxes as a fixed amount or as a percentage.
+    type: object
+    properties:
+      LaborTaxPercent:
+        format: double
+        description: Amount of the labor tax in percentage (for countries other than USA and Canada).
+        type: number
+      MaterialTaxPercent:
+        format: double
+        description: Amount of the material tax in percentage (for countries other than USA and Canada).
+        type: number
+      TravelTaxPercent:
+        format: double
+        description: Amount of the travel tax in percentage (for countries other than USA and Canada).
+        type: number
+      FreightTaxPercent:
+        format: double
+        description: Amount of the freight tax in percentage (for countries other than USA and Canada).
+        type: number
+      OtherTaxPercent:
+        format: double
+        description: Amount of other taxes in percentage (for countries other than USA and Canada).
+        type: number
+      LaborTax:
+        format: double
+        description: Amount of the labor tax.
+        type: number
+      MaterialTax:
+        format: double
+        description: Amount of the material tax.
+        type: number
+      TravelTax:
+        format: double
+        description: Amount of the travel tax.
+        type: number
+      FreightTax:
+        format: double
+        description: Amount of the freight tax.
+        type: number
+      OtherTax:
+        format: double
+        description: Amount of other taxes.
+        type: number
+  ServiceChannel.Services.Messaging.Invoices.MaterialMarkupDiscrepancy:
+    type: object
+    properties:
+      LineItemId:
+        format: int32
+        type: integer
+      AppliedMarkupPercent:
+        format: double
+        type: number
+      AgreedMarkupPercent:
+        format: double
+        type: number
+      DiscrepancyReason:
+        type: string
+  ServiceChannel.Services.Messaging.Invoices.InvoiceLabor:
+    description: Information on labor. Add a separate object for each worker. When two or more workers have the same `SkillLevel`,`LaborType`, and `HourlyRate`, use one object and specify `NumOfTech`.
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      InvoiceId:
+        format: int32
+        description: Invoice identifier.
+        type: integer
+      SkillLevel:
+        format: byte
+        description: 'The skill level of a worker. Valid values: `1` - Supervisor, `2` - Technician, `3` - Helper.'
+        type: string
+      LaborType:
+        format: byte
+        description: 'The type of the pay rate. Valid values: `1` - Regular, `2` - Overtime, `3` - Double time.'
+        type: string
+      NumOfTech:
+        format: byte
+        description: Number of workers.
+        type: string
+      HourlyRate:
+        format: double
+        description: Worker hourly rate.
+        type: number
+      Hours:
+        format: double
+        description: Total hours the worker spent to complete the work order.
+        type: number
+      Amount:
+        format: double
+        description: The amount of the labor charge. The sum of all `Amount` parameters in the `Labors` array must equal `InvoiceAmountsDetails.LaborAmount`.
+        type: number
+      IsOffShore:
+        description: Type of the shore (`1` - Onshore, `2` - Offshore).
+        default: false
+        type: boolean
+      ServiceType:
+        format: byte
+        description: Type of the service (`1` - Design Engineering, Architecture, Technical Service, `2` - Installation and Supervision, `3` - Survey and Troubleshooting).
+        type: string
+      CityPerformed:
+        description: City where services are performed.
+        type: string
+      RateDiscrepancyReason:
+        description: Rate discrepancy reason.
+        type: string
+      AgreedRate:
+        format: double
+        description: Agreed rate.
+        type: number
+      ApprovalCodeGroup:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+      IsRateDiscrepancy:
+        default: false
+        type: boolean
+        readOnly: true
+      isNontaxableVATEU:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Invoices.InvoiceRejectionReasonResponse:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      SubscriberId:
+        format: int32
+        type: integer
+      Description:
+        type: string
+      Retired:
+        default: false
+        type: boolean
+      ReasonType:
+        enum:
+        - Custom
+        - WorkOrderNotInvoiceable
+        - InvoiceRequiresCorrection
+        - Other
+        type: string
+  ServiceChannel.Services.Messaging.Invoices.OData.ODataInvoice:
+    type: object
+    properties:
+      Provider:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Providers.Provider'
+      Subscriber:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Subscribers.Subscriber'
+      Location:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.Location'
+      Id:
+        format: int32
+        type: integer
+      Number:
+        description: Gets or sets invoice number.
+        type: string
+      BatchNumber:
+        description: Gets or sets Batch number.
+        type: string
+      InvoiceTax:
+        format: double
+        type: number
+      PostedTaxRate:
+        format: float
+        type: number
+      PostedTax2Rate:
+        format: float
+        type: number
+      VendorPayeeId:
+        format: int32
+        type: integer
+      InvoiceTotal:
+        format: double
+        description: Gets or sets total with tax amounts.
+        type: number
+      InvoiceBalance:
+        format: double
+        type: number
+      Currency:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Currencies.Currency'
+      ApprovedDate:
+        format: date-time
+        type: string
+      ApprovalCode:
+        type: string
+      EditableAdditionalApprovalCode:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.ApprovalCodes.EditableAdditionalApprovalCode'
+      PostedDate:
+        format: date-time
+        type: string
+      PostedBy:
+        type: string
+      Subtotal:
+        format: double
+        type: number
+      Status:
+        type: string
+      Trade:
+        type: string
+      InvoiceAmountsDetails:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceAmountsDetails'
+      InvoiceTaxesDetails:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceTaxesDetails'
+      Tax2Details:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.Tax2Details'
+      Labors:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceLabor'
+      Materials:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceMaterial'
+      Travels:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceTravel'
+      Others:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceOther'
+      TaxApprovalCodeGroups:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+      Tax2ApprovalCodeGroups:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+      FreightApprovalCodeGroups:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+      WithMismatchedRates:
+        default: false
+        type: boolean
+      IsOutsourced:
+        default: false
+        type: boolean
+      StarredBy:
+        type: string
+      IsStarred:
+        default: false
+        type: boolean
+      IsTransferred:
+        default: false
+        type: boolean
+        readOnly: true
+      StarredDate:
+        format: date-time
+        type: string
+      Description:
+        type: string
+      InvoiceDate:
+        format: date-time
+        type: string
+      LaborTaxIncluded:
+        default: false
+        type: boolean
+      TravelTaxIncluded:
+        default: false
+        type: boolean
+      MaterialsTaxIncluded:
+        default: false
+        type: boolean
+      FreightTaxIncluded:
+        default: false
+        type: boolean
+      OtherTaxIncluded:
+        default: false
+        type: boolean
+      NonTaxableLabor:
+        format: int32
+        type: integer
+      NonTaxableTravel:
+        format: int32
+        type: integer
+      NonTaxableMaterial:
+        format: int32
+        type: integer
+      NonTaxableFreight:
+        format: int32
+        type: integer
+      NonTaxableOther:
+        format: int32
+        type: integer
+      IsExists:
+        default: false
+        type: boolean
+        readOnly: true
+      StatusChangeDate:
+        format: date-time
+        type: string
+      StatusChangeUser:
+        type: string
+      StatusChangeUserid:
+        type: string
+      IsDuplicate:
+        default: false
+        type: boolean
+      WoTrackingNumber:
+        format: int32
+        description: Gets or sets work order tracking number.
+        type: integer
+      Terms:
+        description: terms
+        type: string
+      Comments:
+        type: string
+      PaidDate:
+        format: date-time
+        type: string
+      TransferredDate:
+        format: date-time
+        type: string
+      LastActionDate:
+        format: date-time
+        type: string
+      UpdatedDate:
+        format: date-time
+        description: Updated Date
+        type: string
+      StatusHistoryShort:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.StatusHistoryShort'
+      WoAssignedTo:
+        description: Gets or sets WO Assignee
+        type: string
+      ApprovalCodes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCode'
+      IsChargesApprovalCodesDefault:
+        default: false
+        type: boolean
+      Payments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoicePaymentResponse'
+      StoredFeatures:
+        type: array
+        items:
+          type: string
+  ServiceChannel.Services.Messaging.Invoices.OtherPriceDiscrepancy:
+    description: OtherPriceDiscrepancies
+    type: object
+    properties:
+      LineItemId:
+        format: int32
+        description: Get or set LineItemId
+        type: integer
+      AppliedUnitPrice:
+        format: double
+        description: Get or set AppliedUnitPrice
+        type: number
+      AgreedUnitPrice:
+        format: double
+        description: Get or set AgreedUnitPrice
+        type: number
+      DiscrepancyReason:
+        description: Get or set DiscrepancyReason
+        type: string
+  ServiceChannel.Services.Messaging.Invoices.ProjectsInvoicesIgnoreAccessRightsRequest:
+    type: object
+    properties:
+      StartingDate:
+        format: date-time
+        type: string
+      EndingDate:
+        format: date-time
+        type: string
+      Statuses:
+        type: array
+        items:
+          type: string
+      Projects:
+        type: array
+        items:
+          format: int32
+          type: integer
+  AddInvoiceAttachmentRequest:
+    type: object
+    properties:
+      Name:
+        type: string
+      Description:
+        type: string
+      Path:
+        type: string
+      Visibility:
+        format: int32
+        description: 'Note visibility - valid values: null, 1, 2, 3'
+        type: integer
+      IsInvoiceDigitalCopy:
+        description: Mark attachment as Invoice Digital Copy
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Invoices.ApiGetInvoiceResponse:
+    type: object
+    properties:
+      VendorPayee:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.ApiVendorPayee'
+      AdditionalApprovalCodes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCodeWithoutOptions'
+      ProviderId:
+        format: int32
+        description: Gets or sets provider identifier.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Gets or sets subscriber identifier.
+        type: integer
+      LocationId:
+        format: int32
+        description: Gets or sets location identifier.
+        type: integer
+      InvoiceNumber:
+        description: Gets or sets invoice number.
+        type: string
+        readOnly: true
+      WithAutoApprovalCriteria:
+        description: Gets or sets if invoice meets Auto Approval Criteria.
+        default: false
+        type: boolean
+      PostedDateStr:
+        type: string
+        readOnly: true
+      InvoiceDateStr:
+        type: string
+        readOnly: true
+      PaidDateStr:
+        type: string
+        readOnly: true
+      StarredDateStr:
+        type: string
+        readOnly: true
+      ApprovedDateStr:
+        type: string
+        readOnly: true
+      TransferredDateStr:
+        type: string
+        readOnly: true
+      LastActionDateStr:
+        type: string
+        readOnly: true
+      StatusChangeDateStr:
+        type: string
+        readOnly: true
+      ProviderName:
+        type: string
+      PreviousUpdated:
+        type: string
+      Discount:
+        format: double
+        type: number
+      SubscriberFee:
+        format: double
+        type: number
+      ProviderFee:
+        format: double
+        type: number
+      InPaymentManager:
+        default: false
+        type: boolean
+      DiscountPercent:
+        format: double
+        type: number
+      Status:
+        type: string
+      EarlyPayFeePercent:
+        format: double
+        type: number
+      Labels:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Api.Model.Workorders.Label'
+      WeatherEventTypeForInvoice:
+        $ref: '#/definitions/ServiceChannel.Api.Model.Invoices.WeatherEventTypeForInvoice'
+      IsHideUsernameOnInvoice:
+        default: false
+        type: boolean
+      IsInvoiceNegativeLineItemsEnabled:
+        default: false
+        type: boolean
+      IsHolidayLaborRate:
+        default: false
+        type: boolean
+      ProjectId:
+        format: int32
+        description: WO ProjectId
+        type: integer
+      IsRestrictedForChanges:
+        default: false
+        type: boolean
+      Payments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoicePaymentResponse'
+      DisputeReason:
+        type: string
+      RejectionReasonDescription:
+        type: string
+      Id:
+        format: int32
+        type: integer
+      Number:
+        description: Gets or sets invoice number.
+        type: string
+      BatchNumber:
+        description: Gets or sets Batch number.
+        type: string
+      InvoiceTax:
+        format: double
+        type: number
+      PostedTaxRate:
+        format: float
+        type: number
+      PostedTax2Rate:
+        format: float
+        type: number
+      VendorPayeeId:
+        format: int32
+        type: integer
+      InvoiceTotal:
+        format: double
+        description: Gets or sets total with tax amounts.
+        type: number
+      InvoiceBalance:
+        format: double
+        type: number
+      Currency:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Currencies.Currency'
+      ApprovedDate:
+        format: date-time
+        type: string
+      ApprovalCode:
+        type: string
+      EditableAdditionalApprovalCode:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.ApprovalCodes.EditableAdditionalApprovalCode'
+      PostedDate:
+        format: date-time
+        type: string
+      PostedBy:
+        type: string
+      Subtotal:
+        format: double
+        type: number
+      Trade:
+        type: string
+      TradeId:
+        format: int32
+        type: integer
+      Category:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceCategoryMessaging'
+      InvoiceAmountsDetails:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceAmountsDetails'
+      InvoiceTaxesDetails:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceTaxesDetails'
+      Tax2Details:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.Tax2Details'
+      Labors:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceLabor'
+      Materials:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceMaterial'
+      Travels:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceTravel'
+      Others:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceOther'
+      TaxApprovalCodeGroups:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+      Tax2ApprovalCodeGroups:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+      FreightApprovalCodeGroups:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+      WithMismatchedRates:
+        default: false
+        type: boolean
+      IsOutsourced:
+        default: false
+        type: boolean
+      StarredBy:
+        type: string
+      IsStarred:
+        default: false
+        type: boolean
+      IsTransferred:
+        default: false
+        type: boolean
+        readOnly: true
+      StarredDate:
+        format: date-time
+        type: string
+      Description:
+        type: string
+      InvoiceDate:
+        format: date-time
+        type: string
+      LaborTaxIncluded:
+        default: false
+        type: boolean
+      TravelTaxIncluded:
+        default: false
+        type: boolean
+      MaterialsTaxIncluded:
+        default: false
+        type: boolean
+      FreightTaxIncluded:
+        default: false
+        type: boolean
+      OtherTaxIncluded:
+        default: false
+        type: boolean
+      NonTaxableLabor:
+        format: int32
+        type: integer
+      NonTaxableTravel:
+        format: int32
+        type: integer
+      NonTaxableMaterial:
+        format: int32
+        type: integer
+      NonTaxableFreight:
+        format: int32
+        type: integer
+      NonTaxableOther:
+        format: int32
+        type: integer
+      IsExists:
+        default: false
+        type: boolean
+        readOnly: true
+      StatusChangeDate:
+        format: date-time
+        type: string
+      StatusChangeUser:
+        type: string
+      StatusChangeUserid:
+        type: string
+      IsDuplicate:
+        default: false
+        type: boolean
+      WoTrackingNumber:
+        format: int32
+        description: Gets or sets work order tracking number.
+        type: integer
+      Terms:
+        description: terms
+        type: string
+      Comments:
+        type: string
+      PaidDate:
+        format: date-time
+        type: string
+      TransferredDate:
+        format: date-time
+        type: string
+      LastActionDate:
+        format: date-time
+        type: string
+      UpdatedDate:
+        format: date-time
+        description: Updated Date
+        type: string
+      StatusHistoryShort:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.StatusHistoryShort'
+      WoAssignedTo:
+        description: Gets or sets WO Assignee
+        type: string
+      ApprovalCodes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCode'
+      IsChargesApprovalCodesDefault:
+        default: false
+        type: boolean
+      StoredFeatures:
+        type: array
+        items:
+          type: string
+  ServiceChannel.Services.Messaging.Invoices.SelectItem:
+    description: Object containing options a subscriber admin can choose from when configuring restrictions and rules for invoice numbers.
+    type: object
+    properties:
+      Value:
+        format: int32
+        description: Number indicating the order of the option in the corresponding drop-down list for configuring invoice number restrictions and rules. The count starts from 0.<br /> • Check `RestrictionTypesSelect` to find out which options are available in the "Restrictions" drop-down list where a subscriber admin can set up number restrictions for manually created invoices.<br /> • See `AutoGenerationTypesSelect` for options in the "Generation uniqueness rule" drop-down list used for configuring number generation rules for automatically created invoices.
+        type: integer
+      Name:
+        description: Name of the option in the corresponding drop-down list — "Restrictions" or "Generation uniqueness rule".
+        type: string
+  ServiceChannel.Services.Messaging.Invoices.NumberRequirementsModel:
+    description: Invoice number requirements object.
+    type: object
+    properties:
+      AutoGenerationTypesSelect:
+        description: A list of options in the "Generation uniqueness rule" drop-down list a subscriber admin can choose from when configuring invoice number rules for automatically generated invoices.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.SelectItem'
+      RestrictionTypesSelect:
+        description: A list of options in the "Restrictions" drop-down list a subscriber admin can choose from when configuring invoice number restrictions for manually created invoices.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.SelectItem'
+      ReuseInvoiceNumbersSelect:
+        description: A list of options in the "ReuseInvoiceNumber" drop-down list a subscriber admin can choose from when configuring invoice number.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.SelectItem'
+      InvoiceNumberRequirement:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceNumberRequirement'
+        description: Detailed info about the invoice number requirements set up for the subscriber listing the selected requirements and rules, users who submitted and updated them, when these actions took place, etc.
+      DefaultRestrictionComments:
+        description: 'A list of default explanatory comments on the invoice number format for the corresponding restrictions. A comment is displayed to a provider user in a tooltip when they try to submit an invoice whose number does not meet the restrictions specified by their subscriber. See `RestrictionTypesSelect` to identify which number (`Value`) corresponds to which restriction type: `2` — *Digits Only*, `3` — *Alphanumeric Only*.'
+        type: object
+        additionalProperties:
+          type: string
+      DefaultRestrictionPatterns:
+        description: 'A list of default regular expressions that define search patterns used to validate the number format of invoices created manually. See `RestrictionTypesSelect` to identify which number (`Value`) corresponds to which restriction type: `2` — *Digits Only*, `3` — *Alphanumeric Only*.'
+        type: object
+        additionalProperties:
+          type: string
+      Resources:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.Localizations'
+        description: A list of UI labels that appear in the "Invoice Number" section on the "General" tab of the "Admin - Invoices" page in Service Automation.
+  ServiceChannel.Services.Messaging.Invoices.StatusHistoryShort:
+    type: object
+    properties:
+      CreatedBy:
+        type: string
+      CreatedById:
+        format: int32
+        type: integer
+      Status:
+        type: string
+      InvId:
+        format: int32
+        type: integer
+      ActionDate:
+        type: string
+  ServiceChannel.Services.Messaging.Invoices.InvoiceSettingsGeneral:
+    description: General invoice settings object.
+    type: object
+    properties:
+      DaysBeforePostingDate:
+        format: int32
+        description: The number of days prior to the invoice posting date within which the invoice creation date can be set. Providers can not create invoices for a date in the past that is older than the specified number of days from the invoice posting date.
+        type: integer
+      MaxDaysAfterPostingDate:
+        format: int32
+        description: The number of days after the invoice posting date within which the invoice creation date can be set. Providers can not generate invoices for a date in the future that is greater than the specified number of days from the invoice posting date.
+        type: integer
+      RequireResolutionText:
+        description: Defines whether providers are required to enter a resolution when creating an invoice.
+        default: false
+        type: boolean
+      RequireApprovalText:
+        description: Defines whether subscriber’s employees are required to enter a comment when approving invoices.
+        default: false
+        type: boolean
+      IsInvoiceApprovalCommentFeatureEnabled:
+        description: Defines whether the feature that prompts subscriber’s employees to enter a comment when approving invoices is turned on.
+        default: false
+        type: boolean
+      IsInvoiceNumberValidationFeatureEnabled:
+        description: Defines whether the feature that enables the invoice number validation is turned on.
+        default: false
+        type: boolean
+      IsInvoiceNegativeFeatureEnabled:
+        description: Defines whether the feature that enables the invoice negative amounts for the required line items.
+        default: false
+        type: boolean
+      IsInvoiceZeroVATEU:
+        description: Use Us UI model in international locations.
+        default: false
+        type: boolean
+      AvailableTrades:
+        description: A list of trades configured for the subscriber. The following parameters are returned for each trade:<br /> • `Id` — trade ID.<br /> • `Name` — trade name.<br /> • `PrimaryTradeName` — name of the primary trade for this trade.
+        type: string
+      AvailableCategories:
+        description: A list of categories set up for the subscriber. The following parameters are returned for each category:<br /> • `Id` — category ID.<br /> • `SubscriberId` — subscriber ID.<br /> • `Name` — category name.<br /> • `HasDependency` — defines whether the category has dependent categories.<br /> • `PrimaryCategoryID` — ID of the primary category for this category.<br /> • `PrimaryCategoryName` — name of the primary category for this category.
+        type: string
+      LaborTradeIds:
+        description: Trade IDs for which providers must itemize Labor charges when creating a line-item invoice.
+        type: array
+        items:
+          format: int32
+          type: integer
+      MaterialsTradeIds:
+        description: Trade IDs for which providers must itemize Material charges when creating a line-item invoice.
+        type: array
+        items:
+          format: int32
+          type: integer
+      TravelTradeIds:
+        description: Trade IDs for which providers must itemize Travel charges when creating a line-item invoice.
+        type: array
+        items:
+          format: int32
+          type: integer
+      OtherTradeIds:
+        description: Trade IDs for which providers must itemize Other charges when creating a line-item invoice.
+        type: array
+        items:
+          format: int32
+          type: integer
+      LaborCategoryIds:
+        description: Category IDs for which providers must itemize Labor charges when creating a line-item invoice.
+        type: array
+        items:
+          format: int32
+          type: integer
+      MaterialsCategoryIds:
+        description: Category IDs for which providers must itemize Material charges when creating a line-item invoice.
+        type: array
+        items:
+          format: int32
+          type: integer
+      TravelCategoryIds:
+        description: Category IDs for which providers must itemize Travel charges when creating a line-item invoice.
+        type: array
+        items:
+          format: int32
+          type: integer
+      OtherCategoryIds:
+        description: Category IDs for which providers must itemize Other charges when creating a line-item invoice.
+        type: array
+        items:
+          format: int32
+          type: integer
+      NumberRequirementsModel:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.NumberRequirementsModel'
+        description: Parameters defining requirements for invoice numbers.
+      IsProviderAbleToAddSalesTax:
+        description: Defines whether the provider can add sales tax to its ivoices
+        default: false
+        type: boolean
+      RequireProviderDigitalCopy:
+        description: Specified is Provider Digital Copy requirement set for the provider
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Providers.Provider:
+    type: object
+    properties:
+      Phone:
+        type: string
+      FullName:
+        description: Full Name
+        type: string
+      Address1:
+        description: Address1
+        type: string
+      Address2:
+        description: Adress2
+        type: string
+      City:
+        description: City
+        type: string
+      State:
+        description: State
+        type: string
+      Zip:
+        description: Zip
+        type: string
+      Country:
+        description: Country
+        type: string
+      MainContact:
+        description: Main Contact
+        type: string
+      DateCreated:
+        format: date-time
+        description: Date Created
+        type: string
+      LastUserDate:
+        description: Last User Date
+        type: string
+      SuperUser:
+        description: SuperUser
+        type: string
+      WebSite:
+        description: WebSite
+        type: string
+      Email:
+        description: Email
+        type: string
+      TaxId:
+        description: Tax Id
+        type: string
+      Trade:
+        description: Trade
+        type: string
+      ProcessingEmail:
+        description: Processing Email
+        type: string
+      FaxNumber:
+        description: Fax Number
+        type: string
+      SuiteFloor:
+        description: Suite Floor
+        type: string
+      MailInfo:
+        description: Mail Info
+        type: string
+      ImageFile:
+        description: Image File
+        type: string
+      ReturnMail:
+        description: Return Mail
+        type: string
+      MailFrequency:
+        format: int32
+        description: Mail Frequency
+        type: integer
+      FormId:
+        format: int32
+        description: Form Id
+        type: integer
+      Pager:
+        description: Pager
+        type: string
+      NightRequest:
+        format: int32
+        description: NightRequest
+        type: integer
+      ShortFormatEmail:
+        description: Short Format Email
+        type: string
+      LastTrainingDate:
+        format: date-time
+        description: Last Training Date
+        type: string
+      LastTrainingDateStr:
+        description: Last Training Date as a string
+        type: string
+      IsInternal:
+        description: Is Internal
+        default: false
+        type: boolean
+      IsOnOffShoreFeatureEnabled:
+        description: Is OnOffShoreFeature Enabled
+        default: false
+        type: boolean
+      Id:
+        format: int32
+        description: Id
+        type: integer
+      Name:
+        description: Name
+        type: string
+      DoNotDispatch:
+        description: DoNotDispatch enabled?
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Invoices.ApiVendorPayee:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      VendorNumber:
+        type: string
+      FullName:
+        type: string
+      Address1:
+        type: string
+      Address2:
+        type: string
+      City:
+        type: string
+      State:
+        type: string
+      Zip:
+        type: string
+      Country:
+        type: string
+  ServiceChannel.Services.Messaging.Invoices.InvoiceMaterial:
+    description: Information on the materials used. Add a separate object for each material.
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      InvoiceId:
+        format: int32
+        description: Invoice identifier.
+        type: integer
+      Description:
+        description: Name or description of the material. Length limit is 100 symbols.
+        type: string
+      PartNum:
+        description: Part, serial, or manufacturer number of the material. Length limit is 100 symbols.
+        type: string
+      UnitType:
+        format: byte
+        description: 'Unit of measurement. Valid values: 1 — Each; 2 — Box; 3 — Feet; 4 — Sqft; 5 — Lbs; 6 — Gal; 7 — Oz. Default value: 1.'
+        type: string
+      UnitPrice:
+        format: double
+        description: Price per unit.
+        type: number
+      PartName:
+        description: Part name.
+        type: string
+      MarkUpPercent:
+        format: double
+        description: Markup percent.
+        type: number
+      AgreedMarkUpPercent:
+        format: double
+        description: Agreed markup percent.
+        type: number
+      MarkUpDiscrepancyReason:
+        description: Mark up discrepancy reason.
+        type: string
+      AgreedPartPrice:
+        format: double
+        description: Agreed part price.
+        type: number
+      Quantity:
+        format: double
+        description: Quantity of the material.
+        type: number
+      Amount:
+        format: double
+        description: The amount of the material cost. The sum of all `Amount` parameters in the `Materials` array must equal `InvoiceAmountsDetails.MaterialAmount`.
+        type: number
+      ApprovalCodeGroup:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+      IsMarkUpDiscrepancy:
+        description: Markup discrepancy.
+        default: false
+        type: boolean
+      IsPartPriceDiscrepancy:
+        description: Part price discrepancy.
+        default: false
+        type: boolean
+      PriceDiscrepancyReason:
+        description: Price discrepancy reason.
+        type: string
+      isNontaxableVATEU:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Invoices.RateDiscrepancy:
+    description: Rate Discrepancy Item
+    type: object
+    properties:
+      SkillLevel:
+        format: int32
+        description: Get or set skill level (1 - Supervisor, 2 - Technician, 3 - Helper).
+        type: integer
+      SkillLevelName:
+        description: Get or set skill level name
+        type: string
+      LaborType:
+        format: int32
+        description: Get or set type of the labor (1 - Regular, 2 - Overtime, 3 - Double Time).
+        type: integer
+      LaborTypeName:
+        description: Get or set labor type name.
+        type: string
+      HourlyRate:
+        format: double
+        description: Get or set hourly rate.
+        type: number
+      AgreedRate:
+        format: double
+        description: Get or set agreed hourly rate.
+        type: number
+      NumOfTech:
+        format: byte
+        description: Get or set number of techs.
+        type: string
+      LaborHours:
+        format: double
+        description: Get or set spent hours.
+        type: number
+      RateDiscrepancyReason:
+        description: Get or set rate discrepancy reason.
+        type: string
+  ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceMaterial:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      InvoiceId:
+        format: int32
+        description: Invoice identifier.
+        type: integer
+      Description:
+        description: Name or description of the material. Length limit is 100 symbols.
+        type: string
+      PartNum:
+        description: Part, serial, or manufacturer number of the material. Length limit is 100 symbols.
+        type: string
+      UnitType:
+        format: byte
+        description: 'Unit of measurement. Valid values: 1 — Each; 2 — Box; 3 — Feet; 4 — Sqft; 5 — Lbs; 6 — Gal; 7 — Oz. Default value: 1.'
+        type: string
+      UnitPrice:
+        format: double
+        description: Price per unit.
+        type: number
+      PartName:
+        description: Part name.
+        type: string
+      MarkUpPercent:
+        format: double
+        description: Markup percent.
+        type: number
+      AgreedMarkUpPercent:
+        format: double
+        description: Agreed markup percent.
+        type: number
+      MarkUpDiscrepancyReason:
+        description: Mark up discrepancy reason.
+        type: string
+      AgreedPartPrice:
+        format: double
+        description: Agreed part price.
+        type: number
+      Quantity:
+        format: double
+        description: Quantity of the material.
+        type: number
+      Amount:
+        format: double
+        description: The amount of the material cost. The sum of all `Amount` parameters in the `Materials` array must equal `InvoiceAmountsDetails.MaterialAmount`.
+        type: number
+      PriceDiscrepancyReason:
+        description: Price discrepancy reason.
+        type: string
+      isNontaxableVATEU:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Users.MlpUserInfo:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      MlpLevel:
+        type: string
+      MlpLocations:
+        type: array
+        items:
+          format: int32
+          type: integer
+  ServiceChannel.Services.Messaging.Users.AccessOptions:
+    description: Object listing locations, districts, regions, and trades a subscriber user has access to. Learn more about [granting access based on locations, districts, and regions](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/585107276/Location+District+Region+Access+Tab) in ServiceChannel University.
+    type: object
+    properties:
+      Locations:
+        description: Locations a user has access to.
+        type: array
+        items:
+          type: string
+      Districts:
+        description: Districts a user has access to.
+        type: array
+        items:
+          type: string
+      Regions:
+        description: Regions a user has access to.
+        type: array
+        items:
+          type: string
+      Trades:
+        description: Trades a user is permitted to work with.
+        type: array
+        items:
+          type: string
+  ServiceChannel.Services.Messaging.Users.User:
+    description: User details object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique user identifier.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique subscriber ID.
+        type: integer
+      UserName:
+        description: Username of the user.<br /> • For subscriber users, the username appears as **User Id** on the "General Info" tab of the user profile page.<br /> • For provider users, the username is listed as **UserID** under "Access" on the "General" tab of the user profile page.
+        pattern: ^$|(^\S+).(\S).(\S)$
+        type: string
+      FullName:
+        description: Full name of the user.<br /> • For subscriber users, the full name appears as **User Name** on the "General Info" tab of the user profile page.<br /> • For provider users, you can see their first and last name under "Basic" on the "General" tab of the user profile page.
+        type: string
+      Email:
+        description: User’s email address.
+        type: string
+      PsmEmail:
+        description: Email address through which a user can reset their password.
+        type: string
+      Disabled:
+        description: Defines if a user is deactivated.
+        default: false
+        type: boolean
+      IsLocked:
+        description: Defines if a user is locked.
+        default: false
+        type: boolean
+      Roles:
+        description: Secondary roles assigned to a subscriber user that determine their permissions and level of access to various Service Automation modules.
+        type: array
+        items:
+          type: string
+      Permissions:
+        description: Permissions assigned to a subscriber user that determine whether they have full or read-only access to various Service Automation modules.
+        type: array
+        items:
+          type: string
+      UserType:
+        description: Subscriber user type defining their level of access to ServiceChannel:<br /> • `Corporate` — a user can work in Service Automation.<br /> • `Dashboard` — a user can only access the dashboard assigned to them.<br />`0` is returned for provider users.
+        enum:
+        - Corporate
+        - Dashboard
+        - ServiceChannel
+        type: string
+      Dashboard:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.DashboardInfo'
+        description: Dashboard a subscriber user has access to.
+      Access:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.AccessOptions'
+        description: List of locations, districts, regions, and trades a subscriber user has access to.
+      Limits:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.LimitOptions'
+        description: NTE, proposal, and invoice limits set for a subscriber user.
+      FeedRole:
+        type: string
+      MliUserInfo:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.MliUserInfo'
+        description: ''
+      MlpUserInfo:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.MlpUserInfo'
+  ServiceChannel.Services.WebApi.Models.Request.Invoices.CreateInvoiceRequest:
+    required:
+    - InvoiceNumber
+    - WoIdentifier
+    type: object
+    properties:
+      InvoiceNumber:
+        description: Invoice identifier. Must be unique for each invoice.
+        type: string
+      InvoiceDate:
+        format: date-time
+        description: Date and time when the invoice was issued.
+        type: string
+      InvoiceDateDTO:
+        format: date-time
+        description: Date and time when the invoice was issued. Indicated with the UTC offset.
+        type: string
+      WoIdentifier:
+        type: string
+      InvoiceTax:
+        format: double
+        description: The amount of the tax.
+        type: number
+      PostedTaxRate:
+        format: float
+        type: number
+      NonTaxableLabor:
+        format: int32
+        type: integer
+      NonTaxableTravel:
+        format: int32
+        type: integer
+      NonTaxableMaterial:
+        format: int32
+        type: integer
+      NonTaxableFreight:
+        format: int32
+        type: integer
+      NonTaxableOther:
+        format: int32
+        type: integer
+      WithMismatchedRates:
+        default: false
+        type: boolean
+      InvoiceTotal:
+        format: double
+        type: number
+      InvoiceText:
+        description: Detailed description of the work completed. Subscriber can change this field to `required`.
+        type: string
+      InvoiceAmountsDetails:
+        $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceAmountsDetails'
+      InvoiceTaxesDetails:
+        $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceTaxesDetails'
+      Tax2Details:
+        $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Invoices.Tax2Details'
+        description: "Gets or sets the additional invoice tax.\r\n            Typically used outside of the united states in Europe for VAT taxes and in Canada for GST/PST/QST/HST taxes."
+      TaxIncluded:
+        $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Invoices.CreatingInvoiceTaxIncludedRequest'
+        description: Gets or sets the invoice tax included (the taxes included into amount of the InvoiceAmountsDetails items).
+      Labors:
+        description: Get or set the labors description (Subscriber can change this field to required).
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceLaborWithPriceList'
+      Materials:
+        description: Get or set the materials description (Subscriber can change this field to required).
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceMaterial'
+      Travels:
+        description: Get or set the travels description (Subscriber can change this field to required).
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceTravel'
+      Others:
+        description: Get or set the others description (Subscriber can change this field to required).
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceOther'
+      ExplainDispute:
+        description: Gets or sets the explain dispute.
+        type: string
+      SubmitDisputed:
+        default: false
+        type: boolean
+      VendorId:
+        format: int32
+        description: Gets or sets vendor payee identifier.
+        type: integer
+      Terms:
+        description: Invoice Terms
+        type: string
+      Attachments:
+        description: Optional
+        type: array
+        items:
+          $ref: '#/definitions/AddInvoiceAttachmentRequest'
+  ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCodeWithoutOptions:
+    type: object
+    properties:
+      Header:
+        type: string
+      Value:
+        type: string
+      SetupId:
+        format: int32
+        type: integer
+      LocationId:
+        format: int32
+        type: integer
+      DefaultOptionId:
+        format: int32
+        type: integer
+      ValueFormat:
+        format: int32
+        type: integer
+      EditableAtLineItemLevel:
+        format: int32
+        type: integer
+      IsDeleted:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Invoices.InvoiceCategoryMessaging:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+  ServiceChannel.Services.Messaging.Users.MliUserInfo:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      MliLevel:
+        type: string
+      MliLocations:
+        type: array
+        items:
+          format: int32
+          type: integer
+  ServiceChannel.Services.Messaging.Currencies.Currency:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      AlphabeticalCode:
+        type: string
+      DecimalCount:
+        format: int32
+        type: integer
+      Entity:
+        type: string
+      CurrencyName:
+        type: string
+      NumericCode:
+        type: string
+      Rate:
+        format: double
+        type: number
+  ServiceChannel.Services.Messaging.Users.LimitOptions:
+    description: Object for NTE, proposal, and invoice limits set for a subscriber user.
+    type: object
+    properties:
+      NteLimit:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.Limit'
+        description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
+      ProposalLimit:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.Limit'
+        description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
+      InvoiceLimit:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.Limit'
+        description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
+  ServiceChannel.Services.Messaging.Invoices.AddInvoicePaymentRequest:
+    description: Object details to add payment to an invoice.
+    type: object
+    properties:
+      InvoiceId:
+        format: int32
+        description: Unique numeric invoice identifier.
+        type: integer
+      PaymentDate:
+        format: date-time
+        description: Date and time when the specified invoice is paid. Cannot be prior to the invoice creation date.
+        type: string
+      PaymentNumber:
+        description: Number provided by a user when adding a payment record.
+        type: string
+      PaymentAmount:
+        format: double
+        description: Amount of the payment. Cannot exceed the total amount of the invoice. If it’s a credited invoice, a single payment is required with a minus before the payment amount.
+        type: number
+  ServiceChannel.Api.Model.Invoices.WeatherEventTypeForInvoice:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      Description:
+        type: string
+      InvoiceId:
+        format: int32
+        type: integer
+  ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup:
+    type: object
+    properties:
+      ApprovalCodeType:
+        enum:
+        - Labor
+        - Travel
+        - Material
+        - Freight
+        - Other
+        - Tax
+        - Tax2
+        - LineItem
+        - FreightGenerated
+        type: string
+      ApprovalCode:
+        type: string
+      AdditionalApprovalCode:
+        type: string
+      Amount:
+        format: double
+        type: number
+      ApprovalCodes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeChild'
+  ServiceChannel.Services.Messaging.Invoices.InvoiceTravel:
+    description: Information on the trip.
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      InvoiceId:
+        format: int32
+        description: Invoice identifier.
+        type: integer
+      Description:
+        description: Description of the trip.
+        type: string
+      UnitType:
+        format: byte
+        description: Unit of measurement.
+        type: string
+      UnitPrice:
+        format: double
+        description: Price per unit.
+        type: number
+      Quantity:
+        format: double
+        description: Quantity.
+        type: number
+      Amount:
+        format: double
+        description: The amount of the trip cost. The sum of all `Amount` parameters in the `Travels` array must equal `InvoiceAmountsDetails.TravelAmount`.
+        type: number
+      IsOffShore:
+        description: Type of the shore (`1` - Onshore, `2` - Offshore).
+        default: false
+        type: boolean
+      ApprovalCodeGroup:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+      isNontaxableVATEU:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Invoices.Tax2Details:
+    description: Information on the additional tax. Only invoices for Canadian locations can have Tax2Details.
+    type: object
+    properties:
+      Tax2Amount:
+        format: double
+        description: Amount of the additional tax.
+        type: number
+      Tax2Name:
+        description: Name of the additional tax, for example, *VAT*, *HST*, *PST*, or *QST*.
+        type: string
+  ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCodeOption:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Value:
+        type: string
+  ServiceChannel.Services.Messaging.Invoices.InvoicePaymentResponse:
+    description: Object containing the invoice payment details.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Numeric identifier of the payment.
+        type: integer
+      PaymentDate:
+        format: date-time
+        description: Date and time when the specified invoice was paid.
+        type: string
+      PaidBy:
+        description: Username of the employee who made the payment.
+        type: string
+      PaymentNumber:
+        description: Order number of payment.
+        type: string
+      PaymentAmount:
+        format: double
+        description: Amount paid for the invoice. The value is negative if it’s a credited invoice.
+        type: number
+  ServiceChannel.Services.Messaging.ErrorResponse:
+    description: The error response object
+    type: object
+    properties:
+      ErrorCodes:
+        description: The list of error codes. Go to /basics/general/response-codes/#internal-error-codes-and-messages to map error codes to error reasons.
+        type: array
+        items:
+          enum:
+          - NotAllowed
+          - EmptyProvider
+          - InvalidProviderId
+          - UnknownProvider
+          - ProviderAlreadyExists
+          - ProviderIdNotExists
+          - TimeoutExpiredError
+          - EmptyContract
+          - ContractUndefined
+          - EmptySubscriber
+          - InvalidSubscriberId
+          - UnknownSubscriber
+          - InactiveSubscriber
+          - EmptySubscriberId
+          - SubscriberIdNotExists
+          - InternalError
+          - DataNotFound
+          - BadRequest
+          - UnAuthorized
+          - UnSupportedApplication
+          - SubsidiaryUserDisabled
+          - EmptyLocation
+          - InvalidLocationId
+          - UnknownLocation
+          - LocationNotBelongsToSubscriber
+          - EmptyLocationCountry
+          - LocationAlreadyExists
+          - InvalidStoreId
+          - LocationEmptyState
+          - NoAccessToLocation
+          - LocationAddressValidationError
+          - LocationAddressRequestValidationError
+          - InvalidLocationNoteHeader
+          - NoAccessToUpdateProtectedNote
+          - InvalidBusinessHoursFormat
+          - WorkingHoursIntersect
+          - InvalidDayOfWeek
+          - DuplicateDayOfWeek
+          - InvalidBusinessHoursInitialSetup
+          - BusinessHoursIsEmpty
+          - InvalidHolidayRepeatByType
+          - EmptyHolidayListOfDays
+          - EmptyHolidayListOfMonths
+          - InvalidHolidayMonthName
+          - InvalidHolidayNameLength
+          - InvalidHolidayRepeatEvery
+          - DuplicateMonth
+          - InvalidHolidayFrequency
+          - InvalidHolidayStartDate
+          - InvalidCloseAllDay
+          - HolidayDoesNotExist
+          - InvalidFormatParameter
+          - InvalidLocationCity
+          - InvalidLocationZip
+          - InvalidLocationLatitude
+          - InvalidLocationLongitude
+          - InvalidLocationEmail
+          - InvalidLocationName
+          - InvalidLocationState
+          - InvalidLocationAddlAddress
+          - InvalidLocationMainAddress
+          - InvalidLocationCountry
+          - InvalidLocationRegion
+          - InvalidLocationDistrict
+          - InvalidLocationPhone
+          - InvalidLocationContact
+          - InvalidLocationFaxNumber
+          - LocationCountryNotFound
+          - LocationStateNotFound
+          - LocationCityNotFound
+          - LocationIdNotExists
+          - InvalidLocationEmailLength
+          - LocationStateIdNotFound
+          - IncorrectCombinationStateAndStateId
+          - InvalidSubscriberIds
+          - InvalidLocalizationSettings
+          - LandlordResponsibilityNotFound
+          - LandlordResponsibilityAlreadyExists
+          - EmptyLocationIds
+          - AttachmentNotExist
+          - InvalidTradeId
+          - InvalidCategoryId
+          - InvalidOverrideCategoryId
+          - InvalidOverridePriorityId
+          - LeaseNoteExceedMaxLength
+          - InvalidOverrideProviderRank
+          - InvalidOverrideNTE
+          - DuplicateRows
+          - InvalidPriorityId
+          - LocationNotFound
+          - EmptyTrade
+          - InvalidTrade
+          - TradeNotBelongsToSubscriber
+          - InvalidPrimaryTrade
+          - InvalidTradeForSubscriber
+          - InvalidCategoryForSubscriber
+          - GlCodeAlreadyExists
+          - GlCodeNotExists
+          - InvalidGlCodeUpdate
+          - EmptyGlCode
+          - TradeAlreadyExists
+          - InvalidNTETrade
+          - TradeNotExists
+          - TradeAlreadyInUse
+          - TradeWithTheSameNameHasBeenDeleted
+          - TradeInUsePMServices
+          - TradeInUseProposalError
+          - TradeInUseRFPError
+          - TradeInUseChecklistError
+          - TradeInUseBudgetControl
+          - TradeInUseGlCode
+          - TradeInUseDynamicProviderAssignments
+          - TradeInUseInvoice
+          - TradeInUseLandlordResponsibilities
+          - TradeInUseWO
+          - TradeInUseEquipmentType
+          - TradeInUseRFP
+          - TradeInUseConnector
+          - TradeInUseContractedService
+          - TradeInUseIVR
+          - TradeInUseSiteAccess
+          - TradeInUseGLCodes
+          - TradeInUseCIWO
+          - TradeInUseOrganizationPermissions
+          - TradeСreationError
+          - EmptyUser
+          - EmptyCreatedBy
+          - InvalidUserName
+          - NotProviderUser
+          - UserHasNoPermissions
+          - RestrictedAccount
+          - UserAlreadyExists
+          - UserHasNoPermissionsEditWO
+          - UserEmailAddressIsMissing
+          - UserIsNotRTAdmin
+          - InvalidSubsriberProviderId
+          - LanguageNameNotFound
+          - InvalidLanguageId
+          - LanguageIdNotFound
+          - UseBothSubscriberIdProviderId
+          - EmptyWoProblem
+          - InvalidWoProblemSource
+          - InvalidWoProblemDescription
+          - InvalidWoProblemCode
+          - InvalidWoStatus
+          - InvalidWoNte
+          - InvalidWoCaller
+          - InvalidWoCallDate
+          - InvalidWoScheduledDate
+          - InvalidWoScheduledDateGreaterThanMaxAllowed
+          - EmptyWoCategory
+          - InvalidWoCategory
+          - EmptyWoPriority
+          - InvalidWoPriority
+          - InvalidWoCurrency
+          - InvalidWoSetupId
+          - AttachmentsRequired
+          - InvalidWoIdentifier
+          - EquipmentRequired
+          - WoNteOverflow
+          - InvalidWoPurchaseNumber
+          - InvalidWoStateForUpdate
+          - InvalidPagingParameter
+          - InvalidWoNumber
+          - CheckInDenied
+          - CheckOutDenied
+          - WoScheduledDateLessThenReassignDate
+          - WoScheduledDateLessThenCallDate
+          - InvalidWoActionReason
+          - EmptySubscriberProperty
+          - WorkOrderUpdateError
+          - MissedWoNteDetails
+          - InvalidLinkedWoIdentifier
+          - WoIsOnHold
+          - InvalidWoTrade
+          - InvalidStarScore
+          - WorkOrderAlreadyRated
+          - AttachmentThumbnailNotAvailable
+          - InvalidWoIdentifierOrPin
+          - InvalidTimeZoneHeader
+          - RefrigerantWasUsedShouldBeYesOrNo
+          - CheckInDeniedOutsideGeolocation
+          - CheckOutDeniedOutsideGeolocation
+          - LeakDetectorAuditShouldBeCreated
+          - CheckInOutPremature
+          - WorkOrderAttachmentsSizeExceeded
+          - WorkOrderNotFound
+          - WorkOrderCreateError
+          - InvalidWoProjectedCompletionDate
+          - InvalidFollowUpWo
+          - InvalidWeatherEventId
+          - InvalidSiteAuditLinkedWo
+          - InvalidSetupId
+          - IssueListNotFound
+          - InvalidIssueListField
+          - SiteAuditCompleted
+          - CheckSiteAuditError
+          - SaveSiteAuditError
+          - RemoveSiteAuditError
+          - InactiveTemplateType
+          - SiteAuditNotFound
+          - SiteAuditUpdateError
+          - InvalidSiteAuditParameters
+          - InvalidAdditionalApprovalCode
+          - InvalidAdditionalApprovalCodeValue
+          - AdditionalApprovalCodeIsDisabled
+          - InvalidOtherDesc
+          - InvalidTax2Name
+          - InvoiceInconsistentAmounts
+          - InvoiceInvalidTotal
+          - InvoiceTotalGreaterNte
+          - InvoiceExists
+          - CreatingInvoiceError
+          - DuplInvNumber
+          - InvoiceTotalNull
+          - InvComplDateNull
+          - InvDateLessComplDate
+          - InvoiceNotAuto
+          - ESignatureRequired
+          - InvWoNotFound
+          - InvWrongWoCurr
+          - InvWoCurrNotFound
+          - InvoicingDisabled
+          - InvCreationUnexpectedRes
+          - InvoiceInvalidLaborAmount
+          - InvoiceInvalidMaterialAmount
+          - InvDateOld
+          - InvDateGreater
+          - InvoiceMaterialDescriptionLengthOverflow
+          - InvoiceTaxNotValidated
+          - InvoiceMaterialPartNumberLengthOverflow
+          - TaxValidationError
+          - TaxExemptionError
+          - InvalidInvoiceNumber
+          - GetApprovalLevelsError
+          - InvoiceAddUsersToMliLevelsError
+          - InvoiceAddDeleteLocationsToMliLevelUserError
+          - InvoiceUpdateMLiLevelError
+          - InvoiceDeleteMliLevelError
+          - InvoiceDeleteUsersFromMliLevelError
+          - ApprovalLevelNameLengthOverflow
+          - GstTaxError
+          - Tax2Error
+          - GetApprovalLevelsAndLocationsByUserError
+          - GetAssignedUserShortInfoError
+          - AssignAllLocationsToApprovalLevelAndUserError
+          - GetLocationsForApprovalLevelAndAssignedUserError
+          - GetLocationsBySubscriberError
+          - AssignUserWithLocationsToApprovalLevelError
+          - ReAssignUserWithLocationsToNewApprovalLevelError
+          - ReAssignLocationsToApprovalLevelAndUserError
+          - OutstandingBalance
+          - InvoiceTaxDetailsEmpty
+          - InvoiceTaxDetailsIncorrectSum
+          - MultipleUsersForLocationIsNotAllowed
+          - UserAssignedToOtherLevel
+          - UserDoesNotExist
+          - LaborLineItemRequired
+          - MaterialLineItemRequired
+          - InvoiceDoesntExist
+          - InvoiceStarUnstarFailed
+          - InvoiceBatchUpdateInvalidInvoiceStatusError
+          - InvoiceBatchUpdateLimitExceededError
+          - InvoiceNotAvailableForCurrentUser
+          - InvoiceBatchUpdateInvalidRuleSetStructure
+          - InvoiceBatchUpdateInvalidMliStructure
+          - InvoiceBatchUpdateStatusError
+          - InvoiceMaterialUnitTypeInvalid
+          - ExistingBatchNumber
+          - InvoiceResolutionTextRequired
+          - GetInvoiceDefaultApprovalCodesError
+          - InvoiceInvalidTravelAmount
+          - InvoiceTravelDescriptionLengthOverflow
+          - InvoiceTravelUnitTypeInvalid
+          - TravelLineItemRequired
+          - TravelDetailsDisabled
+          - OnOffShoreDisabled
+          - InvoiceInvalidLaborCount
+          - InvoiceInvalidMaterialCount
+          - InvoiceInvalidTravelCount
+          - SubscriberNotRegisteredForTaxValidation
+          - ManyDecimalsInAmountError
+          - DecimalPartQstTaxError
+          - LaborRatesDiscrepancy
+          - PayInvoicesError
+          - InvoiceNumberRequirementsError
+          - InvoiceNumberIncorrect
+          - InvoiceNumberRegExPatternError
+          - GetInvoicesPendingApprovalByLocationError
+          - ReAssignInvoicesToUsersFailed
+          - ReAssignInvoicesUsersMatched
+          - GetUsersForReassignInvoiceError
+          - InvalidTimeRangeActivity
+          - OutsourcedSourceInvoiceNotFound
+          - OthersLineItemsDisabled
+          - InvoiceInvalidOtherAmount
+          - InvoiceInvalidOtherCount
+          - InvoiceOtherDescriptionLengthOverflow
+          - OtherLineItemRequired
+          - OtherLineItemsNotNegativeValueRequired
+          - InvalidLaborSkillLevel
+          - InvalidLaborType
+          - InvalidTechnicianQuantity
+          - GetInvoicesCommonCategoriesError
+          - InvoiceExplainDisputeEmpty
+          - InvoiceAdditionalApprovalCodeHeaderError
+          - TemplateParseSuccess
+          - TemplateIncorrectHeaderError
+          - TemplateEmptyTemplateError
+          - TemplateWrongFieldsCountError
+          - TemplateFieldNotFoundError
+          - TemplateFieldRequiredError
+          - TemplateParseIntError
+          - TemplateFieldSizeError
+          - TemplateInvalidValueError
+          - TemplateFieldFormatError
+          - TemplateFieldMaxRangeError
+          - TemplateFieldMinRangeError
+          - TemplateProviderNotEntered
+          - TemplateInvalidSubscriberError
+          - TemplateVendorNotFoundError
+          - TemplateMissedProviderError
+          - TemplateProviderNotFoundError
+          - TemplateProviderSubsccriberLinkError
+          - TemplateTradeDispatchRankError
+          - TemplateInvalidTradeForSubscriberError
+          - TemplateStoreNotFoundError
+          - TemplateNotStoresForStateError
+          - TemplateNotStoresForCountryError
+          - TemplateNotStoresForDistrictError
+          - TemplateNotStoresForRegionError
+          - TemplateMultiplePimaryProvidersForTradeStoreError
+          - TemplateDuplicatePrimaryRelationshipError
+          - TemplateAmbiguousDataError
+          - TemplateIncorrectSubscriber
+          - TemplateDuplicateRanking
+          - TemplateLongitudeRangeError
+          - TemplateLatitudeRangeError
+          - InvoiceMaterialPartNameLengthOverflow
+          - TemplateTradeLocationExclusion
+          - TemplateInvalidStateError
+          - TemplateMissedSubscriberError
+          - TemplateMissedStoreIdError
+          - TemplateInvalidSubscriberIdError
+          - TemplateOpenCloseDateError
+          - TemplateInvalidCountryError
+          - TemplateInvalidStateForCountryError
+          - TemplateInvalidLocationTypeError
+          - TemplateMissingFullAndShortNameError
+          - TemplateMissingCountryError
+          - TemplateDuplicatedDataError
+          - TemplateParentLocationNotFoundError
+          - TemplateParseDateTimeError
+          - TemplateParseDecimalError
+          - TemplateSquareValueRangeError
+          - TemplateInvalidSquareMeasureError
+          - TemplateTypeLabelCanNotBeUpdatedError
+          - TemplateTypeLabelHaveToBeLocationForNotInventory
+          - TemplateInvalidPrimarySupplyLocation
+          - TemplateInvalidHomestoreLocationNumber
+          - TemplateErrorDuringCreation
+          - TemplateLocationNotFoundError
+          - TemplateDuplicatedLocationFoundError
+          - TemplateInvalidLocationHeaderError
+          - TemplateDuplicatedLocationHeaderError
+          - TemplateHeaderContainsEmptyFieldsError
+          - TemplateLocHeadersShortHeaderError
+          - TemplateHeaderContainsDuplicatesError
+          - TemplateLocationNotesStoreIdFieldLengthError
+          - TemplateLocationNotesNoteValueFieldLengthError
+          - TemplateErrorInvalidZipCode
+          - TemplateMissingLocationNoteHeader
+          - TemplateMissingLocationNoteIdHeader
+          - TemplateInvalidSecondarySupplyLocation
+          - TemplateLocationWasNotCreated
+          - TemplateTruckNameIsEmpty
+          - TemplateWrongFormat
+          - TemplateSubscriberNotFound
+          - TemplateDuplicatedLocationHeaders
+          - TemplateInvalidHeaders
+          - TemplateInvalidPhoneError
+          - TemplateDuplicateTelecomRecordError
+          - TemplateTelecomRecordExistsError
+          - TemplateInvalidCategory
+          - TemplateDifferentRanksForProviderAssignments
+          - TemplateDuplicateRankError
+          - TemplateProviderNonCompliant
+          - TemplateLocationIsClosed
+          - TemplateProviderWarning
+          - TemplateMultipleProvidersForTradeStoreError
+          - EmptyRequest
+          - InvalidNumberOfParameters
+          - InvoiceOtherUnitTypeInvalid
+          - EmptyLocationOrTradeList
+          - RequestSubscriberIdDoesntMatchUserSubscriberId
+          - StoreIdRequiredError
+          - InvalidUserIdError
+          - InvalidStoreIdError
+          - AmbigiousError
+          - MliHierarchyFiledsCountError
+          - MliHierarchyMaxUserNameError
+          - MliHierarchyDuplicateUserError
+          - MLiHirarchyUserExistInOtherLevelError
+          - MissingLevelsError
+          - DuplicateApprovalLevelsError
+          - InvalidMliLocations
+          - InvalidMlpLocations
+          - ApprovalLevelUsedInRulsetError
+          - GLCodeAmbiguous
+          - GlCodeInvalidResponce
+          - GetRuleSetListError
+          - RuleSetDuplicateNameError
+          - RuleSetDuplicateActionError
+          - RuleSetConflictedActionError
+          - RuleSetRuleSetDoesNotExistsError
+          - RuleSetTradeDoesNotExistError
+          - RuleSetCategoryDoesNotExistError
+          - RuleSetMliLevelDoesNotExistError
+          - GetRuleSet
+          - CreateUpdateRuleSetError
+          - DeleteRuleSet
+          - GetRuleSetCategoriesTradesCountError
+          - GetRuleSetByInvoice
+          - GetCategoryTradeIdsAreSelectedError
+          - ProposalAboveMlpLimitError
+          - ProposalNextLevelHasNoAvailableActionsError
+          - DefaultRuleSetError
+          - RuleSetActionEndStatusError
+          - RuleSetRejectActionEmptyForwardToError
+          - UserFilterGetError
+          - UserFilterCreateUpdateError
+          - UserFilterDeleteError
+          - UserFilterSetAsDefaultError
+          - InvoiceFilterFromAlpProviderError
+          - RegionFilterNotAllowedError
+          - LocationIdFilterNotAllowedError
+          - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+          - PaymenowBannersForProvidersOnly
+          - PaymenowFeatureDisabled
+          - PaymenowBannerInfoNotFound
+          - PaymenowBannerInvalidNavigationUrl
+          - PaymenowRequestedProvidersIsNotAssigned
+          - PaymenowEmptyRequestedProviders
+          - PaymentManagerFeatureDisabled
+          - PaymentManagerFeatureDisabledForSubscriber
+          - PaymentSystemCurrentlyUnavailable
+          - CurrencyNotSupported
+          - PaymentSystemAccountNotFound
+          - FeatureIsOff
+          - EarlyPayFeatureWithoutPaymentManagetFeatureError
+          - FtpTestError
+          - AcceptTermsAndConditionsRequestInvalid
+          - PaymentSystemAccountError
+          - SendReportToFTP
+          - SchedulingError
+          - BadPaymentData
+          - InvoicesCanNotBeRepaid
+          - InvoicesCanNotBeRescheduled
+          - InvalidBillingAddress
+          - PaymentManagerGeneralSettingsNotFound
+          - PaymentManagerEInvoiceSettingsNotFound
+          - BadgeVerificationFailed
+          - BadgeTempPassEmpty
+          - BadgeScanRequired
+          - SolvedIssueSubmitFailed
+          - SolvedIssueInvalidLocationId
+          - SolvedIssueInvalidCategoryId
+          - SolvedIssueInvalidTradeId
+          - SolvedIssueInvalidPriorityId
+          - SolvedIssueInvalidSource
+          - SolvedIssueInvalidProblemCode
+          - SolvedIssueInvalidType
+          - SubmitFeedbackErrorWoStatus
+          - SubmitFeedbackInvalidAnswer
+          - SubmitFeedbackInvalidTrackingNumber
+          - SubmitFeedbackInvalidSubscriber
+          - SubmitFeedbackInvalidScore
+          - SubmitFeedbackUnsatisfactoryCommentRequired
+          - SubmitFeedbackInvalidReviewId
+          - SubmitFeedbackInvalidSetupId
+          - FeedbackSetupInvalidSetupId
+          - S3SaveError
+          - AbsSaveError
+          - GoodDataLoginFailed
+          - GoodDataElementUriError
+          - GoodDataReportResultUriError
+          - GoodDataReportResultEmpty
+          - GoodDataDesReportResCountError
+          - GoodDataDesReportResConvertError
+          - GoodDataDesDisplayFormAttributeEmpty
+          - InvalidProposalAmountLimit
+          - GetApprovalProposalReasonsError
+          - GetEmailRecipientsError
+          - GetAssignProposalReasonsError
+          - ProposalHasBeenVoided
+          - AssetTypeDuplicateNameError
+          - AssetTypeDoesntExistError
+          - AssetTypeFailUpdateRefrigerantPurpose
+          - AssetTypeDeleteFailed
+          - ExistingAssetsFoundForAssetType
+          - CantModifyAssetTypeParentId
+          - InvalidAssetTypeName
+          - AssetTypeInheritanceError
+          - ExistingProposalsFoundForAssetType
+          - InstallPurchaseDateOverflow
+          - WOexistsWithSomeAssets
+          - PartsChangeFailed
+          - PartsReasonCodeError
+          - PartsUseDateError
+          - PartsRefrigerantAlreadyExists
+          - PartsChargeHistoryAlreadyExists
+          - PartsNotFound
+          - BulkPartUseIncorrectWorkOrder
+          - BulkPartsByIdsNotFound
+          - BulkPartsMultipleWosError
+          - BulkPartsIncorrectIsRefrigerantParam
+          - BulkPartsIsRefrigerantCanNotbeChanged
+          - BulkPartsReasonCodeChangeError
+          - BulkPartsInvalidAssetAndReasonCodeParams
+          - BulkPartsInvalidAssetId
+          - BulkPartsInvalidInitialChargeCode
+          - BulkPartsAssetDoesntContainCharge
+          - BulkPartsIsInventoryFlagError
+          - BulkPartsLeakAlreadyInProcessError
+          - BulkPartsInvalidDateRangeError
+          - BulkPartsMoeNumberRequiredError
+          - BulkPartsSystemChargeExceeded
+          - BulkRefrigerantuUageBlocked
+          - BulkIDsNotBeNull
+          - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+          - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+          - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+          - BulkInitialChargeSystemExpansionNotAllowed
+          - BulkInventoryPartIdCanNotBeChanged
+          - BulkInventoryLocationIdCanNotBeChanged
+          - BulkPartsDuplicatedRequest
+          - BulkChangePartsIncorrectRefrigerantType
+          - BulkPartsRetroRetireIsInProgressOnThisDate
+          - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+          - RetrofitRetireCanNotBeRemoved
+          - RetroRetirePartsCantbeChanged
+          - BulkPartsInventoryApiFailed
+          - BulkPartsDuplicated
+          - BulkPartsWorkOrderInProcessing
+          - BadNotificationSubscriptionEventType
+          - RefrigerantUseDateOutOfTheLeakProcessDateRange
+          - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+          - BulkExternalWoCurrentlyDoesntExists
+          - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+          - BulkConnectorOnlyClientAssetsCouldBeProcessed
+          - LeakRecordHasWrongDateValue
+          - HasUncompliedLeakRecordInAnoutherWO
+          - HasUncompletedWOOnAnotherLeakRecord
+          - OnlyOneAssetWorkOrderPair
+          - OneLeakRecordMustBeOnCompletedWO
+          - LeakRecordNotFound
+          - AssetIDWoIdIsRequired
+          - BulkPartsReasonCodeRetrofit
+          - RetrofitRetireWasCancelledNoLeak
+          - FailedToUpdateLeakEvent
+          - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+          - LeakPartUseOnZeroChargeNotAllowed
+          - BulkLeakRecordsAndAuditRequest
+          - LeakRecordsDuplicateRequestDetected
+          - AllLeakRecordFieldsAreRequired
+          - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+          - MlpImportLevelError
+          - UpdateMlpUserLevelError
+          - InvalidHolidayName
+          - DuplicateHolidayName
+          - HolidaysDeleteFailed
+          - HolidaysExcludeInsertFailed
+          - HolidaysUpdateFailed
+          - HolidaysInsertFailed
+          - HolidaysExcludeDeleteFailed
+          - BusinessHoursDeleteFailed
+          - BusinessHoursUpdateFailed
+          - BusinessHoursInsertFailed
+          - InvalidTime
+          - HolidayForDeleteNotFound
+          - InvalidChecklistId
+          - ChecklistNotPopulated
+          - ChecklistNotAssignedForTransfersWO
+          - NoLinkBetweenSubscriberAndProvider
+          - WorkforceCreateContractorError
+          - InvalidCertificateId
+          - MaxThresholdExceeded
+          - MaxTriggerRateExceeded
+          - LeakPriorityIsRequired
+          - MissingRTSettings
+          - ResolutionCodesLimitExceeded
+          - ResolutionCodesAreRequired
+          - RootCauseIsRequired
+          - RootCauseTextIsRequired
+          - NoAccessToSetRootCauseText
+          - RootCauseTextMaxLengthExceeded
+          - ResolutionCodeTextIsRequired
+          - NoAccessToSetResolutionCodeText
+          - ResolutionCodeTextMaxLengthExceeded
+          - ResolutionCodeTextMustBeUnique
+          - ResolutionCodeWithoutFreeTextMustBeUnique
+          - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+          - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+          - AssetCategoriesLimitExceeded
+          - NoAccessToAssetCategories
+          - AssetCategoriesAreRequired
+          - InvalidAssetCategoryId
+          - NoAssetCategoriesOnWorkOrder
+          - RootCausesMustBeForAllWorkOrderAssetCategories
+          - RootCauseTextMustBeUnique
+          - AssetCategoryIsRequired
+          - MultipleRootCausesMethodMustBeUsed
+          - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+          - AssetFilterLocationsLimitExceeded
+          - UnknownStoreId
+          - UsesRefrigerantAttributeNotChanged
+          - AssetTagDuplicate
+          - AssetTagIdDuplicate
+          - UnknownEquipmentType
+          - ParentIdInOtherLocation
+          - UnknownBrandName
+          - CARBRequiredManufacturedDate
+          - CARBRequiredInstallDate
+          - TradeNotFound
+          - AssetDoesntExist
+          - AssetIsNotRefrigerant
+          - AssetCantContainRefrigerant
+          - OnlyRackAssetsContainingCircuits
+          - ConnectorAssetTagIdCanNotBeChanged
+          - ConnectorAssetLocationIdCanNotBeChanged
+          - AssetTagCantBeUpdated
+          - AssetTypeIsNotСonfiguredToManageRTAssets
+          - RefrigerantTrackingNotAvailableForLocation
+          - UsesRefrigerantRequiredByAssetTypeSettings
+          - AssetLocationTradeDoesntCorrespondToWO
+          - AssetLocationSelectedPMmodule
+          - UpdateAssetRepairStatusValidation
+          - HasCircuitsCantBeChange
+          - HasComponentsCantBeChange
+          - CircuitCanNotBeConnectedToCircuit
+          - RTCircuitCanNotBeConnectedToNonRTAsset
+          - RTComponentCanNotBeConnectedToNonRTAsset
+          - ComponentCanNotBeConnectedToComponent
+          - NonRTComponentCanNotBeConnectedToRtAsset
+          - NonRTCircuitCanNotBeConnectedToRtAsset
+          - ComponentCanNotBeConnectedToCircuit
+          - ParentAssetShouldHaveEitherComponentsNorCircuits
+          - ParentAssetCantHaveComponents
+          - ParentAssetCantHaveCircuits
+          - MultipleAssetsFoundForTheRequestedTagId
+          - InvalidBrandName
+          - UnknownBrandId
+          - BrandRestrictedByAssetType
+          - BrandRestrictedBySubscriber
+          - BrandsRestrictedBySubscriber
+          - DeclineWorkOrderFailed
+          - AcceptWorkOrderFailed
+          - WorkOrderWasAccepted
+          - AssetAttachmentsSizeExceeded
+          - SaveMliAuditReportSetting
+          - GetMliAuditReportSetting
+          - SaveMliAuditReportResult
+          - SaveMliAuditReportSendEmailStatus
+          - SaveMliAuditReportFilePath
+          - GetSubscribersEnabledSchedule
+          - SaveMliAuditInfoError
+          - TaxValidationAddNewCompanySettingsError
+          - TaxValidationUpdateCompanySettingsError
+          - ProjectAssociationError
+          - GetProjectsInvoiceAmountsError
+          - TaxCodeNotUniqueError
+          - FieldLengthIsTooLongError
+          - SetTaxCodesBulkError
+          - InvoiceAdditionalApprovalCodeValueError
+          - BulkUpdateInvoicePaymentError
+          - InvoiceLineItemFilterDisabled
+          - InvoiceStatusToRejectProviderNotificationFailed
+          - SortFieldNotAvailableError
+          - ContractServiceExist
+          - ContractServiceCantChangeTrade
+          - ContractServiceCantChangeCategory
+          - ContractServiceCantChangeProvider
+          - ContractServicePMServiceCantChangeTrade
+          - ContractServicePMServiceCantChangeCategory
+          - ContractedServiceNameAlreadyExists
+          - ContractedServiceNameLinkedToRates
+          - WorkRequestDescriptionIsRequired
+          - WorkRequestCallDateIsRequired
+          - WorkRequestIssueIsRequired
+          - WorkRequestCallDateHasWrongFormat
+          - WorkRequestScheduledDateHasWrongFormat
+          - InvalidWorkRequestStatus
+          - InvalidWorkRequestExtendedStatus
+          - InvalidWorkRequestCategory
+          - InvalidWorkRequestPriority
+          - InvalidWorkRequestCurrency
+          - InvalidWorkRequestIssueSetup
+          - InvalidWorkRequestIssueArea
+          - InvalidWorkRequestAsset
+          - WorkRequestAttachmentFileNameIsRequired
+          - WorkRequestAttachmentOriginalNameIsRequired
+          - WorkRequestIssueProblemCodeIsRequired
+          - WorkRequestIssueProblemTypeIsRequired
+          - WorkRequestScheduledDateMustBeGreaterThanCallDate
+          - InvalidWorkRequestId
+          - WorkRequestSearchCallDateFromHasWrongFormat
+          - WorkRequestSearchCallDateToHasWrongFormat
+          - WorkRequestSearchScheduledDateFromHasWrongFormat
+          - WorkRequestSearchScheduledDateToHasWrongFormat
+          - WorkRequestSearchClosedDateFromHasWrongFormat
+          - WorkRequestSearchClosedDateToHasWrongFormat
+          - WorkOrderIsAlreadyCreatedForWorkRequest
+          - WorkRequestIsClosed
+          - WorkRequestClosedReasonIsRequiredForClosedStatus
+          - WorkOrderIdIsRequiredForThisClosedReason
+          - InvalidWorkRequestClosedReason
+          - WorkRequestClosedReasonIsOnlyForClosedStatus
+          - InvalidWorkRequestWorkOrderId
+          - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+          - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+          - InvalidWorkOrderSourceType
+          - DeclineReasonIdIsRequired
+          - DeclineReasonDoesntAllowCustomText
+          - InvalidDeclineReasonId
+          - MultipleWorkOrdersForPurchaseNumber
+          - InvoiceMaterialMakupInvalid
+          - MaterialMarkUpDiscrepancyReasonShouldBeStated
+          - MaterialPriceDiscrepancyReasonShouldBeStated
+          - OtherPriceDiscrepancyReasonShouldBeStated
+          - SubscriberIdIsNotValid
+          - FiscalPeriodIsNotValid
+          - AmountIsNotValid
+          - AmountFormatIsNotValid
+          - CategoryMustBeEmpty
+          - CategoryIsNotValid
+          - TradeMustBeEmpty
+          - TradeIsNotValid
+          - GlCodeMustBeEmpty
+          - GlCodeIsNotValid
+          - LocationMustBeEmpty
+          - LocationIsNotValid
+          - RegionMustBeEmpty
+          - RegionIsNotValid
+          - DistrictMustBeEmpty
+          - DistrictIsNotValid
+          - DuplicateData
+          - PrimaryCategoryMustBeEmpty
+          - PrimaryCategoryIsNotValid
+          - CategoryAndExcludedCategoryCannotSimultaneously
+          - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+          - TradeAndExcludedTradeCannotSimultaneously
+          - GlCodeAndExcludedGlCodeCannotSimultaneously
+          - DuplicateCategories
+          - DuplicateTrades
+          - DuplicateGlCodes
+          - DuplicatePrimaryCategories
+          - LocationNoteMustBeEmpty
+          - LocationNoteIsNotValid
+          - OverlappingCategories
+          - OverlappingPrimaryCategories
+          - OverlappingTrades
+          - OverlappingPrimaryTrades
+          - OverlappingGlCodes
+          - OverlappingLocations
+          - OverlappingRegions
+          - OverlappingDistricts
+          - OverlappingLocationNotes
+          - TaxExemptionErrorApi
+          - OtherLineItemZeroAmount
+          - TravelLineItemsNotNegativeValueRequired
+          - MaterialLineItemsNotNegativeValueRequired
+          - LaborLineItemsNotNegativeValueRequired
+          - AdditionalApprovalCodeSetupIdInvalid
+          - VendorIdIsNotValid
+          - InvalidBatchId
+          - InvalidBatchStatusId
+          - CategoryInUsePMServiceError
+          - CategoryInUseChecklistError
+          - CategoryInUseETAMissedAlertError
+          - CategoryInUseBudgetControl
+          - CategoryInUseConnector
+          - CategoryInUseContractedService
+          - CategoryInUseEDI
+          - CategoryInUseIVR
+          - CategoryInUseFeedbackV2
+          - CategoryInUseProposalApproveReasons
+          - CategoryInUsePaymentManager
+          - CategoryInUseProviderAssignments
+          - CategoryInUseSiteAccess
+          - CategoryInUseAlerts
+          - CategoryInUseOpenWOAlert
+          - CategoryInUseWOAutocopy
+          - CategoryInUseWorkRequest
+          - CategoryInUseWO
+          - CategoryInUseDashboardOverride
+          - CategoryInUseInvoiceAttributes
+          - FeatureIsOn
+          - LocationHierarchyNotFound
+          - LocationHierarchyLevelNotFound
+          - LocationHierarchyParentLevelNotFound
+          - LocationSpaceTypeNotFound
+          - DuplicateRowByValueKey
+          - ParentNotFound
+          - DuplicateSequenceAmongSiblings
+          - SequenceConflictsWithExistingData
+          - SequenceMustBeGreaterThanZero
+          - ValueContainsPathDelimiter
+          - InitializationWarmupError
+          type: string
+      ErrorCode:
+        description: The code of the first error found
+        enum:
+        - NotAllowed
+        - EmptyProvider
+        - InvalidProviderId
+        - UnknownProvider
+        - ProviderAlreadyExists
+        - ProviderIdNotExists
+        - TimeoutExpiredError
+        - EmptyContract
+        - ContractUndefined
+        - EmptySubscriber
+        - InvalidSubscriberId
+        - UnknownSubscriber
+        - InactiveSubscriber
+        - EmptySubscriberId
+        - SubscriberIdNotExists
+        - InternalError
+        - DataNotFound
+        - BadRequest
+        - UnAuthorized
+        - UnSupportedApplication
+        - SubsidiaryUserDisabled
+        - EmptyLocation
+        - InvalidLocationId
+        - UnknownLocation
+        - LocationNotBelongsToSubscriber
+        - EmptyLocationCountry
+        - LocationAlreadyExists
+        - InvalidStoreId
+        - LocationEmptyState
+        - NoAccessToLocation
+        - LocationAddressValidationError
+        - LocationAddressRequestValidationError
+        - InvalidLocationNoteHeader
+        - NoAccessToUpdateProtectedNote
+        - InvalidBusinessHoursFormat
+        - WorkingHoursIntersect
+        - InvalidDayOfWeek
+        - DuplicateDayOfWeek
+        - InvalidBusinessHoursInitialSetup
+        - BusinessHoursIsEmpty
+        - InvalidHolidayRepeatByType
+        - EmptyHolidayListOfDays
+        - EmptyHolidayListOfMonths
+        - InvalidHolidayMonthName
+        - InvalidHolidayNameLength
+        - InvalidHolidayRepeatEvery
+        - DuplicateMonth
+        - InvalidHolidayFrequency
+        - InvalidHolidayStartDate
+        - InvalidCloseAllDay
+        - HolidayDoesNotExist
+        - InvalidFormatParameter
+        - InvalidLocationCity
+        - InvalidLocationZip
+        - InvalidLocationLatitude
+        - InvalidLocationLongitude
+        - InvalidLocationEmail
+        - InvalidLocationName
+        - InvalidLocationState
+        - InvalidLocationAddlAddress
+        - InvalidLocationMainAddress
+        - InvalidLocationCountry
+        - InvalidLocationRegion
+        - InvalidLocationDistrict
+        - InvalidLocationPhone
+        - InvalidLocationContact
+        - InvalidLocationFaxNumber
+        - LocationCountryNotFound
+        - LocationStateNotFound
+        - LocationCityNotFound
+        - LocationIdNotExists
+        - InvalidLocationEmailLength
+        - LocationStateIdNotFound
+        - IncorrectCombinationStateAndStateId
+        - InvalidSubscriberIds
+        - InvalidLocalizationSettings
+        - LandlordResponsibilityNotFound
+        - LandlordResponsibilityAlreadyExists
+        - EmptyLocationIds
+        - AttachmentNotExist
+        - InvalidTradeId
+        - InvalidCategoryId
+        - InvalidOverrideCategoryId
+        - InvalidOverridePriorityId
+        - LeaseNoteExceedMaxLength
+        - InvalidOverrideProviderRank
+        - InvalidOverrideNTE
+        - DuplicateRows
+        - InvalidPriorityId
+        - LocationNotFound
+        - EmptyTrade
+        - InvalidTrade
+        - TradeNotBelongsToSubscriber
+        - InvalidPrimaryTrade
+        - InvalidTradeForSubscriber
+        - InvalidCategoryForSubscriber
+        - GlCodeAlreadyExists
+        - GlCodeNotExists
+        - InvalidGlCodeUpdate
+        - EmptyGlCode
+        - TradeAlreadyExists
+        - InvalidNTETrade
+        - TradeNotExists
+        - TradeAlreadyInUse
+        - TradeWithTheSameNameHasBeenDeleted
+        - TradeInUsePMServices
+        - TradeInUseProposalError
+        - TradeInUseRFPError
+        - TradeInUseChecklistError
+        - TradeInUseBudgetControl
+        - TradeInUseGlCode
+        - TradeInUseDynamicProviderAssignments
+        - TradeInUseInvoice
+        - TradeInUseLandlordResponsibilities
+        - TradeInUseWO
+        - TradeInUseEquipmentType
+        - TradeInUseRFP
+        - TradeInUseConnector
+        - TradeInUseContractedService
+        - TradeInUseIVR
+        - TradeInUseSiteAccess
+        - TradeInUseGLCodes
+        - TradeInUseCIWO
+        - TradeInUseOrganizationPermissions
+        - TradeСreationError
+        - EmptyUser
+        - EmptyCreatedBy
+        - InvalidUserName
+        - NotProviderUser
+        - UserHasNoPermissions
+        - RestrictedAccount
+        - UserAlreadyExists
+        - UserHasNoPermissionsEditWO
+        - UserEmailAddressIsMissing
+        - UserIsNotRTAdmin
+        - InvalidSubsriberProviderId
+        - LanguageNameNotFound
+        - InvalidLanguageId
+        - LanguageIdNotFound
+        - UseBothSubscriberIdProviderId
+        - EmptyWoProblem
+        - InvalidWoProblemSource
+        - InvalidWoProblemDescription
+        - InvalidWoProblemCode
+        - InvalidWoStatus
+        - InvalidWoNte
+        - InvalidWoCaller
+        - InvalidWoCallDate
+        - InvalidWoScheduledDate
+        - InvalidWoScheduledDateGreaterThanMaxAllowed
+        - EmptyWoCategory
+        - InvalidWoCategory
+        - EmptyWoPriority
+        - InvalidWoPriority
+        - InvalidWoCurrency
+        - InvalidWoSetupId
+        - AttachmentsRequired
+        - InvalidWoIdentifier
+        - EquipmentRequired
+        - WoNteOverflow
+        - InvalidWoPurchaseNumber
+        - InvalidWoStateForUpdate
+        - InvalidPagingParameter
+        - InvalidWoNumber
+        - CheckInDenied
+        - CheckOutDenied
+        - WoScheduledDateLessThenReassignDate
+        - WoScheduledDateLessThenCallDate
+        - InvalidWoActionReason
+        - EmptySubscriberProperty
+        - WorkOrderUpdateError
+        - MissedWoNteDetails
+        - InvalidLinkedWoIdentifier
+        - WoIsOnHold
+        - InvalidWoTrade
+        - InvalidStarScore
+        - WorkOrderAlreadyRated
+        - AttachmentThumbnailNotAvailable
+        - InvalidWoIdentifierOrPin
+        - InvalidTimeZoneHeader
+        - RefrigerantWasUsedShouldBeYesOrNo
+        - CheckInDeniedOutsideGeolocation
+        - CheckOutDeniedOutsideGeolocation
+        - LeakDetectorAuditShouldBeCreated
+        - CheckInOutPremature
+        - WorkOrderAttachmentsSizeExceeded
+        - WorkOrderNotFound
+        - WorkOrderCreateError
+        - InvalidWoProjectedCompletionDate
+        - InvalidFollowUpWo
+        - InvalidWeatherEventId
+        - InvalidSiteAuditLinkedWo
+        - InvalidSetupId
+        - IssueListNotFound
+        - InvalidIssueListField
+        - SiteAuditCompleted
+        - CheckSiteAuditError
+        - SaveSiteAuditError
+        - RemoveSiteAuditError
+        - InactiveTemplateType
+        - SiteAuditNotFound
+        - SiteAuditUpdateError
+        - InvalidSiteAuditParameters
+        - InvalidAdditionalApprovalCode
+        - InvalidAdditionalApprovalCodeValue
+        - AdditionalApprovalCodeIsDisabled
+        - InvalidOtherDesc
+        - InvalidTax2Name
+        - InvoiceInconsistentAmounts
+        - InvoiceInvalidTotal
+        - InvoiceTotalGreaterNte
+        - InvoiceExists
+        - CreatingInvoiceError
+        - DuplInvNumber
+        - InvoiceTotalNull
+        - InvComplDateNull
+        - InvDateLessComplDate
+        - InvoiceNotAuto
+        - ESignatureRequired
+        - InvWoNotFound
+        - InvWrongWoCurr
+        - InvWoCurrNotFound
+        - InvoicingDisabled
+        - InvCreationUnexpectedRes
+        - InvoiceInvalidLaborAmount
+        - InvoiceInvalidMaterialAmount
+        - InvDateOld
+        - InvDateGreater
+        - InvoiceMaterialDescriptionLengthOverflow
+        - InvoiceTaxNotValidated
+        - InvoiceMaterialPartNumberLengthOverflow
+        - TaxValidationError
+        - TaxExemptionError
+        - InvalidInvoiceNumber
+        - GetApprovalLevelsError
+        - InvoiceAddUsersToMliLevelsError
+        - InvoiceAddDeleteLocationsToMliLevelUserError
+        - InvoiceUpdateMLiLevelError
+        - InvoiceDeleteMliLevelError
+        - InvoiceDeleteUsersFromMliLevelError
+        - ApprovalLevelNameLengthOverflow
+        - GstTaxError
+        - Tax2Error
+        - GetApprovalLevelsAndLocationsByUserError
+        - GetAssignedUserShortInfoError
+        - AssignAllLocationsToApprovalLevelAndUserError
+        - GetLocationsForApprovalLevelAndAssignedUserError
+        - GetLocationsBySubscriberError
+        - AssignUserWithLocationsToApprovalLevelError
+        - ReAssignUserWithLocationsToNewApprovalLevelError
+        - ReAssignLocationsToApprovalLevelAndUserError
+        - OutstandingBalance
+        - InvoiceTaxDetailsEmpty
+        - InvoiceTaxDetailsIncorrectSum
+        - MultipleUsersForLocationIsNotAllowed
+        - UserAssignedToOtherLevel
+        - UserDoesNotExist
+        - LaborLineItemRequired
+        - MaterialLineItemRequired
+        - InvoiceDoesntExist
+        - InvoiceStarUnstarFailed
+        - InvoiceBatchUpdateInvalidInvoiceStatusError
+        - InvoiceBatchUpdateLimitExceededError
+        - InvoiceNotAvailableForCurrentUser
+        - InvoiceBatchUpdateInvalidRuleSetStructure
+        - InvoiceBatchUpdateInvalidMliStructure
+        - InvoiceBatchUpdateStatusError
+        - InvoiceMaterialUnitTypeInvalid
+        - ExistingBatchNumber
+        - InvoiceResolutionTextRequired
+        - GetInvoiceDefaultApprovalCodesError
+        - InvoiceInvalidTravelAmount
+        - InvoiceTravelDescriptionLengthOverflow
+        - InvoiceTravelUnitTypeInvalid
+        - TravelLineItemRequired
+        - TravelDetailsDisabled
+        - OnOffShoreDisabled
+        - InvoiceInvalidLaborCount
+        - InvoiceInvalidMaterialCount
+        - InvoiceInvalidTravelCount
+        - SubscriberNotRegisteredForTaxValidation
+        - ManyDecimalsInAmountError
+        - DecimalPartQstTaxError
+        - LaborRatesDiscrepancy
+        - PayInvoicesError
+        - InvoiceNumberRequirementsError
+        - InvoiceNumberIncorrect
+        - InvoiceNumberRegExPatternError
+        - GetInvoicesPendingApprovalByLocationError
+        - ReAssignInvoicesToUsersFailed
+        - ReAssignInvoicesUsersMatched
+        - GetUsersForReassignInvoiceError
+        - InvalidTimeRangeActivity
+        - OutsourcedSourceInvoiceNotFound
+        - OthersLineItemsDisabled
+        - InvoiceInvalidOtherAmount
+        - InvoiceInvalidOtherCount
+        - InvoiceOtherDescriptionLengthOverflow
+        - OtherLineItemRequired
+        - OtherLineItemsNotNegativeValueRequired
+        - InvalidLaborSkillLevel
+        - InvalidLaborType
+        - InvalidTechnicianQuantity
+        - GetInvoicesCommonCategoriesError
+        - InvoiceExplainDisputeEmpty
+        - InvoiceAdditionalApprovalCodeHeaderError
+        - TemplateParseSuccess
+        - TemplateIncorrectHeaderError
+        - TemplateEmptyTemplateError
+        - TemplateWrongFieldsCountError
+        - TemplateFieldNotFoundError
+        - TemplateFieldRequiredError
+        - TemplateParseIntError
+        - TemplateFieldSizeError
+        - TemplateInvalidValueError
+        - TemplateFieldFormatError
+        - TemplateFieldMaxRangeError
+        - TemplateFieldMinRangeError
+        - TemplateProviderNotEntered
+        - TemplateInvalidSubscriberError
+        - TemplateVendorNotFoundError
+        - TemplateMissedProviderError
+        - TemplateProviderNotFoundError
+        - TemplateProviderSubsccriberLinkError
+        - TemplateTradeDispatchRankError
+        - TemplateInvalidTradeForSubscriberError
+        - TemplateStoreNotFoundError
+        - TemplateNotStoresForStateError
+        - TemplateNotStoresForCountryError
+        - TemplateNotStoresForDistrictError
+        - TemplateNotStoresForRegionError
+        - TemplateMultiplePimaryProvidersForTradeStoreError
+        - TemplateDuplicatePrimaryRelationshipError
+        - TemplateAmbiguousDataError
+        - TemplateIncorrectSubscriber
+        - TemplateDuplicateRanking
+        - TemplateLongitudeRangeError
+        - TemplateLatitudeRangeError
+        - InvoiceMaterialPartNameLengthOverflow
+        - TemplateTradeLocationExclusion
+        - TemplateInvalidStateError
+        - TemplateMissedSubscriberError
+        - TemplateMissedStoreIdError
+        - TemplateInvalidSubscriberIdError
+        - TemplateOpenCloseDateError
+        - TemplateInvalidCountryError
+        - TemplateInvalidStateForCountryError
+        - TemplateInvalidLocationTypeError
+        - TemplateMissingFullAndShortNameError
+        - TemplateMissingCountryError
+        - TemplateDuplicatedDataError
+        - TemplateParentLocationNotFoundError
+        - TemplateParseDateTimeError
+        - TemplateParseDecimalError
+        - TemplateSquareValueRangeError
+        - TemplateInvalidSquareMeasureError
+        - TemplateTypeLabelCanNotBeUpdatedError
+        - TemplateTypeLabelHaveToBeLocationForNotInventory
+        - TemplateInvalidPrimarySupplyLocation
+        - TemplateInvalidHomestoreLocationNumber
+        - TemplateErrorDuringCreation
+        - TemplateLocationNotFoundError
+        - TemplateDuplicatedLocationFoundError
+        - TemplateInvalidLocationHeaderError
+        - TemplateDuplicatedLocationHeaderError
+        - TemplateHeaderContainsEmptyFieldsError
+        - TemplateLocHeadersShortHeaderError
+        - TemplateHeaderContainsDuplicatesError
+        - TemplateLocationNotesStoreIdFieldLengthError
+        - TemplateLocationNotesNoteValueFieldLengthError
+        - TemplateErrorInvalidZipCode
+        - TemplateMissingLocationNoteHeader
+        - TemplateMissingLocationNoteIdHeader
+        - TemplateInvalidSecondarySupplyLocation
+        - TemplateLocationWasNotCreated
+        - TemplateTruckNameIsEmpty
+        - TemplateWrongFormat
+        - TemplateSubscriberNotFound
+        - TemplateDuplicatedLocationHeaders
+        - TemplateInvalidHeaders
+        - TemplateInvalidPhoneError
+        - TemplateDuplicateTelecomRecordError
+        - TemplateTelecomRecordExistsError
+        - TemplateInvalidCategory
+        - TemplateDifferentRanksForProviderAssignments
+        - TemplateDuplicateRankError
+        - TemplateProviderNonCompliant
+        - TemplateLocationIsClosed
+        - TemplateProviderWarning
+        - TemplateMultipleProvidersForTradeStoreError
+        - EmptyRequest
+        - InvalidNumberOfParameters
+        - InvoiceOtherUnitTypeInvalid
+        - EmptyLocationOrTradeList
+        - RequestSubscriberIdDoesntMatchUserSubscriberId
+        - StoreIdRequiredError
+        - InvalidUserIdError
+        - InvalidStoreIdError
+        - AmbigiousError
+        - MliHierarchyFiledsCountError
+        - MliHierarchyMaxUserNameError
+        - MliHierarchyDuplicateUserError
+        - MLiHirarchyUserExistInOtherLevelError
+        - MissingLevelsError
+        - DuplicateApprovalLevelsError
+        - InvalidMliLocations
+        - InvalidMlpLocations
+        - ApprovalLevelUsedInRulsetError
+        - GLCodeAmbiguous
+        - GlCodeInvalidResponce
+        - GetRuleSetListError
+        - RuleSetDuplicateNameError
+        - RuleSetDuplicateActionError
+        - RuleSetConflictedActionError
+        - RuleSetRuleSetDoesNotExistsError
+        - RuleSetTradeDoesNotExistError
+        - RuleSetCategoryDoesNotExistError
+        - RuleSetMliLevelDoesNotExistError
+        - GetRuleSet
+        - CreateUpdateRuleSetError
+        - DeleteRuleSet
+        - GetRuleSetCategoriesTradesCountError
+        - GetRuleSetByInvoice
+        - GetCategoryTradeIdsAreSelectedError
+        - ProposalAboveMlpLimitError
+        - ProposalNextLevelHasNoAvailableActionsError
+        - DefaultRuleSetError
+        - RuleSetActionEndStatusError
+        - RuleSetRejectActionEmptyForwardToError
+        - UserFilterGetError
+        - UserFilterCreateUpdateError
+        - UserFilterDeleteError
+        - UserFilterSetAsDefaultError
+        - InvoiceFilterFromAlpProviderError
+        - RegionFilterNotAllowedError
+        - LocationIdFilterNotAllowedError
+        - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+        - PaymenowBannersForProvidersOnly
+        - PaymenowFeatureDisabled
+        - PaymenowBannerInfoNotFound
+        - PaymenowBannerInvalidNavigationUrl
+        - PaymenowRequestedProvidersIsNotAssigned
+        - PaymenowEmptyRequestedProviders
+        - PaymentManagerFeatureDisabled
+        - PaymentManagerFeatureDisabledForSubscriber
+        - PaymentSystemCurrentlyUnavailable
+        - CurrencyNotSupported
+        - PaymentSystemAccountNotFound
+        - FeatureIsOff
+        - EarlyPayFeatureWithoutPaymentManagetFeatureError
+        - FtpTestError
+        - AcceptTermsAndConditionsRequestInvalid
+        - PaymentSystemAccountError
+        - SendReportToFTP
+        - SchedulingError
+        - BadPaymentData
+        - InvoicesCanNotBeRepaid
+        - InvoicesCanNotBeRescheduled
+        - InvalidBillingAddress
+        - PaymentManagerGeneralSettingsNotFound
+        - PaymentManagerEInvoiceSettingsNotFound
+        - BadgeVerificationFailed
+        - BadgeTempPassEmpty
+        - BadgeScanRequired
+        - SolvedIssueSubmitFailed
+        - SolvedIssueInvalidLocationId
+        - SolvedIssueInvalidCategoryId
+        - SolvedIssueInvalidTradeId
+        - SolvedIssueInvalidPriorityId
+        - SolvedIssueInvalidSource
+        - SolvedIssueInvalidProblemCode
+        - SolvedIssueInvalidType
+        - SubmitFeedbackErrorWoStatus
+        - SubmitFeedbackInvalidAnswer
+        - SubmitFeedbackInvalidTrackingNumber
+        - SubmitFeedbackInvalidSubscriber
+        - SubmitFeedbackInvalidScore
+        - SubmitFeedbackUnsatisfactoryCommentRequired
+        - SubmitFeedbackInvalidReviewId
+        - SubmitFeedbackInvalidSetupId
+        - FeedbackSetupInvalidSetupId
+        - S3SaveError
+        - AbsSaveError
+        - GoodDataLoginFailed
+        - GoodDataElementUriError
+        - GoodDataReportResultUriError
+        - GoodDataReportResultEmpty
+        - GoodDataDesReportResCountError
+        - GoodDataDesReportResConvertError
+        - GoodDataDesDisplayFormAttributeEmpty
+        - InvalidProposalAmountLimit
+        - GetApprovalProposalReasonsError
+        - GetEmailRecipientsError
+        - GetAssignProposalReasonsError
+        - ProposalHasBeenVoided
+        - AssetTypeDuplicateNameError
+        - AssetTypeDoesntExistError
+        - AssetTypeFailUpdateRefrigerantPurpose
+        - AssetTypeDeleteFailed
+        - ExistingAssetsFoundForAssetType
+        - CantModifyAssetTypeParentId
+        - InvalidAssetTypeName
+        - AssetTypeInheritanceError
+        - ExistingProposalsFoundForAssetType
+        - InstallPurchaseDateOverflow
+        - WOexistsWithSomeAssets
+        - PartsChangeFailed
+        - PartsReasonCodeError
+        - PartsUseDateError
+        - PartsRefrigerantAlreadyExists
+        - PartsChargeHistoryAlreadyExists
+        - PartsNotFound
+        - BulkPartUseIncorrectWorkOrder
+        - BulkPartsByIdsNotFound
+        - BulkPartsMultipleWosError
+        - BulkPartsIncorrectIsRefrigerantParam
+        - BulkPartsIsRefrigerantCanNotbeChanged
+        - BulkPartsReasonCodeChangeError
+        - BulkPartsInvalidAssetAndReasonCodeParams
+        - BulkPartsInvalidAssetId
+        - BulkPartsInvalidInitialChargeCode
+        - BulkPartsAssetDoesntContainCharge
+        - BulkPartsIsInventoryFlagError
+        - BulkPartsLeakAlreadyInProcessError
+        - BulkPartsInvalidDateRangeError
+        - BulkPartsMoeNumberRequiredError
+        - BulkPartsSystemChargeExceeded
+        - BulkRefrigerantuUageBlocked
+        - BulkIDsNotBeNull
+        - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+        - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+        - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+        - BulkInitialChargeSystemExpansionNotAllowed
+        - BulkInventoryPartIdCanNotBeChanged
+        - BulkInventoryLocationIdCanNotBeChanged
+        - BulkPartsDuplicatedRequest
+        - BulkChangePartsIncorrectRefrigerantType
+        - BulkPartsRetroRetireIsInProgressOnThisDate
+        - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+        - RetrofitRetireCanNotBeRemoved
+        - RetroRetirePartsCantbeChanged
+        - BulkPartsInventoryApiFailed
+        - BulkPartsDuplicated
+        - BulkPartsWorkOrderInProcessing
+        - BadNotificationSubscriptionEventType
+        - RefrigerantUseDateOutOfTheLeakProcessDateRange
+        - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+        - BulkExternalWoCurrentlyDoesntExists
+        - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+        - BulkConnectorOnlyClientAssetsCouldBeProcessed
+        - LeakRecordHasWrongDateValue
+        - HasUncompliedLeakRecordInAnoutherWO
+        - HasUncompletedWOOnAnotherLeakRecord
+        - OnlyOneAssetWorkOrderPair
+        - OneLeakRecordMustBeOnCompletedWO
+        - LeakRecordNotFound
+        - AssetIDWoIdIsRequired
+        - BulkPartsReasonCodeRetrofit
+        - RetrofitRetireWasCancelledNoLeak
+        - FailedToUpdateLeakEvent
+        - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+        - LeakPartUseOnZeroChargeNotAllowed
+        - BulkLeakRecordsAndAuditRequest
+        - LeakRecordsDuplicateRequestDetected
+        - AllLeakRecordFieldsAreRequired
+        - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+        - MlpImportLevelError
+        - UpdateMlpUserLevelError
+        - InvalidHolidayName
+        - DuplicateHolidayName
+        - HolidaysDeleteFailed
+        - HolidaysExcludeInsertFailed
+        - HolidaysUpdateFailed
+        - HolidaysInsertFailed
+        - HolidaysExcludeDeleteFailed
+        - BusinessHoursDeleteFailed
+        - BusinessHoursUpdateFailed
+        - BusinessHoursInsertFailed
+        - InvalidTime
+        - HolidayForDeleteNotFound
+        - InvalidChecklistId
+        - ChecklistNotPopulated
+        - ChecklistNotAssignedForTransfersWO
+        - NoLinkBetweenSubscriberAndProvider
+        - WorkforceCreateContractorError
+        - InvalidCertificateId
+        - MaxThresholdExceeded
+        - MaxTriggerRateExceeded
+        - LeakPriorityIsRequired
+        - MissingRTSettings
+        - ResolutionCodesLimitExceeded
+        - ResolutionCodesAreRequired
+        - RootCauseIsRequired
+        - RootCauseTextIsRequired
+        - NoAccessToSetRootCauseText
+        - RootCauseTextMaxLengthExceeded
+        - ResolutionCodeTextIsRequired
+        - NoAccessToSetResolutionCodeText
+        - ResolutionCodeTextMaxLengthExceeded
+        - ResolutionCodeTextMustBeUnique
+        - ResolutionCodeWithoutFreeTextMustBeUnique
+        - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+        - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+        - AssetCategoriesLimitExceeded
+        - NoAccessToAssetCategories
+        - AssetCategoriesAreRequired
+        - InvalidAssetCategoryId
+        - NoAssetCategoriesOnWorkOrder
+        - RootCausesMustBeForAllWorkOrderAssetCategories
+        - RootCauseTextMustBeUnique
+        - AssetCategoryIsRequired
+        - MultipleRootCausesMethodMustBeUsed
+        - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+        - AssetFilterLocationsLimitExceeded
+        - UnknownStoreId
+        - UsesRefrigerantAttributeNotChanged
+        - AssetTagDuplicate
+        - AssetTagIdDuplicate
+        - UnknownEquipmentType
+        - ParentIdInOtherLocation
+        - UnknownBrandName
+        - CARBRequiredManufacturedDate
+        - CARBRequiredInstallDate
+        - TradeNotFound
+        - AssetDoesntExist
+        - AssetIsNotRefrigerant
+        - AssetCantContainRefrigerant
+        - OnlyRackAssetsContainingCircuits
+        - ConnectorAssetTagIdCanNotBeChanged
+        - ConnectorAssetLocationIdCanNotBeChanged
+        - AssetTagCantBeUpdated
+        - AssetTypeIsNotСonfiguredToManageRTAssets
+        - RefrigerantTrackingNotAvailableForLocation
+        - UsesRefrigerantRequiredByAssetTypeSettings
+        - AssetLocationTradeDoesntCorrespondToWO
+        - AssetLocationSelectedPMmodule
+        - UpdateAssetRepairStatusValidation
+        - HasCircuitsCantBeChange
+        - HasComponentsCantBeChange
+        - CircuitCanNotBeConnectedToCircuit
+        - RTCircuitCanNotBeConnectedToNonRTAsset
+        - RTComponentCanNotBeConnectedToNonRTAsset
+        - ComponentCanNotBeConnectedToComponent
+        - NonRTComponentCanNotBeConnectedToRtAsset
+        - NonRTCircuitCanNotBeConnectedToRtAsset
+        - ComponentCanNotBeConnectedToCircuit
+        - ParentAssetShouldHaveEitherComponentsNorCircuits
+        - ParentAssetCantHaveComponents
+        - ParentAssetCantHaveCircuits
+        - MultipleAssetsFoundForTheRequestedTagId
+        - InvalidBrandName
+        - UnknownBrandId
+        - BrandRestrictedByAssetType
+        - BrandRestrictedBySubscriber
+        - BrandsRestrictedBySubscriber
+        - DeclineWorkOrderFailed
+        - AcceptWorkOrderFailed
+        - WorkOrderWasAccepted
+        - AssetAttachmentsSizeExceeded
+        - SaveMliAuditReportSetting
+        - GetMliAuditReportSetting
+        - SaveMliAuditReportResult
+        - SaveMliAuditReportSendEmailStatus
+        - SaveMliAuditReportFilePath
+        - GetSubscribersEnabledSchedule
+        - SaveMliAuditInfoError
+        - TaxValidationAddNewCompanySettingsError
+        - TaxValidationUpdateCompanySettingsError
+        - ProjectAssociationError
+        - GetProjectsInvoiceAmountsError
+        - TaxCodeNotUniqueError
+        - FieldLengthIsTooLongError
+        - SetTaxCodesBulkError
+        - InvoiceAdditionalApprovalCodeValueError
+        - BulkUpdateInvoicePaymentError
+        - InvoiceLineItemFilterDisabled
+        - InvoiceStatusToRejectProviderNotificationFailed
+        - SortFieldNotAvailableError
+        - ContractServiceExist
+        - ContractServiceCantChangeTrade
+        - ContractServiceCantChangeCategory
+        - ContractServiceCantChangeProvider
+        - ContractServicePMServiceCantChangeTrade
+        - ContractServicePMServiceCantChangeCategory
+        - ContractedServiceNameAlreadyExists
+        - ContractedServiceNameLinkedToRates
+        - WorkRequestDescriptionIsRequired
+        - WorkRequestCallDateIsRequired
+        - WorkRequestIssueIsRequired
+        - WorkRequestCallDateHasWrongFormat
+        - WorkRequestScheduledDateHasWrongFormat
+        - InvalidWorkRequestStatus
+        - InvalidWorkRequestExtendedStatus
+        - InvalidWorkRequestCategory
+        - InvalidWorkRequestPriority
+        - InvalidWorkRequestCurrency
+        - InvalidWorkRequestIssueSetup
+        - InvalidWorkRequestIssueArea
+        - InvalidWorkRequestAsset
+        - WorkRequestAttachmentFileNameIsRequired
+        - WorkRequestAttachmentOriginalNameIsRequired
+        - WorkRequestIssueProblemCodeIsRequired
+        - WorkRequestIssueProblemTypeIsRequired
+        - WorkRequestScheduledDateMustBeGreaterThanCallDate
+        - InvalidWorkRequestId
+        - WorkRequestSearchCallDateFromHasWrongFormat
+        - WorkRequestSearchCallDateToHasWrongFormat
+        - WorkRequestSearchScheduledDateFromHasWrongFormat
+        - WorkRequestSearchScheduledDateToHasWrongFormat
+        - WorkRequestSearchClosedDateFromHasWrongFormat
+        - WorkRequestSearchClosedDateToHasWrongFormat
+        - WorkOrderIsAlreadyCreatedForWorkRequest
+        - WorkRequestIsClosed
+        - WorkRequestClosedReasonIsRequiredForClosedStatus
+        - WorkOrderIdIsRequiredForThisClosedReason
+        - InvalidWorkRequestClosedReason
+        - WorkRequestClosedReasonIsOnlyForClosedStatus
+        - InvalidWorkRequestWorkOrderId
+        - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+        - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+        - InvalidWorkOrderSourceType
+        - DeclineReasonIdIsRequired
+        - DeclineReasonDoesntAllowCustomText
+        - InvalidDeclineReasonId
+        - MultipleWorkOrdersForPurchaseNumber
+        - InvoiceMaterialMakupInvalid
+        - MaterialMarkUpDiscrepancyReasonShouldBeStated
+        - MaterialPriceDiscrepancyReasonShouldBeStated
+        - OtherPriceDiscrepancyReasonShouldBeStated
+        - SubscriberIdIsNotValid
+        - FiscalPeriodIsNotValid
+        - AmountIsNotValid
+        - AmountFormatIsNotValid
+        - CategoryMustBeEmpty
+        - CategoryIsNotValid
+        - TradeMustBeEmpty
+        - TradeIsNotValid
+        - GlCodeMustBeEmpty
+        - GlCodeIsNotValid
+        - LocationMustBeEmpty
+        - LocationIsNotValid
+        - RegionMustBeEmpty
+        - RegionIsNotValid
+        - DistrictMustBeEmpty
+        - DistrictIsNotValid
+        - DuplicateData
+        - PrimaryCategoryMustBeEmpty
+        - PrimaryCategoryIsNotValid
+        - CategoryAndExcludedCategoryCannotSimultaneously
+        - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+        - TradeAndExcludedTradeCannotSimultaneously
+        - GlCodeAndExcludedGlCodeCannotSimultaneously
+        - DuplicateCategories
+        - DuplicateTrades
+        - DuplicateGlCodes
+        - DuplicatePrimaryCategories
+        - LocationNoteMustBeEmpty
+        - LocationNoteIsNotValid
+        - OverlappingCategories
+        - OverlappingPrimaryCategories
+        - OverlappingTrades
+        - OverlappingPrimaryTrades
+        - OverlappingGlCodes
+        - OverlappingLocations
+        - OverlappingRegions
+        - OverlappingDistricts
+        - OverlappingLocationNotes
+        - TaxExemptionErrorApi
+        - OtherLineItemZeroAmount
+        - TravelLineItemsNotNegativeValueRequired
+        - MaterialLineItemsNotNegativeValueRequired
+        - LaborLineItemsNotNegativeValueRequired
+        - AdditionalApprovalCodeSetupIdInvalid
+        - VendorIdIsNotValid
+        - InvalidBatchId
+        - InvalidBatchStatusId
+        - CategoryInUsePMServiceError
+        - CategoryInUseChecklistError
+        - CategoryInUseETAMissedAlertError
+        - CategoryInUseBudgetControl
+        - CategoryInUseConnector
+        - CategoryInUseContractedService
+        - CategoryInUseEDI
+        - CategoryInUseIVR
+        - CategoryInUseFeedbackV2
+        - CategoryInUseProposalApproveReasons
+        - CategoryInUsePaymentManager
+        - CategoryInUseProviderAssignments
+        - CategoryInUseSiteAccess
+        - CategoryInUseAlerts
+        - CategoryInUseOpenWOAlert
+        - CategoryInUseWOAutocopy
+        - CategoryInUseWorkRequest
+        - CategoryInUseWO
+        - CategoryInUseDashboardOverride
+        - CategoryInUseInvoiceAttributes
+        - FeatureIsOn
+        - LocationHierarchyNotFound
+        - LocationHierarchyLevelNotFound
+        - LocationHierarchyParentLevelNotFound
+        - LocationSpaceTypeNotFound
+        - DuplicateRowByValueKey
+        - ParentNotFound
+        - DuplicateSequenceAmongSiblings
+        - SequenceConflictsWithExistingData
+        - SequenceMustBeGreaterThanZero
+        - ValueContainsPathDelimiter
+        - InitializationWarmupError
+        type: string
+        readOnly: true
+      ErrorMessage:
+        description: The description of all errors.
+        type: string
+      Data:
+        $ref: '#/definitions/System.Object'
+        description: "Optional\r\n            Gets or Sets the Data object."
+  ServiceChannel.Services.Messaging.Invoices.InvoiceAmountsDetails:
+    description: Object containing the list of the invoice charges.
+    type: object
+    properties:
+      LaborAmount:
+        format: double
+        description: Amount of the labor charge. Must equal `Labors.Amount`.
+        type: number
+      MaterialAmount:
+        format: double
+        description: Amount of the material charge. Must equal `Materials.Amount`.
+        type: number
+      TravelAmount:
+        format: double
+        description: Amount of the trip charge.
+        type: number
+      FreightAmount:
+        format: double
+        description: Amount of the freight charge.
+        type: number
+      OtherAmount:
+        format: double
+        description: Amount of other charges. When you add this parameter, also specify `InvoiceAmountsDetails.OtherDescription`.
+        type: number
+      OtherDescription:
+        type: string
+  ServiceChannel.Services.Messaging.Invoices.Localizations:
+    description: The object for UI labels that appear in the "Invoice Number" section on the "General" tab of the "Admin - Invoices" page in Service Automation. Note that only subscriber users with the Super Admin secondary role can access this page.
+    type: object
+    properties:
+      InvoiceNumberLabel:
+        description: Label for the "Invoice Number" section name.
+        type: string
+      LastModifiedLabel:
+        description: The "Last modified" label for details about who last updated the invoice requirements and when.
+        type: string
+      RestrictionLabel:
+        description: Label for the "Restrictions" drop-down list where a subscriber admin selects which restriction should apply to the numbers of manually created invoices.
+        type: string
+      GenerationRuleLabel:
+        description: Label for the "Generation uniqueness rule" drop-down list where a subscriber admin selects which rule should apply to the numbers of automatically generated invoices.
+        type: string
+      HelpStringLabel:
+        description: The "Help string (to show vendors)" label for the field containing comments shown to a provider when they try to submit an invoice whose number does not meet the restrictions specified by a subscriber.
+        type: string
+      PatternPlaceHolder:
+        description: A placeholder text shown in the field where a subscriber admin enters a regular expression pattern to set restrictions for the numbers of manually created invoices.
+        type: string
+      CommentPlaceHolder:
+        description: A placeholder text shown in the field where a subscriber admin enters a comment for the restriction applied to the numbers of manually created invoices based on the selected restriction type.
+        type: string
+  ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCode:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      InvoiceId:
+        format: int32
+        type: integer
+      InvoiceChargeId:
+        format: int32
+        type: integer
+      ApprovalCodeType:
+        enum:
+        - Labor
+        - Travel
+        - Material
+        - Freight
+        - Other
+        - Tax
+        - Tax2
+        - LineItem
+        - FreightGenerated
+        type: string
+      ApprovalCode:
+        type: string
+      AdditionalApprovalCode:
+        type: string
+      ParentId:
+        format: int32
+        type: integer
+      InternalId:
+        format: int32
+        type: integer
+      InternalParentId:
+        format: int32
+        type: integer
+      IsDefault:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Invoices.AddInvoicePaymentResponse:
+    description: Object details of the added payment.
+    type: object
+    properties:
+      PaymentDate:
+        format: date-time
+        description: Date and time when the specified invoice is paid.
+        type: string
+      PaymentId:
+        format: int32
+        description: Unique numeric invoice payment ID.
+        type: integer
+      Error:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.ResponseError'
+      InvoiceId:
+        format: int32
+        description: Unique numeric invoice identifier.
+        type: integer
+      PaymentNumber:
+        description: Number provided by a user when adding a payment record.
+        type: string
+      PaymentAmount:
+        format: double
+        description: Amount of the payment. Cannot exceed the total amount of the invoice. If it’s a credited invoice, a single payment is required with a minus before the payment amount.
+        type: number
+  ServiceChannel.Services.Messaging.Invoices.InvoiceOther:
+    description: The invoices material
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      InvoiceId:
+        format: int32
+        description: Invoice identifier.
+        type: integer
+      Description:
+        description: Get or set description.
+        type: string
+      Type:
+        description: Get or set type of charge.
+        type: string
+      Amount:
+        format: double
+        description: Get or set the amount of money that is charged.
+        type: number
+      UnitType:
+        format: byte
+        description: Get or set the unit of measure
+        type: string
+      UnitPrice:
+        format: double
+        description: Get or set the price of unit
+        type: number
+      Quantity:
+        format: double
+        description: Get or set the quantity
+        type: number
+      AgreedUnitPrice:
+        format: double
+        description: Get or set the AgreedUnitPrice
+        type: number
+      UnitPriceDiscrepancyReason:
+        description: UnitPriceDiscrepancyReason
+        type: string
+      PriceListOtherChargeId:
+        format: int32
+        description: Get or set the PriceListOtherChargeId
+        type: integer
+      IsUnitPriceDiscrepancy:
+        description: Get IsUnitPriceDiscrepancy
+        default: false
+        type: boolean
+        readOnly: true
+      ApprovalCodeGroup:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+      isNontaxableVATEU:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Users.DashboardInfo:
+    description: Dashboard details object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique dashboard identifier.
+        type: integer
+      Name:
+        description: Dashboard name.
+        type: string
+      RedirectToDashboard:
+        description: Defines whether a subscriber user is redirected to a dashboard once they log in.
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.LocationNote.LocationNote:
+    description: Object with the location note details.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Location note numeric identifier.
+        type: integer
+      HeaderId:
+        format: int32
+        description: Unique location note header identifier.
+        type: integer
+      Value:
+        description: Location note content.
+        type: string
+      Header:
+        description: Name of the note.
+        type: string
+  ServiceChannel.Services.Messaging.ApprovalCodes.EditableAdditionalApprovalCode:
+    type: object
+    properties:
+      Header:
+        type: string
+      Value:
+        type: string
+      SetupId:
+        format: int32
+        type: integer
+      LocationId:
+        format: int32
+        type: integer
+      DefaultOptionId:
+        format: int32
+        type: integer
+      ValueFormat:
+        format: int32
+        type: integer
+      EditableAtLineItemLevel:
+        format: int32
+        type: integer
+      Options:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCodeOption'
+      DefaultValue:
+        type: string
+        readOnly: true
+  ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceOther:
+    description: The invoices other item
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      InvoiceId:
+        format: int32
+        description: Invoice identifier.
+        type: integer
+      Description:
+        description: Get or set description.
+        type: string
+      Type:
+        description: Get or set type of charge.
+        type: string
+      Amount:
+        format: double
+        description: Get or set the amount of money that is charged.
+        type: number
+      UnitType:
+        format: byte
+        description: Get or set the unit of measure
+        type: string
+      UnitPrice:
+        format: double
+        description: Get or set the price of unit
+        type: number
+      Quantity:
+        format: double
+        description: Get or set the quantity
+        type: number
+      AgreedUnitPrice:
+        format: double
+        description: Get or set the AgreedUnitPrice
+        type: number
+      UnitPriceDiscrepancyReason:
+        description: UnitPriceDiscrepancyReason
+        type: string
+      PriceListOtherChargeId:
+        format: int32
+        description: Get or set the PriceListOtherChargeId
+        type: integer
+      isNontaxableVATEU:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Location.Location:
+    description: General location details object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique location identifier.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique subscriber identifier.
+        type: integer
+      SubscriberName:
+        type: string
+      StoreId:
+        description: Alphanumeric identifier of the store in the client's system. Assigned by and unique per subscriber.
+        type: string
+      Name:
+        description: Location name.
+        type: string
+      ShortName:
+        description: Shortened location name.
+        type: string
+      Latitude:
+        format: double
+        description: Global position. Latitude.
+        type: number
+      Longitude:
+        format: double
+        description: Global position. Longitude.
+        type: number
+      Distance:
+        format: double
+        description: Distance from GPS coordinate to this location
+        type: number
+      Radius:
+        format: double
+        description: GPS radius for the location.
+        type: number
+      LocationTypeId:
+        format: int32
+        description: Numeric identifier of the location type.
+        type: integer
+      Address1:
+        description: Additional location address.
+        type: string
+      Address2:
+        description: Main location address.
+        type: string
+      City:
+        description: Location city.
+        type: string
+      State:
+        description: State where the location is situated.
+        type: string
+      StateId:
+        format: int32
+        description: Numeric identifier of the location’s state.
+        type: integer
+      Region:
+        description: Part of the country where the location is situated.
+        type: string
+      District:
+        description: Abbreviation of the town or country area where the location is situated.
+        type: string
+      Zip:
+        description: Location ZIP or postal code.
+        type: string
+      Country:
+        description: Abbreviation of the country name where the location is situated.
+        type: string
+      CountryId:
+        format: int32
+        description: Numeric identifier of the country of the location.
+        type: integer
+      ClosedDate:
+        format: date-time
+        description: Last day when the location is open for business.
+        type: string
+      OpenDate:
+        format: date-time
+        description: First day when the location is open for business.
+        type: string
+      Status:
+        description: 'Status of the location. Possible values: *open*, *closed*.'
+        type: string
+      Email:
+        description: Email the location can be contacted at.
+        type: string
+      FaxNumber:
+        description: Fax number the location can be contacted at.
+        type: string
+      Phone:
+        description: Contact phone number of the location.
+        type: string
+      Contact:
+        description: Name of the main person to contact at the location.
+        type: string
+      HasInventory:
+        description: 'Indicates whether it’s an inventory location or not. Possible values: *true*, *false*.'
+        default: false
+        type: boolean
+      SquareValue:
+        format: double
+        description: Square value of the facility.
+        type: number
+      SquareMeasure:
+        description: Unit or system of units for measuring location area.
+        type: string
+      TimeZoneInfoId:
+        format: int32
+        description: Numeric identifier of the location time zone.
+        type: integer
+      TimeZoneShortDescription:
+        description: Location time zone abbreviation.
+        type: string
+      TimeZoneMsName:
+        description: Location time zone Microsoft Name. e.g "Eastern Standard Time"
+        type: string
+      TimeZoneIanaName:
+        description: Location time zone Iana Name. e.g. "America/New_York"
+        type: string
+      TypeLabel:
+        description: '[Inventory location type](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/1209106525/Creating+Inventory+Locations?preview=%2F1209106525%2F1205830388%2FSupply-House-Type.png). Possible values: *Location*, *Warehouse*, *Supply House*, *Truck*.'
+        type: string
+      Supplier:
+        description: Supplier’s location name.
+        type: string
+      CountyId:
+        format: int32
+        description: County numeric identifier.
+        type: integer
+      Notes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.LocationNote.LocationNote'
+      TimeShiftToEST:
+        format: int32
+        type: integer
+      AddressTypeId:
+        format: int32
+        description: Address format pattern Id
+        type: integer
+      FormattedAddress:
+        type: string
+      LocationFormattedAddressTail:
+        type: string
+      IsInternational:
+        default: false
+        type: boolean
+        readOnly: true
+      Address:
+        type: string
+  ServiceChannel.Services.Messaging.Invoices.InvoicePaymentBulkRequest:
+    description: Request model to add payment records in bulk.
+    type: object
+    properties:
+      Payments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.AddInvoicePaymentRequest'
+  ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceTravel:
+    description: Information on the trip.
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      InvoiceId:
+        format: int32
+        description: Invoice identifier.
+        type: integer
+      Description:
+        description: Description of the trip.
+        type: string
+      UnitType:
+        format: byte
+        description: Unit of measurement.
+        type: string
+      UnitPrice:
+        format: double
+        description: Price per unit.
+        type: number
+      Quantity:
+        format: double
+        description: Quantity.
+        type: number
+      Amount:
+        format: double
+        description: The amount of the trip cost. The sum of all `Amount` parameters in the `Travels` array must equal `InvoiceAmountsDetails.TravelAmount`.
+        type: number
+      IsOffShore:
+        description: Type of the shore (`1` - Onshore, `2` - Offshore).
+        default: false
+        type: boolean
+      isNontaxableVATEU:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Invoices.InvoiceStatisticsResponse:
+    description: Invoice statistics response class
+    type: object
+    properties:
+      DaysPeriod:
+        format: int32
+        description: Gets or sets the period in days, last X days for which Invoices statistics was collected
+        type: integer
+      WoReadyForInvoices:
+        format: int32
+        description: Gets or sets the count of Work Orders ready for Invoices
+        type: integer
+      OpenInvoices:
+        format: int32
+        description: Gets or sets the count of open Invoices
+        type: integer
+      ApprovedInvoicesDaysPeriod:
+        format: int32
+        description: Gets or sets the period in days, last X days during which Invoices are approved
+        type: integer
+      ApprovedInvoices:
+        format: int32
+        description: Gets or sets the count of Invoices approved in the past <ApprovedInvoicesDaysPeriod /> days
+        type: integer
+  ServiceChannel.Services.Messaging.Invoices.ProjectsInvoices:
+    type: object
+    properties:
+      InvoicesTotal:
+        format: double
+        type: number
+      TaxTotal:
+        format: double
+        type: number
+      Tax2Total:
+        format: double
+        type: number
+      Currency:
+        type: string
+      Count:
+        format: int32
+        type: integer
+      Invoices:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.ProjectsInvoicesItem'
+  ServiceChannel.Services.WebApi.Models.Request.Invoices.CreatingInvoiceTaxIncludedRequest:
+    type: object
+    properties:
+      LaborTaxIncluded:
+        format: byte
+        type: string
+      TravelTaxIncluded:
+        format: byte
+        type: string
+      MaterialTaxIncluded:
+        format: byte
+        type: string
+      FreightTaxIncluded:
+        format: byte
+        type: string
+      OtherTaxIncluded:
+        format: byte
+        type: string
+  ServiceChannel.Services.Messaging.Invoices.Api.AdditionalApprovalCodeRequest:
+    type: object
+    properties:
+      Header:
+        type: string
+      Value:
+        type: string
+      SetupId:
+        format: int32
+        type: integer
+  ServiceChannel.Services.WebApi.Models.Request.Invoices.Tax2Details:
+    description: Information on the additional tax. Only invoices for Canadian locations can have Tax2Details.
+    type: object
+    properties:
+      Tax2Amount:
+        format: double
+        description: Amount of the additional tax.
+        type: number
+      Tax2Name:
+        description: Name of the additional tax, for example, *VAT*, *HST*, *PST*, or *QST*.
+        type: string
+  ServiceChannel.Services.Messaging.Invoices.ProjectsInvoicesItem:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      InvoiceNumber:
+        type: string
+      Tax:
+        format: double
+        type: number
+      Tax2:
+        format: double
+        type: number
+      Tax2Name:
+        type: string
+      InvoiceTotal:
+        format: double
+        type: number
+      LaborAmount:
+        format: double
+        type: number
+      MaterialAmount:
+        format: double
+        type: number
+      FreightAmount:
+        format: double
+        type: number
+      TravelAmount:
+        format: double
+        type: number
+      OtherAmount:
+        format: double
+        type: number
+      OtherDescription:
+        type: string
+      Status:
+        type: string
+      InvoiceDate:
+        format: date-time
+        type: string
+      InvoiceDateDTO:
+        format: date-time
+        type: string
+      PostedDate:
+        format: date-time
+        type: string
+      PostedDateDTO:
+        format: date-time
+        type: string
+      Currency:
+        type: string
+      AlphabeticCode:
+        type: string
+      WoTrackingNumber:
+        format: int32
+        type: integer
+      ProviderId:
+        format: int32
+        type: integer
+      ProviderName:
+        type: string
+  ServiceChannel.Services.Messaging.Invoices.Api.SingleUpdateGlCodeRequest:
+    type: object
+    properties:
+      Category:
+        type: string
+      ApprovalCode:
+        type: string
+      ProjectId:
+        format: int32
+        type: integer
+      AdditionalApprovalCodes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.Api.AdditionalApprovalCodeRequest'
+  ServiceChannel.Services.Messaging.Invoices.InvoicePaymentRequest:
+    description: Request object to add a payment to an invoice.
+    type: object
+    properties:
+      PaymentDate:
+        format: date-time
+        description: Date and time when the specified invoice is paid. Cannot be earlier than the invoice approval date.
+        type: string
+      PaymentNumber:
+        description: Order number of payment for the invoice.
+        type: string
+      PaymentAmount:
+        format: double
+        description: Amount you want to pay. Cannot exceed the invoice total amount. If it’s a credited invoice, a single payment is required with a minus before the payment amount.
+        type: number
+  ServiceChannel.Services.Messaging.Invoices.ResponseError:
+    description: Object details of the response error.
+    type: object
+    properties:
+      Code:
+        format: int32
+        description: Code of an error that shows why the request has failed.
+        type: integer
+      Message:
+        description: Reason for the request failure.
+        type: string
+  ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceTaxesDetails:
+    description: Object containing the list of taxes. You can add taxes as a fixed amount or as a percentage.
+    type: object
+    properties:
+      LaborTaxPercent:
+        format: double
+        description: Amount of the labor tax in percentage (for countries other than USA and Canada).
+        type: number
+      MaterialTaxPercent:
+        format: double
+        description: Amount of the material tax in percentage (for countries other than USA and Canada).
+        type: number
+      TravelTaxPercent:
+        format: double
+        description: Amount of the travel tax in percentage (for countries other than USA and Canada).
+        type: number
+      FreightTaxPercent:
+        format: double
+        description: Amount of the freight tax in percentage (for countries other than USA and Canada).
+        type: number
+      OtherTaxPercent:
+        format: double
+        description: Amount of other taxes in percentage (for countries other than USA and Canada).
+        type: number
+      LaborTax:
+        format: double
+        description: Amount of the labor tax.
+        type: number
+      MaterialTax:
+        format: double
+        description: Amount of the material tax.
+        type: number
+      TravelTax:
+        format: double
+        description: Amount of the travel tax.
+        type: number
+      FreightTax:
+        format: double
+        description: Amount of the freight tax.
+        type: number
+      OtherTax:
+        format: double
+        description: Amount of other taxes.
+        type: number
+  ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceAmountsDetails:
+    description: Object containing the list of the invoice charges.
+    type: object
+    properties:
+      LaborAmount:
+        format: double
+        description: Amount of the labor charge. Must equal `Labors.Amount`.
+        type: number
+      MaterialAmount:
+        format: double
+        description: Amount of the material charge. Must equal `Materials.Amount`.
+        type: number
+      TravelAmount:
+        format: double
+        description: Amount of the trip charge.
+        type: number
+      FreightAmount:
+        format: double
+        description: Amount of the freight charge.
+        type: number
+      OtherAmount:
+        format: double
+        description: Amount of other charges. When you add this parameter, also specify `InvoiceAmountsDetails.OtherDescription`.
+        type: number
+      OtherDescription:
+        type: string
+  ServiceChannel.Services.Messaging.Invoices.InvoiceDiscrepancy:
+    type: object
+    properties:
+      LaborRateDiscrepancies:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.RateDiscrepancy'
+      MaterialMarkupDiscrepancies:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.MaterialMarkupDiscrepancy'
+      OtherPriceDiscrepancies:
+        description: Get or set OtherPriceDiscrepancies
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.OtherPriceDiscrepancy'
+  ServiceChannel.Services.Messaging.Users.Limit:
+    description: Object for limit details set for a subscriber user.
+    type: object
+    properties:
+      Amount:
+        format: double
+        description: Limit amount.
+        type: number
+      CurrencyId:
+        format: int32
+        description: Identifier of the currency the limit is set in.
+        type: integer
+  ServiceChannel.Services.Messaging.Invoices.InvoiceNumberRequirement:
+    description: Invoice number requirements object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: ID of the regular expression pattern used to validate the numbers of invoices created manually.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique ID of the subscriber whose invoice number requirements are returned.
+        type: integer
+      Pattern:
+        description: Regular expression pattern used to validate the numbers of invoices created manually.<br />A value is returned even if the selected `RestrictionType` is `0` — *None*. In this case, it’s the last pattern entered in the field.
+        type: string
+      Comment:
+        description: Comment on the invoice number format displayed to a provider user in a tooltip when they try to submit an invoice whose number does not meet the specified restrictions. Invoice numbers are validated by the regular expression pattern specified in `Pattern`.<br />A value is returned even if the selected `RestrictionType` is `0` — *None*. In this case, it’s the last comment entered in the field.
+        type: string
+      RestrictionType:
+        description: Selected restriction for the numbers of invoices created manually. See `RestrictionTypesSelect` to identify which number (`Value`) corresponds to which restriction type.
+        enum:
+        - None
+        - Custom
+        - DigitsOnly
+        - AlphaNumericOnly
+        type: string
+      AutoGenerationType:
+        description: Selected rule for the numbers of invoices generated automatically. See `AutoGenerationTypesSelect` to identify which number (`Value`) corresponds to which rule.
+        enum:
+        - None
+        - CurrentDate
+        type: string
+      CreatedDate:
+        format: date-time
+        description: Date and time when the invoice number requirements were created.
+        type: string
+      UpdatedDate:
+        format: date-time
+        description: Date and time when the invoice number requirements were last updated.
+        type: string
+      CreatedByUserId:
+        format: int32
+        description: Unique ID of the subscriber admin user who created the invoice number requirements.
+        type: integer
+      UpdatedByUserId:
+        format: int32
+        description: Unique ID of the subscriber admin user who last updated the invoice number requirements.
+        type: integer
+      CreatedByUser:
+        description: Username of the subscriber admin who created the invoice number requirements.
+        type: string
+      UpdatedByUser:
+        description: Username of the subscriber admin who last updated the invoice number requirements. The username appears in the **Invoice Number** section next to **Last modified**.
+        type: string
+      ReuseInvoiceNumber:
+        format: byte
+        description: Reuse invoice number
+        type: string
+      IsNew:
+        description: Defines whether a default restriction pattern is used.
+        default: false
+        type: boolean
+        readOnly: true
+      CreatedDateString:
+        description: Date when the invoice number requirements were created.
+        type: string
+        readOnly: true
+      UpdatedDateString:
+        description: Date when the invoice number requirements were last updated. The date appears in the **Invoice Number** section next to **Last modified**.
+        type: string
+        readOnly: true
+  ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeChild:
+    type: object
+    properties:
+      Amount:
+        format: double
+        type: number
+      Id:
+        format: int32
+        type: integer
+      InvoiceId:
+        format: int32
+        type: integer
+      InvoiceChargeId:
+        format: int32
+        type: integer
+      ApprovalCodeType:
+        enum:
+        - Labor
+        - Travel
+        - Material
+        - Freight
+        - Other
+        - Tax
+        - Tax2
+        - LineItem
+        - FreightGenerated
+        type: string
+      ApprovalCode:
+        type: string
+      AdditionalApprovalCode:
+        type: string
+      ParentId:
+        format: int32
+        type: integer
+      InternalId:
+        format: int32
+        type: integer
+      InternalParentId:
+        format: int32
+        type: integer
+      IsDefault:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Invoices.InvoicePaymentBulkResponse:
+    description: Invoice payments response object.
+    type: object
+    properties:
+      Payments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Invoices.AddInvoicePaymentResponse'
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Services.Messaging.Subscribers.Subscriber:
+    required:
+    - Name
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      ShortName:
+        type: string
+      Email:
+        type: string
+      Users:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.User'
+      PrimaryCurrency:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Currencies.Currency'
+      IsOutsourcedWorkOn:
+        default: false
+        type: boolean
+      Name:
+        description: "Required Name\r\n            Name - name of the subscriber"
+        type: string
+      Address1:
+        description: Optional
+        type: string
+      Address2:
+        description: Optional
+        type: string
+      Country:
+        description: Optional
+        type: string
+      State:
+        description: Optional
+        type: string
+      City:
+        description: Optional
+        type: string
+      Zip:
+        description: Optional
+        type: string
+      Phone:
+        description: Optional
+        type: string
+      Fax:
+        description: Optional
+        type: string
+      ContactName:
+        description: Optional
+        type: string
+      TimeFormat:
+        type: string
+      DateFormat:
+        type: string
+      DecimalSeparator:
+        type: string
+  ServiceChannel.Api.Model.Workorders.Label:
+    type: object
+    properties:
+      LabelText:
+        type: string
+      InvoiceId:
+        format: int32
+        type: integer
+      LabelId:
+        format: int32
+        type: integer
+      IsActive:
+        default: false
+        type: boolean
+  ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceLaborWithPriceList:
+    description: "Invoice labor with price list details.\r\n            This class is used to return invoice labor details with price list information in the response of GetInvoiceDetails operation."
+    type: object
+    properties:
+      PriceListId:
+        format: int32
+        description: "Price list identifier.\r\n            This parameter is returned only if the invoice labor details are retrieved with price list information.\r\n            Otherwise, this parameter is not returned."
+        type: integer
+      PriceListName:
+        description: "Price list name.\r\n            This parameter is returned only if the invoice labor details are retrieved with price list information."
+        type: string
+      SkillLevelName:
+        description: "Skill level name.\r\n            This parameter is returned only if the invoice labor details are retrieved with price list information."
+        type: string
+      LaborTypeName:
+        description: "Labor type name.\r\n            This parameter is returned only if the invoice labor details are retrieved with price list information."
+        type: string
+      SkillLevel:
+        format: byte
+        description: 'The skill level of a worker. Valid values: `1` - Supervisor, `2` - Technician, `3` - Helper.'
+        type: string
+      LaborType:
+        format: byte
+        description: 'The type of the pay rate. Valid values: `1` - Regular, `2` - Overtime, `3` - Double time.'
+        type: string
+      NumOfTech:
+        format: byte
+        description: Number of workers.
+        type: string
+      HourlyRate:
+        format: double
+        description: Worker hourly rate.
+        type: number
+      Hours:
+        format: double
+        description: Total hours the worker spent to complete the work order.
+        type: number
+      Amount:
+        format: double
+        description: The amount of the labor charge. The sum of all `Amount` parameters in the `Labors` array must equal `InvoiceAmountsDetails.LaborAmount`.
+        type: number
+      IsOffShore:
+        description: Type of the shore (`1` - Onshore, `2` - Offshore).
+        default: false
+        type: boolean
+      ServiceType:
+        format: byte
+        description: Type of the service (`1` - Design Engineering, Architecture, Technical Service, `2` - Installation and Supervision, `3` - Survey and Troubleshooting).
+        type: string
+      CityPerformed:
+        description: City where services are performed.
+        type: string
+      RateDiscrepancyReason:
+        description: Rate discrepancy reason.
+        type: string
+      isNontaxableVATEU:
+        default: false
+        type: boolean
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

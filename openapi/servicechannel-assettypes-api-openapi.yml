@@ -1,0 +1,2868 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours AssetTypes API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: AssetTypes
+paths:
+  /AssetTypes:
+    get:
+      tags:
+      - AssetTypes
+      operationId: GETv3_AssetTypes
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetType'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+    post:
+      tags:
+      - AssetTypes
+      operationId: POSTv3_AssetTypes
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: req
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AddAssetTypeRequest'
+      responses:
+        '201':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AddAssetTypeResponse'
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            3100 — Asset Type Name is already in use.\r\n            3106 — Asset Type Name is Missing.\r\n            703 — Primary trade not found."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /AssetTypes/{assetTypeId}:
+    get:
+      tags:
+      - AssetTypes
+      operationId: GETv3_AssetTypes_{assetTypeId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: assetTypeId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetType'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            502 — Asset Type not found."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+    put:
+      tags:
+      - AssetTypes
+      summary: ''
+      description: "Update Asset Type\r\n            Don't specify AdditiolanTrades if no changes in Additiolan Trades needed\r\n            Set AdditiolanTrades = [] to delete existing Additiolan Trades for asset type\r\n            If AdditiolanTrades contains records then these trades will be set as Additional Trades to asset type."
+      operationId: PUTv3_AssetTypes_{assetTypeId}
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: assetTypeId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      - name: type
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetType'
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            3101 — Asset Type Doesn't Exist!.\r\n            3102 — Asset Type already contains assets. Refrigerant Purpose can not be changed!\r\n            703 — Trade not found."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+    delete:
+      tags:
+      - AssetTypes
+      operationId: DELETEv3_AssetTypes_{assetTypeId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: assetTypeId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            502 — Asset Type not found.\r\n            3103 — Failed to delete asset type\r\n            3104 — Failed to delete asset type. Existing assets found.\r\n            3108 — Failed to delete asset type. Existing proposals found.\r\n            3105 — Cant modify asset type ParentId.\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /AssetTypes/byids:
+    get:
+      tags:
+      - AssetTypes
+      operationId: GETv3_AssetTypes_byids?ids[0]={ids[0]}&ids[1]={ids[1]}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: ids
+        in: query
+        required: true
+        type: array
+        items:
+          type: integer
+          format: int32
+        collectionFormat: multi
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetType'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/GetAssetTypeAttributes/{assetTypeId}:
+    get:
+      tags:
+      - AssetTypes
+      operationId: GETv3_AssetTypes_GetAssetTypeAttributes_{assetTypeId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: assetTypeId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetTypeAttributeExternal'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            502 — Asset Type not found."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/GetAssetTypeTrades/{assetTypeId}:
+    get:
+      tags:
+      - AssetTypes
+      operationId: GETv3_AssetTypes_GetAssetTypeTrades_{assetTypeId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: assetTypeId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            502 — Asset Type not found."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/GetAssetTypeGroups:
+    get:
+      tags:
+      - AssetTypes
+      summary: Get asset type groups by SubscriberId
+      description: Returns a list of asset type groups for the specified subscriber.
+      operationId: GETv3_AssetTypes_GetAssetTypeGroups?subscriberId={subscriberId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: subscriberId
+        in: query
+        description: Unique numeric identifier of the subscriber.
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Asset type groups are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.AssetTypes.AssetTypeGroup'
+        '400':
+          description: "The request was not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 — Bad Request"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Something went wrong, and the server was unable to complete your request.\r\n            <br/>Error codes:\r\n            501 — Object reference is not set to an instance of an object"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/GetSubscriberAssetTypeCategories:
+    post:
+      tags:
+      - AssetTypes
+      summary: Get asset categories by SubscriberId and TradeNames
+      description: "Returns an asset category containing asset types that belong to the specified trade for the specified subscriber.\r\n            <br />\r\n            ***Note***: `TradeNames` is an optional parameter. When you skip it, the response shows all asset categories containing asset types."
+      operationId: POSTv3_AssetTypes_GetSubscriberAssetTypeCategories
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: Request model to retrieve a list of asset categories.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.GetSubscriberAssetCategoriesRequest'
+      responses:
+        '200':
+          description: Asset categories are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetTypeCategory'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Something went wrong, and the server was unable to complete your request.\r\n            <br/>Error codes:\r\n            501 — Object reference is not set to an instance of an object\r\n            501 — Value cannot be null"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/GetAssetTypeCategoriesByIds:
+    post:
+      tags:
+      - AssetTypes
+      summary: Get asset categories by Ids
+      description: "Returns asset categories names based on their numeric identifiers.\r\n            <br />\r\n            ***Note***: To get all asset categories, send the request without specifying any Id. Asset categories from the list may contain asset types or may be empty, as this method retrieves asset categories from the standardized list."
+      operationId: POSTv3_AssetTypes_GetAssetTypeCategoriesByIds
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: Request model to retrieve asset categories names.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.GetByIdsRequest'
+      responses:
+        '200':
+          description: Asset categories names are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetTypeCategory'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Something went wrong, and the server was unable to complete your request.\r\n            <br/>Error codes:\r\n            501 — Object reference is not set to an instance of an object"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/GetAssetTypeCategoriesByAssetIds:
+    post:
+      tags:
+      - AssetTypes
+      summary: Get asset categories by AssetIds
+      description: Returns an asset category that contains the specified asset.
+      operationId: POSTv3_AssetTypes_GetAssetTypeCategoriesByAssetIds
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: Request model to retrieve a list of asset categories.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.GetByIdsRequest'
+      responses:
+        '200':
+          description: Asset categories are in the response.
+          schema:
+            type: object
+            additionalProperties:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetTypeCategory'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Something went wrong, and the server was unable to complete your request.\r\n            <br/>Error codes:\r\n            501 — Object reference not set to an instance of an object\r\n            501 — Unable to create a null constant value. Only entity types, enumeration types, or primitive types are supported in this context"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/GetAssetTypesByLocation:
+    post:
+      tags:
+      - AssetTypes
+      operationId: POSTv3_AssetTypes_GetAssetTypesByLocation
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Core.InternalRequests.Assets.GetAssetTypesByLocationRequestInternal'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            502 — Asset Type not found."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/assets/{assetGroupId}/groupattachments:
+    post:
+      tags:
+      - AssetTypes
+      summary: Add AssetTypeGroup Attachments
+      operationId: POSTv3_AssetTypes_assets_{assetGroupId}_groupattachments
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: assetGroupId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      - name: file
+        in: formData
+        description: File to attach to AssetTypeGroup
+        required: true
+        type: file
+      responses:
+        '200':
+          description: Created indicates that the request resulted in a new resource created before the response was sent.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AddAssetTypeGroupAttachmentResponse'
+        '400':
+          description: "Bad Request - the request could not be executed or was missing required parameters.\r\n            <br/>Error codes:\r\n            502 — AssetTypeGroup Not found;\r\n            503 — Bad Request;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/AssetTypeMeters/{assetTypeId}:
+    get:
+      tags:
+      - AssetTypes
+      summary: Get asset type meters
+      description: "Returns a list of meters and their parameters associated with an asset type and created by the current subscriber.\r\n            <br />You can get the details for a particular level by using the [GET/AssetTypes/AssetTypeMeter/{assetTypeMeterId}](/swagger/ui/index?version=3#/AssetTypes/GETv3_AssetTypes_AssetTypeMeter__assetTypeMeterId_) method.\r\n            <br />Learn more about [asset meter reading](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/834469973/Asset+Meter+Reading) in ServiceChannel University."
+      operationId: GETv3_AssetTypes_AssetTypeMeters_{assetTypeId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: assetTypeId
+        in: path
+        description: Unique numeric identifier of the asset type you want to get information on. Send the [GET /AssetTypes](/swagger/ui/index?version=3#/AssetTypes/GETv3_AssetTypes) request to get an asset type ID.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The requested asset type meters are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetTypeMeterResponseItem'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: The request URI is incorrect, or the resource does not exist.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/AssetTypeMeter/{assetTypeMeterId}:
+    get:
+      tags:
+      - AssetTypes
+      summary: Get an asset type meter details
+      description: Returns the details of the specified asset type meter for the current subscriber.
+      operationId: GETv3_AssetTypes_AssetTypeMeter_{assetTypeMeterId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: assetTypeMeterId
+        in: path
+        description: "Unique numeric identifier of the asset type meter you want to get the details of.\r\n            <br />Pass the [GET /AssetTypes/AssetTypeMeters/{assetTypeId}](/swagger/ui/index?version=3#/AssetTypes/GETv3_AssetTypes_AssetTypeMeters__assetTypeId_) method to acquire an ID of an asset type meter."
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The asset type meter details are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetTypeMeterResponseItem'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: The request URI is incorrect, or the resource does not exist.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/AssetTypeMeter:
+    put:
+      tags:
+      - AssetTypes
+      summary: Update an asset type meter
+      description: "Modifies information of an already existing asset type meter.\r\n            <br />**Note**. All request parameters should be filled out: those you want to add or edit along with the parameters you want to leave unchanged.\r\n            <br />**Example Request**\r\n            \r\n                   PUT /AssetTypes/AssetTypeMeter\r\n                   {\r\n                       \"Id\": 16,\r\n                       \"Name\": \"Music System\",\r\n                       \"MaxValue\": \"500.00\",\r\n                       \"Notes\": ,\r\n                       \"Inactive\": false,\r\n                       \"EditOnWO\": true,\r\n                       \"AssetTypeId\": 7632,\r\n                       \"UnitOfMeasure\": 250\r\n                   }"
+      operationId: PUTv3_AssetTypes_AssetTypeMeter
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: Request to add or update the asset type meter details.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetTypeMeterRequestItem'
+      responses:
+        '200':
+          description: The asset type meter is successfully updated.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/> Failed to Update Asset Type Meter"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 — Object reference not set to an instance of an object"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+    post:
+      tags:
+      - AssetTypes
+      summary: Add an asset type meter
+      description: Creates a new asset type meter for a particular asset type for the current subscriber.
+      operationId: POSTv3_AssetTypes_AssetTypeMeter
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: "Request to add an asset type meter. \r\n            <br />Pass the following parameters in the request:\r\n            <br /> • **Id** (*Required*). Enter 0 or null so that when the asset type meter is created the system can assign a unique numeric ID to it.\r\n            <br /> • **Name** (*Required*). Name of an asset type meter.\r\n            <br /> • **Notes**. Comments provided by a user who added the asset type meter.\r\n            <br /> • **Inactive**. Set the asset type meter to the active on inactive status. Valid values: *true*, *false* or 1 - true, 0 - false.\r\n            <br /> • **EditOnWO**. Define whether technicians are allowed to enter data on work orders for the asset. Valid values: *true*, *false* or 1 - true, 0 - false.\r\n            <br /> • **AssetTypeId** (*Required*). ID of an asset type to assign the meter to.\r\n            <br /> • **UnitOfMeasure** (*Required*). Unique numeric identifier of a unit of measurement in the system."
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetTypeMeterRequestItem'
+      responses:
+        '200':
+          description: The asset type meter is successfully added.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/> Failed to Create Asset Type Meter"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 — Object reference not set to an instance of an object"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/GetAssetTypesAvailableForSubscriber/{subscriberId}:
+    get:
+      tags:
+      - AssetTypes
+      operationId: GETv3_AssetTypes_GetAssetTypesAvailableForSubscriber_{subscriberId}?tradeId={tradeId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: subscriberId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      - name: tradeId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetType'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            502 — Asset Types not found."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/asettypes/GetAssetTypesWithCreatePermission:
+    get:
+      tags:
+      - AssetTypes
+      summary: Get Asset Types With Create Permission
+      operationId: GETv3_AssetTypes_asettypes_GetAssetTypesWithCreatePermission?subscriberId={subscriberId}&tradeId={tradeId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: subscriberId
+        in: query
+        description: ''
+        required: true
+        type: integer
+        format: int32
+      - name: tradeId
+        in: query
+        description: ''
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Providers
+  /AssetTypes/AssetTypes/AssetCategoriesByTradeId/{tradeId}:
+    get:
+      tags:
+      - AssetTypes
+      summary: Get asset categories by tradeId
+      description: "Returns a list of asset categories associated with the specified trade.\r\n            <br />\r\n            ***Note***:  This method retrieves asset categories from the standardized list, that is why asset categories may contain asset types and may not. To get asset categories containing asset types that belong to the certain trade, pass the [POST /AssetTypes/GetSubscriberAssetTypeCategories](/swagger/ui/index?version=3#/AssetTypes/POSTv3_AssetTypes_GetSubscriberAssetTypeCategories) method.\r\n            <br />\r\n            For more information, refer to [Adding Asset Category and Asset Types](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/2523693743/Adding+Asset+Category+and+Asset+Types) in ServiceChannel University."
+      operationId: GETv3_AssetTypes_AssetTypes_AssetCategoriesByTradeId_{tradeId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: tradeId
+        in: path
+        description: "Unique numeric identifier of the trade. \r\n            Pass the [GET / AssetTypes](/swagger/ui/index?version=3#/AssetTypes/GETv3_AssetTypes) or [GET /assets/{assetId}](/swagger/ui/index?version=3#/Assets/GETv3_assets__assetId__locationId__locationId__storeId__storeId__tagId__tagId__trackingNumber__trackingNumber_) method to retrieve `tradeId`."
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Asset categories are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetTypeCategory'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: The request URI is incorrect, or the resource does not exist.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Something went wrong, and the server was unable to complete your request.\r\n            <br/>Error codes:\r\n            501 — Object reference is not set to an instance of an object"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/asettypes/AssetTypesForCreate:
+    get:
+      tags:
+      - AssetTypes
+      summary: Get Asset Types For Create By TradeId
+      operationId: GETv3_AssetTypes_asettypes_AssetTypesForCreate?tradeId={tradeId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: tradeId
+        in: query
+        description: ''
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /AssetTypes/asettypes/GetPrimaryAssetTypesAsync:
+    get:
+      tags:
+      - AssetTypes
+      summary: Get Primary Asset Types
+      operationId: GETv3_AssetTypes_asettypes_GetPrimaryAssetTypesAsync
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /AssetTypes/asettypes/GetPrimaryAssetTypeBrandsAsync/{primaryAssetTypeId}:
+    get:
+      tags:
+      - AssetTypes
+      summary: Get Primary Asset Type Brands
+      operationId: GETv3_AssetTypes_asettypes_GetPrimaryAssetTypeBrandsAsync_{primaryAssetTypeId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: primaryAssetTypeId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /AssetTypes/asettypes/GetAssetTypeBrandsAsync/{assetTypeId}:
+    get:
+      tags:
+      - AssetTypes
+      summary: Get Asset Type Brands
+      operationId: GETv3_AssetTypes_asettypes_GetAssetTypeBrandsAsync_{assetTypeId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: assetTypeId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+definitions:
+  ServiceChannel.Services.Core.InternalRequests.Assets.GetAssetTypesByLocationRequestInternal:
+    type: object
+    properties:
+      LocationIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      TradeIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      IncludeDeactivated:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Assets.AssetTypeCategory:
+    description: Asset category object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the asset category.
+        type: integer
+      Name:
+        description: Asset category name.
+        type: string
+  ServiceChannel.Services.Messaging.ErrorResponse:
+    description: The error response object
+    type: object
+    properties:
+      ErrorCodes:
+        description: The list of error codes. Go to /basics/general/response-codes/#internal-error-codes-and-messages to map error codes to error reasons.
+        type: array
+        items:
+          enum:
+          - NotAllowed
+          - EmptyProvider
+          - InvalidProviderId
+          - UnknownProvider
+          - ProviderAlreadyExists
+          - ProviderIdNotExists
+          - TimeoutExpiredError
+          - EmptyContract
+          - ContractUndefined
+          - EmptySubscriber
+          - InvalidSubscriberId
+          - UnknownSubscriber
+          - InactiveSubscriber
+          - EmptySubscriberId
+          - SubscriberIdNotExists
+          - InternalError
+          - DataNotFound
+          - BadRequest
+          - UnAuthorized
+          - UnSupportedApplication
+          - SubsidiaryUserDisabled
+          - EmptyLocation
+          - InvalidLocationId
+          - UnknownLocation
+          - LocationNotBelongsToSubscriber
+          - EmptyLocationCountry
+          - LocationAlreadyExists
+          - InvalidStoreId
+          - LocationEmptyState
+          - NoAccessToLocation
+          - LocationAddressValidationError
+          - LocationAddressRequestValidationError
+          - InvalidLocationNoteHeader
+          - NoAccessToUpdateProtectedNote
+          - InvalidBusinessHoursFormat
+          - WorkingHoursIntersect
+          - InvalidDayOfWeek
+          - DuplicateDayOfWeek
+          - InvalidBusinessHoursInitialSetup
+          - BusinessHoursIsEmpty
+          - InvalidHolidayRepeatByType
+          - EmptyHolidayListOfDays
+          - EmptyHolidayListOfMonths
+          - InvalidHolidayMonthName
+          - InvalidHolidayNameLength
+          - InvalidHolidayRepeatEvery
+          - DuplicateMonth
+          - InvalidHolidayFrequency
+          - InvalidHolidayStartDate
+          - InvalidCloseAllDay
+          - HolidayDoesNotExist
+          - InvalidFormatParameter
+          - InvalidLocationCity
+          - InvalidLocationZip
+          - InvalidLocationLatitude
+          - InvalidLocationLongitude
+          - InvalidLocationEmail
+          - InvalidLocationName
+          - InvalidLocationState
+          - InvalidLocationAddlAddress
+          - InvalidLocationMainAddress
+          - InvalidLocationCountry
+          - InvalidLocationRegion
+          - InvalidLocationDistrict
+          - InvalidLocationPhone
+          - InvalidLocationContact
+          - InvalidLocationFaxNumber
+          - LocationCountryNotFound
+          - LocationStateNotFound
+          - LocationCityNotFound
+          - LocationIdNotExists
+          - InvalidLocationEmailLength
+          - LocationStateIdNotFound
+          - IncorrectCombinationStateAndStateId
+          - InvalidSubscriberIds
+          - InvalidLocalizationSettings
+          - LandlordResponsibilityNotFound
+          - LandlordResponsibilityAlreadyExists
+          - EmptyLocationIds
+          - AttachmentNotExist
+          - InvalidTradeId
+          - InvalidCategoryId
+          - InvalidOverrideCategoryId
+          - InvalidOverridePriorityId
+          - LeaseNoteExceedMaxLength
+          - InvalidOverrideProviderRank
+          - InvalidOverrideNTE
+          - DuplicateRows
+          - InvalidPriorityId
+          - LocationNotFound
+          - EmptyTrade
+          - InvalidTrade
+          - TradeNotBelongsToSubscriber
+          - InvalidPrimaryTrade
+          - InvalidTradeForSubscriber
+          - InvalidCategoryForSubscriber
+          - GlCodeAlreadyExists
+          - GlCodeNotExists
+          - InvalidGlCodeUpdate
+          - EmptyGlCode
+          - TradeAlreadyExists
+          - InvalidNTETrade
+          - TradeNotExists
+          - TradeAlreadyInUse
+          - TradeWithTheSameNameHasBeenDeleted
+          - TradeInUsePMServices
+          - TradeInUseProposalError
+          - TradeInUseRFPError
+          - TradeInUseChecklistError
+          - TradeInUseBudgetControl
+          - TradeInUseGlCode
+          - TradeInUseDynamicProviderAssignments
+          - TradeInUseInvoice
+          - TradeInUseLandlordResponsibilities
+          - TradeInUseWO
+          - TradeInUseEquipmentType
+          - TradeInUseRFP
+          - TradeInUseConnector
+          - TradeInUseContractedService
+          - TradeInUseIVR
+          - TradeInUseSiteAccess
+          - TradeInUseGLCodes
+          - TradeInUseCIWO
+          - TradeInUseOrganizationPermissions
+          - TradeСreationError
+          - EmptyUser
+          - EmptyCreatedBy
+          - InvalidUserName
+          - NotProviderUser
+          - UserHasNoPermissions
+          - RestrictedAccount
+          - UserAlreadyExists
+          - UserHasNoPermissionsEditWO
+          - UserEmailAddressIsMissing
+          - UserIsNotRTAdmin
+          - InvalidSubsriberProviderId
+          - LanguageNameNotFound
+          - InvalidLanguageId
+          - LanguageIdNotFound
+          - UseBothSubscriberIdProviderId
+          - EmptyWoProblem
+          - InvalidWoProblemSource
+          - InvalidWoProblemDescription
+          - InvalidWoProblemCode
+          - InvalidWoStatus
+          - InvalidWoNte
+          - InvalidWoCaller
+          - InvalidWoCallDate
+          - InvalidWoScheduledDate
+          - InvalidWoScheduledDateGreaterThanMaxAllowed
+          - EmptyWoCategory
+          - InvalidWoCategory
+          - EmptyWoPriority
+          - InvalidWoPriority
+          - InvalidWoCurrency
+          - InvalidWoSetupId
+          - AttachmentsRequired
+          - InvalidWoIdentifier
+          - EquipmentRequired
+          - WoNteOverflow
+          - InvalidWoPurchaseNumber
+          - InvalidWoStateForUpdate
+          - InvalidPagingParameter
+          - InvalidWoNumber
+          - CheckInDenied
+          - CheckOutDenied
+          - WoScheduledDateLessThenReassignDate
+          - WoScheduledDateLessThenCallDate
+          - InvalidWoActionReason
+          - EmptySubscriberProperty
+          - WorkOrderUpdateError
+          - MissedWoNteDetails
+          - InvalidLinkedWoIdentifier
+          - WoIsOnHold
+          - InvalidWoTrade
+          - InvalidStarScore
+          - WorkOrderAlreadyRated
+          - AttachmentThumbnailNotAvailable
+          - InvalidWoIdentifierOrPin
+          - InvalidTimeZoneHeader
+          - RefrigerantWasUsedShouldBeYesOrNo
+          - CheckInDeniedOutsideGeolocation
+          - CheckOutDeniedOutsideGeolocation
+          - LeakDetectorAuditShouldBeCreated
+          - CheckInOutPremature
+          - WorkOrderAttachmentsSizeExceeded
+          - WorkOrderNotFound
+          - WorkOrderCreateError
+          - InvalidWoProjectedCompletionDate
+          - InvalidFollowUpWo
+          - InvalidWeatherEventId
+          - InvalidSiteAuditLinkedWo
+          - InvalidSetupId
+          - IssueListNotFound
+          - InvalidIssueListField
+          - SiteAuditCompleted
+          - CheckSiteAuditError
+          - SaveSiteAuditError
+          - RemoveSiteAuditError
+          - InactiveTemplateType
+          - SiteAuditNotFound
+          - SiteAuditUpdateError
+          - InvalidSiteAuditParameters
+          - InvalidAdditionalApprovalCode
+          - InvalidAdditionalApprovalCodeValue
+          - AdditionalApprovalCodeIsDisabled
+          - InvalidOtherDesc
+          - InvalidTax2Name
+          - InvoiceInconsistentAmounts
+          - InvoiceInvalidTotal
+          - InvoiceTotalGreaterNte
+          - InvoiceExists
+          - CreatingInvoiceError
+          - DuplInvNumber
+          - InvoiceTotalNull
+          - InvComplDateNull
+          - InvDateLessComplDate
+          - InvoiceNotAuto
+          - ESignatureRequired
+          - InvWoNotFound
+          - InvWrongWoCurr
+          - InvWoCurrNotFound
+          - InvoicingDisabled
+          - InvCreationUnexpectedRes
+          - InvoiceInvalidLaborAmount
+          - InvoiceInvalidMaterialAmount
+          - InvDateOld
+          - InvDateGreater
+          - InvoiceMaterialDescriptionLengthOverflow
+          - InvoiceTaxNotValidated
+          - InvoiceMaterialPartNumberLengthOverflow
+          - TaxValidationError
+          - TaxExemptionError
+          - InvalidInvoiceNumber
+          - GetApprovalLevelsError
+          - InvoiceAddUsersToMliLevelsError
+          - InvoiceAddDeleteLocationsToMliLevelUserError
+          - InvoiceUpdateMLiLevelError
+          - InvoiceDeleteMliLevelError
+          - InvoiceDeleteUsersFromMliLevelError
+          - ApprovalLevelNameLengthOverflow
+          - GstTaxError
+          - Tax2Error
+          - GetApprovalLevelsAndLocationsByUserError
+          - GetAssignedUserShortInfoError
+          - AssignAllLocationsToApprovalLevelAndUserError
+          - GetLocationsForApprovalLevelAndAssignedUserError
+          - GetLocationsBySubscriberError
+          - AssignUserWithLocationsToApprovalLevelError
+          - ReAssignUserWithLocationsToNewApprovalLevelError
+          - ReAssignLocationsToApprovalLevelAndUserError
+          - OutstandingBalance
+          - InvoiceTaxDetailsEmpty
+          - InvoiceTaxDetailsIncorrectSum
+          - MultipleUsersForLocationIsNotAllowed
+          - UserAssignedToOtherLevel
+          - UserDoesNotExist
+          - LaborLineItemRequired
+          - MaterialLineItemRequired
+          - InvoiceDoesntExist
+          - InvoiceStarUnstarFailed
+          - InvoiceBatchUpdateInvalidInvoiceStatusError
+          - InvoiceBatchUpdateLimitExceededError
+          - InvoiceNotAvailableForCurrentUser
+          - InvoiceBatchUpdateInvalidRuleSetStructure
+          - InvoiceBatchUpdateInvalidMliStructure
+          - InvoiceBatchUpdateStatusError
+          - InvoiceMaterialUnitTypeInvalid
+          - ExistingBatchNumber
+          - InvoiceResolutionTextRequired
+          - GetInvoiceDefaultApprovalCodesError
+          - InvoiceInvalidTravelAmount
+          - InvoiceTravelDescriptionLengthOverflow
+          - InvoiceTravelUnitTypeInvalid
+          - TravelLineItemRequired
+          - TravelDetailsDisabled
+          - OnOffShoreDisabled
+          - InvoiceInvalidLaborCount
+          - InvoiceInvalidMaterialCount
+          - InvoiceInvalidTravelCount
+          - SubscriberNotRegisteredForTaxValidation
+          - ManyDecimalsInAmountError
+          - DecimalPartQstTaxError
+          - LaborRatesDiscrepancy
+          - PayInvoicesError
+          - InvoiceNumberRequirementsError
+          - InvoiceNumberIncorrect
+          - InvoiceNumberRegExPatternError
+          - GetInvoicesPendingApprovalByLocationError
+          - ReAssignInvoicesToUsersFailed
+          - ReAssignInvoicesUsersMatched
+          - GetUsersForReassignInvoiceError
+          - InvalidTimeRangeActivity
+          - OutsourcedSourceInvoiceNotFound
+          - OthersLineItemsDisabled
+          - InvoiceInvalidOtherAmount
+          - InvoiceInvalidOtherCount
+          - InvoiceOtherDescriptionLengthOverflow
+          - OtherLineItemRequired
+          - OtherLineItemsNotNegativeValueRequired
+          - InvalidLaborSkillLevel
+          - InvalidLaborType
+          - InvalidTechnicianQuantity
+          - GetInvoicesCommonCategoriesError
+          - InvoiceExplainDisputeEmpty
+          - InvoiceAdditionalApprovalCodeHeaderError
+          - TemplateParseSuccess
+          - TemplateIncorrectHeaderError
+          - TemplateEmptyTemplateError
+          - TemplateWrongFieldsCountError
+          - TemplateFieldNotFoundError
+          - TemplateFieldRequiredError
+          - TemplateParseIntError
+          - TemplateFieldSizeError
+          - TemplateInvalidValueError
+          - TemplateFieldFormatError
+          - TemplateFieldMaxRangeError
+          - TemplateFieldMinRangeError
+          - TemplateProviderNotEntered
+          - TemplateInvalidSubscriberError
+          - TemplateVendorNotFoundError
+          - TemplateMissedProviderError
+          - TemplateProviderNotFoundError
+          - TemplateProviderSubsccriberLinkError
+          - TemplateTradeDispatchRankError
+          - TemplateInvalidTradeForSubscriberError
+          - TemplateStoreNotFoundError
+          - TemplateNotStoresForStateError
+          - TemplateNotStoresForCountryError
+          - TemplateNotStoresForDistrictError
+          - TemplateNotStoresForRegionError
+          - TemplateMultiplePimaryProvidersForTradeStoreError
+          - TemplateDuplicatePrimaryRelationshipError
+          - TemplateAmbiguousDataError
+          - TemplateIncorrectSubscriber
+          - TemplateDuplicateRanking
+          - TemplateLongitudeRangeError
+          - TemplateLatitudeRangeError
+          - InvoiceMaterialPartNameLengthOverflow
+          - TemplateTradeLocationExclusion
+          - TemplateInvalidStateError
+          - TemplateMissedSubscriberError
+          - TemplateMissedStoreIdError
+          - TemplateInvalidSubscriberIdError
+          - TemplateOpenCloseDateError
+          - TemplateInvalidCountryError
+          - TemplateInvalidStateForCountryError
+          - TemplateInvalidLocationTypeError
+          - TemplateMissingFullAndShortNameError
+          - TemplateMissingCountryError
+          - TemplateDuplicatedDataError
+          - TemplateParentLocationNotFoundError
+          - TemplateParseDateTimeError
+          - TemplateParseDecimalError
+          - TemplateSquareValueRangeError
+          - TemplateInvalidSquareMeasureError
+          - TemplateTypeLabelCanNotBeUpdatedError
+          - TemplateTypeLabelHaveToBeLocationForNotInventory
+          - TemplateInvalidPrimarySupplyLocation
+          - TemplateInvalidHomestoreLocationNumber
+          - TemplateErrorDuringCreation
+          - TemplateLocationNotFoundError
+          - TemplateDuplicatedLocationFoundError
+          - TemplateInvalidLocationHeaderError
+          - TemplateDuplicatedLocationHeaderError
+          - TemplateHeaderContainsEmptyFieldsError
+          - TemplateLocHeadersShortHeaderError
+          - TemplateHeaderContainsDuplicatesError
+          - TemplateLocationNotesStoreIdFieldLengthError
+          - TemplateLocationNotesNoteValueFieldLengthError
+          - TemplateErrorInvalidZipCode
+          - TemplateMissingLocationNoteHeader
+          - TemplateMissingLocationNoteIdHeader
+          - TemplateInvalidSecondarySupplyLocation
+          - TemplateLocationWasNotCreated
+          - TemplateTruckNameIsEmpty
+          - TemplateWrongFormat
+          - TemplateSubscriberNotFound
+          - TemplateDuplicatedLocationHeaders
+          - TemplateInvalidHeaders
+          - TemplateInvalidPhoneError
+          - TemplateDuplicateTelecomRecordError
+          - TemplateTelecomRecordExistsError
+          - TemplateInvalidCategory
+          - TemplateDifferentRanksForProviderAssignments
+          - TemplateDuplicateRankError
+          - TemplateProviderNonCompliant
+          - TemplateLocationIsClosed
+          - TemplateProviderWarning
+          - TemplateMultipleProvidersForTradeStoreError
+          - EmptyRequest
+          - InvalidNumberOfParameters
+          - InvoiceOtherUnitTypeInvalid
+          - EmptyLocationOrTradeList
+          - RequestSubscriberIdDoesntMatchUserSubscriberId
+          - StoreIdRequiredError
+          - InvalidUserIdError
+          - InvalidStoreIdError
+          - AmbigiousError
+          - MliHierarchyFiledsCountError
+          - MliHierarchyMaxUserNameError
+          - MliHierarchyDuplicateUserError
+          - MLiHirarchyUserExistInOtherLevelError
+          - MissingLevelsError
+          - DuplicateApprovalLevelsError
+          - InvalidMliLocations
+          - InvalidMlpLocations
+          - ApprovalLevelUsedInRulsetError
+          - GLCodeAmbiguous
+          - GlCodeInvalidResponce
+          - GetRuleSetListError
+          - RuleSetDuplicateNameError
+          - RuleSetDuplicateActionError
+          - RuleSetConflictedActionError
+          - RuleSetRuleSetDoesNotExistsError
+          - RuleSetTradeDoesNotExistError
+          - RuleSetCategoryDoesNotExistError
+          - RuleSetMliLevelDoesNotExistError
+          - GetRuleSet
+          - CreateUpdateRuleSetError
+          - DeleteRuleSet
+          - GetRuleSetCategoriesTradesCountError
+          - GetRuleSetByInvoice
+          - GetCategoryTradeIdsAreSelectedError
+          - ProposalAboveMlpLimitError
+          - ProposalNextLevelHasNoAvailableActionsError
+          - DefaultRuleSetError
+          - RuleSetActionEndStatusError
+          - RuleSetRejectActionEmptyForwardToError
+          - UserFilterGetError
+          - UserFilterCreateUpdateError
+          - UserFilterDeleteError
+          - UserFilterSetAsDefaultError
+          - InvoiceFilterFromAlpProviderError
+          - RegionFilterNotAllowedError
+          - LocationIdFilterNotAllowedError
+          - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+          - PaymenowBannersForProvidersOnly
+          - PaymenowFeatureDisabled
+          - PaymenowBannerInfoNotFound
+          - PaymenowBannerInvalidNavigationUrl
+          - PaymenowRequestedProvidersIsNotAssigned
+          - PaymenowEmptyRequestedProviders
+          - PaymentManagerFeatureDisabled
+          - PaymentManagerFeatureDisabledForSubscriber
+          - PaymentSystemCurrentlyUnavailable
+          - CurrencyNotSupported
+          - PaymentSystemAccountNotFound
+          - FeatureIsOff
+          - EarlyPayFeatureWithoutPaymentManagetFeatureError
+          - FtpTestError
+          - AcceptTermsAndConditionsRequestInvalid
+          - PaymentSystemAccountError
+          - SendReportToFTP
+          - SchedulingError
+          - BadPaymentData
+          - InvoicesCanNotBeRepaid
+          - InvoicesCanNotBeRescheduled
+          - InvalidBillingAddress
+          - PaymentManagerGeneralSettingsNotFound
+          - PaymentManagerEInvoiceSettingsNotFound
+          - BadgeVerificationFailed
+          - BadgeTempPassEmpty
+          - BadgeScanRequired
+          - SolvedIssueSubmitFailed
+          - SolvedIssueInvalidLocationId
+          - SolvedIssueInvalidCategoryId
+          - SolvedIssueInvalidTradeId
+          - SolvedIssueInvalidPriorityId
+          - SolvedIssueInvalidSource
+          - SolvedIssueInvalidProblemCode
+          - SolvedIssueInvalidType
+          - SubmitFeedbackErrorWoStatus
+          - SubmitFeedbackInvalidAnswer
+          - SubmitFeedbackInvalidTrackingNumber
+          - SubmitFeedbackInvalidSubscriber
+          - SubmitFeedbackInvalidScore
+          - SubmitFeedbackUnsatisfactoryCommentRequired
+          - SubmitFeedbackInvalidReviewId
+          - SubmitFeedbackInvalidSetupId
+          - FeedbackSetupInvalidSetupId
+          - S3SaveError
+          - AbsSaveError
+          - GoodDataLoginFailed
+          - GoodDataElementUriError
+          - GoodDataReportResultUriError
+          - GoodDataReportResultEmpty
+          - GoodDataDesReportResCountError
+          - GoodDataDesReportResConvertError
+          - GoodDataDesDisplayFormAttributeEmpty
+          - InvalidProposalAmountLimit
+          - GetApprovalProposalReasonsError
+          - GetEmailRecipientsError
+          - GetAssignProposalReasonsError
+          - ProposalHasBeenVoided
+          - AssetTypeDuplicateNameError
+          - AssetTypeDoesntExistError
+          - AssetTypeFailUpdateRefrigerantPurpose
+          - AssetTypeDeleteFailed
+          - ExistingAssetsFoundForAssetType
+          - CantModifyAssetTypeParentId
+          - InvalidAssetTypeName
+          - AssetTypeInheritanceError
+          - ExistingProposalsFoundForAssetType
+          - InstallPurchaseDateOverflow
+          - WOexistsWithSomeAssets
+          - PartsChangeFailed
+          - PartsReasonCodeError
+          - PartsUseDateError
+          - PartsRefrigerantAlreadyExists
+          - PartsChargeHistoryAlreadyExists
+          - PartsNotFound
+          - BulkPartUseIncorrectWorkOrder
+          - BulkPartsByIdsNotFound
+          - BulkPartsMultipleWosError
+          - BulkPartsIncorrectIsRefrigerantParam
+          - BulkPartsIsRefrigerantCanNotbeChanged
+          - BulkPartsReasonCodeChangeError
+          - BulkPartsInvalidAssetAndReasonCodeParams
+          - BulkPartsInvalidAssetId
+          - BulkPartsInvalidInitialChargeCode
+          - BulkPartsAssetDoesntContainCharge
+          - BulkPartsIsInventoryFlagError
+          - BulkPartsLeakAlreadyInProcessError
+          - BulkPartsInvalidDateRangeError
+          - BulkPartsMoeNumberRequiredError
+          - BulkPartsSystemChargeExceeded
+          - BulkRefrigerantuUageBlocked
+          - BulkIDsNotBeNull
+          - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+          - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+          - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+          - BulkInitialChargeSystemExpansionNotAllowed
+          - BulkInventoryPartIdCanNotBeChanged
+          - BulkInventoryLocationIdCanNotBeChanged
+          - BulkPartsDuplicatedRequest
+          - BulkChangePartsIncorrectRefrigerantType
+          - BulkPartsRetroRetireIsInProgressOnThisDate
+          - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+          - RetrofitRetireCanNotBeRemoved
+          - RetroRetirePartsCantbeChanged
+          - BulkPartsInventoryApiFailed
+          - BulkPartsDuplicated
+          - BulkPartsWorkOrderInProcessing
+          - BadNotificationSubscriptionEventType
+          - RefrigerantUseDateOutOfTheLeakProcessDateRange
+          - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+          - BulkExternalWoCurrentlyDoesntExists
+          - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+          - BulkConnectorOnlyClientAssetsCouldBeProcessed
+          - LeakRecordHasWrongDateValue
+          - HasUncompliedLeakRecordInAnoutherWO
+          - HasUncompletedWOOnAnotherLeakRecord
+          - OnlyOneAssetWorkOrderPair
+          - OneLeakRecordMustBeOnCompletedWO
+          - LeakRecordNotFound
+          - AssetIDWoIdIsRequired
+          - BulkPartsReasonCodeRetrofit
+          - RetrofitRetireWasCancelledNoLeak
+          - FailedToUpdateLeakEvent
+          - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+          - LeakPartUseOnZeroChargeNotAllowed
+          - BulkLeakRecordsAndAuditRequest
+          - LeakRecordsDuplicateRequestDetected
+          - AllLeakRecordFieldsAreRequired
+          - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+          - MlpImportLevelError
+          - UpdateMlpUserLevelError
+          - InvalidHolidayName
+          - DuplicateHolidayName
+          - HolidaysDeleteFailed
+          - HolidaysExcludeInsertFailed
+          - HolidaysUpdateFailed
+          - HolidaysInsertFailed
+          - HolidaysExcludeDeleteFailed
+          - BusinessHoursDeleteFailed
+          - BusinessHoursUpdateFailed
+          - BusinessHoursInsertFailed
+          - InvalidTime
+          - HolidayForDeleteNotFound
+          - InvalidChecklistId
+          - ChecklistNotPopulated
+          - ChecklistNotAssignedForTransfersWO
+          - NoLinkBetweenSubscriberAndProvider
+          - WorkforceCreateContractorError
+          - InvalidCertificateId
+          - MaxThresholdExceeded
+          - MaxTriggerRateExceeded
+          - LeakPriorityIsRequired
+          - MissingRTSettings
+          - ResolutionCodesLimitExceeded
+          - ResolutionCodesAreRequired
+          - RootCauseIsRequired
+          - RootCauseTextIsRequired
+          - NoAccessToSetRootCauseText
+          - RootCauseTextMaxLengthExceeded
+          - ResolutionCodeTextIsRequired
+          - NoAccessToSetResolutionCodeText
+          - ResolutionCodeTextMaxLengthExceeded
+          - ResolutionCodeTextMustBeUnique
+          - ResolutionCodeWithoutFreeTextMustBeUnique
+          - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+          - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+          - AssetCategoriesLimitExceeded
+          - NoAccessToAssetCategories
+          - AssetCategoriesAreRequired
+          - InvalidAssetCategoryId
+          - NoAssetCategoriesOnWorkOrder
+          - RootCausesMustBeForAllWorkOrderAssetCategories
+          - RootCauseTextMustBeUnique
+          - AssetCategoryIsRequired
+          - MultipleRootCausesMethodMustBeUsed
+          - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+          - AssetFilterLocationsLimitExceeded
+          - UnknownStoreId
+          - UsesRefrigerantAttributeNotChanged
+          - AssetTagDuplicate
+          - AssetTagIdDuplicate
+          - UnknownEquipmentType
+          - ParentIdInOtherLocation
+          - UnknownBrandName
+          - CARBRequiredManufacturedDate
+          - CARBRequiredInstallDate
+          - TradeNotFound
+          - AssetDoesntExist
+          - AssetIsNotRefrigerant
+          - AssetCantContainRefrigerant
+          - OnlyRackAssetsContainingCircuits
+          - ConnectorAssetTagIdCanNotBeChanged
+          - ConnectorAssetLocationIdCanNotBeChanged
+          - AssetTagCantBeUpdated
+          - AssetTypeIsNotСonfiguredToManageRTAssets
+          - RefrigerantTrackingNotAvailableForLocation
+          - UsesRefrigerantRequiredByAssetTypeSettings
+          - AssetLocationTradeDoesntCorrespondToWO
+          - AssetLocationSelectedPMmodule
+          - UpdateAssetRepairStatusValidation
+          - HasCircuitsCantBeChange
+          - HasComponentsCantBeChange
+          - CircuitCanNotBeConnectedToCircuit
+          - RTCircuitCanNotBeConnectedToNonRTAsset
+          - RTComponentCanNotBeConnectedToNonRTAsset
+          - ComponentCanNotBeConnectedToComponent
+          - NonRTComponentCanNotBeConnectedToRtAsset
+          - NonRTCircuitCanNotBeConnectedToRtAsset
+          - ComponentCanNotBeConnectedToCircuit
+          - ParentAssetShouldHaveEitherComponentsNorCircuits
+          - ParentAssetCantHaveComponents
+          - ParentAssetCantHaveCircuits
+          - MultipleAssetsFoundForTheRequestedTagId
+          - InvalidBrandName
+          - UnknownBrandId
+          - BrandRestrictedByAssetType
+          - BrandRestrictedBySubscriber
+          - BrandsRestrictedBySubscriber
+          - DeclineWorkOrderFailed
+          - AcceptWorkOrderFailed
+          - WorkOrderWasAccepted
+          - AssetAttachmentsSizeExceeded
+          - SaveMliAuditReportSetting
+          - GetMliAuditReportSetting
+          - SaveMliAuditReportResult
+          - SaveMliAuditReportSendEmailStatus
+          - SaveMliAuditReportFilePath
+          - GetSubscribersEnabledSchedule
+          - SaveMliAuditInfoError
+          - TaxValidationAddNewCompanySettingsError
+          - TaxValidationUpdateCompanySettingsError
+          - ProjectAssociationError
+          - GetProjectsInvoiceAmountsError
+          - TaxCodeNotUniqueError
+          - FieldLengthIsTooLongError
+          - SetTaxCodesBulkError
+          - InvoiceAdditionalApprovalCodeValueError
+          - BulkUpdateInvoicePaymentError
+          - InvoiceLineItemFilterDisabled
+          - InvoiceStatusToRejectProviderNotificationFailed
+          - SortFieldNotAvailableError
+          - ContractServiceExist
+          - ContractServiceCantChangeTrade
+          - ContractServiceCantChangeCategory
+          - ContractServiceCantChangeProvider
+          - ContractServicePMServiceCantChangeTrade
+          - ContractServicePMServiceCantChangeCategory
+          - ContractedServiceNameAlreadyExists
+          - ContractedServiceNameLinkedToRates
+          - WorkRequestDescriptionIsRequired
+          - WorkRequestCallDateIsRequired
+          - WorkRequestIssueIsRequired
+          - WorkRequestCallDateHasWrongFormat
+          - WorkRequestScheduledDateHasWrongFormat
+          - InvalidWorkRequestStatus
+          - InvalidWorkRequestExtendedStatus
+          - InvalidWorkRequestCategory
+          - InvalidWorkRequestPriority
+          - InvalidWorkRequestCurrency
+          - InvalidWorkRequestIssueSetup
+          - InvalidWorkRequestIssueArea
+          - InvalidWorkRequestAsset
+          - WorkRequestAttachmentFileNameIsRequired
+          - WorkRequestAttachmentOriginalNameIsRequired
+          - WorkRequestIssueProblemCodeIsRequired
+          - WorkRequestIssueProblemTypeIsRequired
+          - WorkRequestScheduledDateMustBeGreaterThanCallDate
+          - InvalidWorkRequestId
+          - WorkRequestSearchCallDateFromHasWrongFormat
+          - WorkRequestSearchCallDateToHasWrongFormat
+          - WorkRequestSearchScheduledDateFromHasWrongFormat
+          - WorkRequestSearchScheduledDateToHasWrongFormat
+          - WorkRequestSearchClosedDateFromHasWrongFormat
+          - WorkRequestSearchClosedDateToHasWrongFormat
+          - WorkOrderIsAlreadyCreatedForWorkRequest
+          - WorkRequestIsClosed
+          - WorkRequestClosedReasonIsRequiredForClosedStatus
+          - WorkOrderIdIsRequiredForThisClosedReason
+          - InvalidWorkRequestClosedReason
+          - WorkRequestClosedReasonIsOnlyForClosedStatus
+          - InvalidWorkRequestWorkOrderId
+          - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+          - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+          - InvalidWorkOrderSourceType
+          - DeclineReasonIdIsRequired
+          - DeclineReasonDoesntAllowCustomText
+          - InvalidDeclineReasonId
+          - MultipleWorkOrdersForPurchaseNumber
+          - InvoiceMaterialMakupInvalid
+          - MaterialMarkUpDiscrepancyReasonShouldBeStated
+          - MaterialPriceDiscrepancyReasonShouldBeStated
+          - OtherPriceDiscrepancyReasonShouldBeStated
+          - SubscriberIdIsNotValid
+          - FiscalPeriodIsNotValid
+          - AmountIsNotValid
+          - AmountFormatIsNotValid
+          - CategoryMustBeEmpty
+          - CategoryIsNotValid
+          - TradeMustBeEmpty
+          - TradeIsNotValid
+          - GlCodeMustBeEmpty
+          - GlCodeIsNotValid
+          - LocationMustBeEmpty
+          - LocationIsNotValid
+          - RegionMustBeEmpty
+          - RegionIsNotValid
+          - DistrictMustBeEmpty
+          - DistrictIsNotValid
+          - DuplicateData
+          - PrimaryCategoryMustBeEmpty
+          - PrimaryCategoryIsNotValid
+          - CategoryAndExcludedCategoryCannotSimultaneously
+          - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+          - TradeAndExcludedTradeCannotSimultaneously
+          - GlCodeAndExcludedGlCodeCannotSimultaneously
+          - DuplicateCategories
+          - DuplicateTrades
+          - DuplicateGlCodes
+          - DuplicatePrimaryCategories
+          - LocationNoteMustBeEmpty
+          - LocationNoteIsNotValid
+          - OverlappingCategories
+          - OverlappingPrimaryCategories
+          - OverlappingTrades
+          - OverlappingPrimaryTrades
+          - OverlappingGlCodes
+          - OverlappingLocations
+          - OverlappingRegions
+          - OverlappingDistricts
+          - OverlappingLocationNotes
+          - TaxExemptionErrorApi
+          - OtherLineItemZeroAmount
+          - TravelLineItemsNotNegativeValueRequired
+          - MaterialLineItemsNotNegativeValueRequired
+          - LaborLineItemsNotNegativeValueRequired
+          - AdditionalApprovalCodeSetupIdInvalid
+          - VendorIdIsNotValid
+          - InvalidBatchId
+          - InvalidBatchStatusId
+          - CategoryInUsePMServiceError
+          - CategoryInUseChecklistError
+          - CategoryInUseETAMissedAlertError
+          - CategoryInUseBudgetControl
+          - CategoryInUseConnector
+          - CategoryInUseContractedService
+          - CategoryInUseEDI
+          - CategoryInUseIVR
+          - CategoryInUseFeedbackV2
+          - CategoryInUseProposalApproveReasons
+          - CategoryInUsePaymentManager
+          - CategoryInUseProviderAssignments
+          - CategoryInUseSiteAccess
+          - CategoryInUseAlerts
+          - CategoryInUseOpenWOAlert
+          - CategoryInUseWOAutocopy
+          - CategoryInUseWorkRequest
+          - CategoryInUseWO
+          - CategoryInUseDashboardOverride
+          - CategoryInUseInvoiceAttributes
+          - FeatureIsOn
+          - LocationHierarchyNotFound
+          - LocationHierarchyLevelNotFound
+          - LocationHierarchyParentLevelNotFound
+          - LocationSpaceTypeNotFound
+          - DuplicateRowByValueKey
+          - ParentNotFound
+          - DuplicateSequenceAmongSiblings
+          - SequenceConflictsWithExistingData
+          - SequenceMustBeGreaterThanZero
+          - ValueContainsPathDelimiter
+          - InitializationWarmupError
+          type: string
+      ErrorCode:
+        description: The code of the first error found
+        enum:
+        - NotAllowed
+        - EmptyProvider
+        - InvalidProviderId
+        - UnknownProvider
+        - ProviderAlreadyExists
+        - ProviderIdNotExists
+        - TimeoutExpiredError
+        - EmptyContract
+        - ContractUndefined
+        - EmptySubscriber
+        - InvalidSubscriberId
+        - UnknownSubscriber
+        - InactiveSubscriber
+        - EmptySubscriberId
+        - SubscriberIdNotExists
+        - InternalError
+        - DataNotFound
+        - BadRequest
+        - UnAuthorized
+        - UnSupportedApplication
+        - SubsidiaryUserDisabled
+        - EmptyLocation
+        - InvalidLocationId
+        - UnknownLocation
+        - LocationNotBelongsToSubscriber
+        - EmptyLocationCountry
+        - LocationAlreadyExists
+        - InvalidStoreId
+        - LocationEmptyState
+        - NoAccessToLocation
+        - LocationAddressValidationError
+        - LocationAddressRequestValidationError
+        - InvalidLocationNoteHeader
+        - NoAccessToUpdateProtectedNote
+        - InvalidBusinessHoursFormat
+        - WorkingHoursIntersect
+        - InvalidDayOfWeek
+        - DuplicateDayOfWeek
+        - InvalidBusinessHoursInitialSetup
+        - BusinessHoursIsEmpty
+        - InvalidHolidayRepeatByType
+        - EmptyHolidayListOfDays
+        - EmptyHolidayListOfMonths
+        - InvalidHolidayMonthName
+        - InvalidHolidayNameLength
+        - InvalidHolidayRepeatEvery
+        - DuplicateMonth
+        - InvalidHolidayFrequency
+        - InvalidHolidayStartDate
+        - InvalidCloseAllDay
+        - HolidayDoesNotExist
+        - InvalidFormatParameter
+        - InvalidLocationCity
+        - InvalidLocationZip
+        - InvalidLocationLatitude
+        - InvalidLocationLongitude
+        - InvalidLocationEmail
+        - InvalidLocationName
+        - InvalidLocationState
+        - InvalidLocationAddlAddress
+        - InvalidLocationMainAddress
+        - InvalidLocationCountry
+        - InvalidLocationRegion
+        - InvalidLocationDistrict
+        - InvalidLocationPhone
+        - InvalidLocationContact
+        - InvalidLocationFaxNumber
+        - LocationCountryNotFound
+        - LocationStateNotFound
+        - LocationCityNotFound
+        - LocationIdNotExists
+        - InvalidLocationEmailLength
+        - LocationStateIdNotFound
+        - IncorrectCombinationStateAndStateId
+        - InvalidSubscriberIds
+        - InvalidLocalizationSettings
+        - LandlordResponsibilityNotFound
+        - LandlordResponsibilityAlreadyExists
+        - EmptyLocationIds
+        - AttachmentNotExist
+        - InvalidTradeId
+        - InvalidCategoryId
+        - InvalidOverrideCategoryId
+        - InvalidOverridePriorityId
+        - LeaseNoteExceedMaxLength
+        - InvalidOverrideProviderRank
+        - InvalidOverrideNTE
+        - DuplicateRows
+        - InvalidPriorityId
+        - LocationNotFound
+        - EmptyTrade
+        - InvalidTrade
+        - TradeNotBelongsToSubscriber
+        - InvalidPrimaryTrade
+        - InvalidTradeForSubscriber
+        - InvalidCategoryForSubscriber
+        - GlCodeAlreadyExists
+        - GlCodeNotExists
+        - InvalidGlCodeUpdate
+        - EmptyGlCode
+        - TradeAlreadyExists
+        - InvalidNTETrade
+        - TradeNotExists
+        - TradeAlreadyInUse
+        - TradeWithTheSameNameHasBeenDeleted
+        - TradeInUsePMServices
+        - TradeInUseProposalError
+        - TradeInUseRFPError
+        - TradeInUseChecklistError
+        - TradeInUseBudgetControl
+        - TradeInUseGlCode
+        - TradeInUseDynamicProviderAssignments
+        - TradeInUseInvoice
+        - TradeInUseLandlordResponsibilities
+        - TradeInUseWO
+        - TradeInUseEquipmentType
+        - TradeInUseRFP
+        - TradeInUseConnector
+        - TradeInUseContractedService
+        - TradeInUseIVR
+        - TradeInUseSiteAccess
+        - TradeInUseGLCodes
+        - TradeInUseCIWO
+        - TradeInUseOrganizationPermissions
+        - TradeСreationError
+        - EmptyUser
+        - EmptyCreatedBy
+        - InvalidUserName
+        - NotProviderUser
+        - UserHasNoPermissions
+        - RestrictedAccount
+        - UserAlreadyExists
+        - UserHasNoPermissionsEditWO
+        - UserEmailAddressIsMissing
+        - UserIsNotRTAdmin
+        - InvalidSubsriberProviderId
+        - LanguageNameNotFound
+        - InvalidLanguageId
+        - LanguageIdNotFound
+        - UseBothSubscriberIdProviderId
+        - EmptyWoProblem
+        - InvalidWoProblemSource
+        - InvalidWoProblemDescription
+        - InvalidWoProblemCode
+        - InvalidWoStatus
+        - InvalidWoNte
+        - InvalidWoCaller
+        - InvalidWoCallDate
+        - InvalidWoScheduledDate
+        - InvalidWoScheduledDateGreaterThanMaxAllowed
+        - EmptyWoCategory
+        - InvalidWoCategory
+        - EmptyWoPriority
+        - InvalidWoPriority
+        - InvalidWoCurrency
+        - InvalidWoSetupId
+        - AttachmentsRequired
+        - InvalidWoIdentifier
+        - EquipmentRequired
+        - WoNteOverflow
+        - InvalidWoPurchaseNumber
+        - InvalidWoStateForUpdate
+        - InvalidPagingParameter
+        - InvalidWoNumber
+        - CheckInDenied
+        - CheckOutDenied
+        - WoScheduledDateLessThenReassignDate
+        - WoScheduledDateLessThenCallDate
+        - InvalidWoActionReason
+        - EmptySubscriberProperty
+        - WorkOrderUpdateError
+        - MissedWoNteDetails
+        - InvalidLinkedWoIdentifier
+        - WoIsOnHold
+        - InvalidWoTrade
+        - InvalidStarScore
+        - WorkOrderAlreadyRated
+        - AttachmentThumbnailNotAvailable
+        - InvalidWoIdentifierOrPin
+        - InvalidTimeZoneHeader
+        - RefrigerantWasUsedShouldBeYesOrNo
+        - CheckInDeniedOutsideGeolocation
+        - CheckOutDeniedOutsideGeolocation
+        - LeakDetectorAuditShouldBeCreated
+        - CheckInOutPremature
+        - WorkOrderAttachmentsSizeExceeded
+        - WorkOrderNotFound
+        - WorkOrderCreateError
+        - InvalidWoProjectedCompletionDate
+        - InvalidFollowUpWo
+        - InvalidWeatherEventId
+        - InvalidSiteAuditLinkedWo
+        - InvalidSetupId
+        - IssueListNotFound
+        - InvalidIssueListField
+        - SiteAuditCompleted
+        - CheckSiteAuditError
+        - SaveSiteAuditError
+        - RemoveSiteAuditError
+        - InactiveTemplateType
+        - SiteAuditNotFound
+        - SiteAuditUpdateError
+        - InvalidSiteAuditParameters
+        - InvalidAdditionalApprovalCode
+        - InvalidAdditionalApprovalCodeValue
+        - AdditionalApprovalCodeIsDisabled
+        - InvalidOtherDesc
+        - InvalidTax2Name
+        - InvoiceInconsistentAmounts
+        - InvoiceInvalidTotal
+        - InvoiceTotalGreaterNte
+        - InvoiceExists
+        - CreatingInvoiceError
+        - DuplInvNumber
+        - InvoiceTotalNull
+        - InvComplDateNull
+        - InvDateLessComplDate
+        - InvoiceNotAuto
+        - ESignatureRequired
+        - InvWoNotFound
+        - InvWrongWoCurr
+        - InvWoCurrNotFound
+        - InvoicingDisabled
+        - InvCreationUnexpectedRes
+        - InvoiceInvalidLaborAmount
+        - InvoiceInvalidMaterialAmount
+        - InvDateOld
+        - InvDateGreater
+        - InvoiceMaterialDescriptionLengthOverflow
+        - InvoiceTaxNotValidated
+        - InvoiceMaterialPartNumberLengthOverflow
+        - TaxValidationError
+        - TaxExemptionError
+        - InvalidInvoiceNumber
+        - GetApprovalLevelsError
+        - InvoiceAddUsersToMliLevelsError
+        - InvoiceAddDeleteLocationsToMliLevelUserError
+        - InvoiceUpdateMLiLevelError
+        - InvoiceDeleteMliLevelError
+        - InvoiceDeleteUsersFromMliLevelError
+        - ApprovalLevelNameLengthOverflow
+        - GstTaxError
+        - Tax2Error
+        - GetApprovalLevelsAndLocationsByUserError
+        - GetAssignedUserShortInfoError
+        - AssignAllLocationsToApprovalLevelAndUserError
+        - GetLocationsForApprovalLevelAndAssignedUserError
+        - GetLocationsBySubscriberError
+        - AssignUserWithLocationsToApprovalLevelError
+        - ReAssignUserWithLocationsToNewApprovalLevelError
+        - ReAssignLocationsToApprovalLevelAndUserError
+        - OutstandingBalance
+        - InvoiceTaxDetailsEmpty
+        - InvoiceTaxDetailsIncorrectSum
+        - MultipleUsersForLocationIsNotAllowed
+        - UserAssignedToOtherLevel
+        - UserDoesNotExist
+        - LaborLineItemRequired
+        - MaterialLineItemRequired
+        - InvoiceDoesntExist
+        - InvoiceStarUnstarFailed
+        - InvoiceBatchUpdateInvalidInvoiceStatusError
+        - InvoiceBatchUpdateLimitExceededError
+        - InvoiceNotAvailableForCurrentUser
+        - InvoiceBatchUpdateInvalidRuleSetStructure
+        - InvoiceBatchUpdateInvalidMliStructure
+        - InvoiceBatchUpdateStatusError
+        - InvoiceMaterialUnitTypeInvalid
+        - ExistingBatchNumber
+        - InvoiceResolutionTextRequired
+        - GetInvoiceDefaultApprovalCodesError
+        - InvoiceInvalidTravelAmount
+        - InvoiceTravelDescriptionLengthOverflow
+        - InvoiceTravelUnitTypeInvalid
+        - TravelLineItemRequired
+        - TravelDetailsDisabled
+        - OnOffShoreDisabled
+        - InvoiceInvalidLaborCount
+        - InvoiceInvalidMaterialCount
+        - InvoiceInvalidTravelCount
+        - SubscriberNotRegisteredForTaxValidation
+        - ManyDecimalsInAmountError
+        - DecimalPartQstTaxError
+        - LaborRatesDiscrepancy
+        - PayInvoicesError
+        - InvoiceNumberRequirementsError
+        - InvoiceNumberIncorrect
+        - InvoiceNumberRegExPatternError
+        - GetInvoicesPendingApprovalByLocationError
+        - ReAssignInvoicesToUsersFailed
+        - ReAssignInvoicesUsersMatched
+        - GetUsersForReassignInvoiceError
+        - InvalidTimeRangeActivity
+        - OutsourcedSourceInvoiceNotFound
+        - OthersLineItemsDisabled
+        - InvoiceInvalidOtherAmount
+        - InvoiceInvalidOtherCount
+        - InvoiceOtherDescriptionLengthOverflow
+        - OtherLineItemRequired
+        - OtherLineItemsNotNegativeValueRequired
+        - InvalidLaborSkillLevel
+        - InvalidLaborType
+        - InvalidTechnicianQuantity
+        - GetInvoicesCommonCategoriesError
+        - InvoiceExplainDisputeEmpty
+        - InvoiceAdditionalApprovalCodeHeaderError
+        - TemplateParseSuccess
+        - TemplateIncorrectHeaderError
+        - TemplateEmptyTemplateError
+        - TemplateWrongFieldsCountError
+        - TemplateFieldNotFoundError
+        - TemplateFieldRequiredError
+        - TemplateParseIntError
+        - TemplateFieldSizeError
+        - TemplateInvalidValueError
+        - TemplateFieldFormatError
+        - TemplateFieldMaxRangeError
+        - TemplateFieldMinRangeError
+        - TemplateProviderNotEntered
+        - TemplateInvalidSubscriberError
+        - TemplateVendorNotFoundError
+        - TemplateMissedProviderError
+        - TemplateProviderNotFoundError
+        - TemplateProviderSubsccriberLinkError
+        - TemplateTradeDispatchRankError
+        - TemplateInvalidTradeForSubscriberError
+        - TemplateStoreNotFoundError
+        - TemplateNotStoresForStateError
+        - TemplateNotStoresForCountryError
+        - TemplateNotStoresForDistrictError
+        - TemplateNotStoresForRegionError
+        - TemplateMultiplePimaryProvidersForTradeStoreError
+        - TemplateDuplicatePrimaryRelationshipError
+        - TemplateAmbiguousDataError
+        - TemplateIncorrectSubscriber
+        - TemplateDuplicateRanking
+        - TemplateLongitudeRangeError
+        - TemplateLatitudeRangeError
+        - InvoiceMaterialPartNameLengthOverflow
+        - TemplateTradeLocationExclusion
+        - TemplateInvalidStateError
+        - TemplateMissedSubscriberError
+        - TemplateMissedStoreIdError
+        - TemplateInvalidSubscriberIdError
+        - TemplateOpenCloseDateError
+        - TemplateInvalidCountryError
+        - TemplateInvalidStateForCountryError
+        - TemplateInvalidLocationTypeError
+        - TemplateMissingFullAndShortNameError
+        - TemplateMissingCountryError
+        - TemplateDuplicatedDataError
+        - TemplateParentLocationNotFoundError
+        - TemplateParseDateTimeError
+        - TemplateParseDecimalError
+        - TemplateSquareValueRangeError
+        - TemplateInvalidSquareMeasureError
+        - TemplateTypeLabelCanNotBeUpdatedError
+        - TemplateTypeLabelHaveToBeLocationForNotInventory
+        - TemplateInvalidPrimarySupplyLocation
+        - TemplateInvalidHomestoreLocationNumber
+        - TemplateErrorDuringCreation
+        - TemplateLocationNotFoundError
+        - TemplateDuplicatedLocationFoundError
+        - TemplateInvalidLocationHeaderError
+        - TemplateDuplicatedLocationHeaderError
+        - TemplateHeaderContainsEmptyFieldsError
+        - TemplateLocHeadersShortHeaderError
+        - TemplateHeaderContainsDuplicatesError
+        - TemplateLocationNotesStoreIdFieldLengthError
+        - TemplateLocationNotesNoteValueFieldLengthError
+        - TemplateErrorInvalidZipCode
+        - TemplateMissingLocationNoteHeader
+        - TemplateMissingLocationNoteIdHeader
+        - TemplateInvalidSecondarySupplyLocation
+        - TemplateLocationWasNotCreated
+        - TemplateTruckNameIsEmpty
+        - TemplateWrongFormat
+        - TemplateSubscriberNotFound
+        - TemplateDuplicatedLocationHeaders
+        - TemplateInvalidHeaders
+        - TemplateInvalidPhoneError
+        - TemplateDuplicateTelecomRecordError
+        - TemplateTelecomRecordExistsError
+        - TemplateInvalidCategory
+        - TemplateDifferentRanksForProviderAssignments
+        - TemplateDuplicateRankError
+        - TemplateProviderNonCompliant
+        - TemplateLocationIsClosed
+        - TemplateProviderWarning
+        - TemplateMultipleProvidersForTradeStoreError
+        - EmptyRequest
+        - InvalidNumberOfParameters
+        - InvoiceOtherUnitTypeInvalid
+        - EmptyLocationOrTradeList
+        - RequestSubscriberIdDoesntMatchUserSubscriberId
+        - StoreIdRequiredError
+        - InvalidUserIdError
+        - InvalidStoreIdError
+        - AmbigiousError
+        - MliHierarchyFiledsCountError
+        - MliHierarchyMaxUserNameError
+        - MliHierarchyDuplicateUserError
+        - MLiHirarchyUserExistInOtherLevelError
+        - MissingLevelsError
+        - DuplicateApprovalLevelsError
+        - InvalidMliLocations
+        - InvalidMlpLocations
+        - ApprovalLevelUsedInRulsetError
+        - GLCodeAmbiguous
+        - GlCodeInvalidResponce
+        - GetRuleSetListError
+        - RuleSetDuplicateNameError
+        - RuleSetDuplicateActionError
+        - RuleSetConflictedActionError
+        - RuleSetRuleSetDoesNotExistsError
+        - RuleSetTradeDoesNotExistError
+        - RuleSetCategoryDoesNotExistError
+        - RuleSetMliLevelDoesNotExistError
+        - GetRuleSet
+        - CreateUpdateRuleSetError
+        - DeleteRuleSet
+        - GetRuleSetCategoriesTradesCountError
+        - GetRuleSetByInvoice
+        - GetCategoryTradeIdsAreSelectedError
+        - ProposalAboveMlpLimitError
+        - ProposalNextLevelHasNoAvailableActionsError
+        - DefaultRuleSetError
+        - RuleSetActionEndStatusError
+        - RuleSetRejectActionEmptyForwardToError
+        - UserFilterGetError
+        - UserFilterCreateUpdateError
+        - UserFilterDeleteError
+        - UserFilterSetAsDefaultError
+        - InvoiceFilterFromAlpProviderError
+        - RegionFilterNotAllowedError
+        - LocationIdFilterNotAllowedError
+        - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+        - PaymenowBannersForProvidersOnly
+        - PaymenowFeatureDisabled
+        - PaymenowBannerInfoNotFound
+        - PaymenowBannerInvalidNavigationUrl
+        - PaymenowRequestedProvidersIsNotAssigned
+        - PaymenowEmptyRequestedProviders
+        - PaymentManagerFeatureDisabled
+        - PaymentManagerFeatureDisabledForSubscriber
+        - PaymentSystemCurrentlyUnavailable
+        - CurrencyNotSupported
+        - PaymentSystemAccountNotFound
+        - FeatureIsOff
+        - EarlyPayFeatureWithoutPaymentManagetFeatureError
+        - FtpTestError
+        - AcceptTermsAndConditionsRequestInvalid
+        - PaymentSystemAccountError
+        - SendReportToFTP
+        - SchedulingError
+        - BadPaymentData
+        - InvoicesCanNotBeRepaid
+        - InvoicesCanNotBeRescheduled
+        - InvalidBillingAddress
+        - PaymentManagerGeneralSettingsNotFound
+        - PaymentManagerEInvoiceSettingsNotFound
+        - BadgeVerificationFailed
+        - BadgeTempPassEmpty
+        - BadgeScanRequired
+        - SolvedIssueSubmitFailed
+        - SolvedIssueInvalidLocationId
+        - SolvedIssueInvalidCategoryId
+        - SolvedIssueInvalidTradeId
+        - SolvedIssueInvalidPriorityId
+        - SolvedIssueInvalidSource
+        - SolvedIssueInvalidProblemCode
+        - SolvedIssueInvalidType
+        - SubmitFeedbackErrorWoStatus
+        - SubmitFeedbackInvalidAnswer
+        - SubmitFeedbackInvalidTrackingNumber
+        - SubmitFeedbackInvalidSubscriber
+        - SubmitFeedbackInvalidScore
+        - SubmitFeedbackUnsatisfactoryCommentRequired
+        - SubmitFeedbackInvalidReviewId
+        - SubmitFeedbackInvalidSetupId
+        - FeedbackSetupInvalidSetupId
+        - S3SaveError
+        - AbsSaveError
+        - GoodDataLoginFailed
+        - GoodDataElementUriError
+        - GoodDataReportResultUriError
+        - GoodDataReportResultEmpty
+        - GoodDataDesReportResCountError
+        - GoodDataDesReportResConvertError
+        - GoodDataDesDisplayFormAttributeEmpty
+        - InvalidProposalAmountLimit
+        - GetApprovalProposalReasonsError
+        - GetEmailRecipientsError
+        - GetAssignProposalReasonsError
+        - ProposalHasBeenVoided
+        - AssetTypeDuplicateNameError
+        - AssetTypeDoesntExistError
+        - AssetTypeFailUpdateRefrigerantPurpose
+        - AssetTypeDeleteFailed
+        - ExistingAssetsFoundForAssetType
+        - CantModifyAssetTypeParentId
+        - InvalidAssetTypeName
+        - AssetTypeInheritanceError
+        - ExistingProposalsFoundForAssetType
+        - InstallPurchaseDateOverflow
+        - WOexistsWithSomeAssets
+        - PartsChangeFailed
+        - PartsReasonCodeError
+        - PartsUseDateError
+        - PartsRefrigerantAlreadyExists
+        - PartsChargeHistoryAlreadyExists
+        - PartsNotFound
+        - BulkPartUseIncorrectWorkOrder
+        - BulkPartsByIdsNotFound
+        - BulkPartsMultipleWosError
+        - BulkPartsIncorrectIsRefrigerantParam
+        - BulkPartsIsRefrigerantCanNotbeChanged
+        - BulkPartsReasonCodeChangeError
+        - BulkPartsInvalidAssetAndReasonCodeParams
+        - BulkPartsInvalidAssetId
+        - BulkPartsInvalidInitialChargeCode
+        - BulkPartsAssetDoesntContainCharge
+        - BulkPartsIsInventoryFlagError
+        - BulkPartsLeakAlreadyInProcessError
+        - BulkPartsInvalidDateRangeError
+        - BulkPartsMoeNumberRequiredError
+        - BulkPartsSystemChargeExceeded
+        - BulkRefrigerantuUageBlocked
+        - BulkIDsNotBeNull
+        - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+        - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+        - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+        - BulkInitialChargeSystemExpansionNotAllowed
+        - BulkInventoryPartIdCanNotBeChanged
+        - BulkInventoryLocationIdCanNotBeChanged
+        - BulkPartsDuplicatedRequest
+        - BulkChangePartsIncorrectRefrigerantType
+        - BulkPartsRetroRetireIsInProgressOnThisDate
+        - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+        - RetrofitRetireCanNotBeRemoved
+        - RetroRetirePartsCantbeChanged
+        - BulkPartsInventoryApiFailed
+        - BulkPartsDuplicated
+        - BulkPartsWorkOrderInProcessing
+        - BadNotificationSubscriptionEventType
+        - RefrigerantUseDateOutOfTheLeakProcessDateRange
+        - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+        - BulkExternalWoCurrentlyDoesntExists
+        - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+        - BulkConnectorOnlyClientAssetsCouldBeProcessed
+        - LeakRecordHasWrongDateValue
+        - HasUncompliedLeakRecordInAnoutherWO
+        - HasUncompletedWOOnAnotherLeakRecord
+        - OnlyOneAssetWorkOrderPair
+        - OneLeakRecordMustBeOnCompletedWO
+        - LeakRecordNotFound
+        - AssetIDWoIdIsRequired
+        - BulkPartsReasonCodeRetrofit
+        - RetrofitRetireWasCancelledNoLeak
+        - FailedToUpdateLeakEvent
+        - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+        - LeakPartUseOnZeroChargeNotAllowed
+        - BulkLeakRecordsAndAuditRequest
+        - LeakRecordsDuplicateRequestDetected
+        - AllLeakRecordFieldsAreRequired
+        - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+        - MlpImportLevelError
+        - UpdateMlpUserLevelError
+        - InvalidHolidayName
+        - DuplicateHolidayName
+        - HolidaysDeleteFailed
+        - HolidaysExcludeInsertFailed
+        - HolidaysUpdateFailed
+        - HolidaysInsertFailed
+        - HolidaysExcludeDeleteFailed
+        - BusinessHoursDeleteFailed
+        - BusinessHoursUpdateFailed
+        - BusinessHoursInsertFailed
+        - InvalidTime
+        - HolidayForDeleteNotFound
+        - InvalidChecklistId
+        - ChecklistNotPopulated
+        - ChecklistNotAssignedForTransfersWO
+        - NoLinkBetweenSubscriberAndProvider
+        - WorkforceCreateContractorError
+        - InvalidCertificateId
+        - MaxThresholdExceeded
+        - MaxTriggerRateExceeded
+        - LeakPriorityIsRequired
+        - MissingRTSettings
+        - ResolutionCodesLimitExceeded
+        - ResolutionCodesAreRequired
+        - RootCauseIsRequired
+        - RootCauseTextIsRequired
+        - NoAccessToSetRootCauseText
+        - RootCauseTextMaxLengthExceeded
+        - ResolutionCodeTextIsRequired
+        - NoAccessToSetResolutionCodeText
+        - ResolutionCodeTextMaxLengthExceeded
+        - ResolutionCodeTextMustBeUnique
+        - ResolutionCodeWithoutFreeTextMustBeUnique
+        - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+        - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+        - AssetCategoriesLimitExceeded
+        - NoAccessToAssetCategories
+        - AssetCategoriesAreRequired
+        - InvalidAssetCategoryId
+        - NoAssetCategoriesOnWorkOrder
+        - RootCausesMustBeForAllWorkOrderAssetCategories
+        - RootCauseTextMustBeUnique
+        - AssetCategoryIsRequired
+        - MultipleRootCausesMethodMustBeUsed
+        - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+        - AssetFilterLocationsLimitExceeded
+        - UnknownStoreId
+        - UsesRefrigerantAttributeNotChanged
+        - AssetTagDuplicate
+        - AssetTagIdDuplicate
+        - UnknownEquipmentType
+        - ParentIdInOtherLocation
+        - UnknownBrandName
+        - CARBRequiredManufacturedDate
+        - CARBRequiredInstallDate
+        - TradeNotFound
+        - AssetDoesntExist
+        - AssetIsNotRefrigerant
+        - AssetCantContainRefrigerant
+        - OnlyRackAssetsContainingCircuits
+        - ConnectorAssetTagIdCanNotBeChanged
+        - ConnectorAssetLocationIdCanNotBeChanged
+        - AssetTagCantBeUpdated
+        - AssetTypeIsNotСonfiguredToManageRTAssets
+        - RefrigerantTrackingNotAvailableForLocation
+        - UsesRefrigerantRequiredByAssetTypeSettings
+        - AssetLocationTradeDoesntCorrespondToWO
+        - AssetLocationSelectedPMmodule
+        - UpdateAssetRepairStatusValidation
+        - HasCircuitsCantBeChange
+        - HasComponentsCantBeChange
+        - CircuitCanNotBeConnectedToCircuit
+        - RTCircuitCanNotBeConnectedToNonRTAsset
+        - RTComponentCanNotBeConnectedToNonRTAsset
+        - ComponentCanNotBeConnectedToComponent
+        - NonRTComponentCanNotBeConnectedToRtAsset
+        - NonRTCircuitCanNotBeConnectedToRtAsset
+        - ComponentCanNotBeConnectedToCircuit
+        - ParentAssetShouldHaveEitherComponentsNorCircuits
+        - ParentAssetCantHaveComponents
+        - ParentAssetCantHaveCircuits
+        - MultipleAssetsFoundForTheRequestedTagId
+        - InvalidBrandName
+        - UnknownBrandId
+        - BrandRestrictedByAssetType
+        - BrandRestrictedBySubscriber
+        - BrandsRestrictedBySubscriber
+        - DeclineWorkOrderFailed
+        - AcceptWorkOrderFailed
+        - WorkOrderWasAccepted
+        - AssetAttachmentsSizeExceeded
+        - SaveMliAuditReportSetting
+        - GetMliAuditReportSetting
+        - SaveMliAuditReportResult
+        - SaveMliAuditReportSendEmailStatus
+        - SaveMliAuditReportFilePath
+        - GetSubscribersEnabledSchedule
+        - SaveMliAuditInfoError
+        - TaxValidationAddNewCompanySettingsError
+        - TaxValidationUpdateCompanySettingsError
+        - ProjectAssociationError
+        - GetProjectsInvoiceAmountsError
+        - TaxCodeNotUniqueError
+        - FieldLengthIsTooLongError
+        - SetTaxCodesBulkError
+        - InvoiceAdditionalApprovalCodeValueError
+        - BulkUpdateInvoicePaymentError
+        - InvoiceLineItemFilterDisabled
+        - InvoiceStatusToRejectProviderNotificationFailed
+        - SortFieldNotAvailableError
+        - ContractServiceExist
+        - ContractServiceCantChangeTrade
+        - ContractServiceCantChangeCategory
+        - ContractServiceCantChangeProvider
+        - ContractServicePMServiceCantChangeTrade
+        - ContractServicePMServiceCantChangeCategory
+        - ContractedServiceNameAlreadyExists
+        - ContractedServiceNameLinkedToRates
+        - WorkRequestDescriptionIsRequired
+        - WorkRequestCallDateIsRequired
+        - WorkRequestIssueIsRequired
+        - WorkRequestCallDateHasWrongFormat
+        - WorkRequestScheduledDateHasWrongFormat
+        - InvalidWorkRequestStatus
+        - InvalidWorkRequestExtendedStatus
+        - InvalidWorkRequestCategory
+        - InvalidWorkRequestPriority
+        - InvalidWorkRequestCurrency
+        - InvalidWorkRequestIssueSetup
+        - InvalidWorkRequestIssueArea
+        - InvalidWorkRequestAsset
+        - WorkRequestAttachmentFileNameIsRequired
+        - WorkRequestAttachmentOriginalNameIsRequired
+        - WorkRequestIssueProblemCodeIsRequired
+        - WorkRequestIssueProblemTypeIsRequired
+        - WorkRequestScheduledDateMustBeGreaterThanCallDate
+        - InvalidWorkRequestId
+        - WorkRequestSearchCallDateFromHasWrongFormat
+        - WorkRequestSearchCallDateToHasWrongFormat
+        - WorkRequestSearchScheduledDateFromHasWrongFormat
+        - WorkRequestSearchScheduledDateToHasWrongFormat
+        - WorkRequestSearchClosedDateFromHasWrongFormat
+        - WorkRequestSearchClosedDateToHasWrongFormat
+        - WorkOrderIsAlreadyCreatedForWorkRequest
+        - WorkRequestIsClosed
+        - WorkRequestClosedReasonIsRequiredForClosedStatus
+        - WorkOrderIdIsRequiredForThisClosedReason
+        - InvalidWorkRequestClosedReason
+        - WorkRequestClosedReasonIsOnlyForClosedStatus
+        - InvalidWorkRequestWorkOrderId
+        - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+        - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+        - InvalidWorkOrderSourceType
+        - DeclineReasonIdIsRequired
+        - DeclineReasonDoesntAllowCustomText
+        - InvalidDeclineReasonId
+        - MultipleWorkOrdersForPurchaseNumber
+        - InvoiceMaterialMakupInvalid
+        - MaterialMarkUpDiscrepancyReasonShouldBeStated
+        - MaterialPriceDiscrepancyReasonShouldBeStated
+        - OtherPriceDiscrepancyReasonShouldBeStated
+        - SubscriberIdIsNotValid
+        - FiscalPeriodIsNotValid
+        - AmountIsNotValid
+        - AmountFormatIsNotValid
+        - CategoryMustBeEmpty
+        - CategoryIsNotValid
+        - TradeMustBeEmpty
+        - TradeIsNotValid
+        - GlCodeMustBeEmpty
+        - GlCodeIsNotValid
+        - LocationMustBeEmpty
+        - LocationIsNotValid
+        - RegionMustBeEmpty
+        - RegionIsNotValid
+        - DistrictMustBeEmpty
+        - DistrictIsNotValid
+        - DuplicateData
+        - PrimaryCategoryMustBeEmpty
+        - PrimaryCategoryIsNotValid
+        - CategoryAndExcludedCategoryCannotSimultaneously
+        - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+        - TradeAndExcludedTradeCannotSimultaneously
+        - GlCodeAndExcludedGlCodeCannotSimultaneously
+        - DuplicateCategories
+        - DuplicateTrades
+        - DuplicateGlCodes
+        - DuplicatePrimaryCategories
+        - LocationNoteMustBeEmpty
+        - LocationNoteIsNotValid
+        - OverlappingCategories
+        - OverlappingPrimaryCategories
+        - OverlappingTrades
+        - OverlappingPrimaryTrades
+        - OverlappingGlCodes
+        - OverlappingLocations
+        - OverlappingRegions
+        - OverlappingDistricts
+        - OverlappingLocationNotes
+        - TaxExemptionErrorApi
+        - OtherLineItemZeroAmount
+        - TravelLineItemsNotNegativeValueRequired
+        - MaterialLineItemsNotNegativeValueRequired
+        - LaborLineItemsNotNegativeValueRequired
+        - AdditionalApprovalCodeSetupIdInvalid
+        - VendorIdIsNotValid
+        - InvalidBatchId
+        - InvalidBatchStatusId
+        - CategoryInUsePMServiceError
+        - CategoryInUseChecklistError
+        - CategoryInUseETAMissedAlertError
+        - CategoryInUseBudgetControl
+        - CategoryInUseConnector
+        - CategoryInUseContractedService
+        - CategoryInUseEDI
+        - CategoryInUseIVR
+        - CategoryInUseFeedbackV2
+        - CategoryInUseProposalApproveReasons
+        - CategoryInUsePaymentManager
+        - CategoryInUseProviderAssignments
+        - CategoryInUseSiteAccess
+        - CategoryInUseAlerts
+        - CategoryInUseOpenWOAlert
+        - CategoryInUseWOAutocopy
+        - CategoryInUseWorkRequest
+        - CategoryInUseWO
+        - CategoryInUseDashboardOverride
+        - CategoryInUseInvoiceAttributes
+        - FeatureIsOn
+        - LocationHierarchyNotFound
+        - LocationHierarchyLevelNotFound
+        - LocationHierarchyParentLevelNotFound
+        - LocationSpaceTypeNotFound
+        - DuplicateRowByValueKey
+        - ParentNotFound
+        - DuplicateSequenceAmongSiblings
+        - SequenceConflictsWithExistingData
+        - SequenceMustBeGreaterThanZero
+        - ValueContainsPathDelimiter
+        - InitializationWarmupError
+        type: string
+        readOnly: true
+      ErrorMessage:
+        description: The description of all errors.
+        type: string
+      Data:
+        $ref: '#/definitions/System.Object'
+        description: "Optional\r\n            Gets or Sets the Data object."
+  ServiceChannel.Services.Messaging.Assets.AddAssetTypeResponse:
+    description: Add Trade Response
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      ErrorCode:
+        format: int32
+        description: 'Numeric identifier that determines the nature of an error. Possible values: `0` - success, otherwise - error.'
+        type: integer
+      Message:
+        description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
+        type: string
+  ServiceChannel.Services.Messaging.Assets.AddAssetTypeRequest:
+    type: object
+    properties:
+      ValidateTradeByName:
+        default: false
+        type: boolean
+      AllowAdditionalTradesOnInheritance:
+        default: false
+        type: boolean
+      Name:
+        type: string
+      PrimaryTrade:
+        type: string
+      TradeId:
+        format: int32
+        type: integer
+      ParentId:
+        format: int32
+        type: integer
+      RefrigerantPurposeId:
+        format: int32
+        type: integer
+      RefrigerantPurposeName:
+        type: string
+      AdditionalTrades:
+        type: array
+        items:
+          type: string
+      AdditionalTradesIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      IsCircuit:
+        default: false
+        type: boolean
+      UserId:
+        format: int32
+        type: integer
+      AssetTypeGroupId:
+        format: int32
+        type: integer
+      PrimaryAssetTypeId:
+        format: int32
+        type: integer
+      BrandIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+  ServiceChannel.Services.Messaging.Assets.AssetTypeAttributeExternal:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      DefaultValue:
+        type: string
+      Required:
+        default: false
+        type: boolean
+      Viewable:
+        default: false
+        type: boolean
+      Hidden:
+        default: false
+        type: boolean
+      Editable:
+        default: false
+        type: boolean
+      AutoGeneratedValue:
+        type: string
+      SortPosition:
+        format: int32
+        type: integer
+      IsCustom:
+        default: false
+        type: boolean
+      AttributeType:
+        enum:
+        - String
+        - Integer
+        - Date
+        - Money
+        - Choice
+        - MultipleChoice
+        - Boolean
+        type: string
+      SingleOptions:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetAttributeSelectOption'
+      MultipleOptions:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetAttributeSelectOption'
+  ServiceChannel.Services.Messaging.GetByIdsRequest:
+    type: object
+    properties:
+      Ids:
+        description: A list of unique numeric identifiers.
+        type: array
+        items:
+          format: int32
+          type: integer
+  ServiceChannel.Services.Messaging.Assets.AddAssetTypeGroupAttachmentResponse:
+    type: object
+    properties:
+      IsSuccess:
+        default: false
+        type: boolean
+      Message:
+        type: string
+      Id:
+        format: int32
+        description: Unique numeric identifier of the asset type group.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique numeric identifier of the subscriber.
+        type: integer
+      Name:
+        description: The name of the asset type group.
+        type: string
+      FileName:
+        description: The file name of the image attached to the asset type group. For example, *audioequipment.png* or *AEE323FF8091.jpeg*.
+        type: string
+      FilePath:
+        description: Path snippet to the full-size image version attached to the asset type group. For example, *#assets/6cb4f87b-3d5f-49ba-9971-11442dcf3d1e*.
+        type: string
+      ThumbnailPath:
+        description: Path snippet to the reduced-size image version attached to the asset type group. For example, *#assets/7bc49564-5ac4-4002-9ffc-2282483e6df8*.
+        type: string
+      AssetTypeIds:
+        description: A list of unique numeric identifiers of the asset types.
+        type: array
+        items:
+          format: int32
+          type: integer
+      ImgPath:
+        description: Path to the cloud location of the full-size image version attached to the asset type group.
+        type: string
+        readOnly: true
+      Uri:
+        description: The URI of the full-size image version attached to the asset type group.
+        type: string
+      ThumbnailUri:
+        description: The URI of the reduced-size image version attached to the asset type group.
+        type: string
+      AssetTypeCategoryId:
+        format: int32
+        description: Unique numeric identifier of the asset category.
+        type: integer
+  ServiceChannel.Services.Messaging.Assets.GetSubscriberAssetCategoriesRequest:
+    description: Asset categories request object.
+    type: object
+    properties:
+      SubscriberId:
+        format: int32
+        description: Unique numeric identifier of the subscriber.
+        type: integer
+      TradeNames:
+        description: The names of the trades, such as HVAC or PLUMBING.
+        type: array
+        items:
+          type: string
+  ServiceChannel.Services.Messaging.Assets.AssetType:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      IsActive:
+        default: false
+        type: boolean
+      HasEquipment:
+        default: false
+        type: boolean
+      SubscriberId:
+        format: int32
+        type: integer
+      Parent:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetType'
+      Name:
+        type: string
+      PrimaryTrade:
+        type: string
+      TradeId:
+        format: int32
+        type: integer
+      ParentId:
+        format: int32
+        type: integer
+      RefrigerantPurposeId:
+        format: int32
+        type: integer
+      RefrigerantPurposeName:
+        type: string
+      AdditionalTrades:
+        type: array
+        items:
+          type: string
+      AdditionalTradesIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      IsCircuit:
+        default: false
+        type: boolean
+      UserId:
+        format: int32
+        type: integer
+      AssetTypeGroupId:
+        format: int32
+        type: integer
+      PrimaryAssetTypeId:
+        format: int32
+        type: integer
+      BrandIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+  ServiceChannel.Services.Messaging.Assets.AssetTypeMeterRequestItem:
+    description: Object with an asset type meter details.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of an asset type meter.
+        type: integer
+      Name:
+        description: Asset type meter name given by a user.
+        type: string
+      MaxValue:
+        description: Maximum value that a user can enter when recording a meter reading on an asset.
+        type: string
+      Notes:
+        description: Comment added to a meter when creating or editing an asset type meter.
+        type: string
+      Inactive:
+        description: Defines whether a meter is active or has been deactivated. **Possible values:** *true*, *false*. Note that readings can be recorded for active meters only.
+        default: false
+        type: boolean
+      EditOnWO:
+        description: Defines whether a user can record asset meter readings on a work order via Dashboard. **Possible values:** *true*, *false*.
+        default: false
+        type: boolean
+      AssetTypeId:
+        format: int32
+        description: Unique numeric identifier of an asset type.
+        type: integer
+      UnitOfMeasure:
+        format: int32
+        description: Number of the unit of measure associated with a meter. This is a sequence number of the unit of measure as it is listed in the overlay for creating a meter.
+        type: integer
+  ServiceChannel.Services.Messaging.Assets.AssetAttributeSelectOption:
+    type: object
+    properties:
+      AssetTypeAttributeSelectOptionId:
+        format: int32
+        type: integer
+      AssetTypeAttributeId:
+        format: int32
+        type: integer
+      AssetAttributeSelectOptionId:
+        format: int32
+        type: integer
+      AssetAttributeId:
+        format: int32
+        type: integer
+      Text:
+        type: string
+      Selected:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.AssetTypes.AssetTypeGroup:
+    description: Asset type group object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the asset type group.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique numeric identifier of the subscriber.
+        type: integer
+      Name:
+        description: The name of the asset type group.
+        type: string
+      FileName:
+        description: The file name of the image attached to the asset type group. For example, *audioequipment.png* or *AEE323FF8091.jpeg*.
+        type: string
+      FilePath:
+        description: Path snippet to the full-size image version attached to the asset type group. For example, *#assets/6cb4f87b-3d5f-49ba-9971-11442dcf3d1e*.
+        type: string
+      ThumbnailPath:
+        description: Path snippet to the reduced-size image version attached to the asset type group. For example, *#assets/7bc49564-5ac4-4002-9ffc-2282483e6df8*.
+        type: string
+      AssetTypeIds:
+        description: A list of unique numeric identifiers of the asset types.
+        type: array
+        items:
+          format: int32
+          type: integer
+      ImgPath:
+        description: Path to the cloud location of the full-size image version attached to the asset type group.
+        type: string
+        readOnly: true
+      Uri:
+        description: The URI of the full-size image version attached to the asset type group.
+        type: string
+      ThumbnailUri:
+        description: The URI of the reduced-size image version attached to the asset type group.
+        type: string
+      AssetTypeCategoryId:
+        format: int32
+        description: Unique numeric identifier of the asset category.
+        type: integer
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Services.Messaging.Assets.AssetTypeMeterResponseItem:
+    description: Object with an asset type meter details.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of an asset type meter.
+        type: integer
+      Name:
+        description: Asset type meter name given by a user.
+        type: string
+      MaxValue:
+        description: Maximum value that a user can enter when recording a meter reading on an asset.
+        type: string
+      Notes:
+        description: Maximum value that a user can enter when recording a meter reading on an asset.
+        type: string
+      Inactive:
+        description: Defines whether a meter is active or has been deactivated. **Possible values:** *true*, *false*. Note that readings can be recorded for active meters only.
+        default: false
+        type: boolean
+      EditOnWO:
+        description: Defines whether a user can record asset meter readings on a work order via Dashboard. **Possible values:** *true*, *false*.
+        default: false
+        type: boolean
+      AssetTypeId:
+        format: int32
+        description: Unique numeric identifier of an asset type.
+        type: integer
+      UnitOfMeasure:
+        format: int32
+        description: Number of the unit of measure associated with a meter. This is a sequence number of the unit of measure as it is listed in the overlay for creating a meter.
+        type: integer
+      UnitOfMeasureName:
+        description: Unit Of Measure Name
+        type: string
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

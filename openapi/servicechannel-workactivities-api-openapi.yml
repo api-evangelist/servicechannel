@@ -1,0 +1,2202 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours WorkActivities API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: WorkActivities
+paths:
+  /workorders/{workorderId}/workactivities/{workactivityId}:
+    put:
+      tags:
+      - WorkActivities
+      summary: Update the specified work activity of a work order
+      description: "Updates the specified work activity of a work order by setting the check-in and check-out date and time values passed in the request.\r\n            <br />Before updating a work activity, please consider the following:\r\n             • You can update work activities only for work orders in the *In Progress* primary status.\r\n             • The check-in date and time cannot be greater than the check-out date and time.\r\n             • The check-in date and time cannot be earlier than the scheduled date and time of the work order.\r\n             • The time range of the work activity you are updating cannot overlap the time ranges of existing work activities of the work order.\r\n             • The name will be set to the API caller name if the `name` value is not provided.\r\n            <br />***Note:*** Both subscribers and providers can use this method.\r\n            <br />***Note:*** Only users with extended permissions can update the work activities created by other users along with updating the `name` parameter. The users with certain permissions are:\r\n             • Subscribers that have the *Admin* role. These users can update the work activities created both by subscribers and by providers.\r\n             • Providers that have the *Admin* role (with the *EditLaborItemsOnWoDetailsProvider* feature flag turned on). These users can update the work activities created by providers only.\r\n             • Providers that have the *Business Owner / Management* role (with the *EditLaborItemsOnWoDetailsProvider* feature flag turned on). These users can update the work activities created by providers only.\r\n            <br />Learn more about [updating a work activity](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/576258285/Updating+Service+Provider+Check-In+Out+Information) in ServiceChannel University.\r\n            <br />**Example Request**\r\n            \r\n                PUT /workorders/{workorderId}/workactivities/{workactivityId}\r\n                {\r\n                   \"CheckInDate\": \"2020-11-19T11:10:36.868Z\",\r\n                   \"CheckOutDate\": \"2020-11-19T12:30:36.868Z\",\r\n                   \"Name\": \"John Doe\"\r\n                }"
+      operationId: PUTv3_workorders_{workorderId}_workactivities_{workactivityId}
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workorderId
+        in: path
+        description: The unique numeric identifier of the work order for which you want to update a work activity.
+        required: true
+        type: integer
+        format: int32
+      - name: workactivityId
+        in: path
+        description: The unique numeric identifier of the work activity to update.
+        required: true
+        type: integer
+        format: int32
+      - name: activityRequest
+        in: body
+        description: Request to update a work activity.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.WorkActivityRequest'
+      responses:
+        '200':
+          description: The work activity is updated, and its ID is returned in the response.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — WorkOrder not found\r\n            503 — Work activity is not found\r\n            503 — Date range is incorrect\r\n            503 — Check In/Out is premature\r\n            904 — Invalid work order status\r\n            1186 — Time range is overlapped"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/>Error codes:\r\n            804 — User has no permissions to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /workorders/{workorderId}/workactivities:
+    post:
+      tags:
+      - WorkActivities
+      summary: Create a work activity for the specified work order
+      description: "Creates a new work activity for the specified work order. The work activity type can be either *Travel* or *Repair*. Note that custom types may be configured for a subscriber.\r\n            <br />Before creating a work activity, please consider the following:\r\n             • You can create work activities only for work orders in the *In Progress* primary status.\r\n             • The check-in date and time cannot be greater than the check-out date and time.\r\n             • The check-in date and time cannot be earlier than the scheduled date and time of the work order.\r\n             • The time range of the work activity you are creating cannot overlap the time ranges of existing work activities of the work order.\r\n             • The name will be set to the API caller name if the `name` value is not provided.\r\n            <br />***Note:*** Both subscribers and providers can use this method.\r\n            <br />***Note:*** Only users with extended permissions can specify the technician's name while creating a work activity. The users with extended permissions are:\r\n             • Subscribers that have the *Admin* role.\r\n             • Providers that have the *Admin* role (with the *EditLaborItemsOnWoDetailsProvider* feature flag turned on).\r\n             • Providers that have the *Business Owner / Management* role (with the *EditLaborItemsOnWoDetailsProvider* feature flag turned on).\r\n            <br />Learn more about [creating a work activity](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/576258285/Updating+Service+Provider+Check-In+Out+Information) in ServiceChannel University.\r\n            <br />**Example Request**\r\n            \r\n                POST /workorders/{workorderId}/workactivities\r\n                {\r\n                   \"WorkTypeId\": \"1\",       \r\n                   \"CheckInDate\": \"2020-11-19T11:10:36.868Z\",\r\n                   \"CheckOutDate\": \"2020-11-19T12:15:36.868Z\",\r\n                   \"Name\": \"John Doe\"\r\n                }"
+      operationId: POSTv3_workorders_{workorderId}_workactivities
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workorderId
+        in: path
+        description: The unique numeric identifier of the work order for which you want to create a work activity.
+        required: true
+        type: integer
+        format: int32
+      - name: activityRequest
+        in: body
+        description: Request to create a work activity.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.WorkActivityPostRequest'
+      responses:
+        '201':
+          description: A work activity is created for the specified work order, and a unique work activity ID is returned in the response.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — WorkOrder not found\r\n            503 — Work Type Not Found\r\n            503 — Date range is incorrect\r\n            503 — Check In/Out is premature\r\n            904 — Invalid work order status\r\n            1186 — Time range is overlapped"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/>Error codes:\r\n            804 — User has no permissions to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '406':
+          description: The request is already processed.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+    delete:
+      tags:
+      - WorkActivities
+      summary: Delete the specified work activities of a work order
+      description: "Delete one or more work activities of the specified work order. When you pass multiple work activity IDs, the request will succeed if at least one ID is valid.\r\n            <br />***Note:*** Both subscribers and providers can use this method."
+      operationId: DELETEv3_workorders_{workorderId}_workactivities?workactivityIds[0]={workactivityIds[0]}&workactivityIds[1]={workactivityIds[1]}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workorderId
+        in: path
+        description: The unique numeric identifier of the work order for which you want to delete work activities.
+        required: true
+        type: integer
+        format: int32
+      - name: workactivityIds
+        in: query
+        description: The unique numeric identifiers of the work activities to delete.
+        required: true
+        type: array
+        items:
+          type: integer
+          format: int32
+        collectionFormat: multi
+      responses:
+        '204':
+          description: The specified work activities are deleted, and the response is intentionally blank.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — WorkOrder not found\r\n            502 — Work activities are not found\r\n            804 — User has no permissions to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /odata/workorders({workorderId})/workactivities:
+    get:
+      tags:
+      - WorkActivities
+      summary: List work activities of the specified work order
+      description: "Returns work activities of the specified work order.\r\n            <br />A work activity details information about the technician's work on a service request: the time when the technician started and finished their work, the type of activity they carried out, the number of technicians who rendered the service, and other details related to the labor performed.\r\n            <br />***Note:*** Both subscribers and providers can use this method."
+      operationId: WorkActivities_GetWorkActivities
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: workorderId
+        in: path
+        description: The unique numeric identifier of the work order for which you want to retrieve work activities.
+        required: true
+        type: integer
+        format: int32
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: The work activities of the specified work order are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.WorkActivity'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — WorkOrder not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /odata/workactivities/Service.ForTimeInterval(dtMin={dtMin}, dtMax={dtMax}, userId={userId}):
+    get:
+      tags:
+      - WorkActivities
+      summary: List work activities created by a provider user within the specified time period
+      description: "Returns work activities created by the specified provider user within the set time period.\r\n            <br />A work activity details information about the technician’s work on a service request: the time when the technician started and finished their work, the type of activity they carried out, the number of technicians who rendered the service, and other details related to the labor performed.\r\n            <br />***Note:*** This method is only available to provider users."
+      operationId: WorkActivities_ForTimeInterval
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: PIN of the provider user who created work activities.
+        required: true
+        type: integer
+        format: int32
+      - name: dtMax
+        in: path
+        description: The end date of the time period for which you want to retrieve work activities. The format is `YYYY-MM-DD`.
+        required: true
+        type: string
+        format: date-time
+      - name: dtMin
+        in: path
+        description: The start date of the time period for which you want to retrieve work activities. The format is `YYYY-MM-DD`.
+        required: true
+        type: string
+        format: date-time
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: Work activities created by the specified provider user within the set time period are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.WorkActivity'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            504 — User not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Providers
+  /odata/workorders({workorderId})/workactivities({workactivityId}):
+    get:
+      tags:
+      - WorkActivities
+      summary: Retrieve the specified work activity of a work order
+      description: "Returns the specified work activity of a work order.\r\n            <br />A work activity details information about the technician's work on a service request: the time when the technician started and finished their work, the type of activity they carried out, the number of technicians who rendered the service, and other details related to the labor performed.\r\n            <br />***Note:*** Both subscribers and providers can use this method."
+      operationId: WorkActivities_GetWorkActivity
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: workactivityId
+        in: path
+        description: The unique numeric identifier of the work activity to return.
+        required: true
+        type: integer
+        format: int32
+      - name: workorderId
+        in: path
+        description: The unique numeric identifier of the work order for which you want to retrieve a work activity.
+        required: true
+        type: integer
+        format: int32
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: The requested work activity of the specified work order is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.WorkActivity'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — WorkOrder not found\r\n            502 — Work activity is not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+definitions:
+  ServiceChannel.Services.Messaging.ErrorResponse:
+    description: The error response object
+    type: object
+    properties:
+      ErrorCodes:
+        description: The list of error codes. Go to /basics/general/response-codes/#internal-error-codes-and-messages to map error codes to error reasons.
+        type: array
+        items:
+          enum:
+          - NotAllowed
+          - EmptyProvider
+          - InvalidProviderId
+          - UnknownProvider
+          - ProviderAlreadyExists
+          - ProviderIdNotExists
+          - TimeoutExpiredError
+          - EmptyContract
+          - ContractUndefined
+          - EmptySubscriber
+          - InvalidSubscriberId
+          - UnknownSubscriber
+          - InactiveSubscriber
+          - EmptySubscriberId
+          - SubscriberIdNotExists
+          - InternalError
+          - DataNotFound
+          - BadRequest
+          - UnAuthorized
+          - UnSupportedApplication
+          - SubsidiaryUserDisabled
+          - EmptyLocation
+          - InvalidLocationId
+          - UnknownLocation
+          - LocationNotBelongsToSubscriber
+          - EmptyLocationCountry
+          - LocationAlreadyExists
+          - InvalidStoreId
+          - LocationEmptyState
+          - NoAccessToLocation
+          - LocationAddressValidationError
+          - LocationAddressRequestValidationError
+          - InvalidLocationNoteHeader
+          - NoAccessToUpdateProtectedNote
+          - InvalidBusinessHoursFormat
+          - WorkingHoursIntersect
+          - InvalidDayOfWeek
+          - DuplicateDayOfWeek
+          - InvalidBusinessHoursInitialSetup
+          - BusinessHoursIsEmpty
+          - InvalidHolidayRepeatByType
+          - EmptyHolidayListOfDays
+          - EmptyHolidayListOfMonths
+          - InvalidHolidayMonthName
+          - InvalidHolidayNameLength
+          - InvalidHolidayRepeatEvery
+          - DuplicateMonth
+          - InvalidHolidayFrequency
+          - InvalidHolidayStartDate
+          - InvalidCloseAllDay
+          - HolidayDoesNotExist
+          - InvalidFormatParameter
+          - InvalidLocationCity
+          - InvalidLocationZip
+          - InvalidLocationLatitude
+          - InvalidLocationLongitude
+          - InvalidLocationEmail
+          - InvalidLocationName
+          - InvalidLocationState
+          - InvalidLocationAddlAddress
+          - InvalidLocationMainAddress
+          - InvalidLocationCountry
+          - InvalidLocationRegion
+          - InvalidLocationDistrict
+          - InvalidLocationPhone
+          - InvalidLocationContact
+          - InvalidLocationFaxNumber
+          - LocationCountryNotFound
+          - LocationStateNotFound
+          - LocationCityNotFound
+          - LocationIdNotExists
+          - InvalidLocationEmailLength
+          - LocationStateIdNotFound
+          - IncorrectCombinationStateAndStateId
+          - InvalidSubscriberIds
+          - InvalidLocalizationSettings
+          - LandlordResponsibilityNotFound
+          - LandlordResponsibilityAlreadyExists
+          - EmptyLocationIds
+          - AttachmentNotExist
+          - InvalidTradeId
+          - InvalidCategoryId
+          - InvalidOverrideCategoryId
+          - InvalidOverridePriorityId
+          - LeaseNoteExceedMaxLength
+          - InvalidOverrideProviderRank
+          - InvalidOverrideNTE
+          - DuplicateRows
+          - InvalidPriorityId
+          - LocationNotFound
+          - EmptyTrade
+          - InvalidTrade
+          - TradeNotBelongsToSubscriber
+          - InvalidPrimaryTrade
+          - InvalidTradeForSubscriber
+          - InvalidCategoryForSubscriber
+          - GlCodeAlreadyExists
+          - GlCodeNotExists
+          - InvalidGlCodeUpdate
+          - EmptyGlCode
+          - TradeAlreadyExists
+          - InvalidNTETrade
+          - TradeNotExists
+          - TradeAlreadyInUse
+          - TradeWithTheSameNameHasBeenDeleted
+          - TradeInUsePMServices
+          - TradeInUseProposalError
+          - TradeInUseRFPError
+          - TradeInUseChecklistError
+          - TradeInUseBudgetControl
+          - TradeInUseGlCode
+          - TradeInUseDynamicProviderAssignments
+          - TradeInUseInvoice
+          - TradeInUseLandlordResponsibilities
+          - TradeInUseWO
+          - TradeInUseEquipmentType
+          - TradeInUseRFP
+          - TradeInUseConnector
+          - TradeInUseContractedService
+          - TradeInUseIVR
+          - TradeInUseSiteAccess
+          - TradeInUseGLCodes
+          - TradeInUseCIWO
+          - TradeInUseOrganizationPermissions
+          - TradeСreationError
+          - EmptyUser
+          - EmptyCreatedBy
+          - InvalidUserName
+          - NotProviderUser
+          - UserHasNoPermissions
+          - RestrictedAccount
+          - UserAlreadyExists
+          - UserHasNoPermissionsEditWO
+          - UserEmailAddressIsMissing
+          - UserIsNotRTAdmin
+          - InvalidSubsriberProviderId
+          - LanguageNameNotFound
+          - InvalidLanguageId
+          - LanguageIdNotFound
+          - UseBothSubscriberIdProviderId
+          - EmptyWoProblem
+          - InvalidWoProblemSource
+          - InvalidWoProblemDescription
+          - InvalidWoProblemCode
+          - InvalidWoStatus
+          - InvalidWoNte
+          - InvalidWoCaller
+          - InvalidWoCallDate
+          - InvalidWoScheduledDate
+          - InvalidWoScheduledDateGreaterThanMaxAllowed
+          - EmptyWoCategory
+          - InvalidWoCategory
+          - EmptyWoPriority
+          - InvalidWoPriority
+          - InvalidWoCurrency
+          - InvalidWoSetupId
+          - AttachmentsRequired
+          - InvalidWoIdentifier
+          - EquipmentRequired
+          - WoNteOverflow
+          - InvalidWoPurchaseNumber
+          - InvalidWoStateForUpdate
+          - InvalidPagingParameter
+          - InvalidWoNumber
+          - CheckInDenied
+          - CheckOutDenied
+          - WoScheduledDateLessThenReassignDate
+          - WoScheduledDateLessThenCallDate
+          - InvalidWoActionReason
+          - EmptySubscriberProperty
+          - WorkOrderUpdateError
+          - MissedWoNteDetails
+          - InvalidLinkedWoIdentifier
+          - WoIsOnHold
+          - InvalidWoTrade
+          - InvalidStarScore
+          - WorkOrderAlreadyRated
+          - AttachmentThumbnailNotAvailable
+          - InvalidWoIdentifierOrPin
+          - InvalidTimeZoneHeader
+          - RefrigerantWasUsedShouldBeYesOrNo
+          - CheckInDeniedOutsideGeolocation
+          - CheckOutDeniedOutsideGeolocation
+          - LeakDetectorAuditShouldBeCreated
+          - CheckInOutPremature
+          - WorkOrderAttachmentsSizeExceeded
+          - WorkOrderNotFound
+          - WorkOrderCreateError
+          - InvalidWoProjectedCompletionDate
+          - InvalidFollowUpWo
+          - InvalidWeatherEventId
+          - InvalidSiteAuditLinkedWo
+          - InvalidSetupId
+          - IssueListNotFound
+          - InvalidIssueListField
+          - SiteAuditCompleted
+          - CheckSiteAuditError
+          - SaveSiteAuditError
+          - RemoveSiteAuditError
+          - InactiveTemplateType
+          - SiteAuditNotFound
+          - SiteAuditUpdateError
+          - InvalidSiteAuditParameters
+          - InvalidAdditionalApprovalCode
+          - InvalidAdditionalApprovalCodeValue
+          - AdditionalApprovalCodeIsDisabled
+          - InvalidOtherDesc
+          - InvalidTax2Name
+          - InvoiceInconsistentAmounts
+          - InvoiceInvalidTotal
+          - InvoiceTotalGreaterNte
+          - InvoiceExists
+          - CreatingInvoiceError
+          - DuplInvNumber
+          - InvoiceTotalNull
+          - InvComplDateNull
+          - InvDateLessComplDate
+          - InvoiceNotAuto
+          - ESignatureRequired
+          - InvWoNotFound
+          - InvWrongWoCurr
+          - InvWoCurrNotFound
+          - InvoicingDisabled
+          - InvCreationUnexpectedRes
+          - InvoiceInvalidLaborAmount
+          - InvoiceInvalidMaterialAmount
+          - InvDateOld
+          - InvDateGreater
+          - InvoiceMaterialDescriptionLengthOverflow
+          - InvoiceTaxNotValidated
+          - InvoiceMaterialPartNumberLengthOverflow
+          - TaxValidationError
+          - TaxExemptionError
+          - InvalidInvoiceNumber
+          - GetApprovalLevelsError
+          - InvoiceAddUsersToMliLevelsError
+          - InvoiceAddDeleteLocationsToMliLevelUserError
+          - InvoiceUpdateMLiLevelError
+          - InvoiceDeleteMliLevelError
+          - InvoiceDeleteUsersFromMliLevelError
+          - ApprovalLevelNameLengthOverflow
+          - GstTaxError
+          - Tax2Error
+          - GetApprovalLevelsAndLocationsByUserError
+          - GetAssignedUserShortInfoError
+          - AssignAllLocationsToApprovalLevelAndUserError
+          - GetLocationsForApprovalLevelAndAssignedUserError
+          - GetLocationsBySubscriberError
+          - AssignUserWithLocationsToApprovalLevelError
+          - ReAssignUserWithLocationsToNewApprovalLevelError
+          - ReAssignLocationsToApprovalLevelAndUserError
+          - OutstandingBalance
+          - InvoiceTaxDetailsEmpty
+          - InvoiceTaxDetailsIncorrectSum
+          - MultipleUsersForLocationIsNotAllowed
+          - UserAssignedToOtherLevel
+          - UserDoesNotExist
+          - LaborLineItemRequired
+          - MaterialLineItemRequired
+          - InvoiceDoesntExist
+          - InvoiceStarUnstarFailed
+          - InvoiceBatchUpdateInvalidInvoiceStatusError
+          - InvoiceBatchUpdateLimitExceededError
+          - InvoiceNotAvailableForCurrentUser
+          - InvoiceBatchUpdateInvalidRuleSetStructure
+          - InvoiceBatchUpdateInvalidMliStructure
+          - InvoiceBatchUpdateStatusError
+          - InvoiceMaterialUnitTypeInvalid
+          - ExistingBatchNumber
+          - InvoiceResolutionTextRequired
+          - GetInvoiceDefaultApprovalCodesError
+          - InvoiceInvalidTravelAmount
+          - InvoiceTravelDescriptionLengthOverflow
+          - InvoiceTravelUnitTypeInvalid
+          - TravelLineItemRequired
+          - TravelDetailsDisabled
+          - OnOffShoreDisabled
+          - InvoiceInvalidLaborCount
+          - InvoiceInvalidMaterialCount
+          - InvoiceInvalidTravelCount
+          - SubscriberNotRegisteredForTaxValidation
+          - ManyDecimalsInAmountError
+          - DecimalPartQstTaxError
+          - LaborRatesDiscrepancy
+          - PayInvoicesError
+          - InvoiceNumberRequirementsError
+          - InvoiceNumberIncorrect
+          - InvoiceNumberRegExPatternError
+          - GetInvoicesPendingApprovalByLocationError
+          - ReAssignInvoicesToUsersFailed
+          - ReAssignInvoicesUsersMatched
+          - GetUsersForReassignInvoiceError
+          - InvalidTimeRangeActivity
+          - OutsourcedSourceInvoiceNotFound
+          - OthersLineItemsDisabled
+          - InvoiceInvalidOtherAmount
+          - InvoiceInvalidOtherCount
+          - InvoiceOtherDescriptionLengthOverflow
+          - OtherLineItemRequired
+          - OtherLineItemsNotNegativeValueRequired
+          - InvalidLaborSkillLevel
+          - InvalidLaborType
+          - InvalidTechnicianQuantity
+          - GetInvoicesCommonCategoriesError
+          - InvoiceExplainDisputeEmpty
+          - InvoiceAdditionalApprovalCodeHeaderError
+          - TemplateParseSuccess
+          - TemplateIncorrectHeaderError
+          - TemplateEmptyTemplateError
+          - TemplateWrongFieldsCountError
+          - TemplateFieldNotFoundError
+          - TemplateFieldRequiredError
+          - TemplateParseIntError
+          - TemplateFieldSizeError
+          - TemplateInvalidValueError
+          - TemplateFieldFormatError
+          - TemplateFieldMaxRangeError
+          - TemplateFieldMinRangeError
+          - TemplateProviderNotEntered
+          - TemplateInvalidSubscriberError
+          - TemplateVendorNotFoundError
+          - TemplateMissedProviderError
+          - TemplateProviderNotFoundError
+          - TemplateProviderSubsccriberLinkError
+          - TemplateTradeDispatchRankError
+          - TemplateInvalidTradeForSubscriberError
+          - TemplateStoreNotFoundError
+          - TemplateNotStoresForStateError
+          - TemplateNotStoresForCountryError
+          - TemplateNotStoresForDistrictError
+          - TemplateNotStoresForRegionError
+          - TemplateMultiplePimaryProvidersForTradeStoreError
+          - TemplateDuplicatePrimaryRelationshipError
+          - TemplateAmbiguousDataError
+          - TemplateIncorrectSubscriber
+          - TemplateDuplicateRanking
+          - TemplateLongitudeRangeError
+          - TemplateLatitudeRangeError
+          - InvoiceMaterialPartNameLengthOverflow
+          - TemplateTradeLocationExclusion
+          - TemplateInvalidStateError
+          - TemplateMissedSubscriberError
+          - TemplateMissedStoreIdError
+          - TemplateInvalidSubscriberIdError
+          - TemplateOpenCloseDateError
+          - TemplateInvalidCountryError
+          - TemplateInvalidStateForCountryError
+          - TemplateInvalidLocationTypeError
+          - TemplateMissingFullAndShortNameError
+          - TemplateMissingCountryError
+          - TemplateDuplicatedDataError
+          - TemplateParentLocationNotFoundError
+          - TemplateParseDateTimeError
+          - TemplateParseDecimalError
+          - TemplateSquareValueRangeError
+          - TemplateInvalidSquareMeasureError
+          - TemplateTypeLabelCanNotBeUpdatedError
+          - TemplateTypeLabelHaveToBeLocationForNotInventory
+          - TemplateInvalidPrimarySupplyLocation
+          - TemplateInvalidHomestoreLocationNumber
+          - TemplateErrorDuringCreation
+          - TemplateLocationNotFoundError
+          - TemplateDuplicatedLocationFoundError
+          - TemplateInvalidLocationHeaderError
+          - TemplateDuplicatedLocationHeaderError
+          - TemplateHeaderContainsEmptyFieldsError
+          - TemplateLocHeadersShortHeaderError
+          - TemplateHeaderContainsDuplicatesError
+          - TemplateLocationNotesStoreIdFieldLengthError
+          - TemplateLocationNotesNoteValueFieldLengthError
+          - TemplateErrorInvalidZipCode
+          - TemplateMissingLocationNoteHeader
+          - TemplateMissingLocationNoteIdHeader
+          - TemplateInvalidSecondarySupplyLocation
+          - TemplateLocationWasNotCreated
+          - TemplateTruckNameIsEmpty
+          - TemplateWrongFormat
+          - TemplateSubscriberNotFound
+          - TemplateDuplicatedLocationHeaders
+          - TemplateInvalidHeaders
+          - TemplateInvalidPhoneError
+          - TemplateDuplicateTelecomRecordError
+          - TemplateTelecomRecordExistsError
+          - TemplateInvalidCategory
+          - TemplateDifferentRanksForProviderAssignments
+          - TemplateDuplicateRankError
+          - TemplateProviderNonCompliant
+          - TemplateLocationIsClosed
+          - TemplateProviderWarning
+          - TemplateMultipleProvidersForTradeStoreError
+          - EmptyRequest
+          - InvalidNumberOfParameters
+          - InvoiceOtherUnitTypeInvalid
+          - EmptyLocationOrTradeList
+          - RequestSubscriberIdDoesntMatchUserSubscriberId
+          - StoreIdRequiredError
+          - InvalidUserIdError
+          - InvalidStoreIdError
+          - AmbigiousError
+          - MliHierarchyFiledsCountError
+          - MliHierarchyMaxUserNameError
+          - MliHierarchyDuplicateUserError
+          - MLiHirarchyUserExistInOtherLevelError
+          - MissingLevelsError
+          - DuplicateApprovalLevelsError
+          - InvalidMliLocations
+          - InvalidMlpLocations
+          - ApprovalLevelUsedInRulsetError
+          - GLCodeAmbiguous
+          - GlCodeInvalidResponce
+          - GetRuleSetListError
+          - RuleSetDuplicateNameError
+          - RuleSetDuplicateActionError
+          - RuleSetConflictedActionError
+          - RuleSetRuleSetDoesNotExistsError
+          - RuleSetTradeDoesNotExistError
+          - RuleSetCategoryDoesNotExistError
+          - RuleSetMliLevelDoesNotExistError
+          - GetRuleSet
+          - CreateUpdateRuleSetError
+          - DeleteRuleSet
+          - GetRuleSetCategoriesTradesCountError
+          - GetRuleSetByInvoice
+          - GetCategoryTradeIdsAreSelectedError
+          - ProposalAboveMlpLimitError
+          - ProposalNextLevelHasNoAvailableActionsError
+          - DefaultRuleSetError
+          - RuleSetActionEndStatusError
+          - RuleSetRejectActionEmptyForwardToError
+          - UserFilterGetError
+          - UserFilterCreateUpdateError
+          - UserFilterDeleteError
+          - UserFilterSetAsDefaultError
+          - InvoiceFilterFromAlpProviderError
+          - RegionFilterNotAllowedError
+          - LocationIdFilterNotAllowedError
+          - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+          - PaymenowBannersForProvidersOnly
+          - PaymenowFeatureDisabled
+          - PaymenowBannerInfoNotFound
+          - PaymenowBannerInvalidNavigationUrl
+          - PaymenowRequestedProvidersIsNotAssigned
+          - PaymenowEmptyRequestedProviders
+          - PaymentManagerFeatureDisabled
+          - PaymentManagerFeatureDisabledForSubscriber
+          - PaymentSystemCurrentlyUnavailable
+          - CurrencyNotSupported
+          - PaymentSystemAccountNotFound
+          - FeatureIsOff
+          - EarlyPayFeatureWithoutPaymentManagetFeatureError
+          - FtpTestError
+          - AcceptTermsAndConditionsRequestInvalid
+          - PaymentSystemAccountError
+          - SendReportToFTP
+          - SchedulingError
+          - BadPaymentData
+          - InvoicesCanNotBeRepaid
+          - InvoicesCanNotBeRescheduled
+          - InvalidBillingAddress
+          - PaymentManagerGeneralSettingsNotFound
+          - PaymentManagerEInvoiceSettingsNotFound
+          - BadgeVerificationFailed
+          - BadgeTempPassEmpty
+          - BadgeScanRequired
+          - SolvedIssueSubmitFailed
+          - SolvedIssueInvalidLocationId
+          - SolvedIssueInvalidCategoryId
+          - SolvedIssueInvalidTradeId
+          - SolvedIssueInvalidPriorityId
+          - SolvedIssueInvalidSource
+          - SolvedIssueInvalidProblemCode
+          - SolvedIssueInvalidType
+          - SubmitFeedbackErrorWoStatus
+          - SubmitFeedbackInvalidAnswer
+          - SubmitFeedbackInvalidTrackingNumber
+          - SubmitFeedbackInvalidSubscriber
+          - SubmitFeedbackInvalidScore
+          - SubmitFeedbackUnsatisfactoryCommentRequired
+          - SubmitFeedbackInvalidReviewId
+          - SubmitFeedbackInvalidSetupId
+          - FeedbackSetupInvalidSetupId
+          - S3SaveError
+          - AbsSaveError
+          - GoodDataLoginFailed
+          - GoodDataElementUriError
+          - GoodDataReportResultUriError
+          - GoodDataReportResultEmpty
+          - GoodDataDesReportResCountError
+          - GoodDataDesReportResConvertError
+          - GoodDataDesDisplayFormAttributeEmpty
+          - InvalidProposalAmountLimit
+          - GetApprovalProposalReasonsError
+          - GetEmailRecipientsError
+          - GetAssignProposalReasonsError
+          - ProposalHasBeenVoided
+          - AssetTypeDuplicateNameError
+          - AssetTypeDoesntExistError
+          - AssetTypeFailUpdateRefrigerantPurpose
+          - AssetTypeDeleteFailed
+          - ExistingAssetsFoundForAssetType
+          - CantModifyAssetTypeParentId
+          - InvalidAssetTypeName
+          - AssetTypeInheritanceError
+          - ExistingProposalsFoundForAssetType
+          - InstallPurchaseDateOverflow
+          - WOexistsWithSomeAssets
+          - PartsChangeFailed
+          - PartsReasonCodeError
+          - PartsUseDateError
+          - PartsRefrigerantAlreadyExists
+          - PartsChargeHistoryAlreadyExists
+          - PartsNotFound
+          - BulkPartUseIncorrectWorkOrder
+          - BulkPartsByIdsNotFound
+          - BulkPartsMultipleWosError
+          - BulkPartsIncorrectIsRefrigerantParam
+          - BulkPartsIsRefrigerantCanNotbeChanged
+          - BulkPartsReasonCodeChangeError
+          - BulkPartsInvalidAssetAndReasonCodeParams
+          - BulkPartsInvalidAssetId
+          - BulkPartsInvalidInitialChargeCode
+          - BulkPartsAssetDoesntContainCharge
+          - BulkPartsIsInventoryFlagError
+          - BulkPartsLeakAlreadyInProcessError
+          - BulkPartsInvalidDateRangeError
+          - BulkPartsMoeNumberRequiredError
+          - BulkPartsSystemChargeExceeded
+          - BulkRefrigerantuUageBlocked
+          - BulkIDsNotBeNull
+          - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+          - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+          - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+          - BulkInitialChargeSystemExpansionNotAllowed
+          - BulkInventoryPartIdCanNotBeChanged
+          - BulkInventoryLocationIdCanNotBeChanged
+          - BulkPartsDuplicatedRequest
+          - BulkChangePartsIncorrectRefrigerantType
+          - BulkPartsRetroRetireIsInProgressOnThisDate
+          - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+          - RetrofitRetireCanNotBeRemoved
+          - RetroRetirePartsCantbeChanged
+          - BulkPartsInventoryApiFailed
+          - BulkPartsDuplicated
+          - BulkPartsWorkOrderInProcessing
+          - BadNotificationSubscriptionEventType
+          - RefrigerantUseDateOutOfTheLeakProcessDateRange
+          - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+          - BulkExternalWoCurrentlyDoesntExists
+          - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+          - BulkConnectorOnlyClientAssetsCouldBeProcessed
+          - LeakRecordHasWrongDateValue
+          - HasUncompliedLeakRecordInAnoutherWO
+          - HasUncompletedWOOnAnotherLeakRecord
+          - OnlyOneAssetWorkOrderPair
+          - OneLeakRecordMustBeOnCompletedWO
+          - LeakRecordNotFound
+          - AssetIDWoIdIsRequired
+          - BulkPartsReasonCodeRetrofit
+          - RetrofitRetireWasCancelledNoLeak
+          - FailedToUpdateLeakEvent
+          - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+          - LeakPartUseOnZeroChargeNotAllowed
+          - BulkLeakRecordsAndAuditRequest
+          - LeakRecordsDuplicateRequestDetected
+          - AllLeakRecordFieldsAreRequired
+          - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+          - MlpImportLevelError
+          - UpdateMlpUserLevelError
+          - InvalidHolidayName
+          - DuplicateHolidayName
+          - HolidaysDeleteFailed
+          - HolidaysExcludeInsertFailed
+          - HolidaysUpdateFailed
+          - HolidaysInsertFailed
+          - HolidaysExcludeDeleteFailed
+          - BusinessHoursDeleteFailed
+          - BusinessHoursUpdateFailed
+          - BusinessHoursInsertFailed
+          - InvalidTime
+          - HolidayForDeleteNotFound
+          - InvalidChecklistId
+          - ChecklistNotPopulated
+          - ChecklistNotAssignedForTransfersWO
+          - NoLinkBetweenSubscriberAndProvider
+          - WorkforceCreateContractorError
+          - InvalidCertificateId
+          - MaxThresholdExceeded
+          - MaxTriggerRateExceeded
+          - LeakPriorityIsRequired
+          - MissingRTSettings
+          - ResolutionCodesLimitExceeded
+          - ResolutionCodesAreRequired
+          - RootCauseIsRequired
+          - RootCauseTextIsRequired
+          - NoAccessToSetRootCauseText
+          - RootCauseTextMaxLengthExceeded
+          - ResolutionCodeTextIsRequired
+          - NoAccessToSetResolutionCodeText
+          - ResolutionCodeTextMaxLengthExceeded
+          - ResolutionCodeTextMustBeUnique
+          - ResolutionCodeWithoutFreeTextMustBeUnique
+          - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+          - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+          - AssetCategoriesLimitExceeded
+          - NoAccessToAssetCategories
+          - AssetCategoriesAreRequired
+          - InvalidAssetCategoryId
+          - NoAssetCategoriesOnWorkOrder
+          - RootCausesMustBeForAllWorkOrderAssetCategories
+          - RootCauseTextMustBeUnique
+          - AssetCategoryIsRequired
+          - MultipleRootCausesMethodMustBeUsed
+          - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+          - AssetFilterLocationsLimitExceeded
+          - UnknownStoreId
+          - UsesRefrigerantAttributeNotChanged
+          - AssetTagDuplicate
+          - AssetTagIdDuplicate
+          - UnknownEquipmentType
+          - ParentIdInOtherLocation
+          - UnknownBrandName
+          - CARBRequiredManufacturedDate
+          - CARBRequiredInstallDate
+          - TradeNotFound
+          - AssetDoesntExist
+          - AssetIsNotRefrigerant
+          - AssetCantContainRefrigerant
+          - OnlyRackAssetsContainingCircuits
+          - ConnectorAssetTagIdCanNotBeChanged
+          - ConnectorAssetLocationIdCanNotBeChanged
+          - AssetTagCantBeUpdated
+          - AssetTypeIsNotСonfiguredToManageRTAssets
+          - RefrigerantTrackingNotAvailableForLocation
+          - UsesRefrigerantRequiredByAssetTypeSettings
+          - AssetLocationTradeDoesntCorrespondToWO
+          - AssetLocationSelectedPMmodule
+          - UpdateAssetRepairStatusValidation
+          - HasCircuitsCantBeChange
+          - HasComponentsCantBeChange
+          - CircuitCanNotBeConnectedToCircuit
+          - RTCircuitCanNotBeConnectedToNonRTAsset
+          - RTComponentCanNotBeConnectedToNonRTAsset
+          - ComponentCanNotBeConnectedToComponent
+          - NonRTComponentCanNotBeConnectedToRtAsset
+          - NonRTCircuitCanNotBeConnectedToRtAsset
+          - ComponentCanNotBeConnectedToCircuit
+          - ParentAssetShouldHaveEitherComponentsNorCircuits
+          - ParentAssetCantHaveComponents
+          - ParentAssetCantHaveCircuits
+          - MultipleAssetsFoundForTheRequestedTagId
+          - InvalidBrandName
+          - UnknownBrandId
+          - BrandRestrictedByAssetType
+          - BrandRestrictedBySubscriber
+          - BrandsRestrictedBySubscriber
+          - DeclineWorkOrderFailed
+          - AcceptWorkOrderFailed
+          - WorkOrderWasAccepted
+          - AssetAttachmentsSizeExceeded
+          - SaveMliAuditReportSetting
+          - GetMliAuditReportSetting
+          - SaveMliAuditReportResult
+          - SaveMliAuditReportSendEmailStatus
+          - SaveMliAuditReportFilePath
+          - GetSubscribersEnabledSchedule
+          - SaveMliAuditInfoError
+          - TaxValidationAddNewCompanySettingsError
+          - TaxValidationUpdateCompanySettingsError
+          - ProjectAssociationError
+          - GetProjectsInvoiceAmountsError
+          - TaxCodeNotUniqueError
+          - FieldLengthIsTooLongError
+          - SetTaxCodesBulkError
+          - InvoiceAdditionalApprovalCodeValueError
+          - BulkUpdateInvoicePaymentError
+          - InvoiceLineItemFilterDisabled
+          - InvoiceStatusToRejectProviderNotificationFailed
+          - SortFieldNotAvailableError
+          - ContractServiceExist
+          - ContractServiceCantChangeTrade
+          - ContractServiceCantChangeCategory
+          - ContractServiceCantChangeProvider
+          - ContractServicePMServiceCantChangeTrade
+          - ContractServicePMServiceCantChangeCategory
+          - ContractedServiceNameAlreadyExists
+          - ContractedServiceNameLinkedToRates
+          - WorkRequestDescriptionIsRequired
+          - WorkRequestCallDateIsRequired
+          - WorkRequestIssueIsRequired
+          - WorkRequestCallDateHasWrongFormat
+          - WorkRequestScheduledDateHasWrongFormat
+          - InvalidWorkRequestStatus
+          - InvalidWorkRequestExtendedStatus
+          - InvalidWorkRequestCategory
+          - InvalidWorkRequestPriority
+          - InvalidWorkRequestCurrency
+          - InvalidWorkRequestIssueSetup
+          - InvalidWorkRequestIssueArea
+          - InvalidWorkRequestAsset
+          - WorkRequestAttachmentFileNameIsRequired
+          - WorkRequestAttachmentOriginalNameIsRequired
+          - WorkRequestIssueProblemCodeIsRequired
+          - WorkRequestIssueProblemTypeIsRequired
+          - WorkRequestScheduledDateMustBeGreaterThanCallDate
+          - InvalidWorkRequestId
+          - WorkRequestSearchCallDateFromHasWrongFormat
+          - WorkRequestSearchCallDateToHasWrongFormat
+          - WorkRequestSearchScheduledDateFromHasWrongFormat
+          - WorkRequestSearchScheduledDateToHasWrongFormat
+          - WorkRequestSearchClosedDateFromHasWrongFormat
+          - WorkRequestSearchClosedDateToHasWrongFormat
+          - WorkOrderIsAlreadyCreatedForWorkRequest
+          - WorkRequestIsClosed
+          - WorkRequestClosedReasonIsRequiredForClosedStatus
+          - WorkOrderIdIsRequiredForThisClosedReason
+          - InvalidWorkRequestClosedReason
+          - WorkRequestClosedReasonIsOnlyForClosedStatus
+          - InvalidWorkRequestWorkOrderId
+          - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+          - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+          - InvalidWorkOrderSourceType
+          - DeclineReasonIdIsRequired
+          - DeclineReasonDoesntAllowCustomText
+          - InvalidDeclineReasonId
+          - MultipleWorkOrdersForPurchaseNumber
+          - InvoiceMaterialMakupInvalid
+          - MaterialMarkUpDiscrepancyReasonShouldBeStated
+          - MaterialPriceDiscrepancyReasonShouldBeStated
+          - OtherPriceDiscrepancyReasonShouldBeStated
+          - SubscriberIdIsNotValid
+          - FiscalPeriodIsNotValid
+          - AmountIsNotValid
+          - AmountFormatIsNotValid
+          - CategoryMustBeEmpty
+          - CategoryIsNotValid
+          - TradeMustBeEmpty
+          - TradeIsNotValid
+          - GlCodeMustBeEmpty
+          - GlCodeIsNotValid
+          - LocationMustBeEmpty
+          - LocationIsNotValid
+          - RegionMustBeEmpty
+          - RegionIsNotValid
+          - DistrictMustBeEmpty
+          - DistrictIsNotValid
+          - DuplicateData
+          - PrimaryCategoryMustBeEmpty
+          - PrimaryCategoryIsNotValid
+          - CategoryAndExcludedCategoryCannotSimultaneously
+          - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+          - TradeAndExcludedTradeCannotSimultaneously
+          - GlCodeAndExcludedGlCodeCannotSimultaneously
+          - DuplicateCategories
+          - DuplicateTrades
+          - DuplicateGlCodes
+          - DuplicatePrimaryCategories
+          - LocationNoteMustBeEmpty
+          - LocationNoteIsNotValid
+          - OverlappingCategories
+          - OverlappingPrimaryCategories
+          - OverlappingTrades
+          - OverlappingPrimaryTrades
+          - OverlappingGlCodes
+          - OverlappingLocations
+          - OverlappingRegions
+          - OverlappingDistricts
+          - OverlappingLocationNotes
+          - TaxExemptionErrorApi
+          - OtherLineItemZeroAmount
+          - TravelLineItemsNotNegativeValueRequired
+          - MaterialLineItemsNotNegativeValueRequired
+          - LaborLineItemsNotNegativeValueRequired
+          - AdditionalApprovalCodeSetupIdInvalid
+          - VendorIdIsNotValid
+          - InvalidBatchId
+          - InvalidBatchStatusId
+          - CategoryInUsePMServiceError
+          - CategoryInUseChecklistError
+          - CategoryInUseETAMissedAlertError
+          - CategoryInUseBudgetControl
+          - CategoryInUseConnector
+          - CategoryInUseContractedService
+          - CategoryInUseEDI
+          - CategoryInUseIVR
+          - CategoryInUseFeedbackV2
+          - CategoryInUseProposalApproveReasons
+          - CategoryInUsePaymentManager
+          - CategoryInUseProviderAssignments
+          - CategoryInUseSiteAccess
+          - CategoryInUseAlerts
+          - CategoryInUseOpenWOAlert
+          - CategoryInUseWOAutocopy
+          - CategoryInUseWorkRequest
+          - CategoryInUseWO
+          - CategoryInUseDashboardOverride
+          - CategoryInUseInvoiceAttributes
+          - FeatureIsOn
+          - LocationHierarchyNotFound
+          - LocationHierarchyLevelNotFound
+          - LocationHierarchyParentLevelNotFound
+          - LocationSpaceTypeNotFound
+          - DuplicateRowByValueKey
+          - ParentNotFound
+          - DuplicateSequenceAmongSiblings
+          - SequenceConflictsWithExistingData
+          - SequenceMustBeGreaterThanZero
+          - ValueContainsPathDelimiter
+          - InitializationWarmupError
+          type: string
+      ErrorCode:
+        description: The code of the first error found
+        enum:
+        - NotAllowed
+        - EmptyProvider
+        - InvalidProviderId
+        - UnknownProvider
+        - ProviderAlreadyExists
+        - ProviderIdNotExists
+        - TimeoutExpiredError
+        - EmptyContract
+        - ContractUndefined
+        - EmptySubscriber
+        - InvalidSubscriberId
+        - UnknownSubscriber
+        - InactiveSubscriber
+        - EmptySubscriberId
+        - SubscriberIdNotExists
+        - InternalError
+        - DataNotFound
+        - BadRequest
+        - UnAuthorized
+        - UnSupportedApplication
+        - SubsidiaryUserDisabled
+        - EmptyLocation
+        - InvalidLocationId
+        - UnknownLocation
+        - LocationNotBelongsToSubscriber
+        - EmptyLocationCountry
+        - LocationAlreadyExists
+        - InvalidStoreId
+        - LocationEmptyState
+        - NoAccessToLocation
+        - LocationAddressValidationError
+        - LocationAddressRequestValidationError
+        - InvalidLocationNoteHeader
+        - NoAccessToUpdateProtectedNote
+        - InvalidBusinessHoursFormat
+        - WorkingHoursIntersect
+        - InvalidDayOfWeek
+        - DuplicateDayOfWeek
+        - InvalidBusinessHoursInitialSetup
+        - BusinessHoursIsEmpty
+        - InvalidHolidayRepeatByType
+        - EmptyHolidayListOfDays
+        - EmptyHolidayListOfMonths
+        - InvalidHolidayMonthName
+        - InvalidHolidayNameLength
+        - InvalidHolidayRepeatEvery
+        - DuplicateMonth
+        - InvalidHolidayFrequency
+        - InvalidHolidayStartDate
+        - InvalidCloseAllDay
+        - HolidayDoesNotExist
+        - InvalidFormatParameter
+        - InvalidLocationCity
+        - InvalidLocationZip
+        - InvalidLocationLatitude
+        - InvalidLocationLongitude
+        - InvalidLocationEmail
+        - InvalidLocationName
+        - InvalidLocationState
+        - InvalidLocationAddlAddress
+        - InvalidLocationMainAddress
+        - InvalidLocationCountry
+        - InvalidLocationRegion
+        - InvalidLocationDistrict
+        - InvalidLocationPhone
+        - InvalidLocationContact
+        - InvalidLocationFaxNumber
+        - LocationCountryNotFound
+        - LocationStateNotFound
+        - LocationCityNotFound
+        - LocationIdNotExists
+        - InvalidLocationEmailLength
+        - LocationStateIdNotFound
+        - IncorrectCombinationStateAndStateId
+        - InvalidSubscriberIds
+        - InvalidLocalizationSettings
+        - LandlordResponsibilityNotFound
+        - LandlordResponsibilityAlreadyExists
+        - EmptyLocationIds
+        - AttachmentNotExist
+        - InvalidTradeId
+        - InvalidCategoryId
+        - InvalidOverrideCategoryId
+        - InvalidOverridePriorityId
+        - LeaseNoteExceedMaxLength
+        - InvalidOverrideProviderRank
+        - InvalidOverrideNTE
+        - DuplicateRows
+        - InvalidPriorityId
+        - LocationNotFound
+        - EmptyTrade
+        - InvalidTrade
+        - TradeNotBelongsToSubscriber
+        - InvalidPrimaryTrade
+        - InvalidTradeForSubscriber
+        - InvalidCategoryForSubscriber
+        - GlCodeAlreadyExists
+        - GlCodeNotExists
+        - InvalidGlCodeUpdate
+        - EmptyGlCode
+        - TradeAlreadyExists
+        - InvalidNTETrade
+        - TradeNotExists
+        - TradeAlreadyInUse
+        - TradeWithTheSameNameHasBeenDeleted
+        - TradeInUsePMServices
+        - TradeInUseProposalError
+        - TradeInUseRFPError
+        - TradeInUseChecklistError
+        - TradeInUseBudgetControl
+        - TradeInUseGlCode
+        - TradeInUseDynamicProviderAssignments
+        - TradeInUseInvoice
+        - TradeInUseLandlordResponsibilities
+        - TradeInUseWO
+        - TradeInUseEquipmentType
+        - TradeInUseRFP
+        - TradeInUseConnector
+        - TradeInUseContractedService
+        - TradeInUseIVR
+        - TradeInUseSiteAccess
+        - TradeInUseGLCodes
+        - TradeInUseCIWO
+        - TradeInUseOrganizationPermissions
+        - TradeСreationError
+        - EmptyUser
+        - EmptyCreatedBy
+        - InvalidUserName
+        - NotProviderUser
+        - UserHasNoPermissions
+        - RestrictedAccount
+        - UserAlreadyExists
+        - UserHasNoPermissionsEditWO
+        - UserEmailAddressIsMissing
+        - UserIsNotRTAdmin
+        - InvalidSubsriberProviderId
+        - LanguageNameNotFound
+        - InvalidLanguageId
+        - LanguageIdNotFound
+        - UseBothSubscriberIdProviderId
+        - EmptyWoProblem
+        - InvalidWoProblemSource
+        - InvalidWoProblemDescription
+        - InvalidWoProblemCode
+        - InvalidWoStatus
+        - InvalidWoNte
+        - InvalidWoCaller
+        - InvalidWoCallDate
+        - InvalidWoScheduledDate
+        - InvalidWoScheduledDateGreaterThanMaxAllowed
+        - EmptyWoCategory
+        - InvalidWoCategory
+        - EmptyWoPriority
+        - InvalidWoPriority
+        - InvalidWoCurrency
+        - InvalidWoSetupId
+        - AttachmentsRequired
+        - InvalidWoIdentifier
+        - EquipmentRequired
+        - WoNteOverflow
+        - InvalidWoPurchaseNumber
+        - InvalidWoStateForUpdate
+        - InvalidPagingParameter
+        - InvalidWoNumber
+        - CheckInDenied
+        - CheckOutDenied
+        - WoScheduledDateLessThenReassignDate
+        - WoScheduledDateLessThenCallDate
+        - InvalidWoActionReason
+        - EmptySubscriberProperty
+        - WorkOrderUpdateError
+        - MissedWoNteDetails
+        - InvalidLinkedWoIdentifier
+        - WoIsOnHold
+        - InvalidWoTrade
+        - InvalidStarScore
+        - WorkOrderAlreadyRated
+        - AttachmentThumbnailNotAvailable
+        - InvalidWoIdentifierOrPin
+        - InvalidTimeZoneHeader
+        - RefrigerantWasUsedShouldBeYesOrNo
+        - CheckInDeniedOutsideGeolocation
+        - CheckOutDeniedOutsideGeolocation
+        - LeakDetectorAuditShouldBeCreated
+        - CheckInOutPremature
+        - WorkOrderAttachmentsSizeExceeded
+        - WorkOrderNotFound
+        - WorkOrderCreateError
+        - InvalidWoProjectedCompletionDate
+        - InvalidFollowUpWo
+        - InvalidWeatherEventId
+        - InvalidSiteAuditLinkedWo
+        - InvalidSetupId
+        - IssueListNotFound
+        - InvalidIssueListField
+        - SiteAuditCompleted
+        - CheckSiteAuditError
+        - SaveSiteAuditError
+        - RemoveSiteAuditError
+        - InactiveTemplateType
+        - SiteAuditNotFound
+        - SiteAuditUpdateError
+        - InvalidSiteAuditParameters
+        - InvalidAdditionalApprovalCode
+        - InvalidAdditionalApprovalCodeValue
+        - AdditionalApprovalCodeIsDisabled
+        - InvalidOtherDesc
+        - InvalidTax2Name
+        - InvoiceInconsistentAmounts
+        - InvoiceInvalidTotal
+        - InvoiceTotalGreaterNte
+        - InvoiceExists
+        - CreatingInvoiceError
+        - DuplInvNumber
+        - InvoiceTotalNull
+        - InvComplDateNull
+        - InvDateLessComplDate
+        - InvoiceNotAuto
+        - ESignatureRequired
+        - InvWoNotFound
+        - InvWrongWoCurr
+        - InvWoCurrNotFound
+        - InvoicingDisabled
+        - InvCreationUnexpectedRes
+        - InvoiceInvalidLaborAmount
+        - InvoiceInvalidMaterialAmount
+        - InvDateOld
+        - InvDateGreater
+        - InvoiceMaterialDescriptionLengthOverflow
+        - InvoiceTaxNotValidated
+        - InvoiceMaterialPartNumberLengthOverflow
+        - TaxValidationError
+        - TaxExemptionError
+        - InvalidInvoiceNumber
+        - GetApprovalLevelsError
+        - InvoiceAddUsersToMliLevelsError
+        - InvoiceAddDeleteLocationsToMliLevelUserError
+        - InvoiceUpdateMLiLevelError
+        - InvoiceDeleteMliLevelError
+        - InvoiceDeleteUsersFromMliLevelError
+        - ApprovalLevelNameLengthOverflow
+        - GstTaxError
+        - Tax2Error
+        - GetApprovalLevelsAndLocationsByUserError
+        - GetAssignedUserShortInfoError
+        - AssignAllLocationsToApprovalLevelAndUserError
+        - GetLocationsForApprovalLevelAndAssignedUserError
+        - GetLocationsBySubscriberError
+        - AssignUserWithLocationsToApprovalLevelError
+        - ReAssignUserWithLocationsToNewApprovalLevelError
+        - ReAssignLocationsToApprovalLevelAndUserError
+        - OutstandingBalance
+        - InvoiceTaxDetailsEmpty
+        - InvoiceTaxDetailsIncorrectSum
+        - MultipleUsersForLocationIsNotAllowed
+        - UserAssignedToOtherLevel
+        - UserDoesNotExist
+        - LaborLineItemRequired
+        - MaterialLineItemRequired
+        - InvoiceDoesntExist
+        - InvoiceStarUnstarFailed
+        - InvoiceBatchUpdateInvalidInvoiceStatusError
+        - InvoiceBatchUpdateLimitExceededError
+        - InvoiceNotAvailableForCurrentUser
+        - InvoiceBatchUpdateInvalidRuleSetStructure
+        - InvoiceBatchUpdateInvalidMliStructure
+        - InvoiceBatchUpdateStatusError
+        - InvoiceMaterialUnitTypeInvalid
+        - ExistingBatchNumber
+        - InvoiceResolutionTextRequired
+        - GetInvoiceDefaultApprovalCodesError
+        - InvoiceInvalidTravelAmount
+        - InvoiceTravelDescriptionLengthOverflow
+        - InvoiceTravelUnitTypeInvalid
+        - TravelLineItemRequired
+        - TravelDetailsDisabled
+        - OnOffShoreDisabled
+        - InvoiceInvalidLaborCount
+        - InvoiceInvalidMaterialCount
+        - InvoiceInvalidTravelCount
+        - SubscriberNotRegisteredForTaxValidation
+        - ManyDecimalsInAmountError
+        - DecimalPartQstTaxError
+        - LaborRatesDiscrepancy
+        - PayInvoicesError
+        - InvoiceNumberRequirementsError
+        - InvoiceNumberIncorrect
+        - InvoiceNumberRegExPatternError
+        - GetInvoicesPendingApprovalByLocationError
+        - ReAssignInvoicesToUsersFailed
+        - ReAssignInvoicesUsersMatched
+        - GetUsersForReassignInvoiceError
+        - InvalidTimeRangeActivity
+        - OutsourcedSourceInvoiceNotFound
+        - OthersLineItemsDisabled
+        - InvoiceInvalidOtherAmount
+        - InvoiceInvalidOtherCount
+        - InvoiceOtherDescriptionLengthOverflow
+        - OtherLineItemRequired
+        - OtherLineItemsNotNegativeValueRequired
+        - InvalidLaborSkillLevel
+        - InvalidLaborType
+        - InvalidTechnicianQuantity
+        - GetInvoicesCommonCategoriesError
+        - InvoiceExplainDisputeEmpty
+        - InvoiceAdditionalApprovalCodeHeaderError
+        - TemplateParseSuccess
+        - TemplateIncorrectHeaderError
+        - TemplateEmptyTemplateError
+        - TemplateWrongFieldsCountError
+        - TemplateFieldNotFoundError
+        - TemplateFieldRequiredError
+        - TemplateParseIntError
+        - TemplateFieldSizeError
+        - TemplateInvalidValueError
+        - TemplateFieldFormatError
+        - TemplateFieldMaxRangeError
+        - TemplateFieldMinRangeError
+        - TemplateProviderNotEntered
+        - TemplateInvalidSubscriberError
+        - TemplateVendorNotFoundError
+        - TemplateMissedProviderError
+        - TemplateProviderNotFoundError
+        - TemplateProviderSubsccriberLinkError
+        - TemplateTradeDispatchRankError
+        - TemplateInvalidTradeForSubscriberError
+        - TemplateStoreNotFoundError
+        - TemplateNotStoresForStateError
+        - TemplateNotStoresForCountryError
+        - TemplateNotStoresForDistrictError
+        - TemplateNotStoresForRegionError
+        - TemplateMultiplePimaryProvidersForTradeStoreError
+        - TemplateDuplicatePrimaryRelationshipError
+        - TemplateAmbiguousDataError
+        - TemplateIncorrectSubscriber
+        - TemplateDuplicateRanking
+        - TemplateLongitudeRangeError
+        - TemplateLatitudeRangeError
+        - InvoiceMaterialPartNameLengthOverflow
+        - TemplateTradeLocationExclusion
+        - TemplateInvalidStateError
+        - TemplateMissedSubscriberError
+        - TemplateMissedStoreIdError
+        - TemplateInvalidSubscriberIdError
+        - TemplateOpenCloseDateError
+        - TemplateInvalidCountryError
+        - TemplateInvalidStateForCountryError
+        - TemplateInvalidLocationTypeError
+        - TemplateMissingFullAndShortNameError
+        - TemplateMissingCountryError
+        - TemplateDuplicatedDataError
+        - TemplateParentLocationNotFoundError
+        - TemplateParseDateTimeError
+        - TemplateParseDecimalError
+        - TemplateSquareValueRangeError
+        - TemplateInvalidSquareMeasureError
+        - TemplateTypeLabelCanNotBeUpdatedError
+        - TemplateTypeLabelHaveToBeLocationForNotInventory
+        - TemplateInvalidPrimarySupplyLocation
+        - TemplateInvalidHomestoreLocationNumber
+        - TemplateErrorDuringCreation
+        - TemplateLocationNotFoundError
+        - TemplateDuplicatedLocationFoundError
+        - TemplateInvalidLocationHeaderError
+        - TemplateDuplicatedLocationHeaderError
+        - TemplateHeaderContainsEmptyFieldsError
+        - TemplateLocHeadersShortHeaderError
+        - TemplateHeaderContainsDuplicatesError
+        - TemplateLocationNotesStoreIdFieldLengthError
+        - TemplateLocationNotesNoteValueFieldLengthError
+        - TemplateErrorInvalidZipCode
+        - TemplateMissingLocationNoteHeader
+        - TemplateMissingLocationNoteIdHeader
+        - TemplateInvalidSecondarySupplyLocation
+        - TemplateLocationWasNotCreated
+        - TemplateTruckNameIsEmpty
+        - TemplateWrongFormat
+        - TemplateSubscriberNotFound
+        - TemplateDuplicatedLocationHeaders
+        - TemplateInvalidHeaders
+        - TemplateInvalidPhoneError
+        - TemplateDuplicateTelecomRecordError
+        - TemplateTelecomRecordExistsError
+        - TemplateInvalidCategory
+        - TemplateDifferentRanksForProviderAssignments
+        - TemplateDuplicateRankError
+        - TemplateProviderNonCompliant
+        - TemplateLocationIsClosed
+        - TemplateProviderWarning
+        - TemplateMultipleProvidersForTradeStoreError
+        - EmptyRequest
+        - InvalidNumberOfParameters
+        - InvoiceOtherUnitTypeInvalid
+        - EmptyLocationOrTradeList
+        - RequestSubscriberIdDoesntMatchUserSubscriberId
+        - StoreIdRequiredError
+        - InvalidUserIdError
+        - InvalidStoreIdError
+        - AmbigiousError
+        - MliHierarchyFiledsCountError
+        - MliHierarchyMaxUserNameError
+        - MliHierarchyDuplicateUserError
+        - MLiHirarchyUserExistInOtherLevelError
+        - MissingLevelsError
+        - DuplicateApprovalLevelsError
+        - InvalidMliLocations
+        - InvalidMlpLocations
+        - ApprovalLevelUsedInRulsetError
+        - GLCodeAmbiguous
+        - GlCodeInvalidResponce
+        - GetRuleSetListError
+        - RuleSetDuplicateNameError
+        - RuleSetDuplicateActionError
+        - RuleSetConflictedActionError
+        - RuleSetRuleSetDoesNotExistsError
+        - RuleSetTradeDoesNotExistError
+        - RuleSetCategoryDoesNotExistError
+        - RuleSetMliLevelDoesNotExistError
+        - GetRuleSet
+        - CreateUpdateRuleSetError
+        - DeleteRuleSet
+        - GetRuleSetCategoriesTradesCountError
+        - GetRuleSetByInvoice
+        - GetCategoryTradeIdsAreSelectedError
+        - ProposalAboveMlpLimitError
+        - ProposalNextLevelHasNoAvailableActionsError
+        - DefaultRuleSetError
+        - RuleSetActionEndStatusError
+        - RuleSetRejectActionEmptyForwardToError
+        - UserFilterGetError
+        - UserFilterCreateUpdateError
+        - UserFilterDeleteError
+        - UserFilterSetAsDefaultError
+        - InvoiceFilterFromAlpProviderError
+        - RegionFilterNotAllowedError
+        - LocationIdFilterNotAllowedError
+        - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+        - PaymenowBannersForProvidersOnly
+        - PaymenowFeatureDisabled
+        - PaymenowBannerInfoNotFound
+        - PaymenowBannerInvalidNavigationUrl
+        - PaymenowRequestedProvidersIsNotAssigned
+        - PaymenowEmptyRequestedProviders
+        - PaymentManagerFeatureDisabled
+        - PaymentManagerFeatureDisabledForSubscriber
+        - PaymentSystemCurrentlyUnavailable
+        - CurrencyNotSupported
+        - PaymentSystemAccountNotFound
+        - FeatureIsOff
+        - EarlyPayFeatureWithoutPaymentManagetFeatureError
+        - FtpTestError
+        - AcceptTermsAndConditionsRequestInvalid
+        - PaymentSystemAccountError
+        - SendReportToFTP
+        - SchedulingError
+        - BadPaymentData
+        - InvoicesCanNotBeRepaid
+        - InvoicesCanNotBeRescheduled
+        - InvalidBillingAddress
+        - PaymentManagerGeneralSettingsNotFound
+        - PaymentManagerEInvoiceSettingsNotFound
+        - BadgeVerificationFailed
+        - BadgeTempPassEmpty
+        - BadgeScanRequired
+        - SolvedIssueSubmitFailed
+        - SolvedIssueInvalidLocationId
+        - SolvedIssueInvalidCategoryId
+        - SolvedIssueInvalidTradeId
+        - SolvedIssueInvalidPriorityId
+        - SolvedIssueInvalidSource
+        - SolvedIssueInvalidProblemCode
+        - SolvedIssueInvalidType
+        - SubmitFeedbackErrorWoStatus
+        - SubmitFeedbackInvalidAnswer
+        - SubmitFeedbackInvalidTrackingNumber
+        - SubmitFeedbackInvalidSubscriber
+        - SubmitFeedbackInvalidScore
+        - SubmitFeedbackUnsatisfactoryCommentRequired
+        - SubmitFeedbackInvalidReviewId
+        - SubmitFeedbackInvalidSetupId
+        - FeedbackSetupInvalidSetupId
+        - S3SaveError
+        - AbsSaveError
+        - GoodDataLoginFailed
+        - GoodDataElementUriError
+        - GoodDataReportResultUriError
+        - GoodDataReportResultEmpty
+        - GoodDataDesReportResCountError
+        - GoodDataDesReportResConvertError
+        - GoodDataDesDisplayFormAttributeEmpty
+        - InvalidProposalAmountLimit
+        - GetApprovalProposalReasonsError
+        - GetEmailRecipientsError
+        - GetAssignProposalReasonsError
+        - ProposalHasBeenVoided
+        - AssetTypeDuplicateNameError
+        - AssetTypeDoesntExistError
+        - AssetTypeFailUpdateRefrigerantPurpose
+        - AssetTypeDeleteFailed
+        - ExistingAssetsFoundForAssetType
+        - CantModifyAssetTypeParentId
+        - InvalidAssetTypeName
+        - AssetTypeInheritanceError
+        - ExistingProposalsFoundForAssetType
+        - InstallPurchaseDateOverflow
+        - WOexistsWithSomeAssets
+        - PartsChangeFailed
+        - PartsReasonCodeError
+        - PartsUseDateError
+        - PartsRefrigerantAlreadyExists
+        - PartsChargeHistoryAlreadyExists
+        - PartsNotFound
+        - BulkPartUseIncorrectWorkOrder
+        - BulkPartsByIdsNotFound
+        - BulkPartsMultipleWosError
+        - BulkPartsIncorrectIsRefrigerantParam
+        - BulkPartsIsRefrigerantCanNotbeChanged
+        - BulkPartsReasonCodeChangeError
+        - BulkPartsInvalidAssetAndReasonCodeParams
+        - BulkPartsInvalidAssetId
+        - BulkPartsInvalidInitialChargeCode
+        - BulkPartsAssetDoesntContainCharge
+        - BulkPartsIsInventoryFlagError
+        - BulkPartsLeakAlreadyInProcessError
+        - BulkPartsInvalidDateRangeError
+        - BulkPartsMoeNumberRequiredError
+        - BulkPartsSystemChargeExceeded
+        - BulkRefrigerantuUageBlocked
+        - BulkIDsNotBeNull
+        - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+        - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+        - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+        - BulkInitialChargeSystemExpansionNotAllowed
+        - BulkInventoryPartIdCanNotBeChanged
+        - BulkInventoryLocationIdCanNotBeChanged
+        - BulkPartsDuplicatedRequest
+        - BulkChangePartsIncorrectRefrigerantType
+        - BulkPartsRetroRetireIsInProgressOnThisDate
+        - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+        - RetrofitRetireCanNotBeRemoved
+        - RetroRetirePartsCantbeChanged
+        - BulkPartsInventoryApiFailed
+        - BulkPartsDuplicated
+        - BulkPartsWorkOrderInProcessing
+        - BadNotificationSubscriptionEventType
+        - RefrigerantUseDateOutOfTheLeakProcessDateRange
+        - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+        - BulkExternalWoCurrentlyDoesntExists
+        - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+        - BulkConnectorOnlyClientAssetsCouldBeProcessed
+        - LeakRecordHasWrongDateValue
+        - HasUncompliedLeakRecordInAnoutherWO
+        - HasUncompletedWOOnAnotherLeakRecord
+        - OnlyOneAssetWorkOrderPair
+        - OneLeakRecordMustBeOnCompletedWO
+        - LeakRecordNotFound
+        - AssetIDWoIdIsRequired
+        - BulkPartsReasonCodeRetrofit
+        - RetrofitRetireWasCancelledNoLeak
+        - FailedToUpdateLeakEvent
+        - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+        - LeakPartUseOnZeroChargeNotAllowed
+        - BulkLeakRecordsAndAuditRequest
+        - LeakRecordsDuplicateRequestDetected
+        - AllLeakRecordFieldsAreRequired
+        - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+        - MlpImportLevelError
+        - UpdateMlpUserLevelError
+        - InvalidHolidayName
+        - DuplicateHolidayName
+        - HolidaysDeleteFailed
+        - HolidaysExcludeInsertFailed
+        - HolidaysUpdateFailed
+        - HolidaysInsertFailed
+        - HolidaysExcludeDeleteFailed
+        - BusinessHoursDeleteFailed
+        - BusinessHoursUpdateFailed
+        - BusinessHoursInsertFailed
+        - InvalidTime
+        - HolidayForDeleteNotFound
+        - InvalidChecklistId
+        - ChecklistNotPopulated
+        - ChecklistNotAssignedForTransfersWO
+        - NoLinkBetweenSubscriberAndProvider
+        - WorkforceCreateContractorError
+        - InvalidCertificateId
+        - MaxThresholdExceeded
+        - MaxTriggerRateExceeded
+        - LeakPriorityIsRequired
+        - MissingRTSettings
+        - ResolutionCodesLimitExceeded
+        - ResolutionCodesAreRequired
+        - RootCauseIsRequired
+        - RootCauseTextIsRequired
+        - NoAccessToSetRootCauseText
+        - RootCauseTextMaxLengthExceeded
+        - ResolutionCodeTextIsRequired
+        - NoAccessToSetResolutionCodeText
+        - ResolutionCodeTextMaxLengthExceeded
+        - ResolutionCodeTextMustBeUnique
+        - ResolutionCodeWithoutFreeTextMustBeUnique
+        - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+        - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+        - AssetCategoriesLimitExceeded
+        - NoAccessToAssetCategories
+        - AssetCategoriesAreRequired
+        - InvalidAssetCategoryId
+        - NoAssetCategoriesOnWorkOrder
+        - RootCausesMustBeForAllWorkOrderAssetCategories
+        - RootCauseTextMustBeUnique
+        - AssetCategoryIsRequired
+        - MultipleRootCausesMethodMustBeUsed
+        - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+        - AssetFilterLocationsLimitExceeded
+        - UnknownStoreId
+        - UsesRefrigerantAttributeNotChanged
+        - AssetTagDuplicate
+        - AssetTagIdDuplicate
+        - UnknownEquipmentType
+        - ParentIdInOtherLocation
+        - UnknownBrandName
+        - CARBRequiredManufacturedDate
+        - CARBRequiredInstallDate
+        - TradeNotFound
+        - AssetDoesntExist
+        - AssetIsNotRefrigerant
+        - AssetCantContainRefrigerant
+        - OnlyRackAssetsContainingCircuits
+        - ConnectorAssetTagIdCanNotBeChanged
+        - ConnectorAssetLocationIdCanNotBeChanged
+        - AssetTagCantBeUpdated
+        - AssetTypeIsNotСonfiguredToManageRTAssets
+        - RefrigerantTrackingNotAvailableForLocation
+        - UsesRefrigerantRequiredByAssetTypeSettings
+        - AssetLocationTradeDoesntCorrespondToWO
+        - AssetLocationSelectedPMmodule
+        - UpdateAssetRepairStatusValidation
+        - HasCircuitsCantBeChange
+        - HasComponentsCantBeChange
+        - CircuitCanNotBeConnectedToCircuit
+        - RTCircuitCanNotBeConnectedToNonRTAsset
+        - RTComponentCanNotBeConnectedToNonRTAsset
+        - ComponentCanNotBeConnectedToComponent
+        - NonRTComponentCanNotBeConnectedToRtAsset
+        - NonRTCircuitCanNotBeConnectedToRtAsset
+        - ComponentCanNotBeConnectedToCircuit
+        - ParentAssetShouldHaveEitherComponentsNorCircuits
+        - ParentAssetCantHaveComponents
+        - ParentAssetCantHaveCircuits
+        - MultipleAssetsFoundForTheRequestedTagId
+        - InvalidBrandName
+        - UnknownBrandId
+        - BrandRestrictedByAssetType
+        - BrandRestrictedBySubscriber
+        - BrandsRestrictedBySubscriber
+        - DeclineWorkOrderFailed
+        - AcceptWorkOrderFailed
+        - WorkOrderWasAccepted
+        - AssetAttachmentsSizeExceeded
+        - SaveMliAuditReportSetting
+        - GetMliAuditReportSetting
+        - SaveMliAuditReportResult
+        - SaveMliAuditReportSendEmailStatus
+        - SaveMliAuditReportFilePath
+        - GetSubscribersEnabledSchedule
+        - SaveMliAuditInfoError
+        - TaxValidationAddNewCompanySettingsError
+        - TaxValidationUpdateCompanySettingsError
+        - ProjectAssociationError
+        - GetProjectsInvoiceAmountsError
+        - TaxCodeNotUniqueError
+        - FieldLengthIsTooLongError
+        - SetTaxCodesBulkError
+        - InvoiceAdditionalApprovalCodeValueError
+        - BulkUpdateInvoicePaymentError
+        - InvoiceLineItemFilterDisabled
+        - InvoiceStatusToRejectProviderNotificationFailed
+        - SortFieldNotAvailableError
+        - ContractServiceExist
+        - ContractServiceCantChangeTrade
+        - ContractServiceCantChangeCategory
+        - ContractServiceCantChangeProvider
+        - ContractServicePMServiceCantChangeTrade
+        - ContractServicePMServiceCantChangeCategory
+        - ContractedServiceNameAlreadyExists
+        - ContractedServiceNameLinkedToRates
+        - WorkRequestDescriptionIsRequired
+        - WorkRequestCallDateIsRequired
+        - WorkRequestIssueIsRequired
+        - WorkRequestCallDateHasWrongFormat
+        - WorkRequestScheduledDateHasWrongFormat
+        - InvalidWorkRequestStatus
+        - InvalidWorkRequestExtendedStatus
+        - InvalidWorkRequestCategory
+        - InvalidWorkRequestPriority
+        - InvalidWorkRequestCurrency
+        - InvalidWorkRequestIssueSetup
+        - InvalidWorkRequestIssueArea
+        - InvalidWorkRequestAsset
+        - WorkRequestAttachmentFileNameIsRequired
+        - WorkRequestAttachmentOriginalNameIsRequired
+        - WorkRequestIssueProblemCodeIsRequired
+        - WorkRequestIssueProblemTypeIsRequired
+        - WorkRequestScheduledDateMustBeGreaterThanCallDate
+        - InvalidWorkRequestId
+        - WorkRequestSearchCallDateFromHasWrongFormat
+        - WorkRequestSearchCallDateToHasWrongFormat
+        - WorkRequestSearchScheduledDateFromHasWrongFormat
+        - WorkRequestSearchScheduledDateToHasWrongFormat
+        - WorkRequestSearchClosedDateFromHasWrongFormat
+        - WorkRequestSearchClosedDateToHasWrongFormat
+        - WorkOrderIsAlreadyCreatedForWorkRequest
+        - WorkRequestIsClosed
+        - WorkRequestClosedReasonIsRequiredForClosedStatus
+        - WorkOrderIdIsRequiredForThisClosedReason
+        - InvalidWorkRequestClosedReason
+        - WorkRequestClosedReasonIsOnlyForClosedStatus
+        - InvalidWorkRequestWorkOrderId
+        - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+        - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+        - InvalidWorkOrderSourceType
+        - DeclineReasonIdIsRequired
+        - DeclineReasonDoesntAllowCustomText
+        - InvalidDeclineReasonId
+        - MultipleWorkOrdersForPurchaseNumber
+        - InvoiceMaterialMakupInvalid
+        - MaterialMarkUpDiscrepancyReasonShouldBeStated
+        - MaterialPriceDiscrepancyReasonShouldBeStated
+        - OtherPriceDiscrepancyReasonShouldBeStated
+        - SubscriberIdIsNotValid
+        - FiscalPeriodIsNotValid
+        - AmountIsNotValid
+        - AmountFormatIsNotValid
+        - CategoryMustBeEmpty
+        - CategoryIsNotValid
+        - TradeMustBeEmpty
+        - TradeIsNotValid
+        - GlCodeMustBeEmpty
+        - GlCodeIsNotValid
+        - LocationMustBeEmpty
+        - LocationIsNotValid
+        - RegionMustBeEmpty
+        - RegionIsNotValid
+        - DistrictMustBeEmpty
+        - DistrictIsNotValid
+        - DuplicateData
+        - PrimaryCategoryMustBeEmpty
+        - PrimaryCategoryIsNotValid
+        - CategoryAndExcludedCategoryCannotSimultaneously
+        - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+        - TradeAndExcludedTradeCannotSimultaneously
+        - GlCodeAndExcludedGlCodeCannotSimultaneously
+        - DuplicateCategories
+        - DuplicateTrades
+        - DuplicateGlCodes
+        - DuplicatePrimaryCategories
+        - LocationNoteMustBeEmpty
+        - LocationNoteIsNotValid
+        - OverlappingCategories
+        - OverlappingPrimaryCategories
+        - OverlappingTrades
+        - OverlappingPrimaryTrades
+        - OverlappingGlCodes
+        - OverlappingLocations
+        - OverlappingRegions
+        - OverlappingDistricts
+        - OverlappingLocationNotes
+        - TaxExemptionErrorApi
+        - OtherLineItemZeroAmount
+        - TravelLineItemsNotNegativeValueRequired
+        - MaterialLineItemsNotNegativeValueRequired
+        - LaborLineItemsNotNegativeValueRequired
+        - AdditionalApprovalCodeSetupIdInvalid
+        - VendorIdIsNotValid
+        - InvalidBatchId
+        - InvalidBatchStatusId
+        - CategoryInUsePMServiceError
+        - CategoryInUseChecklistError
+        - CategoryInUseETAMissedAlertError
+        - CategoryInUseBudgetControl
+        - CategoryInUseConnector
+        - CategoryInUseContractedService
+        - CategoryInUseEDI
+        - CategoryInUseIVR
+        - CategoryInUseFeedbackV2
+        - CategoryInUseProposalApproveReasons
+        - CategoryInUsePaymentManager
+        - CategoryInUseProviderAssignments
+        - CategoryInUseSiteAccess
+        - CategoryInUseAlerts
+        - CategoryInUseOpenWOAlert
+        - CategoryInUseWOAutocopy
+        - CategoryInUseWorkRequest
+        - CategoryInUseWO
+        - CategoryInUseDashboardOverride
+        - CategoryInUseInvoiceAttributes
+        - FeatureIsOn
+        - LocationHierarchyNotFound
+        - LocationHierarchyLevelNotFound
+        - LocationHierarchyParentLevelNotFound
+        - LocationSpaceTypeNotFound
+        - DuplicateRowByValueKey
+        - ParentNotFound
+        - DuplicateSequenceAmongSiblings
+        - SequenceConflictsWithExistingData
+        - SequenceMustBeGreaterThanZero
+        - ValueContainsPathDelimiter
+        - InitializationWarmupError
+        type: string
+        readOnly: true
+      ErrorMessage:
+        description: The description of all errors.
+        type: string
+      Data:
+        $ref: '#/definitions/System.Object'
+        description: "Optional\r\n            Gets or Sets the Data object."
+  ServiceChannel.Services.Messaging.Workorders.WorkActivityRequest:
+    description: Request object to update a work activity.
+    type: object
+    properties:
+      CheckInDate:
+        format: date-time
+        description: The date and time when a technician started work on the service request. The format is `YYYY-MM-DDThh:mm:ss.sssZ`. The default is the current date and time.
+        type: string
+      CheckOutDate:
+        format: date-time
+        description: The date and time when a technician finished work on the service request. The format is `YYYY-MM-DDThh:mm:ss.sssZ`. The default is the current date and time.
+        type: string
+      Name:
+        description: (*Optional*) The name of technician who worked on the service request.
+        type: string
+  ServiceChannel.Services.Messaging.Users.UserInfo:
+    description: The user details object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: The unique numeric identifier of the user.
+        type: integer
+      UserName:
+        description: The username of the user.
+        type: string
+      UserNameOrFullName:
+        description: The username if fullname is null or empty
+        type: string
+        readOnly: true
+      FullName:
+        description: The full name of the user.
+        type: string
+      Email:
+        description: The email address of the user.
+        type: string
+      LevelInfo:
+        $ref: '#/definitions/ServiceChannel.Api.Model.Proposals.MlpLevelSimpleModel'
+        description: The information on the MLP level the user belongs to.
+  ServiceChannel.Services.Messaging.Workorders.WorkActivityPostRequest:
+    description: Request object to create a work activity.
+    type: object
+    properties:
+      WorkTypeId:
+        format: int32
+        description: 'The type of activity performed: 1 — *Repair*, 2 — *Travel*. You can pass other values if custom types are set up for the subscriber.'
+        type: integer
+      CheckInDate:
+        format: date-time
+        description: The date and time when a technician started work on the service request. The format is `YYYY-MM-DDThh:mm:ss.sssZ`. The default is the current date and time.
+        type: string
+      CheckOutDate:
+        format: date-time
+        description: The date and time when a technician finished work on the service request. The format is `YYYY-MM-DDThh:mm:ss.sssZ`. The default is the current date and time.
+        type: string
+      Name:
+        description: (*Optional*) The name of technician who worked on the service request.
+        type: string
+  ServiceChannel.Api.Model.Proposals.MlpLevelSimpleModel:
+    type: object
+    properties:
+      UserId:
+        format: int32
+        type: integer
+      LocationIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      LevelId:
+        format: int32
+        type: integer
+      LevelName:
+        type: string
+      Order:
+        format: int32
+        type: integer
+      UsersLocations:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            format: int32
+            type: integer
+      CategoryChange:
+        default: false
+        type: boolean
+      PriorityChange:
+        default: false
+        type: boolean
+      CodeChange:
+        default: false
+        type: boolean
+      DivisionId:
+        format: int32
+        type: integer
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Services.Messaging.Workorders.WorkActivity:
+    description: Work activity object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: The unique numeric identifier of the work activity.
+        type: integer
+      WorkOrderId:
+        format: int32
+        description: The unique numeric identifier of the work order for which the work activity was reported.
+        type: integer
+      TimeIn:
+        format: date-time
+        description: The date and time when the technician started work on the service request.
+        type: string
+      TimeOut:
+        format: date-time
+        description: The date and time when the technician finished work on the service request.
+        type: string
+      IsTimeEdited:
+        description: Indicates if the time of the labor performed was modified.
+        default: false
+        type: boolean
+      User:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.UserInfo'
+        description: The detailed info about the user who performed a check-in.
+      CallerId:
+        description: "Possible values:\r\n            a) The GPS coordinates of the location where the technician performed the most recent action — either check-in or check-out — via the ServiceChannel Provider mobile app.\r\n            b) The phone number of the technician from which they performed the most recent action — either check-in or check-out — using the IVR (Interactive Voice Response) system.\r\n            c) Null value if the work activity was entered manually."
+        type: string
+      ResolutionCode:
+        description: The most recent status assigned to the work order by the technician.
+        type: string
+      WorkType:
+        description: 'The type of activity performed: *Repair* or *Travel*. Other values may be returned if custom types are set up for the subscriber.'
+        type: string
+      HasCheckInInfo:
+        description: Indicates if a check-in was performed for the work activity.
+        default: false
+        type: boolean
+      HasCheckListResponse:
+        description: Indicates if the technician answered checklist questions.
+        default: false
+        type: boolean
+      TechsCount:
+        format: int32
+        description: The number of technicians who performed the work.
+        type: integer
+      Name:
+        description: The technician performed the work.
+        type: string
+      CreatedBy:
+        format: int32
+        description: The user who created the labor.
+        type: integer
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

@@ -1,0 +1,188 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours EmailNotifications API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: EmailNotifications
+paths:
+  /users/current/locations/{locationId}/subscribe:
+    post:
+      tags:
+      - EmailNotifications
+      summary: Subscribe to Email Notifications
+      description: "Subscribe to Email Notification.\r\n            <br /><br />Available for subscriber usage."
+      operationId: POSTv3_users_current_locations_{locationId}_subscribe
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: Numeric Id of the Location to perform action with.
+        required: true
+        type: integer
+        format: int32
+      - name: request
+        in: body
+        description: The Subscription Email Notification request.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Notifications.EmailNotificationSubscriptionRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+  /users/current/locations/{locationId}/email:
+    get:
+      tags:
+      - EmailNotifications
+      summary: List existing email subscriptions
+      description: Returns a list of email subscriptions
+      operationId: GETv3_users_current_locations_{locationId}_email
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+  /users/current/unsubscribe:
+    delete:
+      tags:
+      - EmailNotifications
+      summary: Unsubscribe from Email Notifications
+      description: "Unsubscribe from Email Notifications.\r\n            <br /><br />Available for subscriber usage."
+      operationId: DELETEv3_users_current_unsubscribe
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+  /users/current/locations/{locationId}/unsubscribe:
+    delete:
+      tags:
+      - EmailNotifications
+      summary: Unsubscribe from Email Notifications
+      description: "Unsubscribe from Email Notifications.\r\n            <br /><br />Available for subscriber usage."
+      operationId: DELETEv3_users_current_locations_{locationId}_unsubscribe?id={id}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: Numeric Id of the Location to perform action with.
+        required: true
+        type: integer
+        format: int32
+      - name: id
+        in: query
+        description: Numeric Id of the Subscription to perform action with.
+        required: false
+        type: integer
+        format: int32
+      - name: notificationType
+        in: query
+        description: 'Notification type: Check In , ....'
+        required: true
+        type: string
+        enum:
+        - CheckIn
+        - CheckOut
+        - BadgeScanRequired
+      - name: languageCode
+        in: query
+        description: ISO 639-1 two-letter code for the language.
+        required: false
+        type: string
+      - name: notificationRules.rules
+        in: query
+        required: false
+        type: array
+        items: {}
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+definitions:
+  ServiceChannel.Services.Messaging.Notifications.EmailNotificationSubscriptionRequest:
+    description: Subscribe Email Notification Request model
+    required:
+    - NotificationType
+    type: object
+    properties:
+      NotificationType:
+        description: 'Notification type: Check In , ....'
+        enum:
+        - CheckIn
+        - CheckOut
+        - BadgeScanRequired
+        type: string
+      LanguageCode:
+        description: ISO 639-1 two-letter code for the language.
+        type: string
+      NotificationRules:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Notifications.NotificationRulesRequest'
+        description: Filter for Notification Request
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Services.Messaging.Notifications.Rule:
+    type: object
+    properties:
+      Field:
+        type: string
+      Value:
+        type: string
+  ServiceChannel.Services.Messaging.Notifications.NotificationRulesRequest:
+    description: Rules for Notification Request model
+    type: object
+    properties:
+      Rules:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Notifications.Rule'
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

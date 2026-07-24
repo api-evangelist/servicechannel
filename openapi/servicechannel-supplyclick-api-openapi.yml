@@ -1,0 +1,106 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours SupplyClick API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: SupplyClick
+paths:
+  /SupplyClick/ProcessItems:
+    post:
+      tags:
+      - SupplyClick
+      summary: Create supply manager work orders
+      operationId: POSTv3_SupplyClick_ProcessItems
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: items
+        in: body
+        description: Materials
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/ServiceChannel.Api.Model.SupplyManager.CatalogItemModel'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+definitions:
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Api.Model.SupplyManager.CatalogItemModel:
+    type: object
+    properties:
+      ProductId:
+        type: string
+      SubscriberId:
+        format: int32
+        type: integer
+      LocationId:
+        format: int32
+        type: integer
+      StoreId:
+        type: string
+      CallerName:
+        type: string
+      CustomCallerName:
+        type: string
+      CallerEmail:
+        type: string
+      ShippingAddress:
+        type: string
+      BillingAddress:
+        type: string
+      SupplierId:
+        type: string
+      Quantity:
+        format: double
+        type: number
+      Price:
+        format: double
+        type: number
+      Description:
+        type: string
+      SupplierPartId:
+        type: string
+      SupplierPartAuxiliaryId:
+        type: string
+      SupplierName:
+        type: string
+      CurrencyCode:
+        type: string
+      NTE:
+        type: string
+      Attachment:
+        type: string
+      Reason:
+        type: string
+      GlCode:
+        type: string
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

@@ -1,0 +1,325 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours Trucks API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: Trucks
+paths:
+  /trucks/{id}:
+    get:
+      tags:
+      - Trucks
+      operationId: GETv3_trucks_{id}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+    put:
+      tags:
+      - Trucks
+      operationId: PUTv3_trucks_{id}
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+        format: int32
+      - name: truckRequest
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Trucks.TruckRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+    delete:
+      tags:
+      - Trucks
+      operationId: DELETEv3_trucks_{id}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /trucks:
+    post:
+      tags:
+      - Trucks
+      operationId: POSTv3_trucks
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: truckRequest
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Trucks.TruckRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /trucks/technician:
+    post:
+      tags:
+      - Trucks
+      operationId: POSTv3_trucks_technician
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: techTruckCreate
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Trucks.TechTruckRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /trucks/technician/{authTechId}:
+    get:
+      tags:
+      - Trucks
+      operationId: GETv3_trucks_technician_{authTechId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: authTechId
+        in: path
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+    put:
+      tags:
+      - Trucks
+      operationId: PUTv3_trucks_technician_{authTechId}
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: authTechId
+        in: path
+        required: true
+        type: integer
+        format: int64
+      - name: techTruck
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Trucks.TechTruckRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+    delete:
+      tags:
+      - Trucks
+      operationId: DELETEv3_trucks_technician_{authTechId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: authTechId
+        in: path
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /odata/trucks:
+    get:
+      tags:
+      - Trucks
+      operationId: Trucks_GetTrucks
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+definitions:
+  ServiceChannel.Services.Messaging.Trucks.TechTruckRequest:
+    required:
+    - AuthTechnicianId
+    type: object
+    properties:
+      AuthTechnicianId:
+        format: int64
+        type: integer
+      TruckId:
+        format: int32
+        type: integer
+      AlternativeTruckDescription:
+        type: string
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Services.Messaging.Trucks.TruckRequest:
+    required:
+    - TruckId
+    - Name
+    type: object
+    properties:
+      TruckId:
+        type: string
+      Name:
+        type: string
+      Region:
+        type: string
+      District:
+        type: string
+      Make:
+        type: string
+      Model:
+        type: string
+      Year:
+        type: string
+      License:
+        type: string
+      Vin:
+        type: string
+      HomestoreLocationId:
+        format: int32
+        type: integer
+      MainContact:
+        type: string
+      PhoneNumber:
+        type: string
+      FaxNumber:
+        type: string
+      Email:
+        type: string
+      ManagerAuthId:
+        format: int64
+        type: integer
+      InventoryProviderId:
+        format: int32
+        type: integer
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

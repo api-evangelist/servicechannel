@@ -1,0 +1,707 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours ProviderAssignment API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: ProviderAssignment
+paths:
+  /odata/providerassignment/Service.GetAssigned():
+    get:
+      tags:
+      - ProviderAssignment
+      summary: Retrieve list of providers assigned to specific subscriber
+      description: ''
+      operationId: ProviderAssignment_GetAssigned
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Providers.ProviderInfo'
+      deprecated: false
+      x-access: Any
+  /odata/GetProviderAssignments:
+    get:
+      tags:
+      - ProviderAssignment
+      summary: Retrieve Provider Assignments
+      description: "Retrieve Provider Assignments.\r\n            <br />One page contains 50 items by default. To get next 50 items use the \"$skip\" parameter (for example $skip=50 and so on)."
+      operationId: ProviderAssignment_GetProviderAssignments
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.ProviderAssignments.ProviderAssignment'
+      deprecated: false
+      x-access: Any
+definitions:
+  ServiceChannel.Services.Messaging.Trade.Trade:
+    description: Trade object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Numeric identifier of the trade.
+        type: integer
+      Name:
+        description: Trade name.
+        type: string
+      SubscriberId:
+        format: int32
+        description: Unique subscriber ID.
+        type: integer
+  ServiceChannel.Services.Messaging.Providers.ProviderInfo:
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Id
+        type: integer
+      Name:
+        description: Name
+        type: string
+      DoNotDispatch:
+        description: DoNotDispatch enabled?
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Users.User:
+    description: User details object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique user identifier.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique subscriber ID.
+        type: integer
+      UserName:
+        description: Username of the user.<br /> • For subscriber users, the username appears as **User Id** on the "General Info" tab of the user profile page.<br /> • For provider users, the username is listed as **UserID** under "Access" on the "General" tab of the user profile page.
+        pattern: ^$|(^\S+).(\S).(\S)$
+        type: string
+      FullName:
+        description: Full name of the user.<br /> • For subscriber users, the full name appears as **User Name** on the "General Info" tab of the user profile page.<br /> • For provider users, you can see their first and last name under "Basic" on the "General" tab of the user profile page.
+        type: string
+      Email:
+        description: User’s email address.
+        type: string
+      PsmEmail:
+        description: Email address through which a user can reset their password.
+        type: string
+      Disabled:
+        description: Defines if a user is deactivated.
+        default: false
+        type: boolean
+      IsLocked:
+        description: Defines if a user is locked.
+        default: false
+        type: boolean
+      Roles:
+        description: Secondary roles assigned to a subscriber user that determine their permissions and level of access to various Service Automation modules.
+        type: array
+        items:
+          type: string
+      Permissions:
+        description: Permissions assigned to a subscriber user that determine whether they have full or read-only access to various Service Automation modules.
+        type: array
+        items:
+          type: string
+      UserType:
+        description: Subscriber user type defining their level of access to ServiceChannel:<br /> • `Corporate` — a user can work in Service Automation.<br /> • `Dashboard` — a user can only access the dashboard assigned to them.<br />`0` is returned for provider users.
+        enum:
+        - Corporate
+        - Dashboard
+        - ServiceChannel
+        type: string
+      Dashboard:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.DashboardInfo'
+        description: Dashboard a subscriber user has access to.
+      Access:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.AccessOptions'
+        description: List of locations, districts, regions, and trades a subscriber user has access to.
+      Limits:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.LimitOptions'
+        description: NTE, proposal, and invoice limits set for a subscriber user.
+      FeedRole:
+        type: string
+      MliUserInfo:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.MliUserInfo'
+        description: ''
+      MlpUserInfo:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.MlpUserInfo'
+  ServiceChannel.Services.Messaging.Users.DashboardInfo:
+    description: Dashboard details object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique dashboard identifier.
+        type: integer
+      Name:
+        description: Dashboard name.
+        type: string
+      RedirectToDashboard:
+        description: Defines whether a subscriber user is redirected to a dashboard once they log in.
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Users.Limit:
+    description: Object for limit details set for a subscriber user.
+    type: object
+    properties:
+      Amount:
+        format: double
+        description: Limit amount.
+        type: number
+      CurrencyId:
+        format: int32
+        description: Identifier of the currency the limit is set in.
+        type: integer
+  ServiceChannel.Services.Messaging.Users.MliUserInfo:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      MliLevel:
+        type: string
+      MliLocations:
+        type: array
+        items:
+          format: int32
+          type: integer
+  ServiceChannel.Services.Messaging.LocationNote.LocationNote:
+    description: Object with the location note details.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Location note numeric identifier.
+        type: integer
+      HeaderId:
+        format: int32
+        description: Unique location note header identifier.
+        type: integer
+      Value:
+        description: Location note content.
+        type: string
+      Header:
+        description: Name of the note.
+        type: string
+  ServiceChannel.Services.Messaging.Providers.Provider:
+    type: object
+    properties:
+      Phone:
+        type: string
+      FullName:
+        description: Full Name
+        type: string
+      Address1:
+        description: Address1
+        type: string
+      Address2:
+        description: Adress2
+        type: string
+      City:
+        description: City
+        type: string
+      State:
+        description: State
+        type: string
+      Zip:
+        description: Zip
+        type: string
+      Country:
+        description: Country
+        type: string
+      MainContact:
+        description: Main Contact
+        type: string
+      DateCreated:
+        format: date-time
+        description: Date Created
+        type: string
+      LastUserDate:
+        description: Last User Date
+        type: string
+      SuperUser:
+        description: SuperUser
+        type: string
+      WebSite:
+        description: WebSite
+        type: string
+      Email:
+        description: Email
+        type: string
+      TaxId:
+        description: Tax Id
+        type: string
+      Trade:
+        description: Trade
+        type: string
+      ProcessingEmail:
+        description: Processing Email
+        type: string
+      FaxNumber:
+        description: Fax Number
+        type: string
+      SuiteFloor:
+        description: Suite Floor
+        type: string
+      MailInfo:
+        description: Mail Info
+        type: string
+      ImageFile:
+        description: Image File
+        type: string
+      ReturnMail:
+        description: Return Mail
+        type: string
+      MailFrequency:
+        format: int32
+        description: Mail Frequency
+        type: integer
+      FormId:
+        format: int32
+        description: Form Id
+        type: integer
+      Pager:
+        description: Pager
+        type: string
+      NightRequest:
+        format: int32
+        description: NightRequest
+        type: integer
+      ShortFormatEmail:
+        description: Short Format Email
+        type: string
+      LastTrainingDate:
+        format: date-time
+        description: Last Training Date
+        type: string
+      LastTrainingDateStr:
+        description: Last Training Date as a string
+        type: string
+      IsInternal:
+        description: Is Internal
+        default: false
+        type: boolean
+      IsOnOffShoreFeatureEnabled:
+        description: Is OnOffShoreFeature Enabled
+        default: false
+        type: boolean
+      Id:
+        format: int32
+        description: Id
+        type: integer
+      Name:
+        description: Name
+        type: string
+      DoNotDispatch:
+        description: DoNotDispatch enabled?
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Location.Location:
+    description: General location details object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique location identifier.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique subscriber identifier.
+        type: integer
+      SubscriberName:
+        type: string
+      StoreId:
+        description: Alphanumeric identifier of the store in the client's system. Assigned by and unique per subscriber.
+        type: string
+      Name:
+        description: Location name.
+        type: string
+      ShortName:
+        description: Shortened location name.
+        type: string
+      Latitude:
+        format: double
+        description: Global position. Latitude.
+        type: number
+      Longitude:
+        format: double
+        description: Global position. Longitude.
+        type: number
+      Distance:
+        format: double
+        description: Distance from GPS coordinate to this location
+        type: number
+      Radius:
+        format: double
+        description: GPS radius for the location.
+        type: number
+      LocationTypeId:
+        format: int32
+        description: Numeric identifier of the location type.
+        type: integer
+      Address1:
+        description: Additional location address.
+        type: string
+      Address2:
+        description: Main location address.
+        type: string
+      City:
+        description: Location city.
+        type: string
+      State:
+        description: State where the location is situated.
+        type: string
+      StateId:
+        format: int32
+        description: Numeric identifier of the location’s state.
+        type: integer
+      Region:
+        description: Part of the country where the location is situated.
+        type: string
+      District:
+        description: Abbreviation of the town or country area where the location is situated.
+        type: string
+      Zip:
+        description: Location ZIP or postal code.
+        type: string
+      Country:
+        description: Abbreviation of the country name where the location is situated.
+        type: string
+      CountryId:
+        format: int32
+        description: Numeric identifier of the country of the location.
+        type: integer
+      ClosedDate:
+        format: date-time
+        description: Last day when the location is open for business.
+        type: string
+      OpenDate:
+        format: date-time
+        description: First day when the location is open for business.
+        type: string
+      Status:
+        description: 'Status of the location. Possible values: *open*, *closed*.'
+        type: string
+      Email:
+        description: Email the location can be contacted at.
+        type: string
+      FaxNumber:
+        description: Fax number the location can be contacted at.
+        type: string
+      Phone:
+        description: Contact phone number of the location.
+        type: string
+      Contact:
+        description: Name of the main person to contact at the location.
+        type: string
+      HasInventory:
+        description: 'Indicates whether it’s an inventory location or not. Possible values: *true*, *false*.'
+        default: false
+        type: boolean
+      SquareValue:
+        format: double
+        description: Square value of the facility.
+        type: number
+      SquareMeasure:
+        description: Unit or system of units for measuring location area.
+        type: string
+      TimeZoneInfoId:
+        format: int32
+        description: Numeric identifier of the location time zone.
+        type: integer
+      TimeZoneShortDescription:
+        description: Location time zone abbreviation.
+        type: string
+      TimeZoneMsName:
+        description: Location time zone Microsoft Name. e.g "Eastern Standard Time"
+        type: string
+      TimeZoneIanaName:
+        description: Location time zone Iana Name. e.g. "America/New_York"
+        type: string
+      TypeLabel:
+        description: '[Inventory location type](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/1209106525/Creating+Inventory+Locations?preview=%2F1209106525%2F1205830388%2FSupply-House-Type.png). Possible values: *Location*, *Warehouse*, *Supply House*, *Truck*.'
+        type: string
+      Supplier:
+        description: Supplier’s location name.
+        type: string
+      CountyId:
+        format: int32
+        description: County numeric identifier.
+        type: integer
+      Notes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.LocationNote.LocationNote'
+      TimeShiftToEST:
+        format: int32
+        type: integer
+      AddressTypeId:
+        format: int32
+        description: Address format pattern Id
+        type: integer
+      FormattedAddress:
+        type: string
+      LocationFormattedAddressTail:
+        type: string
+      IsInternational:
+        default: false
+        type: boolean
+        readOnly: true
+      Address:
+        type: string
+  ServiceChannel.Services.Messaging.Currencies.Currency:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      AlphabeticalCode:
+        type: string
+      DecimalCount:
+        format: int32
+        type: integer
+      Entity:
+        type: string
+      CurrencyName:
+        type: string
+      NumericCode:
+        type: string
+      Rate:
+        format: double
+        type: number
+  ServiceChannel.Services.Messaging.Users.LimitOptions:
+    description: Object for NTE, proposal, and invoice limits set for a subscriber user.
+    type: object
+    properties:
+      NteLimit:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.Limit'
+        description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
+      ProposalLimit:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.Limit'
+        description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
+      InvoiceLimit:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.Limit'
+        description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
+  ServiceChannel.Services.Messaging.Users.MlpUserInfo:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      MlpLevel:
+        type: string
+      MlpLocations:
+        type: array
+        items:
+          format: int32
+          type: integer
+  ServiceChannel.Services.Messaging.Subscribers.Subscriber:
+    required:
+    - Name
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      ShortName:
+        type: string
+      Email:
+        type: string
+      Users:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.User'
+      PrimaryCurrency:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Currencies.Currency'
+      IsOutsourcedWorkOn:
+        default: false
+        type: boolean
+      Name:
+        description: "Required Name\r\n            Name - name of the subscriber"
+        type: string
+      Address1:
+        description: Optional
+        type: string
+      Address2:
+        description: Optional
+        type: string
+      Country:
+        description: Optional
+        type: string
+      State:
+        description: Optional
+        type: string
+      City:
+        description: Optional
+        type: string
+      Zip:
+        description: Optional
+        type: string
+      Phone:
+        description: Optional
+        type: string
+      Fax:
+        description: Optional
+        type: string
+      ContactName:
+        description: Optional
+        type: string
+      TimeFormat:
+        type: string
+      DateFormat:
+        type: string
+      DecimalSeparator:
+        type: string
+  ServiceChannel.Services.Messaging.Users.AccessOptions:
+    description: Object listing locations, districts, regions, and trades a subscriber user has access to. Learn more about [granting access based on locations, districts, and regions](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/585107276/Location+District+Region+Access+Tab) in ServiceChannel University.
+    type: object
+    properties:
+      Locations:
+        description: Locations a user has access to.
+        type: array
+        items:
+          type: string
+      Districts:
+        description: Districts a user has access to.
+        type: array
+        items:
+          type: string
+      Regions:
+        description: Regions a user has access to.
+        type: array
+        items:
+          type: string
+      Trades:
+        description: Trades a user is permitted to work with.
+        type: array
+        items:
+          type: string
+  ServiceChannel.Services.Messaging.ProviderAssignments.ProviderAssignment:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Rank:
+        format: int32
+        type: integer
+      CreatedDate:
+        format: date-time
+        type: string
+      UpdatedDate:
+        format: date-time
+        type: string
+      Provider:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Providers.Provider'
+      Subscriber:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Subscribers.Subscriber'
+      Trade:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Trade.Trade'
+      Location:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.Location'
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

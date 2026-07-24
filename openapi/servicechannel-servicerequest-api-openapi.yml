@@ -1,0 +1,3872 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours ServiceRequest API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: ServiceRequest
+paths:
+  /servicerequest/providers:
+    get:
+      tags:
+      - ServiceRequest
+      summary: Get list of providers per service request
+      description: "Returns providers for specified location and trade or equipment. If no location, trade specified in request equipment values are used.\r\n            <br /><br />Available for provider and subscriber usage."
+      operationId: GETv3_servicerequest_providers?locationId={locationId}&tradeId={tradeId}&trade={trade}&equipmentType={equipmentType}&providerRank={providerRank}&equipmentId={equipmentId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: query
+        description: Location Id
+        required: false
+        type: integer
+        format: int32
+      - name: tradeId
+        in: query
+        description: Trade Id
+        required: false
+        type: integer
+        format: int32
+      - name: trade
+        in: query
+        description: Trade
+        required: false
+        type: string
+      - name: equipmentType
+        in: query
+        description: Equipment type
+        required: false
+        type: string
+      - name: providerRank
+        in: query
+        description: Sets default provider with specified rank
+        required: false
+        type: integer
+        format: int32
+      - name: equipmentId
+        in: query
+        description: Sets default provider for specified equipment id
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Providers.GetServiceRequestProvidersResponse'
+        '400':
+          description: Bad Request - the request could not be understood or was missing required parameters.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /subscribers/current/servicerequest/info:
+    get:
+      tags:
+      - ServiceRequest
+      summary: Get Service Request Info
+      description: "Retrieves supporting info for \"Create Work Order\" operation.\r\n            <br /><br />This method can only be used for subscriber's users that have assigned dashboard."
+      operationId: GETv3_subscribers_current_servicerequest_info?AreaName={AreaName}&ProblemType={ProblemType}&EquipmentType={EquipmentType}&ProblemCode={ProblemCode}&LocationId={LocationId}&SetupId={SetupId}&CallDate={CallDate}&Version={Version}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: areaName
+        in: query
+        description: Name of the area
+        required: false
+        type: string
+      - name: problemType
+        in: query
+        description: Problem type
+        required: false
+        type: string
+      - name: equipmentType
+        in: query
+        description: Equipment type
+        required: false
+        type: string
+      - name: problemCode
+        in: query
+        description: Problem name
+        required: false
+        type: string
+      - name: locationId
+        in: query
+        description: ID of a location
+        required: false
+        type: integer
+        format: int32
+      - name: setupId
+        in: query
+        description: SetupId
+        required: false
+        type: integer
+        format: int32
+      - name: callDate
+        in: query
+        description: Call Date
+        required: false
+        type: string
+        format: date-time
+      - name: version
+        in: query
+        required: false
+        type: string
+        enum:
+        - Undefined
+        - V1
+        - V2
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.GetServiceRequestInfoResponse'
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 917 - Invalid work order identifier. Returned if workorderId is &lt;= 0;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/servicerequest/info/nosettings:
+    get:
+      tags:
+      - ServiceRequest
+      summary: Get Service Request Info Without Dashboard Settings
+      description: "Retrieves supporting info for \"Create Work Order\" operation.\r\n            <br /><br />This method can only be used for subscriber's users that have assigned dashboard."
+      operationId: GETv3_subscribers_current_servicerequest_info_nosettings?AreaName={AreaName}&ProblemType={ProblemType}&EquipmentType={EquipmentType}&ProblemCode={ProblemCode}&LocationId={LocationId}&SetupId={SetupId}&CallDate={CallDate}&Version={Version}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: areaName
+        in: query
+        description: Name of the area
+        required: false
+        type: string
+      - name: problemType
+        in: query
+        description: Problem type
+        required: false
+        type: string
+      - name: equipmentType
+        in: query
+        description: Equipment type
+        required: false
+        type: string
+      - name: problemCode
+        in: query
+        description: Problem name
+        required: false
+        type: string
+      - name: locationId
+        in: query
+        description: ID of a location
+        required: false
+        type: integer
+        format: int32
+      - name: setupId
+        in: query
+        description: SetupId
+        required: false
+        type: integer
+        format: int32
+      - name: callDate
+        in: query
+        description: Call Date
+        required: false
+        type: string
+        format: date-time
+      - name: version
+        in: query
+        required: false
+        type: string
+        enum:
+        - Undefined
+        - V1
+        - V2
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.GetServiceRequestInfoResponse'
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 917 - Invalid work order identifier. Returned if workorderId is &lt;= 0;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/servicerequest/addresses:
+    get:
+      tags:
+      - ServiceRequest
+      summary: ''
+      operationId: GETv3_subscribers_current_servicerequest_addresses?SubscriberId={SubscriberId}&SetupId={SetupId}&LocationId={LocationId}&ProviderId={ProviderId}&Trade={Trade}&TradeId={TradeId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: subscriberId
+        in: query
+        required: true
+        type: integer
+        format: int32
+      - name: setupId
+        in: query
+        required: true
+        type: integer
+        format: int32
+      - name: locationId
+        in: query
+        required: true
+        type: integer
+        format: int32
+      - name: providerId
+        in: query
+        required: true
+        type: integer
+        format: int32
+      - name: trade
+        in: query
+        required: false
+        type: string
+      - name: tradeId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 503 - Request data is empty;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: Indicates that the requested resource does not exist on the server.
+      deprecated: false
+      x-access: Any
+  /providers/current/subscribers/{subscriberId}/applicationissuechoice/servicerequest/info:
+    get:
+      tags:
+      - ServiceRequest
+      operationId: GETv3_providers_current_subscribers_{subscriberId}_applicationissuechoice_servicerequest_info?AreaName={AreaName}&ProblemType={ProblemType}&EquipmentType={EquipmentType}&ProblemCode={ProblemCode}&LocationId={LocationId}&SetupId={SetupId}&CallDate={CallDate}&Version={Version}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: subscriberId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      - name: areaName
+        in: query
+        description: Name of the area
+        required: false
+        type: string
+      - name: problemType
+        in: query
+        description: Problem type
+        required: false
+        type: string
+      - name: equipmentType
+        in: query
+        description: Equipment type
+        required: false
+        type: string
+      - name: problemCode
+        in: query
+        description: Problem name
+        required: false
+        type: string
+      - name: locationId
+        in: query
+        description: ID of a location
+        required: false
+        type: integer
+        format: int32
+      - name: setupId
+        in: query
+        description: SetupId
+        required: false
+        type: integer
+        format: int32
+      - name: callDate
+        in: query
+        description: Call Date
+        required: false
+        type: string
+        format: date-time
+      - name: version
+        in: query
+        required: false
+        type: string
+        enum:
+        - Undefined
+        - V1
+        - V2
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.GetServiceRequestInfoRequest'
+        '400':
+          description: Bad Request - the request could not be understood or was missing required parameters.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Providers
+  /providers/current/subscriber/{subscriberId}/location/{locationId}/applicationissuechoice/servicerequest/info:
+    get:
+      tags:
+      - ServiceRequest
+      operationId: GETv3_providers_current_subscriber_{subscriberId}_location_{locationId}_applicationissuechoice_servicerequest_info
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: subscriberId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      - name: locationId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Providers
+  /subscribers/current/servicerequest/overrides/props:
+    post:
+      tags:
+      - ServiceRequest
+      summary: Get WorkOrder properties with overrides
+      operationId: POSTv3_subscribers_current_servicerequest_overrides_props
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: Properties request
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.GetWorkOrderPropertiesRequest'
+      responses:
+        '200':
+          description: WorkOrder properties with overrides are provided in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.RequestHandlers.WorkOrders.GetWorkOrderPropertiesWithOverridesResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 - Bad Request - validation fails"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /providers/current/subscribers/{subscriberId}/servicerequest/overrides/props:
+    post:
+      tags:
+      - ServiceRequest
+      summary: Get WorkOrder properties with overrides
+      operationId: POSTv3_providers_current_subscribers_{subscriberId}_servicerequest_overrides_props
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: subscriberId
+        in: path
+        description: Subscriber Id
+        required: true
+        type: integer
+        format: int32
+      - name: request
+        in: body
+        description: Properties request
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.GetWorkOrderPropertiesRequest'
+      responses:
+        '200':
+          description: WorkOrder properties with overrides are provided in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.RequestHandlers.WorkOrders.GetWorkOrderPropertiesWithOverridesResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 - Bad Request - validation fails"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Providers
+  /subscribers/current/servicerequest/duplicates/completed:
+    post:
+      tags:
+      - ServiceRequest
+      operationId: POSTv3_subscribers_current_servicerequest_duplicates_completed
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.Dashboard.Requests.GetWarningTicketsPagedRequest'
+      responses:
+        '200':
+          description: Completed duplicate work orders are provided in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Api.Model.Dashboard.WorkOrderViewModel'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/servicerequest/duplicates/open:
+    post:
+      tags:
+      - ServiceRequest
+      operationId: POSTv3_subscribers_current_servicerequest_duplicates_open
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.Dashboard.Requests.GetWarningTicketsPagedRequest'
+      responses:
+        '200':
+          description: Open duplicate work orders are provided in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Api.Model.Dashboard.WorkOrderViewModel'
+      deprecated: false
+      x-access: Subscribers
+definitions:
+  ServiceChannel.Services.Messaging.RefrigerantTracking.AssetRefrigerant:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      AssetId:
+        format: int32
+        type: integer
+      RefrigerantUsageType:
+        format: int32
+        type: integer
+      RackId:
+        type: string
+      RackEntityId:
+        format: int32
+        type: integer
+      CarbID:
+        type: string
+      IsCarbReporting:
+        default: false
+        type: boolean
+      SystemLocation:
+        format: byte
+        type: string
+      OperationalStatus:
+        format: byte
+        type: string
+      RefrigerantPartNumber:
+        type: string
+      PartNumberId:
+        format: int32
+        type: integer
+      RackTypeId:
+        format: int32
+        type: integer
+      CurrentCharge:
+        format: double
+        type: number
+      CurrentChargeMetrics:
+        format: double
+        type: number
+      CurrentChargeOunces:
+        format: double
+        type: number
+      ChargeDescriptionId:
+        format: int32
+        type: integer
+      ChargeProviderName:
+        type: string
+      EffectiveChargeDate:
+        format: date-time
+        type: string
+      RefrigerantChargeOptionId:
+        format: int32
+        type: integer
+      RackTypeName:
+        type: string
+      UserId:
+        format: int32
+        type: integer
+      TagId:
+        type: string
+      AssetTypeId:
+        format: int32
+        type: integer
+      RefrigerantPurposeId:
+        format: int32
+        type: integer
+      RefrigerantPurposeName:
+        type: string
+      ParentId:
+        format: int32
+        type: integer
+      CreateOperationalStatusHistory:
+        default: false
+        type: boolean
+      OperationStatusDate:
+        format: date-time
+        type: string
+      HasLeakDetector:
+        default: false
+        type: boolean
+      AssetLeakDetectorId:
+        format: int32
+        type: integer
+      InitialCharge:
+        default: false
+        type: boolean
+      RackType:
+        format: byte
+        type: string
+      NeedsRetrofitRetirement:
+        default: false
+        type: boolean
+      RequiresAutomaticLeakDetector:
+        default: false
+        type: boolean
+      ConnectedRackId:
+        format: int32
+        type: integer
+      PreviousConnectedRackId:
+        format: int32
+        type: integer
+      UpdatedDate:
+        format: date-time
+        type: string
+  ServiceChannel.Api.Model.Dashboard.WorkOrderFeedbackViewModel:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      TrackingNumber:
+        format: int32
+        type: integer
+      RateStars:
+        format: int32
+        type: integer
+      Description:
+        type: string
+      CreatedDate:
+        type: string
+      UserName:
+        type: string
+      ReviewedUser:
+        type: string
+      IsSelfReviewed:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Workorders.GetServiceRequestInfoRequest:
+    type: object
+    properties:
+      AreaName:
+        description: Name of the area
+        type: string
+      ProblemType:
+        description: Problem type
+        type: string
+      EquipmentType:
+        description: Equipment type
+        type: string
+      ProblemCode:
+        description: Problem name
+        type: string
+      LocationId:
+        format: int32
+        description: ID of a location
+        type: integer
+      SetupId:
+        format: int32
+        description: SetupId
+        type: integer
+      CallDate:
+        format: date-time
+        description: Call Date
+        type: string
+      Version:
+        enum:
+        - Undefined
+        - V1
+        - V2
+        type: string
+  ServiceChannel.Services.Messaging.IssueLists.DecisionModelResponse:
+    description: Decision Model
+    type: object
+    properties:
+      OptionValue:
+        description: OptionValue
+        type: string
+      NextQuestion:
+        description: NextQuestion
+        type: string
+      OriginalNextQuestion:
+        description: Original NextQuestion
+        type: string
+        readOnly: true
+      TradeOverride:
+        description: TradeOverride
+        type: string
+      CategoryOverride:
+        description: CategoryOverride
+        type: string
+      PriorityOverride:
+        description: PriorityOverride
+        type: string
+      NTEOverride:
+        description: NTEOverride
+        type: string
+      ProviderRankOverride:
+        description: ProviderRankOverride
+        type: string
+      WoLabelOverride:
+        description: WoLabelOverride
+        type: string
+      EtcOverride:
+        description: EtcOverride
+        type: string
+  ServiceChannel.Services.Messaging.Assets.Warranty:
+    description: Object containing warranty parameters.
+    type: object
+    properties:
+      ExpirationDate:
+        format: date-time
+        description: Warranty expiration date based on the warranty expiration settings.
+        type: string
+      ProviderId:
+        format: int32
+        description: ID of a provider who is in charge of warranty services.
+        type: integer
+      NTE:
+        format: double
+        description: Maximum amount of money to be spent on warranty services in USD. Value -1  means that the amount is not applicable.
+        type: number
+      Priority:
+        description: Defines how quickly warranty services should be provided, for example, *Emergency-4 Hours*, *Normal-48 Hours*, *7 Days*.
+        type: string
+      PriorityId:
+        format: int32
+        type: integer
+      Category:
+        description: Warranty category, for example, *ADVISE ONLY*, *REPAIR*, *DISASTER*.
+        type: string
+      CategoryId:
+        format: int32
+        type: integer
+      Provider:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.WarrantyProvider'
+        description: Rules to choose Warranty Provider
+      Expiration:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.WarrantyExpiration'
+        description: Rules for Warranty Expiration
+  ServiceChannel.Api.Model.Workorders.OverrideProperties.Trade:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+  ServiceChannel.Services.Messaging.Providers.ServiceRequestProvider:
+    type: object
+    properties:
+      Rank:
+        format: int32
+        description: Rank
+        type: integer
+      Category:
+        description: Category
+        type: string
+      Priority:
+        description: Priority
+        type: string
+      Nte:
+        format: double
+        description: Nte
+        type: number
+      GeneralEmail:
+        description: General Email
+        type: string
+      IsDefault:
+        description: Is Default
+        default: false
+        type: boolean
+      ServiceRequestEmails:
+        description: ServiceRequestEmails
+        type: string
+      Phone:
+        type: string
+      FullName:
+        description: Full Name
+        type: string
+      Address1:
+        description: Address1
+        type: string
+      Address2:
+        description: Adress2
+        type: string
+      City:
+        description: City
+        type: string
+      State:
+        description: State
+        type: string
+      Zip:
+        description: Zip
+        type: string
+      Country:
+        description: Country
+        type: string
+      MainContact:
+        description: Main Contact
+        type: string
+      DateCreated:
+        format: date-time
+        description: Date Created
+        type: string
+      LastUserDate:
+        description: Last User Date
+        type: string
+      SuperUser:
+        description: SuperUser
+        type: string
+      WebSite:
+        description: WebSite
+        type: string
+      Email:
+        description: Email
+        type: string
+      TaxId:
+        description: Tax Id
+        type: string
+      Trade:
+        description: Trade
+        type: string
+      ProcessingEmail:
+        description: Processing Email
+        type: string
+      FaxNumber:
+        description: Fax Number
+        type: string
+      SuiteFloor:
+        description: Suite Floor
+        type: string
+      MailInfo:
+        description: Mail Info
+        type: string
+      ImageFile:
+        description: Image File
+        type: string
+      ReturnMail:
+        description: Return Mail
+        type: string
+      MailFrequency:
+        format: int32
+        description: Mail Frequency
+        type: integer
+      FormId:
+        format: int32
+        description: Form Id
+        type: integer
+      Pager:
+        description: Pager
+        type: string
+      NightRequest:
+        format: int32
+        description: NightRequest
+        type: integer
+      ShortFormatEmail:
+        description: Short Format Email
+        type: string
+      LastTrainingDate:
+        format: date-time
+        description: Last Training Date
+        type: string
+      LastTrainingDateStr:
+        description: Last Training Date as a string
+        type: string
+      IsInternal:
+        description: Is Internal
+        default: false
+        type: boolean
+      IsOnOffShoreFeatureEnabled:
+        description: Is OnOffShoreFeature Enabled
+        default: false
+        type: boolean
+      Id:
+        format: int32
+        description: Id
+        type: integer
+      Name:
+        description: Name
+        type: string
+      DoNotDispatch:
+        description: DoNotDispatch enabled?
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Workorders.GetWorkOrderPropertiesRequest:
+    type: object
+    properties:
+      AreaName:
+        description: Name of the area
+        type: string
+      ProblemType:
+        description: Problem type
+        type: string
+      EquipmentType:
+        description: Equipment type
+        type: string
+      ProblemCode:
+        description: Problem name
+        type: string
+      LocationId:
+        format: int32
+        description: ID of a location
+        type: integer
+      SetupId:
+        format: int32
+        description: SetupId
+        type: integer
+      AssetId:
+        format: int32
+        description: Id of an Asset
+        type: integer
+      DecisionAnswers:
+        description: DescisionTree answers made by the user
+        type: array
+        items:
+          $ref: '#/definitions/DecisionAnswer'
+      CorrelationId:
+        description: Key to find the selected issue choice
+        type: string
+  ServiceChannel.Services.Messaging.DashboardSettings.SetupRequestResponse:
+    type: object
+    properties:
+      SetupId:
+        format: int32
+        description: Store Dashboard Setup ID.
+        type: integer
+      EnableRequestWizard:
+        description: This flag enables/disables request wizard for the dashboard.
+        default: false
+        type: boolean
+      ShowPrivateStoreNotes:
+        description: Show/hide private store notes in the 'location notes' field on the first step of the service request wizard page.
+        default: false
+        type: boolean
+      ShowProviderPhoneNumber:
+        description: Show/hide provider phone number on the confirmation step after an issue has been submitted.
+        default: false
+        type: boolean
+      ShowLastServiceCall:
+        description: Show last service call and last description in the body of alert email.
+        default: false
+        type: boolean
+      SetOriginalVendorForRecalls:
+        description: This option controls whether original vendor is assigned to the work order in case of a recall.
+        default: false
+        type: boolean
+      NteToZeroForRecalls:
+        description: Set NTE to zero if a new service request is marked as a recall.
+        default: false
+        type: boolean
+      SendAlertToFM:
+        description: This flag controls whether service request email will be sent to the facility managers or not.
+        default: false
+        type: boolean
+      TurnOffDescription:
+        description: Show/hide problem description field.
+        default: false
+        type: boolean
+      DaysOfHistoryToDisplay:
+        format: int32
+        description: How many days of work order history to display on the dublicates warning report.
+        type: integer
+      ShowStoreWarrantyStr:
+        description: "There are three possible options: 1) 'none' hides a StoreWarrantyMessage on the first step of the Request Wizard;\r\n            2) 'show' shows a StoreWarrantyMessage on the first step of the Request Wizard;\r\n            3) 'stop' shows a StoreWarrantyMessage without a possibility to move to the next step."
+        type: string
+      StoreWarrantyMessage:
+        description: A store warranty message to show on the first step of the request wizard page.
+        type: string
+      ConfirmationMessage:
+        description: This message is shown on the confirmation page after the user submits their request.
+        type: string
+      ProviderNotFoundMessage:
+        description: An error message to show when provider is not found for the specified issue choice.
+        type: string
+      EnableEquipment:
+        description: Show equipment
+        default: false
+        type: boolean
+      DuplicateFilters:
+        type: array
+        items:
+          type: string
+      ExcludedCategoriesOpenDup:
+        type: array
+        items:
+          type: string
+      ExcludedCategoriesClosedDup:
+        type: array
+        items:
+          type: string
+      ExcludedStatuses:
+        type: array
+        items:
+          type: string
+      ExcludedTradesOpenDup:
+        type: array
+        items:
+          type: string
+      EnableEquipmentReplacementFlag:
+        default: false
+        type: boolean
+      EnableRequestWizardMobile:
+        description: This flag enables/disables request wizard for the SC Mobile.
+        default: false
+        type: boolean
+      EnableLocationNotes:
+        default: false
+        type: boolean
+      AlwaysShowLocationNotes:
+        default: false
+        type: boolean
+      SkipTroubleshootingStep:
+        default: false
+        type: boolean
+      HidePriority:
+        default: false
+        type: boolean
+      EnableIssueListKeywordSearch:
+        description: "This flag enables/disables the keyword search functionality on the request wizard.\r\n            When enabled, users can type keywords to more quickly identify issue list selections."
+        default: false
+        type: boolean
+      HideGPSRadius:
+        default: false
+        type: boolean
+      AssetFirstWorkOrderCreation:
+        description: Enables asset-first approach for work order creation.
+        default: false
+        type: boolean
+      EnableEquipmentReplacement:
+        default: false
+        type: boolean
+      AssetNotListedFlag:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.DashboardSettings.SetupRequestConfirmResponse:
+    type: object
+    properties:
+      ChangeableCategory:
+        default: false
+        type: boolean
+      ChangeablePriority:
+        default: false
+        type: boolean
+      ChangeablePrioritySetDefault:
+        default: false
+        type: boolean
+      ChangeableNte:
+        default: false
+        type: boolean
+      AllowChangeableCurrency:
+        default: false
+        type: boolean
+      ChangeableScheduledDate:
+        default: false
+        type: boolean
+      ChangeableProvider:
+        default: false
+        type: boolean
+      EnableAdditionalCodes:
+        default: false
+        type: boolean
+      ChangeableGlCode:
+        default: false
+        type: boolean
+      CreateLinkedRequest:
+        default: false
+        type: boolean
+      AvoidDispatching:
+        default: false
+        type: boolean
+      ShowRecipients:
+        default: false
+        type: boolean
+      AddCopyRecipient:
+        default: false
+        type: boolean
+      DeleteCopyRecipients:
+        default: false
+        type: boolean
+      EmptyProviderEmailNotification:
+        default: false
+        type: boolean
+      EnablePO:
+        default: false
+        type: boolean
+      RequirePO:
+        default: false
+        type: boolean
+      EnableWO:
+        default: false
+        type: boolean
+      EnableLabels:
+        default: false
+        type: boolean
+      LabelsAsSelectOnly:
+        default: false
+        type: boolean
+      EditWeatherType:
+        default: false
+        type: boolean
+      MaintainOrDecreasePriority:
+        default: false
+        type: boolean
+      DisplayAssignedTechnician:
+        default: false
+        type: boolean
+      ChangeableProjectedCompletionDate:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Category.CategoryResponse:
+    description: Object containing the details of the available categories.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Category ID.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique numeric subscriber ID.
+        type: integer
+      Name:
+        description: Category name.
+        type: string
+      HasDependency:
+        description: Parameter is not populated. The only value is "false".
+        default: false
+        type: boolean
+      PrimaryCategoryID:
+        format: int32
+        description: Primary category ID.
+        type: integer
+      PrimaryCategoryName:
+        description: Primary category name.
+        type: string
+  System.Web.HtmlString:
+    type: object
+    properties: {}
+  ServiceChannel.Services.Messaging.Workorders.Dashboard.Requests.GetWarningTicketsPagedRequest:
+    type: object
+    properties:
+      LocationId:
+        format: int32
+        type: integer
+      SetupId:
+        format: int32
+        type: integer
+      AreaId:
+        format: int32
+        type: integer
+      ProblemType:
+        type: string
+      EquipmentType:
+        type: string
+      ProblemCode:
+        type: string
+      TradeId:
+        format: int32
+        type: integer
+      HideTroubleShooting:
+        default: false
+        type: boolean
+      DaysOfHistoryToDisplay:
+        format: int32
+        type: integer
+      SortBy:
+        type: string
+      PageIndex:
+        format: int32
+        type: integer
+      PageSize:
+        format: int32
+        type: integer
+      AscendingOrder:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Assets.WarrantyProvider:
+    description: Object containing warranty provider details.
+    type: object
+    properties:
+      Type:
+        description: 'Defines the provider type responsible for warranty services. **Possible values**: `0` - Fixed provider, `1`- Primary rank provider, `2` - Fixed rank provider.'
+        enum:
+        - Fixed
+        - PrimaryRanked
+        - FixedRanked
+        type: string
+      Value:
+        format: int32
+        description: Provider type value. Displays provider ID for the fixed provider type; provider rank number — from 1 to 100 — for the fixed rank type; 1 for a primary rank provider.
+        type: integer
+      ProviderName:
+        description: Name of the provider who is in charge of warranty services.
+        type: string
+  ServiceChannel.Api.Model.Dashboard.Assets.Asset:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      TagID:
+        type: string
+      Manufacturer:
+        type: string
+      ModelNo:
+        type: string
+      SerialNo:
+        type: string
+      Location:
+        type: string
+      WarrantyExpirationDate:
+        type: string
+      WarrantyCategory:
+        type: string
+      Nte:
+        format: double
+        type: number
+      WarrantyPriority:
+        type: string
+      WarrantyNTEHidden:
+        default: false
+        type: boolean
+      WarrantyNotExpired:
+        default: false
+        type: boolean
+      Type:
+        type: string
+      AssetTag:
+        type: string
+      Description:
+        type: string
+      StoreId:
+        type: string
+  ServiceChannel.Api.Model.Workorders.OverrideProperties.Category:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+  ServiceChannel.Services.Messaging.Currencies.Currency:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      AlphabeticalCode:
+        type: string
+      DecimalCount:
+        format: int32
+        type: integer
+      Entity:
+        type: string
+      CurrencyName:
+        type: string
+      NumericCode:
+        type: string
+      Rate:
+        format: double
+        type: number
+  ServiceChannel.Api.Model.Dashboard.WorkOrderViewModel:
+    type: object
+    properties:
+      TrackingNumber:
+        format: int32
+        type: integer
+      Caller:
+        type: string
+      CreatedBy:
+        type: string
+      Area:
+        type: string
+      Age:
+        type: string
+        readOnly: true
+      AgeValue:
+        format: int32
+        type: integer
+        readOnly: true
+      CallDate:
+        format: date-time
+        type: string
+      PrioritySub:
+        type: string
+      Provider:
+        $ref: '#/definitions/ServiceChannel.Data.Provider'
+      Vendor:
+        type: string
+      VendorPhone:
+        type: string
+      Trade:
+        type: string
+      ScheduledDate:
+        format: date-time
+        type: string
+      ScheduledDateISO:
+        type: string
+      ScheduledDateString:
+        type: string
+      CompletedDate:
+        format: date-time
+        type: string
+      CompletedDateISO:
+        type: string
+      StatusText:
+        type: string
+      Status:
+        enum:
+        - Open
+        - InProgress
+        - Completed
+        - Confirmed
+        - PartsOnOrder
+        - Void
+        - Empty
+        type: string
+        readOnly: true
+      StatusExtText:
+        type: string
+      FixedStatusName:
+        type: string
+        readOnly: true
+      StatusToShow:
+        type: string
+        readOnly: true
+      HasAttachments:
+        default: false
+        type: boolean
+      NumberOfAttachments:
+        format: int32
+        type: integer
+      NumberOfOwnAttachments:
+        format: int32
+        type: integer
+      Description:
+        type: string
+      DescriptionWithStatus:
+        type: string
+      DescriptionWithStatusHtml:
+        $ref: '#/definitions/System.Web.HtmlString'
+        readOnly: true
+      LastNoteText:
+        type: string
+      LastNoteDate:
+        format: date-time
+        type: string
+      LastNoteDateString:
+        type: string
+      LastNotePage:
+        type: string
+      Category:
+        type: string
+      Nte:
+        format: double
+        type: number
+      NotesCount:
+        format: int32
+        type: integer
+      CurrencyCode:
+        type: string
+      ProblemCode:
+        type: string
+      InvoiceNumber:
+        type: string
+      Resolution:
+        type: string
+      ProblemType:
+        type: string
+      Equipment:
+        type: string
+      EquipmentId:
+        format: int32
+        type: integer
+      StoreId:
+        type: string
+      StoreName:
+        type: string
+      LastFeedBackDate:
+        format: date-time
+        type: string
+      FeedBackNotification:
+        default: false
+        type: boolean
+      LinkedWOs:
+        type: string
+      LinkedInWOs:
+        type: string
+      PrimaryCategoryId:
+        format: int32
+        type: integer
+      WorkDate:
+        format: date-time
+        type: string
+      WorkDateStamp:
+        format: int64
+        type: integer
+        readOnly: true
+      PostedId:
+        format: int32
+        type: integer
+      ExpirationDate:
+        format: date-time
+        type: string
+      Feedback:
+        $ref: '#/definitions/ServiceChannel.Api.Model.Dashboard.WorkOrderFeedbackViewModel'
+      UserId:
+        type: string
+      DescriptionWithHighlightedIssueChoice:
+        type: string
+      ShowTimeTracker:
+        default: false
+        type: boolean
+      IconClass:
+        type: string
+      PlannedMaintenanceServiceId:
+        format: int32
+        type: integer
+      TimeZone:
+        type: string
+      IanaTimeZone:
+        type: string
+      CallDateISO:
+        type: string
+  ServiceChannel.Data.Provider:
+    type: object
+    properties:
+      ID:
+        format: int32
+        type: integer
+      ShortName:
+        type: string
+      FullName:
+        type: string
+      Address1:
+        type: string
+      Address2:
+        type: string
+      City:
+        type: string
+      State:
+        type: string
+      Zip:
+        type: string
+      Country:
+        type: string
+      WebSite:
+        type: string
+      Email:
+        type: string
+      PhoneNumber:
+        type: string
+      ProcEmail:
+        type: string
+      FaxNumber:
+        type: string
+      Pager:
+        type: string
+      Rank:
+        format: int32
+        type: integer
+      SpecificCategory:
+        type: string
+      SpecificPriority:
+        type: string
+      SpecificNte:
+        format: double
+        type: number
+      GeneralEmail:
+        type: string
+      DoNotDispatch:
+        default: false
+        type: boolean
+      IsInternal:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Assets.AssetsInfoResponse:
+    type: object
+    properties:
+      Assets:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetResponse'
+      AssetRequired:
+        default: false
+        type: boolean
+      AssetEntry:
+        type: string
+  DecisionAnswer:
+    type: object
+    properties:
+      Id:
+        type: string
+      Answer:
+        type: string
+  ServiceChannel.Services.Messaging.ErrorResponse:
+    description: The error response object
+    type: object
+    properties:
+      ErrorCodes:
+        description: The list of error codes. Go to /basics/general/response-codes/#internal-error-codes-and-messages to map error codes to error reasons.
+        type: array
+        items:
+          enum:
+          - NotAllowed
+          - EmptyProvider
+          - InvalidProviderId
+          - UnknownProvider
+          - ProviderAlreadyExists
+          - ProviderIdNotExists
+          - TimeoutExpiredError
+          - EmptyContract
+          - ContractUndefined
+          - EmptySubscriber
+          - InvalidSubscriberId
+          - UnknownSubscriber
+          - InactiveSubscriber
+          - EmptySubscriberId
+          - SubscriberIdNotExists
+          - InternalError
+          - DataNotFound
+          - BadRequest
+          - UnAuthorized
+          - UnSupportedApplication
+          - SubsidiaryUserDisabled
+          - EmptyLocation
+          - InvalidLocationId
+          - UnknownLocation
+          - LocationNotBelongsToSubscriber
+          - EmptyLocationCountry
+          - LocationAlreadyExists
+          - InvalidStoreId
+          - LocationEmptyState
+          - NoAccessToLocation
+          - LocationAddressValidationError
+          - LocationAddressRequestValidationError
+          - InvalidLocationNoteHeader
+          - NoAccessToUpdateProtectedNote
+          - InvalidBusinessHoursFormat
+          - WorkingHoursIntersect
+          - InvalidDayOfWeek
+          - DuplicateDayOfWeek
+          - InvalidBusinessHoursInitialSetup
+          - BusinessHoursIsEmpty
+          - InvalidHolidayRepeatByType
+          - EmptyHolidayListOfDays
+          - EmptyHolidayListOfMonths
+          - InvalidHolidayMonthName
+          - InvalidHolidayNameLength
+          - InvalidHolidayRepeatEvery
+          - DuplicateMonth
+          - InvalidHolidayFrequency
+          - InvalidHolidayStartDate
+          - InvalidCloseAllDay
+          - HolidayDoesNotExist
+          - InvalidFormatParameter
+          - InvalidLocationCity
+          - InvalidLocationZip
+          - InvalidLocationLatitude
+          - InvalidLocationLongitude
+          - InvalidLocationEmail
+          - InvalidLocationName
+          - InvalidLocationState
+          - InvalidLocationAddlAddress
+          - InvalidLocationMainAddress
+          - InvalidLocationCountry
+          - InvalidLocationRegion
+          - InvalidLocationDistrict
+          - InvalidLocationPhone
+          - InvalidLocationContact
+          - InvalidLocationFaxNumber
+          - LocationCountryNotFound
+          - LocationStateNotFound
+          - LocationCityNotFound
+          - LocationIdNotExists
+          - InvalidLocationEmailLength
+          - LocationStateIdNotFound
+          - IncorrectCombinationStateAndStateId
+          - InvalidSubscriberIds
+          - InvalidLocalizationSettings
+          - LandlordResponsibilityNotFound
+          - LandlordResponsibilityAlreadyExists
+          - EmptyLocationIds
+          - AttachmentNotExist
+          - InvalidTradeId
+          - InvalidCategoryId
+          - InvalidOverrideCategoryId
+          - InvalidOverridePriorityId
+          - LeaseNoteExceedMaxLength
+          - InvalidOverrideProviderRank
+          - InvalidOverrideNTE
+          - DuplicateRows
+          - InvalidPriorityId
+          - LocationNotFound
+          - EmptyTrade
+          - InvalidTrade
+          - TradeNotBelongsToSubscriber
+          - InvalidPrimaryTrade
+          - InvalidTradeForSubscriber
+          - InvalidCategoryForSubscriber
+          - GlCodeAlreadyExists
+          - GlCodeNotExists
+          - InvalidGlCodeUpdate
+          - EmptyGlCode
+          - TradeAlreadyExists
+          - InvalidNTETrade
+          - TradeNotExists
+          - TradeAlreadyInUse
+          - TradeWithTheSameNameHasBeenDeleted
+          - TradeInUsePMServices
+          - TradeInUseProposalError
+          - TradeInUseRFPError
+          - TradeInUseChecklistError
+          - TradeInUseBudgetControl
+          - TradeInUseGlCode
+          - TradeInUseDynamicProviderAssignments
+          - TradeInUseInvoice
+          - TradeInUseLandlordResponsibilities
+          - TradeInUseWO
+          - TradeInUseEquipmentType
+          - TradeInUseRFP
+          - TradeInUseConnector
+          - TradeInUseContractedService
+          - TradeInUseIVR
+          - TradeInUseSiteAccess
+          - TradeInUseGLCodes
+          - TradeInUseCIWO
+          - TradeInUseOrganizationPermissions
+          - TradeСreationError
+          - EmptyUser
+          - EmptyCreatedBy
+          - InvalidUserName
+          - NotProviderUser
+          - UserHasNoPermissions
+          - RestrictedAccount
+          - UserAlreadyExists
+          - UserHasNoPermissionsEditWO
+          - UserEmailAddressIsMissing
+          - UserIsNotRTAdmin
+          - InvalidSubsriberProviderId
+          - LanguageNameNotFound
+          - InvalidLanguageId
+          - LanguageIdNotFound
+          - UseBothSubscriberIdProviderId
+          - EmptyWoProblem
+          - InvalidWoProblemSource
+          - InvalidWoProblemDescription
+          - InvalidWoProblemCode
+          - InvalidWoStatus
+          - InvalidWoNte
+          - InvalidWoCaller
+          - InvalidWoCallDate
+          - InvalidWoScheduledDate
+          - InvalidWoScheduledDateGreaterThanMaxAllowed
+          - EmptyWoCategory
+          - InvalidWoCategory
+          - EmptyWoPriority
+          - InvalidWoPriority
+          - InvalidWoCurrency
+          - InvalidWoSetupId
+          - AttachmentsRequired
+          - InvalidWoIdentifier
+          - EquipmentRequired
+          - WoNteOverflow
+          - InvalidWoPurchaseNumber
+          - InvalidWoStateForUpdate
+          - InvalidPagingParameter
+          - InvalidWoNumber
+          - CheckInDenied
+          - CheckOutDenied
+          - WoScheduledDateLessThenReassignDate
+          - WoScheduledDateLessThenCallDate
+          - InvalidWoActionReason
+          - EmptySubscriberProperty
+          - WorkOrderUpdateError
+          - MissedWoNteDetails
+          - InvalidLinkedWoIdentifier
+          - WoIsOnHold
+          - InvalidWoTrade
+          - InvalidStarScore
+          - WorkOrderAlreadyRated
+          - AttachmentThumbnailNotAvailable
+          - InvalidWoIdentifierOrPin
+          - InvalidTimeZoneHeader
+          - RefrigerantWasUsedShouldBeYesOrNo
+          - CheckInDeniedOutsideGeolocation
+          - CheckOutDeniedOutsideGeolocation
+          - LeakDetectorAuditShouldBeCreated
+          - CheckInOutPremature
+          - WorkOrderAttachmentsSizeExceeded
+          - WorkOrderNotFound
+          - WorkOrderCreateError
+          - InvalidWoProjectedCompletionDate
+          - InvalidFollowUpWo
+          - InvalidWeatherEventId
+          - InvalidSiteAuditLinkedWo
+          - InvalidSetupId
+          - IssueListNotFound
+          - InvalidIssueListField
+          - SiteAuditCompleted
+          - CheckSiteAuditError
+          - SaveSiteAuditError
+          - RemoveSiteAuditError
+          - InactiveTemplateType
+          - SiteAuditNotFound
+          - SiteAuditUpdateError
+          - InvalidSiteAuditParameters
+          - InvalidAdditionalApprovalCode
+          - InvalidAdditionalApprovalCodeValue
+          - AdditionalApprovalCodeIsDisabled
+          - InvalidOtherDesc
+          - InvalidTax2Name
+          - InvoiceInconsistentAmounts
+          - InvoiceInvalidTotal
+          - InvoiceTotalGreaterNte
+          - InvoiceExists
+          - CreatingInvoiceError
+          - DuplInvNumber
+          - InvoiceTotalNull
+          - InvComplDateNull
+          - InvDateLessComplDate
+          - InvoiceNotAuto
+          - ESignatureRequired
+          - InvWoNotFound
+          - InvWrongWoCurr
+          - InvWoCurrNotFound
+          - InvoicingDisabled
+          - InvCreationUnexpectedRes
+          - InvoiceInvalidLaborAmount
+          - InvoiceInvalidMaterialAmount
+          - InvDateOld
+          - InvDateGreater
+          - InvoiceMaterialDescriptionLengthOverflow
+          - InvoiceTaxNotValidated
+          - InvoiceMaterialPartNumberLengthOverflow
+          - TaxValidationError
+          - TaxExemptionError
+          - InvalidInvoiceNumber
+          - GetApprovalLevelsError
+          - InvoiceAddUsersToMliLevelsError
+          - InvoiceAddDeleteLocationsToMliLevelUserError
+          - InvoiceUpdateMLiLevelError
+          - InvoiceDeleteMliLevelError
+          - InvoiceDeleteUsersFromMliLevelError
+          - ApprovalLevelNameLengthOverflow
+          - GstTaxError
+          - Tax2Error
+          - GetApprovalLevelsAndLocationsByUserError
+          - GetAssignedUserShortInfoError
+          - AssignAllLocationsToApprovalLevelAndUserError
+          - GetLocationsForApprovalLevelAndAssignedUserError
+          - GetLocationsBySubscriberError
+          - AssignUserWithLocationsToApprovalLevelError
+          - ReAssignUserWithLocationsToNewApprovalLevelError
+          - ReAssignLocationsToApprovalLevelAndUserError
+          - OutstandingBalance
+          - InvoiceTaxDetailsEmpty
+          - InvoiceTaxDetailsIncorrectSum
+          - MultipleUsersForLocationIsNotAllowed
+          - UserAssignedToOtherLevel
+          - UserDoesNotExist
+          - LaborLineItemRequired
+          - MaterialLineItemRequired
+          - InvoiceDoesntExist
+          - InvoiceStarUnstarFailed
+          - InvoiceBatchUpdateInvalidInvoiceStatusError
+          - InvoiceBatchUpdateLimitExceededError
+          - InvoiceNotAvailableForCurrentUser
+          - InvoiceBatchUpdateInvalidRuleSetStructure
+          - InvoiceBatchUpdateInvalidMliStructure
+          - InvoiceBatchUpdateStatusError
+          - InvoiceMaterialUnitTypeInvalid
+          - ExistingBatchNumber
+          - InvoiceResolutionTextRequired
+          - GetInvoiceDefaultApprovalCodesError
+          - InvoiceInvalidTravelAmount
+          - InvoiceTravelDescriptionLengthOverflow
+          - InvoiceTravelUnitTypeInvalid
+          - TravelLineItemRequired
+          - TravelDetailsDisabled
+          - OnOffShoreDisabled
+          - InvoiceInvalidLaborCount
+          - InvoiceInvalidMaterialCount
+          - InvoiceInvalidTravelCount
+          - SubscriberNotRegisteredForTaxValidation
+          - ManyDecimalsInAmountError
+          - DecimalPartQstTaxError
+          - LaborRatesDiscrepancy
+          - PayInvoicesError
+          - InvoiceNumberRequirementsError
+          - InvoiceNumberIncorrect
+          - InvoiceNumberRegExPatternError
+          - GetInvoicesPendingApprovalByLocationError
+          - ReAssignInvoicesToUsersFailed
+          - ReAssignInvoicesUsersMatched
+          - GetUsersForReassignInvoiceError
+          - InvalidTimeRangeActivity
+          - OutsourcedSourceInvoiceNotFound
+          - OthersLineItemsDisabled
+          - InvoiceInvalidOtherAmount
+          - InvoiceInvalidOtherCount
+          - InvoiceOtherDescriptionLengthOverflow
+          - OtherLineItemRequired
+          - OtherLineItemsNotNegativeValueRequired
+          - InvalidLaborSkillLevel
+          - InvalidLaborType
+          - InvalidTechnicianQuantity
+          - GetInvoicesCommonCategoriesError
+          - InvoiceExplainDisputeEmpty
+          - InvoiceAdditionalApprovalCodeHeaderError
+          - TemplateParseSuccess
+          - TemplateIncorrectHeaderError
+          - TemplateEmptyTemplateError
+          - TemplateWrongFieldsCountError
+          - TemplateFieldNotFoundError
+          - TemplateFieldRequiredError
+          - TemplateParseIntError
+          - TemplateFieldSizeError
+          - TemplateInvalidValueError
+          - TemplateFieldFormatError
+          - TemplateFieldMaxRangeError
+          - TemplateFieldMinRangeError
+          - TemplateProviderNotEntered
+          - TemplateInvalidSubscriberError
+          - TemplateVendorNotFoundError
+          - TemplateMissedProviderError
+          - TemplateProviderNotFoundError
+          - TemplateProviderSubsccriberLinkError
+          - TemplateTradeDispatchRankError
+          - TemplateInvalidTradeForSubscriberError
+          - TemplateStoreNotFoundError
+          - TemplateNotStoresForStateError
+          - TemplateNotStoresForCountryError
+          - TemplateNotStoresForDistrictError
+          - TemplateNotStoresForRegionError
+          - TemplateMultiplePimaryProvidersForTradeStoreError
+          - TemplateDuplicatePrimaryRelationshipError
+          - TemplateAmbiguousDataError
+          - TemplateIncorrectSubscriber
+          - TemplateDuplicateRanking
+          - TemplateLongitudeRangeError
+          - TemplateLatitudeRangeError
+          - InvoiceMaterialPartNameLengthOverflow
+          - TemplateTradeLocationExclusion
+          - TemplateInvalidStateError
+          - TemplateMissedSubscriberError
+          - TemplateMissedStoreIdError
+          - TemplateInvalidSubscriberIdError
+          - TemplateOpenCloseDateError
+          - TemplateInvalidCountryError
+          - TemplateInvalidStateForCountryError
+          - TemplateInvalidLocationTypeError
+          - TemplateMissingFullAndShortNameError
+          - TemplateMissingCountryError
+          - TemplateDuplicatedDataError
+          - TemplateParentLocationNotFoundError
+          - TemplateParseDateTimeError
+          - TemplateParseDecimalError
+          - TemplateSquareValueRangeError
+          - TemplateInvalidSquareMeasureError
+          - TemplateTypeLabelCanNotBeUpdatedError
+          - TemplateTypeLabelHaveToBeLocationForNotInventory
+          - TemplateInvalidPrimarySupplyLocation
+          - TemplateInvalidHomestoreLocationNumber
+          - TemplateErrorDuringCreation
+          - TemplateLocationNotFoundError
+          - TemplateDuplicatedLocationFoundError
+          - TemplateInvalidLocationHeaderError
+          - TemplateDuplicatedLocationHeaderError
+          - TemplateHeaderContainsEmptyFieldsError
+          - TemplateLocHeadersShortHeaderError
+          - TemplateHeaderContainsDuplicatesError
+          - TemplateLocationNotesStoreIdFieldLengthError
+          - TemplateLocationNotesNoteValueFieldLengthError
+          - TemplateErrorInvalidZipCode
+          - TemplateMissingLocationNoteHeader
+          - TemplateMissingLocationNoteIdHeader
+          - TemplateInvalidSecondarySupplyLocation
+          - TemplateLocationWasNotCreated
+          - TemplateTruckNameIsEmpty
+          - TemplateWrongFormat
+          - TemplateSubscriberNotFound
+          - TemplateDuplicatedLocationHeaders
+          - TemplateInvalidHeaders
+          - TemplateInvalidPhoneError
+          - TemplateDuplicateTelecomRecordError
+          - TemplateTelecomRecordExistsError
+          - TemplateInvalidCategory
+          - TemplateDifferentRanksForProviderAssignments
+          - TemplateDuplicateRankError
+          - TemplateProviderNonCompliant
+          - TemplateLocationIsClosed
+          - TemplateProviderWarning
+          - TemplateMultipleProvidersForTradeStoreError
+          - EmptyRequest
+          - InvalidNumberOfParameters
+          - InvoiceOtherUnitTypeInvalid
+          - EmptyLocationOrTradeList
+          - RequestSubscriberIdDoesntMatchUserSubscriberId
+          - StoreIdRequiredError
+          - InvalidUserIdError
+          - InvalidStoreIdError
+          - AmbigiousError
+          - MliHierarchyFiledsCountError
+          - MliHierarchyMaxUserNameError
+          - MliHierarchyDuplicateUserError
+          - MLiHirarchyUserExistInOtherLevelError
+          - MissingLevelsError
+          - DuplicateApprovalLevelsError
+          - InvalidMliLocations
+          - InvalidMlpLocations
+          - ApprovalLevelUsedInRulsetError
+          - GLCodeAmbiguous
+          - GlCodeInvalidResponce
+          - GetRuleSetListError
+          - RuleSetDuplicateNameError
+          - RuleSetDuplicateActionError
+          - RuleSetConflictedActionError
+          - RuleSetRuleSetDoesNotExistsError
+          - RuleSetTradeDoesNotExistError
+          - RuleSetCategoryDoesNotExistError
+          - RuleSetMliLevelDoesNotExistError
+          - GetRuleSet
+          - CreateUpdateRuleSetError
+          - DeleteRuleSet
+          - GetRuleSetCategoriesTradesCountError
+          - GetRuleSetByInvoice
+          - GetCategoryTradeIdsAreSelectedError
+          - ProposalAboveMlpLimitError
+          - ProposalNextLevelHasNoAvailableActionsError
+          - DefaultRuleSetError
+          - RuleSetActionEndStatusError
+          - RuleSetRejectActionEmptyForwardToError
+          - UserFilterGetError
+          - UserFilterCreateUpdateError
+          - UserFilterDeleteError
+          - UserFilterSetAsDefaultError
+          - InvoiceFilterFromAlpProviderError
+          - RegionFilterNotAllowedError
+          - LocationIdFilterNotAllowedError
+          - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+          - PaymenowBannersForProvidersOnly
+          - PaymenowFeatureDisabled
+          - PaymenowBannerInfoNotFound
+          - PaymenowBannerInvalidNavigationUrl
+          - PaymenowRequestedProvidersIsNotAssigned
+          - PaymenowEmptyRequestedProviders
+          - PaymentManagerFeatureDisabled
+          - PaymentManagerFeatureDisabledForSubscriber
+          - PaymentSystemCurrentlyUnavailable
+          - CurrencyNotSupported
+          - PaymentSystemAccountNotFound
+          - FeatureIsOff
+          - EarlyPayFeatureWithoutPaymentManagetFeatureError
+          - FtpTestError
+          - AcceptTermsAndConditionsRequestInvalid
+          - PaymentSystemAccountError
+          - SendReportToFTP
+          - SchedulingError
+          - BadPaymentData
+          - InvoicesCanNotBeRepaid
+          - InvoicesCanNotBeRescheduled
+          - InvalidBillingAddress
+          - PaymentManagerGeneralSettingsNotFound
+          - PaymentManagerEInvoiceSettingsNotFound
+          - BadgeVerificationFailed
+          - BadgeTempPassEmpty
+          - BadgeScanRequired
+          - SolvedIssueSubmitFailed
+          - SolvedIssueInvalidLocationId
+          - SolvedIssueInvalidCategoryId
+          - SolvedIssueInvalidTradeId
+          - SolvedIssueInvalidPriorityId
+          - SolvedIssueInvalidSource
+          - SolvedIssueInvalidProblemCode
+          - SolvedIssueInvalidType
+          - SubmitFeedbackErrorWoStatus
+          - SubmitFeedbackInvalidAnswer
+          - SubmitFeedbackInvalidTrackingNumber
+          - SubmitFeedbackInvalidSubscriber
+          - SubmitFeedbackInvalidScore
+          - SubmitFeedbackUnsatisfactoryCommentRequired
+          - SubmitFeedbackInvalidReviewId
+          - SubmitFeedbackInvalidSetupId
+          - FeedbackSetupInvalidSetupId
+          - S3SaveError
+          - AbsSaveError
+          - GoodDataLoginFailed
+          - GoodDataElementUriError
+          - GoodDataReportResultUriError
+          - GoodDataReportResultEmpty
+          - GoodDataDesReportResCountError
+          - GoodDataDesReportResConvertError
+          - GoodDataDesDisplayFormAttributeEmpty
+          - InvalidProposalAmountLimit
+          - GetApprovalProposalReasonsError
+          - GetEmailRecipientsError
+          - GetAssignProposalReasonsError
+          - ProposalHasBeenVoided
+          - AssetTypeDuplicateNameError
+          - AssetTypeDoesntExistError
+          - AssetTypeFailUpdateRefrigerantPurpose
+          - AssetTypeDeleteFailed
+          - ExistingAssetsFoundForAssetType
+          - CantModifyAssetTypeParentId
+          - InvalidAssetTypeName
+          - AssetTypeInheritanceError
+          - ExistingProposalsFoundForAssetType
+          - InstallPurchaseDateOverflow
+          - WOexistsWithSomeAssets
+          - PartsChangeFailed
+          - PartsReasonCodeError
+          - PartsUseDateError
+          - PartsRefrigerantAlreadyExists
+          - PartsChargeHistoryAlreadyExists
+          - PartsNotFound
+          - BulkPartUseIncorrectWorkOrder
+          - BulkPartsByIdsNotFound
+          - BulkPartsMultipleWosError
+          - BulkPartsIncorrectIsRefrigerantParam
+          - BulkPartsIsRefrigerantCanNotbeChanged
+          - BulkPartsReasonCodeChangeError
+          - BulkPartsInvalidAssetAndReasonCodeParams
+          - BulkPartsInvalidAssetId
+          - BulkPartsInvalidInitialChargeCode
+          - BulkPartsAssetDoesntContainCharge
+          - BulkPartsIsInventoryFlagError
+          - BulkPartsLeakAlreadyInProcessError
+          - BulkPartsInvalidDateRangeError
+          - BulkPartsMoeNumberRequiredError
+          - BulkPartsSystemChargeExceeded
+          - BulkRefrigerantuUageBlocked
+          - BulkIDsNotBeNull
+          - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+          - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+          - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+          - BulkInitialChargeSystemExpansionNotAllowed
+          - BulkInventoryPartIdCanNotBeChanged
+          - BulkInventoryLocationIdCanNotBeChanged
+          - BulkPartsDuplicatedRequest
+          - BulkChangePartsIncorrectRefrigerantType
+          - BulkPartsRetroRetireIsInProgressOnThisDate
+          - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+          - RetrofitRetireCanNotBeRemoved
+          - RetroRetirePartsCantbeChanged
+          - BulkPartsInventoryApiFailed
+          - BulkPartsDuplicated
+          - BulkPartsWorkOrderInProcessing
+          - BadNotificationSubscriptionEventType
+          - RefrigerantUseDateOutOfTheLeakProcessDateRange
+          - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+          - BulkExternalWoCurrentlyDoesntExists
+          - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+          - BulkConnectorOnlyClientAssetsCouldBeProcessed
+          - LeakRecordHasWrongDateValue
+          - HasUncompliedLeakRecordInAnoutherWO
+          - HasUncompletedWOOnAnotherLeakRecord
+          - OnlyOneAssetWorkOrderPair
+          - OneLeakRecordMustBeOnCompletedWO
+          - LeakRecordNotFound
+          - AssetIDWoIdIsRequired
+          - BulkPartsReasonCodeRetrofit
+          - RetrofitRetireWasCancelledNoLeak
+          - FailedToUpdateLeakEvent
+          - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+          - LeakPartUseOnZeroChargeNotAllowed
+          - BulkLeakRecordsAndAuditRequest
+          - LeakRecordsDuplicateRequestDetected
+          - AllLeakRecordFieldsAreRequired
+          - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+          - MlpImportLevelError
+          - UpdateMlpUserLevelError
+          - InvalidHolidayName
+          - DuplicateHolidayName
+          - HolidaysDeleteFailed
+          - HolidaysExcludeInsertFailed
+          - HolidaysUpdateFailed
+          - HolidaysInsertFailed
+          - HolidaysExcludeDeleteFailed
+          - BusinessHoursDeleteFailed
+          - BusinessHoursUpdateFailed
+          - BusinessHoursInsertFailed
+          - InvalidTime
+          - HolidayForDeleteNotFound
+          - InvalidChecklistId
+          - ChecklistNotPopulated
+          - ChecklistNotAssignedForTransfersWO
+          - NoLinkBetweenSubscriberAndProvider
+          - WorkforceCreateContractorError
+          - InvalidCertificateId
+          - MaxThresholdExceeded
+          - MaxTriggerRateExceeded
+          - LeakPriorityIsRequired
+          - MissingRTSettings
+          - ResolutionCodesLimitExceeded
+          - ResolutionCodesAreRequired
+          - RootCauseIsRequired
+          - RootCauseTextIsRequired
+          - NoAccessToSetRootCauseText
+          - RootCauseTextMaxLengthExceeded
+          - ResolutionCodeTextIsRequired
+          - NoAccessToSetResolutionCodeText
+          - ResolutionCodeTextMaxLengthExceeded
+          - ResolutionCodeTextMustBeUnique
+          - ResolutionCodeWithoutFreeTextMustBeUnique
+          - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+          - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+          - AssetCategoriesLimitExceeded
+          - NoAccessToAssetCategories
+          - AssetCategoriesAreRequired
+          - InvalidAssetCategoryId
+          - NoAssetCategoriesOnWorkOrder
+          - RootCausesMustBeForAllWorkOrderAssetCategories
+          - RootCauseTextMustBeUnique
+          - AssetCategoryIsRequired
+          - MultipleRootCausesMethodMustBeUsed
+          - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+          - AssetFilterLocationsLimitExceeded
+          - UnknownStoreId
+          - UsesRefrigerantAttributeNotChanged
+          - AssetTagDuplicate
+          - AssetTagIdDuplicate
+          - UnknownEquipmentType
+          - ParentIdInOtherLocation
+          - UnknownBrandName
+          - CARBRequiredManufacturedDate
+          - CARBRequiredInstallDate
+          - TradeNotFound
+          - AssetDoesntExist
+          - AssetIsNotRefrigerant
+          - AssetCantContainRefrigerant
+          - OnlyRackAssetsContainingCircuits
+          - ConnectorAssetTagIdCanNotBeChanged
+          - ConnectorAssetLocationIdCanNotBeChanged
+          - AssetTagCantBeUpdated
+          - AssetTypeIsNotСonfiguredToManageRTAssets
+          - RefrigerantTrackingNotAvailableForLocation
+          - UsesRefrigerantRequiredByAssetTypeSettings
+          - AssetLocationTradeDoesntCorrespondToWO
+          - AssetLocationSelectedPMmodule
+          - UpdateAssetRepairStatusValidation
+          - HasCircuitsCantBeChange
+          - HasComponentsCantBeChange
+          - CircuitCanNotBeConnectedToCircuit
+          - RTCircuitCanNotBeConnectedToNonRTAsset
+          - RTComponentCanNotBeConnectedToNonRTAsset
+          - ComponentCanNotBeConnectedToComponent
+          - NonRTComponentCanNotBeConnectedToRtAsset
+          - NonRTCircuitCanNotBeConnectedToRtAsset
+          - ComponentCanNotBeConnectedToCircuit
+          - ParentAssetShouldHaveEitherComponentsNorCircuits
+          - ParentAssetCantHaveComponents
+          - ParentAssetCantHaveCircuits
+          - MultipleAssetsFoundForTheRequestedTagId
+          - InvalidBrandName
+          - UnknownBrandId
+          - BrandRestrictedByAssetType
+          - BrandRestrictedBySubscriber
+          - BrandsRestrictedBySubscriber
+          - DeclineWorkOrderFailed
+          - AcceptWorkOrderFailed
+          - WorkOrderWasAccepted
+          - AssetAttachmentsSizeExceeded
+          - SaveMliAuditReportSetting
+          - GetMliAuditReportSetting
+          - SaveMliAuditReportResult
+          - SaveMliAuditReportSendEmailStatus
+          - SaveMliAuditReportFilePath
+          - GetSubscribersEnabledSchedule
+          - SaveMliAuditInfoError
+          - TaxValidationAddNewCompanySettingsError
+          - TaxValidationUpdateCompanySettingsError
+          - ProjectAssociationError
+          - GetProjectsInvoiceAmountsError
+          - TaxCodeNotUniqueError
+          - FieldLengthIsTooLongError
+          - SetTaxCodesBulkError
+          - InvoiceAdditionalApprovalCodeValueError
+          - BulkUpdateInvoicePaymentError
+          - InvoiceLineItemFilterDisabled
+          - InvoiceStatusToRejectProviderNotificationFailed
+          - SortFieldNotAvailableError
+          - ContractServiceExist
+          - ContractServiceCantChangeTrade
+          - ContractServiceCantChangeCategory
+          - ContractServiceCantChangeProvider
+          - ContractServicePMServiceCantChangeTrade
+          - ContractServicePMServiceCantChangeCategory
+          - ContractedServiceNameAlreadyExists
+          - ContractedServiceNameLinkedToRates
+          - WorkRequestDescriptionIsRequired
+          - WorkRequestCallDateIsRequired
+          - WorkRequestIssueIsRequired
+          - WorkRequestCallDateHasWrongFormat
+          - WorkRequestScheduledDateHasWrongFormat
+          - InvalidWorkRequestStatus
+          - InvalidWorkRequestExtendedStatus
+          - InvalidWorkRequestCategory
+          - InvalidWorkRequestPriority
+          - InvalidWorkRequestCurrency
+          - InvalidWorkRequestIssueSetup
+          - InvalidWorkRequestIssueArea
+          - InvalidWorkRequestAsset
+          - WorkRequestAttachmentFileNameIsRequired
+          - WorkRequestAttachmentOriginalNameIsRequired
+          - WorkRequestIssueProblemCodeIsRequired
+          - WorkRequestIssueProblemTypeIsRequired
+          - WorkRequestScheduledDateMustBeGreaterThanCallDate
+          - InvalidWorkRequestId
+          - WorkRequestSearchCallDateFromHasWrongFormat
+          - WorkRequestSearchCallDateToHasWrongFormat
+          - WorkRequestSearchScheduledDateFromHasWrongFormat
+          - WorkRequestSearchScheduledDateToHasWrongFormat
+          - WorkRequestSearchClosedDateFromHasWrongFormat
+          - WorkRequestSearchClosedDateToHasWrongFormat
+          - WorkOrderIsAlreadyCreatedForWorkRequest
+          - WorkRequestIsClosed
+          - WorkRequestClosedReasonIsRequiredForClosedStatus
+          - WorkOrderIdIsRequiredForThisClosedReason
+          - InvalidWorkRequestClosedReason
+          - WorkRequestClosedReasonIsOnlyForClosedStatus
+          - InvalidWorkRequestWorkOrderId
+          - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+          - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+          - InvalidWorkOrderSourceType
+          - DeclineReasonIdIsRequired
+          - DeclineReasonDoesntAllowCustomText
+          - InvalidDeclineReasonId
+          - MultipleWorkOrdersForPurchaseNumber
+          - InvoiceMaterialMakupInvalid
+          - MaterialMarkUpDiscrepancyReasonShouldBeStated
+          - MaterialPriceDiscrepancyReasonShouldBeStated
+          - OtherPriceDiscrepancyReasonShouldBeStated
+          - SubscriberIdIsNotValid
+          - FiscalPeriodIsNotValid
+          - AmountIsNotValid
+          - AmountFormatIsNotValid
+          - CategoryMustBeEmpty
+          - CategoryIsNotValid
+          - TradeMustBeEmpty
+          - TradeIsNotValid
+          - GlCodeMustBeEmpty
+          - GlCodeIsNotValid
+          - LocationMustBeEmpty
+          - LocationIsNotValid
+          - RegionMustBeEmpty
+          - RegionIsNotValid
+          - DistrictMustBeEmpty
+          - DistrictIsNotValid
+          - DuplicateData
+          - PrimaryCategoryMustBeEmpty
+          - PrimaryCategoryIsNotValid
+          - CategoryAndExcludedCategoryCannotSimultaneously
+          - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+          - TradeAndExcludedTradeCannotSimultaneously
+          - GlCodeAndExcludedGlCodeCannotSimultaneously
+          - DuplicateCategories
+          - DuplicateTrades
+          - DuplicateGlCodes
+          - DuplicatePrimaryCategories
+          - LocationNoteMustBeEmpty
+          - LocationNoteIsNotValid
+          - OverlappingCategories
+          - OverlappingPrimaryCategories
+          - OverlappingTrades
+          - OverlappingPrimaryTrades
+          - OverlappingGlCodes
+          - OverlappingLocations
+          - OverlappingRegions
+          - OverlappingDistricts
+          - OverlappingLocationNotes
+          - TaxExemptionErrorApi
+          - OtherLineItemZeroAmount
+          - TravelLineItemsNotNegativeValueRequired
+          - MaterialLineItemsNotNegativeValueRequired
+          - LaborLineItemsNotNegativeValueRequired
+          - AdditionalApprovalCodeSetupIdInvalid
+          - VendorIdIsNotValid
+          - InvalidBatchId
+          - InvalidBatchStatusId
+          - CategoryInUsePMServiceError
+          - CategoryInUseChecklistError
+          - CategoryInUseETAMissedAlertError
+          - CategoryInUseBudgetControl
+          - CategoryInUseConnector
+          - CategoryInUseContractedService
+          - CategoryInUseEDI
+          - CategoryInUseIVR
+          - CategoryInUseFeedbackV2
+          - CategoryInUseProposalApproveReasons
+          - CategoryInUsePaymentManager
+          - CategoryInUseProviderAssignments
+          - CategoryInUseSiteAccess
+          - CategoryInUseAlerts
+          - CategoryInUseOpenWOAlert
+          - CategoryInUseWOAutocopy
+          - CategoryInUseWorkRequest
+          - CategoryInUseWO
+          - CategoryInUseDashboardOverride
+          - CategoryInUseInvoiceAttributes
+          - FeatureIsOn
+          - LocationHierarchyNotFound
+          - LocationHierarchyLevelNotFound
+          - LocationHierarchyParentLevelNotFound
+          - LocationSpaceTypeNotFound
+          - DuplicateRowByValueKey
+          - ParentNotFound
+          - DuplicateSequenceAmongSiblings
+          - SequenceConflictsWithExistingData
+          - SequenceMustBeGreaterThanZero
+          - ValueContainsPathDelimiter
+          - InitializationWarmupError
+          type: string
+      ErrorCode:
+        description: The code of the first error found
+        enum:
+        - NotAllowed
+        - EmptyProvider
+        - InvalidProviderId
+        - UnknownProvider
+        - ProviderAlreadyExists
+        - ProviderIdNotExists
+        - TimeoutExpiredError
+        - EmptyContract
+        - ContractUndefined
+        - EmptySubscriber
+        - InvalidSubscriberId
+        - UnknownSubscriber
+        - InactiveSubscriber
+        - EmptySubscriberId
+        - SubscriberIdNotExists
+        - InternalError
+        - DataNotFound
+        - BadRequest
+        - UnAuthorized
+        - UnSupportedApplication
+        - SubsidiaryUserDisabled
+        - EmptyLocation
+        - InvalidLocationId
+        - UnknownLocation
+        - LocationNotBelongsToSubscriber
+        - EmptyLocationCountry
+        - LocationAlreadyExists
+        - InvalidStoreId
+        - LocationEmptyState
+        - NoAccessToLocation
+        - LocationAddressValidationError
+        - LocationAddressRequestValidationError
+        - InvalidLocationNoteHeader
+        - NoAccessToUpdateProtectedNote
+        - InvalidBusinessHoursFormat
+        - WorkingHoursIntersect
+        - InvalidDayOfWeek
+        - DuplicateDayOfWeek
+        - InvalidBusinessHoursInitialSetup
+        - BusinessHoursIsEmpty
+        - InvalidHolidayRepeatByType
+        - EmptyHolidayListOfDays
+        - EmptyHolidayListOfMonths
+        - InvalidHolidayMonthName
+        - InvalidHolidayNameLength
+        - InvalidHolidayRepeatEvery
+        - DuplicateMonth
+        - InvalidHolidayFrequency
+        - InvalidHolidayStartDate
+        - InvalidCloseAllDay
+        - HolidayDoesNotExist
+        - InvalidFormatParameter
+        - InvalidLocationCity
+        - InvalidLocationZip
+        - InvalidLocationLatitude
+        - InvalidLocationLongitude
+        - InvalidLocationEmail
+        - InvalidLocationName
+        - InvalidLocationState
+        - InvalidLocationAddlAddress
+        - InvalidLocationMainAddress
+        - InvalidLocationCountry
+        - InvalidLocationRegion
+        - InvalidLocationDistrict
+        - InvalidLocationPhone
+        - InvalidLocationContact
+        - InvalidLocationFaxNumber
+        - LocationCountryNotFound
+        - LocationStateNotFound
+        - LocationCityNotFound
+        - LocationIdNotExists
+        - InvalidLocationEmailLength
+        - LocationStateIdNotFound
+        - IncorrectCombinationStateAndStateId
+        - InvalidSubscriberIds
+        - InvalidLocalizationSettings
+        - LandlordResponsibilityNotFound
+        - LandlordResponsibilityAlreadyExists
+        - EmptyLocationIds
+        - AttachmentNotExist
+        - InvalidTradeId
+        - InvalidCategoryId
+        - InvalidOverrideCategoryId
+        - InvalidOverridePriorityId
+        - LeaseNoteExceedMaxLength
+        - InvalidOverrideProviderRank
+        - InvalidOverrideNTE
+        - DuplicateRows
+        - InvalidPriorityId
+        - LocationNotFound
+        - EmptyTrade
+        - InvalidTrade
+        - TradeNotBelongsToSubscriber
+        - InvalidPrimaryTrade
+        - InvalidTradeForSubscriber
+        - InvalidCategoryForSubscriber
+        - GlCodeAlreadyExists
+        - GlCodeNotExists
+        - InvalidGlCodeUpdate
+        - EmptyGlCode
+        - TradeAlreadyExists
+        - InvalidNTETrade
+        - TradeNotExists
+        - TradeAlreadyInUse
+        - TradeWithTheSameNameHasBeenDeleted
+        - TradeInUsePMServices
+        - TradeInUseProposalError
+        - TradeInUseRFPError
+        - TradeInUseChecklistError
+        - TradeInUseBudgetControl
+        - TradeInUseGlCode
+        - TradeInUseDynamicProviderAssignments
+        - TradeInUseInvoice
+        - TradeInUseLandlordResponsibilities
+        - TradeInUseWO
+        - TradeInUseEquipmentType
+        - TradeInUseRFP
+        - TradeInUseConnector
+        - TradeInUseContractedService
+        - TradeInUseIVR
+        - TradeInUseSiteAccess
+        - TradeInUseGLCodes
+        - TradeInUseCIWO
+        - TradeInUseOrganizationPermissions
+        - TradeСreationError
+        - EmptyUser
+        - EmptyCreatedBy
+        - InvalidUserName
+        - NotProviderUser
+        - UserHasNoPermissions
+        - RestrictedAccount
+        - UserAlreadyExists
+        - UserHasNoPermissionsEditWO
+        - UserEmailAddressIsMissing
+        - UserIsNotRTAdmin
+        - InvalidSubsriberProviderId
+        - LanguageNameNotFound
+        - InvalidLanguageId
+        - LanguageIdNotFound
+        - UseBothSubscriberIdProviderId
+        - EmptyWoProblem
+        - InvalidWoProblemSource
+        - InvalidWoProblemDescription
+        - InvalidWoProblemCode
+        - InvalidWoStatus
+        - InvalidWoNte
+        - InvalidWoCaller
+        - InvalidWoCallDate
+        - InvalidWoScheduledDate
+        - InvalidWoScheduledDateGreaterThanMaxAllowed
+        - EmptyWoCategory
+        - InvalidWoCategory
+        - EmptyWoPriority
+        - InvalidWoPriority
+        - InvalidWoCurrency
+        - InvalidWoSetupId
+        - AttachmentsRequired
+        - InvalidWoIdentifier
+        - EquipmentRequired
+        - WoNteOverflow
+        - InvalidWoPurchaseNumber
+        - InvalidWoStateForUpdate
+        - InvalidPagingParameter
+        - InvalidWoNumber
+        - CheckInDenied
+        - CheckOutDenied
+        - WoScheduledDateLessThenReassignDate
+        - WoScheduledDateLessThenCallDate
+        - InvalidWoActionReason
+        - EmptySubscriberProperty
+        - WorkOrderUpdateError
+        - MissedWoNteDetails
+        - InvalidLinkedWoIdentifier
+        - WoIsOnHold
+        - InvalidWoTrade
+        - InvalidStarScore
+        - WorkOrderAlreadyRated
+        - AttachmentThumbnailNotAvailable
+        - InvalidWoIdentifierOrPin
+        - InvalidTimeZoneHeader
+        - RefrigerantWasUsedShouldBeYesOrNo
+        - CheckInDeniedOutsideGeolocation
+        - CheckOutDeniedOutsideGeolocation
+        - LeakDetectorAuditShouldBeCreated
+        - CheckInOutPremature
+        - WorkOrderAttachmentsSizeExceeded
+        - WorkOrderNotFound
+        - WorkOrderCreateError
+        - InvalidWoProjectedCompletionDate
+        - InvalidFollowUpWo
+        - InvalidWeatherEventId
+        - InvalidSiteAuditLinkedWo
+        - InvalidSetupId
+        - IssueListNotFound
+        - InvalidIssueListField
+        - SiteAuditCompleted
+        - CheckSiteAuditError
+        - SaveSiteAuditError
+        - RemoveSiteAuditError
+        - InactiveTemplateType
+        - SiteAuditNotFound
+        - SiteAuditUpdateError
+        - InvalidSiteAuditParameters
+        - InvalidAdditionalApprovalCode
+        - InvalidAdditionalApprovalCodeValue
+        - AdditionalApprovalCodeIsDisabled
+        - InvalidOtherDesc
+        - InvalidTax2Name
+        - InvoiceInconsistentAmounts
+        - InvoiceInvalidTotal
+        - InvoiceTotalGreaterNte
+        - InvoiceExists
+        - CreatingInvoiceError
+        - DuplInvNumber
+        - InvoiceTotalNull
+        - InvComplDateNull
+        - InvDateLessComplDate
+        - InvoiceNotAuto
+        - ESignatureRequired
+        - InvWoNotFound
+        - InvWrongWoCurr
+        - InvWoCurrNotFound
+        - InvoicingDisabled
+        - InvCreationUnexpectedRes
+        - InvoiceInvalidLaborAmount
+        - InvoiceInvalidMaterialAmount
+        - InvDateOld
+        - InvDateGreater
+        - InvoiceMaterialDescriptionLengthOverflow
+        - InvoiceTaxNotValidated
+        - InvoiceMaterialPartNumberLengthOverflow
+        - TaxValidationError
+        - TaxExemptionError
+        - InvalidInvoiceNumber
+        - GetApprovalLevelsError
+        - InvoiceAddUsersToMliLevelsError
+        - InvoiceAddDeleteLocationsToMliLevelUserError
+        - InvoiceUpdateMLiLevelError
+        - InvoiceDeleteMliLevelError
+        - InvoiceDeleteUsersFromMliLevelError
+        - ApprovalLevelNameLengthOverflow
+        - GstTaxError
+        - Tax2Error
+        - GetApprovalLevelsAndLocationsByUserError
+        - GetAssignedUserShortInfoError
+        - AssignAllLocationsToApprovalLevelAndUserError
+        - GetLocationsForApprovalLevelAndAssignedUserError
+        - GetLocationsBySubscriberError
+        - AssignUserWithLocationsToApprovalLevelError
+        - ReAssignUserWithLocationsToNewApprovalLevelError
+        - ReAssignLocationsToApprovalLevelAndUserError
+        - OutstandingBalance
+        - InvoiceTaxDetailsEmpty
+        - InvoiceTaxDetailsIncorrectSum
+        - MultipleUsersForLocationIsNotAllowed
+        - UserAssignedToOtherLevel
+        - UserDoesNotExist
+        - LaborLineItemRequired
+        - MaterialLineItemRequired
+        - InvoiceDoesntExist
+        - InvoiceStarUnstarFailed
+        - InvoiceBatchUpdateInvalidInvoiceStatusError
+        - InvoiceBatchUpdateLimitExceededError
+        - InvoiceNotAvailableForCurrentUser
+        - InvoiceBatchUpdateInvalidRuleSetStructure
+        - InvoiceBatchUpdateInvalidMliStructure
+        - InvoiceBatchUpdateStatusError
+        - InvoiceMaterialUnitTypeInvalid
+        - ExistingBatchNumber
+        - InvoiceResolutionTextRequired
+        - GetInvoiceDefaultApprovalCodesError
+        - InvoiceInvalidTravelAmount
+        - InvoiceTravelDescriptionLengthOverflow
+        - InvoiceTravelUnitTypeInvalid
+        - TravelLineItemRequired
+        - TravelDetailsDisabled
+        - OnOffShoreDisabled
+        - InvoiceInvalidLaborCount
+        - InvoiceInvalidMaterialCount
+        - InvoiceInvalidTravelCount
+        - SubscriberNotRegisteredForTaxValidation
+        - ManyDecimalsInAmountError
+        - DecimalPartQstTaxError
+        - LaborRatesDiscrepancy
+        - PayInvoicesError
+        - InvoiceNumberRequirementsError
+        - InvoiceNumberIncorrect
+        - InvoiceNumberRegExPatternError
+        - GetInvoicesPendingApprovalByLocationError
+        - ReAssignInvoicesToUsersFailed
+        - ReAssignInvoicesUsersMatched
+        - GetUsersForReassignInvoiceError
+        - InvalidTimeRangeActivity
+        - OutsourcedSourceInvoiceNotFound
+        - OthersLineItemsDisabled
+        - InvoiceInvalidOtherAmount
+        - InvoiceInvalidOtherCount
+        - InvoiceOtherDescriptionLengthOverflow
+        - OtherLineItemRequired
+        - OtherLineItemsNotNegativeValueRequired
+        - InvalidLaborSkillLevel
+        - InvalidLaborType
+        - InvalidTechnicianQuantity
+        - GetInvoicesCommonCategoriesError
+        - InvoiceExplainDisputeEmpty
+        - InvoiceAdditionalApprovalCodeHeaderError
+        - TemplateParseSuccess
+        - TemplateIncorrectHeaderError
+        - TemplateEmptyTemplateError
+        - TemplateWrongFieldsCountError
+        - TemplateFieldNotFoundError
+        - TemplateFieldRequiredError
+        - TemplateParseIntError
+        - TemplateFieldSizeError
+        - TemplateInvalidValueError
+        - TemplateFieldFormatError
+        - TemplateFieldMaxRangeError
+        - TemplateFieldMinRangeError
+        - TemplateProviderNotEntered
+        - TemplateInvalidSubscriberError
+        - TemplateVendorNotFoundError
+        - TemplateMissedProviderError
+        - TemplateProviderNotFoundError
+        - TemplateProviderSubsccriberLinkError
+        - TemplateTradeDispatchRankError
+        - TemplateInvalidTradeForSubscriberError
+        - TemplateStoreNotFoundError
+        - TemplateNotStoresForStateError
+        - TemplateNotStoresForCountryError
+        - TemplateNotStoresForDistrictError
+        - TemplateNotStoresForRegionError
+        - TemplateMultiplePimaryProvidersForTradeStoreError
+        - TemplateDuplicatePrimaryRelationshipError
+        - TemplateAmbiguousDataError
+        - TemplateIncorrectSubscriber
+        - TemplateDuplicateRanking
+        - TemplateLongitudeRangeError
+        - TemplateLatitudeRangeError
+        - InvoiceMaterialPartNameLengthOverflow
+        - TemplateTradeLocationExclusion
+        - TemplateInvalidStateError
+        - TemplateMissedSubscriberError
+        - TemplateMissedStoreIdError
+        - TemplateInvalidSubscriberIdError
+        - TemplateOpenCloseDateError
+        - TemplateInvalidCountryError
+        - TemplateInvalidStateForCountryError
+        - TemplateInvalidLocationTypeError
+        - TemplateMissingFullAndShortNameError
+        - TemplateMissingCountryError
+        - TemplateDuplicatedDataError
+        - TemplateParentLocationNotFoundError
+        - TemplateParseDateTimeError
+        - TemplateParseDecimalError
+        - TemplateSquareValueRangeError
+        - TemplateInvalidSquareMeasureError
+        - TemplateTypeLabelCanNotBeUpdatedError
+        - TemplateTypeLabelHaveToBeLocationForNotInventory
+        - TemplateInvalidPrimarySupplyLocation
+        - TemplateInvalidHomestoreLocationNumber
+        - TemplateErrorDuringCreation
+        - TemplateLocationNotFoundError
+        - TemplateDuplicatedLocationFoundError
+        - TemplateInvalidLocationHeaderError
+        - TemplateDuplicatedLocationHeaderError
+        - TemplateHeaderContainsEmptyFieldsError
+        - TemplateLocHeadersShortHeaderError
+        - TemplateHeaderContainsDuplicatesError
+        - TemplateLocationNotesStoreIdFieldLengthError
+        - TemplateLocationNotesNoteValueFieldLengthError
+        - TemplateErrorInvalidZipCode
+        - TemplateMissingLocationNoteHeader
+        - TemplateMissingLocationNoteIdHeader
+        - TemplateInvalidSecondarySupplyLocation
+        - TemplateLocationWasNotCreated
+        - TemplateTruckNameIsEmpty
+        - TemplateWrongFormat
+        - TemplateSubscriberNotFound
+        - TemplateDuplicatedLocationHeaders
+        - TemplateInvalidHeaders
+        - TemplateInvalidPhoneError
+        - TemplateDuplicateTelecomRecordError
+        - TemplateTelecomRecordExistsError
+        - TemplateInvalidCategory
+        - TemplateDifferentRanksForProviderAssignments
+        - TemplateDuplicateRankError
+        - TemplateProviderNonCompliant
+        - TemplateLocationIsClosed
+        - TemplateProviderWarning
+        - TemplateMultipleProvidersForTradeStoreError
+        - EmptyRequest
+        - InvalidNumberOfParameters
+        - InvoiceOtherUnitTypeInvalid
+        - EmptyLocationOrTradeList
+        - RequestSubscriberIdDoesntMatchUserSubscriberId
+        - StoreIdRequiredError
+        - InvalidUserIdError
+        - InvalidStoreIdError
+        - AmbigiousError
+        - MliHierarchyFiledsCountError
+        - MliHierarchyMaxUserNameError
+        - MliHierarchyDuplicateUserError
+        - MLiHirarchyUserExistInOtherLevelError
+        - MissingLevelsError
+        - DuplicateApprovalLevelsError
+        - InvalidMliLocations
+        - InvalidMlpLocations
+        - ApprovalLevelUsedInRulsetError
+        - GLCodeAmbiguous
+        - GlCodeInvalidResponce
+        - GetRuleSetListError
+        - RuleSetDuplicateNameError
+        - RuleSetDuplicateActionError
+        - RuleSetConflictedActionError
+        - RuleSetRuleSetDoesNotExistsError
+        - RuleSetTradeDoesNotExistError
+        - RuleSetCategoryDoesNotExistError
+        - RuleSetMliLevelDoesNotExistError
+        - GetRuleSet
+        - CreateUpdateRuleSetError
+        - DeleteRuleSet
+        - GetRuleSetCategoriesTradesCountError
+        - GetRuleSetByInvoice
+        - GetCategoryTradeIdsAreSelectedError
+        - ProposalAboveMlpLimitError
+        - ProposalNextLevelHasNoAvailableActionsError
+        - DefaultRuleSetError
+        - RuleSetActionEndStatusError
+        - RuleSetRejectActionEmptyForwardToError
+        - UserFilterGetError
+        - UserFilterCreateUpdateError
+        - UserFilterDeleteError
+        - UserFilterSetAsDefaultError
+        - InvoiceFilterFromAlpProviderError
+        - RegionFilterNotAllowedError
+        - LocationIdFilterNotAllowedError
+        - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+        - PaymenowBannersForProvidersOnly
+        - PaymenowFeatureDisabled
+        - PaymenowBannerInfoNotFound
+        - PaymenowBannerInvalidNavigationUrl
+        - PaymenowRequestedProvidersIsNotAssigned
+        - PaymenowEmptyRequestedProviders
+        - PaymentManagerFeatureDisabled
+        - PaymentManagerFeatureDisabledForSubscriber
+        - PaymentSystemCurrentlyUnavailable
+        - CurrencyNotSupported
+        - PaymentSystemAccountNotFound
+        - FeatureIsOff
+        - EarlyPayFeatureWithoutPaymentManagetFeatureError
+        - FtpTestError
+        - AcceptTermsAndConditionsRequestInvalid
+        - PaymentSystemAccountError
+        - SendReportToFTP
+        - SchedulingError
+        - BadPaymentData
+        - InvoicesCanNotBeRepaid
+        - InvoicesCanNotBeRescheduled
+        - InvalidBillingAddress
+        - PaymentManagerGeneralSettingsNotFound
+        - PaymentManagerEInvoiceSettingsNotFound
+        - BadgeVerificationFailed
+        - BadgeTempPassEmpty
+        - BadgeScanRequired
+        - SolvedIssueSubmitFailed
+        - SolvedIssueInvalidLocationId
+        - SolvedIssueInvalidCategoryId
+        - SolvedIssueInvalidTradeId
+        - SolvedIssueInvalidPriorityId
+        - SolvedIssueInvalidSource
+        - SolvedIssueInvalidProblemCode
+        - SolvedIssueInvalidType
+        - SubmitFeedbackErrorWoStatus
+        - SubmitFeedbackInvalidAnswer
+        - SubmitFeedbackInvalidTrackingNumber
+        - SubmitFeedbackInvalidSubscriber
+        - SubmitFeedbackInvalidScore
+        - SubmitFeedbackUnsatisfactoryCommentRequired
+        - SubmitFeedbackInvalidReviewId
+        - SubmitFeedbackInvalidSetupId
+        - FeedbackSetupInvalidSetupId
+        - S3SaveError
+        - AbsSaveError
+        - GoodDataLoginFailed
+        - GoodDataElementUriError
+        - GoodDataReportResultUriError
+        - GoodDataReportResultEmpty
+        - GoodDataDesReportResCountError
+        - GoodDataDesReportResConvertError
+        - GoodDataDesDisplayFormAttributeEmpty
+        - InvalidProposalAmountLimit
+        - GetApprovalProposalReasonsError
+        - GetEmailRecipientsError
+        - GetAssignProposalReasonsError
+        - ProposalHasBeenVoided
+        - AssetTypeDuplicateNameError
+        - AssetTypeDoesntExistError
+        - AssetTypeFailUpdateRefrigerantPurpose
+        - AssetTypeDeleteFailed
+        - ExistingAssetsFoundForAssetType
+        - CantModifyAssetTypeParentId
+        - InvalidAssetTypeName
+        - AssetTypeInheritanceError
+        - ExistingProposalsFoundForAssetType
+        - InstallPurchaseDateOverflow
+        - WOexistsWithSomeAssets
+        - PartsChangeFailed
+        - PartsReasonCodeError
+        - PartsUseDateError
+        - PartsRefrigerantAlreadyExists
+        - PartsChargeHistoryAlreadyExists
+        - PartsNotFound
+        - BulkPartUseIncorrectWorkOrder
+        - BulkPartsByIdsNotFound
+        - BulkPartsMultipleWosError
+        - BulkPartsIncorrectIsRefrigerantParam
+        - BulkPartsIsRefrigerantCanNotbeChanged
+        - BulkPartsReasonCodeChangeError
+        - BulkPartsInvalidAssetAndReasonCodeParams
+        - BulkPartsInvalidAssetId
+        - BulkPartsInvalidInitialChargeCode
+        - BulkPartsAssetDoesntContainCharge
+        - BulkPartsIsInventoryFlagError
+        - BulkPartsLeakAlreadyInProcessError
+        - BulkPartsInvalidDateRangeError
+        - BulkPartsMoeNumberRequiredError
+        - BulkPartsSystemChargeExceeded
+        - BulkRefrigerantuUageBlocked
+        - BulkIDsNotBeNull
+        - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+        - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+        - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+        - BulkInitialChargeSystemExpansionNotAllowed
+        - BulkInventoryPartIdCanNotBeChanged
+        - BulkInventoryLocationIdCanNotBeChanged
+        - BulkPartsDuplicatedRequest
+        - BulkChangePartsIncorrectRefrigerantType
+        - BulkPartsRetroRetireIsInProgressOnThisDate
+        - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+        - RetrofitRetireCanNotBeRemoved
+        - RetroRetirePartsCantbeChanged
+        - BulkPartsInventoryApiFailed
+        - BulkPartsDuplicated
+        - BulkPartsWorkOrderInProcessing
+        - BadNotificationSubscriptionEventType
+        - RefrigerantUseDateOutOfTheLeakProcessDateRange
+        - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+        - BulkExternalWoCurrentlyDoesntExists
+        - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+        - BulkConnectorOnlyClientAssetsCouldBeProcessed
+        - LeakRecordHasWrongDateValue
+        - HasUncompliedLeakRecordInAnoutherWO
+        - HasUncompletedWOOnAnotherLeakRecord
+        - OnlyOneAssetWorkOrderPair
+        - OneLeakRecordMustBeOnCompletedWO
+        - LeakRecordNotFound
+        - AssetIDWoIdIsRequired
+        - BulkPartsReasonCodeRetrofit
+        - RetrofitRetireWasCancelledNoLeak
+        - FailedToUpdateLeakEvent
+        - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+        - LeakPartUseOnZeroChargeNotAllowed
+        - BulkLeakRecordsAndAuditRequest
+        - LeakRecordsDuplicateRequestDetected
+        - AllLeakRecordFieldsAreRequired
+        - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+        - MlpImportLevelError
+        - UpdateMlpUserLevelError
+        - InvalidHolidayName
+        - DuplicateHolidayName
+        - HolidaysDeleteFailed
+        - HolidaysExcludeInsertFailed
+        - HolidaysUpdateFailed
+        - HolidaysInsertFailed
+        - HolidaysExcludeDeleteFailed
+        - BusinessHoursDeleteFailed
+        - BusinessHoursUpdateFailed
+        - BusinessHoursInsertFailed
+        - InvalidTime
+        - HolidayForDeleteNotFound
+        - InvalidChecklistId
+        - ChecklistNotPopulated
+        - ChecklistNotAssignedForTransfersWO
+        - NoLinkBetweenSubscriberAndProvider
+        - WorkforceCreateContractorError
+        - InvalidCertificateId
+        - MaxThresholdExceeded
+        - MaxTriggerRateExceeded
+        - LeakPriorityIsRequired
+        - MissingRTSettings
+        - ResolutionCodesLimitExceeded
+        - ResolutionCodesAreRequired
+        - RootCauseIsRequired
+        - RootCauseTextIsRequired
+        - NoAccessToSetRootCauseText
+        - RootCauseTextMaxLengthExceeded
+        - ResolutionCodeTextIsRequired
+        - NoAccessToSetResolutionCodeText
+        - ResolutionCodeTextMaxLengthExceeded
+        - ResolutionCodeTextMustBeUnique
+        - ResolutionCodeWithoutFreeTextMustBeUnique
+        - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+        - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+        - AssetCategoriesLimitExceeded
+        - NoAccessToAssetCategories
+        - AssetCategoriesAreRequired
+        - InvalidAssetCategoryId
+        - NoAssetCategoriesOnWorkOrder
+        - RootCausesMustBeForAllWorkOrderAssetCategories
+        - RootCauseTextMustBeUnique
+        - AssetCategoryIsRequired
+        - MultipleRootCausesMethodMustBeUsed
+        - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+        - AssetFilterLocationsLimitExceeded
+        - UnknownStoreId
+        - UsesRefrigerantAttributeNotChanged
+        - AssetTagDuplicate
+        - AssetTagIdDuplicate
+        - UnknownEquipmentType
+        - ParentIdInOtherLocation
+        - UnknownBrandName
+        - CARBRequiredManufacturedDate
+        - CARBRequiredInstallDate
+        - TradeNotFound
+        - AssetDoesntExist
+        - AssetIsNotRefrigerant
+        - AssetCantContainRefrigerant
+        - OnlyRackAssetsContainingCircuits
+        - ConnectorAssetTagIdCanNotBeChanged
+        - ConnectorAssetLocationIdCanNotBeChanged
+        - AssetTagCantBeUpdated
+        - AssetTypeIsNotСonfiguredToManageRTAssets
+        - RefrigerantTrackingNotAvailableForLocation
+        - UsesRefrigerantRequiredByAssetTypeSettings
+        - AssetLocationTradeDoesntCorrespondToWO
+        - AssetLocationSelectedPMmodule
+        - UpdateAssetRepairStatusValidation
+        - HasCircuitsCantBeChange
+        - HasComponentsCantBeChange
+        - CircuitCanNotBeConnectedToCircuit
+        - RTCircuitCanNotBeConnectedToNonRTAsset
+        - RTComponentCanNotBeConnectedToNonRTAsset
+        - ComponentCanNotBeConnectedToComponent
+        - NonRTComponentCanNotBeConnectedToRtAsset
+        - NonRTCircuitCanNotBeConnectedToRtAsset
+        - ComponentCanNotBeConnectedToCircuit
+        - ParentAssetShouldHaveEitherComponentsNorCircuits
+        - ParentAssetCantHaveComponents
+        - ParentAssetCantHaveCircuits
+        - MultipleAssetsFoundForTheRequestedTagId
+        - InvalidBrandName
+        - UnknownBrandId
+        - BrandRestrictedByAssetType
+        - BrandRestrictedBySubscriber
+        - BrandsRestrictedBySubscriber
+        - DeclineWorkOrderFailed
+        - AcceptWorkOrderFailed
+        - WorkOrderWasAccepted
+        - AssetAttachmentsSizeExceeded
+        - SaveMliAuditReportSetting
+        - GetMliAuditReportSetting
+        - SaveMliAuditReportResult
+        - SaveMliAuditReportSendEmailStatus
+        - SaveMliAuditReportFilePath
+        - GetSubscribersEnabledSchedule
+        - SaveMliAuditInfoError
+        - TaxValidationAddNewCompanySettingsError
+        - TaxValidationUpdateCompanySettingsError
+        - ProjectAssociationError
+        - GetProjectsInvoiceAmountsError
+        - TaxCodeNotUniqueError
+        - FieldLengthIsTooLongError
+        - SetTaxCodesBulkError
+        - InvoiceAdditionalApprovalCodeValueError
+        - BulkUpdateInvoicePaymentError
+        - InvoiceLineItemFilterDisabled
+        - InvoiceStatusToRejectProviderNotificationFailed
+        - SortFieldNotAvailableError
+        - ContractServiceExist
+        - ContractServiceCantChangeTrade
+        - ContractServiceCantChangeCategory
+        - ContractServiceCantChangeProvider
+        - ContractServicePMServiceCantChangeTrade
+        - ContractServicePMServiceCantChangeCategory
+        - ContractedServiceNameAlreadyExists
+        - ContractedServiceNameLinkedToRates
+        - WorkRequestDescriptionIsRequired
+        - WorkRequestCallDateIsRequired
+        - WorkRequestIssueIsRequired
+        - WorkRequestCallDateHasWrongFormat
+        - WorkRequestScheduledDateHasWrongFormat
+        - InvalidWorkRequestStatus
+        - InvalidWorkRequestExtendedStatus
+        - InvalidWorkRequestCategory
+        - InvalidWorkRequestPriority
+        - InvalidWorkRequestCurrency
+        - InvalidWorkRequestIssueSetup
+        - InvalidWorkRequestIssueArea
+        - InvalidWorkRequestAsset
+        - WorkRequestAttachmentFileNameIsRequired
+        - WorkRequestAttachmentOriginalNameIsRequired
+        - WorkRequestIssueProblemCodeIsRequired
+        - WorkRequestIssueProblemTypeIsRequired
+        - WorkRequestScheduledDateMustBeGreaterThanCallDate
+        - InvalidWorkRequestId
+        - WorkRequestSearchCallDateFromHasWrongFormat
+        - WorkRequestSearchCallDateToHasWrongFormat
+        - WorkRequestSearchScheduledDateFromHasWrongFormat
+        - WorkRequestSearchScheduledDateToHasWrongFormat
+        - WorkRequestSearchClosedDateFromHasWrongFormat
+        - WorkRequestSearchClosedDateToHasWrongFormat
+        - WorkOrderIsAlreadyCreatedForWorkRequest
+        - WorkRequestIsClosed
+        - WorkRequestClosedReasonIsRequiredForClosedStatus
+        - WorkOrderIdIsRequiredForThisClosedReason
+        - InvalidWorkRequestClosedReason
+        - WorkRequestClosedReasonIsOnlyForClosedStatus
+        - InvalidWorkRequestWorkOrderId
+        - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+        - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+        - InvalidWorkOrderSourceType
+        - DeclineReasonIdIsRequired
+        - DeclineReasonDoesntAllowCustomText
+        - InvalidDeclineReasonId
+        - MultipleWorkOrdersForPurchaseNumber
+        - InvoiceMaterialMakupInvalid
+        - MaterialMarkUpDiscrepancyReasonShouldBeStated
+        - MaterialPriceDiscrepancyReasonShouldBeStated
+        - OtherPriceDiscrepancyReasonShouldBeStated
+        - SubscriberIdIsNotValid
+        - FiscalPeriodIsNotValid
+        - AmountIsNotValid
+        - AmountFormatIsNotValid
+        - CategoryMustBeEmpty
+        - CategoryIsNotValid
+        - TradeMustBeEmpty
+        - TradeIsNotValid
+        - GlCodeMustBeEmpty
+        - GlCodeIsNotValid
+        - LocationMustBeEmpty
+        - LocationIsNotValid
+        - RegionMustBeEmpty
+        - RegionIsNotValid
+        - DistrictMustBeEmpty
+        - DistrictIsNotValid
+        - DuplicateData
+        - PrimaryCategoryMustBeEmpty
+        - PrimaryCategoryIsNotValid
+        - CategoryAndExcludedCategoryCannotSimultaneously
+        - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+        - TradeAndExcludedTradeCannotSimultaneously
+        - GlCodeAndExcludedGlCodeCannotSimultaneously
+        - DuplicateCategories
+        - DuplicateTrades
+        - DuplicateGlCodes
+        - DuplicatePrimaryCategories
+        - LocationNoteMustBeEmpty
+        - LocationNoteIsNotValid
+        - OverlappingCategories
+        - OverlappingPrimaryCategories
+        - OverlappingTrades
+        - OverlappingPrimaryTrades
+        - OverlappingGlCodes
+        - OverlappingLocations
+        - OverlappingRegions
+        - OverlappingDistricts
+        - OverlappingLocationNotes
+        - TaxExemptionErrorApi
+        - OtherLineItemZeroAmount
+        - TravelLineItemsNotNegativeValueRequired
+        - MaterialLineItemsNotNegativeValueRequired
+        - LaborLineItemsNotNegativeValueRequired
+        - AdditionalApprovalCodeSetupIdInvalid
+        - VendorIdIsNotValid
+        - InvalidBatchId
+        - InvalidBatchStatusId
+        - CategoryInUsePMServiceError
+        - CategoryInUseChecklistError
+        - CategoryInUseETAMissedAlertError
+        - CategoryInUseBudgetControl
+        - CategoryInUseConnector
+        - CategoryInUseContractedService
+        - CategoryInUseEDI
+        - CategoryInUseIVR
+        - CategoryInUseFeedbackV2
+        - CategoryInUseProposalApproveReasons
+        - CategoryInUsePaymentManager
+        - CategoryInUseProviderAssignments
+        - CategoryInUseSiteAccess
+        - CategoryInUseAlerts
+        - CategoryInUseOpenWOAlert
+        - CategoryInUseWOAutocopy
+        - CategoryInUseWorkRequest
+        - CategoryInUseWO
+        - CategoryInUseDashboardOverride
+        - CategoryInUseInvoiceAttributes
+        - FeatureIsOn
+        - LocationHierarchyNotFound
+        - LocationHierarchyLevelNotFound
+        - LocationHierarchyParentLevelNotFound
+        - LocationSpaceTypeNotFound
+        - DuplicateRowByValueKey
+        - ParentNotFound
+        - DuplicateSequenceAmongSiblings
+        - SequenceConflictsWithExistingData
+        - SequenceMustBeGreaterThanZero
+        - ValueContainsPathDelimiter
+        - InitializationWarmupError
+        type: string
+        readOnly: true
+      ErrorMessage:
+        description: The description of all errors.
+        type: string
+      Data:
+        $ref: '#/definitions/System.Object'
+        description: "Optional\r\n            Gets or Sets the Data object."
+  ServiceChannel.Services.Messaging.Workorders.GetServiceRequestInfoResponse:
+    type: object
+    properties:
+      IssueChoice:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.IssueLists.GetIssueChoiceResponse'
+      Providers:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Providers.ServiceRequestProvider'
+      ProvidersNotFoundMessage:
+        type: string
+      CallerName:
+        type: string
+      ScheduledDateOffsetFromCallDate:
+        format: int64
+        type: integer
+      AssetsInfo:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetsInfoResponse'
+      SetupRequestConfirm:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.DashboardSettings.SetupRequestConfirmResponse'
+      SetupRequest:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.DashboardSettings.SetupRequestResponse'
+      Categories:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Category.CategoryResponse'
+      Priorities:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Priorities.PriorityResponse'
+      SetupGeneral:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.DashboardSettings.SetupGeneralResponse'
+      UserSettings:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.DashboardSettings.UserSettingsResponse'
+      Currency:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Currencies.Currency'
+      AreaId:
+        format: int32
+        type: integer
+      TradeId:
+        format: int32
+        type: integer
+      CategoryId:
+        format: int32
+        type: integer
+      SetupId:
+        format: int32
+        type: integer
+      EasierAssetAttachmentEnabled:
+        default: false
+        type: boolean
+      TradeExcluded:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Assets.WarrantyExpiration:
+    description: Object containing warranty expiration details.
+    type: object
+    properties:
+      Type:
+        description: 'Warranty expiration calculation type. **Possible values**: 0 - the expiration date is calculated starting from the asset purchase data; 1 - the expiration date is calculated starting from the asset installation date.'
+        enum:
+        - FromPurchaseDate
+        - FromInstallDate
+        type: string
+      Period:
+        format: int32
+        description: Warranty period in months.
+        type: integer
+  ServiceChannel.Services.Messaging.DashboardSettings.UserSettingsResponse:
+    type: object
+    properties:
+      MaximumNteAmount:
+        format: double
+        type: number
+  ServiceChannel.Api.Model.Workorders.OverrideProperties.ServiceProvider:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      Rank:
+        format: int32
+        type: integer
+      Default:
+        default: false
+        type: boolean
+      DoNotDispatch:
+        default: false
+        type: boolean
+      Pilot:
+        default: false
+        type: boolean
+      IsInternal:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.DashboardSettings.SetupGeneralResponse:
+    type: object
+    properties:
+      AllowAddingAttachments:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Priorities.PriorityResponse:
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: UID of priority. Can be null
+        type: integer
+      Name:
+        description: Priority name
+        type: string
+      SubscriberId:
+        format: int32
+        description: UID of subscriber. Can be null
+        type: integer
+      Eta:
+        description: ETA
+        type: string
+      SkipNights:
+        description: Skip nights while calculating scheduled date
+        default: false
+        type: boolean
+      SkipWeekends:
+        description: Skip weekends while calculating scheduled date
+        default: false
+        type: boolean
+      LocationId:
+        format: int32
+        description: If priority is associated with location - assiciated location
+        type: integer
+      Trade:
+        description: If priority is associated with trade - assiciated trade
+        type: string
+      ScheduledDate:
+        format: date-time
+        description: Calculated WO Scheduled Date
+        type: string
+      ScheduledDate_DTO:
+        format: date-time
+        description: Calculated WO Scheduled Date with time zone offset
+        type: string
+      ProjectComplDate:
+        format: date-time
+        type: string
+      IsSelectable:
+        description: IsSelectable
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Providers.GetServiceRequestProvidersResponse:
+    type: object
+    properties:
+      Providers:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Providers.ServiceRequestProvider'
+  ServiceChannel.Api.Model.Workorders.OverrideProperties.Anomaly:
+    type: object
+    properties:
+      TradeAnomalous:
+        default: false
+        type: boolean
+      TradeScore:
+        format: double
+        type: number
+      NTEAnomalous:
+        default: false
+        type: boolean
+      NTEScore:
+        format: double
+        type: number
+      FirstTimeFixAnomalous:
+        default: false
+        type: boolean
+      FirstTimeFixScore:
+        format: double
+        type: number
+      Top1PrimaryTrade:
+        type: string
+      InvoiceTotalWithoutProposal25:
+        format: double
+        type: number
+      InvoiceTotalWithoutProposalMedian:
+        format: double
+        type: number
+      InvoiceTotalWithProposal75:
+        format: double
+        type: number
+      IsAnomaly:
+        default: false
+        type: boolean
+        readOnly: true
+  ServiceChannel.Services.RequestHandlers.WorkOrders.GetWorkOrderPropertiesWithOverridesResponse:
+    type: object
+    properties:
+      Providers:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Api.Model.Workorders.OverrideProperties.ServiceProvider'
+        readOnly: true
+      Trade:
+        $ref: '#/definitions/ServiceChannel.Api.Model.Workorders.OverrideProperties.Trade'
+        readOnly: true
+      Category:
+        $ref: '#/definitions/ServiceChannel.Api.Model.Workorders.OverrideProperties.Category'
+        readOnly: true
+      Priority:
+        type: string
+        readOnly: true
+      Nte:
+        format: double
+        type: number
+        readOnly: true
+      WoLabels:
+        type: array
+        items:
+          type: string
+        readOnly: true
+      AssetAssociatedWithTrade:
+        default: false
+        type: boolean
+        readOnly: true
+      LeaseNote:
+        type: string
+      ProviderFoundType:
+        enum:
+        - Found
+        - NotFound
+        - DoNotDispatch
+        - TradeExcluded
+        type: string
+      EtcMinutes:
+        format: int32
+        type: integer
+      Anomaly:
+        $ref: '#/definitions/ServiceChannel.Api.Model.Workorders.OverrideProperties.Anomaly'
+        readOnly: true
+      IsAnomalyProviderOverwritten:
+        default: false
+        type: boolean
+      EtcMinutesFromIssueChoice:
+        format: int32
+        type: integer
+      Asset:
+        $ref: '#/definitions/ServiceChannel.Api.Model.Dashboard.Assets.Asset'
+        readOnly: true
+  ServiceChannel.Services.Messaging.IssueLists.IssueFieldResponse:
+    type: object
+    properties:
+      ProblemType:
+        description: Gets or sets the problem type.
+        type: string
+      Item:
+        description: Gets or sets the item.
+        type: string
+      Problem:
+        description: Gets or sets the problem.
+        type: string
+      For:
+        description: Gets or sets the for.
+        type: string
+      Id:
+        description: Gets or sets the id.
+        type: string
+      Header:
+        description: Gets or sets the header.
+        type: string
+      ErrorText:
+        description: Gets or sets the error text.
+        type: string
+      AreaName:
+        description: Gets or sets the area name.
+        type: string
+      Exclude:
+        description: Gets or sets the exclude.
+        type: string
+      Min:
+        description: Gets or sets the min.
+        type: string
+      Max:
+        description: Gets or sets the max.
+        type: string
+      Step:
+        description: Gets or sets the step.
+        type: string
+      Helptip:
+        description: Gets or sets the helptip.
+        type: string
+      Type:
+        description: Gets or sets the type.
+        enum:
+        - textbox
+        - select
+        - size
+        - label
+        - stop
+        - datepicker
+        - timepicker
+        type: string
+      Allow:
+        description: Gets or sets the allow.
+        enum:
+        - numbers
+        - decimals
+        - all
+        type: string
+      ExpectedValue:
+        description: Gets or sets the expected value.
+        type: string
+      Options:
+        description: Gets or sets the options.
+        type: array
+        items:
+          type: string
+      Required:
+        description: Determines whether this field is required to fill or not
+        default: false
+        type: boolean
+      Decisions:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.IssueLists.DecisionModelResponse'
+      LinkToMedia:
+        type: string
+      DisableFilter:
+        description: Gets a value indicating whether disable filter.
+        default: false
+        type: boolean
+        readOnly: true
+  ServiceChannel.Services.Messaging.Equipments.EquipmentAttributeDescription:
+    type: object
+    properties:
+      EquipmentAttributeId:
+        format: int32
+        type: integer
+      EquipmentTypeAttributeId:
+        format: int32
+        type: integer
+      ValueType:
+        format: int32
+        type: integer
+      EquipmentId:
+        format: int32
+        type: integer
+      Value:
+        $ref: '#/definitions/System.Object'
+      ValueText:
+        type: string
+      SelectedOptionsText:
+        type: string
+      Visible:
+        default: false
+        type: boolean
+      Editable:
+        default: false
+        type: boolean
+      Required:
+        default: false
+        type: boolean
+      Name:
+        type: string
+      Custom:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.IssueLists.GetIssueChoiceResponse:
+    type: object
+    properties:
+      ProblemType:
+        type: string
+      EquipmentType:
+        type: string
+      ProblemCode:
+        type: string
+      Trade:
+        type: string
+      TradeId:
+        format: int32
+        type: integer
+      IsTradeDeleted:
+        default: false
+        type: boolean
+      Priority:
+        type: string
+      AllowPriorityUpgrade:
+        default: false
+        type: boolean
+      RequireAttachment:
+        default: false
+        type: boolean
+      EquipmentId:
+        type: string
+      EquipmentEntry:
+        type: string
+      Category:
+        type: string
+      Comments:
+        type: string
+      TroubleshootingMessage:
+        type: string
+      ProviderRank:
+        format: int32
+        type: integer
+      LabelRanks:
+        type: array
+        items:
+          format: int32
+          type: integer
+      Currency:
+        type: string
+      ApprovalCode:
+        type: string
+      LinkToMedia:
+        type: string
+      AdditionalFields:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.IssueLists.IssueFieldResponse'
+      AllAdditionalFields:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.IssueLists.IssueFieldResponse'
+      IsNewIssueList:
+        default: false
+        type: boolean
+      WoStatusId:
+        format: int32
+        type: integer
+      Note:
+        type: string
+      DashOverrideApplied:
+        default: false
+        type: boolean
+      Nte:
+        type: string
+      WoLabel:
+        type: string
+      AttachmentName:
+        type: string
+      PinWoNote:
+        default: false
+        type: boolean
+      EtcMinutes:
+        format: int32
+        type: integer
+      ProjComplDate:
+        format: date-time
+        type: string
+      CategoryId:
+        format: int32
+        type: integer
+  ServiceChannel.Services.Messaging.Assets.AssetAttributesMap:
+    type: object
+    properties:
+      StandardAttributesMap:
+        format: int32
+        type: integer
+      ViewableForProvidersAttributesMap:
+        format: int32
+        type: integer
+      EditableForProvidersAttributesMap:
+        format: int32
+        type: integer
+      RequiredStandardAttributesMap:
+        format: int32
+        type: integer
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Services.Messaging.Assets.AssetResponse:
+    description: Object details of an asset.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric asset identifier assigned by the system.
+        type: integer
+      Tag:
+        description: Alphanumeric asset identifier assigned by the client.
+        type: string
+      Manufacturer:
+        description: Company name that produces an asset.
+        type: string
+      ModelNo:
+        description: Asset model number.
+        type: string
+      SerialNo:
+        description: Asset serial number.
+        type: string
+      LocationId:
+        format: int32
+        description: Unique numeric identifier of a location an asset is assigned to.
+        type: integer
+      Area:
+        description: Place where an asset is physically located.
+        type: string
+      WorkOrderArea:
+        description: Work order area, such as *Dining Room*, *Kitchen*, *Storage*.
+        type: string
+      StoreId:
+        description: Alphanumeric location identifier assigned by the client.
+        type: string
+      Trade:
+        description: Trade of an asset type the asset is assigned to, for example, *HVAC*, *DOORS*, *ELECTRICAL*.
+        type: string
+      TradeId:
+        format: int32
+        description: Numeric identifier of the primary trade of an asset.
+        type: integer
+      Type:
+        description: Asset type, for example, *Refrigerator*, *Computer Monitor*, etc.
+        type: string
+      AssetTypeId:
+        format: int32
+        description: Unique numeric identifier of an asset type.
+        type: integer
+      BrandId:
+        format: int32
+        description: Unique numeric identifier of a manufacturer that produces an asset.
+        type: integer
+      InstallDate:
+        description: Date and time when an asset was installed at the current location.
+        type: string
+      InstallDateVal:
+        format: date-time
+        description: Date and time when an asset was installed at the current location.
+        type: string
+      ManufacturerDate:
+        format: date-time
+        description: Date and time when an asset was produced.
+        type: string
+      ManufacturerDateStr:
+        description: Date and time when an asset was produced by the manufacturer.
+        type: string
+      PurchaseDate:
+        description: Date and time when an asset was purchased.
+        type: string
+      UsesRefrigerant:
+        format: int32
+        description: 'Defines whether an asset uses a refrigerant.  **Possible values**: 0 - no, 1 - yes.'
+        type: integer
+      Active:
+        description: 'Shows whether an asset is still in use. **Possible values**: *true*, *false*.'
+        default: false
+        type: boolean
+      IsLeased:
+        description: 'Defines whether an asset is leased. **Possible values**: *true*, *false*.'
+        default: false
+        type: boolean
+      LifeExpectancy:
+        format: int32
+        description: Estimated useful life of an asset in months.
+        type: integer
+      OriginalValue:
+        format: double
+        description: Original asset price.
+        type: number
+      LeaseDate:
+        description: Date and time when a lease was signed.
+        type: string
+      LeasePeriod:
+        format: int32
+        description: Period of time in months a contracted lease is in place.
+        type: integer
+      Condition:
+        format: int32
+        description: 'Value representation of an asset condition. **Possible values**: `0` - *broken*, `25` - *poor*, `50` - *average*, `75` - *good*, `100` - *excellent*.'
+        type: integer
+      ConditionString:
+        description: 'Current condition of an asset. **Possible values**: *broken*, *poor*, *average*, *good*, *excellent*.'
+        type: string
+      EnergyEfficiency:
+        description: Provides information on energy efficiency of a particular asset. Maximum is 150 characters.
+        type: string
+      Capacity:
+        description: Provides information on the maximum amount of the refrigerant an asset can contain. Maximum is 150 characters.
+        type: string
+      HasLeakDetector:
+        description: 'Defines whether an asset has a leak detector and belongs to the Leak Detector asset type. **Possible values**: *true*, *false*.'
+        default: false
+        type: boolean
+      AssetLeakDetectorConnectionId:
+        format: int32
+        description: ID of the leak detector that is connected to an asset.
+        type: integer
+      Location:
+        description: Place where an asset is physically located.
+        type: string
+        readOnly: true
+      Warranty:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.Warranty'
+        description: Object containing warranty parameters.
+      IsReplaceEquipment:
+        description: 'Defines if the current asset is a replacement for another on condition that a tracking number is provided. **Possible values**: *true*, *false*.'
+        default: false
+        type: boolean
+      HasTagged:
+        description: Defines if an asset contains ‘Asset Tag’.
+        default: false
+        type: boolean
+      LastModifiedUseDate:
+        format: date-time
+        description: Date and time when an asset was last updated.
+        type: string
+      LastModifiedUserName:
+        description: Name of the user who updated an asset.
+        type: string
+      SubName:
+        description: Subscriber’s name who added an asset.
+        type: string
+      AssetRefrigerant:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.RefrigerantTracking.AssetRefrigerant'
+      AssetAttributesMap:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Assets.AssetAttributesMap'
+      AssetTag:
+        description: Unique alphanumeric decoded value contained in a barcode, QR code, or NFC tag of an asset. It is used to scan assets via [ServiceChannel Mobile](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/575341308/Asset+Tagging#AssetTagging-AccessingtheAssetScanningModuleinSCMobile) and [ServiceChannel Provider](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/1181745372/Scanning+and+Validating+Assets+via+SC+Provider+for+FTM+Internal+Techs).
+        type: string
+      ImportedFrom:
+        format: int32
+        description: Provides the number of the template an asset was imported from.
+        type: integer
+      ParentId:
+        format: int32
+        description: Unique numeric identification of an asset that has a circuit or component.
+        type: integer
+      Description:
+        description: Comment created by a user when adding an asset.
+        type: string
+      HasComponents:
+        description: 'Defines whether an asset has components. **Possible values**: *true*, *false*.'
+        default: false
+        type: boolean
+      HasCircuits:
+        description: 'Defines if an asset has an added circuit. **Possible values**: *true*, *false*.'
+        default: false
+        type: boolean
+      IsCircuit:
+        description: 'Defines whether an asset is a circuit. **Possible values**: *true*, *false*.'
+        default: false
+        type: boolean
+      SubscriberId:
+        format: int32
+        description: Unique numeric ID of the subscriber an asset belongs to.
+        type: integer
+      AssetValidated:
+        description: 'Defines whether the asset has been validated by a technician.  **Possible values**: *true*, *false*.'
+        default: false
+        type: boolean
+      ValidationRequired:
+        description: Defines whether an asset needs to be validated by a technician upon check-in.
+        default: false
+        type: boolean
+      IsLeakDetector:
+        description: Defines whether an asset belongs to the *Leak Detector* asset type.
+        default: false
+        type: boolean
+      AssetStatus:
+        format: byte
+        description: 'Defines an asset repair status. **Possible values**: `0` - *In Use*, `1` - *Out For Repair*, `2` - *Replacement Recommended*, `3` - *Repaired*.'
+        type: string
+      AssetUpdatesStatus:
+        format: byte
+        description: 'Defines the asset update status. **Possible values**: 0 - Attributes updated by provider, 1- New unconfirmed - asset created by provider, 2 - Rejected, 3 - Asset change confirmed.'
+        type: string
+      AdditionalTradesNames:
+        description: Names of the additional trades for an asset type.
+        type: string
+      AdditionalTradeIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      CreatedDate:
+        format: date-time
+        description: Date and time of the asset creation.
+        type: string
+      ModifiedDate:
+        format: date-time
+        description: Date and time of the last asset update.
+        type: string
+      AssetTypeGroupId:
+        format: int32
+        description: Unique ID of an asset type group.
+        type: integer
+      Spend:
+        format: double
+        description: Total asset cost. Can be calculated if the *IncludeTotalCostOfOwnership* feature flag is enabled.
+        type: number
+      IsCarbReporting:
+        description: 'Defines whether an asset is included in a CARB report. **Possible values**: *true*, *false*.'
+        default: false
+        type: boolean
+      AssetValidationStatus:
+        format: int32
+        description: ''
+        type: integer
+      UnableToScanReason:
+        description: Asset tag not scanned reason
+        type: string
+      UnableToScanReasonCustomText:
+        description: Asset tag not scanned reason custom text
+        type: string
+      UnableToScanReasonId:
+        format: int32
+        description: Asset tag not scanned reason id
+        type: integer
+      CustomAttributes:
+        description: Custom Attributes
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Equipments.EquipmentAttributeDescription'
+      HasChilds:
+        description: ''
+        default: false
+        type: boolean
+      Currency:
+        format: int32
+        type: integer
+      ModifiedDateDto:
+        format: date-time
+        description: ModifiedDate datetime offset
+        type: string
+      RetiredDate:
+        format: date-time
+        description: Date and time of the asset deactivation.
+        type: string
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

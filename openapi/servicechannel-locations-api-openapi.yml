@@ -1,0 +1,4830 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours Locations API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: Locations
+paths:
+  /stores:
+    get:
+      tags:
+      - Locations
+      summary: Retrieve stores
+      description: "Returns a list of all Locations, also called Stores, if neither of the filters is used. You can get the details for a certain store by specifying any of the following parameters: `Id`, `storeIdentifier`, `name`.\r\n            <br /> You can use either of these methods to get a list of the subscriber’s locations: [GET /locations](/swagger/ui/index?version=3#/Locations/GETv3_locations_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET /stores](/swagger/ui/index?version=3#/Locations/GETv3_stores_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_).\r\n            <br /> Visit ServiceChannel University to find out more about [locations and provider assignments](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/556105830/Locations+Provider+Assignments)."
+      operationId: GETv3_stores?Id={Id}&storeIdentifier={storeIdentifier}&Name={Name}&Sort={Sort}&Page={Page}&PageSize={PageSize}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: id
+        in: query
+        description: Unique location identifier.
+        required: false
+        type: integer
+        format: int32
+      - name: storeIdentifier
+        in: query
+        description: Alphanumeric location identifier in the client’s system. Assigned by and unique per subscriber.
+        required: false
+        type: string
+      - name: name
+        in: query
+        description: Location name.
+        required: false
+        type: string
+      - name: sort
+        in: query
+        description: Sort resources by the specified property in the response.
+        required: false
+        type: string
+      - name: page
+        in: query
+        description: Results page number.
+        required: false
+        type: integer
+        format: int32
+      - name: pageSize
+        in: query
+        description: Number of objects on the results page. The default and maximum per page is 50.
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The requested locations are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.GetLocationsWithTotalResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc\r\n            <br/>Error codes: \r\n            502 — Subscriber not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - API call rejected by security permissions\r\n            100 — User has no permissions to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error. \r\n            <br/>Error codes:\r\n            501 — “Location ID” is not a valid value for Int32\r\n            "
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /locations:
+    get:
+      tags:
+      - Locations
+      summary: Retrieve stores
+      description: "Returns a list of all Locations, also called Stores, if neither of the filters is used. You can get the details for a certain store by specifying any of the following parameters: `Id`, `storeIdentifier`, `name`.\r\n            <br /> You can use either of these methods to get a list of the subscriber’s locations: [GET /locations](/swagger/ui/index?version=3#/Locations/GETv3_locations_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET /stores](/swagger/ui/index?version=3#/Locations/GETv3_stores_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_).\r\n            <br /> Visit ServiceChannel University to find out more about [locations and provider assignments](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/556105830/Locations+Provider+Assignments)."
+      operationId: GETv3_locations?Id={Id}&storeIdentifier={storeIdentifier}&Name={Name}&Sort={Sort}&Page={Page}&PageSize={PageSize}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: id
+        in: query
+        description: Unique location identifier.
+        required: false
+        type: integer
+        format: int32
+      - name: storeIdentifier
+        in: query
+        description: Alphanumeric location identifier in the client’s system. Assigned by and unique per subscriber.
+        required: false
+        type: string
+      - name: name
+        in: query
+        description: Location name.
+        required: false
+        type: string
+      - name: sort
+        in: query
+        description: Sort resources by the specified property in the response.
+        required: false
+        type: string
+      - name: page
+        in: query
+        description: Results page number.
+        required: false
+        type: integer
+        format: int32
+      - name: pageSize
+        in: query
+        description: Number of objects on the results page. The default and maximum per page is 50.
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The requested locations are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.GetLocationsWithTotalResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc\r\n            <br/>Error codes: \r\n            502 — Subscriber not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - API call rejected by security permissions\r\n            100 — User has no permissions to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error. \r\n            <br/>Error codes:\r\n            501 — “Location ID” is not a valid value for Int32\r\n            "
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /subscribers/current/users/current/stores:
+    get:
+      tags:
+      - Locations
+      summary: Get stores
+      description: "Returns a list of stores with the LocationIDs and subscriber IDs, along with the location address details. The method is available to subscribers only.\r\n            <br /> To get more detailed information, use one of these methods: [GET /stores](/swagger/ui/index?version=3#/Locations/GETv3_stores_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET /locations](/swagger/ui/index?version=3#/Locations/GETv3_locations_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET /odata/locations](/swagger/ui/index?version=3#/Locations/Locations_GetLocations).\r\n            <br /> Learn about updating [location details](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/708936009/Updating+Location+Details) in ServiceChannel University."
+      operationId: GETv3_subscribers_current_users_current_stores
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /locations/{locationId}:
+    get:
+      tags:
+      - Locations
+      summary: Retrieve a location
+      description: "Returns the details for the specified location.\r\n            <br /> To receive details of several locations, use one of these methods: [GET /stores](/swagger/ui/index?version=3#/Locations/GETv3_stores_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET /locations](/swagger/ui/index?version=3#/Locations/GETv3_locations_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET /odata/locations](/swagger/ui/index?version=3#/Locations/Locations_GetLocations)."
+      operationId: GETv3_locations_{locationId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: Unique numeric identifier of the location to return the details for.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The specified location details are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.LocationWithTimezoneName'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            601 — Location is not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+    put:
+      tags:
+      - Locations
+      summary: Update a location
+      description: "Modifies information of the existing location.You can use either of the following methods to retrieve location details: [GET/stores](/swagger/ui/index?version=3#/Locations/GETv3_stores_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET/locations](/swagger/ui/index?version=3#/Locations/GETv3_locations_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_).\r\n             <br />***Note:*** Method is available for subscribers with the *Super Admin* permission or *SC Admin* role.\r\n             <br />Visit ServiceChannel University to find out [how subscribers can update location details](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/708936009/Updating+Location+Details).\r\n             <br />**Example request**\r\n            \r\n                 PUT / locations/{locationId}\r\n                 {\r\n                  \"StoreId\": \"34\",\r\n                  \"Name\": \"CSR Flagship\",\r\n                  \"Latitude\": 40.736601,\r\n                  \"Longitude\": -73.991795,\r\n                  \"Distance\": null,\r\n                  \"Address1\": \"3rd Floor, Innovation Center\",\r\n                  \"Address2\": \"18 E. 16th Street\",\r\n                  \"City\": \"New York\",\r\n                  \"State\": \"NY\",\r\n                  \"StateId\": 1,\r\n                  \"Region\": \"Northeast\",\r\n                  \"District\": \"NYC/LI\",\r\n                  \"Zip\": \"10003\",\r\n                  \"Country\": \"US\",\r\n                  \"CountryId\": 1,\r\n                  \"ClosedDate\": \"null\",\r\n                  \"OpenDate\": \"2021-07-05T07:05:04.991Z\",\r\n                  \"Email\": \"flagship@gmail.com\",\r\n                  \"Phone\": \"212-555-1212\",\r\n                  \"Contact\": \"\",\r\n                  \"FaxNumber\": \"\",\r\n                  \"LocationTypeId\": null,\r\n                  \"SquareValue\": 20.21\r\n                  \"SquareMeasure\": \"ft or foot\" or \"m or metre\"\r\n                 }"
+      operationId: PUTv3_locations_{locationId}
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: Unique identifier of the subscriber’s location which information you want to update.
+        required: true
+        type: integer
+        format: int32
+      - name: request
+        in: body
+        description: Request to change the location details. Leaving a parameter empty or excluding it from the request model erases the already existing data.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.UpdateLocationExRequest'
+      responses:
+        '200':
+          description: The location details are updated.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            601 — Location not found\r\n            1254 — Invalid square measure"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /locations/{locationId}/notes:
+    get:
+      tags:
+      - Locations
+      summary: Retrieve location notes
+      description: Returns the location notes for the specified location.
+      operationId: GETv3_locations_{locationId}_notes?privateNotes={privateNotes}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: Unique ID of the location you want to receive notes for.
+        required: true
+        type: integer
+        format: int32
+      - name: privateNotes
+        in: query
+        description: Should privateNotes be included. Settings from dashboardSetup by default
+        required: false
+        type: boolean
+        default: false
+      responses:
+        '200':
+          description: Location notes are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.LocationNote.LocationNote'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            601 — Location not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+    post:
+      tags:
+      - Locations
+      summary: Add a location note
+      description: "Adds a location note for the specified location. If a note is already added, you can change it by sending the request, or leave the `Value` parameter empty to delete the note.\r\n             <br /> To retrieve location IDs along with the location notes, send either of these requests: [GET/stores](/swagger/ui/index?version=3#/Locations/GETv3_stores_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET/locations](/swagger/ui/index?version=3#/Locations/GETv3_locations_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_).\r\n             Get location notes separately for the specified location by sending the [GET/locations/{locationId}/notes](/swagger/ui/index?version=3#/Locations/GETv3_locations__locationId__notes) request.\r\n             <br />***Note***: Method is available for users with the *Super Admin* or *Admin* roles, or the *Location Admin* permission.\r\n             <br /> **Example request**\r\n            \r\n                 POST /locations/{locationId}/notes\r\n                 {\r\n                   \"Header\": \"Location Manager\",\r\n                   \"Value\": \"John Smith\"\r\n                 }"
+      operationId: POSTv3_locations_{locationId}_notes
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: Unique ID of the location you want to update a note for.
+        required: true
+        type: integer
+        format: int32
+      - name: locNoteHeader
+        in: body
+        description: Request to add, update or delete a location note header for a location.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.LocationNote.UpdateLocationNoteHeaderApiModelRequest'
+      responses:
+        '200':
+          description: The note is added to the specified location.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            601 — Location is not found\r\n            1301 — Request is empty or null"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/>Error codes:\r\n            100 — User has no rights to perform this action\r\n            612 — The user does not have access to update a protected location note header"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\r\n            <br/>Error codes:\r\n            611 — The location note header does not exist on the subscriber instance"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 — Object reference not set to an instance of an object"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /locations/{storeId}/updateNotes:
+    post:
+      tags:
+      - Locations
+      summary: Add location notes
+      description: "Add location notes for the specified location. If a note is already added, you can change it by sending the request, or leave the `Value` parameter empty to delete the note.\r\n             <br /> ***Note***: To retrieve store IDs along with the location notes, send either of these requests: [GET/stores](/swagger/ui/index?version=3#/Locations/GETv3_stores_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET/locations](/swagger/ui/index?version=3#/Locations/GETv3_locations_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_).\r\n             Get location notes separately for the specified location by sending the [GET/locations/{locationId}/notes](/swagger/ui/index?version=3#/Locations/GETv3_locations__locationId__notes) request.\r\n             <br /> **Example request**\r\n            \r\n                 POST /locations/{storeId}/updateNotes\r\n                 {\r\n                    \"Notes\": [\r\n                        {\r\n                            \"Header\": \"Note1\",\r\n                            \"Value\": \"1\"\r\n                        },\r\n                        {\r\n                            \"Header\": \"Note2\",\r\n                            \"Value\": \"2\"\r\n                        }\r\n                    ]\r\n                 }"
+      operationId: POSTv3_locations_{storeId}_updateNotes
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: storeId
+        in: path
+        description: Unique storeId of the location you want to update a note for.
+        required: true
+        type: string
+      - name: locNoteHeaders
+        in: body
+        description: Request to add, update or delete a location note headers for a location.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.LocationNote.UpdateLocationNoteHeadersApiModelRequest'
+      responses:
+        '200':
+          description: The note is added to the specified location.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            601 — Location is not found\r\n            1301 — Request is empty or null"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/>Error codes:\r\n            100 — User has no rights to perform this action\r\n            612 — The user does not have access to update a protected location note header"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\r\n            <br/>Error codes:\r\n            611 — The location note header does not exist on the subscriber instance"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 — Object reference not set to an instance of an object"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /locations/UnassignedContracts:
+    get:
+      tags:
+      - Locations
+      summary: Get unassigned contracts
+      description: "Returns subscriber’s locations with open trades that have unassigned providers.\r\n            <br /> ***Note***: Method could be outdated causing faulty results."
+      operationId: GETv3_locations_UnassignedContracts
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      responses:
+        '200':
+          description: The requested locations are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.GetProviderAssignmentExtendedLocationsResponse'
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: The requested resource does not exist on the server.
+      deprecated: false
+      x-access: Any
+  /locations/{locationId}/evacuationmaps:
+    get:
+      tags:
+      - Locations
+      summary: Get an evacuation plan map of a location
+      description: "Returns evacuation plan map attachments details for the specified location.\r\n            <br /> Visit ServiceChannel University to learn about [Location Emergency Evacuation Plan Map(s)](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/710312376/Location+Emergency+Evacuation+Plan+Map+s)."
+      operationId: GETv3_locations_{locationId}_evacuationmaps
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: Unique numeric identifier of the location to return the details for.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Location evacuation plan maps are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.GetLocationAttachmentsResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /locations/CheckIfLocationIsOpen:
+    get:
+      tags:
+      - Locations
+      summary: Check whether the location is open or closed.
+      description: "Returns information on the specified location if it is open or closed now. If the `checkTime` parameter is not provided, the location is checked at the current time.\r\n            <br /> Learn about [managing business hours](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/683507788/Managing+Business+Hours) in ServiceChannel University."
+      operationId: GETv3_locations_CheckIfLocationIsOpen?locationId={locationId}&checkTime={checkTime}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: query
+        description: Unique location identifier
+        required: true
+        type: integer
+        format: int32
+      - name: checkTime
+        in: query
+        description: Date and time to check if the location is open
+        required: false
+        type: string
+        format: date-time
+      responses:
+        '200':
+          description: The location opening status is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.AfterHours.CheckIfLocationIsOpenResponse'
+      deprecated: false
+      x-access: Any
+  /GetFilteredLocations:
+    post:
+      tags:
+      - Locations
+      summary: Get locations by filters
+      description: "Returns locations based on the filters applied.\r\n             By default closed locations are not included in the response. To include them, set the `IncludeClosedLocations` parameter to `true`."
+      operationId: POSTv3_GetFilteredLocations
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: "Request parameters to filter the response. Parameters can be used separately, as a combination of several parameters, or all at once. For the `LocationIds` and `StateIds` parameters, several values can be entered separated with a comma.\r\n             <br />**Example Request**\r\n            \r\n                 POST /GetFilteredLocations\r\n                 {\r\n                  \"ProviderId\": 2000069665,\r\n                  \"LocationIds\": [\r\n                    2005862796, 2005901195\r\n                  ],\r\n                  \"StateIds\": [\r\n                    30, 32\r\n                  ],\r\n                  \"IncludeClosedLocations\": \"false\"\r\n                 }"
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.GetFilteredLocationsRequest'
+      responses:
+        '200':
+          description: The filtered locations are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.LocationShortModel'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes: \r\n            502 — Subscriber not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/>Error codes:\r\n            100 — User has no rights to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 — Object reference not set to an instance of an object"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /locations/LocationWithNotes:
+    post:
+      tags:
+      - Locations
+      summary: Create a location with location notes
+      description: "Create or update a location along with location notes.\r\n             <br />**Note:** Method takes a dynamic list of parameters as input.\r\n             <br />**Example request**\r\n            \r\n                 POST /locations/LocationWithNotes\r\n                 {\r\n                  \"StoreId\":\"TestStore\",\r\n                  \"Name\": \"CSR Flagship\",\r\n                  \"MainAddress\": \"18 E. 16th Street\",\r\n                  \"AddlAddress\": \"3rd Floor, Innovation Center\",\r\n                  \"Latitude\": 40.736601,\r\n                  \"Longitude\": -73.991795,\r\n                  \"City\": \"New York\",\r\n                  \"State\": \"NY\",\r\n                  \"Region\": \"Northeast\",\r\n                  \"District\": \"NYC/LI\",\r\n                  \"Zip\": \"10003\",\r\n                  \"Country\": \"US\",\r\n                  \"OpenDate\": \"2021-07-03T00:10:00.308Z\",\r\n                  \"ClosedDate\": \"\",\r\n                  \"Email\": \"csrflagship@gmail.com\",\r\n                  \"Phone\": \"212-555-1212\",\r\n                  \"Contact\": \"\",\r\n                  \"FaxNumber\": \"\",\r\n                  \"YourLocationNoteHeader1\": \"Value1\",\r\n                  \"YourLocationNoteHeader2\": \"Value2\",\r\n                  \"YourLocationNoteHeaderN\": \"ValueN\"\r\n                 }"
+      operationId: POSTv3_locations_LocationWithNotes
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationWithNotes
+        in: body
+        description: Request to create or update a location with location notes.
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            $ref: '#/definitions/System.Object'
+      responses:
+        '200':
+          description: A new location is created or an existing one is updated. The location ID is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.AddUpdateLocationResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            606 — The `StoreId` value cannot be empty. The maximum length is 50 characters.\r\n            608 - Location no accessible for the user.\r\n            611 — The location note header does not exist on the subscriber instance.\r\n            612 — The user does not have access to update a protected location note header.\r\n            630 — Incorrect format of the 'ParameterName'.\r\n            631 — The `City` value cannot be empty. The maximum length is 50 characters.\r\n            632 — The `Zip` value cannot be empty. The maximum length is 12 characters.\r\n            633 — Latitude value should be between '-90' and '90'.\r\n            634 — Longitude value should be between '-180' and '180'.\r\n            635 — Invalid Email.\r\n            636 — The `Name` value cannot be empty. The maximum length is 100 characters.\r\n            637 — Invalid `State` format. The maximum length is 2 characters.\r\n            638 — Invalid `AddlAddress` format. The maximum length is 500 characters.\r\n            639 — Invalid `MainAddress` format. The maximum length is 500 characters.\r\n            640 — The `Country` value cannot be empty. The maximum length is 20 characters.\r\n            641 — Invalid `Region` format. The maximum length is 50 characters.\r\n            642 — Invalid `District` format. The maximum length is 50 characters.\r\n            643 — Invalid `Phone` format. The maximum length is 22 characters.\r\n            644 — Invalid `Contact` format. The maximum length is 50 characters.\r\n            645 — Invalid `FaxNumber` format. The maximum length is 22 characters.\r\n            646 — The country doesn't exist.\r\n            647 — The state doesn't exist in the country.\r\n            648 — The city doesn't exist in the country.\r\n            650 — Invalid `Email` format. The maximum length is 200 characters.\r\n            1301 — Request is empty or null."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /providers/GetProviderLocationAssignments:
+    get:
+      tags:
+      - Locations
+      summary: Get provider location assignments
+      description: "Returns a list of stores with the LocationIDs and StoreIds, along with the first contract (assignment) created date and whether the location is primary or not.\r\n            <br />The method is available to providers only."
+      operationId: GETv3_providers_GetProviderLocationAssignments
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      responses:
+        '200':
+          description: The provider location assignments are in the response.
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /providers/GetPrimaryLocationAssignmentsForProviderIds:
+    get:
+      tags:
+      - Locations
+      summary: Get provider primary location assignments by Provider Ids
+      operationId: GETv3_providers_GetPrimaryLocationAssignmentsForProviderIds?providerIds[0]={providerIds[0]}&providerIds[1]={providerIds[1]}&dateFrom={dateFrom}&dateTo={dateTo}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: providerIds
+        in: query
+        description: An array of Provider Ids.
+        required: true
+        type: array
+        items:
+          type: integer
+          format: int32
+        collectionFormat: multi
+      - name: dateFrom
+        in: query
+        description: The start date of the time period for which you want to retrieve location assignments. The format is `YYYY-MM-DDThh:mm:ss.ssZ`.
+        required: true
+        type: string
+        format: date-time
+      - name: dateTo
+        in: query
+        description: The end date of the time period for which you want to retrieve location assignments. The format is `YYYY-MM-DDThh:mm:ss.ssZ`
+        required: true
+        type: string
+        format: date-time
+      responses:
+        '200':
+          description: The providers location assignments are in the response.
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /GetLocationsMobile:
+    get:
+      tags:
+      - Locations
+      summary: Get Locations
+      description: ''
+      operationId: GETv3_GetLocationsMobile?page={page}&pageSize={pageSize}&latitude={latitude}&longitude={longitude}&searchExpression={searchExpression}&onlyOpened={onlyOpened}&locationIds={locationIds}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: page
+        in: query
+        description: Number of the current page
+        required: true
+        type: integer
+        format: int32
+      - name: pageSize
+        in: query
+        description: Limit to return items
+        required: true
+        type: integer
+        format: int32
+      - name: latitude
+        in: query
+        description: The latitude of the user location
+        required: false
+        type: number
+        format: double
+      - name: longitude
+        in: query
+        description: The longitude of the user location
+        required: false
+        type: number
+        format: double
+      - name: searchExpression
+        in: query
+        description: User input text
+        required: false
+        type: string
+      - name: onlyOpened
+        in: query
+        description: Include only open locations
+        required: false
+        type: boolean
+        default: false
+      - name: locationIds
+        in: query
+        description: Comma separated location ID array
+        required: false
+        type: string
+      responses:
+        '200':
+          description: The requested locations are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.GetLocationsMobileResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            401 — User has no permissions to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error. \r\n            <br/>Error codes:\r\n            501 — Value of pageSize or page is less than 1"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /GetLocationDistricts:
+    get:
+      tags:
+      - Locations
+      summary: Get location districts
+      operationId: GETv3_GetLocationDistricts?page={page}&pageSize={pageSize}&searchExpression={searchExpression}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: page
+        in: query
+        description: Number of the current page
+        required: true
+        type: integer
+        format: int32
+      - name: pageSize
+        in: query
+        description: Limit to return items
+        required: true
+        type: integer
+        format: int32
+      - name: searchExpression
+        in: query
+        description: User input text
+        required: false
+        type: string
+      responses:
+        '200':
+          description: The requested districts are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.GetLocationDistrictsResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            401 — User has no permissions to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error. \r\n            <br/>Error codes:\r\n            501 — Value of pageSize or page is less than 1"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /GetUserDistricts:
+    get:
+      tags:
+      - Locations
+      summary: Get user districts
+      operationId: GETv3_GetUserDistricts?page={page}&pageSize={pageSize}&searchExpression={searchExpression}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: page
+        in: query
+        description: Number of the current page
+        required: true
+        type: integer
+        format: int32
+      - name: pageSize
+        in: query
+        description: Limit to return items
+        required: false
+        type: integer
+        format: int32
+      - name: searchExpression
+        in: query
+        description: User input text
+        required: false
+        type: string
+      responses:
+        '200':
+          description: The requested districts are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.GetUserDistrictsResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            401 — User has no permissions to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error. \r\n            <br/>Error codes:\r\n            501 — Value of pageSize or page is less than 1"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /GetUserRegions:
+    get:
+      tags:
+      - Locations
+      summary: Get user regions
+      operationId: GETv3_GetUserRegions?page={page}&pageSize={pageSize}&searchExpression={searchExpression}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: page
+        in: query
+        description: Number of the current page
+        required: true
+        type: integer
+        format: int32
+      - name: pageSize
+        in: query
+        description: Limit to return items
+        required: false
+        type: integer
+        format: int32
+      - name: searchExpression
+        in: query
+        description: User input text
+        required: false
+        type: string
+      responses:
+        '200':
+          description: The requested regions are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.GetUserRegionsResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            401 — User has no permissions to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error. \r\n            <br/>Error codes:\r\n            501 — Value of pageSize or page is less than 1"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /locations/addressformats:
+    get:
+      tags:
+      - Locations
+      summary: Retrieve address format pattern per list of country ISO codes or per list of address types Ids
+      description: Returns a list of address types (Id, Pattern).
+      operationId: GETv3_locations_addressformats?c[0]={c[0]}&c[1]={c[1]}&id[0]={id[0]}&id[1]={id[1]}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: c
+        in: query
+        required: true
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      - name: id
+        in: query
+        required: true
+        type: array
+        items:
+          type: integer
+          format: int32
+        collectionFormat: multi
+      responses:
+        '200':
+          description: The requested address types with patterns are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.AddressType'
+      deprecated: false
+      x-access: Any
+  /filter:
+    post:
+      tags:
+      - Locations
+      summary: Retrieve Locations by location ids
+      description: Returns a list of locations.
+      operationId: POSTv3_filter
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationFilter
+        in: body
+        description: Request parameters to filter the response.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.GetLocationsByFilterRequest'
+      responses:
+        '200':
+          description: The requested locations are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.GetApiLocationResponse'
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            655 — Location Ids List is empty or null."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /landlord-responsibilities-by-storeId:
+    get:
+      tags:
+      - Locations
+      summary: Get landlord responsibilities
+      operationId: GETv3_landlord-responsibilities-by-storeId?storeId={storeId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: storeId
+        in: query
+        description: ''
+        required: false
+        type: string
+      responses:
+        '200':
+          description: The requested locations are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.GetLandlordResponsibilityResponse'
+        '403':
+          description: "User is not assigned to Location \r\n                <br/>Error codes:\r\n                100 — User has no permissions to perform this action."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Location is not found\r\n                <br/>Error codes:\r\n                651 — Location is not found."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /landlord-responsibilities-by-locationId:
+    get:
+      tags:
+      - Locations
+      summary: Get landlord responsibilities
+      operationId: GETv3_landlord-responsibilities-by-locationId?locationId={locationId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: query
+        description: ''
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The requested locations are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.GetLandlordResponsibilityResponse'
+        '403':
+          description: "User is not assigned to Location \r\n                <br/>Error codes:\r\n                100 — User has no permissions to perform this action."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Location is not found\r\n                <br/>Error codes:\r\n                601 — Location is not found."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /landlord-responsibilities:
+    put:
+      tags:
+      - Locations
+      summary: Update Landlord Responsibility
+      operationId: PUTv3_landlord-responsibilities
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: apiRequest
+        in: body
+        description: ''
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.UpdateLandlordResponsibilityApiRequest'
+      responses:
+        '201':
+          description: The Landlord Responsibility are updated.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n                <br/>Error codes:\r\n                1301 — Request is empty or null\r\n                503 — Failed to create landlord responsibility\r\n                655 — Landlord responsibility is not found\r\n                656 — The combination of Location Trade and Category must be unique\r\n                659 — Invalid Trade name\r\n                660 — Invalid Category name\r\n                661 — Invalid Override Category name\r\n                662 — Invalid Override Priority name\r\n                663 — Lease Note can not exceed 200 characters\r\n                664 — Invalid override provider rank\r\n                665 — Invalid override NTE"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "User is not assigned to Location \r\n                <br/>Error codes:\r\n                804 — User is not assigned to Location."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Invalid Store Id\r\n                <br/>Error codes:\r\n                606 — Invalid Store Id."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+    post:
+      tags:
+      - Locations
+      summary: Create landlord responsibility
+      operationId: POSTv3_landlord-responsibilities
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: apiRequest
+        in: body
+        description: ''
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.CreateLandlordResponsibilityApiRequest'
+      responses:
+        '201':
+          description: The Landlord Responsibility are created.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.LandlordResponsibilityModel'
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n                <br/>Error codes:\r\n                1301 — Request is empty or null\r\n                503 — Failed to create landlord responsibility\r\n                656 — The combination of Location Trade and Category must be unique\r\n                659 — Invalid Trade Id\r\n                660 — Invalid Category Id\r\n                661 — Invalid Override Category Id\r\n                662 — Invalid Override PriorityId\r\n                663 — Lease Note can not exceed 200 characters\r\n                664 — Invalid override provider rank\r\n                665 — Invalid override NTE"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "User is not assigned to Location \r\n                <br/>Error codes:\r\n                804 — User is not assigned to Location."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Invalid Store Id\r\n                <br/>Error codes:\r\n                606 — Invalid Store Id."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /landlord-responsibilities/{responsibilityId}:
+    delete:
+      tags:
+      - Locations
+      summary: Delete Landlord Responsibility
+      operationId: DELETEv3_landlord-responsibilities_{responsibilityId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: responsibilityId
+        in: path
+        description: ''
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The landlord responsibility is deleted.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\r\n                <br/>Error codes:\r\n                655 — Landlord responsibility is not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: Indicates that the requested resource requires authentication.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "User is not assigned to Location \r\n                <br/>Error codes:\r\n                804 — User is not assigned to Location."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /locations/{storeId}/attachments:
+    get:
+      tags:
+      - Locations
+      summary: Get a Location’s Attachments
+      description: Returns a list of attachments.
+      operationId: GETv3_locations_{storeId}_attachments
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: storeId
+        in: path
+        description: ''
+        required: true
+        type: string
+      responses:
+        '200':
+          description: The requested attachments are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.LocationAttachment'
+        '400':
+          description: Bad Request - the request could not be understood or was missing required parameters
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: Indicates that the requested resource requires authentication.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "User is not assigned to Location \r\n                <br/>Error codes:\r\n                804 — User is not assigned to Location."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Invalid StoreID\r\n                <br/>Error codes:\r\n                606 — Invalid StoreID."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+    post:
+      tags:
+      - Locations
+      summary: Create a Location Attachment
+      operationId: POSTv3_locations_{storeId}_attachments?subscriberId={subscriberId}&fileDescription={fileDescription}&isEvacuationPlan={isEvacuationPlan}
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: storeId
+        in: path
+        description: ''
+        required: true
+        type: string
+      - name: subscriberId
+        in: query
+        description: ''
+        required: false
+        type: integer
+        format: int32
+      - name: fileDescription
+        in: query
+        description: ''
+        required: false
+        type: string
+      - name: isEvacuationPlan
+        in: query
+        description: ''
+        required: false
+        type: boolean
+        default: false
+      - name: file
+        in: formData
+        description: File to attach to the location.
+        required: true
+        type: file
+      responses:
+        '201':
+          description: Created indicates that the attachment created before the response was sent.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.LocationAttachment'
+        '400':
+          description: Bad Request - the request could not be understood or was missing required parameters.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "User is not assigned to Location \r\n                <br/>Error codes:\r\n                804 — User is not assigned to Location."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Invalid StoreID\r\n                <br/>Error codes:\r\n                606 — Invalid StoreID\r\n                401 — Invalid Subscriber Id\r\n                502 — Location Not Found by Passed Store Id and Subscriber Id."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /locations/{storeId}/attachments/{attachmentId}:
+    delete:
+      tags:
+      - Locations
+      summary: Delete a Location Attachment
+      operationId: DELETEv3_locations_{storeId}_attachments_{attachmentId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: storeId
+        in: path
+        description: ''
+        required: true
+        type: string
+      - name: attachmentId
+        in: path
+        description: ''
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The attachment is deleted.
+        '400':
+          description: Bad Request - the request could not be understood or was missing required parameters
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: Indicates that the requested resource requires authentication.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "User is not assigned to Location \r\n                <br/>Error codes:\r\n                804 — User is not assigned to Location."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Invalid StoreID\r\n                <br/>Error codes:\r\n                606 — Invalid StoreID."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /locations/GetExistsLocations:
+    post:
+      tags:
+      - Locations
+      summary: GetExistsLocations
+      operationId: POSTv3_locations_GetExistsLocations
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: ''
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.ExistsLocationsRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+  /locations/GetExistsRegions:
+    post:
+      tags:
+      - Locations
+      summary: GetExistsRegions
+      operationId: POSTv3_locations_GetExistsRegions
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: ''
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.ExistsRegionsRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+  /locations/GetExistsDistricts:
+    post:
+      tags:
+      - Locations
+      summary: GetExistsDistricts
+      operationId: POSTv3_locations_GetExistsDistricts
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: ''
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.ExistsDistrictsRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+  /providers/current/locationsWithRetired:
+    get:
+      tags:
+      - Locations
+      summary: Retrieve provider's locations (include retired)
+      description: Returns a list of all Locations.
+      operationId: GETv3_providers_current_locationsWithRetired
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters: []
+      responses:
+        '200':
+          description: The requested locations are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.ProviderLocation'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - API call rejected by security permissions\r\n            100 — User has no permissions to perform this action"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /locations/{locationId}/hierarchy:
+    get:
+      tags:
+      - Locations
+      summary: GetLocationHierarchy
+      operationId: GETv3_locations_{locationId}_hierarchy
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: locationId
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.LocationHierarchy.LocationHierarchyResponse'
+        '400':
+          description: Bad Request - the request could not be understood or was missing required parameters.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: Indicates that the requested resource requires authentication.<br>Error codes:<br> 504 - API call rejected by security permissions;
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: Indicates that the requested resource not allowed for current user
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /locations/{locationId}/locationAttachments:
+    get:
+      tags:
+      - Locations
+      summary: Get Location Attachments
+      description: Returns a list of attachments.
+      operationId: GETv3_locations_{locationId}_locationAttachments
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: ''
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The requested attachments are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.LocationAttachment'
+        '400':
+          description: "Invalid LocationID\r\n                <br/>Error codes:\r\n                601— Invalid Location Id."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: Indicates that the requested resource requires authentication.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "User is not assigned to Location \r\n                <br/>Error codes:\r\n                804 — User is not assigned to Location."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Location not found\r\n                <br/>Error codes:\r\n                668— Location not found."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /odata/locations:
+    get:
+      tags:
+      - Locations
+      summary: Retrieve locations
+      description: "Returns a list of locations. You can use filter parameters to make your request more specific.\r\n            <br /> You can also get a list of locations by using one of the following methods: [GET /stores](/swagger/ui/index?version=3#/Locations/GETv3_stores_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET /locations](/swagger/ui/index?version=3#/Locations/GETv3_locations_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_)."
+      operationId: Locations_GetLocations
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: The list of locations is in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.Location'
+      deprecated: false
+      x-access: Any
+  /odata/locations/Service.NearBy(latitude={latitude},longitude={longitude}):
+    get:
+      tags:
+      - Locations
+      summary: Get locations by geographic coordinates
+      description: Returns locations that are near the longitude and latitude specified in the request. Use the filter parameters to make the request more specific.
+      operationId: Locations_GetLocationsNearMe
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: longitude
+        in: path
+        description: Location’s global position. Longitude.
+        required: true
+        type: number
+        format: double
+      - name: latitude
+        in: path
+        description: Location’s global position. Latitude.
+        required: true
+        type: number
+        format: double
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: The requested locations are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.Location'
+      deprecated: false
+      x-access: Any
+  /odata/locations/Service.ForServiceRequest():
+    get:
+      tags:
+      - Locations
+      summary: Retrieve locations
+      description: Returns a list of locations of a service request. You can use filter parameters to make the request more specific.
+      operationId: Locations_GetServiceRequestLocations
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: $expand
+        in: query
+        description: Expand a navigation property.
+        required: false
+        type: string
+      - name: $select
+        in: query
+        description: Select a set of properties to return.
+        required: false
+        type: string
+      - name: $filter
+        in: query
+        description: Filter a collection of resources addressed by a request URL.
+        required: false
+        type: string
+      - name: $orderby
+        in: query
+        description: Order resources by the specified property in the response.
+        required: false
+        type: string
+      - name: $top
+        in: query
+        description: Return the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $skip
+        in: query
+        description: Skip the specified number of items in the response.
+        required: false
+        type: integer
+      - name: $count
+        in: query
+        description: Include the count of the matching resources in the response.
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: The requested locations are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.Location'
+      deprecated: false
+      x-access: Any
+definitions:
+  ServiceChannel.Services.Messaging.Location.GetUserDistrictsResponse:
+    description: Response details object.
+    type: object
+    properties:
+      Districts:
+        description: Districts
+        type: array
+        items:
+          type: string
+      TotalCount:
+        format: int32
+        description: Total number of items on all pages;
+        type: integer
+  ServiceChannel.Services.Messaging.Location.ExistsRegionsRequest:
+    description: ExistsRegionsRequest
+    type: object
+    properties:
+      Regions:
+        description: Regions
+        type: array
+        items:
+          type: string
+  ServiceChannel.Services.Messaging.Providers.Provider:
+    type: object
+    properties:
+      Phone:
+        type: string
+      FullName:
+        description: Full Name
+        type: string
+      Address1:
+        description: Address1
+        type: string
+      Address2:
+        description: Adress2
+        type: string
+      City:
+        description: City
+        type: string
+      State:
+        description: State
+        type: string
+      Zip:
+        description: Zip
+        type: string
+      Country:
+        description: Country
+        type: string
+      MainContact:
+        description: Main Contact
+        type: string
+      DateCreated:
+        format: date-time
+        description: Date Created
+        type: string
+      LastUserDate:
+        description: Last User Date
+        type: string
+      SuperUser:
+        description: SuperUser
+        type: string
+      WebSite:
+        description: WebSite
+        type: string
+      Email:
+        description: Email
+        type: string
+      TaxId:
+        description: Tax Id
+        type: string
+      Trade:
+        description: Trade
+        type: string
+      ProcessingEmail:
+        description: Processing Email
+        type: string
+      FaxNumber:
+        description: Fax Number
+        type: string
+      SuiteFloor:
+        description: Suite Floor
+        type: string
+      MailInfo:
+        description: Mail Info
+        type: string
+      ImageFile:
+        description: Image File
+        type: string
+      ReturnMail:
+        description: Return Mail
+        type: string
+      MailFrequency:
+        format: int32
+        description: Mail Frequency
+        type: integer
+      FormId:
+        format: int32
+        description: Form Id
+        type: integer
+      Pager:
+        description: Pager
+        type: string
+      NightRequest:
+        format: int32
+        description: NightRequest
+        type: integer
+      ShortFormatEmail:
+        description: Short Format Email
+        type: string
+      LastTrainingDate:
+        format: date-time
+        description: Last Training Date
+        type: string
+      LastTrainingDateStr:
+        description: Last Training Date as a string
+        type: string
+      IsInternal:
+        description: Is Internal
+        default: false
+        type: boolean
+      IsOnOffShoreFeatureEnabled:
+        description: Is OnOffShoreFeature Enabled
+        default: false
+        type: boolean
+      Id:
+        format: int32
+        description: Id
+        type: integer
+      Name:
+        description: Name
+        type: string
+      DoNotDispatch:
+        description: DoNotDispatch enabled?
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Location.ProviderAssignmentExtendedLocation:
+    type: object
+    properties:
+      WorkOrdersCount:
+        format: int32
+        type: integer
+      Contracts:
+        description: List of Contracts
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Contracts.Contract'
+      Id:
+        format: int32
+        description: Unique location identifier.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique subscriber identifier.
+        type: integer
+      SubscriberName:
+        type: string
+      StoreId:
+        description: Alphanumeric identifier of the store in the client's system. Assigned by and unique per subscriber.
+        type: string
+      Name:
+        description: Location name.
+        type: string
+      ShortName:
+        description: Shortened location name.
+        type: string
+      Latitude:
+        format: double
+        description: Global position. Latitude.
+        type: number
+      Longitude:
+        format: double
+        description: Global position. Longitude.
+        type: number
+      Distance:
+        format: double
+        description: Distance from GPS coordinate to this location
+        type: number
+      Radius:
+        format: double
+        description: GPS radius for the location.
+        type: number
+      LocationTypeId:
+        format: int32
+        description: Numeric identifier of the location type.
+        type: integer
+      Address1:
+        description: Additional location address.
+        type: string
+      Address2:
+        description: Main location address.
+        type: string
+      City:
+        description: Location city.
+        type: string
+      State:
+        description: State where the location is situated.
+        type: string
+      StateId:
+        format: int32
+        description: Numeric identifier of the location’s state.
+        type: integer
+      Region:
+        description: Part of the country where the location is situated.
+        type: string
+      District:
+        description: Abbreviation of the town or country area where the location is situated.
+        type: string
+      Zip:
+        description: Location ZIP or postal code.
+        type: string
+      Country:
+        description: Abbreviation of the country name where the location is situated.
+        type: string
+      CountryId:
+        format: int32
+        description: Numeric identifier of the country of the location.
+        type: integer
+      ClosedDate:
+        format: date-time
+        description: Last day when the location is open for business.
+        type: string
+      OpenDate:
+        format: date-time
+        description: First day when the location is open for business.
+        type: string
+      Status:
+        description: 'Status of the location. Possible values: *open*, *closed*.'
+        type: string
+      Email:
+        description: Email the location can be contacted at.
+        type: string
+      FaxNumber:
+        description: Fax number the location can be contacted at.
+        type: string
+      Phone:
+        description: Contact phone number of the location.
+        type: string
+      Contact:
+        description: Name of the main person to contact at the location.
+        type: string
+      HasInventory:
+        description: 'Indicates whether it’s an inventory location or not. Possible values: *true*, *false*.'
+        default: false
+        type: boolean
+      SquareValue:
+        format: double
+        description: Square value of the facility.
+        type: number
+      SquareMeasure:
+        description: Unit or system of units for measuring location area.
+        type: string
+      TimeZoneInfoId:
+        format: int32
+        description: Numeric identifier of the location time zone.
+        type: integer
+      TimeZoneShortDescription:
+        description: Location time zone abbreviation.
+        type: string
+      TimeZoneMsName:
+        description: Location time zone Microsoft Name. e.g "Eastern Standard Time"
+        type: string
+      TimeZoneIanaName:
+        description: Location time zone Iana Name. e.g. "America/New_York"
+        type: string
+      TypeLabel:
+        description: '[Inventory location type](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/1209106525/Creating+Inventory+Locations?preview=%2F1209106525%2F1205830388%2FSupply-House-Type.png). Possible values: *Location*, *Warehouse*, *Supply House*, *Truck*.'
+        type: string
+      Supplier:
+        description: Supplier’s location name.
+        type: string
+      CountyId:
+        format: int32
+        description: County numeric identifier.
+        type: integer
+      Notes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.LocationNote.LocationNote'
+      TimeShiftToEST:
+        format: int32
+        type: integer
+      AddressTypeId:
+        format: int32
+        description: Address format pattern Id
+        type: integer
+      FormattedAddress:
+        type: string
+      LocationFormattedAddressTail:
+        type: string
+      IsInternational:
+        default: false
+        type: boolean
+        readOnly: true
+      Address:
+        type: string
+  ServiceChannel.Services.Messaging.Location.AddressType:
+    description: AddressType
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: db Id value
+        type: integer
+      Pattern:
+        description: Address format pattern
+        type: string
+  ServiceChannel.Services.Messaging.Location.GetFilteredLocationsRequest:
+    description: Request object to get locations.
+    type: object
+    properties:
+      ProviderId:
+        format: int32
+        description: Unique provider identifier.
+        type: integer
+      LocationIds:
+        description: Unique location identifier.
+        type: array
+        items:
+          format: int32
+          type: integer
+      Name:
+        description: Location name.
+        type: string
+      Address:
+        description: Main location address.
+        type: string
+      CountryId:
+        format: int32
+        description: Numeric identifier of the location country.
+        type: integer
+      StateIds:
+        description: Numeric identifier of the location’s state.
+        type: array
+        items:
+          format: int32
+          type: integer
+      City:
+        description: Location city.
+        type: string
+      Region:
+        description: Part of the country where the location is situated.
+        type: string
+      District:
+        description: Abbreviation of the town or country area where the location is situated.
+        type: string
+      IncludeClosedLocations:
+        description: Flag to include closed locations in the result.
+        default: false
+        type: boolean
+  ServiceChannel.Services.WebApi.Models.Response.LocationHierarchy.LocationHierarchyByLevelResponse:
+    description: LocationHierarchyByLevelResponse
+    type: object
+    properties:
+      NodeId:
+        format: int32
+        description: NodeId
+        type: integer
+      ParentNodeId:
+        format: int32
+        description: ParentNodeId
+        type: integer
+      LevelId:
+        format: int32
+        description: LevelId
+        type: integer
+      LevelName:
+        description: LevelName
+        type: string
+      LevelValue:
+        description: LevelValue
+        type: string
+      SpaceTypeId:
+        format: int32
+        description: SpaceTypeId
+        type: integer
+      SpaceTypeName:
+        description: SpaceTypeName
+        type: string
+  ServiceChannel.Services.Messaging.Users.MlpUserInfo:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      MlpLevel:
+        type: string
+      MlpLocations:
+        type: array
+        items:
+          format: int32
+          type: integer
+  ServiceChannel.Services.Messaging.Users.AccessOptions:
+    description: Object listing locations, districts, regions, and trades a subscriber user has access to. Learn more about [granting access based on locations, districts, and regions](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/585107276/Location+District+Region+Access+Tab) in ServiceChannel University.
+    type: object
+    properties:
+      Locations:
+        description: Locations a user has access to.
+        type: array
+        items:
+          type: string
+      Districts:
+        description: Districts a user has access to.
+        type: array
+        items:
+          type: string
+      Regions:
+        description: Regions a user has access to.
+        type: array
+        items:
+          type: string
+      Trades:
+        description: Trades a user is permitted to work with.
+        type: array
+        items:
+          type: string
+  ServiceChannel.Services.Messaging.Location.CreateLandlordResponsibilityApiRequest:
+    type: object
+    properties:
+      StoreId:
+        type: string
+      TradeName:
+        type: string
+      CategoryName:
+        type: string
+      OverridePriorityName:
+        type: string
+      OverrideCategoryName:
+        type: string
+      OverrideProviderRank:
+        type: string
+      OverrideNTE:
+        type: string
+      LeaseNote:
+        type: string
+  ServiceChannel.Services.Messaging.Location.ProviderLocation:
+    description: Provider's location
+    type: object
+    properties:
+      LocationId:
+        format: int32
+        type: integer
+      IsAllTradesRetired:
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Users.User:
+    description: User details object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique user identifier.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique subscriber ID.
+        type: integer
+      UserName:
+        description: Username of the user.<br /> • For subscriber users, the username appears as **User Id** on the "General Info" tab of the user profile page.<br /> • For provider users, the username is listed as **UserID** under "Access" on the "General" tab of the user profile page.
+        pattern: ^$|(^\S+).(\S).(\S)$
+        type: string
+      FullName:
+        description: Full name of the user.<br /> • For subscriber users, the full name appears as **User Name** on the "General Info" tab of the user profile page.<br /> • For provider users, you can see their first and last name under "Basic" on the "General" tab of the user profile page.
+        type: string
+      Email:
+        description: User’s email address.
+        type: string
+      PsmEmail:
+        description: Email address through which a user can reset their password.
+        type: string
+      Disabled:
+        description: Defines if a user is deactivated.
+        default: false
+        type: boolean
+      IsLocked:
+        description: Defines if a user is locked.
+        default: false
+        type: boolean
+      Roles:
+        description: Secondary roles assigned to a subscriber user that determine their permissions and level of access to various Service Automation modules.
+        type: array
+        items:
+          type: string
+      Permissions:
+        description: Permissions assigned to a subscriber user that determine whether they have full or read-only access to various Service Automation modules.
+        type: array
+        items:
+          type: string
+      UserType:
+        description: Subscriber user type defining their level of access to ServiceChannel:<br /> • `Corporate` — a user can work in Service Automation.<br /> • `Dashboard` — a user can only access the dashboard assigned to them.<br />`0` is returned for provider users.
+        enum:
+        - Corporate
+        - Dashboard
+        - ServiceChannel
+        type: string
+      Dashboard:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.DashboardInfo'
+        description: Dashboard a subscriber user has access to.
+      Access:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.AccessOptions'
+        description: List of locations, districts, regions, and trades a subscriber user has access to.
+      Limits:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.LimitOptions'
+        description: NTE, proposal, and invoice limits set for a subscriber user.
+      FeedRole:
+        type: string
+      MliUserInfo:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.MliUserInfo'
+        description: ''
+      MlpUserInfo:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.MlpUserInfo'
+  ServiceChannel.Services.Messaging.Location.LandlordResponsibilityModel:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      LocationId:
+        format: int32
+        type: integer
+      StoreId:
+        type: string
+      TradeId:
+        format: int32
+        type: integer
+      CategoryId:
+        format: int32
+        type: integer
+      OverrideCategoryId:
+        format: int32
+        type: integer
+      OverridePriorityId:
+        format: int32
+        type: integer
+      TradeName:
+        type: string
+      CategoryName:
+        type: string
+      OverridePriorityName:
+        type: string
+      OverrideCategoryName:
+        type: string
+      OverrideProviderRank:
+        type: string
+      OverrideNTE:
+        type: string
+      LeaseNote:
+        type: string
+      UpdatedBy:
+        type: string
+      UpdatedDate:
+        type: string
+  ServiceChannel.Services.Messaging.Location.LocationFilterRequest:
+    type: object
+    properties:
+      LocationIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+  ServiceChannel.Services.Messaging.Users.MliUserInfo:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      MliLevel:
+        type: string
+      MliLocations:
+        type: array
+        items:
+          format: int32
+          type: integer
+  ServiceChannel.Services.Messaging.Location.GetLocationsByFilterRequest:
+    type: object
+    properties:
+      Locations:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.LocationFilterRequest'
+  ServiceChannel.Services.Messaging.Location.GetLocationsMobileResponse:
+    description: Response details object.
+    type: object
+    properties:
+      Locations:
+        description: Location details.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.LocationForMobile'
+      TotalElements:
+        format: int64
+        description: Total number of items on all pages;
+        type: integer
+      Page:
+        format: int32
+        description: Current page
+        type: integer
+      TotalPages:
+        format: int32
+        description: Total number of pages available
+        type: integer
+  ServiceChannel.Api.Model.Entities.Category:
+    type: object
+    properties:
+      Name:
+        type: string
+      HasDependency:
+        default: false
+        type: boolean
+      PrimaryCategory:
+        $ref: '#/definitions/ServiceChannel.Api.Model.Entities.PrimaryCategory'
+      Id:
+        format: int32
+        type: integer
+      SubscriberId:
+        format: int32
+        type: integer
+      UserId:
+        format: int32
+        type: integer
+  ServiceChannel.Services.Messaging.Currencies.Currency:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      AlphabeticalCode:
+        type: string
+      DecimalCount:
+        format: int32
+        type: integer
+      Entity:
+        type: string
+      CurrencyName:
+        type: string
+      NumericCode:
+        type: string
+      Rate:
+        format: double
+        type: number
+  ServiceChannel.Services.Messaging.Users.LimitOptions:
+    description: Object for NTE, proposal, and invoice limits set for a subscriber user.
+    type: object
+    properties:
+      NteLimit:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.Limit'
+        description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
+      ProposalLimit:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.Limit'
+        description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
+      InvoiceLimit:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.Limit'
+        description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
+  ServiceChannel.Services.Messaging.AfterHours.CheckIfLocationIsOpenResponse:
+    description: Stores information whether the location is open or closed.
+    type: object
+    properties:
+      IsOpen:
+        description: 'Defines if the location is open or closed. Possible values: *true*, *false*.'
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Location.UpdateLandlordResponsibilityApiRequest:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      TradeName:
+        type: string
+      CategoryName:
+        type: string
+      OverridePriorityName:
+        type: string
+      OverrideCategoryName:
+        type: string
+      OverrideProviderRank:
+        type: string
+      OverrideNTE:
+        type: string
+      LeaseNote:
+        type: string
+  ServiceChannel.Services.Messaging.Location.ExistsLocationsRequest:
+    description: ExistsLocationsRequest
+    type: object
+    properties:
+      StoreIds:
+        description: StoreIds
+        type: array
+        items:
+          type: string
+  ServiceChannel.Services.Messaging.LocationNote.UpdateLocationNoteHeaderApiModelRequest:
+    description: Object containing the details of the location note.
+    type: object
+    properties:
+      Header:
+        description: Name of the existing location note to add, update or delete a note for. The maximum length is 100 characters.
+        type: string
+      Value:
+        description: Text of the note a user wants to replace the existing note with. The maximum length is 7000 characters including spaces.
+        type: string
+  ServiceChannel.Services.Messaging.Trade.Trade:
+    description: Trade object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Numeric identifier of the trade.
+        type: integer
+      Name:
+        description: Trade name.
+        type: string
+      SubscriberId:
+        format: int32
+        description: Unique subscriber ID.
+        type: integer
+  ServiceChannel.Services.Messaging.Location.AddUpdateLocationResponse:
+    description: Location note object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Location note numeric identifier.
+        type: integer
+  ServiceChannel.Services.Messaging.Location.GetLocationDistrictsResponse:
+    description: Response details object.
+    type: object
+    properties:
+      Districts:
+        description: Districts
+        type: array
+        items:
+          type: string
+      TotalElements:
+        format: int64
+        description: Total number of items on all pages;
+        type: integer
+      Page:
+        format: int32
+        description: Current page
+        type: integer
+      TotalPages:
+        format: int32
+        description: Total number of pages available
+        type: integer
+  ServiceChannel.Services.Messaging.Location.LocationForMobile:
+    description: Location details object for mobile.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique location identifier.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique subscriber identifier.
+        type: integer
+      StoreId:
+        description: Alphanumeric identifier of the store in the client's system. Assigned by and unique per subscriber.
+        type: string
+      Name:
+        description: Location name.
+        type: string
+      Latitude:
+        format: double
+        description: Global position. Latitude.
+        type: number
+      Longitude:
+        format: double
+        description: Global position. Longitude.
+        type: number
+      Address1:
+        description: Additional location address.
+        type: string
+      Address2:
+        description: Main location address.
+        type: string
+      City:
+        description: Location city.
+        type: string
+      State:
+        description: State where the location is situated.
+        type: string
+      Region:
+        description: Part of the country where the location is situated.
+        type: string
+      District:
+        description: Abbreviation of the town or country area where the location is situated.
+        type: string
+      Zip:
+        description: Location ZIP or postal code.
+        type: string
+      Country:
+        description: Abbreviation of the country name where the location is situated.
+        type: string
+      Phone:
+        description: Contact phone number of the location.
+        type: string
+      Contact:
+        description: Name of the main person to contact at the location.
+        type: string
+      OpenDate:
+        format: date-time
+        description: First day when the location is open for business
+        type: string
+      CloseDate:
+        format: date-time
+        description: Last day when the location is open for business.
+        type: string
+      Distance:
+        format: double
+        description: Distance between user and location
+        type: number
+      Email:
+        description: Email of the location.
+        type: string
+      FaxNumber:
+        description: Fax number of the location.
+        type: string
+      Radius:
+        format: double
+        description: GPS radius for the location.
+        type: number
+      Notes:
+        description: Notes
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.LocationNote.LocationNote'
+  ServiceChannel.Services.Messaging.ErrorResponse:
+    description: The error response object
+    type: object
+    properties:
+      ErrorCodes:
+        description: The list of error codes. Go to /basics/general/response-codes/#internal-error-codes-and-messages to map error codes to error reasons.
+        type: array
+        items:
+          enum:
+          - NotAllowed
+          - EmptyProvider
+          - InvalidProviderId
+          - UnknownProvider
+          - ProviderAlreadyExists
+          - ProviderIdNotExists
+          - TimeoutExpiredError
+          - EmptyContract
+          - ContractUndefined
+          - EmptySubscriber
+          - InvalidSubscriberId
+          - UnknownSubscriber
+          - InactiveSubscriber
+          - EmptySubscriberId
+          - SubscriberIdNotExists
+          - InternalError
+          - DataNotFound
+          - BadRequest
+          - UnAuthorized
+          - UnSupportedApplication
+          - SubsidiaryUserDisabled
+          - EmptyLocation
+          - InvalidLocationId
+          - UnknownLocation
+          - LocationNotBelongsToSubscriber
+          - EmptyLocationCountry
+          - LocationAlreadyExists
+          - InvalidStoreId
+          - LocationEmptyState
+          - NoAccessToLocation
+          - LocationAddressValidationError
+          - LocationAddressRequestValidationError
+          - InvalidLocationNoteHeader
+          - NoAccessToUpdateProtectedNote
+          - InvalidBusinessHoursFormat
+          - WorkingHoursIntersect
+          - InvalidDayOfWeek
+          - DuplicateDayOfWeek
+          - InvalidBusinessHoursInitialSetup
+          - BusinessHoursIsEmpty
+          - InvalidHolidayRepeatByType
+          - EmptyHolidayListOfDays
+          - EmptyHolidayListOfMonths
+          - InvalidHolidayMonthName
+          - InvalidHolidayNameLength
+          - InvalidHolidayRepeatEvery
+          - DuplicateMonth
+          - InvalidHolidayFrequency
+          - InvalidHolidayStartDate
+          - InvalidCloseAllDay
+          - HolidayDoesNotExist
+          - InvalidFormatParameter
+          - InvalidLocationCity
+          - InvalidLocationZip
+          - InvalidLocationLatitude
+          - InvalidLocationLongitude
+          - InvalidLocationEmail
+          - InvalidLocationName
+          - InvalidLocationState
+          - InvalidLocationAddlAddress
+          - InvalidLocationMainAddress
+          - InvalidLocationCountry
+          - InvalidLocationRegion
+          - InvalidLocationDistrict
+          - InvalidLocationPhone
+          - InvalidLocationContact
+          - InvalidLocationFaxNumber
+          - LocationCountryNotFound
+          - LocationStateNotFound
+          - LocationCityNotFound
+          - LocationIdNotExists
+          - InvalidLocationEmailLength
+          - LocationStateIdNotFound
+          - IncorrectCombinationStateAndStateId
+          - InvalidSubscriberIds
+          - InvalidLocalizationSettings
+          - LandlordResponsibilityNotFound
+          - LandlordResponsibilityAlreadyExists
+          - EmptyLocationIds
+          - AttachmentNotExist
+          - InvalidTradeId
+          - InvalidCategoryId
+          - InvalidOverrideCategoryId
+          - InvalidOverridePriorityId
+          - LeaseNoteExceedMaxLength
+          - InvalidOverrideProviderRank
+          - InvalidOverrideNTE
+          - DuplicateRows
+          - InvalidPriorityId
+          - LocationNotFound
+          - EmptyTrade
+          - InvalidTrade
+          - TradeNotBelongsToSubscriber
+          - InvalidPrimaryTrade
+          - InvalidTradeForSubscriber
+          - InvalidCategoryForSubscriber
+          - GlCodeAlreadyExists
+          - GlCodeNotExists
+          - InvalidGlCodeUpdate
+          - EmptyGlCode
+          - TradeAlreadyExists
+          - InvalidNTETrade
+          - TradeNotExists
+          - TradeAlreadyInUse
+          - TradeWithTheSameNameHasBeenDeleted
+          - TradeInUsePMServices
+          - TradeInUseProposalError
+          - TradeInUseRFPError
+          - TradeInUseChecklistError
+          - TradeInUseBudgetControl
+          - TradeInUseGlCode
+          - TradeInUseDynamicProviderAssignments
+          - TradeInUseInvoice
+          - TradeInUseLandlordResponsibilities
+          - TradeInUseWO
+          - TradeInUseEquipmentType
+          - TradeInUseRFP
+          - TradeInUseConnector
+          - TradeInUseContractedService
+          - TradeInUseIVR
+          - TradeInUseSiteAccess
+          - TradeInUseGLCodes
+          - TradeInUseCIWO
+          - TradeInUseOrganizationPermissions
+          - TradeСreationError
+          - EmptyUser
+          - EmptyCreatedBy
+          - InvalidUserName
+          - NotProviderUser
+          - UserHasNoPermissions
+          - RestrictedAccount
+          - UserAlreadyExists
+          - UserHasNoPermissionsEditWO
+          - UserEmailAddressIsMissing
+          - UserIsNotRTAdmin
+          - InvalidSubsriberProviderId
+          - LanguageNameNotFound
+          - InvalidLanguageId
+          - LanguageIdNotFound
+          - UseBothSubscriberIdProviderId
+          - EmptyWoProblem
+          - InvalidWoProblemSource
+          - InvalidWoProblemDescription
+          - InvalidWoProblemCode
+          - InvalidWoStatus
+          - InvalidWoNte
+          - InvalidWoCaller
+          - InvalidWoCallDate
+          - InvalidWoScheduledDate
+          - InvalidWoScheduledDateGreaterThanMaxAllowed
+          - EmptyWoCategory
+          - InvalidWoCategory
+          - EmptyWoPriority
+          - InvalidWoPriority
+          - InvalidWoCurrency
+          - InvalidWoSetupId
+          - AttachmentsRequired
+          - InvalidWoIdentifier
+          - EquipmentRequired
+          - WoNteOverflow
+          - InvalidWoPurchaseNumber
+          - InvalidWoStateForUpdate
+          - InvalidPagingParameter
+          - InvalidWoNumber
+          - CheckInDenied
+          - CheckOutDenied
+          - WoScheduledDateLessThenReassignDate
+          - WoScheduledDateLessThenCallDate
+          - InvalidWoActionReason
+          - EmptySubscriberProperty
+          - WorkOrderUpdateError
+          - MissedWoNteDetails
+          - InvalidLinkedWoIdentifier
+          - WoIsOnHold
+          - InvalidWoTrade
+          - InvalidStarScore
+          - WorkOrderAlreadyRated
+          - AttachmentThumbnailNotAvailable
+          - InvalidWoIdentifierOrPin
+          - InvalidTimeZoneHeader
+          - RefrigerantWasUsedShouldBeYesOrNo
+          - CheckInDeniedOutsideGeolocation
+          - CheckOutDeniedOutsideGeolocation
+          - LeakDetectorAuditShouldBeCreated
+          - CheckInOutPremature
+          - WorkOrderAttachmentsSizeExceeded
+          - WorkOrderNotFound
+          - WorkOrderCreateError
+          - InvalidWoProjectedCompletionDate
+          - InvalidFollowUpWo
+          - InvalidWeatherEventId
+          - InvalidSiteAuditLinkedWo
+          - InvalidSetupId
+          - IssueListNotFound
+          - InvalidIssueListField
+          - SiteAuditCompleted
+          - CheckSiteAuditError
+          - SaveSiteAuditError
+          - RemoveSiteAuditError
+          - InactiveTemplateType
+          - SiteAuditNotFound
+          - SiteAuditUpdateError
+          - InvalidSiteAuditParameters
+          - InvalidAdditionalApprovalCode
+          - InvalidAdditionalApprovalCodeValue
+          - AdditionalApprovalCodeIsDisabled
+          - InvalidOtherDesc
+          - InvalidTax2Name
+          - InvoiceInconsistentAmounts
+          - InvoiceInvalidTotal
+          - InvoiceTotalGreaterNte
+          - InvoiceExists
+          - CreatingInvoiceError
+          - DuplInvNumber
+          - InvoiceTotalNull
+          - InvComplDateNull
+          - InvDateLessComplDate
+          - InvoiceNotAuto
+          - ESignatureRequired
+          - InvWoNotFound
+          - InvWrongWoCurr
+          - InvWoCurrNotFound
+          - InvoicingDisabled
+          - InvCreationUnexpectedRes
+          - InvoiceInvalidLaborAmount
+          - InvoiceInvalidMaterialAmount
+          - InvDateOld
+          - InvDateGreater
+          - InvoiceMaterialDescriptionLengthOverflow
+          - InvoiceTaxNotValidated
+          - InvoiceMaterialPartNumberLengthOverflow
+          - TaxValidationError
+          - TaxExemptionError
+          - InvalidInvoiceNumber
+          - GetApprovalLevelsError
+          - InvoiceAddUsersToMliLevelsError
+          - InvoiceAddDeleteLocationsToMliLevelUserError
+          - InvoiceUpdateMLiLevelError
+          - InvoiceDeleteMliLevelError
+          - InvoiceDeleteUsersFromMliLevelError
+          - ApprovalLevelNameLengthOverflow
+          - GstTaxError
+          - Tax2Error
+          - GetApprovalLevelsAndLocationsByUserError
+          - GetAssignedUserShortInfoError
+          - AssignAllLocationsToApprovalLevelAndUserError
+          - GetLocationsForApprovalLevelAndAssignedUserError
+          - GetLocationsBySubscriberError
+          - AssignUserWithLocationsToApprovalLevelError
+          - ReAssignUserWithLocationsToNewApprovalLevelError
+          - ReAssignLocationsToApprovalLevelAndUserError
+          - OutstandingBalance
+          - InvoiceTaxDetailsEmpty
+          - InvoiceTaxDetailsIncorrectSum
+          - MultipleUsersForLocationIsNotAllowed
+          - UserAssignedToOtherLevel
+          - UserDoesNotExist
+          - LaborLineItemRequired
+          - MaterialLineItemRequired
+          - InvoiceDoesntExist
+          - InvoiceStarUnstarFailed
+          - InvoiceBatchUpdateInvalidInvoiceStatusError
+          - InvoiceBatchUpdateLimitExceededError
+          - InvoiceNotAvailableForCurrentUser
+          - InvoiceBatchUpdateInvalidRuleSetStructure
+          - InvoiceBatchUpdateInvalidMliStructure
+          - InvoiceBatchUpdateStatusError
+          - InvoiceMaterialUnitTypeInvalid
+          - ExistingBatchNumber
+          - InvoiceResolutionTextRequired
+          - GetInvoiceDefaultApprovalCodesError
+          - InvoiceInvalidTravelAmount
+          - InvoiceTravelDescriptionLengthOverflow
+          - InvoiceTravelUnitTypeInvalid
+          - TravelLineItemRequired
+          - TravelDetailsDisabled
+          - OnOffShoreDisabled
+          - InvoiceInvalidLaborCount
+          - InvoiceInvalidMaterialCount
+          - InvoiceInvalidTravelCount
+          - SubscriberNotRegisteredForTaxValidation
+          - ManyDecimalsInAmountError
+          - DecimalPartQstTaxError
+          - LaborRatesDiscrepancy
+          - PayInvoicesError
+          - InvoiceNumberRequirementsError
+          - InvoiceNumberIncorrect
+          - InvoiceNumberRegExPatternError
+          - GetInvoicesPendingApprovalByLocationError
+          - ReAssignInvoicesToUsersFailed
+          - ReAssignInvoicesUsersMatched
+          - GetUsersForReassignInvoiceError
+          - InvalidTimeRangeActivity
+          - OutsourcedSourceInvoiceNotFound
+          - OthersLineItemsDisabled
+          - InvoiceInvalidOtherAmount
+          - InvoiceInvalidOtherCount
+          - InvoiceOtherDescriptionLengthOverflow
+          - OtherLineItemRequired
+          - OtherLineItemsNotNegativeValueRequired
+          - InvalidLaborSkillLevel
+          - InvalidLaborType
+          - InvalidTechnicianQuantity
+          - GetInvoicesCommonCategoriesError
+          - InvoiceExplainDisputeEmpty
+          - InvoiceAdditionalApprovalCodeHeaderError
+          - TemplateParseSuccess
+          - TemplateIncorrectHeaderError
+          - TemplateEmptyTemplateError
+          - TemplateWrongFieldsCountError
+          - TemplateFieldNotFoundError
+          - TemplateFieldRequiredError
+          - TemplateParseIntError
+          - TemplateFieldSizeError
+          - TemplateInvalidValueError
+          - TemplateFieldFormatError
+          - TemplateFieldMaxRangeError
+          - TemplateFieldMinRangeError
+          - TemplateProviderNotEntered
+          - TemplateInvalidSubscriberError
+          - TemplateVendorNotFoundError
+          - TemplateMissedProviderError
+          - TemplateProviderNotFoundError
+          - TemplateProviderSubsccriberLinkError
+          - TemplateTradeDispatchRankError
+          - TemplateInvalidTradeForSubscriberError
+          - TemplateStoreNotFoundError
+          - TemplateNotStoresForStateError
+          - TemplateNotStoresForCountryError
+          - TemplateNotStoresForDistrictError
+          - TemplateNotStoresForRegionError
+          - TemplateMultiplePimaryProvidersForTradeStoreError
+          - TemplateDuplicatePrimaryRelationshipError
+          - TemplateAmbiguousDataError
+          - TemplateIncorrectSubscriber
+          - TemplateDuplicateRanking
+          - TemplateLongitudeRangeError
+          - TemplateLatitudeRangeError
+          - InvoiceMaterialPartNameLengthOverflow
+          - TemplateTradeLocationExclusion
+          - TemplateInvalidStateError
+          - TemplateMissedSubscriberError
+          - TemplateMissedStoreIdError
+          - TemplateInvalidSubscriberIdError
+          - TemplateOpenCloseDateError
+          - TemplateInvalidCountryError
+          - TemplateInvalidStateForCountryError
+          - TemplateInvalidLocationTypeError
+          - TemplateMissingFullAndShortNameError
+          - TemplateMissingCountryError
+          - TemplateDuplicatedDataError
+          - TemplateParentLocationNotFoundError
+          - TemplateParseDateTimeError
+          - TemplateParseDecimalError
+          - TemplateSquareValueRangeError
+          - TemplateInvalidSquareMeasureError
+          - TemplateTypeLabelCanNotBeUpdatedError
+          - TemplateTypeLabelHaveToBeLocationForNotInventory
+          - TemplateInvalidPrimarySupplyLocation
+          - TemplateInvalidHomestoreLocationNumber
+          - TemplateErrorDuringCreation
+          - TemplateLocationNotFoundError
+          - TemplateDuplicatedLocationFoundError
+          - TemplateInvalidLocationHeaderError
+          - TemplateDuplicatedLocationHeaderError
+          - TemplateHeaderContainsEmptyFieldsError
+          - TemplateLocHeadersShortHeaderError
+          - TemplateHeaderContainsDuplicatesError
+          - TemplateLocationNotesStoreIdFieldLengthError
+          - TemplateLocationNotesNoteValueFieldLengthError
+          - TemplateErrorInvalidZipCode
+          - TemplateMissingLocationNoteHeader
+          - TemplateMissingLocationNoteIdHeader
+          - TemplateInvalidSecondarySupplyLocation
+          - TemplateLocationWasNotCreated
+          - TemplateTruckNameIsEmpty
+          - TemplateWrongFormat
+          - TemplateSubscriberNotFound
+          - TemplateDuplicatedLocationHeaders
+          - TemplateInvalidHeaders
+          - TemplateInvalidPhoneError
+          - TemplateDuplicateTelecomRecordError
+          - TemplateTelecomRecordExistsError
+          - TemplateInvalidCategory
+          - TemplateDifferentRanksForProviderAssignments
+          - TemplateDuplicateRankError
+          - TemplateProviderNonCompliant
+          - TemplateLocationIsClosed
+          - TemplateProviderWarning
+          - TemplateMultipleProvidersForTradeStoreError
+          - EmptyRequest
+          - InvalidNumberOfParameters
+          - InvoiceOtherUnitTypeInvalid
+          - EmptyLocationOrTradeList
+          - RequestSubscriberIdDoesntMatchUserSubscriberId
+          - StoreIdRequiredError
+          - InvalidUserIdError
+          - InvalidStoreIdError
+          - AmbigiousError
+          - MliHierarchyFiledsCountError
+          - MliHierarchyMaxUserNameError
+          - MliHierarchyDuplicateUserError
+          - MLiHirarchyUserExistInOtherLevelError
+          - MissingLevelsError
+          - DuplicateApprovalLevelsError
+          - InvalidMliLocations
+          - InvalidMlpLocations
+          - ApprovalLevelUsedInRulsetError
+          - GLCodeAmbiguous
+          - GlCodeInvalidResponce
+          - GetRuleSetListError
+          - RuleSetDuplicateNameError
+          - RuleSetDuplicateActionError
+          - RuleSetConflictedActionError
+          - RuleSetRuleSetDoesNotExistsError
+          - RuleSetTradeDoesNotExistError
+          - RuleSetCategoryDoesNotExistError
+          - RuleSetMliLevelDoesNotExistError
+          - GetRuleSet
+          - CreateUpdateRuleSetError
+          - DeleteRuleSet
+          - GetRuleSetCategoriesTradesCountError
+          - GetRuleSetByInvoice
+          - GetCategoryTradeIdsAreSelectedError
+          - ProposalAboveMlpLimitError
+          - ProposalNextLevelHasNoAvailableActionsError
+          - DefaultRuleSetError
+          - RuleSetActionEndStatusError
+          - RuleSetRejectActionEmptyForwardToError
+          - UserFilterGetError
+          - UserFilterCreateUpdateError
+          - UserFilterDeleteError
+          - UserFilterSetAsDefaultError
+          - InvoiceFilterFromAlpProviderError
+          - RegionFilterNotAllowedError
+          - LocationIdFilterNotAllowedError
+          - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+          - PaymenowBannersForProvidersOnly
+          - PaymenowFeatureDisabled
+          - PaymenowBannerInfoNotFound
+          - PaymenowBannerInvalidNavigationUrl
+          - PaymenowRequestedProvidersIsNotAssigned
+          - PaymenowEmptyRequestedProviders
+          - PaymentManagerFeatureDisabled
+          - PaymentManagerFeatureDisabledForSubscriber
+          - PaymentSystemCurrentlyUnavailable
+          - CurrencyNotSupported
+          - PaymentSystemAccountNotFound
+          - FeatureIsOff
+          - EarlyPayFeatureWithoutPaymentManagetFeatureError
+          - FtpTestError
+          - AcceptTermsAndConditionsRequestInvalid
+          - PaymentSystemAccountError
+          - SendReportToFTP
+          - SchedulingError
+          - BadPaymentData
+          - InvoicesCanNotBeRepaid
+          - InvoicesCanNotBeRescheduled
+          - InvalidBillingAddress
+          - PaymentManagerGeneralSettingsNotFound
+          - PaymentManagerEInvoiceSettingsNotFound
+          - BadgeVerificationFailed
+          - BadgeTempPassEmpty
+          - BadgeScanRequired
+          - SolvedIssueSubmitFailed
+          - SolvedIssueInvalidLocationId
+          - SolvedIssueInvalidCategoryId
+          - SolvedIssueInvalidTradeId
+          - SolvedIssueInvalidPriorityId
+          - SolvedIssueInvalidSource
+          - SolvedIssueInvalidProblemCode
+          - SolvedIssueInvalidType
+          - SubmitFeedbackErrorWoStatus
+          - SubmitFeedbackInvalidAnswer
+          - SubmitFeedbackInvalidTrackingNumber
+          - SubmitFeedbackInvalidSubscriber
+          - SubmitFeedbackInvalidScore
+          - SubmitFeedbackUnsatisfactoryCommentRequired
+          - SubmitFeedbackInvalidReviewId
+          - SubmitFeedbackInvalidSetupId
+          - FeedbackSetupInvalidSetupId
+          - S3SaveError
+          - AbsSaveError
+          - GoodDataLoginFailed
+          - GoodDataElementUriError
+          - GoodDataReportResultUriError
+          - GoodDataReportResultEmpty
+          - GoodDataDesReportResCountError
+          - GoodDataDesReportResConvertError
+          - GoodDataDesDisplayFormAttributeEmpty
+          - InvalidProposalAmountLimit
+          - GetApprovalProposalReasonsError
+          - GetEmailRecipientsError
+          - GetAssignProposalReasonsError
+          - ProposalHasBeenVoided
+          - AssetTypeDuplicateNameError
+          - AssetTypeDoesntExistError
+          - AssetTypeFailUpdateRefrigerantPurpose
+          - AssetTypeDeleteFailed
+          - ExistingAssetsFoundForAssetType
+          - CantModifyAssetTypeParentId
+          - InvalidAssetTypeName
+          - AssetTypeInheritanceError
+          - ExistingProposalsFoundForAssetType
+          - InstallPurchaseDateOverflow
+          - WOexistsWithSomeAssets
+          - PartsChangeFailed
+          - PartsReasonCodeError
+          - PartsUseDateError
+          - PartsRefrigerantAlreadyExists
+          - PartsChargeHistoryAlreadyExists
+          - PartsNotFound
+          - BulkPartUseIncorrectWorkOrder
+          - BulkPartsByIdsNotFound
+          - BulkPartsMultipleWosError
+          - BulkPartsIncorrectIsRefrigerantParam
+          - BulkPartsIsRefrigerantCanNotbeChanged
+          - BulkPartsReasonCodeChangeError
+          - BulkPartsInvalidAssetAndReasonCodeParams
+          - BulkPartsInvalidAssetId
+          - BulkPartsInvalidInitialChargeCode
+          - BulkPartsAssetDoesntContainCharge
+          - BulkPartsIsInventoryFlagError
+          - BulkPartsLeakAlreadyInProcessError
+          - BulkPartsInvalidDateRangeError
+          - BulkPartsMoeNumberRequiredError
+          - BulkPartsSystemChargeExceeded
+          - BulkRefrigerantuUageBlocked
+          - BulkIDsNotBeNull
+          - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+          - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+          - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+          - BulkInitialChargeSystemExpansionNotAllowed
+          - BulkInventoryPartIdCanNotBeChanged
+          - BulkInventoryLocationIdCanNotBeChanged
+          - BulkPartsDuplicatedRequest
+          - BulkChangePartsIncorrectRefrigerantType
+          - BulkPartsRetroRetireIsInProgressOnThisDate
+          - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+          - RetrofitRetireCanNotBeRemoved
+          - RetroRetirePartsCantbeChanged
+          - BulkPartsInventoryApiFailed
+          - BulkPartsDuplicated
+          - BulkPartsWorkOrderInProcessing
+          - BadNotificationSubscriptionEventType
+          - RefrigerantUseDateOutOfTheLeakProcessDateRange
+          - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+          - BulkExternalWoCurrentlyDoesntExists
+          - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+          - BulkConnectorOnlyClientAssetsCouldBeProcessed
+          - LeakRecordHasWrongDateValue
+          - HasUncompliedLeakRecordInAnoutherWO
+          - HasUncompletedWOOnAnotherLeakRecord
+          - OnlyOneAssetWorkOrderPair
+          - OneLeakRecordMustBeOnCompletedWO
+          - LeakRecordNotFound
+          - AssetIDWoIdIsRequired
+          - BulkPartsReasonCodeRetrofit
+          - RetrofitRetireWasCancelledNoLeak
+          - FailedToUpdateLeakEvent
+          - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+          - LeakPartUseOnZeroChargeNotAllowed
+          - BulkLeakRecordsAndAuditRequest
+          - LeakRecordsDuplicateRequestDetected
+          - AllLeakRecordFieldsAreRequired
+          - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+          - MlpImportLevelError
+          - UpdateMlpUserLevelError
+          - InvalidHolidayName
+          - DuplicateHolidayName
+          - HolidaysDeleteFailed
+          - HolidaysExcludeInsertFailed
+          - HolidaysUpdateFailed
+          - HolidaysInsertFailed
+          - HolidaysExcludeDeleteFailed
+          - BusinessHoursDeleteFailed
+          - BusinessHoursUpdateFailed
+          - BusinessHoursInsertFailed
+          - InvalidTime
+          - HolidayForDeleteNotFound
+          - InvalidChecklistId
+          - ChecklistNotPopulated
+          - ChecklistNotAssignedForTransfersWO
+          - NoLinkBetweenSubscriberAndProvider
+          - WorkforceCreateContractorError
+          - InvalidCertificateId
+          - MaxThresholdExceeded
+          - MaxTriggerRateExceeded
+          - LeakPriorityIsRequired
+          - MissingRTSettings
+          - ResolutionCodesLimitExceeded
+          - ResolutionCodesAreRequired
+          - RootCauseIsRequired
+          - RootCauseTextIsRequired
+          - NoAccessToSetRootCauseText
+          - RootCauseTextMaxLengthExceeded
+          - ResolutionCodeTextIsRequired
+          - NoAccessToSetResolutionCodeText
+          - ResolutionCodeTextMaxLengthExceeded
+          - ResolutionCodeTextMustBeUnique
+          - ResolutionCodeWithoutFreeTextMustBeUnique
+          - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+          - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+          - AssetCategoriesLimitExceeded
+          - NoAccessToAssetCategories
+          - AssetCategoriesAreRequired
+          - InvalidAssetCategoryId
+          - NoAssetCategoriesOnWorkOrder
+          - RootCausesMustBeForAllWorkOrderAssetCategories
+          - RootCauseTextMustBeUnique
+          - AssetCategoryIsRequired
+          - MultipleRootCausesMethodMustBeUsed
+          - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+          - AssetFilterLocationsLimitExceeded
+          - UnknownStoreId
+          - UsesRefrigerantAttributeNotChanged
+          - AssetTagDuplicate
+          - AssetTagIdDuplicate
+          - UnknownEquipmentType
+          - ParentIdInOtherLocation
+          - UnknownBrandName
+          - CARBRequiredManufacturedDate
+          - CARBRequiredInstallDate
+          - TradeNotFound
+          - AssetDoesntExist
+          - AssetIsNotRefrigerant
+          - AssetCantContainRefrigerant
+          - OnlyRackAssetsContainingCircuits
+          - ConnectorAssetTagIdCanNotBeChanged
+          - ConnectorAssetLocationIdCanNotBeChanged
+          - AssetTagCantBeUpdated
+          - AssetTypeIsNotСonfiguredToManageRTAssets
+          - RefrigerantTrackingNotAvailableForLocation
+          - UsesRefrigerantRequiredByAssetTypeSettings
+          - AssetLocationTradeDoesntCorrespondToWO
+          - AssetLocationSelectedPMmodule
+          - UpdateAssetRepairStatusValidation
+          - HasCircuitsCantBeChange
+          - HasComponentsCantBeChange
+          - CircuitCanNotBeConnectedToCircuit
+          - RTCircuitCanNotBeConnectedToNonRTAsset
+          - RTComponentCanNotBeConnectedToNonRTAsset
+          - ComponentCanNotBeConnectedToComponent
+          - NonRTComponentCanNotBeConnectedToRtAsset
+          - NonRTCircuitCanNotBeConnectedToRtAsset
+          - ComponentCanNotBeConnectedToCircuit
+          - ParentAssetShouldHaveEitherComponentsNorCircuits
+          - ParentAssetCantHaveComponents
+          - ParentAssetCantHaveCircuits
+          - MultipleAssetsFoundForTheRequestedTagId
+          - InvalidBrandName
+          - UnknownBrandId
+          - BrandRestrictedByAssetType
+          - BrandRestrictedBySubscriber
+          - BrandsRestrictedBySubscriber
+          - DeclineWorkOrderFailed
+          - AcceptWorkOrderFailed
+          - WorkOrderWasAccepted
+          - AssetAttachmentsSizeExceeded
+          - SaveMliAuditReportSetting
+          - GetMliAuditReportSetting
+          - SaveMliAuditReportResult
+          - SaveMliAuditReportSendEmailStatus
+          - SaveMliAuditReportFilePath
+          - GetSubscribersEnabledSchedule
+          - SaveMliAuditInfoError
+          - TaxValidationAddNewCompanySettingsError
+          - TaxValidationUpdateCompanySettingsError
+          - ProjectAssociationError
+          - GetProjectsInvoiceAmountsError
+          - TaxCodeNotUniqueError
+          - FieldLengthIsTooLongError
+          - SetTaxCodesBulkError
+          - InvoiceAdditionalApprovalCodeValueError
+          - BulkUpdateInvoicePaymentError
+          - InvoiceLineItemFilterDisabled
+          - InvoiceStatusToRejectProviderNotificationFailed
+          - SortFieldNotAvailableError
+          - ContractServiceExist
+          - ContractServiceCantChangeTrade
+          - ContractServiceCantChangeCategory
+          - ContractServiceCantChangeProvider
+          - ContractServicePMServiceCantChangeTrade
+          - ContractServicePMServiceCantChangeCategory
+          - ContractedServiceNameAlreadyExists
+          - ContractedServiceNameLinkedToRates
+          - WorkRequestDescriptionIsRequired
+          - WorkRequestCallDateIsRequired
+          - WorkRequestIssueIsRequired
+          - WorkRequestCallDateHasWrongFormat
+          - WorkRequestScheduledDateHasWrongFormat
+          - InvalidWorkRequestStatus
+          - InvalidWorkRequestExtendedStatus
+          - InvalidWorkRequestCategory
+          - InvalidWorkRequestPriority
+          - InvalidWorkRequestCurrency
+          - InvalidWorkRequestIssueSetup
+          - InvalidWorkRequestIssueArea
+          - InvalidWorkRequestAsset
+          - WorkRequestAttachmentFileNameIsRequired
+          - WorkRequestAttachmentOriginalNameIsRequired
+          - WorkRequestIssueProblemCodeIsRequired
+          - WorkRequestIssueProblemTypeIsRequired
+          - WorkRequestScheduledDateMustBeGreaterThanCallDate
+          - InvalidWorkRequestId
+          - WorkRequestSearchCallDateFromHasWrongFormat
+          - WorkRequestSearchCallDateToHasWrongFormat
+          - WorkRequestSearchScheduledDateFromHasWrongFormat
+          - WorkRequestSearchScheduledDateToHasWrongFormat
+          - WorkRequestSearchClosedDateFromHasWrongFormat
+          - WorkRequestSearchClosedDateToHasWrongFormat
+          - WorkOrderIsAlreadyCreatedForWorkRequest
+          - WorkRequestIsClosed
+          - WorkRequestClosedReasonIsRequiredForClosedStatus
+          - WorkOrderIdIsRequiredForThisClosedReason
+          - InvalidWorkRequestClosedReason
+          - WorkRequestClosedReasonIsOnlyForClosedStatus
+          - InvalidWorkRequestWorkOrderId
+          - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+          - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+          - InvalidWorkOrderSourceType
+          - DeclineReasonIdIsRequired
+          - DeclineReasonDoesntAllowCustomText
+          - InvalidDeclineReasonId
+          - MultipleWorkOrdersForPurchaseNumber
+          - InvoiceMaterialMakupInvalid
+          - MaterialMarkUpDiscrepancyReasonShouldBeStated
+          - MaterialPriceDiscrepancyReasonShouldBeStated
+          - OtherPriceDiscrepancyReasonShouldBeStated
+          - SubscriberIdIsNotValid
+          - FiscalPeriodIsNotValid
+          - AmountIsNotValid
+          - AmountFormatIsNotValid
+          - CategoryMustBeEmpty
+          - CategoryIsNotValid
+          - TradeMustBeEmpty
+          - TradeIsNotValid
+          - GlCodeMustBeEmpty
+          - GlCodeIsNotValid
+          - LocationMustBeEmpty
+          - LocationIsNotValid
+          - RegionMustBeEmpty
+          - RegionIsNotValid
+          - DistrictMustBeEmpty
+          - DistrictIsNotValid
+          - DuplicateData
+          - PrimaryCategoryMustBeEmpty
+          - PrimaryCategoryIsNotValid
+          - CategoryAndExcludedCategoryCannotSimultaneously
+          - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+          - TradeAndExcludedTradeCannotSimultaneously
+          - GlCodeAndExcludedGlCodeCannotSimultaneously
+          - DuplicateCategories
+          - DuplicateTrades
+          - DuplicateGlCodes
+          - DuplicatePrimaryCategories
+          - LocationNoteMustBeEmpty
+          - LocationNoteIsNotValid
+          - OverlappingCategories
+          - OverlappingPrimaryCategories
+          - OverlappingTrades
+          - OverlappingPrimaryTrades
+          - OverlappingGlCodes
+          - OverlappingLocations
+          - OverlappingRegions
+          - OverlappingDistricts
+          - OverlappingLocationNotes
+          - TaxExemptionErrorApi
+          - OtherLineItemZeroAmount
+          - TravelLineItemsNotNegativeValueRequired
+          - MaterialLineItemsNotNegativeValueRequired
+          - LaborLineItemsNotNegativeValueRequired
+          - AdditionalApprovalCodeSetupIdInvalid
+          - VendorIdIsNotValid
+          - InvalidBatchId
+          - InvalidBatchStatusId
+          - CategoryInUsePMServiceError
+          - CategoryInUseChecklistError
+          - CategoryInUseETAMissedAlertError
+          - CategoryInUseBudgetControl
+          - CategoryInUseConnector
+          - CategoryInUseContractedService
+          - CategoryInUseEDI
+          - CategoryInUseIVR
+          - CategoryInUseFeedbackV2
+          - CategoryInUseProposalApproveReasons
+          - CategoryInUsePaymentManager
+          - CategoryInUseProviderAssignments
+          - CategoryInUseSiteAccess
+          - CategoryInUseAlerts
+          - CategoryInUseOpenWOAlert
+          - CategoryInUseWOAutocopy
+          - CategoryInUseWorkRequest
+          - CategoryInUseWO
+          - CategoryInUseDashboardOverride
+          - CategoryInUseInvoiceAttributes
+          - FeatureIsOn
+          - LocationHierarchyNotFound
+          - LocationHierarchyLevelNotFound
+          - LocationHierarchyParentLevelNotFound
+          - LocationSpaceTypeNotFound
+          - DuplicateRowByValueKey
+          - ParentNotFound
+          - DuplicateSequenceAmongSiblings
+          - SequenceConflictsWithExistingData
+          - SequenceMustBeGreaterThanZero
+          - ValueContainsPathDelimiter
+          - InitializationWarmupError
+          type: string
+      ErrorCode:
+        description: The code of the first error found
+        enum:
+        - NotAllowed
+        - EmptyProvider
+        - InvalidProviderId
+        - UnknownProvider
+        - ProviderAlreadyExists
+        - ProviderIdNotExists
+        - TimeoutExpiredError
+        - EmptyContract
+        - ContractUndefined
+        - EmptySubscriber
+        - InvalidSubscriberId
+        - UnknownSubscriber
+        - InactiveSubscriber
+        - EmptySubscriberId
+        - SubscriberIdNotExists
+        - InternalError
+        - DataNotFound
+        - BadRequest
+        - UnAuthorized
+        - UnSupportedApplication
+        - SubsidiaryUserDisabled
+        - EmptyLocation
+        - InvalidLocationId
+        - UnknownLocation
+        - LocationNotBelongsToSubscriber
+        - EmptyLocationCountry
+        - LocationAlreadyExists
+        - InvalidStoreId
+        - LocationEmptyState
+        - NoAccessToLocation
+        - LocationAddressValidationError
+        - LocationAddressRequestValidationError
+        - InvalidLocationNoteHeader
+        - NoAccessToUpdateProtectedNote
+        - InvalidBusinessHoursFormat
+        - WorkingHoursIntersect
+        - InvalidDayOfWeek
+        - DuplicateDayOfWeek
+        - InvalidBusinessHoursInitialSetup
+        - BusinessHoursIsEmpty
+        - InvalidHolidayRepeatByType
+        - EmptyHolidayListOfDays
+        - EmptyHolidayListOfMonths
+        - InvalidHolidayMonthName
+        - InvalidHolidayNameLength
+        - InvalidHolidayRepeatEvery
+        - DuplicateMonth
+        - InvalidHolidayFrequency
+        - InvalidHolidayStartDate
+        - InvalidCloseAllDay
+        - HolidayDoesNotExist
+        - InvalidFormatParameter
+        - InvalidLocationCity
+        - InvalidLocationZip
+        - InvalidLocationLatitude
+        - InvalidLocationLongitude
+        - InvalidLocationEmail
+        - InvalidLocationName
+        - InvalidLocationState
+        - InvalidLocationAddlAddress
+        - InvalidLocationMainAddress
+        - InvalidLocationCountry
+        - InvalidLocationRegion
+        - InvalidLocationDistrict
+        - InvalidLocationPhone
+        - InvalidLocationContact
+        - InvalidLocationFaxNumber
+        - LocationCountryNotFound
+        - LocationStateNotFound
+        - LocationCityNotFound
+        - LocationIdNotExists
+        - InvalidLocationEmailLength
+        - LocationStateIdNotFound
+        - IncorrectCombinationStateAndStateId
+        - InvalidSubscriberIds
+        - InvalidLocalizationSettings
+        - LandlordResponsibilityNotFound
+        - LandlordResponsibilityAlreadyExists
+        - EmptyLocationIds
+        - AttachmentNotExist
+        - InvalidTradeId
+        - InvalidCategoryId
+        - InvalidOverrideCategoryId
+        - InvalidOverridePriorityId
+        - LeaseNoteExceedMaxLength
+        - InvalidOverrideProviderRank
+        - InvalidOverrideNTE
+        - DuplicateRows
+        - InvalidPriorityId
+        - LocationNotFound
+        - EmptyTrade
+        - InvalidTrade
+        - TradeNotBelongsToSubscriber
+        - InvalidPrimaryTrade
+        - InvalidTradeForSubscriber
+        - InvalidCategoryForSubscriber
+        - GlCodeAlreadyExists
+        - GlCodeNotExists
+        - InvalidGlCodeUpdate
+        - EmptyGlCode
+        - TradeAlreadyExists
+        - InvalidNTETrade
+        - TradeNotExists
+        - TradeAlreadyInUse
+        - TradeWithTheSameNameHasBeenDeleted
+        - TradeInUsePMServices
+        - TradeInUseProposalError
+        - TradeInUseRFPError
+        - TradeInUseChecklistError
+        - TradeInUseBudgetControl
+        - TradeInUseGlCode
+        - TradeInUseDynamicProviderAssignments
+        - TradeInUseInvoice
+        - TradeInUseLandlordResponsibilities
+        - TradeInUseWO
+        - TradeInUseEquipmentType
+        - TradeInUseRFP
+        - TradeInUseConnector
+        - TradeInUseContractedService
+        - TradeInUseIVR
+        - TradeInUseSiteAccess
+        - TradeInUseGLCodes
+        - TradeInUseCIWO
+        - TradeInUseOrganizationPermissions
+        - TradeСreationError
+        - EmptyUser
+        - EmptyCreatedBy
+        - InvalidUserName
+        - NotProviderUser
+        - UserHasNoPermissions
+        - RestrictedAccount
+        - UserAlreadyExists
+        - UserHasNoPermissionsEditWO
+        - UserEmailAddressIsMissing
+        - UserIsNotRTAdmin
+        - InvalidSubsriberProviderId
+        - LanguageNameNotFound
+        - InvalidLanguageId
+        - LanguageIdNotFound
+        - UseBothSubscriberIdProviderId
+        - EmptyWoProblem
+        - InvalidWoProblemSource
+        - InvalidWoProblemDescription
+        - InvalidWoProblemCode
+        - InvalidWoStatus
+        - InvalidWoNte
+        - InvalidWoCaller
+        - InvalidWoCallDate
+        - InvalidWoScheduledDate
+        - InvalidWoScheduledDateGreaterThanMaxAllowed
+        - EmptyWoCategory
+        - InvalidWoCategory
+        - EmptyWoPriority
+        - InvalidWoPriority
+        - InvalidWoCurrency
+        - InvalidWoSetupId
+        - AttachmentsRequired
+        - InvalidWoIdentifier
+        - EquipmentRequired
+        - WoNteOverflow
+        - InvalidWoPurchaseNumber
+        - InvalidWoStateForUpdate
+        - InvalidPagingParameter
+        - InvalidWoNumber
+        - CheckInDenied
+        - CheckOutDenied
+        - WoScheduledDateLessThenReassignDate
+        - WoScheduledDateLessThenCallDate
+        - InvalidWoActionReason
+        - EmptySubscriberProperty
+        - WorkOrderUpdateError
+        - MissedWoNteDetails
+        - InvalidLinkedWoIdentifier
+        - WoIsOnHold
+        - InvalidWoTrade
+        - InvalidStarScore
+        - WorkOrderAlreadyRated
+        - AttachmentThumbnailNotAvailable
+        - InvalidWoIdentifierOrPin
+        - InvalidTimeZoneHeader
+        - RefrigerantWasUsedShouldBeYesOrNo
+        - CheckInDeniedOutsideGeolocation
+        - CheckOutDeniedOutsideGeolocation
+        - LeakDetectorAuditShouldBeCreated
+        - CheckInOutPremature
+        - WorkOrderAttachmentsSizeExceeded
+        - WorkOrderNotFound
+        - WorkOrderCreateError
+        - InvalidWoProjectedCompletionDate
+        - InvalidFollowUpWo
+        - InvalidWeatherEventId
+        - InvalidSiteAuditLinkedWo
+        - InvalidSetupId
+        - IssueListNotFound
+        - InvalidIssueListField
+        - SiteAuditCompleted
+        - CheckSiteAuditError
+        - SaveSiteAuditError
+        - RemoveSiteAuditError
+        - InactiveTemplateType
+        - SiteAuditNotFound
+        - SiteAuditUpdateError
+        - InvalidSiteAuditParameters
+        - InvalidAdditionalApprovalCode
+        - InvalidAdditionalApprovalCodeValue
+        - AdditionalApprovalCodeIsDisabled
+        - InvalidOtherDesc
+        - InvalidTax2Name
+        - InvoiceInconsistentAmounts
+        - InvoiceInvalidTotal
+        - InvoiceTotalGreaterNte
+        - InvoiceExists
+        - CreatingInvoiceError
+        - DuplInvNumber
+        - InvoiceTotalNull
+        - InvComplDateNull
+        - InvDateLessComplDate
+        - InvoiceNotAuto
+        - ESignatureRequired
+        - InvWoNotFound
+        - InvWrongWoCurr
+        - InvWoCurrNotFound
+        - InvoicingDisabled
+        - InvCreationUnexpectedRes
+        - InvoiceInvalidLaborAmount
+        - InvoiceInvalidMaterialAmount
+        - InvDateOld
+        - InvDateGreater
+        - InvoiceMaterialDescriptionLengthOverflow
+        - InvoiceTaxNotValidated
+        - InvoiceMaterialPartNumberLengthOverflow
+        - TaxValidationError
+        - TaxExemptionError
+        - InvalidInvoiceNumber
+        - GetApprovalLevelsError
+        - InvoiceAddUsersToMliLevelsError
+        - InvoiceAddDeleteLocationsToMliLevelUserError
+        - InvoiceUpdateMLiLevelError
+        - InvoiceDeleteMliLevelError
+        - InvoiceDeleteUsersFromMliLevelError
+        - ApprovalLevelNameLengthOverflow
+        - GstTaxError
+        - Tax2Error
+        - GetApprovalLevelsAndLocationsByUserError
+        - GetAssignedUserShortInfoError
+        - AssignAllLocationsToApprovalLevelAndUserError
+        - GetLocationsForApprovalLevelAndAssignedUserError
+        - GetLocationsBySubscriberError
+        - AssignUserWithLocationsToApprovalLevelError
+        - ReAssignUserWithLocationsToNewApprovalLevelError
+        - ReAssignLocationsToApprovalLevelAndUserError
+        - OutstandingBalance
+        - InvoiceTaxDetailsEmpty
+        - InvoiceTaxDetailsIncorrectSum
+        - MultipleUsersForLocationIsNotAllowed
+        - UserAssignedToOtherLevel
+        - UserDoesNotExist
+        - LaborLineItemRequired
+        - MaterialLineItemRequired
+        - InvoiceDoesntExist
+        - InvoiceStarUnstarFailed
+        - InvoiceBatchUpdateInvalidInvoiceStatusError
+        - InvoiceBatchUpdateLimitExceededError
+        - InvoiceNotAvailableForCurrentUser
+        - InvoiceBatchUpdateInvalidRuleSetStructure
+        - InvoiceBatchUpdateInvalidMliStructure
+        - InvoiceBatchUpdateStatusError
+        - InvoiceMaterialUnitTypeInvalid
+        - ExistingBatchNumber
+        - InvoiceResolutionTextRequired
+        - GetInvoiceDefaultApprovalCodesError
+        - InvoiceInvalidTravelAmount
+        - InvoiceTravelDescriptionLengthOverflow
+        - InvoiceTravelUnitTypeInvalid
+        - TravelLineItemRequired
+        - TravelDetailsDisabled
+        - OnOffShoreDisabled
+        - InvoiceInvalidLaborCount
+        - InvoiceInvalidMaterialCount
+        - InvoiceInvalidTravelCount
+        - SubscriberNotRegisteredForTaxValidation
+        - ManyDecimalsInAmountError
+        - DecimalPartQstTaxError
+        - LaborRatesDiscrepancy
+        - PayInvoicesError
+        - InvoiceNumberRequirementsError
+        - InvoiceNumberIncorrect
+        - InvoiceNumberRegExPatternError
+        - GetInvoicesPendingApprovalByLocationError
+        - ReAssignInvoicesToUsersFailed
+        - ReAssignInvoicesUsersMatched
+        - GetUsersForReassignInvoiceError
+        - InvalidTimeRangeActivity
+        - OutsourcedSourceInvoiceNotFound
+        - OthersLineItemsDisabled
+        - InvoiceInvalidOtherAmount
+        - InvoiceInvalidOtherCount
+        - InvoiceOtherDescriptionLengthOverflow
+        - OtherLineItemRequired
+        - OtherLineItemsNotNegativeValueRequired
+        - InvalidLaborSkillLevel
+        - InvalidLaborType
+        - InvalidTechnicianQuantity
+        - GetInvoicesCommonCategoriesError
+        - InvoiceExplainDisputeEmpty
+        - InvoiceAdditionalApprovalCodeHeaderError
+        - TemplateParseSuccess
+        - TemplateIncorrectHeaderError
+        - TemplateEmptyTemplateError
+        - TemplateWrongFieldsCountError
+        - TemplateFieldNotFoundError
+        - TemplateFieldRequiredError
+        - TemplateParseIntError
+        - TemplateFieldSizeError
+        - TemplateInvalidValueError
+        - TemplateFieldFormatError
+        - TemplateFieldMaxRangeError
+        - TemplateFieldMinRangeError
+        - TemplateProviderNotEntered
+        - TemplateInvalidSubscriberError
+        - TemplateVendorNotFoundError
+        - TemplateMissedProviderError
+        - TemplateProviderNotFoundError
+        - TemplateProviderSubsccriberLinkError
+        - TemplateTradeDispatchRankError
+        - TemplateInvalidTradeForSubscriberError
+        - TemplateStoreNotFoundError
+        - TemplateNotStoresForStateError
+        - TemplateNotStoresForCountryError
+        - TemplateNotStoresForDistrictError
+        - TemplateNotStoresForRegionError
+        - TemplateMultiplePimaryProvidersForTradeStoreError
+        - TemplateDuplicatePrimaryRelationshipError
+        - TemplateAmbiguousDataError
+        - TemplateIncorrectSubscriber
+        - TemplateDuplicateRanking
+        - TemplateLongitudeRangeError
+        - TemplateLatitudeRangeError
+        - InvoiceMaterialPartNameLengthOverflow
+        - TemplateTradeLocationExclusion
+        - TemplateInvalidStateError
+        - TemplateMissedSubscriberError
+        - TemplateMissedStoreIdError
+        - TemplateInvalidSubscriberIdError
+        - TemplateOpenCloseDateError
+        - TemplateInvalidCountryError
+        - TemplateInvalidStateForCountryError
+        - TemplateInvalidLocationTypeError
+        - TemplateMissingFullAndShortNameError
+        - TemplateMissingCountryError
+        - TemplateDuplicatedDataError
+        - TemplateParentLocationNotFoundError
+        - TemplateParseDateTimeError
+        - TemplateParseDecimalError
+        - TemplateSquareValueRangeError
+        - TemplateInvalidSquareMeasureError
+        - TemplateTypeLabelCanNotBeUpdatedError
+        - TemplateTypeLabelHaveToBeLocationForNotInventory
+        - TemplateInvalidPrimarySupplyLocation
+        - TemplateInvalidHomestoreLocationNumber
+        - TemplateErrorDuringCreation
+        - TemplateLocationNotFoundError
+        - TemplateDuplicatedLocationFoundError
+        - TemplateInvalidLocationHeaderError
+        - TemplateDuplicatedLocationHeaderError
+        - TemplateHeaderContainsEmptyFieldsError
+        - TemplateLocHeadersShortHeaderError
+        - TemplateHeaderContainsDuplicatesError
+        - TemplateLocationNotesStoreIdFieldLengthError
+        - TemplateLocationNotesNoteValueFieldLengthError
+        - TemplateErrorInvalidZipCode
+        - TemplateMissingLocationNoteHeader
+        - TemplateMissingLocationNoteIdHeader
+        - TemplateInvalidSecondarySupplyLocation
+        - TemplateLocationWasNotCreated
+        - TemplateTruckNameIsEmpty
+        - TemplateWrongFormat
+        - TemplateSubscriberNotFound
+        - TemplateDuplicatedLocationHeaders
+        - TemplateInvalidHeaders
+        - TemplateInvalidPhoneError
+        - TemplateDuplicateTelecomRecordError
+        - TemplateTelecomRecordExistsError
+        - TemplateInvalidCategory
+        - TemplateDifferentRanksForProviderAssignments
+        - TemplateDuplicateRankError
+        - TemplateProviderNonCompliant
+        - TemplateLocationIsClosed
+        - TemplateProviderWarning
+        - TemplateMultipleProvidersForTradeStoreError
+        - EmptyRequest
+        - InvalidNumberOfParameters
+        - InvoiceOtherUnitTypeInvalid
+        - EmptyLocationOrTradeList
+        - RequestSubscriberIdDoesntMatchUserSubscriberId
+        - StoreIdRequiredError
+        - InvalidUserIdError
+        - InvalidStoreIdError
+        - AmbigiousError
+        - MliHierarchyFiledsCountError
+        - MliHierarchyMaxUserNameError
+        - MliHierarchyDuplicateUserError
+        - MLiHirarchyUserExistInOtherLevelError
+        - MissingLevelsError
+        - DuplicateApprovalLevelsError
+        - InvalidMliLocations
+        - InvalidMlpLocations
+        - ApprovalLevelUsedInRulsetError
+        - GLCodeAmbiguous
+        - GlCodeInvalidResponce
+        - GetRuleSetListError
+        - RuleSetDuplicateNameError
+        - RuleSetDuplicateActionError
+        - RuleSetConflictedActionError
+        - RuleSetRuleSetDoesNotExistsError
+        - RuleSetTradeDoesNotExistError
+        - RuleSetCategoryDoesNotExistError
+        - RuleSetMliLevelDoesNotExistError
+        - GetRuleSet
+        - CreateUpdateRuleSetError
+        - DeleteRuleSet
+        - GetRuleSetCategoriesTradesCountError
+        - GetRuleSetByInvoice
+        - GetCategoryTradeIdsAreSelectedError
+        - ProposalAboveMlpLimitError
+        - ProposalNextLevelHasNoAvailableActionsError
+        - DefaultRuleSetError
+        - RuleSetActionEndStatusError
+        - RuleSetRejectActionEmptyForwardToError
+        - UserFilterGetError
+        - UserFilterCreateUpdateError
+        - UserFilterDeleteError
+        - UserFilterSetAsDefaultError
+        - InvoiceFilterFromAlpProviderError
+        - RegionFilterNotAllowedError
+        - LocationIdFilterNotAllowedError
+        - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+        - PaymenowBannersForProvidersOnly
+        - PaymenowFeatureDisabled
+        - PaymenowBannerInfoNotFound
+        - PaymenowBannerInvalidNavigationUrl
+        - PaymenowRequestedProvidersIsNotAssigned
+        - PaymenowEmptyRequestedProviders
+        - PaymentManagerFeatureDisabled
+        - PaymentManagerFeatureDisabledForSubscriber
+        - PaymentSystemCurrentlyUnavailable
+        - CurrencyNotSupported
+        - PaymentSystemAccountNotFound
+        - FeatureIsOff
+        - EarlyPayFeatureWithoutPaymentManagetFeatureError
+        - FtpTestError
+        - AcceptTermsAndConditionsRequestInvalid
+        - PaymentSystemAccountError
+        - SendReportToFTP
+        - SchedulingError
+        - BadPaymentData
+        - InvoicesCanNotBeRepaid
+        - InvoicesCanNotBeRescheduled
+        - InvalidBillingAddress
+        - PaymentManagerGeneralSettingsNotFound
+        - PaymentManagerEInvoiceSettingsNotFound
+        - BadgeVerificationFailed
+        - BadgeTempPassEmpty
+        - BadgeScanRequired
+        - SolvedIssueSubmitFailed
+        - SolvedIssueInvalidLocationId
+        - SolvedIssueInvalidCategoryId
+        - SolvedIssueInvalidTradeId
+        - SolvedIssueInvalidPriorityId
+        - SolvedIssueInvalidSource
+        - SolvedIssueInvalidProblemCode
+        - SolvedIssueInvalidType
+        - SubmitFeedbackErrorWoStatus
+        - SubmitFeedbackInvalidAnswer
+        - SubmitFeedbackInvalidTrackingNumber
+        - SubmitFeedbackInvalidSubscriber
+        - SubmitFeedbackInvalidScore
+        - SubmitFeedbackUnsatisfactoryCommentRequired
+        - SubmitFeedbackInvalidReviewId
+        - SubmitFeedbackInvalidSetupId
+        - FeedbackSetupInvalidSetupId
+        - S3SaveError
+        - AbsSaveError
+        - GoodDataLoginFailed
+        - GoodDataElementUriError
+        - GoodDataReportResultUriError
+        - GoodDataReportResultEmpty
+        - GoodDataDesReportResCountError
+        - GoodDataDesReportResConvertError
+        - GoodDataDesDisplayFormAttributeEmpty
+        - InvalidProposalAmountLimit
+        - GetApprovalProposalReasonsError
+        - GetEmailRecipientsError
+        - GetAssignProposalReasonsError
+        - ProposalHasBeenVoided
+        - AssetTypeDuplicateNameError
+        - AssetTypeDoesntExistError
+        - AssetTypeFailUpdateRefrigerantPurpose
+        - AssetTypeDeleteFailed
+        - ExistingAssetsFoundForAssetType
+        - CantModifyAssetTypeParentId
+        - InvalidAssetTypeName
+        - AssetTypeInheritanceError
+        - ExistingProposalsFoundForAssetType
+        - InstallPurchaseDateOverflow
+        - WOexistsWithSomeAssets
+        - PartsChangeFailed
+        - PartsReasonCodeError
+        - PartsUseDateError
+        - PartsRefrigerantAlreadyExists
+        - PartsChargeHistoryAlreadyExists
+        - PartsNotFound
+        - BulkPartUseIncorrectWorkOrder
+        - BulkPartsByIdsNotFound
+        - BulkPartsMultipleWosError
+        - BulkPartsIncorrectIsRefrigerantParam
+        - BulkPartsIsRefrigerantCanNotbeChanged
+        - BulkPartsReasonCodeChangeError
+        - BulkPartsInvalidAssetAndReasonCodeParams
+        - BulkPartsInvalidAssetId
+        - BulkPartsInvalidInitialChargeCode
+        - BulkPartsAssetDoesntContainCharge
+        - BulkPartsIsInventoryFlagError
+        - BulkPartsLeakAlreadyInProcessError
+        - BulkPartsInvalidDateRangeError
+        - BulkPartsMoeNumberRequiredError
+        - BulkPartsSystemChargeExceeded
+        - BulkRefrigerantuUageBlocked
+        - BulkIDsNotBeNull
+        - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+        - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+        - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+        - BulkInitialChargeSystemExpansionNotAllowed
+        - BulkInventoryPartIdCanNotBeChanged
+        - BulkInventoryLocationIdCanNotBeChanged
+        - BulkPartsDuplicatedRequest
+        - BulkChangePartsIncorrectRefrigerantType
+        - BulkPartsRetroRetireIsInProgressOnThisDate
+        - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+        - RetrofitRetireCanNotBeRemoved
+        - RetroRetirePartsCantbeChanged
+        - BulkPartsInventoryApiFailed
+        - BulkPartsDuplicated
+        - BulkPartsWorkOrderInProcessing
+        - BadNotificationSubscriptionEventType
+        - RefrigerantUseDateOutOfTheLeakProcessDateRange
+        - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+        - BulkExternalWoCurrentlyDoesntExists
+        - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+        - BulkConnectorOnlyClientAssetsCouldBeProcessed
+        - LeakRecordHasWrongDateValue
+        - HasUncompliedLeakRecordInAnoutherWO
+        - HasUncompletedWOOnAnotherLeakRecord
+        - OnlyOneAssetWorkOrderPair
+        - OneLeakRecordMustBeOnCompletedWO
+        - LeakRecordNotFound
+        - AssetIDWoIdIsRequired
+        - BulkPartsReasonCodeRetrofit
+        - RetrofitRetireWasCancelledNoLeak
+        - FailedToUpdateLeakEvent
+        - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+        - LeakPartUseOnZeroChargeNotAllowed
+        - BulkLeakRecordsAndAuditRequest
+        - LeakRecordsDuplicateRequestDetected
+        - AllLeakRecordFieldsAreRequired
+        - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+        - MlpImportLevelError
+        - UpdateMlpUserLevelError
+        - InvalidHolidayName
+        - DuplicateHolidayName
+        - HolidaysDeleteFailed
+        - HolidaysExcludeInsertFailed
+        - HolidaysUpdateFailed
+        - HolidaysInsertFailed
+        - HolidaysExcludeDeleteFailed
+        - BusinessHoursDeleteFailed
+        - BusinessHoursUpdateFailed
+        - BusinessHoursInsertFailed
+        - InvalidTime
+        - HolidayForDeleteNotFound
+        - InvalidChecklistId
+        - ChecklistNotPopulated
+        - ChecklistNotAssignedForTransfersWO
+        - NoLinkBetweenSubscriberAndProvider
+        - WorkforceCreateContractorError
+        - InvalidCertificateId
+        - MaxThresholdExceeded
+        - MaxTriggerRateExceeded
+        - LeakPriorityIsRequired
+        - MissingRTSettings
+        - ResolutionCodesLimitExceeded
+        - ResolutionCodesAreRequired
+        - RootCauseIsRequired
+        - RootCauseTextIsRequired
+        - NoAccessToSetRootCauseText
+        - RootCauseTextMaxLengthExceeded
+        - ResolutionCodeTextIsRequired
+        - NoAccessToSetResolutionCodeText
+        - ResolutionCodeTextMaxLengthExceeded
+        - ResolutionCodeTextMustBeUnique
+        - ResolutionCodeWithoutFreeTextMustBeUnique
+        - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+        - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+        - AssetCategoriesLimitExceeded
+        - NoAccessToAssetCategories
+        - AssetCategoriesAreRequired
+        - InvalidAssetCategoryId
+        - NoAssetCategoriesOnWorkOrder
+        - RootCausesMustBeForAllWorkOrderAssetCategories
+        - RootCauseTextMustBeUnique
+        - AssetCategoryIsRequired
+        - MultipleRootCausesMethodMustBeUsed
+        - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+        - AssetFilterLocationsLimitExceeded
+        - UnknownStoreId
+        - UsesRefrigerantAttributeNotChanged
+        - AssetTagDuplicate
+        - AssetTagIdDuplicate
+        - UnknownEquipmentType
+        - ParentIdInOtherLocation
+        - UnknownBrandName
+        - CARBRequiredManufacturedDate
+        - CARBRequiredInstallDate
+        - TradeNotFound
+        - AssetDoesntExist
+        - AssetIsNotRefrigerant
+        - AssetCantContainRefrigerant
+        - OnlyRackAssetsContainingCircuits
+        - ConnectorAssetTagIdCanNotBeChanged
+        - ConnectorAssetLocationIdCanNotBeChanged
+        - AssetTagCantBeUpdated
+        - AssetTypeIsNotСonfiguredToManageRTAssets
+        - RefrigerantTrackingNotAvailableForLocation
+        - UsesRefrigerantRequiredByAssetTypeSettings
+        - AssetLocationTradeDoesntCorrespondToWO
+        - AssetLocationSelectedPMmodule
+        - UpdateAssetRepairStatusValidation
+        - HasCircuitsCantBeChange
+        - HasComponentsCantBeChange
+        - CircuitCanNotBeConnectedToCircuit
+        - RTCircuitCanNotBeConnectedToNonRTAsset
+        - RTComponentCanNotBeConnectedToNonRTAsset
+        - ComponentCanNotBeConnectedToComponent
+        - NonRTComponentCanNotBeConnectedToRtAsset
+        - NonRTCircuitCanNotBeConnectedToRtAsset
+        - ComponentCanNotBeConnectedToCircuit
+        - ParentAssetShouldHaveEitherComponentsNorCircuits
+        - ParentAssetCantHaveComponents
+        - ParentAssetCantHaveCircuits
+        - MultipleAssetsFoundForTheRequestedTagId
+        - InvalidBrandName
+        - UnknownBrandId
+        - BrandRestrictedByAssetType
+        - BrandRestrictedBySubscriber
+        - BrandsRestrictedBySubscriber
+        - DeclineWorkOrderFailed
+        - AcceptWorkOrderFailed
+        - WorkOrderWasAccepted
+        - AssetAttachmentsSizeExceeded
+        - SaveMliAuditReportSetting
+        - GetMliAuditReportSetting
+        - SaveMliAuditReportResult
+        - SaveMliAuditReportSendEmailStatus
+        - SaveMliAuditReportFilePath
+        - GetSubscribersEnabledSchedule
+        - SaveMliAuditInfoError
+        - TaxValidationAddNewCompanySettingsError
+        - TaxValidationUpdateCompanySettingsError
+        - ProjectAssociationError
+        - GetProjectsInvoiceAmountsError
+        - TaxCodeNotUniqueError
+        - FieldLengthIsTooLongError
+        - SetTaxCodesBulkError
+        - InvoiceAdditionalApprovalCodeValueError
+        - BulkUpdateInvoicePaymentError
+        - InvoiceLineItemFilterDisabled
+        - InvoiceStatusToRejectProviderNotificationFailed
+        - SortFieldNotAvailableError
+        - ContractServiceExist
+        - ContractServiceCantChangeTrade
+        - ContractServiceCantChangeCategory
+        - ContractServiceCantChangeProvider
+        - ContractServicePMServiceCantChangeTrade
+        - ContractServicePMServiceCantChangeCategory
+        - ContractedServiceNameAlreadyExists
+        - ContractedServiceNameLinkedToRates
+        - WorkRequestDescriptionIsRequired
+        - WorkRequestCallDateIsRequired
+        - WorkRequestIssueIsRequired
+        - WorkRequestCallDateHasWrongFormat
+        - WorkRequestScheduledDateHasWrongFormat
+        - InvalidWorkRequestStatus
+        - InvalidWorkRequestExtendedStatus
+        - InvalidWorkRequestCategory
+        - InvalidWorkRequestPriority
+        - InvalidWorkRequestCurrency
+        - InvalidWorkRequestIssueSetup
+        - InvalidWorkRequestIssueArea
+        - InvalidWorkRequestAsset
+        - WorkRequestAttachmentFileNameIsRequired
+        - WorkRequestAttachmentOriginalNameIsRequired
+        - WorkRequestIssueProblemCodeIsRequired
+        - WorkRequestIssueProblemTypeIsRequired
+        - WorkRequestScheduledDateMustBeGreaterThanCallDate
+        - InvalidWorkRequestId
+        - WorkRequestSearchCallDateFromHasWrongFormat
+        - WorkRequestSearchCallDateToHasWrongFormat
+        - WorkRequestSearchScheduledDateFromHasWrongFormat
+        - WorkRequestSearchScheduledDateToHasWrongFormat
+        - WorkRequestSearchClosedDateFromHasWrongFormat
+        - WorkRequestSearchClosedDateToHasWrongFormat
+        - WorkOrderIsAlreadyCreatedForWorkRequest
+        - WorkRequestIsClosed
+        - WorkRequestClosedReasonIsRequiredForClosedStatus
+        - WorkOrderIdIsRequiredForThisClosedReason
+        - InvalidWorkRequestClosedReason
+        - WorkRequestClosedReasonIsOnlyForClosedStatus
+        - InvalidWorkRequestWorkOrderId
+        - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+        - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+        - InvalidWorkOrderSourceType
+        - DeclineReasonIdIsRequired
+        - DeclineReasonDoesntAllowCustomText
+        - InvalidDeclineReasonId
+        - MultipleWorkOrdersForPurchaseNumber
+        - InvoiceMaterialMakupInvalid
+        - MaterialMarkUpDiscrepancyReasonShouldBeStated
+        - MaterialPriceDiscrepancyReasonShouldBeStated
+        - OtherPriceDiscrepancyReasonShouldBeStated
+        - SubscriberIdIsNotValid
+        - FiscalPeriodIsNotValid
+        - AmountIsNotValid
+        - AmountFormatIsNotValid
+        - CategoryMustBeEmpty
+        - CategoryIsNotValid
+        - TradeMustBeEmpty
+        - TradeIsNotValid
+        - GlCodeMustBeEmpty
+        - GlCodeIsNotValid
+        - LocationMustBeEmpty
+        - LocationIsNotValid
+        - RegionMustBeEmpty
+        - RegionIsNotValid
+        - DistrictMustBeEmpty
+        - DistrictIsNotValid
+        - DuplicateData
+        - PrimaryCategoryMustBeEmpty
+        - PrimaryCategoryIsNotValid
+        - CategoryAndExcludedCategoryCannotSimultaneously
+        - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+        - TradeAndExcludedTradeCannotSimultaneously
+        - GlCodeAndExcludedGlCodeCannotSimultaneously
+        - DuplicateCategories
+        - DuplicateTrades
+        - DuplicateGlCodes
+        - DuplicatePrimaryCategories
+        - LocationNoteMustBeEmpty
+        - LocationNoteIsNotValid
+        - OverlappingCategories
+        - OverlappingPrimaryCategories
+        - OverlappingTrades
+        - OverlappingPrimaryTrades
+        - OverlappingGlCodes
+        - OverlappingLocations
+        - OverlappingRegions
+        - OverlappingDistricts
+        - OverlappingLocationNotes
+        - TaxExemptionErrorApi
+        - OtherLineItemZeroAmount
+        - TravelLineItemsNotNegativeValueRequired
+        - MaterialLineItemsNotNegativeValueRequired
+        - LaborLineItemsNotNegativeValueRequired
+        - AdditionalApprovalCodeSetupIdInvalid
+        - VendorIdIsNotValid
+        - InvalidBatchId
+        - InvalidBatchStatusId
+        - CategoryInUsePMServiceError
+        - CategoryInUseChecklistError
+        - CategoryInUseETAMissedAlertError
+        - CategoryInUseBudgetControl
+        - CategoryInUseConnector
+        - CategoryInUseContractedService
+        - CategoryInUseEDI
+        - CategoryInUseIVR
+        - CategoryInUseFeedbackV2
+        - CategoryInUseProposalApproveReasons
+        - CategoryInUsePaymentManager
+        - CategoryInUseProviderAssignments
+        - CategoryInUseSiteAccess
+        - CategoryInUseAlerts
+        - CategoryInUseOpenWOAlert
+        - CategoryInUseWOAutocopy
+        - CategoryInUseWorkRequest
+        - CategoryInUseWO
+        - CategoryInUseDashboardOverride
+        - CategoryInUseInvoiceAttributes
+        - FeatureIsOn
+        - LocationHierarchyNotFound
+        - LocationHierarchyLevelNotFound
+        - LocationHierarchyParentLevelNotFound
+        - LocationSpaceTypeNotFound
+        - DuplicateRowByValueKey
+        - ParentNotFound
+        - DuplicateSequenceAmongSiblings
+        - SequenceConflictsWithExistingData
+        - SequenceMustBeGreaterThanZero
+        - ValueContainsPathDelimiter
+        - InitializationWarmupError
+        type: string
+        readOnly: true
+      ErrorMessage:
+        description: The description of all errors.
+        type: string
+      Data:
+        $ref: '#/definitions/System.Object'
+        description: "Optional\r\n            Gets or Sets the Data object."
+  ServiceChannel.Services.Messaging.Users.DashboardInfo:
+    description: Dashboard details object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique dashboard identifier.
+        type: integer
+      Name:
+        description: Dashboard name.
+        type: string
+      RedirectToDashboard:
+        description: Defines whether a subscriber user is redirected to a dashboard once they log in.
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.Location.GetLocationAttachmentsResponse:
+    type: object
+    properties:
+      LocationAttachments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.LocationAttachment'
+      ErrorCode:
+        format: int32
+        description: 'Numeric identifier that determines the nature of an error. Possible values: `0` - success, otherwise - error.'
+        type: integer
+      Message:
+        description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
+        type: string
+  ServiceChannel.Services.Messaging.Location.LocationAttachment:
+    description: Attachment object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Numeric identifier of the location attachment.
+        type: integer
+      LocationId:
+        format: int32
+        description: Unique ID of the location to which the attachment is added.
+        type: integer
+      StoreId:
+        description: StoreId
+        type: string
+      FileName:
+        description: Filename of the evacuation plan map attachment.
+        type: string
+      FilePath:
+        description: File’s position in the subscriber’s location.
+        type: string
+      Description:
+        description: Description of the evacuation plan map attachment added by the user.
+        type: string
+      UploadDate:
+        format: date-time
+        description: Date and time when the attachment was added.
+        type: string
+      UserId:
+        format: int32
+        description: ID of the user who added the attachment to the location.
+        type: integer
+      UserName:
+        description: Username of the user who added the attachment.
+        type: string
+      AttachmentType:
+        description: 'Numeric identifier of the attachment added. Possible values: `1` - EvacuationPlan.'
+        enum:
+        - EvacuationPlan
+        type: string
+      GetFileLink:
+        type: string
+  ServiceChannel.Services.Messaging.LocationNote.LocationNote:
+    description: Object with the location note details.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Location note numeric identifier.
+        type: integer
+      HeaderId:
+        format: int32
+        description: Unique location note header identifier.
+        type: integer
+      Value:
+        description: Location note content.
+        type: string
+      Header:
+        description: Name of the note.
+        type: string
+  ServiceChannel.Services.Messaging.Location.Location:
+    description: General location details object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique location identifier.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique subscriber identifier.
+        type: integer
+      SubscriberName:
+        type: string
+      StoreId:
+        description: Alphanumeric identifier of the store in the client's system. Assigned by and unique per subscriber.
+        type: string
+      Name:
+        description: Location name.
+        type: string
+      ShortName:
+        description: Shortened location name.
+        type: string
+      Latitude:
+        format: double
+        description: Global position. Latitude.
+        type: number
+      Longitude:
+        format: double
+        description: Global position. Longitude.
+        type: number
+      Distance:
+        format: double
+        description: Distance from GPS coordinate to this location
+        type: number
+      Radius:
+        format: double
+        description: GPS radius for the location.
+        type: number
+      LocationTypeId:
+        format: int32
+        description: Numeric identifier of the location type.
+        type: integer
+      Address1:
+        description: Additional location address.
+        type: string
+      Address2:
+        description: Main location address.
+        type: string
+      City:
+        description: Location city.
+        type: string
+      State:
+        description: State where the location is situated.
+        type: string
+      StateId:
+        format: int32
+        description: Numeric identifier of the location’s state.
+        type: integer
+      Region:
+        description: Part of the country where the location is situated.
+        type: string
+      District:
+        description: Abbreviation of the town or country area where the location is situated.
+        type: string
+      Zip:
+        description: Location ZIP or postal code.
+        type: string
+      Country:
+        description: Abbreviation of the country name where the location is situated.
+        type: string
+      CountryId:
+        format: int32
+        description: Numeric identifier of the country of the location.
+        type: integer
+      ClosedDate:
+        format: date-time
+        description: Last day when the location is open for business.
+        type: string
+      OpenDate:
+        format: date-time
+        description: First day when the location is open for business.
+        type: string
+      Status:
+        description: 'Status of the location. Possible values: *open*, *closed*.'
+        type: string
+      Email:
+        description: Email the location can be contacted at.
+        type: string
+      FaxNumber:
+        description: Fax number the location can be contacted at.
+        type: string
+      Phone:
+        description: Contact phone number of the location.
+        type: string
+      Contact:
+        description: Name of the main person to contact at the location.
+        type: string
+      HasInventory:
+        description: 'Indicates whether it’s an inventory location or not. Possible values: *true*, *false*.'
+        default: false
+        type: boolean
+      SquareValue:
+        format: double
+        description: Square value of the facility.
+        type: number
+      SquareMeasure:
+        description: Unit or system of units for measuring location area.
+        type: string
+      TimeZoneInfoId:
+        format: int32
+        description: Numeric identifier of the location time zone.
+        type: integer
+      TimeZoneShortDescription:
+        description: Location time zone abbreviation.
+        type: string
+      TimeZoneMsName:
+        description: Location time zone Microsoft Name. e.g "Eastern Standard Time"
+        type: string
+      TimeZoneIanaName:
+        description: Location time zone Iana Name. e.g. "America/New_York"
+        type: string
+      TypeLabel:
+        description: '[Inventory location type](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/1209106525/Creating+Inventory+Locations?preview=%2F1209106525%2F1205830388%2FSupply-House-Type.png). Possible values: *Location*, *Warehouse*, *Supply House*, *Truck*.'
+        type: string
+      Supplier:
+        description: Supplier’s location name.
+        type: string
+      CountyId:
+        format: int32
+        description: County numeric identifier.
+        type: integer
+      Notes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.LocationNote.LocationNote'
+      TimeShiftToEST:
+        format: int32
+        type: integer
+      AddressTypeId:
+        format: int32
+        description: Address format pattern Id
+        type: integer
+      FormattedAddress:
+        type: string
+      LocationFormattedAddressTail:
+        type: string
+      IsInternational:
+        default: false
+        type: boolean
+        readOnly: true
+      Address:
+        type: string
+  ServiceChannel.Services.Messaging.Location.ApiLocationModel:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      StoreId:
+        type: string
+      Name:
+        type: string
+      City:
+        type: string
+      State:
+        type: string
+      Zip:
+        type: string
+      Address1:
+        type: string
+      Address2:
+        type: string
+      CountryCode:
+        type: string
+      IsOpened:
+        default: false
+        type: boolean
+      Country:
+        type: string
+      Contact:
+        type: string
+  ServiceChannel.Services.Messaging.Location.GetLandlordResponsibilityResponse:
+    type: object
+    properties:
+      LordResponsibilities:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.LandlordResponsibilityModel'
+  ServiceChannel.Services.WebApi.Models.Response.LocationHierarchy.LocationHierarchyResponse:
+    type: object
+    properties:
+      Nodes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.LocationHierarchy.LocationHierarchyByLevelResponse'
+        readOnly: true
+  ServiceChannel.Services.Messaging.Location.GetUserRegionsResponse:
+    description: Response details object.
+    type: object
+    properties:
+      Regions:
+        description: Regions
+        type: array
+        items:
+          type: string
+      TotalCount:
+        format: int32
+        description: Total number of items on all pages;
+        type: integer
+  ServiceChannel.Services.Messaging.LocationNote.UpdateLocationNoteHeadersApiModelRequest:
+    description: Object containing the details of the location notes.
+    type: object
+    properties:
+      Notes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.LocationNote.UpdateLocationNoteHeaderApiModelRequest'
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Services.Messaging.Location.GetApiLocationResponse:
+    type: object
+    properties:
+      Locations:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.ApiLocationModel'
+  ServiceChannel.Api.Model.Entities.PrimaryCategory:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      SubscriberId:
+        format: int32
+        type: integer
+      UserId:
+        format: int32
+        type: integer
+  ServiceChannel.Services.Messaging.Location.UpdateLocationExRequest:
+    description: Request object to update location details.
+    required:
+    - StoreId
+    - Name
+    type: object
+    properties:
+      StoreId:
+        description: Numeric location identifier in the client’s system.
+        type: string
+      Name:
+        description: Location name.
+        type: string
+      Latitude:
+        format: double
+        description: Global position. Latitude.
+        type: number
+      Longitude:
+        format: double
+        description: Global position. Longitude.
+        type: number
+      Distance:
+        format: double
+        description: Distance from GPS coordinates to the location.
+        type: number
+      Address1:
+        description: Additional location address.
+        type: string
+      Address2:
+        description: Main location address.
+        type: string
+      City:
+        description: Location city.
+        type: string
+      State:
+        description: State where the location is placed.
+        type: string
+      StateId:
+        format: int32
+        description: Numeric identifier of the location’s state.
+        type: integer
+      Region:
+        description: Part of the country where the location is placed.
+        type: string
+      District:
+        description: Abbreviation of the town or country area where the location is placed.
+        type: string
+      Zip:
+        description: Postal code of the location.
+        type: string
+      Country:
+        description: Abbreviation of the country name where the location is placed.
+        type: string
+      CountryId:
+        format: int32
+        description: Numeric identifier of the country of the location.
+        type: integer
+      ClosedDate:
+        format: date-time
+        description: Last day when the location is open for business.
+        type: string
+      OpenDate:
+        format: date-time
+        description: First day when the location is open for business.
+        type: string
+      Email:
+        description: Email the location can be contacted at.
+        type: string
+      Phone:
+        description: Contact phone number of the location.
+        type: string
+      Contact:
+        description: Name of the main person to contact at the location.
+        type: string
+      FaxNumber:
+        description: Fax number the location can be contacted at.
+        type: string
+      LocationTypeId:
+        format: int32
+        description: Numeric identifier of the location type.
+        type: integer
+      SquareValue:
+        format: double
+        description: Square value
+        type: number
+      SquareMeasure:
+        description: Square measure
+        type: string
+  ServiceChannel.Services.Messaging.Location.GetLocationsWithTotalResponse:
+    description: Response details object.
+    type: object
+    properties:
+      Locations:
+        description: Location details.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.Location'
+      TotalCount:
+        format: int64
+        description: Total count of all accessible locations unless one of the filters is filled out. For example, specifying the `Id` filter brings out details of the particular location.
+        type: integer
+  ServiceChannel.Services.Messaging.Users.Limit:
+    description: Object for limit details set for a subscriber user.
+    type: object
+    properties:
+      Amount:
+        format: double
+        description: Limit amount.
+        type: number
+      CurrencyId:
+        format: int32
+        description: Identifier of the currency the limit is set in.
+        type: integer
+  ServiceChannel.Services.Messaging.Location.ExistsDistrictsRequest:
+    description: ExistsDistrictsRequest
+    type: object
+    properties:
+      Districts:
+        description: Districts
+        type: array
+        items:
+          type: string
+  ServiceChannel.Services.Messaging.Location.GetProviderAssignmentExtendedLocationsResponse:
+    type: object
+    properties:
+      Locations:
+        description: Response details object
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.ProviderAssignmentExtendedLocation'
+      AllLocationsCount:
+        format: int32
+        description: Total number of all locations displayed in the response.
+        type: integer
+      TrucksCount:
+        format: int32
+        description: Number of mobile units that move around locations to fix the broken equipment.
+        type: integer
+      LocationsCount:
+        format: int32
+        description: Number of retail locations that have inventory.
+        type: integer
+      WarehousesCount:
+        format: int32
+        description: Number of company-owned locations that supply other locations with parts.
+        type: integer
+      SupplyHousesCount:
+        format: int32
+        description: Number of non-company-owned locations where goods are purchased from.
+        type: integer
+  ServiceChannel.Services.Messaging.Location.LocationWithTimezoneName:
+    description: LocationWithTimezoneName
+    type: object
+    properties:
+      TimezoneName:
+        description: The time zone identifier
+        type: string
+      Id:
+        format: int32
+        description: Unique location identifier.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique subscriber identifier.
+        type: integer
+      SubscriberName:
+        type: string
+      StoreId:
+        description: Alphanumeric identifier of the store in the client's system. Assigned by and unique per subscriber.
+        type: string
+      Name:
+        description: Location name.
+        type: string
+      ShortName:
+        description: Shortened location name.
+        type: string
+      Latitude:
+        format: double
+        description: Global position. Latitude.
+        type: number
+      Longitude:
+        format: double
+        description: Global position. Longitude.
+        type: number
+      Distance:
+        format: double
+        description: Distance from GPS coordinate to this location
+        type: number
+      Radius:
+        format: double
+        description: GPS radius for the location.
+        type: number
+      LocationTypeId:
+        format: int32
+        description: Numeric identifier of the location type.
+        type: integer
+      Address1:
+        description: Additional location address.
+        type: string
+      Address2:
+        description: Main location address.
+        type: string
+      City:
+        description: Location city.
+        type: string
+      State:
+        description: State where the location is situated.
+        type: string
+      StateId:
+        format: int32
+        description: Numeric identifier of the location’s state.
+        type: integer
+      Region:
+        description: Part of the country where the location is situated.
+        type: string
+      District:
+        description: Abbreviation of the town or country area where the location is situated.
+        type: string
+      Zip:
+        description: Location ZIP or postal code.
+        type: string
+      Country:
+        description: Abbreviation of the country name where the location is situated.
+        type: string
+      CountryId:
+        format: int32
+        description: Numeric identifier of the country of the location.
+        type: integer
+      ClosedDate:
+        format: date-time
+        description: Last day when the location is open for business.
+        type: string
+      OpenDate:
+        format: date-time
+        description: First day when the location is open for business.
+        type: string
+      Status:
+        description: 'Status of the location. Possible values: *open*, *closed*.'
+        type: string
+      Email:
+        description: Email the location can be contacted at.
+        type: string
+      FaxNumber:
+        description: Fax number the location can be contacted at.
+        type: string
+      Phone:
+        description: Contact phone number of the location.
+        type: string
+      Contact:
+        description: Name of the main person to contact at the location.
+        type: string
+      HasInventory:
+        description: 'Indicates whether it’s an inventory location or not. Possible values: *true*, *false*.'
+        default: false
+        type: boolean
+      SquareValue:
+        format: double
+        description: Square value of the facility.
+        type: number
+      SquareMeasure:
+        description: Unit or system of units for measuring location area.
+        type: string
+      TimeZoneInfoId:
+        format: int32
+        description: Numeric identifier of the location time zone.
+        type: integer
+      TimeZoneShortDescription:
+        description: Location time zone abbreviation.
+        type: string
+      TimeZoneMsName:
+        description: Location time zone Microsoft Name. e.g "Eastern Standard Time"
+        type: string
+      TimeZoneIanaName:
+        description: Location time zone Iana Name. e.g. "America/New_York"
+        type: string
+      TypeLabel:
+        description: '[Inventory location type](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/1209106525/Creating+Inventory+Locations?preview=%2F1209106525%2F1205830388%2FSupply-House-Type.png). Possible values: *Location*, *Warehouse*, *Supply House*, *Truck*.'
+        type: string
+      Supplier:
+        description: Supplier’s location name.
+        type: string
+      CountyId:
+        format: int32
+        description: County numeric identifier.
+        type: integer
+      Notes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.LocationNote.LocationNote'
+      TimeShiftToEST:
+        format: int32
+        type: integer
+      AddressTypeId:
+        format: int32
+        description: Address format pattern Id
+        type: integer
+      FormattedAddress:
+        type: string
+      LocationFormattedAddressTail:
+        type: string
+      IsInternational:
+        default: false
+        type: boolean
+        readOnly: true
+      Address:
+        type: string
+  ServiceChannel.Services.Messaging.Contracts.Contract:
+    description: Contract object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Numeric identifier of the provider’s assignment.
+        type: integer
+      Rank:
+        format: int32
+        description: Provider’s rank for the trade and location combo in the subscriber’s system.
+        type: integer
+      Contractor:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Providers.Provider'
+      Client:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Subscribers.Subscriber'
+      Trade:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Trade.Trade'
+      Location:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Location.Location'
+      Category:
+        $ref: '#/definitions/ServiceChannel.Api.Model.Entities.Category'
+  ServiceChannel.Services.Messaging.Location.LocationShortModel:
+    description: Shortened location details object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique location identifier.
+        type: integer
+      StoreId:
+        description: Alphanumeric identifier of the store in the client's system. Assigned by and unique per subscriber.
+        type: string
+      Name:
+        description: Location name.
+        type: string
+      Address:
+        description: Main location address.
+        type: string
+      City:
+        description: Location city.
+        type: string
+      State:
+        description: State where the location is situated.
+        type: string
+      Zip:
+        description: Location ZIP or postal code.
+        type: string
+      Phone:
+        description: Contact phone number of the location.
+        type: string
+      Region:
+        description: Part of the country where the location is situated.
+        type: string
+      District:
+        description: Abbreviation of the town or country area where the location is situated.
+        type: string
+      StateId:
+        format: int32
+        description: Numeric identifier of the location’s state.
+        type: integer
+      FullName:
+        type: string
+      AddressAddl:
+        type: string
+      StoreOpen:
+        format: date-time
+        type: string
+      StoreClose:
+        format: date-time
+        type: string
+      Latitude:
+        format: double
+        type: number
+      Longitude:
+        format: double
+        type: number
+      CountyId:
+        format: int32
+        type: integer
+      County:
+        type: string
+      Status:
+        type: string
+      SubscriberId:
+        format: int32
+        type: integer
+      SubscriberName:
+        type: string
+  ServiceChannel.Services.Messaging.Subscribers.Subscriber:
+    required:
+    - Name
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      ShortName:
+        type: string
+      Email:
+        type: string
+      Users:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Users.User'
+      PrimaryCurrency:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Currencies.Currency'
+      IsOutsourcedWorkOn:
+        default: false
+        type: boolean
+      Name:
+        description: "Required Name\r\n            Name - name of the subscriber"
+        type: string
+      Address1:
+        description: Optional
+        type: string
+      Address2:
+        description: Optional
+        type: string
+      Country:
+        description: Optional
+        type: string
+      State:
+        description: Optional
+        type: string
+      City:
+        description: Optional
+        type: string
+      Zip:
+        description: Optional
+        type: string
+      Phone:
+        description: Optional
+        type: string
+      Fax:
+        description: Optional
+        type: string
+      ContactName:
+        description: Optional
+        type: string
+      TimeFormat:
+        type: string
+      DateFormat:
+        type: string
+      DecimalSeparator:
+        type: string
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

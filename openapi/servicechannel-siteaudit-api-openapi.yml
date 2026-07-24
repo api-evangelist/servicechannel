@@ -1,0 +1,4018 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours SiteAudit API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: SiteAudit
+paths:
+  /subscribers/current/locations/{locationId}/siteaudit/templateTypes:
+    get:
+      tags:
+      - SiteAudit
+      summary: Get available audit types for specified location
+      operationId: GETv3_subscribers_current_locations_{locationId}_siteaudit_templateTypes
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: Location identifier
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/locations/{locationId}/siteaudit/templateTypes/{templateTypeId}/auditInfo:
+    get:
+      tags:
+      - SiteAudit
+      summary: Get audit data for specified location and audit type
+      description: "Audit can be created from:\r\n            - completed audit data\r\n            - setup (templates) data\r\n            - mixed completed + setup\r\n            How audit data is combined depends on the loaded setup file to the system and/or availability \r\n            of previous finished audit data."
+      operationId: GETv3_subscribers_current_locations_{locationId}_siteaudit_templateTypes_{templateTypeId}_auditInfo
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: Location identifier
+        required: true
+        type: integer
+        format: int32
+      - name: templateTypeId
+        in: path
+        description: Audit type identifier
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+    post:
+      tags:
+      - SiteAudit
+      summary: Post (save) completed audit to the database
+      operationId: POSTv3_subscribers_current_locations_{locationId}_siteaudit_templateTypes_{templateTypeId}_auditInfo
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: Location identifier
+        required: true
+        type: integer
+        format: int32
+      - name: templateTypeId
+        in: path
+        description: Audit type identifier
+        required: true
+        type: integer
+        format: int32
+      - name: request
+        in: body
+        description: Completed audit data
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternalOld'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/locations/{locationId}/siteaudit/templateTypes/{templateTypeId}/auditInfoWeighted:
+    get:
+      tags:
+      - SiteAudit
+      summary: Get audit data for specified location and audit type for new templates
+      description: "Audit can be created from:\r\n            - completed audit data\r\n            - setup (templates) data\r\n            - mixed completed + setup\r\n            How audit data is combined depends on the loaded setup file to the system and/or availability \r\n            of previous finished audit data."
+      operationId: GETv3_subscribers_current_locations_{locationId}_siteaudit_templateTypes_{templateTypeId}_auditInfoWeighted
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: Location identifier
+        required: true
+        type: integer
+        format: int32
+      - name: templateTypeId
+        in: path
+        description: Audit type identifier
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+    post:
+      tags:
+      - SiteAudit
+      summary: Post (save) completed audit of new type to the database
+      operationId: POSTv3_subscribers_current_locations_{locationId}_siteaudit_templateTypes_{templateTypeId}_auditInfoWeighted
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: Location identifier
+        required: true
+        type: integer
+        format: int32
+      - name: templateTypeId
+        in: path
+        description: Audit type identifier
+        required: true
+        type: integer
+        format: int32
+      - name: request
+        in: body
+        description: Completed audit data
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditDataWeightedExternal'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/locations/auditInfo:
+    post:
+      tags:
+      - SiteAudit
+      summary: Save completed audit to the database
+      operationId: POSTv3_subscribers_current_locations_auditInfo
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: Request object
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternal'
+      responses:
+        '200':
+          description: The audit info for the requested location is provided in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.SaveAuditDataResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            1010 - Invalid site audit parameters"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/locations/auditinfo:
+    get:
+      tags:
+      - SiteAudit
+      summary: Get audit data for specified location and audit type without template information
+      description: Setup data for areas-checklist-checklistItems relationship data are not provided in this method.
+      operationId: GETv3_subscribers_current_locations_auditinfo?locationId={locationId}&templateId={templateId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: query
+        description: Location identifier
+        required: true
+        type: integer
+        format: int32
+      - name: templateId
+        in: query
+        description: Audit type identifier
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The audit info for the requested location is provided in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.GetAuditInfo'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            1010 - Invalid site audit parameters"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/locations/auditinfo/checklist/templates:
+    get:
+      tags:
+      - SiteAudit
+      summary: Get checklist templates by audit template.
+      operationId: GETv3_subscribers_current_locations_auditinfo_checklist_templates?templateId={templateId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: templateId
+        in: query
+        description: Audit type identifier
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Checklist templates are provided in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CheckListTemplateExternal'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            1010 - Invalid site audit parameters"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/locations/auditinfo/checklistitem/templates:
+    get:
+      tags:
+      - SiteAudit
+      summary: Get checklistitem templates by audit template.
+      operationId: GETv3_subscribers_current_locations_auditinfo_checklistitem_templates?templateId={templateId}&checkListTemplateId={checkListTemplateId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: templateId
+        in: query
+        description: Audit type identifier
+        required: true
+        type: integer
+        format: int32
+      - name: checkListTemplateId
+        in: query
+        description: Check list template identifier
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: Checklist templates are provided in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternal'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            1010 - Invalid site audit parameters"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/checkListItems/{checkListItemId}:
+    get:
+      tags:
+      - SiteAudit
+      summary: Get details for specified checklist item
+      description: "Details include:\r\n            - comments with attachments\r\n            - workorders\r\n            - quantity"
+      operationId: GETv3_subscribers_current_siteaudit_checkListItems_{checkListItemId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: checkListItemId
+        in: path
+        description: Identifier of checklist item
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The requested completed audit list is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemDetailsResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/audits/completed:
+    get:
+      tags:
+      - SiteAudit
+      summary: Get completed site audits
+      description: Retrieves a list of completed site audits and their details for the current subscriber.
+      operationId: GETv3_subscribers_current_siteaudit_audits_completed?daysPeriod={daysPeriod}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: daysPeriod
+        in: query
+        description: "Number of days in the past from the current moment. Allows you to find site audits completed over the specified period of time. Any number of days can be entered (no limits).\r\n            <br />When you leave the field empty, the method will return completed audits for the past 365 days."
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The list of completed audits is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditListResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 &mdash; Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 &mdash; Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/report:
+    get:
+      tags:
+      - SiteAudit
+      summary: Get site audit reports
+      description: "Returns a site audit report, its part, or several reports for the current subscriber.\r\n            <br />**Required parameters:**\r\n             • **Option 1**. `auditId`. Use to get a site audit report by ID.\r\n             • **Option 2**. The combination of `fromDate` and `toDate`. Use to get site audit reports for a specific period.\r\n            <br />***Note:*** Site audit reports are also known as *site planning reports* or just *audits*. See [Site Planning Manager](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/551059548/Site+Planning+Manager) for more info."
+      operationId: GETv3_subscribers_current_siteaudit_report?auditId={auditId}&fromDate={fromDate}&toDate={toDate}&country={country}&locationId={locationId}&area={area}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: auditId
+        in: query
+        description: The numeric identifier of the site audit report to return.
+        required: false
+        type: integer
+        format: int32
+      - name: fromDate
+        in: query
+        description: The date from which you want to return site audit reports. The format is `YYYY-MM-DDThh:mm:ss.sssZ`.
+        required: false
+        type: string
+        format: date-time
+      - name: toDate
+        in: query
+        description: The date until which you want to return site audit reports. The format is `YYYY-MM-DDThh:mm:ss.sssZ`.
+        required: false
+        type: string
+        format: date-time
+      - name: country
+        in: query
+        description: The two-letter [ISO 3166-1 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the location country.
+        required: false
+        type: string
+      - name: locationId
+        in: query
+        description: The numeric identifier of the subscriber's property.
+        required: false
+        type: integer
+        format: int32
+      - name: area
+        in: query
+        description: The audited area within the location.
+        required: false
+        type: string
+      responses:
+        '200':
+          description: The requested site audit reports are in the response.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditReportExternal'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            1010 - Invalid site audit parameters"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/completed/{auditId}:
+    get:
+      tags:
+      - SiteAudit
+      summary: Get information on a completed audit
+      description: Returns details of a completed site audit.
+      operationId: GETv3_subscribers_current_siteaudit_completed_{auditId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: auditId
+        in: path
+        description: Unique numeric identifier of the site audit. To get the audit ID, you can run the `GET/subscribers/current/siteaudit/report` method.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The requested site audit info is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditInfo'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            608 &mdash; Do not have access to the location"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 &mdash; Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\r\n            <br/>Error codes:\r\n            1008 &mdash; Audit not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 &mdash; Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/completed:
+    put:
+      tags:
+      - SiteAudit
+      summary: Modify details of a completed audit
+      description: "Allows users to update, delete, and add information for completed site audits. The following audit parameters can be modified:\r\n             • `Areas`\r\n             • `CheckLists`\r\n             • `CheckListItems`\r\n             • `WorkOrderIds`\r\n             • `Quantity`\r\n             • `Issues`\r\n             • `Attachments`\r\n            <br />Use the [GET/subscribers/current/siteaudit/completed/{auditId}](https://developer.servicechannel.com/swagger/index.html#/SiteAudit/GETv3_subscribers_current_siteaudit_completed_%7BauditId%7D) method to get the audit you want to modify."
+      operationId: PUTv3_subscribers_current_siteaudit_completed
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: Request parameters for updating a completed site audit.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditDataExternal'
+      responses:
+        '200':
+          description: The site audit was successfully updated.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.UpdatedCompletedAuditResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            608 &mdash; Do not have access to the location\r\n            1009 &mdash; An error occurred while updating the entries. See the inner exception for details\r\n            1009 &mdash; Validation failed: Site audit must contain at least one checklist item\r\n            1009 &mdash; Validation failed: The range must contain the score\r\n            1009 &mdash; Validation failed: The range must contain the pass threshold value\r\n            1009 &mdash; Unexpected error"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 &mdash; API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\r\n            <br/>Error codes:\r\n            1008 &mdash; The requested audit was not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Something went wrong, and the server was unable to complete your request.\r\n            <br/>Error codes:\r\n            501 &mdash; Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+    post:
+      tags:
+      - SiteAudit
+      summary: Save completed audit to the database
+      operationId: POSTv3_subscribers_current_siteaudit_completed
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: Request object
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternal'
+      responses:
+        '201':
+          description: The audit with status completed is created
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.SaveAuditDataResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            608 - Do not have access to the location.\r\n            999 - Invalid site audit linked work orders\r\n            1005 - Save site audit error.\r\n            1007 - Inactive template type.\r\n            1010 - Invalid site audit parameters"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/{auditId}:
+    get:
+      tags:
+      - SiteAudit
+      summary: Get site audit by Id
+      operationId: GETv3_subscribers_current_siteaudit_{auditId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: auditId
+        in: path
+        description: The numeric identifier of the site audit to return.
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The requested site audit info is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditInfoExternal'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            608 - Do not have access to the location"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\r\n            <br/>Error codes:\r\n            1008 - Audit not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/open:
+    put:
+      tags:
+      - SiteAudit
+      summary: Update audit with open status
+      operationId: PUTv3_subscribers_current_siteaudit_open
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: Open audit info
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditDataExternal'
+      responses:
+        '200':
+          description: The site audit with open status is successfully updated.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.UpdatedOpenAuditResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            608 - Do not have access to the location.\r\n            1003 - Site audit has already been completed\r\n            1009 - Unexpected error"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\r\n            <br/>Error codes:\r\n            1008 - Audit not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+    post:
+      tags:
+      - SiteAudit
+      summary: Save audit with open status to the database
+      operationId: POSTv3_subscribers_current_siteaudit_open
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: Request object
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternal'
+      responses:
+        '201':
+          description: The audit with status open is created
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.SaveAuditDataResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            601 - Invalid location Id.\r\n            1006 - Save site audit error.\r\n            1010 - Invalid site audit parameters"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/audits/filtered:
+    get:
+      tags:
+      - SiteAudit
+      summary: Get the list of filtered site audits
+      description: Allows filtering site audits by status, location ID, location name, username, and audit type. Returns filtered audits for the last 30 days.
+      operationId: GETv3_subscribers_current_siteaudit_audits_filtered?searchValue={searchValue}&status={status}&pageIndex={pageIndex}&pageSize={pageSize}&startDate={startDate}&endDate={endDate}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: searchValue
+        in: query
+        description: "Text field where the following search criteria can be entered:\r\n             • Location ID as specified by the subscriber in the location details\r\n             • Location name\r\n             • Username\r\n             • Audit type\r\n            <br />The value you enter will be searched for across all these 4 criteria."
+        required: false
+        type: string
+      - name: status
+        in: query
+        description: 'Site audit status: *Open*, *Completed*, *Undefined*.'
+        required: false
+        type: string
+        enum:
+        - Undefined
+        - Open
+        - Completed
+      - name: pageIndex
+        in: query
+        description: Sequence of pages. Enter `1` to view the first page; enter `2` to view the next page; etc.
+        required: false
+        type: integer
+        format: int32
+      - name: pageSize
+        in: query
+        description: Number of site audits that should be displayed in the response. No limits per page. When left empty, the default number of 20 audits is used.
+        required: false
+        type: integer
+        format: int32
+      - name: startDate
+        in: query
+        description: Optional start date for filtering audits. If provided, only audits created or completed after this date will be included.
+        required: false
+        type: string
+        format: date-time
+      - name: endDate
+        in: query
+        description: Optional end date for filtering audits. If provided, only audits created or completed before this date will be included.
+        required: false
+        type: string
+        format: date-time
+      responses:
+        '200':
+          description: The list of filtered site audits is in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.RequestHandlers.SiteAudit.GetFilteredAuditListResponse'
+        '401':
+          description: "The requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 &mdash; API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 &mdash; Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/open/{auditId}:
+    delete:
+      tags:
+      - SiteAudit
+      summary: Remove open audit
+      operationId: DELETEv3_subscribers_current_siteaudit_open_{auditId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: auditId
+        in: path
+        description: Audit Id
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The site audit info is successfully deleted.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            1006 - RemoveSiteAuditError.\r\n            1010 - InvalidSiteAuditParameters"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\r\n            <br/>Error codes:\r\n            1008 - Audit not found"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/locations/checkAuditInfo:
+    get:
+      tags:
+      - SiteAudit
+      summary: Check if the site audit can be created
+      operationId: GETv3_subscribers_current_locations_checkAuditInfo?locationId={locationId}&templateTypeId={templateTypeId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: query
+        description: Location Id
+        required: true
+        type: integer
+        format: int32
+      - name: templateTypeId
+        in: query
+        description: Template Type Id
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The site audit can be created.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            1010 - InvalidSiteAuditParameters"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/{auditId}/linkedWorkOrderIds:
+    get:
+      tags:
+      - SiteAudit
+      summary: Get an array of workOrderIDs linked to the Site Audit
+      operationId: GETv3_subscribers_current_siteaudit_{auditId}_linkedWorkOrderIds
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: auditId
+        in: path
+        description: Audit Id
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The requested workOrderId list is in the response.
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+definitions:
+  ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListExternal:
+    description: Information on the checklists.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the checklist.
+        type: integer
+      Name:
+        description: Checklist name, for example, *Restroom* or *Dining room*.
+        type: string
+      Unlisted:
+        default: false
+        type: boolean
+      SortOrder:
+        format: int32
+        description: Sorting order of the checklist.
+        type: integer
+      CheckListItems:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListItemExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.AuditTypeExternal:
+    description: Object containing information on audit template types.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the template. The template determines the audit type.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique numeric identifier of the subscriber.
+        type: integer
+      Name:
+        description: Template name.
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.SavedAuditQuantityExternal:
+    description: Quantity or dollar cost of the inspected checklist items.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Quantity record ID.
+        type: integer
+      Value:
+        format: int32
+        description: Value showing either the quantity or the dollar amount of the items that have been inspected.
+        type: integer
+      Unit:
+        description: 'Shows whether the auditor captured the **Quantity** or the **Dollar Cost** of the inspected item. Possible response values: `Quantity` and `Dollars`.'
+        type: string
+  ServiceChannel.Services.RequestHandlers.SiteAudit.GetFilteredAuditListResponse:
+    type: object
+    properties:
+      UserName:
+        type: string
+      Locations:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.LocationExternal'
+      TemplateTypes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditTypeExternal'
+      FilteredAudits:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditInfoExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.GetAuditInfo:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      StartDate:
+        format: date-time
+        type: string
+      Emails:
+        type: string
+      Areas:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.IssueAttachmentExternal:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      RemoteName:
+        type: string
+      RemoteNameResized:
+        type: string
+      FileName:
+        type: string
+      ContentUrl:
+        type: string
+      ContentUrlResized:
+        type: string
+      ContentType:
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.CheckListExternal:
+    type: object
+    properties:
+      Name:
+        type: string
+      Unlisted:
+        default: false
+        type: boolean
+      SortOrder:
+        format: int32
+        type: integer
+      CheckListItems:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.AuditAreaWeightedExternal:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      SortOrder:
+        format: int32
+        type: integer
+      CheckLists:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CheckListWeightedExternal'
+      WorkOrderIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+  ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Description:
+        type: string
+      Date:
+        format: date-time
+        type: string
+      Attachments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.IssueAttachmentExternal'
+      Persistent:
+        default: false
+        type: boolean
+      UserName:
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueAttachmentModelExternal:
+    type: object
+    properties:
+      RemoteName:
+        type: string
+      RemoteNameResized:
+        type: string
+      FileName:
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditInfoModelExternal:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Date:
+        type: string
+      Score:
+        format: int32
+        type: integer
+      AreaName:
+        type: string
+      CheckListName:
+        type: string
+      ItemName:
+        type: string
+      Range:
+        type: array
+        items:
+          format: int32
+          type: integer
+      PassThreshold:
+        format: int32
+        type: integer
+      System:
+        format: int32
+        type: integer
+      Comments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueModelExternal'
+      WorkOrderIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      Quantity:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditQuantityModelExternal'
+      CanBeExpanded:
+        default: false
+        type: boolean
+        readOnly: true
+  ServiceChannel.Services.Messaging.SiteAudit.SavedAuditAreaExternal:
+    description: Information on the inspected areas.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the area that was inspected.
+        type: integer
+      Name:
+        description: Area name, for example, *Exterior* or *Interior*.
+        type: string
+      SortOrder:
+        format: int32
+        description: Sorting order of the area.
+        type: integer
+      CheckLists:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.CheckListRequest:
+    type: object
+    properties:
+      Name:
+        type: string
+      Unlisted:
+        default: false
+        type: boolean
+      SortOrder:
+        format: int32
+        type: integer
+      CheckListItems:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemRequest'
+  ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditListResponse:
+    description: Object containing general info on completed audits.
+    type: object
+    properties:
+      UserName:
+        description: Username of the person who has authorized and is sending the API request.
+        type: string
+      Locations:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.LocationExternal'
+      TemplateTypes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditTypeExternal'
+      CompletedAudits:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditInfoExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.UpdatedCheckListItemExternal:
+    description: Parameters for updating the checklist items.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the checklist item.
+        type: integer
+      Name:
+        description: Checklist item name, for example, *Hand dryer* or *Sink*.
+        type: string
+      Description:
+        description: Detailed description/instruction for the checklist item.
+        type: string
+      Score:
+        format: int32
+        description: "Shows how the checklist item was rated. The response value depends on the rating system applied:\r\n             • `1`: In the **Pass/Fail** rating system, it stands for the **Fail** answer.\r\n             • `2`: In the **Pass/Fail** rating system, it stands for the **Pass** answer. \r\n             • `numeric value`: In the **Weighted** rating system, a custom numeric value is assigned to each option: **Good**, **Fair**, and **Fail**.\r\n             • `0–10`: In the **Numeric** rating system, a value from 0 to 10 can be used to rate the item.\r\n             • `0–100`: In the **Percentage** rating system, a value from 0% to 100% can be used to rate the item."
+        type: integer
+      System:
+        format: int32
+        description: "Rating system that was applied to the checklist item. Possible values:\r\n             • `1`: For the **Pass/Fail** rating system\r\n             • `2`: For the **Numeric** rating system\r\n             • `3`: For the **Weighted** rating system\r\n             • `4`: For the **Percentage** rating system. When this rating system is used, the `Score` value is displayed in percentages.\r\n            <br />Learn more about each rating system in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/550928611/Building+a+Site+Audit+in+an+Excel+Template)."
+        type: integer
+      Date:
+        format: date-time
+        description: Date and time when the checklist item was inspected and rated. The format is YYYY-MM-DDThh:mm:ss.sssZ.
+        type: string
+      Unlisted:
+        default: false
+        type: boolean
+      CheckListItemImpact:
+        description: "Checklist item’s impact on the total audit score. Possible input values:\r\n             • `Veto`: Means that this item has the highest impact on the audit score. When at least one of the veto checklist items is rated as **Fail**, the total score of the audit drops to 1%.\r\n             • `Ignore`: Means that this item is ignored when the audit score is calculated.\r\n             • `Empty value`: Means that this checklist item is counted as a regular item."
+        type: string
+      UseNumericRatingSystem:
+        default: false
+        type: boolean
+      PassThreshold:
+        format: int32
+        description: Minimum rating value that is sufficient to pass the audit. Can be in numbers or in percentages based on the rating system applied to the checklist item. See the `System` parameter.
+        type: integer
+      Range:
+        description: Range of numbers displayed to the user during the audit, allowing the auditor to rate the item. Permits selecting a score on a 0–10 scale or from 0% to 100%.
+        type: array
+        items:
+          format: int32
+          type: integer
+      Issues:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditIssueExternal'
+      WorkOrderIds:
+        description: Tracking numbers of the work orders created in the event of the checklist item inspection.
+        type: array
+        items:
+          format: int32
+          type: integer
+      Quantity:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditQuantityExternal'
+        description: Quantity of items that have been inspected.
+  ServiceChannel.Services.Messaging.SiteAudit.WorkOrder:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      ProblemCode:
+        type: string
+      Priority:
+        type: string
+      ScheduledDate:
+        format: date-time
+        type: string
+      Description:
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternal:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      SortOrder:
+        format: int32
+        type: integer
+      CheckLists:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CheckListExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.AuditAreaRequest:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      SortOrder:
+        format: int32
+        type: integer
+      CheckLists:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CheckListRequest'
+  ServiceChannel.Services.Messaging.SiteAudit.AuditDataWeightedExternal:
+    type: object
+    properties:
+      StartDate:
+        format: date-time
+        type: string
+      FinishDate:
+        format: date-time
+        type: string
+      Areas:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaWeightedExternal'
+      WorkOrderIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      Emails:
+        type: string
+      SendEmails:
+        default: false
+        type: boolean
+      Language:
+        type: string
+      Source:
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueModelExternal:
+    type: object
+    properties:
+      Date:
+        type: string
+      Comment:
+        type: string
+      UserName:
+        type: string
+      Attachments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueAttachmentModelExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditQuantityExternal:
+    description: Parameters for updating the quantity or dollar cost of the inspected checklist items.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Quantity record ID.
+        type: integer
+      Value:
+        format: int32
+        description: Value showing either the quantity or the dollar cost of the inspected items. Check the `Type` parameter’s value.
+        type: integer
+      Type:
+        description: 'Value type. Possible values: `Quantity` and `Dollar`.'
+        enum:
+        - Dollar
+        - Quantity
+        type: string
+      Unit:
+        description: 'Shows whether the auditor captured the **Quantity** or the **Dollar cost** of the inspected item. Possible values: `Quantity` and `Dollar`.'
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticWeightedExternal:
+    type: object
+    properties:
+      CheckListItemId:
+        format: int32
+        type: integer
+      Date:
+        format: date-time
+        type: string
+      Score:
+        format: int32
+        type: integer
+      System:
+        format: int32
+        type: integer
+      Range:
+        type: array
+        items:
+          format: int32
+          type: integer
+      PassThreshold:
+        format: int32
+        type: integer
+      WorkOrdersCount:
+        format: int32
+        type: integer
+      CommentsCount:
+        format: int32
+        type: integer
+      AttachmentsCount:
+        format: int32
+        type: integer
+      QuantityCount:
+        format: int32
+        type: integer
+  ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditDataExternal:
+    description: Parameters for updating general audit info.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the completed site audit.
+        type: integer
+      StoreId:
+        format: int32
+        description: Unique numeric identifier of the location where the site audit was conducted.
+        type: integer
+      TemplateTypeId:
+        format: int32
+        description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
+        type: integer
+      Language:
+        description: Language that was used to conduct the audit. Use the two-letter abbreviation, for example, **EN**.
+        type: string
+      SendEmails:
+        description: "Specifies whether an email notification was sent out upon completing the site audit. Possible input values:\r\n             • `true`: The audit results were sent to the specified recipient(s). Use the `Emails` parameter to add the recipients.\r\n             • `false`: The audit results were not emailed to anyone."
+        default: false
+        type: boolean
+      Emails:
+        description: "Email address(es) to which the audit results were sent out upon completing the audit. Check the `Sent` parameter in the response to see whether the audit results were successfully sent out to the specified recipients.\r\n            <br />Learn more about the email list for site audits in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/552173744/Configuring+an+Email+List+for+Site+Audit+Reports)."
+        type: string
+      Status:
+        description: Site audit status. Set the status value to `2` (`Completed`).
+        enum:
+        - Undefined
+        - Open
+        - Completed
+        type: string
+      Source:
+        type: string
+      Areas:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditAreaExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal:
+    type: object
+    properties:
+      Value:
+        format: int32
+        type: integer
+      Type:
+        enum:
+        - Dollar
+        - Quantity
+        type: string
+      Unit:
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.UpdatedOpenAuditResponse:
+    type: object
+    properties:
+      IsSuccess:
+        default: false
+        type: boolean
+      Sent:
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.CheckListExternalOld:
+    type: object
+    properties:
+      Name:
+        type: string
+      TemplateName:
+        type: string
+      Unlisted:
+        default: false
+        type: boolean
+      SortOrder:
+        format: int32
+        type: integer
+      WorkOrderIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      CheckListItems:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternalOld'
+  ServiceChannel.Services.Messaging.SiteAudit.SaveAuditDataResponse:
+    type: object
+    properties:
+      Saved:
+        default: false
+        type: boolean
+      Sent:
+        type: string
+      AuditId:
+        format: int32
+        type: integer
+  ServiceChannel.Services.Messaging.SiteAudit.AuditInfoExternal:
+    description: Object containing audit details.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the completed audit.
+        type: integer
+      LocationId:
+        format: int32
+        description: Unique numeric identifier of the location — generated by the system.
+        type: integer
+      StartDate:
+        format: date-time
+        description: Date and time when the site audit was started. The format is YYYY-MM-DDThh:mm:ss.sss.
+        type: string
+      EndDate:
+        format: date-time
+        description: Date and time when the site audit was completed. The format is YYYY-MM-DDThh:mm:ss.sss.
+        type: string
+      Status:
+        description: Unique numeric identifier of the status. The response value `2` stands for the *Completed* status.
+        enum:
+        - Undefined
+        - Open
+        - Completed
+        type: string
+      TemplateTypeId:
+        format: int32
+        description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
+        type: integer
+      UserName:
+        description: Username of the person who conducted the audit.
+        type: string
+      UnauditedItems:
+        format: int32
+        description: Number of checklist items that were not audited.
+        type: integer
+  ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditInfoExternal:
+    description: Object containing audit details.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the completed audit.
+        type: integer
+      LocationId:
+        format: int32
+        description: Unique numeric identifier of the location — generated by the system.
+        type: integer
+      StartDate:
+        format: date-time
+        description: Date and time when the site audit was started. The format is YYYY-MM-DDThh:mm:ss.sss.
+        type: string
+      EndDate:
+        format: date-time
+        description: Date and time when the site audit was completed. The format is YYYY-MM-DDThh:mm:ss.sss.
+        type: string
+      TemplateTypeId:
+        format: int32
+        description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
+        type: integer
+      UserName:
+        description: Username of the person who conducted the audit.
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditIssueAttachmentExternal:
+    description: Parameters for updating the attachments added to the checklist item.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Attachment ID.
+        type: integer
+      FileName:
+        description: File name of the attachment.
+        type: string
+      RemoteName:
+        description: Remote name of the attached file.
+        type: string
+      RemoteNameResized:
+        description: File name that has been resized.
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListItemExternal:
+    description: Information on the inspected checklist items.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the checklist item.
+        type: integer
+      Name:
+        description: Item name, for example, *Hand dryer* or *Sink*.
+        type: string
+      Description:
+        description: Detailed description/instruction for the checklist item.
+        type: string
+      Score:
+        format: int32
+        description: "Shows how the checklist item was rated. The response value depends on the rating system applied.\r\n             • `-1`: The item was marked as **Not applicable**.\r\n             • `1`: In the **Pass/Fail** rating system, it stands for the **Fail** answer.\r\n             • `2`: In the **Pass/Fail** rating system, it stands for the **Pass** answer.\r\n             • `numeric value`: In the **Weighted** rating system, a custom numeric value is assigned to each option: **Good**, **Fair**, and **Fail**.\r\n             • `0–10`: In the **Numeric** rating system, a value from 0 to 10 can be used to rate the item.\r\n             • `0–100`: In the **Percentage** rating system, a value from 0% to 100% can be used to rate the item."
+        type: integer
+      System:
+        format: int32
+        description: "Rating system that was applied to the checklist item. Possible response values:\r\n             • `1`: For the **Pass/Fail** rating system\r\n             • `2`: For the **Numeric** rating system\r\n             • `3`: For the **Weighted** rating system\r\n             • `4`: For the **Percentage** rating system. When this rating system is used, the `Score` value is displayed in percentages.\r\n            <br />Learn more about each rating system in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/550928611/Building+a+Site+Audit+in+an+Excel+Template)."
+        type: integer
+      Date:
+        format: date-time
+        description: Date and time when the checklist item was inspected and rated. The format is `YYYY-MM-DDThh:mm:ss.sss`.
+        type: string
+      DateStr:
+        description: Date when the checklist item was inspected and rated. The format is `MMM DD, YYYY`.
+        type: string
+      Unlisted:
+        default: false
+        type: boolean
+      CheckListItemImpact:
+        description: "Checklist item’s impact on the total audit score. Possible response values:\r\n             • `Veto`: Means that this item has the highest impact on the audit score. When at least one of the veto checklist items is rated as **Fail**, the total score of the audit drops to 1%.\r\n             • `Ignore`: Means that this item is ignored when the audit score is calculated.\r\n             • `Empty value`: When the method returns an empty value, it means that this checklist item is counted as a regular item."
+        type: string
+      UseNumericRatingSystem:
+        default: false
+        type: boolean
+      PassThreshold:
+        format: int32
+        description: Minimum rating value that is sufficient to pass the audit. Can be in numbers or percentages based on the rating system applied to the checklist item. See the `System` parameter.
+        type: integer
+      Range:
+        description: Range of numbers displayed to the user during the audit, allowing the auditor to rate the item. Permits selecting a score on a 0–10 scale or from 0% to 100%.
+        type: array
+        items:
+          format: int32
+          type: integer
+      Issues:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueExternal'
+      WorkOrderIds:
+        description: Tracking numbers of the work orders created in the event of the checklist item inspection.
+        type: array
+        items:
+          format: int32
+          type: integer
+      Quantity:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditQuantityExternal'
+      PreviousAuditInfoList:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditInfoModelExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternalOld:
+    type: object
+    properties:
+      Name:
+        type: string
+      Description:
+        type: string
+      Status:
+        format: int32
+        type: integer
+      StatusNumeric:
+        format: int32
+        type: integer
+      UseNumericRatingSystem:
+        default: false
+        type: boolean
+      Date:
+        format: date-time
+        type: string
+      Unlisted:
+        default: false
+        type: boolean
+      WorkOrderIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      Issues:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
+      Quantity:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
+      CheckListItemImpact:
+        type: string
+      StatisticItems:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticExternal'
+  ServiceChannel.Services.Messaging.ErrorResponse:
+    description: The error response object
+    type: object
+    properties:
+      ErrorCodes:
+        description: The list of error codes. Go to /basics/general/response-codes/#internal-error-codes-and-messages to map error codes to error reasons.
+        type: array
+        items:
+          enum:
+          - NotAllowed
+          - EmptyProvider
+          - InvalidProviderId
+          - UnknownProvider
+          - ProviderAlreadyExists
+          - ProviderIdNotExists
+          - TimeoutExpiredError
+          - EmptyContract
+          - ContractUndefined
+          - EmptySubscriber
+          - InvalidSubscriberId
+          - UnknownSubscriber
+          - InactiveSubscriber
+          - EmptySubscriberId
+          - SubscriberIdNotExists
+          - InternalError
+          - DataNotFound
+          - BadRequest
+          - UnAuthorized
+          - UnSupportedApplication
+          - SubsidiaryUserDisabled
+          - EmptyLocation
+          - InvalidLocationId
+          - UnknownLocation
+          - LocationNotBelongsToSubscriber
+          - EmptyLocationCountry
+          - LocationAlreadyExists
+          - InvalidStoreId
+          - LocationEmptyState
+          - NoAccessToLocation
+          - LocationAddressValidationError
+          - LocationAddressRequestValidationError
+          - InvalidLocationNoteHeader
+          - NoAccessToUpdateProtectedNote
+          - InvalidBusinessHoursFormat
+          - WorkingHoursIntersect
+          - InvalidDayOfWeek
+          - DuplicateDayOfWeek
+          - InvalidBusinessHoursInitialSetup
+          - BusinessHoursIsEmpty
+          - InvalidHolidayRepeatByType
+          - EmptyHolidayListOfDays
+          - EmptyHolidayListOfMonths
+          - InvalidHolidayMonthName
+          - InvalidHolidayNameLength
+          - InvalidHolidayRepeatEvery
+          - DuplicateMonth
+          - InvalidHolidayFrequency
+          - InvalidHolidayStartDate
+          - InvalidCloseAllDay
+          - HolidayDoesNotExist
+          - InvalidFormatParameter
+          - InvalidLocationCity
+          - InvalidLocationZip
+          - InvalidLocationLatitude
+          - InvalidLocationLongitude
+          - InvalidLocationEmail
+          - InvalidLocationName
+          - InvalidLocationState
+          - InvalidLocationAddlAddress
+          - InvalidLocationMainAddress
+          - InvalidLocationCountry
+          - InvalidLocationRegion
+          - InvalidLocationDistrict
+          - InvalidLocationPhone
+          - InvalidLocationContact
+          - InvalidLocationFaxNumber
+          - LocationCountryNotFound
+          - LocationStateNotFound
+          - LocationCityNotFound
+          - LocationIdNotExists
+          - InvalidLocationEmailLength
+          - LocationStateIdNotFound
+          - IncorrectCombinationStateAndStateId
+          - InvalidSubscriberIds
+          - InvalidLocalizationSettings
+          - LandlordResponsibilityNotFound
+          - LandlordResponsibilityAlreadyExists
+          - EmptyLocationIds
+          - AttachmentNotExist
+          - InvalidTradeId
+          - InvalidCategoryId
+          - InvalidOverrideCategoryId
+          - InvalidOverridePriorityId
+          - LeaseNoteExceedMaxLength
+          - InvalidOverrideProviderRank
+          - InvalidOverrideNTE
+          - DuplicateRows
+          - InvalidPriorityId
+          - LocationNotFound
+          - EmptyTrade
+          - InvalidTrade
+          - TradeNotBelongsToSubscriber
+          - InvalidPrimaryTrade
+          - InvalidTradeForSubscriber
+          - InvalidCategoryForSubscriber
+          - GlCodeAlreadyExists
+          - GlCodeNotExists
+          - InvalidGlCodeUpdate
+          - EmptyGlCode
+          - TradeAlreadyExists
+          - InvalidNTETrade
+          - TradeNotExists
+          - TradeAlreadyInUse
+          - TradeWithTheSameNameHasBeenDeleted
+          - TradeInUsePMServices
+          - TradeInUseProposalError
+          - TradeInUseRFPError
+          - TradeInUseChecklistError
+          - TradeInUseBudgetControl
+          - TradeInUseGlCode
+          - TradeInUseDynamicProviderAssignments
+          - TradeInUseInvoice
+          - TradeInUseLandlordResponsibilities
+          - TradeInUseWO
+          - TradeInUseEquipmentType
+          - TradeInUseRFP
+          - TradeInUseConnector
+          - TradeInUseContractedService
+          - TradeInUseIVR
+          - TradeInUseSiteAccess
+          - TradeInUseGLCodes
+          - TradeInUseCIWO
+          - TradeInUseOrganizationPermissions
+          - TradeСreationError
+          - EmptyUser
+          - EmptyCreatedBy
+          - InvalidUserName
+          - NotProviderUser
+          - UserHasNoPermissions
+          - RestrictedAccount
+          - UserAlreadyExists
+          - UserHasNoPermissionsEditWO
+          - UserEmailAddressIsMissing
+          - UserIsNotRTAdmin
+          - InvalidSubsriberProviderId
+          - LanguageNameNotFound
+          - InvalidLanguageId
+          - LanguageIdNotFound
+          - UseBothSubscriberIdProviderId
+          - EmptyWoProblem
+          - InvalidWoProblemSource
+          - InvalidWoProblemDescription
+          - InvalidWoProblemCode
+          - InvalidWoStatus
+          - InvalidWoNte
+          - InvalidWoCaller
+          - InvalidWoCallDate
+          - InvalidWoScheduledDate
+          - InvalidWoScheduledDateGreaterThanMaxAllowed
+          - EmptyWoCategory
+          - InvalidWoCategory
+          - EmptyWoPriority
+          - InvalidWoPriority
+          - InvalidWoCurrency
+          - InvalidWoSetupId
+          - AttachmentsRequired
+          - InvalidWoIdentifier
+          - EquipmentRequired
+          - WoNteOverflow
+          - InvalidWoPurchaseNumber
+          - InvalidWoStateForUpdate
+          - InvalidPagingParameter
+          - InvalidWoNumber
+          - CheckInDenied
+          - CheckOutDenied
+          - WoScheduledDateLessThenReassignDate
+          - WoScheduledDateLessThenCallDate
+          - InvalidWoActionReason
+          - EmptySubscriberProperty
+          - WorkOrderUpdateError
+          - MissedWoNteDetails
+          - InvalidLinkedWoIdentifier
+          - WoIsOnHold
+          - InvalidWoTrade
+          - InvalidStarScore
+          - WorkOrderAlreadyRated
+          - AttachmentThumbnailNotAvailable
+          - InvalidWoIdentifierOrPin
+          - InvalidTimeZoneHeader
+          - RefrigerantWasUsedShouldBeYesOrNo
+          - CheckInDeniedOutsideGeolocation
+          - CheckOutDeniedOutsideGeolocation
+          - LeakDetectorAuditShouldBeCreated
+          - CheckInOutPremature
+          - WorkOrderAttachmentsSizeExceeded
+          - WorkOrderNotFound
+          - WorkOrderCreateError
+          - InvalidWoProjectedCompletionDate
+          - InvalidFollowUpWo
+          - InvalidWeatherEventId
+          - InvalidSiteAuditLinkedWo
+          - InvalidSetupId
+          - IssueListNotFound
+          - InvalidIssueListField
+          - SiteAuditCompleted
+          - CheckSiteAuditError
+          - SaveSiteAuditError
+          - RemoveSiteAuditError
+          - InactiveTemplateType
+          - SiteAuditNotFound
+          - SiteAuditUpdateError
+          - InvalidSiteAuditParameters
+          - InvalidAdditionalApprovalCode
+          - InvalidAdditionalApprovalCodeValue
+          - AdditionalApprovalCodeIsDisabled
+          - InvalidOtherDesc
+          - InvalidTax2Name
+          - InvoiceInconsistentAmounts
+          - InvoiceInvalidTotal
+          - InvoiceTotalGreaterNte
+          - InvoiceExists
+          - CreatingInvoiceError
+          - DuplInvNumber
+          - InvoiceTotalNull
+          - InvComplDateNull
+          - InvDateLessComplDate
+          - InvoiceNotAuto
+          - ESignatureRequired
+          - InvWoNotFound
+          - InvWrongWoCurr
+          - InvWoCurrNotFound
+          - InvoicingDisabled
+          - InvCreationUnexpectedRes
+          - InvoiceInvalidLaborAmount
+          - InvoiceInvalidMaterialAmount
+          - InvDateOld
+          - InvDateGreater
+          - InvoiceMaterialDescriptionLengthOverflow
+          - InvoiceTaxNotValidated
+          - InvoiceMaterialPartNumberLengthOverflow
+          - TaxValidationError
+          - TaxExemptionError
+          - InvalidInvoiceNumber
+          - GetApprovalLevelsError
+          - InvoiceAddUsersToMliLevelsError
+          - InvoiceAddDeleteLocationsToMliLevelUserError
+          - InvoiceUpdateMLiLevelError
+          - InvoiceDeleteMliLevelError
+          - InvoiceDeleteUsersFromMliLevelError
+          - ApprovalLevelNameLengthOverflow
+          - GstTaxError
+          - Tax2Error
+          - GetApprovalLevelsAndLocationsByUserError
+          - GetAssignedUserShortInfoError
+          - AssignAllLocationsToApprovalLevelAndUserError
+          - GetLocationsForApprovalLevelAndAssignedUserError
+          - GetLocationsBySubscriberError
+          - AssignUserWithLocationsToApprovalLevelError
+          - ReAssignUserWithLocationsToNewApprovalLevelError
+          - ReAssignLocationsToApprovalLevelAndUserError
+          - OutstandingBalance
+          - InvoiceTaxDetailsEmpty
+          - InvoiceTaxDetailsIncorrectSum
+          - MultipleUsersForLocationIsNotAllowed
+          - UserAssignedToOtherLevel
+          - UserDoesNotExist
+          - LaborLineItemRequired
+          - MaterialLineItemRequired
+          - InvoiceDoesntExist
+          - InvoiceStarUnstarFailed
+          - InvoiceBatchUpdateInvalidInvoiceStatusError
+          - InvoiceBatchUpdateLimitExceededError
+          - InvoiceNotAvailableForCurrentUser
+          - InvoiceBatchUpdateInvalidRuleSetStructure
+          - InvoiceBatchUpdateInvalidMliStructure
+          - InvoiceBatchUpdateStatusError
+          - InvoiceMaterialUnitTypeInvalid
+          - ExistingBatchNumber
+          - InvoiceResolutionTextRequired
+          - GetInvoiceDefaultApprovalCodesError
+          - InvoiceInvalidTravelAmount
+          - InvoiceTravelDescriptionLengthOverflow
+          - InvoiceTravelUnitTypeInvalid
+          - TravelLineItemRequired
+          - TravelDetailsDisabled
+          - OnOffShoreDisabled
+          - InvoiceInvalidLaborCount
+          - InvoiceInvalidMaterialCount
+          - InvoiceInvalidTravelCount
+          - SubscriberNotRegisteredForTaxValidation
+          - ManyDecimalsInAmountError
+          - DecimalPartQstTaxError
+          - LaborRatesDiscrepancy
+          - PayInvoicesError
+          - InvoiceNumberRequirementsError
+          - InvoiceNumberIncorrect
+          - InvoiceNumberRegExPatternError
+          - GetInvoicesPendingApprovalByLocationError
+          - ReAssignInvoicesToUsersFailed
+          - ReAssignInvoicesUsersMatched
+          - GetUsersForReassignInvoiceError
+          - InvalidTimeRangeActivity
+          - OutsourcedSourceInvoiceNotFound
+          - OthersLineItemsDisabled
+          - InvoiceInvalidOtherAmount
+          - InvoiceInvalidOtherCount
+          - InvoiceOtherDescriptionLengthOverflow
+          - OtherLineItemRequired
+          - OtherLineItemsNotNegativeValueRequired
+          - InvalidLaborSkillLevel
+          - InvalidLaborType
+          - InvalidTechnicianQuantity
+          - GetInvoicesCommonCategoriesError
+          - InvoiceExplainDisputeEmpty
+          - InvoiceAdditionalApprovalCodeHeaderError
+          - TemplateParseSuccess
+          - TemplateIncorrectHeaderError
+          - TemplateEmptyTemplateError
+          - TemplateWrongFieldsCountError
+          - TemplateFieldNotFoundError
+          - TemplateFieldRequiredError
+          - TemplateParseIntError
+          - TemplateFieldSizeError
+          - TemplateInvalidValueError
+          - TemplateFieldFormatError
+          - TemplateFieldMaxRangeError
+          - TemplateFieldMinRangeError
+          - TemplateProviderNotEntered
+          - TemplateInvalidSubscriberError
+          - TemplateVendorNotFoundError
+          - TemplateMissedProviderError
+          - TemplateProviderNotFoundError
+          - TemplateProviderSubsccriberLinkError
+          - TemplateTradeDispatchRankError
+          - TemplateInvalidTradeForSubscriberError
+          - TemplateStoreNotFoundError
+          - TemplateNotStoresForStateError
+          - TemplateNotStoresForCountryError
+          - TemplateNotStoresForDistrictError
+          - TemplateNotStoresForRegionError
+          - TemplateMultiplePimaryProvidersForTradeStoreError
+          - TemplateDuplicatePrimaryRelationshipError
+          - TemplateAmbiguousDataError
+          - TemplateIncorrectSubscriber
+          - TemplateDuplicateRanking
+          - TemplateLongitudeRangeError
+          - TemplateLatitudeRangeError
+          - InvoiceMaterialPartNameLengthOverflow
+          - TemplateTradeLocationExclusion
+          - TemplateInvalidStateError
+          - TemplateMissedSubscriberError
+          - TemplateMissedStoreIdError
+          - TemplateInvalidSubscriberIdError
+          - TemplateOpenCloseDateError
+          - TemplateInvalidCountryError
+          - TemplateInvalidStateForCountryError
+          - TemplateInvalidLocationTypeError
+          - TemplateMissingFullAndShortNameError
+          - TemplateMissingCountryError
+          - TemplateDuplicatedDataError
+          - TemplateParentLocationNotFoundError
+          - TemplateParseDateTimeError
+          - TemplateParseDecimalError
+          - TemplateSquareValueRangeError
+          - TemplateInvalidSquareMeasureError
+          - TemplateTypeLabelCanNotBeUpdatedError
+          - TemplateTypeLabelHaveToBeLocationForNotInventory
+          - TemplateInvalidPrimarySupplyLocation
+          - TemplateInvalidHomestoreLocationNumber
+          - TemplateErrorDuringCreation
+          - TemplateLocationNotFoundError
+          - TemplateDuplicatedLocationFoundError
+          - TemplateInvalidLocationHeaderError
+          - TemplateDuplicatedLocationHeaderError
+          - TemplateHeaderContainsEmptyFieldsError
+          - TemplateLocHeadersShortHeaderError
+          - TemplateHeaderContainsDuplicatesError
+          - TemplateLocationNotesStoreIdFieldLengthError
+          - TemplateLocationNotesNoteValueFieldLengthError
+          - TemplateErrorInvalidZipCode
+          - TemplateMissingLocationNoteHeader
+          - TemplateMissingLocationNoteIdHeader
+          - TemplateInvalidSecondarySupplyLocation
+          - TemplateLocationWasNotCreated
+          - TemplateTruckNameIsEmpty
+          - TemplateWrongFormat
+          - TemplateSubscriberNotFound
+          - TemplateDuplicatedLocationHeaders
+          - TemplateInvalidHeaders
+          - TemplateInvalidPhoneError
+          - TemplateDuplicateTelecomRecordError
+          - TemplateTelecomRecordExistsError
+          - TemplateInvalidCategory
+          - TemplateDifferentRanksForProviderAssignments
+          - TemplateDuplicateRankError
+          - TemplateProviderNonCompliant
+          - TemplateLocationIsClosed
+          - TemplateProviderWarning
+          - TemplateMultipleProvidersForTradeStoreError
+          - EmptyRequest
+          - InvalidNumberOfParameters
+          - InvoiceOtherUnitTypeInvalid
+          - EmptyLocationOrTradeList
+          - RequestSubscriberIdDoesntMatchUserSubscriberId
+          - StoreIdRequiredError
+          - InvalidUserIdError
+          - InvalidStoreIdError
+          - AmbigiousError
+          - MliHierarchyFiledsCountError
+          - MliHierarchyMaxUserNameError
+          - MliHierarchyDuplicateUserError
+          - MLiHirarchyUserExistInOtherLevelError
+          - MissingLevelsError
+          - DuplicateApprovalLevelsError
+          - InvalidMliLocations
+          - InvalidMlpLocations
+          - ApprovalLevelUsedInRulsetError
+          - GLCodeAmbiguous
+          - GlCodeInvalidResponce
+          - GetRuleSetListError
+          - RuleSetDuplicateNameError
+          - RuleSetDuplicateActionError
+          - RuleSetConflictedActionError
+          - RuleSetRuleSetDoesNotExistsError
+          - RuleSetTradeDoesNotExistError
+          - RuleSetCategoryDoesNotExistError
+          - RuleSetMliLevelDoesNotExistError
+          - GetRuleSet
+          - CreateUpdateRuleSetError
+          - DeleteRuleSet
+          - GetRuleSetCategoriesTradesCountError
+          - GetRuleSetByInvoice
+          - GetCategoryTradeIdsAreSelectedError
+          - ProposalAboveMlpLimitError
+          - ProposalNextLevelHasNoAvailableActionsError
+          - DefaultRuleSetError
+          - RuleSetActionEndStatusError
+          - RuleSetRejectActionEmptyForwardToError
+          - UserFilterGetError
+          - UserFilterCreateUpdateError
+          - UserFilterDeleteError
+          - UserFilterSetAsDefaultError
+          - InvoiceFilterFromAlpProviderError
+          - RegionFilterNotAllowedError
+          - LocationIdFilterNotAllowedError
+          - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+          - PaymenowBannersForProvidersOnly
+          - PaymenowFeatureDisabled
+          - PaymenowBannerInfoNotFound
+          - PaymenowBannerInvalidNavigationUrl
+          - PaymenowRequestedProvidersIsNotAssigned
+          - PaymenowEmptyRequestedProviders
+          - PaymentManagerFeatureDisabled
+          - PaymentManagerFeatureDisabledForSubscriber
+          - PaymentSystemCurrentlyUnavailable
+          - CurrencyNotSupported
+          - PaymentSystemAccountNotFound
+          - FeatureIsOff
+          - EarlyPayFeatureWithoutPaymentManagetFeatureError
+          - FtpTestError
+          - AcceptTermsAndConditionsRequestInvalid
+          - PaymentSystemAccountError
+          - SendReportToFTP
+          - SchedulingError
+          - BadPaymentData
+          - InvoicesCanNotBeRepaid
+          - InvoicesCanNotBeRescheduled
+          - InvalidBillingAddress
+          - PaymentManagerGeneralSettingsNotFound
+          - PaymentManagerEInvoiceSettingsNotFound
+          - BadgeVerificationFailed
+          - BadgeTempPassEmpty
+          - BadgeScanRequired
+          - SolvedIssueSubmitFailed
+          - SolvedIssueInvalidLocationId
+          - SolvedIssueInvalidCategoryId
+          - SolvedIssueInvalidTradeId
+          - SolvedIssueInvalidPriorityId
+          - SolvedIssueInvalidSource
+          - SolvedIssueInvalidProblemCode
+          - SolvedIssueInvalidType
+          - SubmitFeedbackErrorWoStatus
+          - SubmitFeedbackInvalidAnswer
+          - SubmitFeedbackInvalidTrackingNumber
+          - SubmitFeedbackInvalidSubscriber
+          - SubmitFeedbackInvalidScore
+          - SubmitFeedbackUnsatisfactoryCommentRequired
+          - SubmitFeedbackInvalidReviewId
+          - SubmitFeedbackInvalidSetupId
+          - FeedbackSetupInvalidSetupId
+          - S3SaveError
+          - AbsSaveError
+          - GoodDataLoginFailed
+          - GoodDataElementUriError
+          - GoodDataReportResultUriError
+          - GoodDataReportResultEmpty
+          - GoodDataDesReportResCountError
+          - GoodDataDesReportResConvertError
+          - GoodDataDesDisplayFormAttributeEmpty
+          - InvalidProposalAmountLimit
+          - GetApprovalProposalReasonsError
+          - GetEmailRecipientsError
+          - GetAssignProposalReasonsError
+          - ProposalHasBeenVoided
+          - AssetTypeDuplicateNameError
+          - AssetTypeDoesntExistError
+          - AssetTypeFailUpdateRefrigerantPurpose
+          - AssetTypeDeleteFailed
+          - ExistingAssetsFoundForAssetType
+          - CantModifyAssetTypeParentId
+          - InvalidAssetTypeName
+          - AssetTypeInheritanceError
+          - ExistingProposalsFoundForAssetType
+          - InstallPurchaseDateOverflow
+          - WOexistsWithSomeAssets
+          - PartsChangeFailed
+          - PartsReasonCodeError
+          - PartsUseDateError
+          - PartsRefrigerantAlreadyExists
+          - PartsChargeHistoryAlreadyExists
+          - PartsNotFound
+          - BulkPartUseIncorrectWorkOrder
+          - BulkPartsByIdsNotFound
+          - BulkPartsMultipleWosError
+          - BulkPartsIncorrectIsRefrigerantParam
+          - BulkPartsIsRefrigerantCanNotbeChanged
+          - BulkPartsReasonCodeChangeError
+          - BulkPartsInvalidAssetAndReasonCodeParams
+          - BulkPartsInvalidAssetId
+          - BulkPartsInvalidInitialChargeCode
+          - BulkPartsAssetDoesntContainCharge
+          - BulkPartsIsInventoryFlagError
+          - BulkPartsLeakAlreadyInProcessError
+          - BulkPartsInvalidDateRangeError
+          - BulkPartsMoeNumberRequiredError
+          - BulkPartsSystemChargeExceeded
+          - BulkRefrigerantuUageBlocked
+          - BulkIDsNotBeNull
+          - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+          - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+          - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+          - BulkInitialChargeSystemExpansionNotAllowed
+          - BulkInventoryPartIdCanNotBeChanged
+          - BulkInventoryLocationIdCanNotBeChanged
+          - BulkPartsDuplicatedRequest
+          - BulkChangePartsIncorrectRefrigerantType
+          - BulkPartsRetroRetireIsInProgressOnThisDate
+          - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+          - RetrofitRetireCanNotBeRemoved
+          - RetroRetirePartsCantbeChanged
+          - BulkPartsInventoryApiFailed
+          - BulkPartsDuplicated
+          - BulkPartsWorkOrderInProcessing
+          - BadNotificationSubscriptionEventType
+          - RefrigerantUseDateOutOfTheLeakProcessDateRange
+          - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+          - BulkExternalWoCurrentlyDoesntExists
+          - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+          - BulkConnectorOnlyClientAssetsCouldBeProcessed
+          - LeakRecordHasWrongDateValue
+          - HasUncompliedLeakRecordInAnoutherWO
+          - HasUncompletedWOOnAnotherLeakRecord
+          - OnlyOneAssetWorkOrderPair
+          - OneLeakRecordMustBeOnCompletedWO
+          - LeakRecordNotFound
+          - AssetIDWoIdIsRequired
+          - BulkPartsReasonCodeRetrofit
+          - RetrofitRetireWasCancelledNoLeak
+          - FailedToUpdateLeakEvent
+          - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+          - LeakPartUseOnZeroChargeNotAllowed
+          - BulkLeakRecordsAndAuditRequest
+          - LeakRecordsDuplicateRequestDetected
+          - AllLeakRecordFieldsAreRequired
+          - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+          - MlpImportLevelError
+          - UpdateMlpUserLevelError
+          - InvalidHolidayName
+          - DuplicateHolidayName
+          - HolidaysDeleteFailed
+          - HolidaysExcludeInsertFailed
+          - HolidaysUpdateFailed
+          - HolidaysInsertFailed
+          - HolidaysExcludeDeleteFailed
+          - BusinessHoursDeleteFailed
+          - BusinessHoursUpdateFailed
+          - BusinessHoursInsertFailed
+          - InvalidTime
+          - HolidayForDeleteNotFound
+          - InvalidChecklistId
+          - ChecklistNotPopulated
+          - ChecklistNotAssignedForTransfersWO
+          - NoLinkBetweenSubscriberAndProvider
+          - WorkforceCreateContractorError
+          - InvalidCertificateId
+          - MaxThresholdExceeded
+          - MaxTriggerRateExceeded
+          - LeakPriorityIsRequired
+          - MissingRTSettings
+          - ResolutionCodesLimitExceeded
+          - ResolutionCodesAreRequired
+          - RootCauseIsRequired
+          - RootCauseTextIsRequired
+          - NoAccessToSetRootCauseText
+          - RootCauseTextMaxLengthExceeded
+          - ResolutionCodeTextIsRequired
+          - NoAccessToSetResolutionCodeText
+          - ResolutionCodeTextMaxLengthExceeded
+          - ResolutionCodeTextMustBeUnique
+          - ResolutionCodeWithoutFreeTextMustBeUnique
+          - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+          - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+          - AssetCategoriesLimitExceeded
+          - NoAccessToAssetCategories
+          - AssetCategoriesAreRequired
+          - InvalidAssetCategoryId
+          - NoAssetCategoriesOnWorkOrder
+          - RootCausesMustBeForAllWorkOrderAssetCategories
+          - RootCauseTextMustBeUnique
+          - AssetCategoryIsRequired
+          - MultipleRootCausesMethodMustBeUsed
+          - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+          - AssetFilterLocationsLimitExceeded
+          - UnknownStoreId
+          - UsesRefrigerantAttributeNotChanged
+          - AssetTagDuplicate
+          - AssetTagIdDuplicate
+          - UnknownEquipmentType
+          - ParentIdInOtherLocation
+          - UnknownBrandName
+          - CARBRequiredManufacturedDate
+          - CARBRequiredInstallDate
+          - TradeNotFound
+          - AssetDoesntExist
+          - AssetIsNotRefrigerant
+          - AssetCantContainRefrigerant
+          - OnlyRackAssetsContainingCircuits
+          - ConnectorAssetTagIdCanNotBeChanged
+          - ConnectorAssetLocationIdCanNotBeChanged
+          - AssetTagCantBeUpdated
+          - AssetTypeIsNotСonfiguredToManageRTAssets
+          - RefrigerantTrackingNotAvailableForLocation
+          - UsesRefrigerantRequiredByAssetTypeSettings
+          - AssetLocationTradeDoesntCorrespondToWO
+          - AssetLocationSelectedPMmodule
+          - UpdateAssetRepairStatusValidation
+          - HasCircuitsCantBeChange
+          - HasComponentsCantBeChange
+          - CircuitCanNotBeConnectedToCircuit
+          - RTCircuitCanNotBeConnectedToNonRTAsset
+          - RTComponentCanNotBeConnectedToNonRTAsset
+          - ComponentCanNotBeConnectedToComponent
+          - NonRTComponentCanNotBeConnectedToRtAsset
+          - NonRTCircuitCanNotBeConnectedToRtAsset
+          - ComponentCanNotBeConnectedToCircuit
+          - ParentAssetShouldHaveEitherComponentsNorCircuits
+          - ParentAssetCantHaveComponents
+          - ParentAssetCantHaveCircuits
+          - MultipleAssetsFoundForTheRequestedTagId
+          - InvalidBrandName
+          - UnknownBrandId
+          - BrandRestrictedByAssetType
+          - BrandRestrictedBySubscriber
+          - BrandsRestrictedBySubscriber
+          - DeclineWorkOrderFailed
+          - AcceptWorkOrderFailed
+          - WorkOrderWasAccepted
+          - AssetAttachmentsSizeExceeded
+          - SaveMliAuditReportSetting
+          - GetMliAuditReportSetting
+          - SaveMliAuditReportResult
+          - SaveMliAuditReportSendEmailStatus
+          - SaveMliAuditReportFilePath
+          - GetSubscribersEnabledSchedule
+          - SaveMliAuditInfoError
+          - TaxValidationAddNewCompanySettingsError
+          - TaxValidationUpdateCompanySettingsError
+          - ProjectAssociationError
+          - GetProjectsInvoiceAmountsError
+          - TaxCodeNotUniqueError
+          - FieldLengthIsTooLongError
+          - SetTaxCodesBulkError
+          - InvoiceAdditionalApprovalCodeValueError
+          - BulkUpdateInvoicePaymentError
+          - InvoiceLineItemFilterDisabled
+          - InvoiceStatusToRejectProviderNotificationFailed
+          - SortFieldNotAvailableError
+          - ContractServiceExist
+          - ContractServiceCantChangeTrade
+          - ContractServiceCantChangeCategory
+          - ContractServiceCantChangeProvider
+          - ContractServicePMServiceCantChangeTrade
+          - ContractServicePMServiceCantChangeCategory
+          - ContractedServiceNameAlreadyExists
+          - ContractedServiceNameLinkedToRates
+          - WorkRequestDescriptionIsRequired
+          - WorkRequestCallDateIsRequired
+          - WorkRequestIssueIsRequired
+          - WorkRequestCallDateHasWrongFormat
+          - WorkRequestScheduledDateHasWrongFormat
+          - InvalidWorkRequestStatus
+          - InvalidWorkRequestExtendedStatus
+          - InvalidWorkRequestCategory
+          - InvalidWorkRequestPriority
+          - InvalidWorkRequestCurrency
+          - InvalidWorkRequestIssueSetup
+          - InvalidWorkRequestIssueArea
+          - InvalidWorkRequestAsset
+          - WorkRequestAttachmentFileNameIsRequired
+          - WorkRequestAttachmentOriginalNameIsRequired
+          - WorkRequestIssueProblemCodeIsRequired
+          - WorkRequestIssueProblemTypeIsRequired
+          - WorkRequestScheduledDateMustBeGreaterThanCallDate
+          - InvalidWorkRequestId
+          - WorkRequestSearchCallDateFromHasWrongFormat
+          - WorkRequestSearchCallDateToHasWrongFormat
+          - WorkRequestSearchScheduledDateFromHasWrongFormat
+          - WorkRequestSearchScheduledDateToHasWrongFormat
+          - WorkRequestSearchClosedDateFromHasWrongFormat
+          - WorkRequestSearchClosedDateToHasWrongFormat
+          - WorkOrderIsAlreadyCreatedForWorkRequest
+          - WorkRequestIsClosed
+          - WorkRequestClosedReasonIsRequiredForClosedStatus
+          - WorkOrderIdIsRequiredForThisClosedReason
+          - InvalidWorkRequestClosedReason
+          - WorkRequestClosedReasonIsOnlyForClosedStatus
+          - InvalidWorkRequestWorkOrderId
+          - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+          - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+          - InvalidWorkOrderSourceType
+          - DeclineReasonIdIsRequired
+          - DeclineReasonDoesntAllowCustomText
+          - InvalidDeclineReasonId
+          - MultipleWorkOrdersForPurchaseNumber
+          - InvoiceMaterialMakupInvalid
+          - MaterialMarkUpDiscrepancyReasonShouldBeStated
+          - MaterialPriceDiscrepancyReasonShouldBeStated
+          - OtherPriceDiscrepancyReasonShouldBeStated
+          - SubscriberIdIsNotValid
+          - FiscalPeriodIsNotValid
+          - AmountIsNotValid
+          - AmountFormatIsNotValid
+          - CategoryMustBeEmpty
+          - CategoryIsNotValid
+          - TradeMustBeEmpty
+          - TradeIsNotValid
+          - GlCodeMustBeEmpty
+          - GlCodeIsNotValid
+          - LocationMustBeEmpty
+          - LocationIsNotValid
+          - RegionMustBeEmpty
+          - RegionIsNotValid
+          - DistrictMustBeEmpty
+          - DistrictIsNotValid
+          - DuplicateData
+          - PrimaryCategoryMustBeEmpty
+          - PrimaryCategoryIsNotValid
+          - CategoryAndExcludedCategoryCannotSimultaneously
+          - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+          - TradeAndExcludedTradeCannotSimultaneously
+          - GlCodeAndExcludedGlCodeCannotSimultaneously
+          - DuplicateCategories
+          - DuplicateTrades
+          - DuplicateGlCodes
+          - DuplicatePrimaryCategories
+          - LocationNoteMustBeEmpty
+          - LocationNoteIsNotValid
+          - OverlappingCategories
+          - OverlappingPrimaryCategories
+          - OverlappingTrades
+          - OverlappingPrimaryTrades
+          - OverlappingGlCodes
+          - OverlappingLocations
+          - OverlappingRegions
+          - OverlappingDistricts
+          - OverlappingLocationNotes
+          - TaxExemptionErrorApi
+          - OtherLineItemZeroAmount
+          - TravelLineItemsNotNegativeValueRequired
+          - MaterialLineItemsNotNegativeValueRequired
+          - LaborLineItemsNotNegativeValueRequired
+          - AdditionalApprovalCodeSetupIdInvalid
+          - VendorIdIsNotValid
+          - InvalidBatchId
+          - InvalidBatchStatusId
+          - CategoryInUsePMServiceError
+          - CategoryInUseChecklistError
+          - CategoryInUseETAMissedAlertError
+          - CategoryInUseBudgetControl
+          - CategoryInUseConnector
+          - CategoryInUseContractedService
+          - CategoryInUseEDI
+          - CategoryInUseIVR
+          - CategoryInUseFeedbackV2
+          - CategoryInUseProposalApproveReasons
+          - CategoryInUsePaymentManager
+          - CategoryInUseProviderAssignments
+          - CategoryInUseSiteAccess
+          - CategoryInUseAlerts
+          - CategoryInUseOpenWOAlert
+          - CategoryInUseWOAutocopy
+          - CategoryInUseWorkRequest
+          - CategoryInUseWO
+          - CategoryInUseDashboardOverride
+          - CategoryInUseInvoiceAttributes
+          - FeatureIsOn
+          - LocationHierarchyNotFound
+          - LocationHierarchyLevelNotFound
+          - LocationHierarchyParentLevelNotFound
+          - LocationSpaceTypeNotFound
+          - DuplicateRowByValueKey
+          - ParentNotFound
+          - DuplicateSequenceAmongSiblings
+          - SequenceConflictsWithExistingData
+          - SequenceMustBeGreaterThanZero
+          - ValueContainsPathDelimiter
+          - InitializationWarmupError
+          type: string
+      ErrorCode:
+        description: The code of the first error found
+        enum:
+        - NotAllowed
+        - EmptyProvider
+        - InvalidProviderId
+        - UnknownProvider
+        - ProviderAlreadyExists
+        - ProviderIdNotExists
+        - TimeoutExpiredError
+        - EmptyContract
+        - ContractUndefined
+        - EmptySubscriber
+        - InvalidSubscriberId
+        - UnknownSubscriber
+        - InactiveSubscriber
+        - EmptySubscriberId
+        - SubscriberIdNotExists
+        - InternalError
+        - DataNotFound
+        - BadRequest
+        - UnAuthorized
+        - UnSupportedApplication
+        - SubsidiaryUserDisabled
+        - EmptyLocation
+        - InvalidLocationId
+        - UnknownLocation
+        - LocationNotBelongsToSubscriber
+        - EmptyLocationCountry
+        - LocationAlreadyExists
+        - InvalidStoreId
+        - LocationEmptyState
+        - NoAccessToLocation
+        - LocationAddressValidationError
+        - LocationAddressRequestValidationError
+        - InvalidLocationNoteHeader
+        - NoAccessToUpdateProtectedNote
+        - InvalidBusinessHoursFormat
+        - WorkingHoursIntersect
+        - InvalidDayOfWeek
+        - DuplicateDayOfWeek
+        - InvalidBusinessHoursInitialSetup
+        - BusinessHoursIsEmpty
+        - InvalidHolidayRepeatByType
+        - EmptyHolidayListOfDays
+        - EmptyHolidayListOfMonths
+        - InvalidHolidayMonthName
+        - InvalidHolidayNameLength
+        - InvalidHolidayRepeatEvery
+        - DuplicateMonth
+        - InvalidHolidayFrequency
+        - InvalidHolidayStartDate
+        - InvalidCloseAllDay
+        - HolidayDoesNotExist
+        - InvalidFormatParameter
+        - InvalidLocationCity
+        - InvalidLocationZip
+        - InvalidLocationLatitude
+        - InvalidLocationLongitude
+        - InvalidLocationEmail
+        - InvalidLocationName
+        - InvalidLocationState
+        - InvalidLocationAddlAddress
+        - InvalidLocationMainAddress
+        - InvalidLocationCountry
+        - InvalidLocationRegion
+        - InvalidLocationDistrict
+        - InvalidLocationPhone
+        - InvalidLocationContact
+        - InvalidLocationFaxNumber
+        - LocationCountryNotFound
+        - LocationStateNotFound
+        - LocationCityNotFound
+        - LocationIdNotExists
+        - InvalidLocationEmailLength
+        - LocationStateIdNotFound
+        - IncorrectCombinationStateAndStateId
+        - InvalidSubscriberIds
+        - InvalidLocalizationSettings
+        - LandlordResponsibilityNotFound
+        - LandlordResponsibilityAlreadyExists
+        - EmptyLocationIds
+        - AttachmentNotExist
+        - InvalidTradeId
+        - InvalidCategoryId
+        - InvalidOverrideCategoryId
+        - InvalidOverridePriorityId
+        - LeaseNoteExceedMaxLength
+        - InvalidOverrideProviderRank
+        - InvalidOverrideNTE
+        - DuplicateRows
+        - InvalidPriorityId
+        - LocationNotFound
+        - EmptyTrade
+        - InvalidTrade
+        - TradeNotBelongsToSubscriber
+        - InvalidPrimaryTrade
+        - InvalidTradeForSubscriber
+        - InvalidCategoryForSubscriber
+        - GlCodeAlreadyExists
+        - GlCodeNotExists
+        - InvalidGlCodeUpdate
+        - EmptyGlCode
+        - TradeAlreadyExists
+        - InvalidNTETrade
+        - TradeNotExists
+        - TradeAlreadyInUse
+        - TradeWithTheSameNameHasBeenDeleted
+        - TradeInUsePMServices
+        - TradeInUseProposalError
+        - TradeInUseRFPError
+        - TradeInUseChecklistError
+        - TradeInUseBudgetControl
+        - TradeInUseGlCode
+        - TradeInUseDynamicProviderAssignments
+        - TradeInUseInvoice
+        - TradeInUseLandlordResponsibilities
+        - TradeInUseWO
+        - TradeInUseEquipmentType
+        - TradeInUseRFP
+        - TradeInUseConnector
+        - TradeInUseContractedService
+        - TradeInUseIVR
+        - TradeInUseSiteAccess
+        - TradeInUseGLCodes
+        - TradeInUseCIWO
+        - TradeInUseOrganizationPermissions
+        - TradeСreationError
+        - EmptyUser
+        - EmptyCreatedBy
+        - InvalidUserName
+        - NotProviderUser
+        - UserHasNoPermissions
+        - RestrictedAccount
+        - UserAlreadyExists
+        - UserHasNoPermissionsEditWO
+        - UserEmailAddressIsMissing
+        - UserIsNotRTAdmin
+        - InvalidSubsriberProviderId
+        - LanguageNameNotFound
+        - InvalidLanguageId
+        - LanguageIdNotFound
+        - UseBothSubscriberIdProviderId
+        - EmptyWoProblem
+        - InvalidWoProblemSource
+        - InvalidWoProblemDescription
+        - InvalidWoProblemCode
+        - InvalidWoStatus
+        - InvalidWoNte
+        - InvalidWoCaller
+        - InvalidWoCallDate
+        - InvalidWoScheduledDate
+        - InvalidWoScheduledDateGreaterThanMaxAllowed
+        - EmptyWoCategory
+        - InvalidWoCategory
+        - EmptyWoPriority
+        - InvalidWoPriority
+        - InvalidWoCurrency
+        - InvalidWoSetupId
+        - AttachmentsRequired
+        - InvalidWoIdentifier
+        - EquipmentRequired
+        - WoNteOverflow
+        - InvalidWoPurchaseNumber
+        - InvalidWoStateForUpdate
+        - InvalidPagingParameter
+        - InvalidWoNumber
+        - CheckInDenied
+        - CheckOutDenied
+        - WoScheduledDateLessThenReassignDate
+        - WoScheduledDateLessThenCallDate
+        - InvalidWoActionReason
+        - EmptySubscriberProperty
+        - WorkOrderUpdateError
+        - MissedWoNteDetails
+        - InvalidLinkedWoIdentifier
+        - WoIsOnHold
+        - InvalidWoTrade
+        - InvalidStarScore
+        - WorkOrderAlreadyRated
+        - AttachmentThumbnailNotAvailable
+        - InvalidWoIdentifierOrPin
+        - InvalidTimeZoneHeader
+        - RefrigerantWasUsedShouldBeYesOrNo
+        - CheckInDeniedOutsideGeolocation
+        - CheckOutDeniedOutsideGeolocation
+        - LeakDetectorAuditShouldBeCreated
+        - CheckInOutPremature
+        - WorkOrderAttachmentsSizeExceeded
+        - WorkOrderNotFound
+        - WorkOrderCreateError
+        - InvalidWoProjectedCompletionDate
+        - InvalidFollowUpWo
+        - InvalidWeatherEventId
+        - InvalidSiteAuditLinkedWo
+        - InvalidSetupId
+        - IssueListNotFound
+        - InvalidIssueListField
+        - SiteAuditCompleted
+        - CheckSiteAuditError
+        - SaveSiteAuditError
+        - RemoveSiteAuditError
+        - InactiveTemplateType
+        - SiteAuditNotFound
+        - SiteAuditUpdateError
+        - InvalidSiteAuditParameters
+        - InvalidAdditionalApprovalCode
+        - InvalidAdditionalApprovalCodeValue
+        - AdditionalApprovalCodeIsDisabled
+        - InvalidOtherDesc
+        - InvalidTax2Name
+        - InvoiceInconsistentAmounts
+        - InvoiceInvalidTotal
+        - InvoiceTotalGreaterNte
+        - InvoiceExists
+        - CreatingInvoiceError
+        - DuplInvNumber
+        - InvoiceTotalNull
+        - InvComplDateNull
+        - InvDateLessComplDate
+        - InvoiceNotAuto
+        - ESignatureRequired
+        - InvWoNotFound
+        - InvWrongWoCurr
+        - InvWoCurrNotFound
+        - InvoicingDisabled
+        - InvCreationUnexpectedRes
+        - InvoiceInvalidLaborAmount
+        - InvoiceInvalidMaterialAmount
+        - InvDateOld
+        - InvDateGreater
+        - InvoiceMaterialDescriptionLengthOverflow
+        - InvoiceTaxNotValidated
+        - InvoiceMaterialPartNumberLengthOverflow
+        - TaxValidationError
+        - TaxExemptionError
+        - InvalidInvoiceNumber
+        - GetApprovalLevelsError
+        - InvoiceAddUsersToMliLevelsError
+        - InvoiceAddDeleteLocationsToMliLevelUserError
+        - InvoiceUpdateMLiLevelError
+        - InvoiceDeleteMliLevelError
+        - InvoiceDeleteUsersFromMliLevelError
+        - ApprovalLevelNameLengthOverflow
+        - GstTaxError
+        - Tax2Error
+        - GetApprovalLevelsAndLocationsByUserError
+        - GetAssignedUserShortInfoError
+        - AssignAllLocationsToApprovalLevelAndUserError
+        - GetLocationsForApprovalLevelAndAssignedUserError
+        - GetLocationsBySubscriberError
+        - AssignUserWithLocationsToApprovalLevelError
+        - ReAssignUserWithLocationsToNewApprovalLevelError
+        - ReAssignLocationsToApprovalLevelAndUserError
+        - OutstandingBalance
+        - InvoiceTaxDetailsEmpty
+        - InvoiceTaxDetailsIncorrectSum
+        - MultipleUsersForLocationIsNotAllowed
+        - UserAssignedToOtherLevel
+        - UserDoesNotExist
+        - LaborLineItemRequired
+        - MaterialLineItemRequired
+        - InvoiceDoesntExist
+        - InvoiceStarUnstarFailed
+        - InvoiceBatchUpdateInvalidInvoiceStatusError
+        - InvoiceBatchUpdateLimitExceededError
+        - InvoiceNotAvailableForCurrentUser
+        - InvoiceBatchUpdateInvalidRuleSetStructure
+        - InvoiceBatchUpdateInvalidMliStructure
+        - InvoiceBatchUpdateStatusError
+        - InvoiceMaterialUnitTypeInvalid
+        - ExistingBatchNumber
+        - InvoiceResolutionTextRequired
+        - GetInvoiceDefaultApprovalCodesError
+        - InvoiceInvalidTravelAmount
+        - InvoiceTravelDescriptionLengthOverflow
+        - InvoiceTravelUnitTypeInvalid
+        - TravelLineItemRequired
+        - TravelDetailsDisabled
+        - OnOffShoreDisabled
+        - InvoiceInvalidLaborCount
+        - InvoiceInvalidMaterialCount
+        - InvoiceInvalidTravelCount
+        - SubscriberNotRegisteredForTaxValidation
+        - ManyDecimalsInAmountError
+        - DecimalPartQstTaxError
+        - LaborRatesDiscrepancy
+        - PayInvoicesError
+        - InvoiceNumberRequirementsError
+        - InvoiceNumberIncorrect
+        - InvoiceNumberRegExPatternError
+        - GetInvoicesPendingApprovalByLocationError
+        - ReAssignInvoicesToUsersFailed
+        - ReAssignInvoicesUsersMatched
+        - GetUsersForReassignInvoiceError
+        - InvalidTimeRangeActivity
+        - OutsourcedSourceInvoiceNotFound
+        - OthersLineItemsDisabled
+        - InvoiceInvalidOtherAmount
+        - InvoiceInvalidOtherCount
+        - InvoiceOtherDescriptionLengthOverflow
+        - OtherLineItemRequired
+        - OtherLineItemsNotNegativeValueRequired
+        - InvalidLaborSkillLevel
+        - InvalidLaborType
+        - InvalidTechnicianQuantity
+        - GetInvoicesCommonCategoriesError
+        - InvoiceExplainDisputeEmpty
+        - InvoiceAdditionalApprovalCodeHeaderError
+        - TemplateParseSuccess
+        - TemplateIncorrectHeaderError
+        - TemplateEmptyTemplateError
+        - TemplateWrongFieldsCountError
+        - TemplateFieldNotFoundError
+        - TemplateFieldRequiredError
+        - TemplateParseIntError
+        - TemplateFieldSizeError
+        - TemplateInvalidValueError
+        - TemplateFieldFormatError
+        - TemplateFieldMaxRangeError
+        - TemplateFieldMinRangeError
+        - TemplateProviderNotEntered
+        - TemplateInvalidSubscriberError
+        - TemplateVendorNotFoundError
+        - TemplateMissedProviderError
+        - TemplateProviderNotFoundError
+        - TemplateProviderSubsccriberLinkError
+        - TemplateTradeDispatchRankError
+        - TemplateInvalidTradeForSubscriberError
+        - TemplateStoreNotFoundError
+        - TemplateNotStoresForStateError
+        - TemplateNotStoresForCountryError
+        - TemplateNotStoresForDistrictError
+        - TemplateNotStoresForRegionError
+        - TemplateMultiplePimaryProvidersForTradeStoreError
+        - TemplateDuplicatePrimaryRelationshipError
+        - TemplateAmbiguousDataError
+        - TemplateIncorrectSubscriber
+        - TemplateDuplicateRanking
+        - TemplateLongitudeRangeError
+        - TemplateLatitudeRangeError
+        - InvoiceMaterialPartNameLengthOverflow
+        - TemplateTradeLocationExclusion
+        - TemplateInvalidStateError
+        - TemplateMissedSubscriberError
+        - TemplateMissedStoreIdError
+        - TemplateInvalidSubscriberIdError
+        - TemplateOpenCloseDateError
+        - TemplateInvalidCountryError
+        - TemplateInvalidStateForCountryError
+        - TemplateInvalidLocationTypeError
+        - TemplateMissingFullAndShortNameError
+        - TemplateMissingCountryError
+        - TemplateDuplicatedDataError
+        - TemplateParentLocationNotFoundError
+        - TemplateParseDateTimeError
+        - TemplateParseDecimalError
+        - TemplateSquareValueRangeError
+        - TemplateInvalidSquareMeasureError
+        - TemplateTypeLabelCanNotBeUpdatedError
+        - TemplateTypeLabelHaveToBeLocationForNotInventory
+        - TemplateInvalidPrimarySupplyLocation
+        - TemplateInvalidHomestoreLocationNumber
+        - TemplateErrorDuringCreation
+        - TemplateLocationNotFoundError
+        - TemplateDuplicatedLocationFoundError
+        - TemplateInvalidLocationHeaderError
+        - TemplateDuplicatedLocationHeaderError
+        - TemplateHeaderContainsEmptyFieldsError
+        - TemplateLocHeadersShortHeaderError
+        - TemplateHeaderContainsDuplicatesError
+        - TemplateLocationNotesStoreIdFieldLengthError
+        - TemplateLocationNotesNoteValueFieldLengthError
+        - TemplateErrorInvalidZipCode
+        - TemplateMissingLocationNoteHeader
+        - TemplateMissingLocationNoteIdHeader
+        - TemplateInvalidSecondarySupplyLocation
+        - TemplateLocationWasNotCreated
+        - TemplateTruckNameIsEmpty
+        - TemplateWrongFormat
+        - TemplateSubscriberNotFound
+        - TemplateDuplicatedLocationHeaders
+        - TemplateInvalidHeaders
+        - TemplateInvalidPhoneError
+        - TemplateDuplicateTelecomRecordError
+        - TemplateTelecomRecordExistsError
+        - TemplateInvalidCategory
+        - TemplateDifferentRanksForProviderAssignments
+        - TemplateDuplicateRankError
+        - TemplateProviderNonCompliant
+        - TemplateLocationIsClosed
+        - TemplateProviderWarning
+        - TemplateMultipleProvidersForTradeStoreError
+        - EmptyRequest
+        - InvalidNumberOfParameters
+        - InvoiceOtherUnitTypeInvalid
+        - EmptyLocationOrTradeList
+        - RequestSubscriberIdDoesntMatchUserSubscriberId
+        - StoreIdRequiredError
+        - InvalidUserIdError
+        - InvalidStoreIdError
+        - AmbigiousError
+        - MliHierarchyFiledsCountError
+        - MliHierarchyMaxUserNameError
+        - MliHierarchyDuplicateUserError
+        - MLiHirarchyUserExistInOtherLevelError
+        - MissingLevelsError
+        - DuplicateApprovalLevelsError
+        - InvalidMliLocations
+        - InvalidMlpLocations
+        - ApprovalLevelUsedInRulsetError
+        - GLCodeAmbiguous
+        - GlCodeInvalidResponce
+        - GetRuleSetListError
+        - RuleSetDuplicateNameError
+        - RuleSetDuplicateActionError
+        - RuleSetConflictedActionError
+        - RuleSetRuleSetDoesNotExistsError
+        - RuleSetTradeDoesNotExistError
+        - RuleSetCategoryDoesNotExistError
+        - RuleSetMliLevelDoesNotExistError
+        - GetRuleSet
+        - CreateUpdateRuleSetError
+        - DeleteRuleSet
+        - GetRuleSetCategoriesTradesCountError
+        - GetRuleSetByInvoice
+        - GetCategoryTradeIdsAreSelectedError
+        - ProposalAboveMlpLimitError
+        - ProposalNextLevelHasNoAvailableActionsError
+        - DefaultRuleSetError
+        - RuleSetActionEndStatusError
+        - RuleSetRejectActionEmptyForwardToError
+        - UserFilterGetError
+        - UserFilterCreateUpdateError
+        - UserFilterDeleteError
+        - UserFilterSetAsDefaultError
+        - InvoiceFilterFromAlpProviderError
+        - RegionFilterNotAllowedError
+        - LocationIdFilterNotAllowedError
+        - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+        - PaymenowBannersForProvidersOnly
+        - PaymenowFeatureDisabled
+        - PaymenowBannerInfoNotFound
+        - PaymenowBannerInvalidNavigationUrl
+        - PaymenowRequestedProvidersIsNotAssigned
+        - PaymenowEmptyRequestedProviders
+        - PaymentManagerFeatureDisabled
+        - PaymentManagerFeatureDisabledForSubscriber
+        - PaymentSystemCurrentlyUnavailable
+        - CurrencyNotSupported
+        - PaymentSystemAccountNotFound
+        - FeatureIsOff
+        - EarlyPayFeatureWithoutPaymentManagetFeatureError
+        - FtpTestError
+        - AcceptTermsAndConditionsRequestInvalid
+        - PaymentSystemAccountError
+        - SendReportToFTP
+        - SchedulingError
+        - BadPaymentData
+        - InvoicesCanNotBeRepaid
+        - InvoicesCanNotBeRescheduled
+        - InvalidBillingAddress
+        - PaymentManagerGeneralSettingsNotFound
+        - PaymentManagerEInvoiceSettingsNotFound
+        - BadgeVerificationFailed
+        - BadgeTempPassEmpty
+        - BadgeScanRequired
+        - SolvedIssueSubmitFailed
+        - SolvedIssueInvalidLocationId
+        - SolvedIssueInvalidCategoryId
+        - SolvedIssueInvalidTradeId
+        - SolvedIssueInvalidPriorityId
+        - SolvedIssueInvalidSource
+        - SolvedIssueInvalidProblemCode
+        - SolvedIssueInvalidType
+        - SubmitFeedbackErrorWoStatus
+        - SubmitFeedbackInvalidAnswer
+        - SubmitFeedbackInvalidTrackingNumber
+        - SubmitFeedbackInvalidSubscriber
+        - SubmitFeedbackInvalidScore
+        - SubmitFeedbackUnsatisfactoryCommentRequired
+        - SubmitFeedbackInvalidReviewId
+        - SubmitFeedbackInvalidSetupId
+        - FeedbackSetupInvalidSetupId
+        - S3SaveError
+        - AbsSaveError
+        - GoodDataLoginFailed
+        - GoodDataElementUriError
+        - GoodDataReportResultUriError
+        - GoodDataReportResultEmpty
+        - GoodDataDesReportResCountError
+        - GoodDataDesReportResConvertError
+        - GoodDataDesDisplayFormAttributeEmpty
+        - InvalidProposalAmountLimit
+        - GetApprovalProposalReasonsError
+        - GetEmailRecipientsError
+        - GetAssignProposalReasonsError
+        - ProposalHasBeenVoided
+        - AssetTypeDuplicateNameError
+        - AssetTypeDoesntExistError
+        - AssetTypeFailUpdateRefrigerantPurpose
+        - AssetTypeDeleteFailed
+        - ExistingAssetsFoundForAssetType
+        - CantModifyAssetTypeParentId
+        - InvalidAssetTypeName
+        - AssetTypeInheritanceError
+        - ExistingProposalsFoundForAssetType
+        - InstallPurchaseDateOverflow
+        - WOexistsWithSomeAssets
+        - PartsChangeFailed
+        - PartsReasonCodeError
+        - PartsUseDateError
+        - PartsRefrigerantAlreadyExists
+        - PartsChargeHistoryAlreadyExists
+        - PartsNotFound
+        - BulkPartUseIncorrectWorkOrder
+        - BulkPartsByIdsNotFound
+        - BulkPartsMultipleWosError
+        - BulkPartsIncorrectIsRefrigerantParam
+        - BulkPartsIsRefrigerantCanNotbeChanged
+        - BulkPartsReasonCodeChangeError
+        - BulkPartsInvalidAssetAndReasonCodeParams
+        - BulkPartsInvalidAssetId
+        - BulkPartsInvalidInitialChargeCode
+        - BulkPartsAssetDoesntContainCharge
+        - BulkPartsIsInventoryFlagError
+        - BulkPartsLeakAlreadyInProcessError
+        - BulkPartsInvalidDateRangeError
+        - BulkPartsMoeNumberRequiredError
+        - BulkPartsSystemChargeExceeded
+        - BulkRefrigerantuUageBlocked
+        - BulkIDsNotBeNull
+        - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+        - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+        - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+        - BulkInitialChargeSystemExpansionNotAllowed
+        - BulkInventoryPartIdCanNotBeChanged
+        - BulkInventoryLocationIdCanNotBeChanged
+        - BulkPartsDuplicatedRequest
+        - BulkChangePartsIncorrectRefrigerantType
+        - BulkPartsRetroRetireIsInProgressOnThisDate
+        - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+        - RetrofitRetireCanNotBeRemoved
+        - RetroRetirePartsCantbeChanged
+        - BulkPartsInventoryApiFailed
+        - BulkPartsDuplicated
+        - BulkPartsWorkOrderInProcessing
+        - BadNotificationSubscriptionEventType
+        - RefrigerantUseDateOutOfTheLeakProcessDateRange
+        - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+        - BulkExternalWoCurrentlyDoesntExists
+        - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+        - BulkConnectorOnlyClientAssetsCouldBeProcessed
+        - LeakRecordHasWrongDateValue
+        - HasUncompliedLeakRecordInAnoutherWO
+        - HasUncompletedWOOnAnotherLeakRecord
+        - OnlyOneAssetWorkOrderPair
+        - OneLeakRecordMustBeOnCompletedWO
+        - LeakRecordNotFound
+        - AssetIDWoIdIsRequired
+        - BulkPartsReasonCodeRetrofit
+        - RetrofitRetireWasCancelledNoLeak
+        - FailedToUpdateLeakEvent
+        - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+        - LeakPartUseOnZeroChargeNotAllowed
+        - BulkLeakRecordsAndAuditRequest
+        - LeakRecordsDuplicateRequestDetected
+        - AllLeakRecordFieldsAreRequired
+        - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+        - MlpImportLevelError
+        - UpdateMlpUserLevelError
+        - InvalidHolidayName
+        - DuplicateHolidayName
+        - HolidaysDeleteFailed
+        - HolidaysExcludeInsertFailed
+        - HolidaysUpdateFailed
+        - HolidaysInsertFailed
+        - HolidaysExcludeDeleteFailed
+        - BusinessHoursDeleteFailed
+        - BusinessHoursUpdateFailed
+        - BusinessHoursInsertFailed
+        - InvalidTime
+        - HolidayForDeleteNotFound
+        - InvalidChecklistId
+        - ChecklistNotPopulated
+        - ChecklistNotAssignedForTransfersWO
+        - NoLinkBetweenSubscriberAndProvider
+        - WorkforceCreateContractorError
+        - InvalidCertificateId
+        - MaxThresholdExceeded
+        - MaxTriggerRateExceeded
+        - LeakPriorityIsRequired
+        - MissingRTSettings
+        - ResolutionCodesLimitExceeded
+        - ResolutionCodesAreRequired
+        - RootCauseIsRequired
+        - RootCauseTextIsRequired
+        - NoAccessToSetRootCauseText
+        - RootCauseTextMaxLengthExceeded
+        - ResolutionCodeTextIsRequired
+        - NoAccessToSetResolutionCodeText
+        - ResolutionCodeTextMaxLengthExceeded
+        - ResolutionCodeTextMustBeUnique
+        - ResolutionCodeWithoutFreeTextMustBeUnique
+        - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+        - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+        - AssetCategoriesLimitExceeded
+        - NoAccessToAssetCategories
+        - AssetCategoriesAreRequired
+        - InvalidAssetCategoryId
+        - NoAssetCategoriesOnWorkOrder
+        - RootCausesMustBeForAllWorkOrderAssetCategories
+        - RootCauseTextMustBeUnique
+        - AssetCategoryIsRequired
+        - MultipleRootCausesMethodMustBeUsed
+        - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+        - AssetFilterLocationsLimitExceeded
+        - UnknownStoreId
+        - UsesRefrigerantAttributeNotChanged
+        - AssetTagDuplicate
+        - AssetTagIdDuplicate
+        - UnknownEquipmentType
+        - ParentIdInOtherLocation
+        - UnknownBrandName
+        - CARBRequiredManufacturedDate
+        - CARBRequiredInstallDate
+        - TradeNotFound
+        - AssetDoesntExist
+        - AssetIsNotRefrigerant
+        - AssetCantContainRefrigerant
+        - OnlyRackAssetsContainingCircuits
+        - ConnectorAssetTagIdCanNotBeChanged
+        - ConnectorAssetLocationIdCanNotBeChanged
+        - AssetTagCantBeUpdated
+        - AssetTypeIsNotСonfiguredToManageRTAssets
+        - RefrigerantTrackingNotAvailableForLocation
+        - UsesRefrigerantRequiredByAssetTypeSettings
+        - AssetLocationTradeDoesntCorrespondToWO
+        - AssetLocationSelectedPMmodule
+        - UpdateAssetRepairStatusValidation
+        - HasCircuitsCantBeChange
+        - HasComponentsCantBeChange
+        - CircuitCanNotBeConnectedToCircuit
+        - RTCircuitCanNotBeConnectedToNonRTAsset
+        - RTComponentCanNotBeConnectedToNonRTAsset
+        - ComponentCanNotBeConnectedToComponent
+        - NonRTComponentCanNotBeConnectedToRtAsset
+        - NonRTCircuitCanNotBeConnectedToRtAsset
+        - ComponentCanNotBeConnectedToCircuit
+        - ParentAssetShouldHaveEitherComponentsNorCircuits
+        - ParentAssetCantHaveComponents
+        - ParentAssetCantHaveCircuits
+        - MultipleAssetsFoundForTheRequestedTagId
+        - InvalidBrandName
+        - UnknownBrandId
+        - BrandRestrictedByAssetType
+        - BrandRestrictedBySubscriber
+        - BrandsRestrictedBySubscriber
+        - DeclineWorkOrderFailed
+        - AcceptWorkOrderFailed
+        - WorkOrderWasAccepted
+        - AssetAttachmentsSizeExceeded
+        - SaveMliAuditReportSetting
+        - GetMliAuditReportSetting
+        - SaveMliAuditReportResult
+        - SaveMliAuditReportSendEmailStatus
+        - SaveMliAuditReportFilePath
+        - GetSubscribersEnabledSchedule
+        - SaveMliAuditInfoError
+        - TaxValidationAddNewCompanySettingsError
+        - TaxValidationUpdateCompanySettingsError
+        - ProjectAssociationError
+        - GetProjectsInvoiceAmountsError
+        - TaxCodeNotUniqueError
+        - FieldLengthIsTooLongError
+        - SetTaxCodesBulkError
+        - InvoiceAdditionalApprovalCodeValueError
+        - BulkUpdateInvoicePaymentError
+        - InvoiceLineItemFilterDisabled
+        - InvoiceStatusToRejectProviderNotificationFailed
+        - SortFieldNotAvailableError
+        - ContractServiceExist
+        - ContractServiceCantChangeTrade
+        - ContractServiceCantChangeCategory
+        - ContractServiceCantChangeProvider
+        - ContractServicePMServiceCantChangeTrade
+        - ContractServicePMServiceCantChangeCategory
+        - ContractedServiceNameAlreadyExists
+        - ContractedServiceNameLinkedToRates
+        - WorkRequestDescriptionIsRequired
+        - WorkRequestCallDateIsRequired
+        - WorkRequestIssueIsRequired
+        - WorkRequestCallDateHasWrongFormat
+        - WorkRequestScheduledDateHasWrongFormat
+        - InvalidWorkRequestStatus
+        - InvalidWorkRequestExtendedStatus
+        - InvalidWorkRequestCategory
+        - InvalidWorkRequestPriority
+        - InvalidWorkRequestCurrency
+        - InvalidWorkRequestIssueSetup
+        - InvalidWorkRequestIssueArea
+        - InvalidWorkRequestAsset
+        - WorkRequestAttachmentFileNameIsRequired
+        - WorkRequestAttachmentOriginalNameIsRequired
+        - WorkRequestIssueProblemCodeIsRequired
+        - WorkRequestIssueProblemTypeIsRequired
+        - WorkRequestScheduledDateMustBeGreaterThanCallDate
+        - InvalidWorkRequestId
+        - WorkRequestSearchCallDateFromHasWrongFormat
+        - WorkRequestSearchCallDateToHasWrongFormat
+        - WorkRequestSearchScheduledDateFromHasWrongFormat
+        - WorkRequestSearchScheduledDateToHasWrongFormat
+        - WorkRequestSearchClosedDateFromHasWrongFormat
+        - WorkRequestSearchClosedDateToHasWrongFormat
+        - WorkOrderIsAlreadyCreatedForWorkRequest
+        - WorkRequestIsClosed
+        - WorkRequestClosedReasonIsRequiredForClosedStatus
+        - WorkOrderIdIsRequiredForThisClosedReason
+        - InvalidWorkRequestClosedReason
+        - WorkRequestClosedReasonIsOnlyForClosedStatus
+        - InvalidWorkRequestWorkOrderId
+        - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+        - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+        - InvalidWorkOrderSourceType
+        - DeclineReasonIdIsRequired
+        - DeclineReasonDoesntAllowCustomText
+        - InvalidDeclineReasonId
+        - MultipleWorkOrdersForPurchaseNumber
+        - InvoiceMaterialMakupInvalid
+        - MaterialMarkUpDiscrepancyReasonShouldBeStated
+        - MaterialPriceDiscrepancyReasonShouldBeStated
+        - OtherPriceDiscrepancyReasonShouldBeStated
+        - SubscriberIdIsNotValid
+        - FiscalPeriodIsNotValid
+        - AmountIsNotValid
+        - AmountFormatIsNotValid
+        - CategoryMustBeEmpty
+        - CategoryIsNotValid
+        - TradeMustBeEmpty
+        - TradeIsNotValid
+        - GlCodeMustBeEmpty
+        - GlCodeIsNotValid
+        - LocationMustBeEmpty
+        - LocationIsNotValid
+        - RegionMustBeEmpty
+        - RegionIsNotValid
+        - DistrictMustBeEmpty
+        - DistrictIsNotValid
+        - DuplicateData
+        - PrimaryCategoryMustBeEmpty
+        - PrimaryCategoryIsNotValid
+        - CategoryAndExcludedCategoryCannotSimultaneously
+        - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+        - TradeAndExcludedTradeCannotSimultaneously
+        - GlCodeAndExcludedGlCodeCannotSimultaneously
+        - DuplicateCategories
+        - DuplicateTrades
+        - DuplicateGlCodes
+        - DuplicatePrimaryCategories
+        - LocationNoteMustBeEmpty
+        - LocationNoteIsNotValid
+        - OverlappingCategories
+        - OverlappingPrimaryCategories
+        - OverlappingTrades
+        - OverlappingPrimaryTrades
+        - OverlappingGlCodes
+        - OverlappingLocations
+        - OverlappingRegions
+        - OverlappingDistricts
+        - OverlappingLocationNotes
+        - TaxExemptionErrorApi
+        - OtherLineItemZeroAmount
+        - TravelLineItemsNotNegativeValueRequired
+        - MaterialLineItemsNotNegativeValueRequired
+        - LaborLineItemsNotNegativeValueRequired
+        - AdditionalApprovalCodeSetupIdInvalid
+        - VendorIdIsNotValid
+        - InvalidBatchId
+        - InvalidBatchStatusId
+        - CategoryInUsePMServiceError
+        - CategoryInUseChecklistError
+        - CategoryInUseETAMissedAlertError
+        - CategoryInUseBudgetControl
+        - CategoryInUseConnector
+        - CategoryInUseContractedService
+        - CategoryInUseEDI
+        - CategoryInUseIVR
+        - CategoryInUseFeedbackV2
+        - CategoryInUseProposalApproveReasons
+        - CategoryInUsePaymentManager
+        - CategoryInUseProviderAssignments
+        - CategoryInUseSiteAccess
+        - CategoryInUseAlerts
+        - CategoryInUseOpenWOAlert
+        - CategoryInUseWOAutocopy
+        - CategoryInUseWorkRequest
+        - CategoryInUseWO
+        - CategoryInUseDashboardOverride
+        - CategoryInUseInvoiceAttributes
+        - FeatureIsOn
+        - LocationHierarchyNotFound
+        - LocationHierarchyLevelNotFound
+        - LocationHierarchyParentLevelNotFound
+        - LocationSpaceTypeNotFound
+        - DuplicateRowByValueKey
+        - ParentNotFound
+        - DuplicateSequenceAmongSiblings
+        - SequenceConflictsWithExistingData
+        - SequenceMustBeGreaterThanZero
+        - ValueContainsPathDelimiter
+        - InitializationWarmupError
+        type: string
+        readOnly: true
+      ErrorMessage:
+        description: The description of all errors.
+        type: string
+      Data:
+        $ref: '#/definitions/System.Object'
+        description: "Optional\r\n            Gets or Sets the Data object."
+  ServiceChannel.Services.Messaging.SiteAudit.LocationExternal:
+    description: Object containing location details.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the location — generated by the system.
+        type: integer
+      SubscriberId:
+        format: int32
+        description: Unique numeric identifier of the subscriber.
+        type: integer
+      StoreId:
+        description: Unique numeric identifier of the location — specified by the user.
+        type: string
+      Name:
+        description: Location name.
+        type: string
+      ShortName:
+        description: Short name of the location.
+        type: string
+      Address:
+        description: Location address.
+        type: string
+      City:
+        description: Location city.
+        type: string
+      State:
+        description: Location state.
+        type: string
+      Country:
+        description: Location country.
+        type: string
+      Zip:
+        description: Location ZIP code.
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditQuantityModelExternal:
+    type: object
+    properties:
+      Value:
+        format: int32
+        type: integer
+      Unit:
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.UpdatedCheckListExternal:
+    description: Parameters for updating the checklist.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the checklist.
+        type: integer
+      Name:
+        description: Checklist name, for example, *Restroom* or *Dining room*.
+        type: string
+      Unlisted:
+        default: false
+        type: boolean
+      SortOrder:
+        format: int32
+        description: Sorting order of the checklist.
+        type: integer
+      CheckListItems:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.UpdatedCheckListItemExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternal:
+    type: object
+    properties:
+      Name:
+        type: string
+      Description:
+        type: string
+      Score:
+        format: int32
+        type: integer
+      System:
+        enum:
+        - PassFail
+        - Numeric
+        - Weighted
+        - Percentage
+        type: string
+      Date:
+        format: date-time
+        type: string
+      Unlisted:
+        default: false
+        type: boolean
+      Issues:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
+      Quantity:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
+      CheckListItemImpact:
+        type: string
+      PassThreshold:
+        format: int32
+        type: integer
+      Range:
+        type: array
+        items:
+          format: int32
+          type: integer
+      StatisticItems:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticWeightedExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.AuditReportExternal:
+    description: The site audit report object. Depending on the features enabled for your company, the object structure may differ from the example below.
+    type: object
+    properties:
+      TemplateTypeName:
+        description: The site audit type.
+        type: string
+      AuditId:
+        format: int32
+        description: The numeric identifier of the site audit report.
+        type: integer
+      StoreId:
+        description: The internal identifier of the subscriber’s property.
+        type: string
+      LocationName:
+        description: The name of the subscriber’s property.
+        type: string
+      Region:
+        description: The region where the property is located.
+        type: string
+      District:
+        description: The district where the property is located.
+        type: string
+      AreaName:
+        description: The name of the audited area within the location.
+        type: string
+      CheckListName:
+        description: The name of the checklist.
+        type: string
+      CheckListItemName:
+        description: The name of the checklist item inspected by the auditor.
+        type: string
+      CheckListItemDescription:
+        description: Detailed instructions for the auditor on how to check or rate the checklist item.
+        type: string
+      Status:
+        description: This field is obsolete. Use field "Score" with "PassThreshold" and "RatingSystem" fields  please.
+        type: string
+      Score:
+        format: int32
+        description: The score that the auditor gave on the checklist item
+        type: integer
+      PassThreshold:
+        format: int32
+        description: Pass threshold
+        type: integer
+      RatingSystem:
+        description: Rating system
+        type: string
+      CheckListItemQuantity:
+        description: The quantity of the checklist item or its cost in dollars depending on the `Unit`.
+        type: string
+      Unit:
+        description: 'The unit of measure of the checklist item: `Quantity` or `Dollars`.'
+        type: string
+      CheckListDate:
+        format: date-time
+        description: The date and time when the auditor completed the audit of the checklist item.
+        type: string
+      TimeOffset:
+        format: int32
+        description: The UTC offset, or the difference in hours from the UTC time.
+        type: integer
+      UserName:
+        description: The username of the auditor who uploaded the completed audit.
+        type: string
+      CheckListItemId:
+        format: int32
+        description: The numeric identifier of the checklist item.
+        type: integer
+      AuditStartDate:
+        format: date-time
+        description: The date and time when the auditor started the site audit.
+        type: string
+      AuditFinishDate:
+        format: date-time
+        description: The date and time when the auditor completed the site audit.
+        type: string
+      AuditIssues:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditReportIssueExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueAttachmentExternal:
+    description: Checklist item attachments.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Attachment ID.
+        type: integer
+      FileName:
+        description: File name of the attachment.
+        type: string
+      RemoteName:
+        description: Remote name of the attached file.
+        type: string
+      RemoteNameResized:
+        description: Attachment file name that has been resized.
+        type: string
+      ContentType:
+        description: Type of the attached file, for example, *image* or *video*.
+        type: string
+      ContentUrl:
+        description: Web address (or Uniform Resource Locator) that points to the attached file.
+        type: string
+      ContentUrlResized:
+        description: Web address (or Uniform Resource Locator) that points to the resized version of the original image.
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternal:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      StoreId:
+        format: int32
+        type: integer
+      TemplateTypeId:
+        format: int32
+        type: integer
+      StartDate:
+        format: date-time
+        type: string
+      FinishDate:
+        format: date-time
+        type: string
+      SendEmails:
+        default: false
+        type: boolean
+      Emails:
+        type: string
+      Areas:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaRequest'
+      Language:
+        type: string
+      Status:
+        enum:
+        - Undefined
+        - Open
+        - Completed
+        type: string
+      Source:
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.CheckListTemplateExternal:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      SortOrder:
+        format: int32
+        type: integer
+  ServiceChannel.Services.Messaging.SiteAudit.AuditReportIssueExternal:
+    description: The details of issues created by the auditor for the inspected checklist item. Issues are also known as action items.
+    type: object
+    properties:
+      IssueType:
+        description: The type of the action item, either `WO` or `Comment`.
+        type: string
+      IssueDescription:
+        description: '`Comment type`: auditor''s comment added to the action item or its attachment. `WO type`: work order description that includes the area, problem type, asset, problem, and auditor’s description of the problem.'
+        type: string
+      AttachmentPaths:
+        description: The paths to the attachments added to the checklist item.
+        type: array
+        items:
+          type: string
+      IssueId:
+        format: int32
+        description: '`Comment type`: numeric identifier of the action item. `WO type`: numeric identifier of the work order, also known as WO tracking number.'
+        type: integer
+      WorkOrderPriority:
+        description: The name of the work order priority if the action item belongs to the WO type.
+        type: string
+      Date:
+        format: date-time
+        description: The date and time when the auditor created the action item.
+        type: string
+  ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditArea:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      SortOrder:
+        format: int32
+        type: integer
+      CheckLists:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckList'
+  ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticExternal:
+    type: object
+    properties:
+      CheckListItemId:
+        format: int32
+        type: integer
+      Date:
+        format: date-time
+        type: string
+      Status:
+        format: int32
+        type: integer
+      StatusNumeric:
+        format: int32
+        type: integer
+      UseNumericRatingSystem:
+        default: false
+        type: boolean
+      WorkOrdersCount:
+        format: int32
+        type: integer
+      CommentsCount:
+        format: int32
+        type: integer
+      AttachmentsCount:
+        format: int32
+        type: integer
+      QuantityCount:
+        format: int32
+        type: integer
+  ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckList:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      Unlisted:
+        default: false
+        type: boolean
+      SortOrder:
+        format: int32
+        type: integer
+      CheckListItems:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckListItem'
+  ServiceChannel.Services.Messaging.SiteAudit.UpdatedCompletedAuditResponse:
+    description: Object containing response parameters.
+    type: object
+    properties:
+      IsSuccess:
+        description: Returns `true` when the completed audit details have been successfully updated.
+        default: false
+        type: boolean
+      Sent:
+        description: Returns the success message when the updated site audit information is sent out to the specified email address.
+        type: string
+  ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternalOld:
+    type: object
+    properties:
+      StartDate:
+        format: date-time
+        type: string
+      FinishDate:
+        format: date-time
+        type: string
+      Areas:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternalOld'
+      WorkOrderIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      Emails:
+        type: string
+      SendEmails:
+        default: false
+        type: boolean
+      Source:
+        type: string
+  ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditInfo:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      StoreId:
+        format: int32
+        type: integer
+      UserId:
+        format: int32
+        type: integer
+      TemplateTypeId:
+        format: int32
+        type: integer
+      StartDate:
+        format: date-time
+        type: string
+      FinishDate:
+        format: date-time
+        type: string
+      FinishDateStr:
+        type: string
+      Status:
+        enum:
+        - Undefined
+        - Open
+        - Completed
+        type: string
+      Emails:
+        type: string
+      Areas:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditArea'
+  ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternalOld:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      SortOrder:
+        format: int32
+        type: integer
+      CheckLists:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CheckListExternalOld'
+      WorkOrderIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+  ServiceChannel.Services.Messaging.SiteAudit.CheckListWeightedExternal:
+    type: object
+    properties:
+      Name:
+        type: string
+      TemplateName:
+        type: string
+      Unlisted:
+        default: false
+        type: boolean
+      SortOrder:
+        format: int32
+        type: integer
+      WorkOrderIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      CheckListItems:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemWeightedExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.CheckListItemWeightedExternal:
+    type: object
+    properties:
+      Name:
+        type: string
+      Description:
+        type: string
+      Score:
+        format: int32
+        type: integer
+      System:
+        enum:
+        - PassFail
+        - Numeric
+        - Weighted
+        - Percentage
+        type: string
+      Date:
+        format: date-time
+        type: string
+      Unlisted:
+        default: false
+        type: boolean
+      WorkOrderIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      Issues:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
+      Quantity:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
+      CheckListItemImpact:
+        type: string
+      PassThreshold:
+        format: int32
+        type: integer
+      Range:
+        type: array
+        items:
+          format: int32
+          type: integer
+      StatisticItems:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticWeightedExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.CheckListItemDetailsResponse:
+    type: object
+    properties:
+      CheckListItemId:
+        format: int32
+        type: integer
+      Workorders:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.WorkOrder'
+      Comments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
+      Quantity:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
+  ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckListItem:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      Description:
+        type: string
+      Score:
+        format: int32
+        type: integer
+      System:
+        format: int32
+        type: integer
+      Date:
+        format: date-time
+        type: string
+      DateStr:
+        type: string
+      Unlisted:
+        default: false
+        type: boolean
+      CheckListItemImpact:
+        type: string
+      UseNumericRatingSystem:
+        default: false
+        type: boolean
+      PassThreshold:
+        format: int32
+        type: integer
+      Range:
+        type: array
+        items:
+          format: int32
+          type: integer
+      Issues:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueExternal'
+      WorkOrderIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      Quantity:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditQuantityExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditAreaExternal:
+    description: Parameters for updating the areas.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the area that was inspected.
+        type: integer
+      Name:
+        description: Area name that was inspected, for example, *Exterior* or *Interior*.
+        type: string
+      SortOrder:
+        format: int32
+        description: Sorting order of the area.
+        type: integer
+      CheckLists:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.UpdatedCheckListExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.CheckListItemRequest:
+    type: object
+    properties:
+      Name:
+        type: string
+      Description:
+        type: string
+      Score:
+        format: int32
+        type: integer
+      System:
+        enum:
+        - PassFail
+        - Numeric
+        - Weighted
+        - Percentage
+        type: string
+      Range:
+        type: array
+        items:
+          format: int32
+          type: integer
+      PassThreshold:
+        format: int32
+        type: integer
+      Date:
+        format: date-time
+        type: string
+      Unlisted:
+        default: false
+        type: boolean
+      Issues:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
+      Quantity:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
+      CheckListItemImpact:
+        type: string
+      WorkOrderIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+  ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueExternal:
+    description: Comment added to the checklist item.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Comment ID.
+        type: integer
+      Date:
+        format: date-time
+        description: Date and time when the comment was added to the checklist item. The format is `YYYY-MM-DDThh:mm:ss.ss`.
+        type: string
+      DateStr:
+        description: Date when the comment was added to the checklist item. The format is `MMM DD, YYYY`.
+        type: string
+      Description:
+        description: Comment added to the checklist item during the audit.
+        type: string
+      Persistent:
+        description: "Shows whether or not the comment should be saved for future audits. Possible response values:\r\n             • `true`: When the auditor sets the corresponding toggle in the SC Mobile app or in Service Automation to save the checklist item comment for future audits.\r\n             • `false`: When the comment should not be preserved and displayed for future audits."
+        default: false
+        type: boolean
+      UserName:
+        description: Username of the auditor who added the comment to the checklist item during the inspection.
+        type: string
+      Attachments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueAttachmentExternal'
+  ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditIssueExternal:
+    description: Parameters for updating the comment added to the checklist item.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Comment ID.
+        type: integer
+      Date:
+        format: date-time
+        description: Date and time when the comment was added to the checklist item. The format is YYYY-MM-DDThh:mm:ss.sss.
+        type: string
+      Description:
+        description: Text of the comment added to the checklist item during the audit.
+        type: string
+      Persistent:
+        description: "Shows whether the comment should be saved for future audits. Possible input values:\r\n             • `true`: To save the checklist item comment for future audits, set the parameter value to `true`.\r\n             • `false`: When the comment should not be preserved and displayed for future audits, set the parameter value to `false`."
+        default: false
+        type: boolean
+      Attachments:
+        description: Images or videos attached to the checklist item during the inspection.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditIssueAttachmentExternal'
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Services.Messaging.SiteAudit.SavedAuditInfoExternal:
+    description: General details of a completed audit.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Unique numeric identifier of the site audit.
+        type: integer
+      StoreId:
+        format: int32
+        description: Unique numeric identifier of the location where the site audit was conducted.
+        type: integer
+      UserId:
+        format: int32
+        description: Unique numeric identifier of the user (auditor) who conducted the site audit.
+        type: integer
+      UserName:
+        description: Display name of the user (auditor) who conducted the site audit.
+        type: string
+      TemplateTypeId:
+        format: int32
+        description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
+        type: integer
+      StartDate:
+        format: date-time
+        description: Date and time when the user started the audit in the SC Mobile app or in Service Automation. The format is `YYYY-MM-DDThh:mm:ss.ss`.
+        type: string
+      FinishDate:
+        format: date-time
+        description: Date and time when the site audit was completed. The format is `YYYY-MM-DDThh:mm:ss.ss`.
+        type: string
+      FinishDateStr:
+        description: Date when the site audit was completed. The format is `MMM DD, YYYY`.
+        type: string
+      Status:
+        description: "Unique numeric identifier of the status. Possible response values:\r\n             • `1`: The site audit status is *Open*.\r\n             • `2`: The site audit status is *Completed*."
+        enum:
+        - Undefined
+        - Open
+        - Completed
+        type: string
+      Emails:
+        description: Email address(es) to which the audit results were sent out by the auditor upon completing the audit.
+        type: string
+      Areas:
+        description: List of areas that were inspected during the site audit, for example, *Interior* or *Exterior*.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditAreaExternal'
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

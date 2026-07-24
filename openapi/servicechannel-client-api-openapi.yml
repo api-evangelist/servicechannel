@@ -1,0 +1,100 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours Client API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: Client
+paths:
+  /Clients/GetProvidersInfo:
+    get:
+      tags:
+      - Client
+      summary: Retrieve the list of providers
+      description: "Returns a list of providers in subscriber’s private network. The response contains provider contact details and the vendor ID.  \r\n            <br />Visit ServiceChannel University to find out more about the [vendor ID](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/571835102/Managing+Private+Notes+Rating+and+Vendor+ID#ManagingPrivateNotes,Rating,andVendorID-VendorID).\r\n            <br /><br />No input parameters are required."
+      operationId: Client_GetProvidersInfo
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      responses:
+        '200':
+          description: The list of providers is in the response.
+          schema:
+            $ref: '#/definitions/ProviderContactInfo'
+        '401':
+          description: The requested resource requires authentication.
+        '500':
+          description: Something went wrong, and the server was unable to complete your request.
+      deprecated: false
+      x-access: Subscribers
+definitions:
+  ContactDetails:
+    description: Object containing provider contact information
+    type: object
+    properties:
+      Name:
+        description: Primary contact person of the provider
+        type: string
+      Phone:
+        description: Provider’s contact phone number
+        type: string
+      StreetAddress1:
+        description: Main address, such as the house number and street name
+        type: string
+      StreetAddress2:
+        description: Additional address details, such as the floor number
+        type: string
+      PostalCode:
+        description: Postal code
+        type: string
+      City:
+        description: City name
+        type: string
+      RegionName:
+        description: State, province, or administrative region
+        type: string
+      CountryCode:
+        description: Country code
+        type: string
+      Fax:
+        description: Fax number
+        type: string
+  ProviderContactInfo:
+    description: Object containing details about providers in subscriber’s private network
+    type: object
+    properties:
+      ProviderName:
+        description: Provider name
+        type: string
+      ProviderId:
+        format: int32
+        description: Unique numeric identifier of the provider in the ServiceChannel system
+        type: integer
+      VendorId:
+        description: Unique identification number of the provider assigned by the subscriber
+        type: string
+      SubscriberId:
+        format: int64
+        description: Unique numeric identifier of the subscriber in the ServiceChannel system
+        type: integer
+      MainContact:
+        $ref: '#/definitions/ContactDetails'
+        description: Object containing provider contact information
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

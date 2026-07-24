@@ -1,0 +1,2957 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours CheckLists API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: CheckLists
+paths:
+  /checklists/CheckListResponse:
+    post:
+      tags:
+      - CheckLists
+      summary: Submit a response to a checklist question
+      description: Creates a response to the specified checklist question. Learn more about [submitting checklist responses](/guides/checklists/submit-a-checklist-response/).
+      operationId: POSTv3_checklists_CheckListResponse?version={version}
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: version
+        in: query
+        description: Version of the response object. The default value is V1. Specify V2 to receive the response object that contains a list of attachments instead of a single attachment.
+        required: false
+        type: string
+        enum:
+        - V1
+        - V2
+      - name: CheckListResponseRequest
+        in: formData
+        description: "Request to create a response to a checklist question. Retrieve checklist parameters using the [GET /checklists/detail](/swagger/ui/index?version=3#/CheckLists/GETv3_checklists_detail_tradeid__tradeid__checklistid__checklistid__categoryid__categoryid__subscriberId__subscriberId__tradeName__tradeName__checkListName__checkListName__categoryName__categoryName__locationId__locationId__storeId__storeId_) method to make sure you pass valid values.\r\n            <br />Pass the following parameters in the request:\r\n             • **CheckListQuestionId** *(Required)*: ID of the checklist question to submit a response for.\r\n             • **CheckListQuestionOptionIds**: List of the checklist question option Ids selected to a **Selector** type question where multiple options can be selected.\r\n             • **CheckListQuestionOptionId**: ID of the answer option configured for a checklist question of the **Selector** type.\r\n             • **ProviderId** *(Required)*: ID of the provider on whose behalf you are submitting a response.\r\n             • **TechnicianID**: ID of the technician on whose behalf you are submitting a response.\r\n             • **AuthUserId**: Single sign-on (SSO) ID of the technician on whose behalf you are submitting a response.\r\n             • **Answer**: Answer to a checklist question of the following types:\r\n              ◦ **Acknowledgement**. Valid values: `on`, `off`, `1`, `0`, `true`, `false`, `yes`, `no`.\r\n              ◦ **Text Entry**. Enter a text answer. The maximum length is 500 characters.\r\n              ◦ **Numeric Input**. Submit a number.\r\n             • **FreeTextAnswer**: Comment to an answer option with the `IsConditionalFollowUp` attribute. Answer options are configured for questions of the **Selector** type.\r\n             • **EntityId** *(Required)*: Unique ID of the work order for which you are creating a response to a checklist question.\r\n             • **Attempt** *(Required)*: Order of a technician’s on-site visit to submit a checklist response for.\r\n             • **Attachments**: List of pre-uploaded attachments to associate with the response. Upload files first via POST /checklists/ChecklistResponse/attachments and use the returned `DocumentPath`.\r\n              ◦ **DocumentName**: Name of the uploaded file.\r\n              ◦ **DocumentPath**: Storage path returned by the upload endpoint.\r\n            <br />**Example Object for the Acknowledgement Question**\r\n            \r\n                {\r\n                  \"CheckListQuestionID\": 3834,\r\n                  \"ProviderID\": 2000090505,\r\n                  \"TechnicianID\": 270592,\r\n                  \"AuthUserId\": 141,\r\n                  \"Answer\": \"on\",\r\n                  \"EntityID\": 179826000,\r\n                  \"Attempt\": 1,\r\n                  \"Attachments\": [\r\n                       {\r\n                           \"DocumentName\": \"test_att#1.jpg\",\r\n                           \"DocumentPath\": \"workorders/5ef9829b-5aec-4a3e-8c6d-c4a2b49a7317\"\r\n                        },\r\n                       {\r\n                           \"DocumentName\": \"test_att#2.jpg\",\r\n                           \"DocumentPath\": \"workorders/9gd1234b-8c6d-4a3e-5aec-c4a2b49a1234\"\r\n                        }\r\n                   ]\r\n                }"
+        required: false
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.AddChecklistResponseRequest'
+        type: application/json
+      - name: file
+        in: formData
+        description: File to attach to the response to a checklist question. Required for questions with the `PictureFlag` parameter set to 2.
+        required: false
+        type: file
+      responses:
+        '201':
+          description: 'For response version V1: A response to a checklist question is created. A checklist response object and an attachment object are returned.'
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.CreateChecklistResponseWithPicture'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — Work order is not found\r\n            503 — Bad request\r\n            503 — Not all required parameters were specified\r\n            503 — The FreeTextAnswer is required\r\n            503 — The picture is required\r\n            503 — Checkbox responses only support next values: on, off, 1, 0, true, false, yes, no\r\n            503 — The required URL view acknowledgement checkbox only supports the next values: on, 1, true, yes\r\n            503 - The answer is required!\r\n            503 — The Answer is invalid. It must be a number or a string representing a number\r\n            503 — Multiple answers are not allowed to a non-selector type question\r\n            503 — Multiple answer is not allowed to selector type question where AllowMultiSelect is disabled\r\n            503 — The active checklist with specified question (questionId: #) for the specified work order (workOrderId: #) is not found\r\n            503 — AssetIds are required for this checklist question\r\n            503 — There are no checklists for the specified work order. WorkOrderId: {#}\r\n            503 — Question (id: {#}) was not found.\r\n            503 — CheckListResponsePictureId (#) is not valid for CheckListResponse\r\n            503 — The CheckListQuestionId is not valid. An existing checklist response (id: {#}) was created for another question\r\n            503 — The CheckListQuestionOptionID is required\r\n            503 — The ChecklistQuestionOptionIds is required for the selector type question where AllowMultiSelect and AnswerRequired is enabled\r\n            503 — Question option (id: {#}) was not found\r\n            503 — Question option (id: {#}) is not valid for question (id: {#}))\r\n            503 — It is not allowed to use the ChecklistQuestionOptionId parameter and the ChecklistQuestionOptionIds parameter together. Use one of these parameters instead.\r\n            503 — The question has already been answered for this attempt number. QuestionId: {#}"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /checklists/{checkListResponseId}/CheckListResponse:
+    put:
+      tags:
+      - CheckLists
+      summary: Update a response to a checklist question
+      description: '[Updates the specified response](/guides/checklists/update-a-checklist-response/) to a checklist question.'
+      operationId: PUTv3_checklists_{checkListResponseId}_CheckListResponse?overrideAttachments={overrideAttachments}&version={version}
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: checkListResponseId
+        in: path
+        description: "ID of the response to a checklist question to update.\r\n            Pass the [GET /workorders/{workOrderId}/checklists-responses](/swagger/ui/index?version=3#/WorkOrders/GETv3_workorders__workOrderId__checklists_responses) request to retrieve the response ID."
+        required: true
+        type: integer
+        format: int32
+      - name: overrideAttachments
+        in: query
+        description: "Set to true to remove all existing attachments from the checklist response except for the attachment specified by the `CheckListResponsePictureId` parameter.\r\n            When the CheckListResponsePictureId parameter is not specified and this parameter is set to true, the method removes all existing attachments and adds the file provided in the file parameter to the checklist response.\r\n            When the CheckListResponsePictureId parameter is not specified and this parameter is set to false, the method keeps the existing attachments and adds the new file specified by the file parameter.\r\n            By default, this parameter is set to false."
+        required: false
+        type: boolean
+        default: false
+      - name: version
+        in: query
+        description: Version of the response object. The default value is V1. Specify V2 to receive the response object that contains a list of attachments instead of a single attachment.
+        required: false
+        type: string
+        enum:
+        - V1
+        - V2
+      - name: CheckListResponsePictureId
+        in: formData
+        description: "ID of the file attached to the checklist response to update.\r\n            Send the [GET /workorders/{workOrderId}/checklists-responses](/swagger/ui/index?version=3#/WorkOrders/GETv3_workorders__workOrderId__checklists_responses) request, and look for the required file `Id` within `Pictures` in the response."
+        required: false
+        type: text
+      - name: CheckListResponseRequest
+        in: formData
+        description: "Request to update a response to a checklist question.\r\n            <br />Pass the following parameters in the request:\r\n             • **CheckListQuestionId** *(Required)*: ID of the checklist question to update a response for.\r\n             • **CheckListQuestionOptionIds**: List of the checklist question option Ids selected to a **Selector** type question where multiple options can be selected.\r\n             • **CheckListQuestionOptionId**: ID of the answer option configured for a checklist question of the **Selector** type.\r\n             • **ProviderId** *(Required)*: ID of the provider on whose behalf you are updating a response.\r\n             • **TechnicianID** *(Required)*: ID of the technician on whose behalf you are updating a response.\r\n             • **Answer**: Answer to a checklist question of the following types:\r\n              ◦ **Acknowledgement**. Valid values: `on`, `off`, `1`, `0`, `true`, `false`, `yes`, `no`.\r\n              ◦ **Text Entry**. Enter a text answer. The maximum length is 500 characters.\r\n              ◦ **Numeric Input**. Submit a number.\r\n             • **FreeTextAnswer**: Comment to an answer option with the `IsConditionalFollowUp` attribute. Answer options are configured for questions of the **Selector** type.\r\n             • **EntityId** *(Required)*: Unique ID of the work order for which you are updating a response to a checklist question.\r\n             • **Attempt** *(Required)*: Order of a technician’s on-site visit to update a checklist response for.\r\n              ◦ **Attachments** List of attachment information to be added to the checklist response.\r\n               ◦ **ChecklistResponsePictureId**. ID of the file attached to the checklist response to update. *Ignore this parameter to attach a new additional file to the checklist response.*\r\n               ◦ **DocumentName**. The name of the document.\r\n               ◦ **DocumentPath**. Document path in the storage.\r\n            <br />**Example Object for the Acknowledgement Question**\r\n            \r\n                {\r\n                  \"CheckListQuestionID\": 3834,\r\n                  \"ProviderID\": 2000090505,\r\n                  \"TechnicianID\": 270592,\r\n                  \"Answer\": \"off\",\r\n                  \"EntityID\": 179826000,\r\n                  \"Attempt\": 1,\r\n                  \"Attachments\": [\r\n                       {\r\n                           \"ChecklistResponsePictureId\": 5366060,\r\n                           \"DocumentName\": \"test_att#1.jpg\",\r\n                           \"DocumentPath\": \"workorders/5ef9829b-5aec-4a3e-8c6d-c4a2b49a7317\"\r\n                        },\r\n                       {\r\n                           \"DocumentName\": \"test_att#2.jpg\",\r\n                           \"DocumentPath\": \"workorders/9gd1234b-8c6d-4a3e-5aec-c4a2b49a1234\"\r\n                        }\r\n                   ]\r\n                }"
+        required: false
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateChecklistResponseRequest'
+        type: application/json
+      - name: file
+        in: formData
+        description: File to attach to the response to a checklist question. Required for questions with the `PictureFlag` parameter set to 2.
+        required: false
+        type: file
+      responses:
+        '200':
+          description: The specified response to a checklist question is updated. A checklist response object and an attachment object are returned.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.UpdateChecklistResponseWithPicture'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — Work order is not found\r\n            503 — Bad request\r\n            503 — Not all required parameters were specified\r\n            503 — The FreeTextAnswer is required\r\n            503 — The picture is required\r\n            503 — Checkbox responses only support next values: on, off, 1, 0, true, false, yes, no\r\n            503 — The required URL view acknowledgement checkbox only supports the next values: on, 1, true, yes\r\n            503 - The answer is required!\r\n            503 — The Answer is invalid. It must be a number or a string representing a number\r\n            503 — The CheckListQuestionId is not valid. An existing checklist response (id: {#}) was created for another question\r\n            503 — The Attempt is not valid. An existing checklist response (id: {#}) was created for another attempt\r\n            503 — Multiple answers are not allowed to a non-selector type question\r\n            503 — Multiple answer is not allowed to selector type question where AllowMultiSelect is disabled\r\n            503 — The active checklist with specified question (questionId: #) for the specified work order (workOrderId: #) is not found\r\n            503 — AssetIds are required for this checklist question\r\n            503 — There are no checklists for the specified work order. WorkOrderId: {#}\r\n            503 — Question (id: {#}) was not found\r\n            503 — The CheckListQuestionOptionID is required\r\n            503 — The ChecklistQuestionOptionIds is required for the selector type question where AllowMultiSelect and AnswerRequired is enabled\r\n            503 — Question option (id: {#}) was not found\r\n            503 — Question option (id: {#}) is not valid for question (id: {#}))\r\n            503 — It is not allowed to use the ChecklistQuestionOptionId parameter and the ChecklistQuestionOptionIds parameter together. Use one of these parameters instead\r\n            503 — The Attempt is not valid. An existing checklist response (id: {№}) was created for another attempt\r\n            503 — The CheckListQuestionId is not valid. An existing checklist response (id: {0}) was created for another question.\r\n            503 — The question has already been answered for this attempt number. QuestionId: {#}"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /checklists/ChecklistResponse/get:
+    post:
+      tags:
+      - CheckLists
+      summary: Get a response to a checklist question
+      operationId: POSTv3_checklists_ChecklistResponse_get?workOrderId={workOrderId}
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workOrderId
+        in: query
+        description: The work order identifier *(Required)*
+        required: true
+        type: integer
+        format: int32
+      - name: checklistResponseIds
+        in: body
+        description: List of checklist response identifiers to retrieve *(Required)*
+        required: true
+        schema:
+          type: array
+          items:
+            format: int32
+            type: integer
+      responses:
+        '200':
+          description: The specified responses to a checklist questions are returned.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponseWithPictures'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 - Bad request"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /checklists/ChecklistResponse/attachments:
+    post:
+      tags:
+      - CheckLists
+      summary: Upload a checklist response attachment to the storage
+      operationId: POSTv3_checklists_ChecklistResponse_attachments
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: file
+        in: formData
+        description: File to attach to the response to a checklist question.
+        required: false
+        type: file
+      responses:
+        '200':
+          description: File successfully uploaded to storage. The document path is returned in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.UploadedAttachmentResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 - Bad request,\r\n            503 - No checklist response attachment to upload."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /checklists/ChecklistResponse/bulk:
+    put:
+      tags:
+      - CheckLists
+      summary: Update a responses to a checklist question in bulk
+      operationId: PUTv3_checklists_ChecklistResponse_bulk
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: request
+        in: body
+        description: "Request to update responses to checklist questions in bulk.\r\n            <br />Pass the following parameters in the request:\r\n             • **ChecklistResponseIds** *(Required)*: List of checklist response identifiers to update.\r\n             • **ChecklistResponseRequest** *(Required)*: Request to update a response to a checklist question.\r\n              ◦ **CheckListQuestionId** *(Required)*: ID of the checklist question to update a response for.\r\n              ◦ **CheckListQuestionOptionIds**: List of the checklist question option Ids selected to a **Selector** type question where multiple options can be selected.\r\n              ◦ **CheckListQuestionOptionId**: ID of the answer option configured for a checklist question of the **Selector** type.\r\n              ◦ **ProviderId** *(Required)*: ID of the provider on whose behalf you are updating a response.\r\n              ◦ **TechnicianID** *(Required)*: ID of the technician on whose behalf you are updating a response.\r\n              ◦ **Answer**: Answer to a checklist question of the following types:\r\n               ◦ *Acknowledgement*. Valid values: `on`, `off`, `1`, `0`, `true`, `false`, `yes`, `no`.\r\n               ◦ *Text Entry*. Enter a text answer. The maximum length is 500 characters.\r\n               ◦ *Numeric Input*. Submit a number.\r\n              ◦ **FreeTextAnswer**: Comment to an answer option with the `IsConditionalFollowUp` attribute. Answer options are configured for questions of the **Selector** type.\r\n              ◦ **EntityId** *(Required)*: Unique ID of the work order for which you are updating a response to a checklist question.\r\n              ◦ **Attempt** *(Required)*: Order of a technician’s on-site visit to update a checklist response for.\r\n              ◦ **Attachments** List of attachment information to be added to the checklist response.\r\n               ◦ **ChecklistResponsePictureId**. ID of the file attached to the checklist response to update. *Ignore this parameter to attach a new additional file to the checklist response.*\r\n               ◦ **DocumentName**. The name of the document.\r\n               ◦ **DocumentPath**. Document path in the storage.\r\n              ◦ **OverrideAttachments**: Set to true to remove all existing attachments from the checklist response except for the attachment specified by the `CheckListResponsePictureId` parameter."
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateBulkChecklistResponseRequest'
+      responses:
+        '200':
+          description: The specified response to a checklist question is updated.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — Work order is not found\r\n            503 — Bad request\r\n            503 — Not all required parameters were specified\r\n            503 — The FreeTextAnswer is required\r\n            503 — The picture is required\r\n            503 — Checkbox responses only support next values: on, off, 1, 0, true, false, yes, no\r\n            503 — The required URL view acknowledgement checkbox only supports the next values: on, 1, true, yes\r\n            503 — Multiple answers are not allowed to a non-selector type question.\r\n            503 — Multiple answer is not allowed to selector type question where AllowMultiSelect is disabled\r\n            503 — The active checklist with specified question (questionId: #) for the specified work order (workOrderId: #) is not found\r\n            503 — Asset ids are not allowed for the checklist which is not displayed for each asset\r\n            503 — AssetIds are required for this checklist question\r\n            503 — Not all assets are associated with the work order. Assets not associated with the work order: {#}\r\n            503 — Assets not found (asset ids: {#})\r\n            503 — Not all types of specified assets match the asset types specified for the checklist question. Assets with wrong types: {#}\r\n            503 — There are no checklists for the specified work order. WorkOrderId: {#}\r\n            503 — Question (id: {#}) was not found.\r\n            503 — CheckListResponsePictureId (#) is not valid for CheckListResponse\r\n            503 — The EntityId is not valid. An existing checklist response (id: {#}) was created for another work order\r\n            503 — The Attempt is not valid. An existing checklist response (id: {#}) was created for another attempt\r\n            503 — The CheckListQuestionId is not valid. An existing checklist response (id: {#}) was created for another question\r\n            503 — CheckListResponsePictureId is not valid for CheckListResponse. Invalid Attachment Ids: {#}\r\n            503 — Checklist response ids are required\r\n            503 — The Answer is invalid. It must be a number or a string representing a number.\r\n            503 — The question has already been answered for this attempt number. QuestionId: {#}"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+    post:
+      tags:
+      - CheckLists
+      summary: Submit checklist responses in bulk
+      operationId: POSTv3_checklists_ChecklistResponse_bulk
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: requests
+        in: body
+        description: "List of checklist responses to submit in bulk.\r\n            <br />Pass the following parameters in the request:\r\n             • **AssetIds** *(Required)*: List of asset identifiers to associate with the checklist responses.\r\n             • **Attachments**: List of attachment information to be added to the checklist responses.\r\n              ◦ **DocumentName**. The name of the document.\r\n              ◦ **DocumentPath**. Document path in the storage.\r\n             • **CheckListResponseRequest** *(Required)*: Request to submit a response to a checklist question.\r\n               ◦ **CheckListQuestionId** *(Required)*: ID of the checklist question to update a response for.\r\n               ◦ **CheckListQuestionOptionIds**: List of the checklist question option Ids selected to a **Selector** type question where multiple options can be selected.\r\n               ◦ **CheckListQuestionOptionId**: ID of the answer option configured for a checklist question of the **Selector** type.\r\n               ◦ **ProviderId** *(Required)*: ID of the provider on whose behalf you are updating a response.\r\n               ◦ **TechnicianID** *(Required)*: ID of the technician on whose behalf you are updating a response.\r\n               ◦ **Answer**: Answer to a checklist question of the following types:\r\n                ◦ *Acknowledgement*. Valid values: `on`, `off`, `1`, `0`, `true`, `false`, `yes`, `no`.\r\n                ◦ *Text Entry*. Enter a text answer. The maximum length is 500 characters.\r\n                ◦ *Numeric Input*. Submit a number.\r\n               ◦ **FreeTextAnswer**: Comment to an answer option with the `IsConditionalFollowUp` attribute. Answer options are configured for questions of the **Selector** type.\r\n               ◦ **EntityId** *(Required)*: Unique ID of the work order for which you are updating a response to a checklist question.\r\n               ◦ **Attempt** *(Required)*: Order of a technician’s on-site visit to update a checklist response for."
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.CreateBulkChecklistResponseRequest'
+      responses:
+        '201':
+          description: Responses to a checklist question are created. List of checklist response identifiers is returned.
+          schema:
+            type: array
+            items:
+              format: int32
+              type: integer
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — Work order is not found\r\n            503 — Not all required parameters were specified\r\n            503 — The FreeTextAnswer is required\r\n            503 — The picture is required\r\n            503 — Checkbox responses only support next values: on, off, 1, 0, true, false, yes, no\r\n            503 — The required URL view acknowledgement checkbox only supports the next values: on, 1, true, yes\r\n            503 — Multiple answers are not allowed to a non-selector type question.\r\n            503 — Multiple answer is not allowed to selector type question where AllowMultiSelect is disabled\r\n            503 — The active checklist with specified question (questionId: #) for the specified work order (workOrderId: #) is not found\r\n            503 — Asset ids are not allowed for the checklist which is not displayed for each asset\r\n            503 — AssetIds are required for this checklist question\r\n            503 — Not all assets are associated with the work order. Assets not associated with the work order: {#}\r\n            503 — Assets not found (asset ids: {#})\r\n            503 — Not all types of specified assets match the asset types specified for the checklist question. Assets with wrong types: {#}\r\n            503 — There are no checklists for the specified work order. WorkOrderId: {#}\r\n            503 — Question (id: {#}) was not found\r\n            503 — Checklist responses should be specified for the same work order\r\n            503 — Checklist responses should be specified for the same attempt.\r\n            503 — The Answer is invalid. It must be a number or a string representing a number\r\n            503 — The question has already been answered for this attempt number. QuestionId: {#}."
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /checklists/detail:
+    get:
+      tags:
+      - CheckLists
+      summary: Get standard checklists
+      description: "[Returns standard checklists](/guides/checklists/find-and-filter-checklists/) along with their parameters, configured questions, and answer options.\r\n            <br />You can filter checklists by:\r\n             • **Trade**. Specify either `tradeid` or `tradeName`.\r\n             • **Category**. Enter either `categoryid` or `categoryName`.\r\n             • **Location**. Provide either `locationId` or `storeId` if the feature that allows creating checklists for specific locations is enabled for a subscriber.\r\n             • **Checklist**. Pass either `checklistid` or `checkListName` to get a specific checklist, and ignore other parameters.\r\n            <br />Providers should pass `subscriberId` to retrieve checklists created by the desired subscriber.\r\n            <br />The `NumericInput` and `LessMoreOption` fields in the response are obsolete and should not be used.\r\n            <br />Navigate to ServiceChannel University to find out [how subscribers can configure checklists](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/655425975/Configuring+Checklists)."
+      operationId: GETv3_checklists_detail?tradeid={tradeid}&checklistid={checklistid}&categoryid={categoryid}&subscriberId={subscriberId}&tradeName={tradeName}&checkListName={checkListName}&categoryName={categoryName}&locationId={locationId}&storeId={storeId}&workOrderId={workOrderId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: tradeid
+        in: query
+        description: Trade ID. To get a list of trades with their IDs, send the [GET /odata/trades](/swagger/ui/index?version=3#/Trades/Trades_GetTrades) request.
+        required: false
+        type: integer
+        format: int32
+      - name: checklistid
+        in: query
+        description: Checklist ID.
+        required: false
+        type: integer
+        format: int32
+      - name: categoryid
+        in: query
+        description: Category ID. Subscribers can retrieve category IDs using the [GET /categories](/swagger/ui/index?version=3#/Categories/GETv3_categories_subscriberIds_0___subscriberIds_0___subscriberIds_1___subscriberIds_1__) method.
+        required: false
+        type: integer
+        format: int32
+      - name: subscriberId
+        in: query
+        description: Unique ID of the subscriber who configured checklists. Should be passed by providers.
+        required: false
+        type: integer
+        format: int32
+      - name: tradeName
+        in: query
+        description: Trade name. A trade is an area of work for which a service is performed, such as _Lighting_, _Refrigeration_, or _Plumbing_.
+        required: false
+        type: string
+      - name: checkListName
+        in: query
+        description: Checklist name.
+        required: false
+        type: string
+      - name: categoryName
+        in: query
+        description: Category name. A category is the overall classification of a work order, such as _Maintenance_, _Repair_, or _CAPEX_.
+        required: false
+        type: string
+      - name: locationId
+        in: query
+        description: Unique ID of a subscriber’s location. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber.
+        required: false
+        type: integer
+        format: int32
+      - name: storeId
+        in: query
+        description: Non-unique ID of a subscriber’s location that may appear as a store number. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber.
+        required: false
+        type: string
+      - name: workOrderId
+        in: query
+        description: Work Order ID
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The requested standard checklists are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListDetailExtendedResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 — Bad Request; Subscriber Id should be provided if the api method is called by provider\r\n            503 — A trade can be specified with only one parameter: either tradeId or tradeName\r\n            503 — A category can be specified with only one parameter: either categoryId or categoryName\r\n            503 — A checkList can be specified with only one parameter: either checkListId or checkListName\r\n            503 — A location can be specified with only one parameter: either locationId or storeId"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "The request is not allowed.\r\n            <br/>Error codes:\r\n            100 — User does not have access to work order"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /checklists/TransferCheckListDetail:
+    get:
+      tags:
+      - CheckLists
+      summary: The requested transfer checklists are in the response
+      operationId: GETv3_checklists_TransferCheckListDetail?workOrderId={workOrderId}&subscriberId={subscriberId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: workOrderId
+        in: query
+        description: ''
+        required: true
+        type: integer
+        format: int32
+      - name: subscriberId
+        in: query
+        description: ''
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The requested transfer checklists are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListDetailResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 — Bad Request; Subscriber Id should be provided if the api method is called by provider"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "The request is not allowed.\r\n            <br/>Error codes:\r\n            100 — User does not have access to work order"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /checklists/taskslist:
+    get:
+      tags:
+      - CheckLists
+      summary: Get checklists with asset tasks
+      description: "Retrieves checklists of the **Asset Task** type along with their parameters and task details. Such checklists contain asset-related tasks that a technician is prompted to complete when working on a service request.\r\n            <br />You can filter checklists by:\r\n             • **Trade**. Specify either `tradeid` or `tradeName`.\r\n             • **Category**. Enter either `categoryid` or `categoryName`.\r\n             • **Location**. Provide either `locationId` or `storeId` if the feature that allows creating checklists for specific locations is enabled for a subscriber.\r\n             • **Checklist**. Pass either `checklistid` or `checkListName` to get a specific checklist, and ignore other parameters.\r\n            <br />Providers should pass `subscriberId` to retrieve checklists created by the desired subscriber.\r\n            <br />Navigate to ServiceChannel University to find out [how subscribers can configure checklists](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/655425975/Configuring+Checklists)."
+      operationId: GETv3_checklists_taskslist?tradeid={tradeid}&checklistid={checklistid}&categoryid={categoryid}&subscriberId={subscriberId}&tradeName={tradeName}&checkListName={checkListName}&categoryName={categoryName}&locationId={locationId}&storeId={storeId}&providerId={providerId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: tradeid
+        in: query
+        description: Trade ID. To get a list of trades with their IDs, send the [GET /odata/trades](/swagger/ui/index?version=3#/Trades/Trades_GetTrades) request.
+        required: false
+        type: integer
+        format: int32
+      - name: checklistid
+        in: query
+        description: Checklist ID.
+        required: false
+        type: integer
+        format: int32
+      - name: categoryid
+        in: query
+        description: Category ID. Subscribers can retrieve category IDs using the [GET /categories](/swagger/ui/index?version=3#/Categories/GETv3_categories_subscriberIds_0___subscriberIds_0___subscriberIds_1___subscriberIds_1__) method.
+        required: false
+        type: integer
+        format: int32
+      - name: subscriberId
+        in: query
+        description: Unique ID of the subscriber who configured checklists. Should be passed by providers.
+        required: false
+        type: integer
+        format: int32
+      - name: tradeName
+        in: query
+        description: Trade name. A trade is an area of work for which a service is performed, such as _Lighting_, _Refrigeration_, or _Plumbing_.
+        required: false
+        type: string
+      - name: checkListName
+        in: query
+        description: Checklist name.
+        required: false
+        type: string
+      - name: categoryName
+        in: query
+        description: Category name. A category is the overall classification of a work order, such as _Maintenance_, _Repair_, or _CAPEX_.
+        required: false
+        type: string
+      - name: locationId
+        in: query
+        description: Unique ID of a subscriber’s location. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber.
+        required: false
+        type: integer
+        format: int32
+      - name: storeId
+        in: query
+        description: Non-unique ID of a subscriber’s location that may appear as a store number. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber.
+        required: false
+        type: string
+      - name: providerId
+        in: query
+        description: The provider identifier. Required for sub-contractor request. [Required Special permissions]
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The requested asset task checklists are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListWithTasksExtendedResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 — Bad Request; Subscriber Id should be provided if the api method is called by provider\r\n            503 — A trade can be specified with only one parameter: either tradeId or tradeName\r\n            503 — A category can be specified with only one parameter: either categoryId or categoryName\r\n            503 — A checkList can be specified with only one parameter: either checkListId or checkListName\r\n            503 — A location can be specified with only one parameter: either locationId or storeId"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /checklists/types:
+    get:
+      tags:
+      - CheckLists
+      summary: Retrieve checklist types
+      description: "Returns the ID and type of checklists.\r\n            <br />Subscribers can create two types of checklists:\r\n             • **Standard checklist** with questions that a technician is prompted to answer when working on a service request. Send the [GET /checklists/detail](/swagger/ui/index?version=3#/CheckLists/GETv3_checklists_detail_tradeid__tradeid__checklistid__checklistid__categoryid__categoryid__subscriberId__subscriberId__tradeName__tradeName__checkListName__checkListName__categoryName__categoryName__locationId__locationId__storeId__storeId_) request to retrieve standard checklists.\r\n             • **Asset task checklist** with asset-related tasks that a technician should complete when servicing a work order. Pass [GET /checklists/taskslist](/swagger/ui/index?version=3#/CheckLists/GETv3_checklists_taskslist_tradeid__tradeid__checklistid__checklistid__categoryid__categoryid__subscriberId__subscriberId__tradeName__tradeName__checkListName__checkListName__categoryName__categoryName__locationId__locationId__storeId__storeId_) to get asset task checklists.\r\n            <br />You can filter checklists by:\r\n             • **Trade**. Specify either `tradeid` or `tradeName`.\r\n             • **Category**. Enter either `categoryid` or `categoryName`.\r\n             • **Location**. Provide either `locationId` or `storeId` if the feature that allows creating checklists for specific locations is enabled for a subscriber.\r\n             • **Checklist**. Pass either `checklistid` or `checkListName` to get a specific checklist, and ignore other parameters.\r\n            <br />Providers should pass `subscriberId` to retrieve checklists created by the desired subscriber."
+      operationId: GETv3_checklists_types?tradeId={tradeId}&checklistId={checklistId}&categoryId={categoryId}&subscriberId={subscriberId}&tradeName={tradeName}&checklistName={checklistName}&categoryName={categoryName}&locationId={locationId}&storeId={storeId}&providerId={providerId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: tradeId
+        in: query
+        description: Trade ID. To get a list of trades with their IDs, send the [GET /odata/trades](/swagger/ui/index?version=3#/Trades/Trades_GetTrades) request.
+        required: false
+        type: integer
+        format: int32
+      - name: checklistId
+        in: query
+        description: Checklist ID.
+        required: false
+        type: integer
+        format: int32
+      - name: categoryId
+        in: query
+        description: Category ID. Subscribers can retrieve category IDs using the [GET /categories](/swagger/ui/index?version=3#/Categories/GETv3_categories_subscriberIds_0___subscriberIds_0___subscriberIds_1___subscriberIds_1__) method.
+        required: false
+        type: integer
+        format: int32
+      - name: subscriberId
+        in: query
+        description: Unique ID of the subscriber who configured checklists. Should be passed by providers.
+        required: false
+        type: integer
+        format: int32
+      - name: tradeName
+        in: query
+        description: Trade name. A trade is an area of work for which a service is performed, such as _Lighting_, _Refrigeration_, or _Plumbing_.
+        required: false
+        type: string
+      - name: checklistName
+        in: query
+        description: Checklist name.
+        required: false
+        type: string
+      - name: categoryName
+        in: query
+        description: Category name. A category is the overall classification of a work order, such as _Maintenance_, _Repair_, or _CAPEX_.
+        required: false
+        type: string
+      - name: locationId
+        in: query
+        description: Unique ID of a subscriber’s location. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber.
+        required: false
+        type: integer
+        format: int32
+      - name: storeId
+        in: query
+        description: Non-unique ID of a subscriber’s location that may appear as a store number. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber.
+        required: false
+        type: string
+      - name: providerId
+        in: query
+        description: The provider identifier. Required for sub-contractor request. [Required Special permissions]
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: The ID and type of the requested checklists are in the response.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListTypesExtendedResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 — Bad Request; Subscriber Id should be provided if the api method is called by provider\r\n            503 — A trade can be specified with only one parameter: either tradeId or tradeName\r\n            503 — A category can be specified with only one parameter: either categoryId or categoryName\r\n            503 — A checkList can be specified with only one parameter: either checkListId or checkListName\r\n            503 — A location can be specified with only one parameter: either locationId or storeId"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions"
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          schema:
+            $ref: '#/definitions/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+definitions:
+  ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateBulkChecklistResponseRequest:
+    description: Request to update checklist responses in bulk.
+    type: object
+    properties:
+      ChecklistResponseIds:
+        description: Checklist identifiers to be updated
+        type: array
+        items:
+          format: int32
+          type: integer
+      ChecklistResponseRequest:
+        $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateBulkChecklistResponseRequestItem'
+        description: Request to update a checklist response
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.ChecklistTaskResponse:
+    description: Represents the details of an asset task associated with a checklist.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Gets or sets the unique identifier of the asset task.
+        type: integer
+      CheckListId:
+        format: int32
+        description: Gets or sets the identifier of the checklist to which the asset task belongs.
+        type: integer
+      TypeId:
+        format: int32
+        description: Gets or sets the identifier of the asset type for which the task is configured.
+        type: integer
+      TaskTypeId:
+        description: Gets or sets the identifier of the asset task type.
+        enum:
+        - AssetTask
+        type: string
+      TaskTypeName:
+        description: Gets or sets the name of the asset task type.
+        type: string
+      Name:
+        description: Gets or sets the name of the asset task.
+        type: string
+      Description:
+        description: Gets or sets the description of the asset task.
+        type: string
+      IsActive:
+        description: Gets or sets a value indicating whether the asset task is active.
+        default: false
+        type: boolean
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.CreateChecklistResponseWithPicture:
+    description: Object for a submitted checklist response and attachment.
+    type: object
+    properties:
+      CheckListResponse:
+        $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponse'
+        description: Response submitted for a checklist question.
+      CheckListResponsePicture:
+        $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistPictureResponse'
+        description: File attached to a checklist response.
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListAcknowledgeUrlResponse:
+    type: object
+    properties:
+      Url:
+        type: string
+      Required:
+        default: false
+        type: boolean
+  ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.CreateBulkChecklistResponseRequest:
+    description: Request to submit checklist responses in bulk.
+    required:
+    - CheckListResponseRequest
+    type: object
+    properties:
+      AssetIds:
+        description: List of asset identifiers to be associated with the checklist responses
+        type: array
+        items:
+          format: int32
+          type: integer
+      Attachments:
+        description: List of attachment information to be added to the checklist responses
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.AttachmentInfo'
+      CheckListResponseRequest:
+        $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.CheckListResponseRequest'
+        description: Request to submit a checklist response
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListTypesExtendedResponse:
+    description: Represents an extended response containing a list of checklist types.
+    type: object
+    properties:
+      ChecklistTypes:
+        description: Gets or sets a collection of checklist types, each including an identifier and type information.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.ChecklistTypesResponse'
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListQuestionOptionResponse:
+    description: Represents an answer option configured for a checklist question of the Selector type.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Gets or sets the unique identifier of the answer option for a checklist question of the Selector type.
+        type: integer
+      Answer:
+        description: "Gets or sets the answer option for a checklist question of the Selector type.\r\n            A technician can select from a list of configured options when answering the question."
+        type: string
+      Sequence:
+        format: int32
+        description: Gets or sets the sequence number. This property is not applicable to checklists.
+        type: integer
+      IsConditionalFollowUp:
+        description: "Gets or sets a value indicating whether a technician is prompted to add a comment to the selected answer option.\r\n            A comment is mandatory if answering the checklist question is required."
+        default: false
+        type: boolean
+      ResponseResultInFailure:
+        description: Gets or sets a value indicating whether the option for a checklist question of the Selector type results in failure.
+        default: false
+        type: boolean
+      GenerateFollowUpWo:
+        description: Generates a follow-up work order.
+        default: false
+        type: boolean
+  ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.AttachmentInfo:
+    description: An attachment information to be added to a checklist response.
+    type: object
+    properties:
+      DocumentName:
+        description: The name of the document.
+        type: string
+      DocumentPath:
+        description: Document path in the storage.
+        type: string
+  ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.AddChecklistResponseRequest:
+    description: Request to submit a checklist response
+    required:
+    - CheckListQuestionId
+    - CheckListQuestionOptionID
+    - EntityId
+    type: object
+    properties:
+      Attachments:
+        description: "List of pre-uploaded attachments to associate with the checklist response.\r\n            Obtain DocumentPath by calling POST /checklists/ChecklistResponse/attachments first."
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.AttachmentInfo'
+      CheckListQuestionId:
+        format: int32
+        type: integer
+      ChecklistQuestionOptionIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      CheckListQuestionOptionID:
+        format: int32
+        type: integer
+      Answer:
+        type: string
+      FreeTextAnswer:
+        type: string
+      EntityId:
+        format: int32
+        type: integer
+      EntityTypeId:
+        format: int32
+        type: integer
+      ProviderId:
+        format: int32
+        type: integer
+      Attempt:
+        format: int32
+        type: integer
+      TechnicianId:
+        format: int32
+        type: integer
+      AuthUserId:
+        format: int32
+        type: integer
+  ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateAttachmentRequest:
+    description: An attachment information to be added or updated to a checklist response.
+    type: object
+    properties:
+      ChecklistResponsePictureId:
+        format: int32
+        description: ID of the file attached to the checklist response to update.
+        type: integer
+      DocumentName:
+        description: The name of the document.
+        type: string
+      DocumentPath:
+        description: Document path in the storage.
+        type: string
+  ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateBulkChecklistResponseRequestItem:
+    description: Request to update checklist responses in bulk.
+    required:
+    - CheckListQuestionId
+    - CheckListQuestionOptionID
+    - EntityId
+    type: object
+    properties:
+      OverrideAttachments:
+        description: Specifies whether to override existing attachments with the provided attachments.
+        default: false
+        type: boolean
+      Attachments:
+        description: List of attachment information to be added to the checklist response.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateAttachmentRequest'
+      CheckListQuestionId:
+        format: int32
+        type: integer
+      ChecklistQuestionOptionIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      CheckListQuestionOptionID:
+        format: int32
+        type: integer
+      Answer:
+        type: string
+      FreeTextAnswer:
+        type: string
+      EntityId:
+        format: int32
+        type: integer
+      EntityTypeId:
+        format: int32
+        type: integer
+      ProviderId:
+        format: int32
+        type: integer
+      Attempt:
+        format: int32
+        type: integer
+      TechnicianId:
+        format: int32
+        type: integer
+      AuthUserId:
+        format: int32
+        type: integer
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.UpdateChecklistResponseWithPicture:
+    description: Object for an updated checklist response and attachment.
+    type: object
+    properties:
+      CheckListResponse:
+        $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponse'
+        description: Response submitted for a checklist question.
+      CheckListResponsePicture:
+        $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistPictureResponse'
+        description: File attached to a checklist response.
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponse:
+    description: Checklist response object.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Checklist response ID.
+        type: integer
+      Answer:
+        description: Answer to a checklist question.
+        type: string
+      FreeTextAnswer:
+        description: Comment to an answer option with the `IsConditionalFollowUp` attribute. Answer options are configured for questions of the **Selector** type.
+        type: string
+      EntityId:
+        format: int32
+        description: ID of the work order the response was submitted for.
+        type: integer
+      EntityTypeId:
+        format: int32
+        description: ID of the entity the response was submitted for. 0 is returned for work orders.
+        type: integer
+      Attempt:
+        format: int32
+        description: Order of a technician’s on-site visit when the response was submitted.
+        type: integer
+      ProviderId:
+        format: int32
+        description: ID of the provider on whose behalf the response was submitted.
+        type: integer
+      TechnicianId:
+        format: int32
+        description: ID of the technician on whose behalf the response was submitted.
+        type: integer
+      UpdatedDate:
+        format: date-time
+        description: Date and time when the response was last updated set in EST. The format is `YYYY-MM-DDThh:mm:ss.sss`.
+        type: string
+      UpdatedDateStr:
+        description: Date and time when the response was last updated set in the location’s time zone. The format is `Month Day Year hh:mm`.
+        type: string
+      UpdatedDateDto:
+        format: date-time
+        description: Date and time when the response was last updated set in the location’s time zone with the UTC offset. The format is `YYYY-MM-DDThh:mm:ss.sss±hh:mm`.
+        type: string
+      CheckListQuestionId:
+        format: int32
+        description: ID of the checklist question the response was submitted for.
+        type: integer
+      QuestionOptions:
+        description: List of the answer options configured for a checklist question of the **Selector** type where multiple options can be selected.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistQuestionOptionResponse'
+      CheckListQuestionOptionId:
+        format: int32
+        description: ID of the answer option configured for a checklist question of the **Selector** type.
+        type: integer
+      AssetId:
+        format: int32
+        description: ID of the asset for which the response was submitted.
+        type: integer
+      IsPassed:
+        description: Indicates whether the response avoids the failure criteria.
+        default: false
+        type: boolean
+      LinkedWorkOrderId:
+        format: int32
+        description: "ID of the linked work order if the response results in a failure and generates a linked work order.\r\n            Null if the response does not result in a failure or if the failure does not generate a linked work order."
+        type: integer
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistQuestionOptionResponse:
+    description: Answer option configured for a checklist question of the **Selector** type.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: ID of the answer option for a checklist question of the **Selector** type.
+        type: integer
+      Answer:
+        description: Answer option for a checklist question of the **Selector** type. A technician can select from a list of configured options when answering the question.
+        type: string
+      Sequence:
+        format: int32
+        description: Not applicable to checklists.
+        type: integer
+      IsConditionalFollowUp:
+        description: Defines whether a technician is prompted to add a comment to the selected answer option. A comment is mandatory if answering the checklist question is required.
+        default: false
+        type: boolean
+      ResponseResultInFailure:
+        description: Option for a checklist question of the **Selector** type.
+        default: false
+        type: boolean
+  ServiceChannel.Services.Messaging.ErrorResponse:
+    description: The error response object
+    type: object
+    properties:
+      ErrorCodes:
+        description: The list of error codes. Go to /basics/general/response-codes/#internal-error-codes-and-messages to map error codes to error reasons.
+        type: array
+        items:
+          enum:
+          - NotAllowed
+          - EmptyProvider
+          - InvalidProviderId
+          - UnknownProvider
+          - ProviderAlreadyExists
+          - ProviderIdNotExists
+          - TimeoutExpiredError
+          - EmptyContract
+          - ContractUndefined
+          - EmptySubscriber
+          - InvalidSubscriberId
+          - UnknownSubscriber
+          - InactiveSubscriber
+          - EmptySubscriberId
+          - SubscriberIdNotExists
+          - InternalError
+          - DataNotFound
+          - BadRequest
+          - UnAuthorized
+          - UnSupportedApplication
+          - SubsidiaryUserDisabled
+          - EmptyLocation
+          - InvalidLocationId
+          - UnknownLocation
+          - LocationNotBelongsToSubscriber
+          - EmptyLocationCountry
+          - LocationAlreadyExists
+          - InvalidStoreId
+          - LocationEmptyState
+          - NoAccessToLocation
+          - LocationAddressValidationError
+          - LocationAddressRequestValidationError
+          - InvalidLocationNoteHeader
+          - NoAccessToUpdateProtectedNote
+          - InvalidBusinessHoursFormat
+          - WorkingHoursIntersect
+          - InvalidDayOfWeek
+          - DuplicateDayOfWeek
+          - InvalidBusinessHoursInitialSetup
+          - BusinessHoursIsEmpty
+          - InvalidHolidayRepeatByType
+          - EmptyHolidayListOfDays
+          - EmptyHolidayListOfMonths
+          - InvalidHolidayMonthName
+          - InvalidHolidayNameLength
+          - InvalidHolidayRepeatEvery
+          - DuplicateMonth
+          - InvalidHolidayFrequency
+          - InvalidHolidayStartDate
+          - InvalidCloseAllDay
+          - HolidayDoesNotExist
+          - InvalidFormatParameter
+          - InvalidLocationCity
+          - InvalidLocationZip
+          - InvalidLocationLatitude
+          - InvalidLocationLongitude
+          - InvalidLocationEmail
+          - InvalidLocationName
+          - InvalidLocationState
+          - InvalidLocationAddlAddress
+          - InvalidLocationMainAddress
+          - InvalidLocationCountry
+          - InvalidLocationRegion
+          - InvalidLocationDistrict
+          - InvalidLocationPhone
+          - InvalidLocationContact
+          - InvalidLocationFaxNumber
+          - LocationCountryNotFound
+          - LocationStateNotFound
+          - LocationCityNotFound
+          - LocationIdNotExists
+          - InvalidLocationEmailLength
+          - LocationStateIdNotFound
+          - IncorrectCombinationStateAndStateId
+          - InvalidSubscriberIds
+          - InvalidLocalizationSettings
+          - LandlordResponsibilityNotFound
+          - LandlordResponsibilityAlreadyExists
+          - EmptyLocationIds
+          - AttachmentNotExist
+          - InvalidTradeId
+          - InvalidCategoryId
+          - InvalidOverrideCategoryId
+          - InvalidOverridePriorityId
+          - LeaseNoteExceedMaxLength
+          - InvalidOverrideProviderRank
+          - InvalidOverrideNTE
+          - DuplicateRows
+          - InvalidPriorityId
+          - LocationNotFound
+          - EmptyTrade
+          - InvalidTrade
+          - TradeNotBelongsToSubscriber
+          - InvalidPrimaryTrade
+          - InvalidTradeForSubscriber
+          - InvalidCategoryForSubscriber
+          - GlCodeAlreadyExists
+          - GlCodeNotExists
+          - InvalidGlCodeUpdate
+          - EmptyGlCode
+          - TradeAlreadyExists
+          - InvalidNTETrade
+          - TradeNotExists
+          - TradeAlreadyInUse
+          - TradeWithTheSameNameHasBeenDeleted
+          - TradeInUsePMServices
+          - TradeInUseProposalError
+          - TradeInUseRFPError
+          - TradeInUseChecklistError
+          - TradeInUseBudgetControl
+          - TradeInUseGlCode
+          - TradeInUseDynamicProviderAssignments
+          - TradeInUseInvoice
+          - TradeInUseLandlordResponsibilities
+          - TradeInUseWO
+          - TradeInUseEquipmentType
+          - TradeInUseRFP
+          - TradeInUseConnector
+          - TradeInUseContractedService
+          - TradeInUseIVR
+          - TradeInUseSiteAccess
+          - TradeInUseGLCodes
+          - TradeInUseCIWO
+          - TradeInUseOrganizationPermissions
+          - TradeСreationError
+          - EmptyUser
+          - EmptyCreatedBy
+          - InvalidUserName
+          - NotProviderUser
+          - UserHasNoPermissions
+          - RestrictedAccount
+          - UserAlreadyExists
+          - UserHasNoPermissionsEditWO
+          - UserEmailAddressIsMissing
+          - UserIsNotRTAdmin
+          - InvalidSubsriberProviderId
+          - LanguageNameNotFound
+          - InvalidLanguageId
+          - LanguageIdNotFound
+          - UseBothSubscriberIdProviderId
+          - EmptyWoProblem
+          - InvalidWoProblemSource
+          - InvalidWoProblemDescription
+          - InvalidWoProblemCode
+          - InvalidWoStatus
+          - InvalidWoNte
+          - InvalidWoCaller
+          - InvalidWoCallDate
+          - InvalidWoScheduledDate
+          - InvalidWoScheduledDateGreaterThanMaxAllowed
+          - EmptyWoCategory
+          - InvalidWoCategory
+          - EmptyWoPriority
+          - InvalidWoPriority
+          - InvalidWoCurrency
+          - InvalidWoSetupId
+          - AttachmentsRequired
+          - InvalidWoIdentifier
+          - EquipmentRequired
+          - WoNteOverflow
+          - InvalidWoPurchaseNumber
+          - InvalidWoStateForUpdate
+          - InvalidPagingParameter
+          - InvalidWoNumber
+          - CheckInDenied
+          - CheckOutDenied
+          - WoScheduledDateLessThenReassignDate
+          - WoScheduledDateLessThenCallDate
+          - InvalidWoActionReason
+          - EmptySubscriberProperty
+          - WorkOrderUpdateError
+          - MissedWoNteDetails
+          - InvalidLinkedWoIdentifier
+          - WoIsOnHold
+          - InvalidWoTrade
+          - InvalidStarScore
+          - WorkOrderAlreadyRated
+          - AttachmentThumbnailNotAvailable
+          - InvalidWoIdentifierOrPin
+          - InvalidTimeZoneHeader
+          - RefrigerantWasUsedShouldBeYesOrNo
+          - CheckInDeniedOutsideGeolocation
+          - CheckOutDeniedOutsideGeolocation
+          - LeakDetectorAuditShouldBeCreated
+          - CheckInOutPremature
+          - WorkOrderAttachmentsSizeExceeded
+          - WorkOrderNotFound
+          - WorkOrderCreateError
+          - InvalidWoProjectedCompletionDate
+          - InvalidFollowUpWo
+          - InvalidWeatherEventId
+          - InvalidSiteAuditLinkedWo
+          - InvalidSetupId
+          - IssueListNotFound
+          - InvalidIssueListField
+          - SiteAuditCompleted
+          - CheckSiteAuditError
+          - SaveSiteAuditError
+          - RemoveSiteAuditError
+          - InactiveTemplateType
+          - SiteAuditNotFound
+          - SiteAuditUpdateError
+          - InvalidSiteAuditParameters
+          - InvalidAdditionalApprovalCode
+          - InvalidAdditionalApprovalCodeValue
+          - AdditionalApprovalCodeIsDisabled
+          - InvalidOtherDesc
+          - InvalidTax2Name
+          - InvoiceInconsistentAmounts
+          - InvoiceInvalidTotal
+          - InvoiceTotalGreaterNte
+          - InvoiceExists
+          - CreatingInvoiceError
+          - DuplInvNumber
+          - InvoiceTotalNull
+          - InvComplDateNull
+          - InvDateLessComplDate
+          - InvoiceNotAuto
+          - ESignatureRequired
+          - InvWoNotFound
+          - InvWrongWoCurr
+          - InvWoCurrNotFound
+          - InvoicingDisabled
+          - InvCreationUnexpectedRes
+          - InvoiceInvalidLaborAmount
+          - InvoiceInvalidMaterialAmount
+          - InvDateOld
+          - InvDateGreater
+          - InvoiceMaterialDescriptionLengthOverflow
+          - InvoiceTaxNotValidated
+          - InvoiceMaterialPartNumberLengthOverflow
+          - TaxValidationError
+          - TaxExemptionError
+          - InvalidInvoiceNumber
+          - GetApprovalLevelsError
+          - InvoiceAddUsersToMliLevelsError
+          - InvoiceAddDeleteLocationsToMliLevelUserError
+          - InvoiceUpdateMLiLevelError
+          - InvoiceDeleteMliLevelError
+          - InvoiceDeleteUsersFromMliLevelError
+          - ApprovalLevelNameLengthOverflow
+          - GstTaxError
+          - Tax2Error
+          - GetApprovalLevelsAndLocationsByUserError
+          - GetAssignedUserShortInfoError
+          - AssignAllLocationsToApprovalLevelAndUserError
+          - GetLocationsForApprovalLevelAndAssignedUserError
+          - GetLocationsBySubscriberError
+          - AssignUserWithLocationsToApprovalLevelError
+          - ReAssignUserWithLocationsToNewApprovalLevelError
+          - ReAssignLocationsToApprovalLevelAndUserError
+          - OutstandingBalance
+          - InvoiceTaxDetailsEmpty
+          - InvoiceTaxDetailsIncorrectSum
+          - MultipleUsersForLocationIsNotAllowed
+          - UserAssignedToOtherLevel
+          - UserDoesNotExist
+          - LaborLineItemRequired
+          - MaterialLineItemRequired
+          - InvoiceDoesntExist
+          - InvoiceStarUnstarFailed
+          - InvoiceBatchUpdateInvalidInvoiceStatusError
+          - InvoiceBatchUpdateLimitExceededError
+          - InvoiceNotAvailableForCurrentUser
+          - InvoiceBatchUpdateInvalidRuleSetStructure
+          - InvoiceBatchUpdateInvalidMliStructure
+          - InvoiceBatchUpdateStatusError
+          - InvoiceMaterialUnitTypeInvalid
+          - ExistingBatchNumber
+          - InvoiceResolutionTextRequired
+          - GetInvoiceDefaultApprovalCodesError
+          - InvoiceInvalidTravelAmount
+          - InvoiceTravelDescriptionLengthOverflow
+          - InvoiceTravelUnitTypeInvalid
+          - TravelLineItemRequired
+          - TravelDetailsDisabled
+          - OnOffShoreDisabled
+          - InvoiceInvalidLaborCount
+          - InvoiceInvalidMaterialCount
+          - InvoiceInvalidTravelCount
+          - SubscriberNotRegisteredForTaxValidation
+          - ManyDecimalsInAmountError
+          - DecimalPartQstTaxError
+          - LaborRatesDiscrepancy
+          - PayInvoicesError
+          - InvoiceNumberRequirementsError
+          - InvoiceNumberIncorrect
+          - InvoiceNumberRegExPatternError
+          - GetInvoicesPendingApprovalByLocationError
+          - ReAssignInvoicesToUsersFailed
+          - ReAssignInvoicesUsersMatched
+          - GetUsersForReassignInvoiceError
+          - InvalidTimeRangeActivity
+          - OutsourcedSourceInvoiceNotFound
+          - OthersLineItemsDisabled
+          - InvoiceInvalidOtherAmount
+          - InvoiceInvalidOtherCount
+          - InvoiceOtherDescriptionLengthOverflow
+          - OtherLineItemRequired
+          - OtherLineItemsNotNegativeValueRequired
+          - InvalidLaborSkillLevel
+          - InvalidLaborType
+          - InvalidTechnicianQuantity
+          - GetInvoicesCommonCategoriesError
+          - InvoiceExplainDisputeEmpty
+          - InvoiceAdditionalApprovalCodeHeaderError
+          - TemplateParseSuccess
+          - TemplateIncorrectHeaderError
+          - TemplateEmptyTemplateError
+          - TemplateWrongFieldsCountError
+          - TemplateFieldNotFoundError
+          - TemplateFieldRequiredError
+          - TemplateParseIntError
+          - TemplateFieldSizeError
+          - TemplateInvalidValueError
+          - TemplateFieldFormatError
+          - TemplateFieldMaxRangeError
+          - TemplateFieldMinRangeError
+          - TemplateProviderNotEntered
+          - TemplateInvalidSubscriberError
+          - TemplateVendorNotFoundError
+          - TemplateMissedProviderError
+          - TemplateProviderNotFoundError
+          - TemplateProviderSubsccriberLinkError
+          - TemplateTradeDispatchRankError
+          - TemplateInvalidTradeForSubscriberError
+          - TemplateStoreNotFoundError
+          - TemplateNotStoresForStateError
+          - TemplateNotStoresForCountryError
+          - TemplateNotStoresForDistrictError
+          - TemplateNotStoresForRegionError
+          - TemplateMultiplePimaryProvidersForTradeStoreError
+          - TemplateDuplicatePrimaryRelationshipError
+          - TemplateAmbiguousDataError
+          - TemplateIncorrectSubscriber
+          - TemplateDuplicateRanking
+          - TemplateLongitudeRangeError
+          - TemplateLatitudeRangeError
+          - InvoiceMaterialPartNameLengthOverflow
+          - TemplateTradeLocationExclusion
+          - TemplateInvalidStateError
+          - TemplateMissedSubscriberError
+          - TemplateMissedStoreIdError
+          - TemplateInvalidSubscriberIdError
+          - TemplateOpenCloseDateError
+          - TemplateInvalidCountryError
+          - TemplateInvalidStateForCountryError
+          - TemplateInvalidLocationTypeError
+          - TemplateMissingFullAndShortNameError
+          - TemplateMissingCountryError
+          - TemplateDuplicatedDataError
+          - TemplateParentLocationNotFoundError
+          - TemplateParseDateTimeError
+          - TemplateParseDecimalError
+          - TemplateSquareValueRangeError
+          - TemplateInvalidSquareMeasureError
+          - TemplateTypeLabelCanNotBeUpdatedError
+          - TemplateTypeLabelHaveToBeLocationForNotInventory
+          - TemplateInvalidPrimarySupplyLocation
+          - TemplateInvalidHomestoreLocationNumber
+          - TemplateErrorDuringCreation
+          - TemplateLocationNotFoundError
+          - TemplateDuplicatedLocationFoundError
+          - TemplateInvalidLocationHeaderError
+          - TemplateDuplicatedLocationHeaderError
+          - TemplateHeaderContainsEmptyFieldsError
+          - TemplateLocHeadersShortHeaderError
+          - TemplateHeaderContainsDuplicatesError
+          - TemplateLocationNotesStoreIdFieldLengthError
+          - TemplateLocationNotesNoteValueFieldLengthError
+          - TemplateErrorInvalidZipCode
+          - TemplateMissingLocationNoteHeader
+          - TemplateMissingLocationNoteIdHeader
+          - TemplateInvalidSecondarySupplyLocation
+          - TemplateLocationWasNotCreated
+          - TemplateTruckNameIsEmpty
+          - TemplateWrongFormat
+          - TemplateSubscriberNotFound
+          - TemplateDuplicatedLocationHeaders
+          - TemplateInvalidHeaders
+          - TemplateInvalidPhoneError
+          - TemplateDuplicateTelecomRecordError
+          - TemplateTelecomRecordExistsError
+          - TemplateInvalidCategory
+          - TemplateDifferentRanksForProviderAssignments
+          - TemplateDuplicateRankError
+          - TemplateProviderNonCompliant
+          - TemplateLocationIsClosed
+          - TemplateProviderWarning
+          - TemplateMultipleProvidersForTradeStoreError
+          - EmptyRequest
+          - InvalidNumberOfParameters
+          - InvoiceOtherUnitTypeInvalid
+          - EmptyLocationOrTradeList
+          - RequestSubscriberIdDoesntMatchUserSubscriberId
+          - StoreIdRequiredError
+          - InvalidUserIdError
+          - InvalidStoreIdError
+          - AmbigiousError
+          - MliHierarchyFiledsCountError
+          - MliHierarchyMaxUserNameError
+          - MliHierarchyDuplicateUserError
+          - MLiHirarchyUserExistInOtherLevelError
+          - MissingLevelsError
+          - DuplicateApprovalLevelsError
+          - InvalidMliLocations
+          - InvalidMlpLocations
+          - ApprovalLevelUsedInRulsetError
+          - GLCodeAmbiguous
+          - GlCodeInvalidResponce
+          - GetRuleSetListError
+          - RuleSetDuplicateNameError
+          - RuleSetDuplicateActionError
+          - RuleSetConflictedActionError
+          - RuleSetRuleSetDoesNotExistsError
+          - RuleSetTradeDoesNotExistError
+          - RuleSetCategoryDoesNotExistError
+          - RuleSetMliLevelDoesNotExistError
+          - GetRuleSet
+          - CreateUpdateRuleSetError
+          - DeleteRuleSet
+          - GetRuleSetCategoriesTradesCountError
+          - GetRuleSetByInvoice
+          - GetCategoryTradeIdsAreSelectedError
+          - ProposalAboveMlpLimitError
+          - ProposalNextLevelHasNoAvailableActionsError
+          - DefaultRuleSetError
+          - RuleSetActionEndStatusError
+          - RuleSetRejectActionEmptyForwardToError
+          - UserFilterGetError
+          - UserFilterCreateUpdateError
+          - UserFilterDeleteError
+          - UserFilterSetAsDefaultError
+          - InvoiceFilterFromAlpProviderError
+          - RegionFilterNotAllowedError
+          - LocationIdFilterNotAllowedError
+          - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+          - PaymenowBannersForProvidersOnly
+          - PaymenowFeatureDisabled
+          - PaymenowBannerInfoNotFound
+          - PaymenowBannerInvalidNavigationUrl
+          - PaymenowRequestedProvidersIsNotAssigned
+          - PaymenowEmptyRequestedProviders
+          - PaymentManagerFeatureDisabled
+          - PaymentManagerFeatureDisabledForSubscriber
+          - PaymentSystemCurrentlyUnavailable
+          - CurrencyNotSupported
+          - PaymentSystemAccountNotFound
+          - FeatureIsOff
+          - EarlyPayFeatureWithoutPaymentManagetFeatureError
+          - FtpTestError
+          - AcceptTermsAndConditionsRequestInvalid
+          - PaymentSystemAccountError
+          - SendReportToFTP
+          - SchedulingError
+          - BadPaymentData
+          - InvoicesCanNotBeRepaid
+          - InvoicesCanNotBeRescheduled
+          - InvalidBillingAddress
+          - PaymentManagerGeneralSettingsNotFound
+          - PaymentManagerEInvoiceSettingsNotFound
+          - BadgeVerificationFailed
+          - BadgeTempPassEmpty
+          - BadgeScanRequired
+          - SolvedIssueSubmitFailed
+          - SolvedIssueInvalidLocationId
+          - SolvedIssueInvalidCategoryId
+          - SolvedIssueInvalidTradeId
+          - SolvedIssueInvalidPriorityId
+          - SolvedIssueInvalidSource
+          - SolvedIssueInvalidProblemCode
+          - SolvedIssueInvalidType
+          - SubmitFeedbackErrorWoStatus
+          - SubmitFeedbackInvalidAnswer
+          - SubmitFeedbackInvalidTrackingNumber
+          - SubmitFeedbackInvalidSubscriber
+          - SubmitFeedbackInvalidScore
+          - SubmitFeedbackUnsatisfactoryCommentRequired
+          - SubmitFeedbackInvalidReviewId
+          - SubmitFeedbackInvalidSetupId
+          - FeedbackSetupInvalidSetupId
+          - S3SaveError
+          - AbsSaveError
+          - GoodDataLoginFailed
+          - GoodDataElementUriError
+          - GoodDataReportResultUriError
+          - GoodDataReportResultEmpty
+          - GoodDataDesReportResCountError
+          - GoodDataDesReportResConvertError
+          - GoodDataDesDisplayFormAttributeEmpty
+          - InvalidProposalAmountLimit
+          - GetApprovalProposalReasonsError
+          - GetEmailRecipientsError
+          - GetAssignProposalReasonsError
+          - ProposalHasBeenVoided
+          - AssetTypeDuplicateNameError
+          - AssetTypeDoesntExistError
+          - AssetTypeFailUpdateRefrigerantPurpose
+          - AssetTypeDeleteFailed
+          - ExistingAssetsFoundForAssetType
+          - CantModifyAssetTypeParentId
+          - InvalidAssetTypeName
+          - AssetTypeInheritanceError
+          - ExistingProposalsFoundForAssetType
+          - InstallPurchaseDateOverflow
+          - WOexistsWithSomeAssets
+          - PartsChangeFailed
+          - PartsReasonCodeError
+          - PartsUseDateError
+          - PartsRefrigerantAlreadyExists
+          - PartsChargeHistoryAlreadyExists
+          - PartsNotFound
+          - BulkPartUseIncorrectWorkOrder
+          - BulkPartsByIdsNotFound
+          - BulkPartsMultipleWosError
+          - BulkPartsIncorrectIsRefrigerantParam
+          - BulkPartsIsRefrigerantCanNotbeChanged
+          - BulkPartsReasonCodeChangeError
+          - BulkPartsInvalidAssetAndReasonCodeParams
+          - BulkPartsInvalidAssetId
+          - BulkPartsInvalidInitialChargeCode
+          - BulkPartsAssetDoesntContainCharge
+          - BulkPartsIsInventoryFlagError
+          - BulkPartsLeakAlreadyInProcessError
+          - BulkPartsInvalidDateRangeError
+          - BulkPartsMoeNumberRequiredError
+          - BulkPartsSystemChargeExceeded
+          - BulkRefrigerantuUageBlocked
+          - BulkIDsNotBeNull
+          - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+          - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+          - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+          - BulkInitialChargeSystemExpansionNotAllowed
+          - BulkInventoryPartIdCanNotBeChanged
+          - BulkInventoryLocationIdCanNotBeChanged
+          - BulkPartsDuplicatedRequest
+          - BulkChangePartsIncorrectRefrigerantType
+          - BulkPartsRetroRetireIsInProgressOnThisDate
+          - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+          - RetrofitRetireCanNotBeRemoved
+          - RetroRetirePartsCantbeChanged
+          - BulkPartsInventoryApiFailed
+          - BulkPartsDuplicated
+          - BulkPartsWorkOrderInProcessing
+          - BadNotificationSubscriptionEventType
+          - RefrigerantUseDateOutOfTheLeakProcessDateRange
+          - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+          - BulkExternalWoCurrentlyDoesntExists
+          - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+          - BulkConnectorOnlyClientAssetsCouldBeProcessed
+          - LeakRecordHasWrongDateValue
+          - HasUncompliedLeakRecordInAnoutherWO
+          - HasUncompletedWOOnAnotherLeakRecord
+          - OnlyOneAssetWorkOrderPair
+          - OneLeakRecordMustBeOnCompletedWO
+          - LeakRecordNotFound
+          - AssetIDWoIdIsRequired
+          - BulkPartsReasonCodeRetrofit
+          - RetrofitRetireWasCancelledNoLeak
+          - FailedToUpdateLeakEvent
+          - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+          - LeakPartUseOnZeroChargeNotAllowed
+          - BulkLeakRecordsAndAuditRequest
+          - LeakRecordsDuplicateRequestDetected
+          - AllLeakRecordFieldsAreRequired
+          - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+          - MlpImportLevelError
+          - UpdateMlpUserLevelError
+          - InvalidHolidayName
+          - DuplicateHolidayName
+          - HolidaysDeleteFailed
+          - HolidaysExcludeInsertFailed
+          - HolidaysUpdateFailed
+          - HolidaysInsertFailed
+          - HolidaysExcludeDeleteFailed
+          - BusinessHoursDeleteFailed
+          - BusinessHoursUpdateFailed
+          - BusinessHoursInsertFailed
+          - InvalidTime
+          - HolidayForDeleteNotFound
+          - InvalidChecklistId
+          - ChecklistNotPopulated
+          - ChecklistNotAssignedForTransfersWO
+          - NoLinkBetweenSubscriberAndProvider
+          - WorkforceCreateContractorError
+          - InvalidCertificateId
+          - MaxThresholdExceeded
+          - MaxTriggerRateExceeded
+          - LeakPriorityIsRequired
+          - MissingRTSettings
+          - ResolutionCodesLimitExceeded
+          - ResolutionCodesAreRequired
+          - RootCauseIsRequired
+          - RootCauseTextIsRequired
+          - NoAccessToSetRootCauseText
+          - RootCauseTextMaxLengthExceeded
+          - ResolutionCodeTextIsRequired
+          - NoAccessToSetResolutionCodeText
+          - ResolutionCodeTextMaxLengthExceeded
+          - ResolutionCodeTextMustBeUnique
+          - ResolutionCodeWithoutFreeTextMustBeUnique
+          - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+          - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+          - AssetCategoriesLimitExceeded
+          - NoAccessToAssetCategories
+          - AssetCategoriesAreRequired
+          - InvalidAssetCategoryId
+          - NoAssetCategoriesOnWorkOrder
+          - RootCausesMustBeForAllWorkOrderAssetCategories
+          - RootCauseTextMustBeUnique
+          - AssetCategoryIsRequired
+          - MultipleRootCausesMethodMustBeUsed
+          - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+          - AssetFilterLocationsLimitExceeded
+          - UnknownStoreId
+          - UsesRefrigerantAttributeNotChanged
+          - AssetTagDuplicate
+          - AssetTagIdDuplicate
+          - UnknownEquipmentType
+          - ParentIdInOtherLocation
+          - UnknownBrandName
+          - CARBRequiredManufacturedDate
+          - CARBRequiredInstallDate
+          - TradeNotFound
+          - AssetDoesntExist
+          - AssetIsNotRefrigerant
+          - AssetCantContainRefrigerant
+          - OnlyRackAssetsContainingCircuits
+          - ConnectorAssetTagIdCanNotBeChanged
+          - ConnectorAssetLocationIdCanNotBeChanged
+          - AssetTagCantBeUpdated
+          - AssetTypeIsNotСonfiguredToManageRTAssets
+          - RefrigerantTrackingNotAvailableForLocation
+          - UsesRefrigerantRequiredByAssetTypeSettings
+          - AssetLocationTradeDoesntCorrespondToWO
+          - AssetLocationSelectedPMmodule
+          - UpdateAssetRepairStatusValidation
+          - HasCircuitsCantBeChange
+          - HasComponentsCantBeChange
+          - CircuitCanNotBeConnectedToCircuit
+          - RTCircuitCanNotBeConnectedToNonRTAsset
+          - RTComponentCanNotBeConnectedToNonRTAsset
+          - ComponentCanNotBeConnectedToComponent
+          - NonRTComponentCanNotBeConnectedToRtAsset
+          - NonRTCircuitCanNotBeConnectedToRtAsset
+          - ComponentCanNotBeConnectedToCircuit
+          - ParentAssetShouldHaveEitherComponentsNorCircuits
+          - ParentAssetCantHaveComponents
+          - ParentAssetCantHaveCircuits
+          - MultipleAssetsFoundForTheRequestedTagId
+          - InvalidBrandName
+          - UnknownBrandId
+          - BrandRestrictedByAssetType
+          - BrandRestrictedBySubscriber
+          - BrandsRestrictedBySubscriber
+          - DeclineWorkOrderFailed
+          - AcceptWorkOrderFailed
+          - WorkOrderWasAccepted
+          - AssetAttachmentsSizeExceeded
+          - SaveMliAuditReportSetting
+          - GetMliAuditReportSetting
+          - SaveMliAuditReportResult
+          - SaveMliAuditReportSendEmailStatus
+          - SaveMliAuditReportFilePath
+          - GetSubscribersEnabledSchedule
+          - SaveMliAuditInfoError
+          - TaxValidationAddNewCompanySettingsError
+          - TaxValidationUpdateCompanySettingsError
+          - ProjectAssociationError
+          - GetProjectsInvoiceAmountsError
+          - TaxCodeNotUniqueError
+          - FieldLengthIsTooLongError
+          - SetTaxCodesBulkError
+          - InvoiceAdditionalApprovalCodeValueError
+          - BulkUpdateInvoicePaymentError
+          - InvoiceLineItemFilterDisabled
+          - InvoiceStatusToRejectProviderNotificationFailed
+          - SortFieldNotAvailableError
+          - ContractServiceExist
+          - ContractServiceCantChangeTrade
+          - ContractServiceCantChangeCategory
+          - ContractServiceCantChangeProvider
+          - ContractServicePMServiceCantChangeTrade
+          - ContractServicePMServiceCantChangeCategory
+          - ContractedServiceNameAlreadyExists
+          - ContractedServiceNameLinkedToRates
+          - WorkRequestDescriptionIsRequired
+          - WorkRequestCallDateIsRequired
+          - WorkRequestIssueIsRequired
+          - WorkRequestCallDateHasWrongFormat
+          - WorkRequestScheduledDateHasWrongFormat
+          - InvalidWorkRequestStatus
+          - InvalidWorkRequestExtendedStatus
+          - InvalidWorkRequestCategory
+          - InvalidWorkRequestPriority
+          - InvalidWorkRequestCurrency
+          - InvalidWorkRequestIssueSetup
+          - InvalidWorkRequestIssueArea
+          - InvalidWorkRequestAsset
+          - WorkRequestAttachmentFileNameIsRequired
+          - WorkRequestAttachmentOriginalNameIsRequired
+          - WorkRequestIssueProblemCodeIsRequired
+          - WorkRequestIssueProblemTypeIsRequired
+          - WorkRequestScheduledDateMustBeGreaterThanCallDate
+          - InvalidWorkRequestId
+          - WorkRequestSearchCallDateFromHasWrongFormat
+          - WorkRequestSearchCallDateToHasWrongFormat
+          - WorkRequestSearchScheduledDateFromHasWrongFormat
+          - WorkRequestSearchScheduledDateToHasWrongFormat
+          - WorkRequestSearchClosedDateFromHasWrongFormat
+          - WorkRequestSearchClosedDateToHasWrongFormat
+          - WorkOrderIsAlreadyCreatedForWorkRequest
+          - WorkRequestIsClosed
+          - WorkRequestClosedReasonIsRequiredForClosedStatus
+          - WorkOrderIdIsRequiredForThisClosedReason
+          - InvalidWorkRequestClosedReason
+          - WorkRequestClosedReasonIsOnlyForClosedStatus
+          - InvalidWorkRequestWorkOrderId
+          - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+          - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+          - InvalidWorkOrderSourceType
+          - DeclineReasonIdIsRequired
+          - DeclineReasonDoesntAllowCustomText
+          - InvalidDeclineReasonId
+          - MultipleWorkOrdersForPurchaseNumber
+          - InvoiceMaterialMakupInvalid
+          - MaterialMarkUpDiscrepancyReasonShouldBeStated
+          - MaterialPriceDiscrepancyReasonShouldBeStated
+          - OtherPriceDiscrepancyReasonShouldBeStated
+          - SubscriberIdIsNotValid
+          - FiscalPeriodIsNotValid
+          - AmountIsNotValid
+          - AmountFormatIsNotValid
+          - CategoryMustBeEmpty
+          - CategoryIsNotValid
+          - TradeMustBeEmpty
+          - TradeIsNotValid
+          - GlCodeMustBeEmpty
+          - GlCodeIsNotValid
+          - LocationMustBeEmpty
+          - LocationIsNotValid
+          - RegionMustBeEmpty
+          - RegionIsNotValid
+          - DistrictMustBeEmpty
+          - DistrictIsNotValid
+          - DuplicateData
+          - PrimaryCategoryMustBeEmpty
+          - PrimaryCategoryIsNotValid
+          - CategoryAndExcludedCategoryCannotSimultaneously
+          - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+          - TradeAndExcludedTradeCannotSimultaneously
+          - GlCodeAndExcludedGlCodeCannotSimultaneously
+          - DuplicateCategories
+          - DuplicateTrades
+          - DuplicateGlCodes
+          - DuplicatePrimaryCategories
+          - LocationNoteMustBeEmpty
+          - LocationNoteIsNotValid
+          - OverlappingCategories
+          - OverlappingPrimaryCategories
+          - OverlappingTrades
+          - OverlappingPrimaryTrades
+          - OverlappingGlCodes
+          - OverlappingLocations
+          - OverlappingRegions
+          - OverlappingDistricts
+          - OverlappingLocationNotes
+          - TaxExemptionErrorApi
+          - OtherLineItemZeroAmount
+          - TravelLineItemsNotNegativeValueRequired
+          - MaterialLineItemsNotNegativeValueRequired
+          - LaborLineItemsNotNegativeValueRequired
+          - AdditionalApprovalCodeSetupIdInvalid
+          - VendorIdIsNotValid
+          - InvalidBatchId
+          - InvalidBatchStatusId
+          - CategoryInUsePMServiceError
+          - CategoryInUseChecklistError
+          - CategoryInUseETAMissedAlertError
+          - CategoryInUseBudgetControl
+          - CategoryInUseConnector
+          - CategoryInUseContractedService
+          - CategoryInUseEDI
+          - CategoryInUseIVR
+          - CategoryInUseFeedbackV2
+          - CategoryInUseProposalApproveReasons
+          - CategoryInUsePaymentManager
+          - CategoryInUseProviderAssignments
+          - CategoryInUseSiteAccess
+          - CategoryInUseAlerts
+          - CategoryInUseOpenWOAlert
+          - CategoryInUseWOAutocopy
+          - CategoryInUseWorkRequest
+          - CategoryInUseWO
+          - CategoryInUseDashboardOverride
+          - CategoryInUseInvoiceAttributes
+          - FeatureIsOn
+          - LocationHierarchyNotFound
+          - LocationHierarchyLevelNotFound
+          - LocationHierarchyParentLevelNotFound
+          - LocationSpaceTypeNotFound
+          - DuplicateRowByValueKey
+          - ParentNotFound
+          - DuplicateSequenceAmongSiblings
+          - SequenceConflictsWithExistingData
+          - SequenceMustBeGreaterThanZero
+          - ValueContainsPathDelimiter
+          - InitializationWarmupError
+          type: string
+      ErrorCode:
+        description: The code of the first error found
+        enum:
+        - NotAllowed
+        - EmptyProvider
+        - InvalidProviderId
+        - UnknownProvider
+        - ProviderAlreadyExists
+        - ProviderIdNotExists
+        - TimeoutExpiredError
+        - EmptyContract
+        - ContractUndefined
+        - EmptySubscriber
+        - InvalidSubscriberId
+        - UnknownSubscriber
+        - InactiveSubscriber
+        - EmptySubscriberId
+        - SubscriberIdNotExists
+        - InternalError
+        - DataNotFound
+        - BadRequest
+        - UnAuthorized
+        - UnSupportedApplication
+        - SubsidiaryUserDisabled
+        - EmptyLocation
+        - InvalidLocationId
+        - UnknownLocation
+        - LocationNotBelongsToSubscriber
+        - EmptyLocationCountry
+        - LocationAlreadyExists
+        - InvalidStoreId
+        - LocationEmptyState
+        - NoAccessToLocation
+        - LocationAddressValidationError
+        - LocationAddressRequestValidationError
+        - InvalidLocationNoteHeader
+        - NoAccessToUpdateProtectedNote
+        - InvalidBusinessHoursFormat
+        - WorkingHoursIntersect
+        - InvalidDayOfWeek
+        - DuplicateDayOfWeek
+        - InvalidBusinessHoursInitialSetup
+        - BusinessHoursIsEmpty
+        - InvalidHolidayRepeatByType
+        - EmptyHolidayListOfDays
+        - EmptyHolidayListOfMonths
+        - InvalidHolidayMonthName
+        - InvalidHolidayNameLength
+        - InvalidHolidayRepeatEvery
+        - DuplicateMonth
+        - InvalidHolidayFrequency
+        - InvalidHolidayStartDate
+        - InvalidCloseAllDay
+        - HolidayDoesNotExist
+        - InvalidFormatParameter
+        - InvalidLocationCity
+        - InvalidLocationZip
+        - InvalidLocationLatitude
+        - InvalidLocationLongitude
+        - InvalidLocationEmail
+        - InvalidLocationName
+        - InvalidLocationState
+        - InvalidLocationAddlAddress
+        - InvalidLocationMainAddress
+        - InvalidLocationCountry
+        - InvalidLocationRegion
+        - InvalidLocationDistrict
+        - InvalidLocationPhone
+        - InvalidLocationContact
+        - InvalidLocationFaxNumber
+        - LocationCountryNotFound
+        - LocationStateNotFound
+        - LocationCityNotFound
+        - LocationIdNotExists
+        - InvalidLocationEmailLength
+        - LocationStateIdNotFound
+        - IncorrectCombinationStateAndStateId
+        - InvalidSubscriberIds
+        - InvalidLocalizationSettings
+        - LandlordResponsibilityNotFound
+        - LandlordResponsibilityAlreadyExists
+        - EmptyLocationIds
+        - AttachmentNotExist
+        - InvalidTradeId
+        - InvalidCategoryId
+        - InvalidOverrideCategoryId
+        - InvalidOverridePriorityId
+        - LeaseNoteExceedMaxLength
+        - InvalidOverrideProviderRank
+        - InvalidOverrideNTE
+        - DuplicateRows
+        - InvalidPriorityId
+        - LocationNotFound
+        - EmptyTrade
+        - InvalidTrade
+        - TradeNotBelongsToSubscriber
+        - InvalidPrimaryTrade
+        - InvalidTradeForSubscriber
+        - InvalidCategoryForSubscriber
+        - GlCodeAlreadyExists
+        - GlCodeNotExists
+        - InvalidGlCodeUpdate
+        - EmptyGlCode
+        - TradeAlreadyExists
+        - InvalidNTETrade
+        - TradeNotExists
+        - TradeAlreadyInUse
+        - TradeWithTheSameNameHasBeenDeleted
+        - TradeInUsePMServices
+        - TradeInUseProposalError
+        - TradeInUseRFPError
+        - TradeInUseChecklistError
+        - TradeInUseBudgetControl
+        - TradeInUseGlCode
+        - TradeInUseDynamicProviderAssignments
+        - TradeInUseInvoice
+        - TradeInUseLandlordResponsibilities
+        - TradeInUseWO
+        - TradeInUseEquipmentType
+        - TradeInUseRFP
+        - TradeInUseConnector
+        - TradeInUseContractedService
+        - TradeInUseIVR
+        - TradeInUseSiteAccess
+        - TradeInUseGLCodes
+        - TradeInUseCIWO
+        - TradeInUseOrganizationPermissions
+        - TradeСreationError
+        - EmptyUser
+        - EmptyCreatedBy
+        - InvalidUserName
+        - NotProviderUser
+        - UserHasNoPermissions
+        - RestrictedAccount
+        - UserAlreadyExists
+        - UserHasNoPermissionsEditWO
+        - UserEmailAddressIsMissing
+        - UserIsNotRTAdmin
+        - InvalidSubsriberProviderId
+        - LanguageNameNotFound
+        - InvalidLanguageId
+        - LanguageIdNotFound
+        - UseBothSubscriberIdProviderId
+        - EmptyWoProblem
+        - InvalidWoProblemSource
+        - InvalidWoProblemDescription
+        - InvalidWoProblemCode
+        - InvalidWoStatus
+        - InvalidWoNte
+        - InvalidWoCaller
+        - InvalidWoCallDate
+        - InvalidWoScheduledDate
+        - InvalidWoScheduledDateGreaterThanMaxAllowed
+        - EmptyWoCategory
+        - InvalidWoCategory
+        - EmptyWoPriority
+        - InvalidWoPriority
+        - InvalidWoCurrency
+        - InvalidWoSetupId
+        - AttachmentsRequired
+        - InvalidWoIdentifier
+        - EquipmentRequired
+        - WoNteOverflow
+        - InvalidWoPurchaseNumber
+        - InvalidWoStateForUpdate
+        - InvalidPagingParameter
+        - InvalidWoNumber
+        - CheckInDenied
+        - CheckOutDenied
+        - WoScheduledDateLessThenReassignDate
+        - WoScheduledDateLessThenCallDate
+        - InvalidWoActionReason
+        - EmptySubscriberProperty
+        - WorkOrderUpdateError
+        - MissedWoNteDetails
+        - InvalidLinkedWoIdentifier
+        - WoIsOnHold
+        - InvalidWoTrade
+        - InvalidStarScore
+        - WorkOrderAlreadyRated
+        - AttachmentThumbnailNotAvailable
+        - InvalidWoIdentifierOrPin
+        - InvalidTimeZoneHeader
+        - RefrigerantWasUsedShouldBeYesOrNo
+        - CheckInDeniedOutsideGeolocation
+        - CheckOutDeniedOutsideGeolocation
+        - LeakDetectorAuditShouldBeCreated
+        - CheckInOutPremature
+        - WorkOrderAttachmentsSizeExceeded
+        - WorkOrderNotFound
+        - WorkOrderCreateError
+        - InvalidWoProjectedCompletionDate
+        - InvalidFollowUpWo
+        - InvalidWeatherEventId
+        - InvalidSiteAuditLinkedWo
+        - InvalidSetupId
+        - IssueListNotFound
+        - InvalidIssueListField
+        - SiteAuditCompleted
+        - CheckSiteAuditError
+        - SaveSiteAuditError
+        - RemoveSiteAuditError
+        - InactiveTemplateType
+        - SiteAuditNotFound
+        - SiteAuditUpdateError
+        - InvalidSiteAuditParameters
+        - InvalidAdditionalApprovalCode
+        - InvalidAdditionalApprovalCodeValue
+        - AdditionalApprovalCodeIsDisabled
+        - InvalidOtherDesc
+        - InvalidTax2Name
+        - InvoiceInconsistentAmounts
+        - InvoiceInvalidTotal
+        - InvoiceTotalGreaterNte
+        - InvoiceExists
+        - CreatingInvoiceError
+        - DuplInvNumber
+        - InvoiceTotalNull
+        - InvComplDateNull
+        - InvDateLessComplDate
+        - InvoiceNotAuto
+        - ESignatureRequired
+        - InvWoNotFound
+        - InvWrongWoCurr
+        - InvWoCurrNotFound
+        - InvoicingDisabled
+        - InvCreationUnexpectedRes
+        - InvoiceInvalidLaborAmount
+        - InvoiceInvalidMaterialAmount
+        - InvDateOld
+        - InvDateGreater
+        - InvoiceMaterialDescriptionLengthOverflow
+        - InvoiceTaxNotValidated
+        - InvoiceMaterialPartNumberLengthOverflow
+        - TaxValidationError
+        - TaxExemptionError
+        - InvalidInvoiceNumber
+        - GetApprovalLevelsError
+        - InvoiceAddUsersToMliLevelsError
+        - InvoiceAddDeleteLocationsToMliLevelUserError
+        - InvoiceUpdateMLiLevelError
+        - InvoiceDeleteMliLevelError
+        - InvoiceDeleteUsersFromMliLevelError
+        - ApprovalLevelNameLengthOverflow
+        - GstTaxError
+        - Tax2Error
+        - GetApprovalLevelsAndLocationsByUserError
+        - GetAssignedUserShortInfoError
+        - AssignAllLocationsToApprovalLevelAndUserError
+        - GetLocationsForApprovalLevelAndAssignedUserError
+        - GetLocationsBySubscriberError
+        - AssignUserWithLocationsToApprovalLevelError
+        - ReAssignUserWithLocationsToNewApprovalLevelError
+        - ReAssignLocationsToApprovalLevelAndUserError
+        - OutstandingBalance
+        - InvoiceTaxDetailsEmpty
+        - InvoiceTaxDetailsIncorrectSum
+        - MultipleUsersForLocationIsNotAllowed
+        - UserAssignedToOtherLevel
+        - UserDoesNotExist
+        - LaborLineItemRequired
+        - MaterialLineItemRequired
+        - InvoiceDoesntExist
+        - InvoiceStarUnstarFailed
+        - InvoiceBatchUpdateInvalidInvoiceStatusError
+        - InvoiceBatchUpdateLimitExceededError
+        - InvoiceNotAvailableForCurrentUser
+        - InvoiceBatchUpdateInvalidRuleSetStructure
+        - InvoiceBatchUpdateInvalidMliStructure
+        - InvoiceBatchUpdateStatusError
+        - InvoiceMaterialUnitTypeInvalid
+        - ExistingBatchNumber
+        - InvoiceResolutionTextRequired
+        - GetInvoiceDefaultApprovalCodesError
+        - InvoiceInvalidTravelAmount
+        - InvoiceTravelDescriptionLengthOverflow
+        - InvoiceTravelUnitTypeInvalid
+        - TravelLineItemRequired
+        - TravelDetailsDisabled
+        - OnOffShoreDisabled
+        - InvoiceInvalidLaborCount
+        - InvoiceInvalidMaterialCount
+        - InvoiceInvalidTravelCount
+        - SubscriberNotRegisteredForTaxValidation
+        - ManyDecimalsInAmountError
+        - DecimalPartQstTaxError
+        - LaborRatesDiscrepancy
+        - PayInvoicesError
+        - InvoiceNumberRequirementsError
+        - InvoiceNumberIncorrect
+        - InvoiceNumberRegExPatternError
+        - GetInvoicesPendingApprovalByLocationError
+        - ReAssignInvoicesToUsersFailed
+        - ReAssignInvoicesUsersMatched
+        - GetUsersForReassignInvoiceError
+        - InvalidTimeRangeActivity
+        - OutsourcedSourceInvoiceNotFound
+        - OthersLineItemsDisabled
+        - InvoiceInvalidOtherAmount
+        - InvoiceInvalidOtherCount
+        - InvoiceOtherDescriptionLengthOverflow
+        - OtherLineItemRequired
+        - OtherLineItemsNotNegativeValueRequired
+        - InvalidLaborSkillLevel
+        - InvalidLaborType
+        - InvalidTechnicianQuantity
+        - GetInvoicesCommonCategoriesError
+        - InvoiceExplainDisputeEmpty
+        - InvoiceAdditionalApprovalCodeHeaderError
+        - TemplateParseSuccess
+        - TemplateIncorrectHeaderError
+        - TemplateEmptyTemplateError
+        - TemplateWrongFieldsCountError
+        - TemplateFieldNotFoundError
+        - TemplateFieldRequiredError
+        - TemplateParseIntError
+        - TemplateFieldSizeError
+        - TemplateInvalidValueError
+        - TemplateFieldFormatError
+        - TemplateFieldMaxRangeError
+        - TemplateFieldMinRangeError
+        - TemplateProviderNotEntered
+        - TemplateInvalidSubscriberError
+        - TemplateVendorNotFoundError
+        - TemplateMissedProviderError
+        - TemplateProviderNotFoundError
+        - TemplateProviderSubsccriberLinkError
+        - TemplateTradeDispatchRankError
+        - TemplateInvalidTradeForSubscriberError
+        - TemplateStoreNotFoundError
+        - TemplateNotStoresForStateError
+        - TemplateNotStoresForCountryError
+        - TemplateNotStoresForDistrictError
+        - TemplateNotStoresForRegionError
+        - TemplateMultiplePimaryProvidersForTradeStoreError
+        - TemplateDuplicatePrimaryRelationshipError
+        - TemplateAmbiguousDataError
+        - TemplateIncorrectSubscriber
+        - TemplateDuplicateRanking
+        - TemplateLongitudeRangeError
+        - TemplateLatitudeRangeError
+        - InvoiceMaterialPartNameLengthOverflow
+        - TemplateTradeLocationExclusion
+        - TemplateInvalidStateError
+        - TemplateMissedSubscriberError
+        - TemplateMissedStoreIdError
+        - TemplateInvalidSubscriberIdError
+        - TemplateOpenCloseDateError
+        - TemplateInvalidCountryError
+        - TemplateInvalidStateForCountryError
+        - TemplateInvalidLocationTypeError
+        - TemplateMissingFullAndShortNameError
+        - TemplateMissingCountryError
+        - TemplateDuplicatedDataError
+        - TemplateParentLocationNotFoundError
+        - TemplateParseDateTimeError
+        - TemplateParseDecimalError
+        - TemplateSquareValueRangeError
+        - TemplateInvalidSquareMeasureError
+        - TemplateTypeLabelCanNotBeUpdatedError
+        - TemplateTypeLabelHaveToBeLocationForNotInventory
+        - TemplateInvalidPrimarySupplyLocation
+        - TemplateInvalidHomestoreLocationNumber
+        - TemplateErrorDuringCreation
+        - TemplateLocationNotFoundError
+        - TemplateDuplicatedLocationFoundError
+        - TemplateInvalidLocationHeaderError
+        - TemplateDuplicatedLocationHeaderError
+        - TemplateHeaderContainsEmptyFieldsError
+        - TemplateLocHeadersShortHeaderError
+        - TemplateHeaderContainsDuplicatesError
+        - TemplateLocationNotesStoreIdFieldLengthError
+        - TemplateLocationNotesNoteValueFieldLengthError
+        - TemplateErrorInvalidZipCode
+        - TemplateMissingLocationNoteHeader
+        - TemplateMissingLocationNoteIdHeader
+        - TemplateInvalidSecondarySupplyLocation
+        - TemplateLocationWasNotCreated
+        - TemplateTruckNameIsEmpty
+        - TemplateWrongFormat
+        - TemplateSubscriberNotFound
+        - TemplateDuplicatedLocationHeaders
+        - TemplateInvalidHeaders
+        - TemplateInvalidPhoneError
+        - TemplateDuplicateTelecomRecordError
+        - TemplateTelecomRecordExistsError
+        - TemplateInvalidCategory
+        - TemplateDifferentRanksForProviderAssignments
+        - TemplateDuplicateRankError
+        - TemplateProviderNonCompliant
+        - TemplateLocationIsClosed
+        - TemplateProviderWarning
+        - TemplateMultipleProvidersForTradeStoreError
+        - EmptyRequest
+        - InvalidNumberOfParameters
+        - InvoiceOtherUnitTypeInvalid
+        - EmptyLocationOrTradeList
+        - RequestSubscriberIdDoesntMatchUserSubscriberId
+        - StoreIdRequiredError
+        - InvalidUserIdError
+        - InvalidStoreIdError
+        - AmbigiousError
+        - MliHierarchyFiledsCountError
+        - MliHierarchyMaxUserNameError
+        - MliHierarchyDuplicateUserError
+        - MLiHirarchyUserExistInOtherLevelError
+        - MissingLevelsError
+        - DuplicateApprovalLevelsError
+        - InvalidMliLocations
+        - InvalidMlpLocations
+        - ApprovalLevelUsedInRulsetError
+        - GLCodeAmbiguous
+        - GlCodeInvalidResponce
+        - GetRuleSetListError
+        - RuleSetDuplicateNameError
+        - RuleSetDuplicateActionError
+        - RuleSetConflictedActionError
+        - RuleSetRuleSetDoesNotExistsError
+        - RuleSetTradeDoesNotExistError
+        - RuleSetCategoryDoesNotExistError
+        - RuleSetMliLevelDoesNotExistError
+        - GetRuleSet
+        - CreateUpdateRuleSetError
+        - DeleteRuleSet
+        - GetRuleSetCategoriesTradesCountError
+        - GetRuleSetByInvoice
+        - GetCategoryTradeIdsAreSelectedError
+        - ProposalAboveMlpLimitError
+        - ProposalNextLevelHasNoAvailableActionsError
+        - DefaultRuleSetError
+        - RuleSetActionEndStatusError
+        - RuleSetRejectActionEmptyForwardToError
+        - UserFilterGetError
+        - UserFilterCreateUpdateError
+        - UserFilterDeleteError
+        - UserFilterSetAsDefaultError
+        - InvoiceFilterFromAlpProviderError
+        - RegionFilterNotAllowedError
+        - LocationIdFilterNotAllowedError
+        - PaymenowScProviderIdOrFbCompanyIdMustBeProvided
+        - PaymenowBannersForProvidersOnly
+        - PaymenowFeatureDisabled
+        - PaymenowBannerInfoNotFound
+        - PaymenowBannerInvalidNavigationUrl
+        - PaymenowRequestedProvidersIsNotAssigned
+        - PaymenowEmptyRequestedProviders
+        - PaymentManagerFeatureDisabled
+        - PaymentManagerFeatureDisabledForSubscriber
+        - PaymentSystemCurrentlyUnavailable
+        - CurrencyNotSupported
+        - PaymentSystemAccountNotFound
+        - FeatureIsOff
+        - EarlyPayFeatureWithoutPaymentManagetFeatureError
+        - FtpTestError
+        - AcceptTermsAndConditionsRequestInvalid
+        - PaymentSystemAccountError
+        - SendReportToFTP
+        - SchedulingError
+        - BadPaymentData
+        - InvoicesCanNotBeRepaid
+        - InvoicesCanNotBeRescheduled
+        - InvalidBillingAddress
+        - PaymentManagerGeneralSettingsNotFound
+        - PaymentManagerEInvoiceSettingsNotFound
+        - BadgeVerificationFailed
+        - BadgeTempPassEmpty
+        - BadgeScanRequired
+        - SolvedIssueSubmitFailed
+        - SolvedIssueInvalidLocationId
+        - SolvedIssueInvalidCategoryId
+        - SolvedIssueInvalidTradeId
+        - SolvedIssueInvalidPriorityId
+        - SolvedIssueInvalidSource
+        - SolvedIssueInvalidProblemCode
+        - SolvedIssueInvalidType
+        - SubmitFeedbackErrorWoStatus
+        - SubmitFeedbackInvalidAnswer
+        - SubmitFeedbackInvalidTrackingNumber
+        - SubmitFeedbackInvalidSubscriber
+        - SubmitFeedbackInvalidScore
+        - SubmitFeedbackUnsatisfactoryCommentRequired
+        - SubmitFeedbackInvalidReviewId
+        - SubmitFeedbackInvalidSetupId
+        - FeedbackSetupInvalidSetupId
+        - S3SaveError
+        - AbsSaveError
+        - GoodDataLoginFailed
+        - GoodDataElementUriError
+        - GoodDataReportResultUriError
+        - GoodDataReportResultEmpty
+        - GoodDataDesReportResCountError
+        - GoodDataDesReportResConvertError
+        - GoodDataDesDisplayFormAttributeEmpty
+        - InvalidProposalAmountLimit
+        - GetApprovalProposalReasonsError
+        - GetEmailRecipientsError
+        - GetAssignProposalReasonsError
+        - ProposalHasBeenVoided
+        - AssetTypeDuplicateNameError
+        - AssetTypeDoesntExistError
+        - AssetTypeFailUpdateRefrigerantPurpose
+        - AssetTypeDeleteFailed
+        - ExistingAssetsFoundForAssetType
+        - CantModifyAssetTypeParentId
+        - InvalidAssetTypeName
+        - AssetTypeInheritanceError
+        - ExistingProposalsFoundForAssetType
+        - InstallPurchaseDateOverflow
+        - WOexistsWithSomeAssets
+        - PartsChangeFailed
+        - PartsReasonCodeError
+        - PartsUseDateError
+        - PartsRefrigerantAlreadyExists
+        - PartsChargeHistoryAlreadyExists
+        - PartsNotFound
+        - BulkPartUseIncorrectWorkOrder
+        - BulkPartsByIdsNotFound
+        - BulkPartsMultipleWosError
+        - BulkPartsIncorrectIsRefrigerantParam
+        - BulkPartsIsRefrigerantCanNotbeChanged
+        - BulkPartsReasonCodeChangeError
+        - BulkPartsInvalidAssetAndReasonCodeParams
+        - BulkPartsInvalidAssetId
+        - BulkPartsInvalidInitialChargeCode
+        - BulkPartsAssetDoesntContainCharge
+        - BulkPartsIsInventoryFlagError
+        - BulkPartsLeakAlreadyInProcessError
+        - BulkPartsInvalidDateRangeError
+        - BulkPartsMoeNumberRequiredError
+        - BulkPartsSystemChargeExceeded
+        - BulkRefrigerantuUageBlocked
+        - BulkIDsNotBeNull
+        - BulkPartRemovalNotAllowedOnRetrofitRetireWO
+        - BulkAddPartUsagesNotAllowedAfterRetrofitRetireCreation
+        - BulkRetrofitRetireRefrigerantUsageReasonCanNotChanged
+        - BulkInitialChargeSystemExpansionNotAllowed
+        - BulkInventoryPartIdCanNotBeChanged
+        - BulkInventoryLocationIdCanNotBeChanged
+        - BulkPartsDuplicatedRequest
+        - BulkChangePartsIncorrectRefrigerantType
+        - BulkPartsRetroRetireIsInProgressOnThisDate
+        - BulkPartsCanNotAttachRefrigerantUsageToPlanLeakRecord
+        - RetrofitRetireCanNotBeRemoved
+        - RetroRetirePartsCantbeChanged
+        - BulkPartsInventoryApiFailed
+        - BulkPartsDuplicated
+        - BulkPartsWorkOrderInProcessing
+        - BadNotificationSubscriptionEventType
+        - RefrigerantUseDateOutOfTheLeakProcessDateRange
+        - InventoryUsageNotAllowedOnRTrackingConnectedSubAndSubcontractors
+        - BulkExternalWoCurrentlyDoesntExists
+        - BulkConnectorOnlyExternalClientAssetsCanBeProcessed
+        - BulkConnectorOnlyClientAssetsCouldBeProcessed
+        - LeakRecordHasWrongDateValue
+        - HasUncompliedLeakRecordInAnoutherWO
+        - HasUncompletedWOOnAnotherLeakRecord
+        - OnlyOneAssetWorkOrderPair
+        - OneLeakRecordMustBeOnCompletedWO
+        - LeakRecordNotFound
+        - AssetIDWoIdIsRequired
+        - BulkPartsReasonCodeRetrofit
+        - RetrofitRetireWasCancelledNoLeak
+        - FailedToUpdateLeakEvent
+        - AddPartUsagesAreNotAllowedInRetireRetrofitDateInterval
+        - LeakPartUseOnZeroChargeNotAllowed
+        - BulkLeakRecordsAndAuditRequest
+        - LeakRecordsDuplicateRequestDetected
+        - AllLeakRecordFieldsAreRequired
+        - BulkPartsTheSamePartIdForUpdateAndRemovalPassed
+        - MlpImportLevelError
+        - UpdateMlpUserLevelError
+        - InvalidHolidayName
+        - DuplicateHolidayName
+        - HolidaysDeleteFailed
+        - HolidaysExcludeInsertFailed
+        - HolidaysUpdateFailed
+        - HolidaysInsertFailed
+        - HolidaysExcludeDeleteFailed
+        - BusinessHoursDeleteFailed
+        - BusinessHoursUpdateFailed
+        - BusinessHoursInsertFailed
+        - InvalidTime
+        - HolidayForDeleteNotFound
+        - InvalidChecklistId
+        - ChecklistNotPopulated
+        - ChecklistNotAssignedForTransfersWO
+        - NoLinkBetweenSubscriberAndProvider
+        - WorkforceCreateContractorError
+        - InvalidCertificateId
+        - MaxThresholdExceeded
+        - MaxTriggerRateExceeded
+        - LeakPriorityIsRequired
+        - MissingRTSettings
+        - ResolutionCodesLimitExceeded
+        - ResolutionCodesAreRequired
+        - RootCauseIsRequired
+        - RootCauseTextIsRequired
+        - NoAccessToSetRootCauseText
+        - RootCauseTextMaxLengthExceeded
+        - ResolutionCodeTextIsRequired
+        - NoAccessToSetResolutionCodeText
+        - ResolutionCodeTextMaxLengthExceeded
+        - ResolutionCodeTextMustBeUnique
+        - ResolutionCodeWithoutFreeTextMustBeUnique
+        - PendingResCodesStatusCannotBeChangedToInvoiceableBySubscriber
+        - ResolutionAndRootCauseCodesAreRequiredToMoveToInvoiceableStatusByProvider
+        - AssetCategoriesLimitExceeded
+        - NoAccessToAssetCategories
+        - AssetCategoriesAreRequired
+        - InvalidAssetCategoryId
+        - NoAssetCategoriesOnWorkOrder
+        - RootCausesMustBeForAllWorkOrderAssetCategories
+        - RootCauseTextMustBeUnique
+        - AssetCategoryIsRequired
+        - MultipleRootCausesMethodMustBeUsed
+        - ResolutionCodesMustBeForAllWorkOrderAssetCategories
+        - AssetFilterLocationsLimitExceeded
+        - UnknownStoreId
+        - UsesRefrigerantAttributeNotChanged
+        - AssetTagDuplicate
+        - AssetTagIdDuplicate
+        - UnknownEquipmentType
+        - ParentIdInOtherLocation
+        - UnknownBrandName
+        - CARBRequiredManufacturedDate
+        - CARBRequiredInstallDate
+        - TradeNotFound
+        - AssetDoesntExist
+        - AssetIsNotRefrigerant
+        - AssetCantContainRefrigerant
+        - OnlyRackAssetsContainingCircuits
+        - ConnectorAssetTagIdCanNotBeChanged
+        - ConnectorAssetLocationIdCanNotBeChanged
+        - AssetTagCantBeUpdated
+        - AssetTypeIsNotСonfiguredToManageRTAssets
+        - RefrigerantTrackingNotAvailableForLocation
+        - UsesRefrigerantRequiredByAssetTypeSettings
+        - AssetLocationTradeDoesntCorrespondToWO
+        - AssetLocationSelectedPMmodule
+        - UpdateAssetRepairStatusValidation
+        - HasCircuitsCantBeChange
+        - HasComponentsCantBeChange
+        - CircuitCanNotBeConnectedToCircuit
+        - RTCircuitCanNotBeConnectedToNonRTAsset
+        - RTComponentCanNotBeConnectedToNonRTAsset
+        - ComponentCanNotBeConnectedToComponent
+        - NonRTComponentCanNotBeConnectedToRtAsset
+        - NonRTCircuitCanNotBeConnectedToRtAsset
+        - ComponentCanNotBeConnectedToCircuit
+        - ParentAssetShouldHaveEitherComponentsNorCircuits
+        - ParentAssetCantHaveComponents
+        - ParentAssetCantHaveCircuits
+        - MultipleAssetsFoundForTheRequestedTagId
+        - InvalidBrandName
+        - UnknownBrandId
+        - BrandRestrictedByAssetType
+        - BrandRestrictedBySubscriber
+        - BrandsRestrictedBySubscriber
+        - DeclineWorkOrderFailed
+        - AcceptWorkOrderFailed
+        - WorkOrderWasAccepted
+        - AssetAttachmentsSizeExceeded
+        - SaveMliAuditReportSetting
+        - GetMliAuditReportSetting
+        - SaveMliAuditReportResult
+        - SaveMliAuditReportSendEmailStatus
+        - SaveMliAuditReportFilePath
+        - GetSubscribersEnabledSchedule
+        - SaveMliAuditInfoError
+        - TaxValidationAddNewCompanySettingsError
+        - TaxValidationUpdateCompanySettingsError
+        - ProjectAssociationError
+        - GetProjectsInvoiceAmountsError
+        - TaxCodeNotUniqueError
+        - FieldLengthIsTooLongError
+        - SetTaxCodesBulkError
+        - InvoiceAdditionalApprovalCodeValueError
+        - BulkUpdateInvoicePaymentError
+        - InvoiceLineItemFilterDisabled
+        - InvoiceStatusToRejectProviderNotificationFailed
+        - SortFieldNotAvailableError
+        - ContractServiceExist
+        - ContractServiceCantChangeTrade
+        - ContractServiceCantChangeCategory
+        - ContractServiceCantChangeProvider
+        - ContractServicePMServiceCantChangeTrade
+        - ContractServicePMServiceCantChangeCategory
+        - ContractedServiceNameAlreadyExists
+        - ContractedServiceNameLinkedToRates
+        - WorkRequestDescriptionIsRequired
+        - WorkRequestCallDateIsRequired
+        - WorkRequestIssueIsRequired
+        - WorkRequestCallDateHasWrongFormat
+        - WorkRequestScheduledDateHasWrongFormat
+        - InvalidWorkRequestStatus
+        - InvalidWorkRequestExtendedStatus
+        - InvalidWorkRequestCategory
+        - InvalidWorkRequestPriority
+        - InvalidWorkRequestCurrency
+        - InvalidWorkRequestIssueSetup
+        - InvalidWorkRequestIssueArea
+        - InvalidWorkRequestAsset
+        - WorkRequestAttachmentFileNameIsRequired
+        - WorkRequestAttachmentOriginalNameIsRequired
+        - WorkRequestIssueProblemCodeIsRequired
+        - WorkRequestIssueProblemTypeIsRequired
+        - WorkRequestScheduledDateMustBeGreaterThanCallDate
+        - InvalidWorkRequestId
+        - WorkRequestSearchCallDateFromHasWrongFormat
+        - WorkRequestSearchCallDateToHasWrongFormat
+        - WorkRequestSearchScheduledDateFromHasWrongFormat
+        - WorkRequestSearchScheduledDateToHasWrongFormat
+        - WorkRequestSearchClosedDateFromHasWrongFormat
+        - WorkRequestSearchClosedDateToHasWrongFormat
+        - WorkOrderIsAlreadyCreatedForWorkRequest
+        - WorkRequestIsClosed
+        - WorkRequestClosedReasonIsRequiredForClosedStatus
+        - WorkOrderIdIsRequiredForThisClosedReason
+        - InvalidWorkRequestClosedReason
+        - WorkRequestClosedReasonIsOnlyForClosedStatus
+        - InvalidWorkRequestWorkOrderId
+        - WorkRequestWorkOrderIdIsOnlyForClosedStatus
+        - WorkRequestWorkOrderIdIsOnlyForCertainClosedReason
+        - InvalidWorkOrderSourceType
+        - DeclineReasonIdIsRequired
+        - DeclineReasonDoesntAllowCustomText
+        - InvalidDeclineReasonId
+        - MultipleWorkOrdersForPurchaseNumber
+        - InvoiceMaterialMakupInvalid
+        - MaterialMarkUpDiscrepancyReasonShouldBeStated
+        - MaterialPriceDiscrepancyReasonShouldBeStated
+        - OtherPriceDiscrepancyReasonShouldBeStated
+        - SubscriberIdIsNotValid
+        - FiscalPeriodIsNotValid
+        - AmountIsNotValid
+        - AmountFormatIsNotValid
+        - CategoryMustBeEmpty
+        - CategoryIsNotValid
+        - TradeMustBeEmpty
+        - TradeIsNotValid
+        - GlCodeMustBeEmpty
+        - GlCodeIsNotValid
+        - LocationMustBeEmpty
+        - LocationIsNotValid
+        - RegionMustBeEmpty
+        - RegionIsNotValid
+        - DistrictMustBeEmpty
+        - DistrictIsNotValid
+        - DuplicateData
+        - PrimaryCategoryMustBeEmpty
+        - PrimaryCategoryIsNotValid
+        - CategoryAndExcludedCategoryCannotSimultaneously
+        - PrimaryCategoryAndExcludedPrimaryCategoryCannotSimultaneously
+        - TradeAndExcludedTradeCannotSimultaneously
+        - GlCodeAndExcludedGlCodeCannotSimultaneously
+        - DuplicateCategories
+        - DuplicateTrades
+        - DuplicateGlCodes
+        - DuplicatePrimaryCategories
+        - LocationNoteMustBeEmpty
+        - LocationNoteIsNotValid
+        - OverlappingCategories
+        - OverlappingPrimaryCategories
+        - OverlappingTrades
+        - OverlappingPrimaryTrades
+        - OverlappingGlCodes
+        - OverlappingLocations
+        - OverlappingRegions
+        - OverlappingDistricts
+        - OverlappingLocationNotes
+        - TaxExemptionErrorApi
+        - OtherLineItemZeroAmount
+        - TravelLineItemsNotNegativeValueRequired
+        - MaterialLineItemsNotNegativeValueRequired
+        - LaborLineItemsNotNegativeValueRequired
+        - AdditionalApprovalCodeSetupIdInvalid
+        - VendorIdIsNotValid
+        - InvalidBatchId
+        - InvalidBatchStatusId
+        - CategoryInUsePMServiceError
+        - CategoryInUseChecklistError
+        - CategoryInUseETAMissedAlertError
+        - CategoryInUseBudgetControl
+        - CategoryInUseConnector
+        - CategoryInUseContractedService
+        - CategoryInUseEDI
+        - CategoryInUseIVR
+        - CategoryInUseFeedbackV2
+        - CategoryInUseProposalApproveReasons
+        - CategoryInUsePaymentManager
+        - CategoryInUseProviderAssignments
+        - CategoryInUseSiteAccess
+        - CategoryInUseAlerts
+        - CategoryInUseOpenWOAlert
+        - CategoryInUseWOAutocopy
+        - CategoryInUseWorkRequest
+        - CategoryInUseWO
+        - CategoryInUseDashboardOverride
+        - CategoryInUseInvoiceAttributes
+        - FeatureIsOn
+        - LocationHierarchyNotFound
+        - LocationHierarchyLevelNotFound
+        - LocationHierarchyParentLevelNotFound
+        - LocationSpaceTypeNotFound
+        - DuplicateRowByValueKey
+        - ParentNotFound
+        - DuplicateSequenceAmongSiblings
+        - SequenceConflictsWithExistingData
+        - SequenceMustBeGreaterThanZero
+        - ValueContainsPathDelimiter
+        - InitializationWarmupError
+        type: string
+        readOnly: true
+      ErrorMessage:
+        description: The description of all errors.
+        type: string
+      Data:
+        $ref: '#/definitions/System.Object'
+        description: "Optional\r\n            Gets or Sets the Data object."
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.UploadedAttachmentResponse:
+    description: Uploaded file information.
+    type: object
+    properties:
+      DocumentPath:
+        description: Document path in the storage.
+        type: string
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListWithTasksExtendedResponse:
+    description: Represents an extended response containing the details of a checklist with associated asset tasks.
+    type: object
+    properties:
+      ChecklistWithTasks:
+        description: "Gets or sets a collection of asset task checklists.\r\n            Each checklist contains details about its parameters and the configured asset-related tasks."
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListWithTasksResponse'
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListWithTasksResponse:
+    description: Represents the parameters of a checklist that includes asset tasks.
+    type: object
+    properties:
+      ChecklistName:
+        description: Gets or sets the name of the checklist.
+        type: string
+      Id:
+        format: int32
+        description: Gets or sets the unique identifier of the checklist.
+        type: integer
+      IsActive:
+        description: Gets or sets a value indicating whether the checklist is active.
+        default: false
+        type: boolean
+      CreatedDate:
+        format: date-time
+        description: Gets or sets the date and time when the checklist was created.
+        type: string
+      UpdatedDate:
+        format: date-time
+        description: Gets or sets the date and time when the checklist was last updated.
+        type: string
+      CreatedBy:
+        format: int32
+        description: Gets or sets the user ID of the employee who created the checklist.
+        type: integer
+      UpdatedBy:
+        format: int32
+        description: Gets or sets the user ID of the employee who last updated the checklist.
+        type: integer
+      Tasks:
+        description: Gets or sets a collection of asset-related tasks configured for the checklist.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.ChecklistTaskResponse'
+  ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.CheckListResponseRequest:
+    required:
+    - CheckListQuestionId
+    - CheckListQuestionOptionID
+    - EntityId
+    type: object
+    properties:
+      CheckListQuestionId:
+        format: int32
+        type: integer
+      ChecklistQuestionOptionIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      CheckListQuestionOptionID:
+        format: int32
+        type: integer
+      Answer:
+        type: string
+      FreeTextAnswer:
+        type: string
+      EntityId:
+        format: int32
+        type: integer
+      EntityTypeId:
+        format: int32
+        type: integer
+      ProviderId:
+        format: int32
+        type: integer
+      Attempt:
+        format: int32
+        type: integer
+      TechnicianId:
+        format: int32
+        type: integer
+      AuthUserId:
+        format: int32
+        type: integer
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListQuestionNumericTypeResponse:
+    description: Represents an answer option configured for a checklist question of the Numeric type.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Gets or sets the unique identifier of the answer option for a checklist question of the Numeric type.
+        type: integer
+      Type:
+        description: Gets or sets the type value which represents the configuration for numeric options.
+        enum:
+        - LessThan
+        - MoreThan
+        - InBetween
+        type: string
+      SingleValue:
+        format: int32
+        description: Gets or sets the single numeric value for the checklist question, if applicable.
+        type: integer
+      MinValue:
+        format: int32
+        description: Gets or sets the minimum numeric value for the checklist question, if a range is applicable.
+        type: integer
+      MaxValue:
+        format: int32
+        description: Gets or sets the maximum numeric value for the checklist question, if a range is applicable.
+        type: integer
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponseWithPictures:
+    description: Object for a checklist response with attachments.
+    type: object
+    properties:
+      ChecklistResponse:
+        $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponse'
+        description: Response submitted for a checklist question.
+      ChecklistResponsePictures:
+        description: Files attached to a checklist response.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistPictureResponse'
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListDetailQuestionsResponse:
+    description: Represents the details of a checklist question, including its properties and configuration options.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Gets or sets the unique identifier of the checklist question.
+        type: integer
+      CheckListId:
+        format: int32
+        description: Gets or sets the ID of the checklist to which the question belongs.
+        type: integer
+      Question:
+        description: Gets or sets the question that a technician is prompted to answer when working on a service request.
+        type: string
+      ShortDescription:
+        description: Gets or sets the short description, although it's noted as not applicable to checklists.
+        type: string
+      AnswerRequired:
+        description: Gets or sets a value indicating whether answering this checklist question is mandatory.
+        default: false
+        type: boolean
+      PictureFlag:
+        description: "Gets or sets the requirement level for uploading an attachment when answering the question.\r\n            <list type=\"bullet\"><item><description>0 — Adding an attachment is optional.</description></item><item><description>1 — An attachment is not required.</description></item><item><description>2 — Uploading an attachment is mandatory.</description></item></list>"
+        enum:
+        - Optional
+        - 'No'
+        - Required
+        type: string
+      Sequence:
+        format: int32
+        description: Gets or sets the sequence number, noted as not applicable to checklists.
+        type: integer
+      QuestionType:
+        description: "Gets or sets the type of the checklist question.\r\n            <list type=\"bullet\"><item><description>0 — <strong>Acknowledgement</strong>: Represents an on/off toggle prompting a technician to give a positive or negative response to a question.</description></item><item><description>1 — <strong>Selector</strong>: Provides multiple configured answer options to choose from.</description></item><item><description>2 — <strong>Text Entry</strong>: Allows entering a text answer.</description></item><item><description>4 — <strong>Numeric Input</strong>: Prompts to submit a number as a response.</description></item></list>"
+        enum:
+        - CheckBox
+        - RadioButton
+        - TextEntry
+        - TriState
+        - NumericInput
+        type: string
+      CheckListQuestionOptions:
+        description: Gets or sets the answer options for questions of the Selector type.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListQuestionOptionResponse'
+      AnswerCanPersist:
+        description: "Gets or sets a value indicating whether the answer to this question can persist.\r\n            If the answer is persistent, the last submitted response populates on the question.\r\n            A technician can either opt for the current response or update it."
+        default: false
+        type: boolean
+      CheckListTimingType:
+        description: "Gets or sets the checklist segment the question belongs to:\r\n            1 — check-in segment, 2 — check-out segment."
+        enum:
+        - CheckIn
+        - CheckOut
+        type: string
+      AcknowledgeUrl:
+        $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListAcknowledgeUrlResponse'
+        description: Gets or sets the acknowledge URL for special checklist types.
+      AllowMultiSelect:
+        description: Gets or sets a value indicating whether multiple selections are allowed for this question.
+        default: false
+        type: boolean
+      ChecklistFailure:
+        description: Gets or sets a value indicating whether this question contributes to a checklist failure.
+        default: false
+        type: boolean
+      AssetTypeIds:
+        description: Gets or sets the list of asset type IDs to which the question is applicable.
+        type: array
+        items:
+          format: int32
+          type: integer
+      CheckListQuestionNumericType:
+        $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListQuestionNumericTypeResponse'
+        description: Gets or sets the answer option of the Numeric type question.
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListDetailResponse:
+    description: Represents the parameters of a standard checklist, including details and configuration options.
+    type: object
+    properties:
+      ChecklistName:
+        description: Gets or sets the name of the checklist.
+        type: string
+      Id:
+        format: int32
+        description: Gets or sets the unique identifier of the checklist.
+        type: integer
+      IsActive:
+        description: Gets or sets a value indicating whether the checklist is active.
+        default: false
+        type: boolean
+      CreatedDate:
+        format: date-time
+        description: Gets or sets the date and time when the checklist was created.
+        type: string
+      UpdatedDate:
+        format: date-time
+        description: Gets or sets the date and time when the checklist was last updated.
+        type: string
+      CreatedBy:
+        format: int32
+        description: Gets or sets the user ID of the employee who created the checklist.
+        type: integer
+      UpdatedBy:
+        format: int32
+        description: Gets or sets the user ID of the employee who last updated the checklist.
+        type: integer
+      Questions:
+        description: Gets or sets a collection of questions configured for the checklist.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListDetailQuestionsResponse'
+      DisplayForEachAsset:
+        description: Gets or sets a value indicating whether the checklist allows each question to be answered multiple times for each asset on the work order.
+        default: false
+        type: boolean
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistPictureResponse:
+    description: Object for an attachment added to a checklist response.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: ID of the file attached to the checklist response.
+        type: integer
+      CheckListResponseId:
+        format: int32
+        description: ID of the checklist response the attachment is submitted for.
+        type: integer
+      DocumentName:
+        description: Attachment name.
+        type: string
+      DocumentPath:
+        description: Attachment path.
+        type: string
+      ThumbnailPath:
+        description: Attachment thumbnail path.
+        type: string
+      HasThumbnail:
+        description: Defines whether a thumbnail is available for the attachment.
+        default: false
+        type: boolean
+      UpdatedBy:
+        format: int32
+        description: User Id.
+        type: integer
+  ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateChecklistResponseRequest:
+    description: Request to update a checklist response
+    required:
+    - CheckListQuestionId
+    - CheckListQuestionOptionID
+    - EntityId
+    type: object
+    properties:
+      Attachments:
+        description: List of attachment information to be added to the checklist response.
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateAttachmentRequest'
+      CheckListQuestionId:
+        format: int32
+        type: integer
+      ChecklistQuestionOptionIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      CheckListQuestionOptionID:
+        format: int32
+        type: integer
+      Answer:
+        type: string
+      FreeTextAnswer:
+        type: string
+      EntityId:
+        format: int32
+        type: integer
+      EntityTypeId:
+        format: int32
+        type: integer
+      ProviderId:
+        format: int32
+        type: integer
+      Attempt:
+        format: int32
+        type: integer
+      TechnicianId:
+        format: int32
+        type: integer
+      AuthUserId:
+        format: int32
+        type: integer
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListDetailExtendedResponse:
+    description: Represents an extended response containing the details of a standard checklist.
+    type: object
+    properties:
+      CheckListDetails:
+        description: "Gets or sets a collection of detailed standard checklist objects.\r\n            Each object includes parameters and configured questions associated with the checklist."
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListDetailResponse'
+      HasTransferedCheckList:
+        description: Gets or sets a value indicating whether there is a transferred checklist.
+        default: false
+        type: boolean
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.ChecklistTypesResponse:
+    description: Represents a response object containing the checklist ID and its type.
+    type: object
+    properties:
+      Id:
+        format: int32
+        description: Gets or sets the unique identifier of the checklist.
+        type: integer
+      Type:
+        description: "Gets or sets the type of the checklist.\r\n            <para>\r\n            Possible values include:\r\n            </para><list type=\"bullet\"><item><description>0 — <strong>Standard checklist</strong> with questions that a technician is prompted to answer when working on a service request.</description></item><item><description>2 — <strong>Asset task checklist</strong> containing tasks for specific asset types that a technician should complete when servicing a work order.</description></item></list>"
+        enum:
+        - Checklist
+        - Survey
+        - AssetTask
+        - PlannedMaintenance
+        type: string
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

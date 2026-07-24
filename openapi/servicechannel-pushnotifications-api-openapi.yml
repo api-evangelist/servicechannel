@@ -1,0 +1,229 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours PushNotifications API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: PushNotifications
+paths:
+  /locations/{locationId}/subscribe:
+    post:
+      tags:
+      - PushNotifications
+      summary: Subscribe to Push Notifications
+      description: "Subscribe Push Notification.\r\n            <br /><br />Available for subscriber usage."
+      operationId: POSTv3_locations_{locationId}_subscribe
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: Numeric Id of the Location to perform action with.
+        required: true
+        type: integer
+        format: int32
+      - name: request
+        in: body
+        description: The Subscription Push Notification request.
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Notifications.PushNotificationSubscriptionRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+  /locations/{locationId}/push:
+    get:
+      tags:
+      - PushNotifications
+      summary: List existing email subscriptions
+      description: Returns a list of email subscriptions
+      operationId: GETv3_locations_{locationId}_push?deviceToken={deviceToken}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        required: true
+        type: integer
+        format: int32
+      - name: deviceToken
+        in: query
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+  /unsubscribe:
+    delete:
+      tags:
+      - PushNotifications
+      summary: Unsubscribe from Push Notifications
+      description: "Unsubscribe from Push Notifications.\r\n            <br /><br />Available for subscriber usage."
+      operationId: DELETEv3_unsubscribe?deviceToken={deviceToken}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: deviceToken
+        in: query
+        description: 'Device token: "35353-335345-FAC342..."'
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+  /locations/{locationId}/unsubscribe:
+    delete:
+      tags:
+      - PushNotifications
+      summary: Unsubscribe from Push Notifications
+      description: "Unsubscribe from Push Notifications.\r\n            <br /><br />Available for subscriber usage."
+      operationId: DELETEv3_locations_{locationId}_unsubscribe?id={id}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: path
+        description: Numeric Id of the Location to perform action with.
+        required: true
+        type: integer
+        format: int32
+      - name: id
+        in: query
+        description: Numeric Id of the Subscription to perform action with.
+        required: false
+        type: integer
+        format: int32
+      - name: deviceToken
+        in: query
+        description: Required Device Token.
+        required: true
+        type: string
+      - name: deviceType
+        in: query
+        description: 'Device type: Android, iOS, Amazon'
+        required: true
+        type: string
+        enum:
+        - Android
+        - iOS
+        - Amazon
+      - name: notificationType
+        in: query
+        description: 'Notification type: Check In , ....'
+        required: true
+        type: string
+        enum:
+        - CheckIn
+        - CheckOut
+        - BadgeScanRequired
+      - name: application
+        in: query
+        description: 'Application : ScMobile, FTM, ...'
+        required: true
+        type: string
+        enum:
+        - ScMobile
+      - name: notificationRules.rules
+        in: query
+        required: false
+        type: array
+        items: {}
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Subscribers
+definitions:
+  ServiceChannel.Services.Messaging.Notifications.PushNotificationSubscriptionRequest:
+    description: Subscribe Push Notification Request model
+    required:
+    - DeviceToken
+    - DeviceType
+    - NotificationType
+    - Application
+    type: object
+    properties:
+      DeviceToken:
+        description: Required Device Token.
+        type: string
+      DeviceType:
+        description: 'Device type: Android, iOS, Amazon'
+        enum:
+        - Android
+        - iOS
+        - Amazon
+        type: string
+      NotificationType:
+        description: 'Notification type: Check In , ....'
+        enum:
+        - CheckIn
+        - CheckOut
+        - BadgeScanRequired
+        type: string
+      Application:
+        description: 'Application : ScMobile, FTM, ...'
+        enum:
+        - ScMobile
+        type: string
+      NotificationRules:
+        $ref: '#/definitions/ServiceChannel.Services.Messaging.Notifications.NotificationRulesRequest'
+        description: Filter for Notification Request
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Services.Messaging.Notifications.Rule:
+    type: object
+    properties:
+      Field:
+        type: string
+      Value:
+        type: string
+  ServiceChannel.Services.Messaging.Notifications.NotificationRulesRequest:
+    description: Rules for Notification Request model
+    type: object
+    properties:
+      Rules:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Notifications.Rule'
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

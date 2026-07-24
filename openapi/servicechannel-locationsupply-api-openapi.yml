@@ -1,0 +1,158 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours LocationSupply API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: LocationSupply
+paths:
+  /locationsupply:
+    get:
+      tags:
+      - LocationSupply
+      operationId: GETv3_locationsupply?LocationId={LocationId}&TruckId={TruckId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      - name: truckId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+    put:
+      tags:
+      - LocationSupply
+      operationId: PUTv3_locationsupply?LocationId={LocationId}&TruckId={TruckId}
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: supplyLocations
+        in: body
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/ServiceChannel.Api.Model.LocationSupply.Location'
+      - name: locationId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      - name: truckId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+    post:
+      tags:
+      - LocationSupply
+      operationId: POSTv3_locationsupply
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationSupply
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Api.Model.LocationSupply.LocationSupply'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+    delete:
+      tags:
+      - LocationSupply
+      operationId: DELETEv3_locationsupply?LocationId={LocationId}&TruckId={TruckId}
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: locationId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      - name: truckId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+definitions:
+  ServiceChannel.Api.Model.LocationSupply.LocationSupply:
+    type: object
+    properties:
+      Location:
+        $ref: '#/definitions/ServiceChannel.Api.Model.LocationSupply.Location'
+      SupplyLocations:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Api.Model.LocationSupply.Location'
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Api.Model.LocationSupply.Location:
+    type: object
+    properties:
+      LocationId:
+        format: int32
+        type: integer
+      TruckId:
+        format: int32
+        type: integer
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}

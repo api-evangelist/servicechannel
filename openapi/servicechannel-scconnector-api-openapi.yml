@@ -1,0 +1,1090 @@
+swagger: '2.0'
+info:
+  version: bearer.v1
+  title: Fixxbook.Bearer.Api.V1 AfterHours ScConnector API
+  isOdataApi: false
+  relativePath: ''
+  discoveryPath: docs/bearer.v1
+  _isAuthorizedAccess: true
+host: sb2fixxbook.servicechannel.com:443
+basePath: /api
+schemes:
+- https
+security:
+- oauth2: []
+tags:
+- name: ScConnector
+paths:
+  /ScConnector/WorkorderCreated:
+    post:
+      tags:
+      - ScConnector
+      summary: XmlIntegration callout. Called when workorder created
+      operationId: POSTv3_ScConnector_WorkorderCreated
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: msg
+        in: body
+        description: Created workorder
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Controllers.ScConnectorController.Data'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /ScConnector/WorkorderUpdated:
+    post:
+      tags:
+      - ScConnector
+      summary: XmlIntegration callout. Called when workorder updated
+      operationId: POSTv3_ScConnector_WorkorderUpdated
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: msg
+        in: body
+        description: ''
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Controllers.ScConnectorController.Data'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /ScConnector/SubContractorWorkorderCreated:
+    post:
+      tags:
+      - ScConnector
+      summary: XmlIntegration callout. Called when subcontractor workorder created
+      operationId: POSTv3_ScConnector_SubContractorWorkorderCreated
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: msg
+        in: body
+        description: ''
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Controllers.ScConnectorController.Data'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /ScConnector/SubContractorWorkorderUpdated:
+    post:
+      tags:
+      - ScConnector
+      summary: XmlIntegration callout. Called when subcontractor workorder updated
+      operationId: POSTv3_ScConnector_SubContractorWorkorderUpdated
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: msg
+        in: body
+        description: ''
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Controllers.ScConnectorController.Data'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /ScConnector/CheckInOut:
+    post:
+      tags:
+      - ScConnector
+      summary: Called when subcontractor workorder CheckInOut
+      operationId: POSTv3_ScConnector_CheckInOut
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: checkinActivity
+        in: body
+        description: CheckInOut
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.WebApi.Models.CheckInOutNotificationObject'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /ScConnector/SyncNotes:
+    post:
+      tags:
+      - ScConnector
+      summary: Connector sync notes process
+      operationId: POSTv3_ScConnector_SyncNotes
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /ScConnector/SyncAssets:
+    post:
+      tags:
+      - ScConnector
+      summary: Connector sync asset process
+      operationId: POSTv3_ScConnector_SyncAssets
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: notificationObject
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.WorkorderNotificationObject'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /ScConnector/SyncResolutionCodes:
+    post:
+      tags:
+      - ScConnector
+      summary: Connector sync Resolution codes process
+      operationId: POSTv3_ScConnector_SyncResolutionCodes
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: notificationObject
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.WorkorderNotificationObject'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /ScConnector/SyncAssetsValidation:
+    post:
+      tags:
+      - ScConnector
+      summary: Connector sync asset validation process
+      operationId: POSTv3_ScConnector_SyncAssetsValidation
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: notificationObject
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.WorkorderNotificationObject'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+  /ScConnector/UpdateConnectorWorkOrderStatusAfterReassign:
+    post:
+      tags:
+      - ScConnector
+      summary: Update work order status after reassign
+      operationId: POSTv3_ScConnector_UpdateConnectorWorkOrderStatusAfterReassign
+      consumes:
+      - application/json
+      - text/json
+      produces:
+      - application/json
+      - text/json
+      parameters:
+      - name: notificationObject
+        in: body
+        description: ''
+        required: true
+        schema:
+          $ref: '#/definitions/ServiceChannel.Services.Messaging.Workorders.WorkorderNotificationObject'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/System.Object'
+      deprecated: false
+      x-access: Any
+definitions:
+  ServiceChannel.Notifications.Objects.Attachment:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Description:
+        type: string
+      Name:
+        type: string
+      Date:
+        format: date-time
+        type: string
+      Uri:
+        type: string
+      CreatedBy:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.User'
+      Visibility:
+        format: int32
+        type: integer
+      Type:
+        enum:
+        - Undefined
+        - WorkOrder
+        - Invoice
+        - Rfp
+        - Proposal
+        - Asset
+        type: string
+  ServiceChannel.Notifications.Objects.AssetWarranty:
+    type: object
+    properties:
+      ExpirationDate:
+        format: date-time
+        type: string
+      ProviderId:
+        format: int32
+        type: integer
+      NTE:
+        format: double
+        type: number
+      Priority:
+        type: string
+      Category:
+        type: string
+      Provider:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.AssetWarrantyProvider'
+      Expiration:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.AssetWarrantyExpiration'
+  ServiceChannel.Services.WebApi.Models.CheckInOutNotificationObject:
+    type: object
+    properties:
+      Object:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.CheckInOutActivity'
+      Type:
+        type: string
+      Action:
+        type: string
+      EventType:
+        type: string
+  ServiceChannel.Notifications.Objects.AssetWarrantyExpiration:
+    type: object
+    properties:
+      Type:
+        enum:
+        - FromPurchaseDate
+        - FromInstallDate
+        type: string
+      Period:
+        format: int32
+        type: integer
+  ServiceChannel.Notifications.Objects.IssueChoice:
+    type: object
+    properties:
+      SetupId:
+        format: int32
+        type: integer
+      AreaId:
+        format: int32
+        type: integer
+      AreaName:
+        type: string
+      ProblemType:
+        type: string
+      EquipmentType:
+        type: string
+      ProblemCode:
+        type: string
+  ServiceChannel.Notifications.Objects.Label:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Text:
+        type: string
+  ServiceChannel.Notifications.Objects.Location:
+    type: object
+    properties:
+      StoreId:
+        type: string
+      Id:
+        format: int32
+        type: integer
+      SubscriberId:
+        format: int32
+        type: integer
+      ShortName:
+        type: string
+      FullName:
+        type: string
+      Address1:
+        type: string
+      Address2:
+        type: string
+      Region:
+        type: string
+      District:
+        type: string
+      City:
+        type: string
+      State:
+        type: string
+      Country:
+        type: string
+      StoreOpenDTO:
+        format: date-time
+        type: string
+      StoreCloseDTO:
+        format: date-time
+        type: string
+      Zip:
+        type: string
+      MainContact:
+        type: string
+      PhoneNumber:
+        type: string
+      FaxNumber:
+        type: string
+      FacilityManager:
+        type: string
+      Email:
+        type: string
+      NotesCount:
+        format: int32
+        type: integer
+      LocationTypeId:
+        format: int32
+        type: integer
+      LocationType:
+        type: string
+      Latitude:
+        format: double
+        type: number
+      Longitude:
+        format: double
+        type: number
+      TimeZoneId:
+        type: string
+      TimeZoneInfoId:
+        format: int32
+        type: integer
+      TimeShiftToEst:
+        format: int32
+        type: integer
+      RetiredAllProvidersDate:
+        format: date-time
+        type: string
+      RetiredLogin:
+        type: string
+      UpdatedUserName:
+        type: string
+      UpdatedDate:
+        format: date-time
+        type: string
+      UpdatedLocationNotesUserName:
+        type: string
+      UpdatedLocationNotesDate:
+        format: date-time
+        type: string
+  ServiceChannel.Notifications.Objects.Asset:
+    type: object
+    properties:
+      Manufacturer:
+        type: string
+      ModelNo:
+        type: string
+      SerialNo:
+        type: string
+      Area:
+        type: string
+      WorkOrderArea:
+        type: string
+      StoreId:
+        type: string
+      Trade:
+        type: string
+      Type:
+        type: string
+      InstallDate:
+        type: string
+      ManufacturerDate:
+        type: string
+      PurchaseDate:
+        type: string
+      UsesRefrigerant:
+        format: int32
+        type: integer
+      IsLeased:
+        default: false
+        type: boolean
+      LifeExpectancy:
+        format: int32
+        type: integer
+      OriginalValue:
+        format: double
+        type: number
+      LeaseDate:
+        type: string
+      LeasePeriod:
+        format: int32
+        type: integer
+      Condition:
+        format: int32
+        type: integer
+      EnergyEfficiency:
+        type: string
+      Capacity:
+        type: string
+      HasLeakDetector:
+        default: false
+        type: boolean
+      Location:
+        type: string
+        readOnly: true
+      Warranty:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.AssetWarranty'
+      IsReplaceEquipment:
+        default: false
+        type: boolean
+      HasTagged:
+        default: false
+        type: boolean
+      LastModifiedUseDate:
+        format: date-time
+        type: string
+      LastModifiedUserName:
+        type: string
+      SubName:
+        type: string
+      AssetAttributesMap:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.AssetAttributesMap'
+      ImportedFrom:
+        format: int32
+        type: integer
+      ParentId:
+        format: int32
+        type: integer
+      Description:
+        type: string
+      HasComponents:
+        default: false
+        type: boolean
+      HasCircuits:
+        default: false
+        type: boolean
+      IsCircuit:
+        default: false
+        type: boolean
+      SubscriberId:
+        format: int32
+        type: integer
+      AssetValidated:
+        default: false
+        type: boolean
+      ValidationRequired:
+        default: false
+        type: boolean
+      IsLeakDetector:
+        default: false
+        type: boolean
+      AdditionalTradesNames:
+        type: string
+      CreatedDate:
+        format: date-time
+        type: string
+      ModifiedDate:
+        format: date-time
+        type: string
+      AssetTypeGroupId:
+        format: int32
+        type: integer
+      AssetTagScanAuditRecord:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.AssetTagScanAuditRecord'
+      Id:
+        format: int32
+        type: integer
+      Tag:
+        type: string
+      AssetTypeId:
+        format: int32
+        type: integer
+      AssetType:
+        type: string
+      TradeId:
+        format: int32
+        type: integer
+      BrandId:
+        format: int32
+        type: integer
+      Active:
+        default: false
+        type: boolean
+      AssetTag:
+        type: string
+      AssetStatus:
+        format: byte
+        type: string
+      LocationId:
+        format: int32
+        type: integer
+      UpdatedFieldNames:
+        format: int32
+        type: integer
+      UpdatedDateDTO:
+        format: date-time
+        type: string
+      Attachments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Notifications.Objects.AssetAttachment'
+  ServiceChannel.Notifications.Objects.AssetTagScanAuditRecord:
+    type: object
+    properties:
+      AssetTagStatus:
+        type: string
+      ManuallyEntered:
+        default: false
+        type: boolean
+      AssetTagNotScannedReason:
+        type: string
+      UnableToValidateReasonId:
+        format: int32
+        type: integer
+      OtherReason:
+        type: string
+  ServiceChannel.Notifications.Objects.AssetAttachment:
+    type: object
+    properties:
+      IsPrimary:
+        default: false
+        type: boolean
+      ThumbnailUri:
+        type: string
+      Id:
+        format: int32
+        type: integer
+      Description:
+        type: string
+      Name:
+        type: string
+      Date:
+        format: date-time
+        type: string
+      Uri:
+        type: string
+      CreatedBy:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.User'
+      Visibility:
+        format: int32
+        type: integer
+      Type:
+        enum:
+        - Undefined
+        - WorkOrder
+        - Invoice
+        - Rfp
+        - Proposal
+        - Asset
+        type: string
+  ServiceChannel.Services.Messaging.Workorders.WorkorderNotificationObject:
+    type: object
+    properties:
+      Object:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.WorkOrder'
+      Type:
+        type: string
+      Action:
+        type: string
+      EventType:
+        type: string
+  ServiceChannel.Notifications.Objects.WorkOrder:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Number:
+        type: string
+      PurchaseNumber:
+        type: string
+      SubscriberId:
+        format: int32
+        type: integer
+      ProviderId:
+        format: int32
+        type: integer
+      ProviderName:
+        type: string
+      LocationId:
+        format: int32
+        type: integer
+      LocationName:
+        type: string
+      LocationStoreId:
+        type: string
+      Status:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.WorkorderStatusDescriptor'
+      Caller:
+        type: string
+      CreatedBy:
+        type: string
+      UpdatedBy:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.User'
+      AssigneeUserId:
+        format: int32
+        type: integer
+      CallDate:
+        format: date-time
+        type: string
+      CallDate_DTO:
+        format: date-time
+        type: string
+      ReassignDate:
+        format: date-time
+        type: string
+      Priority:
+        type: string
+      Trade:
+        type: string
+      ScheduledDate:
+        format: date-time
+        type: string
+      AreaId:
+        format: int32
+        type: integer
+      AssetType:
+        type: string
+      ProblemType:
+        type: string
+      CreatedDate_DTO:
+        format: date-time
+        type: string
+      UpdatedDate:
+        format: date-time
+        type: string
+      UpdatedDate_DTO:
+        format: date-time
+        type: string
+      ScheduledDate_DTO:
+        format: date-time
+        type: string
+      RescheduleReason:
+        type: string
+      CompletedDate:
+        format: date-time
+        type: string
+      CompletedDate_DTO:
+        format: date-time
+        type: string
+      ExpirationDate:
+        format: date-time
+        type: string
+      ExpirationDate_DTO:
+        format: date-time
+        type: string
+      ProjectedCompletionDate:
+        format: date-time
+        type: string
+      Description:
+        type: string
+      Category:
+        type: string
+      Nte:
+        format: double
+        type: number
+      Subtotal:
+        format: double
+        type: number
+      Tax:
+        format: double
+        type: number
+      Tax2Type:
+        type: string
+      Tax2:
+        format: double
+        type: number
+      CurrencyAlphabeticalCode:
+        type: string
+      ProblemCode:
+        type: string
+      Resolution:
+        type: string
+      AssetId:
+        format: int32
+        type: integer
+      Source:
+        type: string
+      RecallWorkOrder:
+        format: int32
+        type: integer
+      Notes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Notifications.Objects.Note'
+      Attachments:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Notifications.Objects.Attachment'
+      ProjectId:
+        format: int32
+        type: integer
+      Labels:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Notifications.Objects.Label'
+      ResolutionCodes:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Notifications.Objects.ResolutionCodesAndRootCause'
+      ResolutionCodesIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      RootCauses:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Notifications.Objects.ResolutionCodesAndRootCause'
+      LinkedWorOrderIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+      Assets:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceChannel.Notifications.Objects.Asset'
+      RefrigerantWasUsed:
+        format: int32
+        type: integer
+      WeatherEventId:
+        format: int32
+        type: integer
+      PriorityId:
+        format: int32
+        type: integer
+      TradeId:
+        format: int32
+        type: integer
+      CategoryId:
+        format: int32
+        type: integer
+      ContractId:
+        format: int32
+        type: integer
+      InvoiceId:
+        format: int32
+        type: integer
+      HasVerbalApproval:
+        default: false
+        type: boolean
+      MoeNumber:
+        type: string
+      ServiceNowId:
+        type: string
+      GlCode:
+        type: string
+      AdditionalApprovalCodes:
+        type: array
+        items:
+          type: string
+      Technician:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.Technician'
+      IssueChoice:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.IssueChoice'
+      ExtraData:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/System.Object'
+  ServiceChannel.Notifications.Objects.User:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      AuthUserId:
+        format: int64
+        type: integer
+      UserName:
+        type: string
+      FullName:
+        type: string
+      Email:
+        type: string
+      LoginType:
+        enum:
+        - Credentials
+        - Pin
+        type: string
+      SubscriberId:
+        format: int32
+        type: integer
+      ProviderId:
+        format: int32
+        type: integer
+  ServiceChannel.Services.WebApi.Controllers.ScConnectorController.Data:
+    description: Wrapper for body parameter
+    type: object
+    properties:
+      Msg:
+        description: escaped Xml string
+        type: string
+  ServiceChannel.Notifications.Objects.ResolutionCodesAndRootCause:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      Text:
+        type: string
+      AssetCategoryId:
+        format: int32
+        type: integer
+  ServiceChannel.Notifications.Objects.AssetWarrantyProvider:
+    type: object
+    properties:
+      Type:
+        enum:
+        - Fixed
+        - PrimaryRanked
+        - FixedRanked
+        type: string
+      Value:
+        format: int32
+        type: integer
+      ProviderName:
+        type: string
+  ServiceChannel.Notifications.Objects.Technician:
+    type: object
+    properties:
+      Id:
+        format: int32
+        type: integer
+      AuthUserId:
+        format: int64
+        type: integer
+      CertificateId:
+        type: string
+      NumericCertificateId:
+        format: int32
+        type: integer
+  ServiceChannel.Notifications.Objects.WorkorderStatusDescriptor:
+    type: object
+    properties:
+      Primary:
+        type: string
+      Extended:
+        type: string
+  ServiceChannel.Notifications.Objects.CheckInOutActivity:
+    type: object
+    properties:
+      CheckInNotes:
+        type: object
+        additionalProperties:
+          type: string
+      Id:
+        format: int32
+        type: integer
+      SubscriberId:
+        format: int32
+        type: integer
+      ProviderId:
+        format: int32
+        type: integer
+      LocationId:
+        format: int32
+        type: integer
+      CheckinAction:
+        enum:
+        - CheckIn
+        - CheckOut
+        type: string
+      WorkOrderId:
+        format: int32
+        type: integer
+      Date:
+        format: date-time
+        type: string
+      DateDTO:
+        format: date-time
+        type: string
+      User:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.User'
+      CallerId:
+        type: string
+      Action:
+        type: string
+      WorkType:
+        type: string
+      WorkorderStatus:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.WorkorderStatusDescriptor'
+      ProviderName:
+        type: string
+      Trade:
+        type: string
+      Category:
+        type: string
+      Source:
+        type: string
+      TradeId:
+        format: int32
+        type: integer
+      TechsCount:
+        format: int32
+        type: integer
+      Location:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.Location'
+      ClosingAuthorizationNumber:
+        format: int32
+        type: integer
+      CheckinType:
+        enum:
+        - Common
+        - Ivr
+        - Gps
+        type: string
+  ServiceChannel.Notifications.Objects.AssetAttributesMap:
+    type: object
+    properties:
+      StandardAttributesMap:
+        format: int32
+        type: integer
+      ViewableForProvidersAttributesMap:
+        format: int32
+        type: integer
+      EditableForProvidersAttributesMap:
+        format: int32
+        type: integer
+      RequiredStandardAttributesMap:
+        format: int32
+        type: integer
+  ServiceChannel.Notifications.Objects.ActionResolveDetails:
+    type: object
+    properties:
+      ResolvedByUserId:
+        format: int32
+        type: integer
+      ResolvedDate:
+        format: date-time
+        type: string
+      IsResolved:
+        default: false
+        type: boolean
+  System.Object:
+    type: object
+    properties: {}
+  ServiceChannel.Notifications.Objects.Note:
+    type: object
+    properties:
+      Id:
+        format: int64
+        type: integer
+      NoteType:
+        enum:
+        - SystemNote
+        - UsersNote
+        type: string
+      Number:
+        format: int32
+        type: integer
+      NoteData:
+        type: string
+      DateCreated:
+        format: date-time
+        type: string
+      ScheduledDate:
+        format: date-time
+        type: string
+      FollowUpDate:
+        format: date-time
+        type: string
+      ActionRequired:
+        default: false
+        type: boolean
+      MailedTo:
+        type: string
+      CreatedBy:
+        type: string
+      CreatedByUser:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.User'
+      Visibility:
+        format: int32
+        type: integer
+      DateCreated_DTO:
+        format: date-time
+        type: string
+      ActionResolveDetails:
+        $ref: '#/definitions/ServiceChannel.Notifications.Objects.ActionResolveDetails'
+      DocumentId:
+        type: string
+      AttachmentIds:
+        type: array
+        items:
+          format: int32
+          type: integer
+securityDefinitions:
+  oauth2:
+    type: oauth2
+    description: OAuth2 Authorization
+    flow: accessCode
+    authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+    tokenUrl: https://sb2login.servicechannel.com/oauth/token
+    scopes: {}
