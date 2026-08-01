@@ -1,0 +1,96 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/servicechannel-service-automation-openapi-original.json
+docs: https://developer.servicechannel.com/swagger/ui/index?version=3
+note: >-
+  Entity graph derived from the Service Automation OpenAPI resource tags and
+  id-reference fields. 63 tag groups / 788 schema definitions; the core
+  facilities-management entities and their relationships are captured below.
+entities:
+  - name: WorkOrders
+  - name: WorkRequests
+  - name: Assets
+  - name: AssetTypes
+  - name: Locations
+  - name: Invoices
+  - name: Proposals
+  - name: Providers
+  - name: Users
+  - name: Parts
+  - name: Trades
+  - name: Attachments
+  - name: CheckLists
+  - name: Subscribers
+relationships:
+  - from: WorkOrder
+    type: belongs_to
+    to: Location
+    via: locationId
+  - from: WorkOrder
+    type: belongs_to
+    to: Provider
+    via: providerId
+  - from: WorkOrder
+    type: has_one
+    to: Trade
+    via: trade
+  - from: WorkOrder
+    type: has_many
+    to: Invoice
+    via: workOrderId
+  - from: WorkOrder
+    type: has_many
+    to: Attachment
+    via: workOrderId
+  - from: WorkOrder
+    type: has_many
+    to: Asset
+    via: assetId
+  - from: WorkOrder
+    type: has_many
+    to: Proposal
+    via: workOrderId
+  - from: WorkRequest
+    type: has_one
+    to: WorkOrder
+    via: workOrderId
+  - from: WorkRequest
+    type: belongs_to
+    to: Location
+    via: locationId
+  - from: Invoice
+    type: belongs_to
+    to: WorkOrder
+    via: workOrderId
+  - from: Invoice
+    type: belongs_to
+    to: Subscriber
+    via: subscriberId
+  - from: Proposal
+    type: belongs_to
+    to: WorkOrder
+    via: workOrderId
+  - from: Asset
+    type: belongs_to
+    to: Location
+    via: locationId
+  - from: Asset
+    type: has_one
+    to: AssetType
+    via: assetTypeId
+  - from: Location
+    type: belongs_to
+    to: Subscriber
+    via: subscriberId
+  - from: Location
+    type: has_many
+    to: Asset
+    via: locationId
+  - from: Provider
+    type: has_many
+    to: Trade
+    via: trade
+  - from: User
+    type: belongs_to
+    to: Subscriber
+    via: subscriberId

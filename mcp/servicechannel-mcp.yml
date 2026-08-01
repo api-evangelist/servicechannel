@@ -1,0 +1,54 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/servicechannel-service-automation-openapi-original.json
+note: >-
+  No official hosted ServiceChannel MCP server was found. This is a candidate
+  tool list derived from marquee Service Automation API operations, for forging
+  an MCP server over the OpenAPI. operationIds are verbatim from the spec.
+server:
+  name: servicechannel
+  transport: http
+tools:
+  - name: search_work_orders
+    description: Search work orders for a location/store.
+    source_operation: openapi/servicechannel-service-automation-openapi-original.json#GETv3_workorders
+  - name: create_work_order
+    description: Create a work order.
+    source_operation: openapi/servicechannel-service-automation-openapi-original.json#POSTv3_workorders
+  - name: update_work_order_status
+    description: Update a work order status.
+    source_operation: openapi/servicechannel-service-automation-openapi-original.json#PUTv3_workorders_{workorderId}_status
+  - name: add_work_order_resolution
+    description: Add a resolution to a work order.
+    source_operation: openapi/servicechannel-service-automation-openapi-original.json#POSTv3_workorders_{workorderId}_resolution
+  - name: create_work_request
+    description: Create a work request.
+    source_operation: openapi/servicechannel-service-automation-openapi-original.json#POSTv3_workrequests
+  - name: get_work_request
+    description: Retrieve a work request.
+    source_operation: openapi/servicechannel-service-automation-openapi-original.json#GETv3_workrequests_{id}
+  - name: retrieve_locations
+    description: Retrieve stores/locations.
+    source_operation: openapi/servicechannel-service-automation-openapi-original.json#GETv3_locations
+  - name: get_location
+    description: Retrieve a location.
+    source_operation: openapi/servicechannel-service-automation-openapi-original.json#GETv3_locations_{locationId}
+  - name: get_asset
+    description: Get an asset.
+    source_operation: openapi/servicechannel-service-automation-openapi-original.json#GETv3_assets_{assetId}
+  - name: search_assets
+    description: Search assets.
+    source_operation: openapi/servicechannel-service-automation-openapi-original.json#POSTv3_assets_searchassets
+  - name: get_invoice
+    description: Get an invoice.
+    source_operation: openapi/servicechannel-service-automation-openapi-original.json#GETv3_invoices_{invoiceId}
+  - name: approve_invoice
+    description: Approve a non-MLI invoice.
+    source_operation: openapi/servicechannel-service-automation-openapi-original.json#PUTv3_invoices_{invoiceId}_approve
+  - name: retrieve_proposals
+    description: Retrieve proposals / RFPs.
+    source_operation: openapi/servicechannel-service-automation-openapi-original.json#GETv3_proposals
+  - name: subscribe_webhook
+    description: Subscribe to a webhook event.
+    source_operation: openapi/servicechannel-service-automation-openapi-original.json#/webhooks/subscribe

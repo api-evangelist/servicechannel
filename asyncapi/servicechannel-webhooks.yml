@@ -1,0 +1,61 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/servicechannel-service-automation-openapi-original.json
+spec_type: Webhooks
+docs: https://developer.servicechannel.com/swagger/ui/index?version=3
+summary: >-
+  ServiceChannel publishes an HTTP webhook / notification-subscription surface
+  (no standalone AsyncAPI document). Consumers register subscriptions and a
+  signing key, then receive event callbacks. The 2023 "Webhooks 2x" release
+  doubled the available event set. Captured as a webhook catalog derived from
+  the Service Automation OpenAPI operations.
+delivery:
+  transport: https
+  auth: signing-key
+  signing_key_management: /NotificationSubscriptions/SigningKey
+management_operations:
+  - operationId: null
+    method: GET
+    path: /webhooks
+    summary: List webhook subscriptions.
+  - method: POST
+    path: /webhooks/subscribe
+    summary: Subscribe to a webhook event.
+  - method: POST
+    path: /webhooks/unsubscribe
+    summary: Unsubscribe from a webhook event.
+  - method: GET
+    path: /webhooks/{id}
+    summary: Get a webhook subscription.
+  - method: GET
+    path: /NotificationWebHooks
+    summary: List notification webhooks.
+  - method: POST
+    path: /NotificationWebHooks
+    summary: Create a notification webhook.
+  - method: PUT
+    path: /NotificationWebHooks/{id}
+    summary: Update a notification webhook.
+  - method: DELETE
+    path: /NotificationWebHooks/{id}
+    summary: Delete a notification webhook.
+  - method: POST
+    path: /NotificationSubscriptions/Http
+    summary: Create an HTTP notification subscription.
+  - method: GET
+    path: /NotificationSubscriptions/Http/{id}
+    summary: Get an HTTP notification subscription.
+  - method: GET
+    path: /NotificationSubscriptions/SigningKey
+    summary: Retrieve the notification signing key.
+  - method: PUT
+    path: /NotificationSubscriptions/SigningKey
+    summary: Rotate the notification signing key.
+event_families:
+  - work-order lifecycle notifications
+  - work-order note notifications
+  - work-order status notifications
+note: >-
+  Event payload schemas are not published as a machine-readable AsyncAPI/JSON
+  Schema; the subscription and notification operations above are the documented
+  contract. Not fabricated beyond what the OpenAPI declares.

@@ -1,0 +1,16 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for ServiceChannel Service Automation API
+  version: 1.0.0
+extends: openapi/servicechannel-service-automation-openapi-original.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-21'
+      x-apievangelist-provider: servicechannel
+      x-production-host: https://api.servicechannel.com/v3
+      x-sandbox-host: https://sb2api.servicechannel.com/v3
+      x-error-envelope: ServiceChannel.Services.Messaging.ErrorResponse
+      x-rate-limit: 429 Too Many Requests with Retry-After
+      x-pagination: page / pageSize query parameters
+      x-webhooks: HTTP notification subscriptions with signing key

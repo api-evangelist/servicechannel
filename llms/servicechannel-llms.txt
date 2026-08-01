@@ -1,0 +1,27 @@
+# ServiceChannel
+
+> ServiceChannel is a facilities-management platform that lets multi-location brands automate work orders, manage service providers, track assets, and process invoices at scale. The developer platform exposes a large REST API (Service Automation v3) plus the Fixxbook provider-directory API, secured with OAuth2.
+
+## APIs
+- [Service Automation API (v3)](https://developer.servicechannel.com/swagger/ui/index?version=3): 742 operations across work orders, work requests, assets, locations, invoices, proposals, providers, and refrigerant tracking. Production host https://api.servicechannel.com/v3 (sandbox https://sb2api.servicechannel.com/v3).
+- [Fixxbook API (bearer.v1)](https://developer.servicechannel.com/swagger/ui/index?version=3): provider-directory API. Production host https://fixxbook.servicechannel.com/api.
+
+## Authentication
+- OAuth2 authorization-code grant. Authorize https://login.servicechannel.com/oauth/authorize, token https://login.servicechannel.com/oauth/token. Bearer access token on every request.
+
+## Specs
+- [Service Automation OpenAPI](https://raw.githubusercontent.com/api-evangelist/servicechannel/refs/heads/main/openapi/servicechannel-service-automation-openapi-original.json)
+- [Fixxbook OpenAPI](https://raw.githubusercontent.com/api-evangelist/servicechannel/refs/heads/main/openapi/servicechannel-fixxbook-openapi-original.json)
+
+## Docs
+- [Developer Portal](https://developer.servicechannel.com/)
+- [Getting Started](https://developer.servicechannel.com/basics/introduction/getting-started)
+- [Response & Error Codes](https://developer.servicechannel.com/basics/general/response-codes/)
+- [Changelog / News](https://developer.servicechannel.com/news)
+- [Status Page](https://status.servicechannel.com)
+
+## Conventions
+- Pagination via page / pageSize query parameters.
+- Rate limiting: HTTP 429 with Retry-After header.
+- Errors: ErrorResponse envelope with ErrorCodes[], ErrorCode, ErrorMessage and ~257 documented internal codes.
+- Webhooks: HTTP notification subscriptions with a signing key.

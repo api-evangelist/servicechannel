@@ -1,0 +1,551 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/servicechannel-service-automation-openapi-original.json
+docs: https://developer.servicechannel.com/basics/general/response-codes/
+format: custom
+envelope:
+  description: ServiceChannel.Services.Messaging.ErrorResponse
+  fields:
+    ErrorCodes: array of integer internal error codes
+    ErrorCode: integer first error code encountered
+    ErrorMessage: string human-readable description of all errors
+http_statuses:
+  - status: 400
+    count: 467
+  - status: 401
+    count: 500
+  - status: 403
+    count: 89
+  - status: 404
+    count: 112
+  - status: 405
+    count: 4
+  - status: 406
+    count: 2
+  - status: 409
+    count: 1
+  - status: 500
+    count: 252
+  - status: 502
+    count: 5
+  - status: 503
+    count: 5
+  - status: 504
+    count: 2
+# ~257 internal application error codes documented in the response-codes reference,
+# harvested from OpenAPI 4xx/5xx response descriptions (ErrorCodes[] enum values).
+error_codes:
+  - code: 100
+    message: "User has no rights to perform this action"
+  - code: 101
+    message: "Invalid Provider Id"
+  - code: 103
+    message: "Provider already exists"
+  - code: 300
+    message: "Missed contract data"
+  - code: 301
+    message: "Contract not found for specified subscribers location, provider and trade"
+  - code: 400
+    message: "Bad Request"
+  - code: 401
+    message: "Invalid subscriber id"
+  - code: 403
+    message: "Account has not been activated for GPS use"
+  - code: 500
+    message: "Internal server error"
+  - code: 501
+    message: "Unspecified internal server error occurred"
+  - code: 502
+    message: "WorkOrder not found"
+  - code: 503
+    message: "Request data is empty"
+  - code: 504
+    message: "API call rejected by security permissions"
+  - code: 600
+    message: "Invalid Location Id specified"
+  - code: 601
+    message: "Location is not found"
+  - code: 603
+    message: "Subscriber has no specified Location"
+  - code: 606
+    message: "Location is not found"
+  - code: 607
+    message: "Empty Location State"
+  - code: 608
+    message: "Do not have access to the location"
+  - code: 611
+    message: "The location note header does not exist on the subscriber instance"
+  - code: 612
+    message: "The user does not have access to update a protected location note header"
+  - code: 613
+    message: "Incorrect format of the Open Time or Close Time. Valid format: HH:mm or hh:mm tt (for example, 23:59 or 11:59 PM)"
+  - code: 614
+    message: "Business Hours should not overlap between days of the week"
+  - code: 615
+    message: "Incorrect format of the day of the week. Valid values: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday"
+  - code: 616
+    message: "Duplicate 'Day of the Week' value"
+  - code: 617
+    message: "Business Hours are not set for the location. For the initial setup, configure Business Hours for each day of the week"
+  - code: 618
+    message: "Open Time or Close Time cannot be empty for a specific day of the week"
+  - code: 619
+    message: "Incorrect format of the `Repeat by status` value. Valid values: DayOfWeek, DayOfMonth"
+  - code: 620
+    message: "List of days cannot be empty when submitting the `Weekly` frequency"
+  - code: 621
+    message: "List of months cannot be empty when submitting the `Yearly` frequency"
+  - code: 622
+    message: "Incorrect month format. Valid values: January, February, March, April, May, June, July, August, September, October, November, December"
+  - code: 623
+    message: "The `Holiday Name` value cannot be empty. The maximum length is 100 characters"
+  - code: 624
+    message: "Incorrect format of the 'Repeat every' value. The value should be a number between 1 and 60"
+  - code: 625
+    message: "The same month is specified twice in the 'Month' value"
+  - code: 626
+    message: "Incorrect format of the frequency. Valid values: Weekly, Monthly, Yearly, Singular"
+  - code: 627
+    message: "Start date cannot be an empty value"
+  - code: 628
+    message: "Incorrect format of the `Close All Day` value. Valid values: true, false"
+  - code: 629
+    message: "The holiday doesn't exist at the location"
+  - code: 630
+    message: "Incorrect format of the 'ParameterName'"
+  - code: 631
+    message: "The `City` value cannot be empty. The maximum length is 50 characters"
+  - code: 632
+    message: "The `Zip` value cannot be empty. The maximum length is 12 characters"
+  - code: 633
+    message: "Latitude value should be between '-90' and '90'"
+  - code: 634
+    message: "Longitude value should be between '-180' and '180'"
+  - code: 635
+    message: "Invalid Email"
+  - code: 636
+    message: "The `Name` value cannot be empty. The maximum length is 100 characters"
+  - code: 637
+    message: "Invalid `State` format. The maximum length is 2 characters"
+  - code: 638
+    message: "Invalid `AddlAddress` format. The maximum length is 500 characters"
+  - code: 639
+    message: "Invalid `MainAddress` format. The maximum length is 500 characters"
+  - code: 640
+    message: "The `Country` value cannot be empty. The maximum length is 20 characters"
+  - code: 641
+    message: "Invalid `Region` format. The maximum length is 50 characters"
+  - code: 642
+    message: "Invalid `District` format. The maximum length is 50 characters"
+  - code: 643
+    message: "Invalid `Phone` format. The maximum length is 22 characters"
+  - code: 644
+    message: "Invalid `Contact` format. The maximum length is 50 characters"
+  - code: 645
+    message: "Invalid `FaxNumber` format. The maximum length is 22 characters"
+  - code: 646
+    message: "The country doesn't exist"
+  - code: 647
+    message: "The state doesn't exist in the country"
+  - code: 648
+    message: "The city doesn't exist in the country"
+  - code: 650
+    message: "Invalid `Email` format. The maximum length is 200 characters"
+  - code: 651
+    message: "Location is not found"
+  - code: 655
+    message: "Landlord responsibility is not found"
+  - code: 656
+    message: "The combination of Location Trade and Category must be unique"
+  - code: 659
+    message: "Invalid Trade name"
+  - code: 660
+    message: "Invalid Category name"
+  - code: 661
+    message: "Invalid Override Category name"
+  - code: 662
+    message: "Invalid Override Priority name"
+  - code: 663
+    message: "Lease Note can not exceed 200 characters"
+  - code: 664
+    message: "Invalid override provider rank"
+  - code: 665
+    message: "Invalid override NTE"
+  - code: 668
+    message: "Location not found"
+  - code: 700
+    message: "Invalid Trade Name specified"
+  - code: 701
+    message: "Invalid trade"
+  - code: 702
+    message: "Subscriber has no specified Trade"
+  - code: 703
+    message: "Primary trade not found"
+  - code: 704
+    message: "Invalid trade value for the subscriber"
+  - code: 705
+    message: "Invalid category value for the subscriber"
+  - code: 706
+    message: "GL Code already exists"
+  - code: 707
+    message: "GL Code does not exist"
+  - code: 708
+    message: "At least one field trade/category/location is required"
+  - code: 710
+    message: "Trade already exists"
+  - code: 711
+    message: "Invalid NTE"
+  - code: 800
+    message: "Missed required argument 'UserId'"
+  - code: 801
+    message: "Missed required argument 'CreatedBy'"
+  - code: 802
+    message: "Invalid user name"
+  - code: 804
+    message: "User is not assigned to Location"
+  - code: 806
+    message: "User already exists"
+  - code: 900
+    message: "Missed problem description options"
+  - code: 901
+    message: "Missed required argument 'ProblemSource'"
+  - code: 902
+    message: "Missed required argument 'Description'"
+  - code: 903
+    message: "Missed required argument 'ProblemCode'"
+  - code: 904
+    message: "Invalid work order status"
+  - code: 905
+    message: "Invalid 'Nte' value"
+  - code: 906
+    message: "Invalid 'CallerName' value"
+  - code: 907
+    message: "Invalid 'CallDate' value"
+  - code: 908
+    message: "Invalid 'ScheduledDate' value"
+  - code: 909
+    message: "Invalid 'ScheduledDate', greater than max allowed by subscriber"
+  - code: 910
+    message: "Missed required argument 'Category'"
+  - code: 911
+    message: "Invalid 'Category'"
+  - code: 912
+    message: "Missed required argument 'Priority'"
+  - code: 913
+    message: "Invalid 'Priority'"
+  - code: 914
+    message: "Invalid 'Currency' value"
+  - code: 915
+    message: "Invalid Setup Id"
+  - code: 916
+    message: "At least one attachment required to create this WorkOrder"
+  - code: 917
+    message: "Invalid Tracking Number"
+  - code: 918
+    message: "Assets required to create this WorkOrder"
+  - code: 920
+    message: "Purchase number cannot be empty"
+  - code: 921
+    message: "Cannot update invoiced Work order"
+  - code: 922
+    message: "Invalid paging parameter. Returned if paging parameter doesn't correspond to valid format"
+  - code: 923
+    message: "Invalid Work order number specified. Returned if duplicate number is found for this provider or if value exceeds max len (20 chars)"
+  - code: 924
+    message: "Work order has been invoiced and cannot be changed"
+  - code: 925
+    message: "Work order has been invoiced and cannot be changed"
+  - code: 931
+    message: "NTE cannot be adjusted, please use subtotal and tax"
+  - code: 932
+    message: "Wrong Linked Work Order Id"
+  - code: 933
+    message: "Workorder is on hold, no actions allowed"
+  - code: 934
+    message: "Invalid Work order Trade specified. Returned if trade exceeds max len (50 chars) or is empty"
+  - code: 935
+    message: "Invalid Star Score"
+  - code: 936
+    message: "Work Order was rated another user"
+  - code: 941
+    message: "Can't do check in: out of ... mile range"
+  - code: 942
+    message: "Can’t perform check-in or check-out: out of ... mile range"
+  - code: 946
+    message: "Work Order attachments size exceeded"
+  - code: 999
+    message: "Invalid site audit linked work orders"
+  - code: 1000
+    message: "Invalid setupId(dashboard) for current user"
+  - code: 1001
+    message: "No issue list is available, please load it through issue list converter"
+  - code: 1003
+    message: "Site audit has already been completed"
+  - code: 1005
+    message: "Save site audit error"
+  - code: 1006
+    message: "Save site audit error"
+  - code: 1007
+    message: "Inactive template type"
+  - code: 1008
+    message: "Audit not found"
+  - code: 1009
+    message: "Unexpected error"
+  - code: 1010
+    message: "Invalid site audit parameters"
+  - code: 1100
+    message: "Invalid Other Amount Description"
+  - code: 1101
+    message: "Invalid Tax2 name"
+  - code: 1103
+    message: "Invalid Total"
+  - code: 1104
+    message: "Invoice Total > NTE"
+  - code: 1105
+    message: "Invoice exists"
+  - code: 1106
+    message: "Invoice Creation Error"
+  - code: 1107
+    message: "Duplicate Invoice number"
+  - code: 1108
+    message: "Total is null"
+  - code: 1109
+    message: "Completed Date is null"
+  - code: 1110
+    message: "Invoice Date"
+  - code: 1111
+    message: "This invoice is set to auto-invoice"
+  - code: 1112
+    message: "Electronic Signature Agreement Required"
+  - code: 1113
+    message: "Work order not found"
+  - code: 1114
+    message: "Wrong Work Order currency"
+  - code: 1115
+    message: "Work order currency not found"
+  - code: 1116
+    message: "Invoicing is disabled. Invoicing might be disabled if your company account is currently in an inactive state in Fixxbook"
+  - code: 1117
+    message: "Invoice creation Unexpected Result"
+  - code: 1119
+    message: "Invoice labor amount is not equals summary labor items"
+  - code: 1120
+    message: "Invoice material amount is not equals summary material items amounts"
+  - code: 1121
+    message: "Invoice Date is older than X day(s) from today"
+  - code: 1122
+    message: "Invoice Date is greater than X day(s) from today"
+  - code: 1123
+    message: "Invoice material description length overflow"
+  - code: 1124
+    message: "Invoice material part number length overflow"
+  - code: 1125
+    message: "Tax validation error: X"
+  - code: 1126
+    message: "Sales Tax should be 0 - X location"
+  - code: 1127
+    message: "Invalid Invoice Number"
+  - code: 1128
+    message: "Err: Approval level doesn’t exist"
+  - code: 1129
+    message: "Err: failed to assign users"
+  - code: 1130
+    message: "User is not assigned to the level"
+  - code: 1131
+    message: "Err: Approval level doesn’t exist"
+  - code: 1135
+    message: "Locations can't have GST tax"
+  - code: 1136
+    message: "Locations can't have tax2. Only invoices for Canadian Locations can have the Tax2Details array. Tax2Details is only applicable for invoices of locations in countries that have some form of a value-added tax"
+  - code: 1145
+    message: "You have an outstanding balance with ServiceChannel. In order to invoice, please login to Fixxbook.com and update your Payment Method. Once your payment Method is updated you will be able to invoice"
+  - code: 1146
+    message: "Invoice doesn't have Taxes Breakdown"
+  - code: 1147
+    message: "Invoice Taxes Breakdown has incorrect sum"
+  - code: 1149
+    message: "User has already been assigned to another level"
+  - code: 1150
+    message: "User does not exist"
+  - code: 1151
+    message: "Labor Line Items Required"
+  - code: 1152
+    message: "Material Line Items Required"
+  - code: 1159
+    message: "Invoice material unit type is invalid (should be from 1 to 7)"
+  - code: 1163
+    message: "Resolution text required in Invoice Text field"
+  - code: 1178
+    message: "Invoice cannot be paid before invoice dates"
+  - code: 1180
+    message: "Invoice Number is not correct"
+  - code: 1186
+    message: "Time range is overlapped"
+  - code: 1193
+    message: "Negative amounts in Other Line Items not allowed"
+  - code: 1194
+    message: "Invoice labor skill level is invalid (should be from 1 to 3)"
+  - code: 1195
+    message: "Invoice labor type is invalid (should be from 1 to 3)"
+  - code: 1196
+    message: "Invoice technician quantity is invalid (should be > 0)"
+  - code: 1198
+    message: "The explanation of Dispute status is empty"
+  - code: 1217
+    message: "Proccess provider subscriber link error text"
+  - code: 1254
+    message: "Invalid square measure"
+  - code: 1260
+    message: "Tax not supported for this client. For exceptions use ServiceChannel website"
+  - code: 1301
+    message: "Request is empty or null"
+  - code: 1931
+    message: "Negative amounts in Travel Line Items not allowed"
+  - code: 1932
+    message: "Negative amounts in Material Line Items not allowed"
+  - code: 1933
+    message: "Negative amounts in Labor Line Items not allowed"
+  - code: 1992
+    message: "Vendor Id is not valid"
+  - code: 2105
+    message: "Operation is not allowed"
+  - code: 2601
+    message: "Invalid feedback answer"
+  - code: 2602
+    message: "Invalid work order number"
+  - code: 2603
+    message: "Invalid subscriber number"
+  - code: 2604
+    message: "Invalid feedback score"
+  - code: 2605
+    message: "Unsatisfactory answer required a comment"
+  - code: 2606
+    message: "Invalid LocationId or SetupId provided"
+  - code: 3100
+    message: "Asset Type Name is already in use"
+  - code: 3101
+    message: "Asset Type Doesn't Exist!"
+  - code: 3102
+    message: "Asset Type already contains assets. Refrigerant Purpose can not be changed!"
+  - code: 3103
+    message: "Failed to delete asset type"
+  - code: 3104
+    message: "Failed to delete asset type. Existing assets found"
+  - code: 3105
+    message: "Cant modify asset type ParentId"
+  - code: 3106
+    message: "Asset Type Name is Missing"
+  - code: 3108
+    message: "Failed to delete asset type. Existing proposals found"
+  - code: 3401
+    message: "The user has already been assigned"
+  - code: 3502
+    message: "The holiday name is already in use. Please suggest another name"
+  - code: 4100
+    message: "You can specify up to 3 resolution codes for a work order"
+  - code: 4101
+    message: "You need to specify at least one resolution code"
+  - code: 4102
+    message: "You need to select a root cause"
+  - code: 4104
+    message: "You don't have access to set the root cause tex"
+  - code: 4105
+    message: "The max length of the root cause text is exceeded"
+  - code: 4107
+    message: "You don't have access to set the resolution code text"
+  - code: 4108
+    message: "The max length of the resolution code text is exceeded"
+  - code: 4109
+    message: "Resolution code text must be unique"
+  - code: 4110
+    message: "Resolution code without free text must be unique"
+  - code: 4113
+    message: "You can specify up to 5 asset categories"
+  - code: 4114
+    message: "You don't have access to asset categories"
+  - code: 4115
+    message: "You need to specify at least one asset category"
+  - code: 4116
+    message: "Invalid asset category id"
+  - code: 4117
+    message: "The work order doesn't have assigned asset categories. You need to specify at least one asset category"
+  - code: 4118
+    message: "You need to specify one root cause per asset category for all asset categories assigned to the work order"
+  - code: 4120
+    message: "Asset category is required"
+  - code: 4121
+    message: "You must use a method to set multiple root causes when you have access to asset categories"
+  - code: 4122
+    message: "You need to specify up to 3 resolution codes per asset category for all asset categories assigned to the work order"
+  - code: 5010
+    message: "Trade is not found"
+  - code: 6018
+    message: "Email was not sent"
+  - code: 8001
+    message: "Description is required"
+  - code: 8002
+    message: "Call Date is required"
+  - code: 8003
+    message: "Issue is required"
+  - code: 8005
+    message: "CallDate has wrong format"
+  - code: 8006
+    message: "ScheduledDate has wrong format"
+  - code: 8007
+    message: "Invalid status"
+  - code: 8008
+    message: "Invalid extended status"
+  - code: 8009
+    message: "Invalid category"
+  - code: 8010
+    message: "Invalid priority"
+  - code: 8011
+    message: "Invalid currency"
+  - code: 8012
+    message: "Invalid setup"
+  - code: 8013
+    message: "Invalid area"
+  - code: 8014
+    message: "Invalid asset"
+  - code: 8017
+    message: "ProblemCode is required"
+  - code: 8018
+    message: "ProblemType is required"
+  - code: 8019
+    message: "ScheduledDate must be greater than CallDate"
+  - code: 8020
+    message: "InvalidWorkRequestIdentifier"
+  - code: 8100
+    message: "CallDateFrom has wrong format"
+  - code: 8101
+    message: "CallDateTo has wrong format"
+  - code: 8102
+    message: "ScheduledDateFrom has wrong format"
+  - code: 8103
+    message: "ScheduledDateTo has wrong format"
+  - code: 8104
+    message: "CloseDateFrom has wrong format"
+  - code: 8105
+    message: "CloseDateTo has wrong format"
+  - code: 8107
+    message: "Work request is closed"
+  - code: 8108
+    message: "Closed reason is required for Closed status"
+  - code: 8109
+    message: "Work order id is required for this closed reason"
+  - code: 8110
+    message: "Invalid closed reason"
+  - code: 8111
+    message: "Closed reason could be set only for Closed status"
+  - code: 8112
+    message: "Invalid work order id"
+  - code: 8113
+    message: "Work order id could be set only for Closed status"
+  - code: 8114
+    message: "Work order id could be set only for &apos"
+  - code: 9001
+    message: "Decline reason id is required"
+  - code: 9002
+    message: "This decline reason doesn't allow custom text"
+  - code: 9100
+    message: "There are multiple work orders with the same PO number"

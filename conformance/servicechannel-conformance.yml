@@ -1,0 +1,31 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/servicechannel-service-automation-openapi-original.json
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: OpenAPI securityDefinitions declares oauth2 (authorizationCode flow) applied globally.
+  - id: openapi-2.0
+    conforms: true
+    evidence: Both specs are Swagger/OpenAPI 2.0 documents published from the developer portal.
+  - id: rfc6749-authorization-code
+    conforms: true
+    evidence: accessCode flow with authorizationUrl + tokenUrl at login.servicechannel.com/oauth.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use a custom ErrorResponse envelope (ErrorCodes/ErrorCode/ErrorMessage), not application/problem+json.
+  - id: rfc6585-429-rate-limiting
+    conforms: true
+    evidence: 429 Too Many Requests with Retry-After header on throttling (documented since 2019).
+  - id: webhooks
+    conforms: true
+    evidence: HTTP notification-subscription + signing-key webhook surface.
+  - id: pagination
+    conforms: true
+    evidence: page / pageSize query parameters across list operations.
+  - id: fhir-r4
+    conforms: false
+  - id: scim2
+    conforms: false
+  - id: odata
+    conforms: false
