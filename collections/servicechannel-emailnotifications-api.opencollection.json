@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours EmailNotifications API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "EmailNotifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Subscribe to Email Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/users/current/locations/:locationId/subscribe",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Location to perform action with."
+              }
+            ]
+          },
+          "docs": "Subscribe to Email Notification.\r\n            <br /><br />Available for subscriber usage."
+        },
+        {
+          "info": {
+            "name": "List existing email subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/current/locations/:locationId/email",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a list of email subscriptions"
+        },
+        {
+          "info": {
+            "name": "Unsubscribe from Email Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/users/current/unsubscribe"
+          },
+          "docs": "Unsubscribe from Email Notifications.\r\n            <br /><br />Available for subscriber usage."
+        },
+        {
+          "info": {
+            "name": "Unsubscribe from Email Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/users/current/locations/:locationId/unsubscribe",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Location to perform action with."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Numeric Id of the Subscription to perform action with."
+              },
+              {
+                "name": "notificationType",
+                "value": "",
+                "type": "query",
+                "description": "Notification type: Check In , ...."
+              },
+              {
+                "name": "languageCode",
+                "value": "",
+                "type": "query",
+                "description": "ISO 639-1 two-letter code for the language."
+              },
+              {
+                "name": "notificationRules.rules",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Unsubscribe from Email Notifications.\r\n            <br /><br />Available for subscriber usage."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

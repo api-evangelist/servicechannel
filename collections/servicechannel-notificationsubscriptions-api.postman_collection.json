@@ -1,0 +1,2158 @@
+{
+  "item": [
+    {
+      "id": "0d2018cb-b462-4b2d-9978-868c1b7eb4bf",
+      "name": "NotificationSubscriptions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b9e3a700-c726-4299-9956-b6837d59f23d",
+          "name": "List existing subscriptions",
+          "request": {
+            "name": "List existing subscriptions",
+            "description": {
+              "content": "Returns a list of subscriptions for the current subscriber or provider.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "NotificationSubscriptions",
+                "Http"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0a8eb2c9-6eb9-48ba-8c0e-37b47261e07f",
+              "name": "The subscriptions are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "Http"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"Url\": \"string\",\n    \"Name\": \"string\",\n    \"EventTypes\": [\n      \"InvoiceCreated\",\n      \"WorkOrderCallerChanged\"\n    ],\n    \"Id\": 4310,\n    \"Enabled\": false,\n    \"Rules\": {\n      \"Trades\": [\n        \"string\",\n        \"string\"\n      ],\n      \"Categories\": [\n        \"string\",\n        \"string\"\n      ],\n      \"Statuses\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  },\n  {\n    \"Url\": \"string\",\n    \"Name\": \"string\",\n    \"EventTypes\": [\n      \"WorkOrderWeatherTypeDeleted\",\n      \"LocationNoteHeaderDeleted\"\n    ],\n    \"Id\": 9901,\n    \"Enabled\": false,\n    \"Rules\": {\n      \"Trades\": [\n        \"string\",\n        \"string\"\n      ],\n      \"Categories\": [\n        \"string\",\n        \"string\"\n      ],\n      \"Statuses\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2cede06b-6c2c-4428-83b7-7c65f809401e",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "Http"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvoiceAddUsersToMliLevelsError\",\n    \"GlCodeInvalidResponce\"\n  ],\n  \"ErrorCode\": \"DeclineReasonDoesntAllowCustomText\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "330864da-12e3-4bb5-94c3-425036d679af",
+          "name": "Create a subscription",
+          "request": {
+            "name": "Create a subscription",
+            "description": {
+              "content": "Creates a new subscription to the specified [event types](/guides/wh/types-of-events/). Returns a unique subscription ID for a successful request.\r\n            See [Event Objects](/guides/wh/event-objects/) for example notification objects and descriptions of their fields.\r\n            <br />**Example Request**\r\n            \r\n                POST /NotificationSubscriptions/Http\r\n                {\r\n                  \"Url\": \"https://your-company.com/webhook-target-URL\",\r\n                  \"Enabled\": true,\r\n                  \"Name\": \"Subscription to new WOs\",\r\n                  \"EventTypes\": [\r\n                    \"WorkOrderCreated\"\r\n                  ],\r\n                  \"Rules\": {\r\n                    \"Trades\": [\r\n                      \"GLASS\"\r\n                    ],\r\n                    \"Categories\": [\r\n                      \"MAINTENANCE\"\r\n                    ]\r\n                  }\r\n                }",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "NotificationSubscriptions",
+                "Http"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Url\": \"<string>\",\n  \"Name\": \"<string>\",\n  \"EventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Enabled\": false,\n  \"Rules\": {\n    \"Trades\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Statuses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ab7d8c49-8964-4564-a108-f0bd9c8b4f58",
+              "name": "The subscription is created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "Http"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Url\": \"<string>\",\n  \"Name\": \"<string>\",\n  \"EventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Enabled\": false,\n  \"Rules\": {\n    \"Trades\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Statuses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": 424\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ebe2b13-98c3-4967-9900-14d4b6dd4ea2",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 - Required data missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "Http"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Url\": \"<string>\",\n  \"Name\": \"<string>\",\n  \"EventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Enabled\": false,\n  \"Rules\": {\n    \"Trades\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Statuses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2dbe578a-c124-4f61-b6ab-333a3e0683f2",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "Http"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Url\": \"<string>\",\n  \"Name\": \"<string>\",\n  \"EventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Enabled\": false,\n  \"Rules\": {\n    \"Trades\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Statuses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "037aff12-3ea3-4afc-9f49-9d9f0346c250",
+          "name": "Get a subscription",
+          "request": {
+            "name": "Get a subscription",
+            "description": {
+              "content": "Retrieves the details of the specified subscription.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "NotificationSubscriptions",
+                "Http",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) The unique ID of the subscription to return."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a5a8f416-89da-47fb-8f3e-378d347e0650",
+              "name": "The requested subscription is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "Http",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The unique ID of the subscription to return."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Url\": \"string\",\n  \"Name\": \"string\",\n  \"EventTypes\": [\n    \"BadgeScanRequired\",\n    \"WorkOrderResolutionCreated\"\n  ],\n  \"Id\": 6997,\n  \"Enabled\": false,\n  \"Rules\": {\n    \"Trades\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Statuses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "228d8b48-5764-4877-93b7-5135a40a1296",
+              "name": "The requested data are not found.\r\n            <br/>Error codes:\r\n            502 - Subscription not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "Http",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The unique ID of the subscription to return."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7bfe794e-930c-48eb-bae2-27ca7e013dec",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "Http",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The unique ID of the subscription to return."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "04dd339a-580a-4cd5-9e51-d39c41b18d0a",
+          "name": "Update a subscription",
+          "request": {
+            "name": "Update a subscription",
+            "description": {
+              "content": "Updates the specified subscription by setting the values of the parameters passed.\r\n            <br />**Example Request**\r\n            \r\n                PUT /NotificationSubscriptions/Http/{id}\r\n                {\r\n                  \"Id\": 1111,\r\n                  \"Url\": \"https://your-company.com/webhook-target-URL\",\r\n                  \"Enabled\": true,\r\n                  \"Name\": \"Subscription to new WOs\",\r\n                  \"EventTypes\": [\r\n                    \"WorkOrderCreated\"\r\n                  ],\r\n                  \"Rules\": {\r\n                    \"Trades\": [\r\n                      \"GLASS\"\r\n                    ],\r\n                    \"Categories\": [\r\n                      \"MAINTENANCE\"\r\n                    ]\r\n                  }\r\n                }",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "NotificationSubscriptions",
+                "Http",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) The unique ID of the subscription to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Url\": \"<string>\",\n  \"Name\": \"<string>\",\n  \"EventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Id\": \"<integer>\",\n  \"Enabled\": false,\n  \"Rules\": {\n    \"Trades\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Statuses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "243449e0-1ed8-45e1-ada6-63d75211e739",
+              "name": "The subscription is updated, and the response is intentionally blank.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "Http",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The unique ID of the subscription to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Url\": \"<string>\",\n  \"Name\": \"<string>\",\n  \"EventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Id\": \"<integer>\",\n  \"Enabled\": false,\n  \"Rules\": {\n    \"Trades\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Statuses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b5a0817d-edcc-46b1-848c-a62f739d3347",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 - Subscription not found\r\n            503 - Required data missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "Http",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The unique ID of the subscription to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Url\": \"<string>\",\n  \"Name\": \"<string>\",\n  \"EventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Id\": \"<integer>\",\n  \"Enabled\": false,\n  \"Rules\": {\n    \"Trades\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Statuses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be46a3fe-8493-4ad6-a132-b54760ca7c3c",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "Http",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The unique ID of the subscription to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Url\": \"<string>\",\n  \"Name\": \"<string>\",\n  \"EventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"Id\": \"<integer>\",\n  \"Enabled\": false,\n  \"Rules\": {\n    \"Trades\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Categories\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Statuses\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9afbbe0-904d-4205-bda3-9ad540cd6e8e",
+          "name": "Delete a subscription",
+          "request": {
+            "name": "Delete a subscription",
+            "description": {
+              "content": "Permanently deletes the specified subscription. It cannot be undone.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "NotificationSubscriptions",
+                "Http",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) The unique ID of the subscription to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ee99fbe-fa39-4cc0-a321-101fcaa31c74",
+              "name": "The subscription is deleted, and the response is intentionally blank.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "Http",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The unique ID of the subscription to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0b9da65b-c93b-4bf8-ada2-55203a9ca5e8",
+              "name": "The requested data are not found.\r\n            <br/>Error codes:\r\n            502 - Subscription not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "Http",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The unique ID of the subscription to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d8b5560-4e0e-40d6-8e90-ea25b769009f",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "Http",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The unique ID of the subscription to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d57e4f51-7c83-4b72-a957-a9596c85c7fe",
+          "name": "Get MSTeams Subscription",
+          "request": {
+            "name": "Get MSTeams Subscription",
+            "description": {
+              "content": "Retrieves the details of the specified subscription.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "NotificationSubscriptions",
+                "msteams"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "conversationId",
+                  "value": "<string>",
+                  "description": "(Required) Conversation Identifier."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "890f374f-9a7f-4386-8ed3-597aa8b0e444",
+              "name": "The requested subscription is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "msteams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "conversationId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": 7057,\n  \"UserId\": 7038,\n  \"UserEmailAddress\": \"string\",\n  \"SubscriberId\": 1388,\n  \"ProviderId\": 4727,\n  \"IsEnabled\": false,\n  \"ConversationReference\": {\n    \"ConversationId\": \"string\",\n    \"TenantId\": \"string\",\n    \"UserId\": \"string\",\n    \"UserName\": \"string\",\n    \"ServiceUrl\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81f97dcd-c96a-4856-bae0-5fa7b2c83d22",
+              "name": "The requested data are not found.\r\n            <br/>Error codes:\r\n            502 - Subscription not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "msteams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "conversationId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec4955cc-5b0e-4e6f-b229-12898bd00c17",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "msteams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "conversationId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4435fdf9-2ca8-41fd-ac6b-fcc298265c1c",
+          "name": "Subscribe to Notification",
+          "request": {
+            "name": "Subscribe to Notification",
+            "description": {
+              "content": "Creates a new Subscription. Returns a unique subscription ID for a successful request.\r\n            See [Event Objects](/guides/wh/event-objects/) for example notification objects and descriptions of their fields.\r\n            <br />**Example Request**\r\n            \r\n                POST /NotificationSubscriptions/Subscribe\r\n                {\r\n                  \"Name\": \"New Subscription\",\r\n                  \"IsEnabled\": true,\r\n                  \"Type\": \"MSBot\",\r\n                  \"Content\": \r\n                  {\r\n                    \"ConversationId\":\"a:1aV4BNOWtTdqJhkdgsdfhsdfhsgjdfgjdrtydjyj\",\r\n                    \"TenantId\":\"1111111-1111-1111-1111-111111111111\",\r\n                    \"UserId\":\"29:1oTNViX5ByDxfsgdfgsdhgjlnkkli\",\r\n                    \"UserName\":\"First Last\",\r\n                    \"ServiceUrl\":\"https://smba.trafficmanager.net/amer/\"\r\n                  }\r\n                }",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "NotificationSubscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Type\": \"<string>\",\n  \"Content\": {},\n  \"Name\": \"<string>\",\n  \"IsEnabled\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "88db9f6a-edb1-4bef-bfdc-be711e686745",
+              "name": "The subscription is created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Type\": \"<string>\",\n  \"Content\": {},\n  \"Name\": \"<string>\",\n  \"IsEnabled\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": 424\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e02229a0-c3ae-4210-b462-29ae0f65aa74",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            2105 - Operation is not allowed.\r\n            503 - Required data missing or incorrect",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Type\": \"<string>\",\n  \"Content\": {},\n  \"Name\": \"<string>\",\n  \"IsEnabled\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2101e73f-601f-49f3-9378-38a95b70c200",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Type\": \"<string>\",\n  \"Content\": {},\n  \"Name\": \"<string>\",\n  \"IsEnabled\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "26ca584f-9227-46f9-9b58-7e9995bf59eb",
+          "name": "UnSubscribe",
+          "request": {
+            "name": "UnSubscribe",
+            "description": {
+              "content": "Permanently deletes the specified subscription. It cannot be undone.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "NotificationSubscriptions",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "(Required) type of the subscription."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) The unique ID of the subscription."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6e386a39-45ee-4aa5-85ab-89ca7a83f405",
+              "name": "The subscription is deleted, and the response is intentionally blank.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The unique ID of the subscription."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6a52c7a0-5ef1-4273-970a-a339a2f1c917",
+              "name": "The requested data are not found.\r\n            <br/>Error codes:\r\n            2105 - Operation is not allowed.\r\n            502 - Subscription not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The unique ID of the subscription."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37935481-9876-403c-9c05-800cceb6f560",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) The unique ID of the subscription."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81123a20-01e1-4a91-96f6-a5147b96856e",
+          "name": "Get a signing key",
+          "request": {
+            "name": "Get a signing key",
+            "description": {
+              "content": "Retrieves the current subscriber's or provider's signing key.\r\n            A signing key is used to generate event signatures. Use your key to [verify that notifications are sent by SC](/guides/wh/receive-events-and-respond/#verify-an-event).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "NotificationSubscriptions",
+                "SigningKey"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a43ba1bb-9737-4080-8981-7dc0afd8e2ef",
+              "name": "The signing key is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "SigningKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b6c6f20-2d70-4318-bb99-58768d0183e5",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "SigningKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d1440cc-074f-4706-b400-4d0aefd3b3d0",
+          "name": "Regenerate a signing key",
+          "request": {
+            "name": "Regenerate a signing key",
+            "description": {
+              "content": "Regenerates the current subscriber's or provider's signing key. The previous signing key becomes invalid.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "NotificationSubscriptions",
+                "SigningKey"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d9ca56f3-11e3-49b2-9f59-658cb17437b3",
+              "name": "The new signing key is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "SigningKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae7fd30a-fc84-4b9e-a9eb-6c5312f0368f",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 - Missing or incorrect authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "NotificationSubscriptions",
+                    "SigningKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "05bfc02e-468f-44de-8c66-5a2b24885293",
+          "name": "Get providers exclusion list",
+          "request": {
+            "name": "Get providers exclusion list",
+            "description": {
+              "content": "List providers who opted out to not receive the notifications",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "GetProvidersExclusionList"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "emailNotificationType",
+                  "value": "<integer>",
+                  "description": "(Required) 1 - Declined WO; 2 - WO Assigned to User; 4 - ETA Missed; 5 - LNH Autocopy"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f15269a0-3e33-4c46-94db-4f27d59ae2f1",
+              "name": "The requested providers are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetProvidersExclusionList"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "emailNotificationType",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ProviderIds\": [\n    5884,\n    4331\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3d7902d-68d0-4d1a-93c9-dc109843e76f",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            401 — Invalid subsriber ID\r\n            804 — User has no permissions to perform this action",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetProvidersExclusionList"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "emailNotificationType",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8fb87edb-dd22-4139-a375-f0a9892fe052",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetProvidersExclusionList"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "emailNotificationType",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1fa8ee9e-d3cb-41b8-8c52-3d3eae105c25",
+              "name": "The requested resource does not exist on the server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetProvidersExclusionList"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "emailNotificationType",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e25e4bb7-34b6-4c36-bd8e-b144197b86ff",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetProvidersExclusionList"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "emailNotificationType",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CheckInOutPremature\",\n    \"CategoryInUseProposalApproveReasons\"\n  ],\n  \"ErrorCode\": \"TimeoutExpiredError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sb2fixxbook.servicechannel.com:443/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ec7c0ea0-8be2-46ec-b4ca-86b3aa81258f",
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours NotificationSubscriptions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

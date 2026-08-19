@@ -1,0 +1,206 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Ctools API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ctools",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve technicians assigned to a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ctools/workorder/:workOrderId/assignedtechnicians",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work order to retrieve assigned technicians for."
+              }
+            ]
+          },
+          "docs": "Returns technicians assigned to the specified work order.\r\n            <br />***Note:*** This method is only available to provider admins."
+        },
+        {
+          "info": {
+            "name": "Retrieve technicians who accepted a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ctools/workorder/:workOrderId/acceptedtechnicians",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work order for which you want to retrieve technicians who accepted it."
+              }
+            ]
+          },
+          "docs": "Returns technicians who accepted the specified work order. Note that only Field Tech Manager (FTM) technicians can accept work orders.\r\n            <br />***Note:*** This method is only available to provider admins."
+        },
+        {
+          "info": {
+            "name": "Assign a technician to a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/ctools/workorder/:workOrderId/assigntechnician",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work order to assign to a technician."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the technician in the Authentication service to assign the work order to."
+              }
+            ]
+          },
+          "docs": "Assigns a technician to the specified work order.\r\n            <br />***Note:*** This method is only available to provider admins."
+        },
+        {
+          "info": {
+            "name": "Unassign a technician from a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/ctools/workorder/:workOrderId/unassigntechnician",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work order to unassign a technician from."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the technician in the Authentication service to unassign the work order from."
+              }
+            ]
+          },
+          "docs": "Unassigns a technician from the specified work order.\r\n            <br />***Note:*** This method is only available to provider admins."
+        },
+        {
+          "info": {
+            "name": "Accept a work order on behalf of a technician",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/ctools/workorder/:workOrderId/accept",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work order you want to accept on behalf of a technician."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the technician — who accepts the work order — in the Authentication service."
+              }
+            ]
+          },
+          "docs": "Accepts a work order on behalf of the specified technician. Only Field Tech Manager (FTM) technicians can accept work orders.\r\n            <br />Once the work order is accepted, its status changes to *In Progress/Dispatch Confirmed*.\r\n            <br />***Note:*** This method is only available to provider admins."
+        },
+        {
+          "info": {
+            "name": "Decline a work order on behalf of a technician",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/ctools/workorder/:workOrderId/decline",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work order you want to decline on behalf of a technician."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the technician — who declines the work order — in the Authentication service."
+              }
+            ]
+          },
+          "docs": "Declines a work order on behalf of the specified technician. Only Field Tech Manager (FTM) technicians can decline work orders.\r\n            <br />If additional technician permissions are enabled for your company — “Technician”, “Supervising Tech”, and “Regional Manager” — the work order declined by a technician is automatically assigned to a Supervising Tech or Regional Manager or forwarded to the next ranked provider based on the configured auto-assignment rules. If these permissions are not e"
+        },
+        {
+          "info": {
+            "name": "Cancel the acceptance of a work order on behalf of a technician",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/ctools/workorder/:workOrderId/rescindacceptance",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work order for which you want to cancel acceptance on behalf of a technician."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the technician in the Authentication service to cancel the work order acceptance for."
+              }
+            ]
+          },
+          "docs": "Removes a technician as accepted on the specified work order. Note that only Field Tech Manager (FTM) technicians can accept work orders.\r\n            <br />If the technician is currently checked into the work order, the request will fail.\r\n            <br />***Note:*** This method is only available to provider admins."
+        },
+        {
+          "info": {
+            "name": "Get refrigerant certifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ctools/refrigerantcertifications",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "query",
+                "description": "Unique provider identifier."
+              },
+              {
+                "name": "authUserId",
+                "value": "",
+                "type": "query",
+                "description": "Technician’s single sign-on (SSO) ID."
+              }
+            ]
+          },
+          "docs": "Returns all refrigerant certifications for the specified provider for EPA compliance. You can also retrieve certifications for one technician only by specifying their `authUserId`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

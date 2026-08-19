@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Categories API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Categories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/categories",
+            "params": [
+              {
+                "name": "subscriberIds",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric ID of the subscriber you want to retrieve categories for. By default, the current subscriber ID is set."
+              }
+            ]
+          },
+          "docs": "Returns a list of available work order categories for one or several subscribers. Only a parent subscriber can get categories for child subscribers.\r\n            <br />You can create a new category via the [POST /categories](/swagger/ui/index#/Categories/POSTv3_categories) method."
+        },
+        {
+          "info": {
+            "name": "Create a new category",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/categories"
+          },
+          "docs": "Creates a new work order category within a primary category.\r\n            <br />For more information, refer to [Managing categories](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/556302506/Managing+Categories) in ServiceChannel University."
+        },
+        {
+          "info": {
+            "name": "Retrieve primary categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/categories/primary"
+          },
+          "docs": "Returns a list of available primary categories of the current subscriber."
+        },
+        {
+          "info": {
+            "name": "List categories that have a GL code mapping with a trade",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/categories/glcodes",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric identifier of the location for which you want to retrieve categories that have a GL code mapping with the trade."
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query",
+                "description": "Trade to retrieve categories with their associated GL codes for."
+              }
+            ]
+          },
+          "docs": "Returns categories that have GL codes associated with the specified trade. Learn more about [managing GL codes](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/557645834/Managing+GL+Codes) in ServiceChannel University."
+        },
+        {
+          "info": {
+            "name": "GetExistsCategories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/categories/GetExistsCategories"
+          },
+          "docs": "GetExistsCategories"
+        },
+        {
+          "info": {
+            "name": "GetExistsPrimaryCategories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/categories/GetExistsPrimaryCategories"
+          },
+          "docs": "GetExistsPrimaryCategories"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

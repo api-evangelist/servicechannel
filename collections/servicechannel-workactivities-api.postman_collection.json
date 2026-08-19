@@ -1,0 +1,2356 @@
+{
+  "item": [
+    {
+      "id": "b5ffe325-888e-44ca-ac21-21fb7dcad400",
+      "name": "WorkActivities",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9dcd3be9-abc8-46ed-9584-ff40d3014805",
+          "name": "Update the specified work activity of a work order",
+          "request": {
+            "name": "Update the specified work activity of a work order",
+            "description": {
+              "content": "Updates the specified work activity of a work order by setting the check-in and check-out date and time values passed in the request.\r\n            <br />Before updating a work activity, please consider the following:\r\n             • You can update work activities only for work orders in the *In Progress* primary status.\r\n             • The check-in date and time cannot be greater than the check-out date and time.\r\n             • The check-in date and time cannot be earlier than the scheduled date and time of the work order.\r\n             • The time range of the work activity you are updating cannot overlap the time ranges of existing work activities of the work order.\r\n             • The name will be set to the API caller name if the `name` value is not provided.\r\n            <br />***Note:*** Both subscribers and providers can use this method.\r\n            <br />***Note:*** Only users with extended permissions can update the work activities created by other users along with updating the `name` parameter. The users with certain permissions are:\r\n             • Subscribers that have the *Admin* role. These users can update the work activities created both by subscribers and by providers.\r\n             • Providers that have the *Admin* role (with the *EditLaborItemsOnWoDetailsProvider* feature flag turned on). These users can update the work activities created by providers only.\r\n             • Providers that have the *Business Owner / Management* role (with the *EditLaborItemsOnWoDetailsProvider* feature flag turned on). These users can update the work activities created by providers only.\r\n            <br />Learn more about [updating a work activity](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/576258285/Updating+Service+Provider+Check-In+Out+Information) in ServiceChannel University.\r\n            <br />**Example Request**\r\n            \r\n                PUT /workorders/{workorderId}/workactivities/{workactivityId}\r\n                {\r\n                   \"CheckInDate\": \"2020-11-19T11:10:36.868Z\",\r\n                   \"CheckOutDate\": \"2020-11-19T12:30:36.868Z\",\r\n                   \"Name\": \"John Doe\"\r\n                }",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workorders",
+                ":workorderId",
+                "workactivities",
+                ":workactivityId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workorderId",
+                  "description": "(Required) The unique numeric identifier of the work order for which you want to update a work activity."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workactivityId",
+                  "description": "(Required) The unique numeric identifier of the work activity to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"CheckInDate\": \"<dateTime>\",\n  \"CheckOutDate\": \"<dateTime>\",\n  \"Name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cdc0b418-329c-4d77-b2d0-95830e1bd9d6",
+              "name": "The work activity is updated, and its ID is returned in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities",
+                    ":workactivityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to update a work activity."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workactivityId",
+                      "description": "(Required) The unique numeric identifier of the work activity to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"CheckInDate\": \"<dateTime>\",\n  \"CheckOutDate\": \"<dateTime>\",\n  \"Name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1977b04e-d97b-4123-8908-1d348cff1463",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — WorkOrder not found\r\n            503 — Work activity is not found\r\n            503 — Date range is incorrect\r\n            503 — Check In/Out is premature\r\n            904 — Invalid work order status\r\n            1186 — Time range is overlapped",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities",
+                    ":workactivityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to update a work activity."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workactivityId",
+                      "description": "(Required) The unique numeric identifier of the work activity to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"CheckInDate\": \"<dateTime>\",\n  \"CheckOutDate\": \"<dateTime>\",\n  \"Name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"CategoryInUseWorkRequest\",\n    \"BrandsRestrictedBySubscriber\"\n  ],\n  \"ErrorCode\": \"WorkRequestAttachmentOriginalNameIsRequired\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0436196f-31c8-474a-99ba-b0810d0ec63f",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities",
+                    ":workactivityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to update a work activity."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workactivityId",
+                      "description": "(Required) The unique numeric identifier of the work activity to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"CheckInDate\": \"<dateTime>\",\n  \"CheckOutDate\": \"<dateTime>\",\n  \"Name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9afabb6f-a7b3-45c2-8ce6-6aed2b3e7d9c",
+              "name": "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/>Error codes:\r\n            804 — User has no permissions to perform this action",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities",
+                    ":workactivityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to update a work activity."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workactivityId",
+                      "description": "(Required) The unique numeric identifier of the work activity to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"CheckInDate\": \"<dateTime>\",\n  \"CheckOutDate\": \"<dateTime>\",\n  \"Name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c0157ff-7628-49fe-a633-5cb414f643eb",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities",
+                    ":workactivityId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to update a work activity."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workactivityId",
+                      "description": "(Required) The unique numeric identifier of the work activity to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"CheckInDate\": \"<dateTime>\",\n  \"CheckOutDate\": \"<dateTime>\",\n  \"Name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74a1be7c-ce46-4c76-bdda-000cc255509d",
+          "name": "Create a work activity for the specified work order",
+          "request": {
+            "name": "Create a work activity for the specified work order",
+            "description": {
+              "content": "Creates a new work activity for the specified work order. The work activity type can be either *Travel* or *Repair*. Note that custom types may be configured for a subscriber.\r\n            <br />Before creating a work activity, please consider the following:\r\n             • You can create work activities only for work orders in the *In Progress* primary status.\r\n             • The check-in date and time cannot be greater than the check-out date and time.\r\n             • The check-in date and time cannot be earlier than the scheduled date and time of the work order.\r\n             • The time range of the work activity you are creating cannot overlap the time ranges of existing work activities of the work order.\r\n             • The name will be set to the API caller name if the `name` value is not provided.\r\n            <br />***Note:*** Both subscribers and providers can use this method.\r\n            <br />***Note:*** Only users with extended permissions can specify the technician's name while creating a work activity. The users with extended permissions are:\r\n             • Subscribers that have the *Admin* role.\r\n             • Providers that have the *Admin* role (with the *EditLaborItemsOnWoDetailsProvider* feature flag turned on).\r\n             • Providers that have the *Business Owner / Management* role (with the *EditLaborItemsOnWoDetailsProvider* feature flag turned on).\r\n            <br />Learn more about [creating a work activity](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/576258285/Updating+Service+Provider+Check-In+Out+Information) in ServiceChannel University.\r\n            <br />**Example Request**\r\n            \r\n                POST /workorders/{workorderId}/workactivities\r\n                {\r\n                   \"WorkTypeId\": \"1\",       \r\n                   \"CheckInDate\": \"2020-11-19T11:10:36.868Z\",\r\n                   \"CheckOutDate\": \"2020-11-19T12:15:36.868Z\",\r\n                   \"Name\": \"John Doe\"\r\n                }",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workorders",
+                ":workorderId",
+                "workactivities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workorderId",
+                  "description": "(Required) The unique numeric identifier of the work order for which you want to create a work activity."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"WorkTypeId\": \"<integer>\",\n  \"CheckInDate\": \"<dateTime>\",\n  \"CheckOutDate\": \"<dateTime>\",\n  \"Name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "54d1179d-d36d-43ee-8667-49b41c683480",
+              "name": "A work activity is created for the specified work order, and a unique work activity ID is returned in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to create a work activity."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"WorkTypeId\": \"<integer>\",\n  \"CheckInDate\": \"<dateTime>\",\n  \"CheckOutDate\": \"<dateTime>\",\n  \"Name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e783599d-bb9d-4824-8b0c-7004e0531fba",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — WorkOrder not found\r\n            503 — Work Type Not Found\r\n            503 — Date range is incorrect\r\n            503 — Check In/Out is premature\r\n            904 — Invalid work order status\r\n            1186 — Time range is overlapped",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to create a work activity."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"WorkTypeId\": \"<integer>\",\n  \"CheckInDate\": \"<dateTime>\",\n  \"CheckOutDate\": \"<dateTime>\",\n  \"Name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff9defe4-2f21-4117-8bf3-523b1f5291db",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to create a work activity."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"WorkTypeId\": \"<integer>\",\n  \"CheckInDate\": \"<dateTime>\",\n  \"CheckOutDate\": \"<dateTime>\",\n  \"Name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ffc25c5-2913-4910-a25c-3a4e66fd88d6",
+              "name": "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/>Error codes:\r\n            804 — User has no permissions to perform this action",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to create a work activity."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"WorkTypeId\": \"<integer>\",\n  \"CheckInDate\": \"<dateTime>\",\n  \"CheckOutDate\": \"<dateTime>\",\n  \"Name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d1cc6f9-c523-4f0c-900d-dab87f3271f3",
+              "name": "The request is already processed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to create a work activity."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"WorkTypeId\": \"<integer>\",\n  \"CheckInDate\": \"<dateTime>\",\n  \"CheckOutDate\": \"<dateTime>\",\n  \"Name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Acceptable",
+              "code": 406,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21cc0af2-02a7-44b7-8665-2671899fee90",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to create a work activity."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"WorkTypeId\": \"<integer>\",\n  \"CheckInDate\": \"<dateTime>\",\n  \"CheckOutDate\": \"<dateTime>\",\n  \"Name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e419dec7-979e-4cb6-ba8c-a349e7fcc5bd",
+          "name": "Delete the specified work activities of a work order",
+          "request": {
+            "name": "Delete the specified work activities of a work order",
+            "description": {
+              "content": "Delete one or more work activities of the specified work order. When you pass multiple work activity IDs, the request will succeed if at least one ID is valid.\r\n            <br />***Note:*** Both subscribers and providers can use this method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workorders",
+                ":workorderId",
+                "workactivities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workactivityIds",
+                  "value": "<integer>",
+                  "description": "(Required) The unique numeric identifiers of the work activities to delete."
+                },
+                {
+                  "disabled": false,
+                  "key": "workactivityIds",
+                  "value": "<integer>",
+                  "description": "(Required) The unique numeric identifiers of the work activities to delete."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workorderId",
+                  "description": "(Required) The unique numeric identifier of the work order for which you want to delete work activities."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "82588334-7ed1-482e-8e07-a49af8877514",
+              "name": "The specified work activities are deleted, and the response is intentionally blank.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workactivityIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "workactivityIds",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to delete work activities."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5f2ea9f6-dbf7-436a-a9c7-2d3dcb3c01b6",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — WorkOrder not found\r\n            502 — Work activities are not found\r\n            804 — User has no permissions to perform this action",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workactivityIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "workactivityIds",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to delete work activities."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a2adf9d-fff9-4aa8-88dd-12951525e27a",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workactivityIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "workactivityIds",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to delete work activities."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "abdd6f52-8548-445e-82df-831f0bdcbb10",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "workactivities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workactivityIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "workactivityIds",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) The unique numeric identifier of the work order for which you want to delete work activities."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5cd1db49-befc-408b-b87c-d253bd9d1c3a",
+          "name": "List work activities of the specified work order",
+          "request": {
+            "name": "List work activities of the specified work order",
+            "description": {
+              "content": "Returns work activities of the specified work order.\r\n            <br />A work activity details information about the technician's work on a service request: the time when the technician started and finished their work, the type of activity they carried out, the number of technicians who rendered the service, and other details related to the labor performed.\r\n            <br />***Note:*** Both subscribers and providers can use this method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "odata",
+                "workorders({{workorderId}})",
+                "workactivities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Expand a navigation property."
+                },
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Select a set of properties to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "$filter",
+                  "value": "<string>",
+                  "description": "Filter a collection of resources addressed by a request URL."
+                },
+                {
+                  "disabled": false,
+                  "key": "$orderby",
+                  "value": "<string>",
+                  "description": "Order resources by the specified property in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Return the specified number of items in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$skip",
+                  "value": "<integer>",
+                  "description": "Skip the specified number of items in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$count",
+                  "value": "<boolean>",
+                  "description": "Include the count of the matching resources in the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e80a7445-8d17-4ca5-93cf-25ceeb91690c",
+              "name": "The work activities of the specified work order are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workorders({{workorderId}})",
+                    "workactivities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"Id\": 8117,\n    \"WorkOrderId\": 3397,\n    \"TimeIn\": \"2013-12-15T05:34:42.882Z\",\n    \"TimeOut\": \"1948-10-18T03:11:17.874Z\",\n    \"IsTimeEdited\": false,\n    \"User\": {\n      \"Id\": 4850,\n      \"UserName\": \"string\",\n      \"UserNameOrFullName\": \"string\",\n      \"FullName\": \"string\",\n      \"Email\": \"string\",\n      \"LevelInfo\": {\n        \"UserId\": 7012,\n        \"LocationIds\": [\n          1992,\n          4089\n        ],\n        \"LevelId\": 7313,\n        \"LevelName\": \"string\",\n        \"Order\": 7301,\n        \"UsersLocations\": {\n          \"key_0\": [\n            4935,\n            5392\n          ]\n        },\n        \"CategoryChange\": false,\n        \"PriorityChange\": false,\n        \"CodeChange\": false,\n        \"DivisionId\": 4246\n      }\n    },\n    \"CallerId\": \"string\",\n    \"ResolutionCode\": \"string\",\n    \"WorkType\": \"string\",\n    \"HasCheckInInfo\": false,\n    \"HasCheckListResponse\": false,\n    \"TechsCount\": 6711,\n    \"Name\": \"string\",\n    \"CreatedBy\": 4321\n  },\n  {\n    \"Id\": 5340,\n    \"WorkOrderId\": 5526,\n    \"TimeIn\": \"1982-07-07T14:41:51.543Z\",\n    \"TimeOut\": \"1958-09-27T11:53:36.483Z\",\n    \"IsTimeEdited\": false,\n    \"User\": {\n      \"Id\": 8188,\n      \"UserName\": \"string\",\n      \"UserNameOrFullName\": \"string\",\n      \"FullName\": \"string\",\n      \"Email\": \"string\",\n      \"LevelInfo\": {\n        \"UserId\": 2216,\n        \"LocationIds\": [\n          8508,\n          2365\n        ],\n        \"LevelId\": 3394,\n        \"LevelName\": \"string\",\n        \"Order\": 5851,\n        \"UsersLocations\": {\n          \"key_0\": [\n            4840,\n            9402\n          ]\n        },\n        \"CategoryChange\": false,\n        \"PriorityChange\": false,\n        \"CodeChange\": false,\n        \"DivisionId\": 9131\n      }\n    },\n    \"CallerId\": \"string\",\n    \"ResolutionCode\": \"string\",\n    \"WorkType\": \"string\",\n    \"HasCheckInInfo\": false,\n    \"HasCheckListResponse\": false,\n    \"TechsCount\": 435,\n    \"Name\": \"string\",\n    \"CreatedBy\": 547\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fab96a2a-0375-4509-9fba-f9f644aa4ec1",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — WorkOrder not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workorders({{workorderId}})",
+                    "workactivities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "704d34e3-6389-4e22-b7fd-bfbb1f50eb07",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workorders({{workorderId}})",
+                    "workactivities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffe8ad4e-3d67-4afd-a4f1-6e01cb91d165",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workorders({{workorderId}})",
+                    "workactivities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9864d12f-3f4b-4ef4-9a14-9b9ef20a0807",
+          "name": "List work activities created by a provider user within the specified time period",
+          "request": {
+            "name": "List work activities created by a provider user within the specified time period",
+            "description": {
+              "content": "Returns work activities created by the specified provider user within the set time period.\r\n            <br />A work activity details information about the technician’s work on a service request: the time when the technician started and finished their work, the type of activity they carried out, the number of technicians who rendered the service, and other details related to the labor performed.\r\n            <br />***Note:*** This method is only available to provider users.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "odata",
+                "workactivities",
+                "Service.ForTimeInterval(dtMin={{dtMin}}, dtMax={{dtMax}}, userId={{userId}})"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Expand a navigation property."
+                },
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Select a set of properties to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "$filter",
+                  "value": "<string>",
+                  "description": "Filter a collection of resources addressed by a request URL."
+                },
+                {
+                  "disabled": false,
+                  "key": "$orderby",
+                  "value": "<string>",
+                  "description": "Order resources by the specified property in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Return the specified number of items in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$skip",
+                  "value": "<integer>",
+                  "description": "Skip the specified number of items in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$count",
+                  "value": "<boolean>",
+                  "description": "Include the count of the matching resources in the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "80fb12d4-d32b-473d-a0ec-6bf7745ed5bf",
+              "name": "Work activities created by the specified provider user within the set time period are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workactivities",
+                    "Service.ForTimeInterval(dtMin={{dtMin}}, dtMax={{dtMax}}, userId={{userId}})"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"Id\": 320,\n    \"WorkOrderId\": 4708,\n    \"TimeIn\": \"1999-11-01T22:44:35.077Z\",\n    \"TimeOut\": \"2004-04-12T05:30:37.916Z\",\n    \"IsTimeEdited\": false,\n    \"User\": {\n      \"Id\": 5310,\n      \"UserName\": \"string\",\n      \"UserNameOrFullName\": \"string\",\n      \"FullName\": \"string\",\n      \"Email\": \"string\",\n      \"LevelInfo\": {\n        \"UserId\": 3908,\n        \"LocationIds\": [\n          8934,\n          6426\n        ],\n        \"LevelId\": 3581,\n        \"LevelName\": \"string\",\n        \"Order\": 3589,\n        \"UsersLocations\": {\n          \"key_0\": [\n            8624,\n            2196\n          ],\n          \"key_1\": [\n            3312,\n            4375\n          ]\n        },\n        \"CategoryChange\": false,\n        \"PriorityChange\": false,\n        \"CodeChange\": false,\n        \"DivisionId\": 4942\n      }\n    },\n    \"CallerId\": \"string\",\n    \"ResolutionCode\": \"string\",\n    \"WorkType\": \"string\",\n    \"HasCheckInInfo\": false,\n    \"HasCheckListResponse\": false,\n    \"TechsCount\": 4587,\n    \"Name\": \"string\",\n    \"CreatedBy\": 1484\n  },\n  {\n    \"Id\": 3873,\n    \"WorkOrderId\": 4838,\n    \"TimeIn\": \"2012-04-20T08:01:57.492Z\",\n    \"TimeOut\": \"2005-05-19T19:12:55.379Z\",\n    \"IsTimeEdited\": false,\n    \"User\": {\n      \"Id\": 270,\n      \"UserName\": \"string\",\n      \"UserNameOrFullName\": \"string\",\n      \"FullName\": \"string\",\n      \"Email\": \"string\",\n      \"LevelInfo\": {\n        \"UserId\": 3402,\n        \"LocationIds\": [\n          3877,\n          8807\n        ],\n        \"LevelId\": 8167,\n        \"LevelName\": \"string\",\n        \"Order\": 3858,\n        \"UsersLocations\": {\n          \"key_0\": [\n            5132,\n            4444\n          ]\n        },\n        \"CategoryChange\": false,\n        \"PriorityChange\": false,\n        \"CodeChange\": false,\n        \"DivisionId\": 690\n      }\n    },\n    \"CallerId\": \"string\",\n    \"ResolutionCode\": \"string\",\n    \"WorkType\": \"string\",\n    \"HasCheckInInfo\": false,\n    \"HasCheckListResponse\": false,\n    \"TechsCount\": 537,\n    \"Name\": \"string\",\n    \"CreatedBy\": 6211\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "252d0814-46c6-4871-8406-dfe89ffa54a5",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            504 — User not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workactivities",
+                    "Service.ForTimeInterval(dtMin={{dtMin}}, dtMax={{dtMax}}, userId={{userId}})"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac1b4aca-ab7d-4eb5-b982-da7fbbaf5494",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workactivities",
+                    "Service.ForTimeInterval(dtMin={{dtMin}}, dtMax={{dtMax}}, userId={{userId}})"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c97e645b-5463-4dd9-bfa6-6cd878f98ba1",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workactivities",
+                    "Service.ForTimeInterval(dtMin={{dtMin}}, dtMax={{dtMax}}, userId={{userId}})"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8dbe35cc-b9b0-46a5-bef9-0b105e533fce",
+          "name": "Retrieve the specified work activity of a work order",
+          "request": {
+            "name": "Retrieve the specified work activity of a work order",
+            "description": {
+              "content": "Returns the specified work activity of a work order.\r\n            <br />A work activity details information about the technician's work on a service request: the time when the technician started and finished their work, the type of activity they carried out, the number of technicians who rendered the service, and other details related to the labor performed.\r\n            <br />***Note:*** Both subscribers and providers can use this method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "odata",
+                "workorders({{workorderId}})",
+                "workactivities({{workactivityId}})"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Expand a navigation property."
+                },
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Select a set of properties to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "$filter",
+                  "value": "<string>",
+                  "description": "Filter a collection of resources addressed by a request URL."
+                },
+                {
+                  "disabled": false,
+                  "key": "$orderby",
+                  "value": "<string>",
+                  "description": "Order resources by the specified property in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Return the specified number of items in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$skip",
+                  "value": "<integer>",
+                  "description": "Skip the specified number of items in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$count",
+                  "value": "<boolean>",
+                  "description": "Include the count of the matching resources in the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "023bba23-6e4c-41bb-90e6-0ddad91852be",
+              "name": "The requested work activity of the specified work order is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workorders({{workorderId}})",
+                    "workactivities({{workactivityId}})"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": 6942,\n  \"WorkOrderId\": 9289,\n  \"TimeIn\": \"1963-12-11T07:37:26.456Z\",\n  \"TimeOut\": \"1967-03-15T19:32:43.515Z\",\n  \"IsTimeEdited\": false,\n  \"User\": {\n    \"Id\": 3560,\n    \"UserName\": \"string\",\n    \"UserNameOrFullName\": \"string\",\n    \"FullName\": \"string\",\n    \"Email\": \"string\",\n    \"LevelInfo\": {\n      \"UserId\": 3280,\n      \"LocationIds\": [\n        3004,\n        7147\n      ],\n      \"LevelId\": 6784,\n      \"LevelName\": \"string\",\n      \"Order\": 860,\n      \"UsersLocations\": {\n        \"key_0\": [\n          9262,\n          2970\n        ],\n        \"key_1\": [\n          8407,\n          1342\n        ]\n      },\n      \"CategoryChange\": false,\n      \"PriorityChange\": false,\n      \"CodeChange\": false,\n      \"DivisionId\": 5944\n    }\n  },\n  \"CallerId\": \"string\",\n  \"ResolutionCode\": \"string\",\n  \"WorkType\": \"string\",\n  \"HasCheckInInfo\": false,\n  \"HasCheckListResponse\": false,\n  \"TechsCount\": 7269,\n  \"Name\": \"string\",\n  \"CreatedBy\": 3390\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c871f731-10c6-4aa3-b002-c18a0dd39330",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — WorkOrder not found\r\n            502 — Work activity is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workorders({{workorderId}})",
+                    "workactivities({{workactivityId}})"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68786780-5293-4c43-837e-c1934b7f71f6",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workorders({{workorderId}})",
+                    "workactivities({{workactivityId}})"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f699104c-f3ed-4dc3-8cc3-45bbc4cfbdc1",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workorders({{workorderId}})",
+                    "workactivities({{workactivityId}})"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidSubscriberIds\",\n    \"PaymentSystemAccountError\"\n  ],\n  \"ErrorCode\": \"PartsChargeHistoryAlreadyExists\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sb2fixxbook.servicechannel.com:443/api",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) The unique numeric identifier of the work order for which you want to retrieve work activities.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<integer>",
+      "key": "workorderId"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) The start date of the time period for which you want to retrieve work activities. The format is `YYYY-MM-DD`.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<dateTime>",
+      "key": "dtMin"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) The end date of the time period for which you want to retrieve work activities. The format is `YYYY-MM-DD`.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<dateTime>",
+      "key": "dtMax"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) PIN of the provider user who created work activities.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<integer>",
+      "key": "userId"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) The unique numeric identifier of the work activity to return.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<integer>",
+      "key": "workactivityId"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "aab8c4f2-3476-46fb-99ab-aa4895ef440c",
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours WorkActivities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

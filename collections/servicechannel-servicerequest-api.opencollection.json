@@ -1,0 +1,365 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours ServiceRequest API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ServiceRequest",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of providers per service request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/servicerequest/providers",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "Location Id"
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query",
+                "description": "Trade Id"
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query",
+                "description": "Trade"
+              },
+              {
+                "name": "equipmentType",
+                "value": "",
+                "type": "query",
+                "description": "Equipment type"
+              },
+              {
+                "name": "providerRank",
+                "value": "",
+                "type": "query",
+                "description": "Sets default provider with specified rank"
+              },
+              {
+                "name": "equipmentId",
+                "value": "",
+                "type": "query",
+                "description": "Sets default provider for specified equipment id"
+              }
+            ]
+          },
+          "docs": "Returns providers for specified location and trade or equipment. If no location, trade specified in request equipment values are used.\r\n            <br /><br />Available for provider and subscriber usage."
+        },
+        {
+          "info": {
+            "name": "Get Service Request Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/servicerequest/info",
+            "params": [
+              {
+                "name": "areaName",
+                "value": "",
+                "type": "query",
+                "description": "Name of the area"
+              },
+              {
+                "name": "problemType",
+                "value": "",
+                "type": "query",
+                "description": "Problem type"
+              },
+              {
+                "name": "equipmentType",
+                "value": "",
+                "type": "query",
+                "description": "Equipment type"
+              },
+              {
+                "name": "problemCode",
+                "value": "",
+                "type": "query",
+                "description": "Problem name"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "ID of a location"
+              },
+              {
+                "name": "setupId",
+                "value": "",
+                "type": "query",
+                "description": "SetupId"
+              },
+              {
+                "name": "callDate",
+                "value": "",
+                "type": "query",
+                "description": "Call Date"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves supporting info for \"Create Work Order\" operation.\r\n            <br /><br />This method can only be used for subscriber's users that have assigned dashboard."
+        },
+        {
+          "info": {
+            "name": "Get Service Request Info Without Dashboard Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/servicerequest/info/nosettings",
+            "params": [
+              {
+                "name": "areaName",
+                "value": "",
+                "type": "query",
+                "description": "Name of the area"
+              },
+              {
+                "name": "problemType",
+                "value": "",
+                "type": "query",
+                "description": "Problem type"
+              },
+              {
+                "name": "equipmentType",
+                "value": "",
+                "type": "query",
+                "description": "Equipment type"
+              },
+              {
+                "name": "problemCode",
+                "value": "",
+                "type": "query",
+                "description": "Problem name"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "ID of a location"
+              },
+              {
+                "name": "setupId",
+                "value": "",
+                "type": "query",
+                "description": "SetupId"
+              },
+              {
+                "name": "callDate",
+                "value": "",
+                "type": "query",
+                "description": "Call Date"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves supporting info for \"Create Work Order\" operation.\r\n            <br /><br />This method can only be used for subscriber's users that have assigned dashboard."
+        },
+        {
+          "info": {
+            "name": "GETv3_subscribers_current_servicerequest_addresses?SubscriberId={SubscriberId}&SetupId={SetupId}&LocationId={LocationId}&ProviderId={ProviderId}&Trade={Trade}&TradeId={TradeId}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/servicerequest/addresses",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "setupId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GETv3_providers_current_subscribers_{subscriberId}_applicationissuechoice_servicerequest_info?AreaName={AreaName}&ProblemType={ProblemType}&EquipmentType={EquipmentType}&ProblemCode={ProblemCode}&LocationId={LocationId}&SetupId={SetupId}&CallDate={CallDate}&Version={Version}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/providers/current/subscribers/:subscriberId/applicationissuechoice/servicerequest/info",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "areaName",
+                "value": "",
+                "type": "query",
+                "description": "Name of the area"
+              },
+              {
+                "name": "problemType",
+                "value": "",
+                "type": "query",
+                "description": "Problem type"
+              },
+              {
+                "name": "equipmentType",
+                "value": "",
+                "type": "query",
+                "description": "Equipment type"
+              },
+              {
+                "name": "problemCode",
+                "value": "",
+                "type": "query",
+                "description": "Problem name"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "ID of a location"
+              },
+              {
+                "name": "setupId",
+                "value": "",
+                "type": "query",
+                "description": "SetupId"
+              },
+              {
+                "name": "callDate",
+                "value": "",
+                "type": "query",
+                "description": "Call Date"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GETv3_providers_current_subscriber_{subscriberId}_location_{locationId}_applicationissuechoice_servicerequest_info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/providers/current/subscriber/:subscriberId/location/:locationId/applicationissuechoice/servicerequest/info",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Get WorkOrder properties with overrides",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/subscribers/current/servicerequest/overrides/props"
+          },
+          "docs": "Get WorkOrder properties with overrides"
+        },
+        {
+          "info": {
+            "name": "Get WorkOrder properties with overrides",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/providers/current/subscribers/:subscriberId/servicerequest/overrides/props",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path",
+                "description": "Subscriber Id"
+              }
+            ]
+          },
+          "docs": "Get WorkOrder properties with overrides"
+        },
+        {
+          "info": {
+            "name": "POSTv3_subscribers_current_servicerequest_duplicates_completed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/subscribers/current/servicerequest/duplicates/completed"
+          }
+        },
+        {
+          "info": {
+            "name": "POSTv3_subscribers_current_servicerequest_duplicates_open",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/subscribers/current/servicerequest/duplicates/open"
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

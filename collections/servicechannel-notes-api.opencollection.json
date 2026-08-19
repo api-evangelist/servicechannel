@@ -1,0 +1,290 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Notes API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Notes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get work order notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workorderId/notes",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order.\r\n            <br />***Note:*** You need to have access to the WO location per your user settings."
+              },
+              {
+                "name": "paging",
+                "value": "",
+                "type": "query",
+                "description": "Page numbering to display work order notes.\r\n             • The format is **Page number:Page size**, for example, **1:10**, meaning the 1st page with 10 notes displayed. To view the second page, change the entry to **2:10**.\r\n             • When the field is left empty, you get 10 notes per page with the latest note at the top.\r\n             • To get all WO notes, ensure you specify a large number as the **Page size** that will cover all the notes, for example, **1:9999**."
+              }
+            ]
+          },
+          "docs": "Returns notes and attachments associated with the specified work order. Notes are sorted in descending order by creation date.\r\n            <br />Learn more about work order notes in [SCU](https://servicechannel.atlassian.net/wiki/x/4oPNKQ)."
+        },
+        {
+          "info": {
+            "name": "Create a work order note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders/:workorderId/notes",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order where a note should be created.\r\n            _**Note:**_ You need to have access to the WO location per your user settings."
+              }
+            ]
+          },
+          "docs": "Adds a new note to the specified work order. Returns the note ID for a successful request.\r\n            <br />Learn more about work order notes in [SCU](https://servicechannel.atlassian.net/wiki/x/4oPNKQ)."
+        },
+        {
+          "info": {
+            "name": "Note email recipients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workorderId/notes/recipients",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              },
+              {
+                "name": "showExcluded",
+                "value": "",
+                "type": "query",
+                "description": "If set to true, returns all recipients even those that have 'exclude from note recipient' flag in their setup. False by Default."
+              },
+              {
+                "name": "noteVisibility",
+                "value": "",
+                "type": "query",
+                "description": "NoteVisibility.Public is used by default"
+              }
+            ]
+          },
+          "docs": "<para>List of email recipients, who can be added to the list of note followers</para>"
+        },
+        {
+          "info": {
+            "name": "Add Followers to Work order notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders/:workorderId/notes/followers",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "<para>Add Followers to Work order.</para>"
+        },
+        {
+          "info": {
+            "name": "Remove Follower from Work order notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/workorders/:workorderId/notes/followers",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "The follower email address."
+              }
+            ]
+          },
+          "docs": "<para>Remove Follower from Work order.</para>"
+        },
+        {
+          "info": {
+            "name": "Partially update a work order note",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/workorders/:workorderId/notes/:noteId",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order."
+              },
+              {
+                "name": "noteId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the note. To get the `noteId`, run the following method: [GET/workorders/{workorderId}/notes](https://developer.servicechannel.com/swagger/index.html#/Notes/GETv3_workorders_%7BworkorderId%7D_notes%3Fpaging%3D%7Bpaging%7D). One note can be pinned to a single WO at a time."
+              }
+            ]
+          },
+          "docs": "Updates a work order note partially. For example, pins or unpins the work order note. For a successful request, returns the note ID in the response.\r\n            <br />Available behind the *PinnedNotes* feature flag."
+        },
+        {
+          "info": {
+            "name": "Retrieve work order notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/workorders(:workorderId)/notes",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Tracking number of the work order."
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Returns work order notes and attachments for the specified WO ID.\r\n            <br />Supports filtering and sorting within the response.\r\n             • **$expand:** Expand a navigation property. For example, enter **`attachments`**. To include specific fields for the expanded property, combine with the **`$select`** query option, for example, **`attachments($select=Id,Name)`**.\r\n             • **$select:** Select a set of properties to return. For example, **`Id,NoteData,CompanyName,CreatedBy`*"
+        },
+        {
+          "info": {
+            "name": "Get a work order note by note ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/workorders(:workorderId)/notes(:noteId)",
+            "params": [
+              {
+                "name": "noteId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order note. To get a note ID, run the [GET/workorders/{workorderId}/notes](https://developer.servicechannel.com/swagger/index.html#/Notes/GETv3_workorders_%7BworkorderId%7D_notes%3Fpaging%3D%7Bpaging%7D) method."
+              },
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order."
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Returns a specific note that matches the entered work order ID and note ID.\r\n            <br />Supports filtering and sorting within the response.\r\n             • **$expand:** Expand a navigation property. For example, `attachments`. To include specific fields for the expanded property, combine with the `$select` query option, for example, `attachments($select=Id,Name)`. \r\n             • **$select:** Select a set of properties to return. For example, `Id,NoteData,CompanyName,CreatedBy`. \r\n      "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

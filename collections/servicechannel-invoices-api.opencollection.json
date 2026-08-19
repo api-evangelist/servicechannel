@@ -1,0 +1,426 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Invoices API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invoices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve general invoice settings for a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/invoices/:subscriberId/InvoiceRequirements",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the subscriber to return general invoice settings for."
+              }
+            ]
+          },
+          "docs": "Returns general invoice settings for the specified subscriber.\r\n            <br />Both subscribers and providers can use this method.\r\n             • **Subscribers** should enter their subscriber ID.\r\n             • **Providers** need to pass the ID of the subscriber they have a contract with.\r\n            <br />Subscriber users with the *Super Admin* secondary role set up general invoice parameters in **Admin** &gt; **Invoices** &gt; **General**, where they configure when invoices can be create"
+        },
+        {
+          "info": {
+            "name": "Retrieve invoice other descriptions for selected category and subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/invoices/:subscriberId/OtherChargeOptions/:category",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the subscriber"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "path",
+                "description": "Category name"
+              }
+            ]
+          },
+          "docs": "Returns invoice other descriptions for the specified subscriber and category.\r\n            <br />Both subscribers and providers can use this method.\r\n             • **Subscribers** should enter their subscriber ID.\r\n             • **Providers** need to pass the ID of the subscriber they have a contract with."
+        },
+        {
+          "info": {
+            "name": "Retrieve invoice rejection reasons for a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/invoices/:subscriberId/InvoiceRejectionReasons",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the subscriber to return invoice rejection reasons for."
+              }
+            ]
+          },
+          "docs": "Returns invoice rejection reasons for a subscriber\r\n            <br />Both subscribers and providers can use this method.\r\n             • **Subscribers** should enter their subscriber ID.\r\n             • **Providers** need to pass the ID of the subscriber they have a contract with."
+        },
+        {
+          "info": {
+            "name": "Allows reject non-MLI(Multilevel Invoice Approval) invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/invoices/:invoiceId/reject",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice Identifier"
+              },
+              {
+                "name": "comments",
+                "value": "",
+                "type": "query",
+                "description": "Comments"
+              },
+              {
+                "name": "isNotifyProvider",
+                "value": "",
+                "type": "query",
+                "description": "Request to notify provider"
+              },
+              {
+                "name": "additionalEmails",
+                "value": "",
+                "type": "query",
+                "description": "Additional Emails"
+              }
+            ]
+          },
+          "docs": "<para>Allows reject non-MLI(Multilevel Invoice Approval) invoice</para>"
+        },
+        {
+          "info": {
+            "name": "Allows put invoice on hold for non-MLI(Multilevel Invoice Approval) invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/invoices/:invoiceId/onhold",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice Identifier"
+              },
+              {
+                "name": "comments",
+                "value": "",
+                "type": "query",
+                "description": "Comments"
+              }
+            ]
+          },
+          "docs": "<para>Allows put invoice on hold for non-MLI(Multilevel Invoice Approval) invoice</para>"
+        },
+        {
+          "info": {
+            "name": "Allows approve non-MLI(Multilevel Invoice Approval) invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/invoices/:invoiceId/approve",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice Identifier"
+              },
+              {
+                "name": "approvalCode",
+                "value": "",
+                "type": "query",
+                "description": "Approval Code"
+              },
+              {
+                "name": "comments",
+                "value": "",
+                "type": "query",
+                "description": "Comments"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Category"
+              }
+            ]
+          },
+          "docs": "<para>Allows approve non-MLI(Multilevel Invoice Approval) invoice</para>"
+        },
+        {
+          "info": {
+            "name": "Retrieve statistics of all invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/invoices/statistics",
+            "params": [
+              {
+                "name": "daysPeriod",
+                "value": "",
+                "type": "query",
+                "description": "Period in days, last X days for which Invoices statistics was collected (30 by Default)."
+              },
+              {
+                "name": "approvedInThePastDaysPeriod",
+                "value": "",
+                "type": "query",
+                "description": "Period in days, last X days during which Invoices are approved (3 by Default)."
+              }
+            ]
+          },
+          "docs": "Retrieves statistics of all invoices. Returns the statistics of all invoices for successful request.\r\n            <br /><br />Only for providers usage."
+        },
+        {
+          "info": {
+            "name": "Add an invoice to a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/invoices"
+          },
+          "docs": "Creates an invoice in the *Open* status for the specified work order.\r\n            <br />Find out more about [creating an invoice](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/2205811424/Creating+an+Invoice) in ServiceChannel University."
+        },
+        {
+          "info": {
+            "name": "Get an invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/invoices/:invoiceId",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric identifier of the invoice to get the details for."
+              }
+            ]
+          },
+          "docs": "Returns the details of the specified invoice."
+        },
+        {
+          "info": {
+            "name": "Get rates discrepancy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/invoices/:invoiceId/discrepancy",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves Invoice rates discrepancy information. Returns the labor list with rates discrepancy for the specified invoice."
+        },
+        {
+          "info": {
+            "name": "Get rates discrepancy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/invoices/:invoiceId/discrepancyExtended",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves Invoice rates discrepancy information. Returns the labor list with rates discrepancy for the specified invoice."
+        },
+        {
+          "info": {
+            "name": "Add a payment to an invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/invoices/:invoiceId/Payment",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the invoice to add a payment to."
+              }
+            ]
+          },
+          "docs": "Creates a payment record for the specified invoice in the *Approved* status.\r\n            <br />Send this request [GET/odata/invoices](/swagger/ui/index?version=3#/Invoices/Invoices_GetInvoices) to get the invoice ID.\r\n            <br />Learn [how subscribers can mark invoices as paid](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/621936646/Marking+Invoices+as+Paid) in ServiceChannel University.\r\n            <br />**Example Request**\r\n            \r\n                POST /invoices/{in"
+        },
+        {
+          "info": {
+            "name": "Add payment records to invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/invoices/Payments"
+          },
+          "docs": "Creates payment records for the invoices in the *Approved* status in bulk.\r\n             <br />**Note**: This method is available to users with the *Invoice Admin* role and with the *InvoiceChangeToPaid* feature flag enabled.\r\n             <br />**Example Request**\r\n             \r\n                 POST /invoices/Payments\r\n                 {\r\n                   \"Payments\": [\r\n                     {\r\n                       \"InvoiceId\": 96814318,\r\n                       \"PaymentDate\": \"2021-12-13T0"
+        },
+        {
+          "info": {
+            "name": "Add a payment record to an invoice by a tracking number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/invoices/Workorders/:trackingNumber/Payment",
+            "params": [
+              {
+                "name": "trackingNumber",
+                "value": "",
+                "type": "path",
+                "description": "Tracking number of the work order you want to add the invoice payment record for."
+              }
+            ]
+          },
+          "docs": "Creates a payment record for the invoice in the *Approved* status by specifying the tracking number of the work order the invoice was created for.\r\n            <br />Learn [how subscribers can mark invoices as paid](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/621936646/Marking+Invoices+as+Paid) in ServiceChannel University."
+        },
+        {
+          "info": {
+            "name": "Get Projects Invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/invoices/GetProjectsInvoicesIgnoreAccessRights"
+          },
+          "docs": "Retrieve All Invoices for Projects Cost Info Ignoring User Access Rights"
+        },
+        {
+          "info": {
+            "name": "Checks state of a service for invoice.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/invoices/ping/:serviceName",
+            "params": [
+              {
+                "name": "serviceName",
+                "value": "",
+                "type": "path",
+                "description": "Service Name identifier: The value of parameter is 'TWUtilityManager' or 'TWCalculationManager'  in currently."
+              }
+            ]
+          },
+          "docs": "The method allow check some service for invoice for availability state.<br />Responses: 'Success' or 'Fail'."
+        },
+        {
+          "info": {
+            "name": "Update GlCode",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/invoices/:invoiceId/GlCode",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "Invoice Id"
+              }
+            ]
+          },
+          "docs": "Update GlCode"
+        },
+        {
+          "info": {
+            "name": "Retrieve Invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/invoices",
+            "params": [
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Returns a list of invoices posted within the last 90 days if not specified otherwise in `$filter`. The maximum date range between the invoice `PostedDate` and the current date is 365 days."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

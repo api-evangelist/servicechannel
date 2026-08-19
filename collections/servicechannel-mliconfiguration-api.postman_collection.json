@@ -1,0 +1,2279 @@
+{
+  "item": [
+    {
+      "id": "ea0194a0-33dd-4398-83ce-8be7ae30b78f",
+      "name": "MliConfiguration",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6f6724e6-2a6c-4a89-bce8-9e28f6b9f82e",
+          "name": "Get MLI levels",
+          "request": {
+            "name": "Get MLI levels",
+            "description": {
+              "content": "Returns IDs and names of all MLI levels of the current subscriber.\r\n            <br />Learn more about [MLI levels configuration](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/601555312/Configuring+MLI+Levels) in ServiceChannel University.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mliConfiguration",
+                "Levels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d652d77f-4015-4b56-ae53-71aa639a27fc",
+              "name": "MLI levels are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mliConfiguration",
+                    "Levels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"Id\": 6105,\n    \"Name\": \"string\"\n  },\n  {\n    \"Id\": 4882,\n    \"Name\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c8039a8-6ed0-4657-b92e-2b6604e1c1a0",
+              "name": "The request is not authorized.\r\n            <br/> Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mliConfiguration",
+                    "Levels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidAssetTypeName\",\n    \"SubmitFeedbackInvalidSubscriber\"\n  ],\n  \"ErrorCode\": \"MaterialPriceDiscrepancyReasonShouldBeStated\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec0b8aac-f0b8-487a-bcf9-d81d4e181a8e",
+          "name": "Get MLI level users",
+          "request": {
+            "name": "Get MLI level users",
+            "description": {
+              "content": "Returns the users assigned to the specified level. The response body is empty if no user has been assigned to this level.\r\n            <br />You can use the [GET /mliConfiguration/Levels](/swagger/ui/index?version=3#/MliConfiguration/GETv3_mliConfiguration_Levels) method to get the MLI levels IDs. Send the [POST /MliConfiguration/Levels/{levelId}/Users/{userId}](/swagger/ui/index?version=3#/MliConfiguration/POSTv3_MliConfiguration_Levels__levelId__Users__userId_) request to assign users to the MLI level.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mliConfiguration",
+                "Levels",
+                ":levelId",
+                "Users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "levelId",
+                  "description": "(Required) Numeric identifier of the MLI level."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "64e9c428-c469-4c44-9642-2d86f07fd7a0",
+              "name": "The users assigned to the specified MLI level are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"Id\": 5297,\n    \"UserId\": \"string\"\n  },\n  {\n    \"Id\": 1205,\n    \"UserId\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c9048e3-9bf6-4c57-b11c-e7a4a51fe58b",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/> Error codes:\r\n            1128 — Approval levels getting error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa874887-4742-4ce1-a483-dc85b951234a",
+              "name": "The request is not authorized.\r\n            <br/> Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54645f7c-fd28-4244-8953-a1dc472137ac",
+          "name": "Add a user to an MLI level",
+          "request": {
+            "name": "Add a user to an MLI level",
+            "description": {
+              "content": "Assigns a user to an existing MLI level. Get users’ IDs by sending the [GET /users](/swagger/ui/index?version=3#/Users/GETv3_users_subscriberId__subscriberId__startIndex__startIndex__maxCount__maxCount_) request.\r\n            <br />You can assign a user to an existing location by using the [POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId}](/swagger/ui/index?version=3#/MliConfiguration/POSTv3_MliConfiguration_Levels__levelId__Users__userId__Locations__locationId_) method.\r\n            <br />***Note***: Each user can be added to only one MLI level. If a user should be assigned to another MLI level, you first need to [remove this user from the MLI level](/swagger/ui/index?version=3#/MliConfiguration/DELETEv3_mliConfiguration_Levels__levelId__Users__userId_) they currently belong to.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "MliConfiguration",
+                "Levels",
+                ":levelId",
+                "Users",
+                ":userId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "levelId",
+                  "description": "(Required) Numeric identifier of the MLI level."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "userId",
+                  "description": "(Required) Unique numeric identifier of the user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f9d5cd51-794b-4109-ae23-da11ef335a44",
+              "name": "Returns the created user ID from table dat_Division_User.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ba73d108-2036-4927-9cef-dc1e765ff486",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/> Error codes:\r\n            1129 — Err: failed to assign users\r\n            1131 — Err: Approval level doesn’t exist\r\n            1149 — User has already been assigned to another level\r\n            1150 — User does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bea240ba-119e-40bf-a506-cbaca1f09779",
+              "name": "The request is not authorized.\r\n            <br/> Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0fba21a-32c8-45ef-b9b9-22f0bc52d086",
+              "name": "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/> Error codes:\r\n            100 — User has no rights to perform this action",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e83b7ca9-ce0f-4de4-9afd-5b1cf56700f1",
+          "name": "Remove a user from an MLI level",
+          "request": {
+            "name": "Remove a user from an MLI level",
+            "description": {
+              "content": "Removes the specified user from a particular MLI level. To unassign a user from an existing location, send the [DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId}](/swagger/ui/index?version=3#/MliConfiguration/DELETEv3_MliConfiguration_Levels__levelId__Users__userId__Locations__locationId_) request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mliConfiguration",
+                "Levels",
+                ":levelId",
+                "Users",
+                ":userId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "levelId",
+                  "description": "(Required) Numeric identifier of the MLI level."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "userId",
+                  "description": "(Required) Unique numeric identifier of the user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ce2166f-3385-4941-84e7-4d344160f4cd",
+              "name": "The specified user is successfully removed from the MLI level.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0559056c-a675-46a2-84c8-d664e5fa985f",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/> Error codes:\r\n            1130 — Err: Approval level doesn’t exist\r\n            1130 — User is not assigned to the level\r\n            1150 — User does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53c11051-2c25-4f49-b7de-7c3b5fb29cf2",
+              "name": "The request is not authorized.\r\n            <br/> Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2b66826-210e-432f-98dd-b6f9163671ff",
+              "name": "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/> Error codes:\r\n            100 — User has no rights to perform this action",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "442c4d2e-8cfa-4f9c-b6b1-b82150055455",
+          "name": "Add a location to a user’s MLI level",
+          "request": {
+            "name": "Add a location to a user’s MLI level",
+            "description": {
+              "content": "Assigns the specified location to a particular user and user’s MLI level. A location can be removed from a user by sending the [DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId}](/swagger/ui/index?version=3#/MliConfiguration/DELETEv3_MliConfiguration_Levels__levelId__Users__userId__Locations__locationId_) request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "MliConfiguration",
+                "Levels",
+                ":levelId",
+                "Users",
+                ":userId",
+                "Locations",
+                ":locationId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "levelId",
+                  "description": "(Required) Numeric identifier of the MLI level."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "userId",
+                  "description": "(Required) Unique numeric identifier of the user."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "locationId",
+                  "description": "(Required) Unique numeric identifier of the location."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fae19a70-1872-4502-ad9d-4b167bebb27f",
+              "name": "Returns the created location ID from table dat_Location_Division.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId",
+                    "Locations",
+                    ":locationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique numeric identifier of the location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "645177f5-ee1d-4135-9fd9-341defd39625",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/> Error codes:\r\n            1128 — Err: Approval level doesn’t exist\r\n            1130 — Failed to assign the location to the user\r\n            1130 — User is not assigned to the level\r\n            1130 — Err: Failed to assign locations to the approval level\r\n            1130 — Location doesn’t exist for the current subscriber\r\n            1150 — User does not exist\r\n            1301 — Request parameters are empty",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId",
+                    "Locations",
+                    ":locationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique numeric identifier of the location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12829707-f1d5-455f-b308-b75d44a3e7cc",
+              "name": "The request is not authorized.\r\n            <br/> Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId",
+                    "Locations",
+                    ":locationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique numeric identifier of the location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d892641f-ca8f-4e03-8b8b-80f9650f6ad2",
+              "name": "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/> Error codes:\r\n            100 — User has no rights to perform this action",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId",
+                    "Locations",
+                    ":locationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique numeric identifier of the location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "688f1f26-0885-42a3-8881-c5e3c66f5de1",
+          "name": "Remove a location from a user’s MLI level",
+          "request": {
+            "name": "Remove a location from a user’s MLI level",
+            "description": {
+              "content": "Removes the specified location from a particular user and MLI level. To assign a location to a user and MLI level, send the [POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId}](/swagger/ui/index?version=3#/MliConfiguration/POSTv3_MliConfiguration_Levels__levelId__Users__userId__Locations__locationId_) request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "MliConfiguration",
+                "Levels",
+                ":levelId",
+                "Users",
+                ":userId",
+                "Locations",
+                ":locationId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "levelId",
+                  "description": "(Required) Numeric identifier of the MLI level."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "userId",
+                  "description": "(Required) Unique numeric identifier of the user."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "locationId",
+                  "description": "(Required) Unique numeric identifier of the location."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cb2552a7-203e-4ea8-b2b4-882806f1092f",
+              "name": "The specified location is successfully removed from the user’s MLI level.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId",
+                    "Locations",
+                    ":locationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique numeric identifier of the location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cbaae8bf-b1a1-4e8d-a1bc-739909720c72",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/> Error codes:\r\n            1130 — Location is not assigned to the user\r\n            1130 — Approval level doesn’t exist\r\n            1130 — User is not assigned to the level\r\n            1130 — Location doesn’t exist for the current subscriber\r\n            1150 — User doesn’t exist\r\n            1301 — Request parameters are empty",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId",
+                    "Locations",
+                    ":locationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique numeric identifier of the location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1daa0525-dfd3-4be8-90f1-d6055943050f",
+              "name": "The request is not authorized.\r\n            <br/> Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId",
+                    "Locations",
+                    ":locationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique numeric identifier of the location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab378243-337b-4a3a-9b42-ed232fd13d0c",
+              "name": "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/> Error codes:\r\n            100 — User has no rights to perform this action",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "Levels",
+                    ":levelId",
+                    "Users",
+                    ":userId",
+                    "Locations",
+                    ":locationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique numeric identifier of the location."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ffbc923-9a15-4ac8-bc92-3e17b41ef7fc",
+          "name": "Remove all locations from a user’s MLI level",
+          "request": {
+            "name": "Remove all locations from a user’s MLI level",
+            "description": {
+              "content": "Removes all locations from a particular user and MLI level. To assign all locations to a user and MLI level, send the [POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/assign-all](/swagger/ui/index?version=3#/MliConfiguration/POSTv3_MliConfiguration_Levels__levelId__Users__userId__Locations_assign_all) request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "MliConfiguration",
+                "levels",
+                ":levelId",
+                "users",
+                ":userId",
+                "locations",
+                "unassign-all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "levelId",
+                  "description": "(Required) Numeric identifier of the MLI level."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "userId",
+                  "description": "(Required) Unique numeric identifier of the user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ab01b69-79ec-4544-b13c-6376ec15d822",
+              "name": "All locations are successfully removed from the user’s MLI level.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "levels",
+                    ":levelId",
+                    "users",
+                    ":userId",
+                    "locations",
+                    "unassign-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4bd6d0cb-7922-473e-a82e-e0dcabf6d391",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/> Error codes:\r\n            1130 — Location is not assigned to the user\r\n            1130 — Approval level doesn’t exist\r\n            1130 — User is not assigned to the level\r\n            1130 — Location doesn’t exist for the current subscriber\r\n            1150 — User doesn’t exist\r\n            1301 — Request parameters are empty",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "levels",
+                    ":levelId",
+                    "users",
+                    ":userId",
+                    "locations",
+                    "unassign-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8af00ff3-0101-4cfa-8846-e1d335d10520",
+              "name": "The request is not authorized.\r\n            <br/> Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "levels",
+                    ":levelId",
+                    "users",
+                    ":userId",
+                    "locations",
+                    "unassign-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccd1564a-b566-4b4a-8749-110c1d87841e",
+              "name": "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/> Error codes:\r\n            100 — User has no rights to perform this action",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "levels",
+                    ":levelId",
+                    "users",
+                    ":userId",
+                    "locations",
+                    "unassign-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a1a70b97-e5fd-463b-b9b3-982dd79c1f95",
+          "name": "Assign all locations to a user’s MLI level",
+          "request": {
+            "name": "Assign all locations to a user’s MLI level",
+            "description": {
+              "content": "Assigns all locations to a particular user and MLI level. To remove locations from a user and MLI level, send the [DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/unassign-all](/swagger/ui/index?version=3#/MliConfiguration/DELETEv3_MliConfiguration_Levels__levelId__Users__userId__Locations_unassign_all) request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "MliConfiguration",
+                "levels",
+                ":levelId",
+                "users",
+                ":userId",
+                "locations",
+                "assign-all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "levelId",
+                  "description": "(Required) Numeric identifier of the MLI level."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "userId",
+                  "description": "(Required) Unique numeric identifier of the user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e72bb35e-9440-4f25-8153-fb6921658d74",
+              "name": "All locations are successfully assigned to the user’s MLI level.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "levels",
+                    ":levelId",
+                    "users",
+                    ":userId",
+                    "locations",
+                    "assign-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8f5aefdc-bc7a-4a7c-90e6-e968e36a0a04",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/> Error codes:\r\n            1128 — Err: Approval level doesn’t exist\r\n            1130 — Failed to assign the location to the user\r\n            1130 — User is not assigned to the level\r\n            1130 — Err: Failed to assign locations to the approval level\r\n            1130 — Location doesn’t exist for the current subscriber\r\n            1150 — User does not exist\r\n            1301 — Request parameters are empty",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "levels",
+                    ":levelId",
+                    "users",
+                    ":userId",
+                    "locations",
+                    "assign-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60f4e180-7075-4740-80f3-de60da9455bb",
+              "name": "The request is not authorized.\r\n            <br/> Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "levels",
+                    ":levelId",
+                    "users",
+                    ":userId",
+                    "locations",
+                    "assign-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ac6d9f7-ef88-4bb1-ad12-0ab4c2c33d89",
+              "name": "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/> Error codes:\r\n            100 — User has no rights to perform this action",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "MliConfiguration",
+                    "levels",
+                    ":levelId",
+                    "users",
+                    ":userId",
+                    "locations",
+                    "assign-all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "levelId",
+                      "description": "(Required) Numeric identifier of the MLI level."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "userId",
+                      "description": "(Required) Unique numeric identifier of the user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLocationName\",\n    \"TimeoutExpiredError\"\n  ],\n  \"ErrorCode\": \"InvalidBatchStatusId\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sb2fixxbook.servicechannel.com:443/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9fe01627-e44d-4c17-9160-9e8e764ece92",
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours MliConfiguration API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,1683 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Assets API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Assets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/:assetId",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric asset identifier you want to get information of."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric location identifier. Should be paired with the `tagId` parameter to work correctly."
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "query",
+                "description": "Alphanumeric location identifier in the client’s system. Should be paired with the `tagId` parameter to work correctly."
+              },
+              {
+                "name": "tagId",
+                "value": "",
+                "type": "query",
+                "description": "Alphanumeric asset identifier assigned by the client. Should be paired with either `locationId` or `storeId` to work correctly."
+              },
+              {
+                "name": "trackingNumber",
+                "value": "",
+                "type": "query",
+                "description": "Unique ID of the work order. Use the parameter to get asset validation attributes: `AssetValidated`, `ValidationRequired`."
+              }
+            ]
+          },
+          "docs": "Returns the details of the specified asset for the current subscriber.<br />\r\n            Send the [GET/ assets/locations/{locationId}](/swagger/ui/index?version=3#/Assets/GETv3_assets_locations__locationId__trade__trade_) request to retrieve assets for a particular location."
+        },
+        {
+          "info": {
+            "name": "Associate Asset Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/AssociateAssetCode"
+          },
+          "docs": "Associate Asset Code"
+        },
+        {
+          "info": {
+            "name": "Search Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/searchassets"
+          },
+          "docs": "Search Assets"
+        },
+        {
+          "info": {
+            "name": "Get Assets For Replacement",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/assetsforreplacement"
+          },
+          "docs": "Get Assets For Replacement"
+        },
+        {
+          "info": {
+            "name": "Get circuits and components",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/assetcomponents"
+          },
+          "docs": "Retrieves all circuits and components added to the specified parent assets.\r\n            <br />Learn more about [updating assets on work orders](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/1484194012/Updating+Assets+on+Work+Orders) in ServiceChannel University."
+        },
+        {
+          "info": {
+            "name": "Get Filtered Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/getfilteredassets"
+          },
+          "docs": "Get Filtered Assets"
+        },
+        {
+          "info": {
+            "name": "Get Filtered Assets V1",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/getfilteredassetsV1",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "query",
+                "description": "The provider identifier. Required for sub-contractor request. [Required Special permissions]"
+              }
+            ]
+          },
+          "docs": "Get Filtered Assets V1"
+        },
+        {
+          "info": {
+            "name": "Ge tFiltered Asset Leaks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/getfilteredassetleaks"
+          },
+          "docs": "Ge tFiltered Asset Leaks"
+        },
+        {
+          "info": {
+            "name": "Get Wo Asset Tracking",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/getwoassettracking",
+            "params": [
+              {
+                "name": "woId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Wo Asset Tracking"
+        },
+        {
+          "info": {
+            "name": "Get Wo Asset Tags and Tag IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/WoAssetTags",
+            "params": [
+              {
+                "name": "recIds",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Wo Asset Tags and Tag IDs"
+        },
+        {
+          "info": {
+            "name": "Get assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/locations/:locationId",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the location you want to retrieve assets details of."
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query",
+                "description": "Trade of an asset type the asset is assigned to, for example, *CARPENTRY* or *PLUMBING*"
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query",
+                "description": "Trade id of an asset type the asset is assigned to."
+              }
+            ]
+          },
+          "docs": "Returns a list of assets with all details for the specified location. Enter the `trade` parameter to make your request more specific.\r\n             <br />\r\n             You can use the [GET/assets/{assetId}](/swagger/ui/index?version=3#/Assets/GETv3_assets__assetId__locationId__locationId__storeId__storeId__tagId__tagId__trackingNumber__trackingNumber_) method to get the details of a particular asset."
+        },
+        {
+          "info": {
+            "name": "POSTv3_assets_locationAssetsTree?locationId={locationId}&trade={trade}",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/locationAssetsTree",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Get Assets WorkOrders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/getassetwohistory",
+            "params": [
+              {
+                "name": "workOrdersCount",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "This method allows to get WorkOrder objects by Asset Ids.<br />"
+        },
+        {
+          "info": {
+            "name": "Add an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets"
+          },
+          "docs": "Creates a new asset for the existing asset type. Since you need to specify which type an asset will belong to, you can:\r\n            <br /> • use the [GET /AssetTypes](/swagger/ui/index?version=3#/AssetTypes/GETv3_AssetTypes) method to get a list of asset types of the current provider.\r\n            <br /> • create a new asset type by sending the [POST /AssetTypes](/swagger/ui/index?version=3#/AssetTypes/POSTv3_AssetTypes) request.\r\n            <br />You can learn more about [adding and editing a"
+        },
+        {
+          "info": {
+            "name": "Update an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets"
+          },
+          "docs": "Modifies the details of an existing asset."
+        },
+        {
+          "info": {
+            "name": "PUTv3_assets_UpdateAssetTypeInAsset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets/UpdateAssetTypeInAsset"
+          }
+        },
+        {
+          "info": {
+            "name": "Add Update Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/AddUpdateAsset"
+          },
+          "docs": "Add Update Asset"
+        },
+        {
+          "info": {
+            "name": "Activates or deactivates an asset depending on passed parameter.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/Activation"
+          },
+          "docs": "Activates or deactivates an asset depending on passed parameter."
+        },
+        {
+          "info": {
+            "name": "Replace an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets/workorders/:workorderId/attach",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order you want to assign an asset to. To retrieve IDs of work orders, use the [GET /workorders](/swagger/ui/index?version=3#/WorkOrders/GETv3_workorders_locationId__locationId__storeId__storeId_) method."
+              }
+            ]
+          },
+          "docs": "Replaces one asset with another for the specified work order, or when the work order has no asset, attaches it.  \r\n            <br />Successful response returns `AssetId` and information about asset validation. \r\n            <br />***Note***: A work order and an asset should belong to the same trade and location.\r\n            <br />***Note***: This method cannot be used if a work order has more than one asset attached."
+        },
+        {
+          "info": {
+            "name": "Add assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets/workorders/attachassets"
+          },
+          "docs": "Assigns several assets to the specified work order at a time. The *MultipleAssetsPerWorkOrder* FF should be enabled for the method to work properly.\r\n            <br />***Note***: Assets added before will remain attached to the work order along with the new ones."
+        },
+        {
+          "info": {
+            "name": "Add and replace assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets/workorders/setupassets"
+          },
+          "docs": "Assigns several assets to the specified work order at a time. The *MultipleAssetsPerWorkOrder* FF should be enabled for the method to work properly.\r\n            <br />***Note***. Existing assets will be replaced with the new ones."
+        },
+        {
+          "info": {
+            "name": "Setup assets to the work request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets/workrequest/setup"
+          },
+          "docs": "*In limited availability phase.*\r\n            <br />Setup Assets to Work Request."
+        },
+        {
+          "info": {
+            "name": "Remove specified assets from specified work request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/workrequest/remove"
+          },
+          "docs": "*In limited availability phase.*\r\n            <br />Remove Assets from Work Request."
+        },
+        {
+          "info": {
+            "name": "Setup assets to the specified work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/workrequest/:workRequestId",
+            "params": [
+              {
+                "name": "workRequestId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "*In limited availability phase.*\r\n            <br />Setup Assets to Work Order."
+        },
+        {
+          "info": {
+            "name": "Remove specified assets from specified work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/workorders/removeassets"
+          },
+          "docs": "Remove Assets from Work Order."
+        },
+        {
+          "info": {
+            "name": "Remove assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets/workorders/:workorderId/detach",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order you want to remove assets from. To retrieve IDs of work orders, use the [GET /workorders](/swagger/ui/index?version=3#/WorkOrders/GETv3_workorders_locationId__locationId__storeId__storeId_) method."
+              }
+            ]
+          },
+          "docs": "Removes all assets assigned to the specified work order."
+        },
+        {
+          "info": {
+            "name": "Get asset workorder history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/:assetid/assetwohistory",
+            "params": [
+              {
+                "name": "assetid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get asset workorder history"
+        },
+        {
+          "info": {
+            "name": "Get Asset Transfer Provider Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/:assetid/assetTransferProvider",
+            "params": [
+              {
+                "name": "assetid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Asset Transfer Provider Id"
+        },
+        {
+          "info": {
+            "name": "Get Transfer Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/TransferSettings/:subscriberId",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Transfer Settings"
+        },
+        {
+          "info": {
+            "name": "Get Brands",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/Brands"
+          },
+          "docs": "Get Brands"
+        },
+        {
+          "info": {
+            "name": "Get Brands (ver.2)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/v2/Brands",
+            "params": [
+              {
+                "name": "keyword",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Brands (ver.2)"
+        },
+        {
+          "info": {
+            "name": "Get Brands (ver.3)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/v3/Brands",
+            "params": [
+              {
+                "name": "assetTypeId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "keyword",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "assetTypeBrandsOnly",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Brands (ver.3)"
+        },
+        {
+          "info": {
+            "name": "Add Brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/:brandName/AddBrand",
+            "params": [
+              {
+                "name": "brandName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Add Brand"
+        },
+        {
+          "info": {
+            "name": "Get Asset Repair Status By AssetId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/assetrepairstatus",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Asset Repair Status By AssetId"
+        },
+        {
+          "info": {
+            "name": "Get Asset Status History By AssetId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/assetstatushistory",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Asset Status History By AssetId"
+        },
+        {
+          "info": {
+            "name": "Update Asset Repair Status By AssetId",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets/updateassetrepairstatus"
+          },
+          "docs": "Update Asset Repair Status By AssetId"
+        },
+        {
+          "info": {
+            "name": "Records the result of scanning an asset tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/RecordScannedAsset"
+          },
+          "docs": "Records the outcome of scanning (or attempting to scan) an asset tag. Includes validation status and standardized failure reasons. For a successful request, returns `true` in the response.\r\n            <br />***Note:*** Asset scanning is based on **Asset Rules** (*AssetRules* FF) configured by clients within Asset Manager. To check validation rules, run the [GET/assets/{subscriberId}/ValidationRules](https://developer.servicechannel.com/swagger/index.html#/Assets/GETv3_assets_%7BsubscriberId%7D_"
+        },
+        {
+          "info": {
+            "name": "Determines if the specified asset has had its tag validated or not",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/HasAssetBeenValidated"
+          },
+          "docs": "Determines if the specified asset has had its tag validated or not"
+        },
+        {
+          "info": {
+            "name": "Returns asset tag validation information for the specified list of assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/GetAssetValidationInformation"
+          },
+          "docs": "Returns asset tag validation information for the specified list of assets"
+        },
+        {
+          "info": {
+            "name": "Gets the asset tag validation settings for the specified subscriber.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/:subscriberId/ValidationRules",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Gets the asset tag validation settings for the specified subscriber."
+        },
+        {
+          "info": {
+            "name": "Gets the asset tag validation settings for the specified work order.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/ValidationRulesByWOId",
+            "params": [
+              {
+                "name": "trackingNumber",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Gets the asset tag validation settings for the specified work order."
+        },
+        {
+          "info": {
+            "name": "Gets list of unable to validate reasons.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/UnableToValidateReasons"
+          },
+          "docs": "Gets list of unable to validate reasons."
+        },
+        {
+          "info": {
+            "name": "Creates wo_UnableToValidateAssetHistory.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/UnableToValidateReasons"
+          },
+          "docs": "Creates wo_UnableToValidateAssetHistory."
+        },
+        {
+          "info": {
+            "name": "Gets list of unable to scan reasons.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/UnableToScanReasons",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "Subscriber unique indentifier"
+              }
+            ]
+          },
+          "docs": "Gets list of unable to scan reasons."
+        },
+        {
+          "info": {
+            "name": "Creates wo_UnableToScanAssetHistory.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/UnableToScanReasons"
+          },
+          "docs": "Creates wo_UnableToScanAssetHistory."
+        },
+        {
+          "info": {
+            "name": "Gets list of unable to add reasons.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/UnableToAddReasons"
+          },
+          "docs": "Gets list of unable to add reasons."
+        },
+        {
+          "info": {
+            "name": "Creates wo_UnableToAddAssetHistory.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/UnableToAddReasons"
+          },
+          "docs": "Creates wo_UnableToAddAssetHistory."
+        },
+        {
+          "info": {
+            "name": "Gets list of unable to scan reasons not attached assets.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/UnableToScanReasonsNotAttachedAsset"
+          },
+          "docs": "Gets list of unable to scan reasons not attached assets."
+        },
+        {
+          "info": {
+            "name": "Gets list of unable to validate reasons not attached assets.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/UnableToValidateReasonsNotAttachedAsset"
+          },
+          "docs": "Gets list of unable to validate reasons not attached assets."
+        },
+        {
+          "info": {
+            "name": "Gets the asset tag validation settings for multiple subscribers.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/ValidationRulesForMultipleSubscribers"
+          },
+          "docs": "Gets the asset tag validation settings for multiple subscribers."
+        },
+        {
+          "info": {
+            "name": "Returns asset tag validation information for the specified assets and the work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/GetAssetValidationHistoryByTrackingNumber"
+          },
+          "docs": "Returns asset tag validation information for the specified assets and the work order"
+        },
+        {
+          "info": {
+            "name": "Update asset location",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets/updateAssetLocation",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "query",
+                "description": "Asset update id"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "New location id"
+              }
+            ]
+          },
+          "docs": "Updates asset location"
+        },
+        {
+          "info": {
+            "name": "Get Scan Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/:trackingNumber/IsValidationRequired",
+            "params": [
+              {
+                "name": "trackingNumber",
+                "value": "",
+                "type": "path",
+                "description": "Tracking Number"
+              }
+            ]
+          },
+          "docs": "Get Scan Method"
+        },
+        {
+          "info": {
+            "name": "Get primary attachments for asset list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/getPrimaryAttachmentsForAssetList"
+          },
+          "docs": "Adds new asset. Returns list of attachments for successful request."
+        },
+        {
+          "info": {
+            "name": "Get primary attachments for asset list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/getPrimaryAttachmentsForAssetList_v1"
+          },
+          "docs": "Adds new asset. Returns list of attachments for successful request."
+        },
+        {
+          "info": {
+            "name": "Get asset type groups by tradeId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/:tradeId/getAssetTypeGroupsByTradeId",
+            "params": [
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Adds tradeId. Returns list of assetTypeGroup for successful request."
+        },
+        {
+          "info": {
+            "name": "Get asset type groups by assetsIds",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/GetAssetTypeGroupsByAssetsIds"
+          },
+          "docs": "Adds assetsids. Returns list of assetTypeGroup for successful request."
+        },
+        {
+          "info": {
+            "name": "Get list of assets grouped by AsseTypeGroupID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/searchassetsByGroupId"
+          },
+          "docs": "Get list of assets grouped by AsseTypeGroupID"
+        },
+        {
+          "info": {
+            "name": "Getting permission for edit asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/CanUserEditAsset",
+            "params": [
+              {
+                "name": "assetTypeId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Getting permission for edit asset"
+        },
+        {
+          "info": {
+            "name": "Getting permission for provider for create new asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/CanCreateAsset/:assetTypeId",
+            "params": [
+              {
+                "name": "assetTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Getting permission for provider for create new asset"
+        },
+        {
+          "info": {
+            "name": "Getting permission for provider for create new asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/CanProviderCreateAssetForTrade/:tradeId",
+            "params": [
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Getting permission for provider for create new asset"
+        },
+        {
+          "info": {
+            "name": "Get asset readings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/AssetMeterReadings/:assetId",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric asset identifier you want to retrieve asset meter readings for."
+              },
+              {
+                "name": "lastMeterReadingValuesOnly",
+                "value": "",
+                "type": "query",
+                "description": "When it is true the response should contain one last AssetMeterReading entry for each AssetTypeMeter."
+              }
+            ]
+          },
+          "docs": "Returns asset meter readings details of the specified asset for the current subscriber.\r\n            <br />Send the [PUT /assets/AssetMeterReadings](/swagger/ui/index?version=3#/Assets/PUTv3_assets_AssetMeterReading) request to edit a particular asset meter reading.\r\n            <br />Refer to ServiceChannel University to learn more about [asset meter readings](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/834469973/Asset+Meter+Reading)."
+        },
+        {
+          "info": {
+            "name": "POSTv3_assets_AssetMeterReading",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/AssetMeterReading"
+          }
+        },
+        {
+          "info": {
+            "name": "Update an asset meter reading",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets/AssetMeterReading"
+          },
+          "docs": "Updates information of a particular asset meter reading."
+        },
+        {
+          "info": {
+            "name": "Asset meter readings bulk create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/CreateAssetMeterReadingsBulk"
+          },
+          "docs": "Creates asset meter readings.\r\n            <br />Learn more about [adding asset meter reading](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/988840218/Adding+Asset+s+Meter+Reading+Data) in ServiceChannel University."
+        },
+        {
+          "info": {
+            "name": "Asset meter readings bulk update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets/UpdateAssetMeterReadingsBulk"
+          },
+          "docs": "Updates information about asset meter readings."
+        },
+        {
+          "info": {
+            "name": "Add asset meters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/AssetMeter"
+          },
+          "docs": "Attaches an asset meter to a certain asset by specifying a particular asset type meter."
+        },
+        {
+          "info": {
+            "name": "Get asset meters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/AssetMeters",
+            "params": [
+              {
+                "name": "assetMeterId",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric asset meter identifier you want to get the details of."
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric asset identifier you want to retrieve asset meter details for."
+              }
+            ]
+          },
+          "docs": "Returns the details of an asset meter by sending the `assetMeterId` parameter  or the details of one or several asset meters by using the `assetId` parameter."
+        },
+        {
+          "info": {
+            "name": "Get Manufacturer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/Manufacturer",
+            "params": [
+              {
+                "name": "manufacturerId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Manufacturer"
+        },
+        {
+          "info": {
+            "name": "Get Work Orders Area list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/WorkorderAreas/:subscriberId",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Work Orders Area list"
+        },
+        {
+          "info": {
+            "name": "Gets list of asset validation statuses for multiple work order.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/GetValidationStatusesForMultipleWorkOrders",
+            "params": [
+              {
+                "name": "includeDeactivated",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Gets list of asset validation statuses for multiple work order."
+        },
+        {
+          "info": {
+            "name": "Update Asset Status By AssetId",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets/updateAssetStatus"
+          },
+          "docs": "Update Asset Status By AssetId"
+        },
+        {
+          "info": {
+            "name": "Update Assets Statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets/updateAssetsStatuses"
+          },
+          "docs": "Update Assets Statuses"
+        },
+        {
+          "info": {
+            "name": "Check if provider is allowed to manage attachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets/canManageAttachments",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Check if provider is allowed to manage attachments"
+        },
+        {
+          "info": {
+            "name": "Check if RT assets can be attached to workOrders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/checkWOsHaveRefTRackingAssets"
+          },
+          "docs": "Check if RT assets can be attached to workOrders"
+        },
+        {
+          "info": {
+            "name": "Complete Asset Transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/assets/CompleteAssetTransfer",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Complete Asset Transfer"
+        },
+        {
+          "info": {
+            "name": "Get Asset Transfer History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/:assetId/assetTransferHistory",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Asset Transfer History"
+        },
+        {
+          "info": {
+            "name": "Get Asset Transfer Reasons",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/assetTransferReasons"
+          },
+          "docs": "Get Asset Transfer Reasons"
+        },
+        {
+          "info": {
+            "name": "Validate assets for merging",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/assetmerge/validate",
+            "params": [
+              {
+                "name": "mergedToAssetId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Validate assets for merging"
+        },
+        {
+          "info": {
+            "name": "Merge assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/assetmerge/mergeAssets",
+            "params": [
+              {
+                "name": "mergedToAssetId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Merge assets"
+        },
+        {
+          "info": {
+            "name": "Check if retrofit retire allowed",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/assets/IsRetrofitRetireAllowed",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Check if retrofit retire allowed"
+        },
+        {
+          "info": {
+            "name": "Bulk add/update asset to work order.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/assets/BulkAddAssetToWo"
+          },
+          "docs": "Bulk add/update asset to work order."
+        },
+        {
+          "info": {
+            "name": "Get an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/assets(:assetId)",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric asset identifier you want to get the details of."
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Returns the details of the specified asset for the current subscriber."
+        },
+        {
+          "info": {
+            "name": "Get assets by `locationId` and `code`",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/assets/Service.Search(locationId=:locationId,code=:code)",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path",
+                "description": "Also known as AssetTag. The value must be entered in '29182-A'"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the location you want to get assets of."
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Returns a list of assets for the current subscriber based on the specified `locationId` and `code` parameters. You can narrow the search by applying other filter parameters."
+        },
+        {
+          "info": {
+            "name": "Assets_AssociateAssetCode",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/assets/Service.AssociateAssetCode(equipmentId=:equipmentId,code=:code,processDuplicatedAssetTag=:processDuplicatedAssetTag)",
+            "params": [
+              {
+                "name": "processDuplicatedAssetTag",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "equipmentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Finds assets using the supplied search criteria.  The following fields will be searched for a match to the search criteria:  tag ID, asset type, brand, serial Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/assets/Service.FindAssets(searchCriteria=:searchCriteria)",
+            "params": [
+              {
+                "name": "searchCriteria",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Finds assets using the supplied search criteria.  The following fields will be searched for a match to the search criteria:  tag ID, asset type, brand, serial Number"
+        },
+        {
+          "info": {
+            "name": "Finds assets using the supplied search criteria.  The following fields will be searched for a match to the search criteria:  tag ID, asset type, brand, serial Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/assets/Service.FindAssetsBySubscriber(searchCriteria=:searchCriteria,subscriberId=:subscriberId)",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "searchCriteria",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Finds assets using the supplied search criteria.  The following fields will be searched for a match to the search criteria:  tag ID, asset type, brand, serial Number"
+        },
+        {
+          "info": {
+            "name": "Assets_FindAssetsByLocation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/assets/Service.FindAssetsByLocation(searchCriteria=:searchCriteria,locationId=:locationId)",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "searchCriteria",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

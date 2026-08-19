@@ -1,0 +1,1046 @@
+{
+  "item": [
+    {
+      "id": "e789adc5-7c9d-4593-852a-0495f319d453",
+      "name": "WorkRequestNote",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "675b8c5e-2772-4b5e-82e2-c1d55872ce0e",
+          "name": "Work request Notes Collection",
+          "request": {
+            "name": "Work request Notes Collection",
+            "description": {
+              "content": "*In limited availability phase.*\r\n            <br />Returns list of work request notes, sorted descending by creation date.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":workrequestId",
+                "notes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pageNumber",
+                  "value": "<integer>",
+                  "description": "(Required) Page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "(Required) Page size."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workrequestId",
+                  "description": "(Required) Numeric Id of the Work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c5bb70e4-9d1c-489c-9feb-1b52df94c594",
+              "name": "Request succeeded and the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workrequestId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workrequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "60a10271-cf3f-48c5-88b1-17bffb52d929",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 8020 - Invalid work request identifier. Returned if workrequestId is &lt;= 0;\r\n            <br/> 922 - Invalid paging parameter. Returned if paging parameter doesn't correspond to valid format;\r\n            <br/> 100 - You don't have location access to perform this operation;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workrequestId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workrequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"DecimalPartQstTaxError\",\n    \"CircuitCanNotBeConnectedToCircuit\"\n  ],\n  \"ErrorCode\": \"WorkRequestIssueProblemCodeIsRequired\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50cadca3-7ce5-473a-9d65-c2b93d283fbe",
+              "name": "Unauthorized indicates that the requested resource requires authentication.<br>Error codes:<br> 504 - API call rejected by security permissions;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workrequestId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workrequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TradeInUseLandlordResponsibilities\",\n    \"InvalidWoCurrency\"\n  ],\n  \"ErrorCode\": \"SaveMliAuditReportResult\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fdfe6974-9bcb-4468-8492-3d313b18f0dd",
+          "name": "Creates a work request note",
+          "request": {
+            "name": "Creates a work request note",
+            "description": {
+              "content": "*In limited availability phase.*\r\n            <br />Returns Note Id for successful request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":workrequestId",
+                "notes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workrequestId",
+                  "description": "(Required) Numeric Id of the Work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Note\": \"<string>\",\n  \"MailedTo\": \"<string>\",\n  \"Visibility\": \"<integer>\",\n  \"NotifyFollowers\": false,\n  \"DoNotSendEmail\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c4506b48-c29e-4c01-85eb-c2b9ffd9cebc",
+              "name": "Created indicates that the request resulted in a new resource created before the response was sent.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workrequestId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workrequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Note\": \"<string>\",\n  \"MailedTo\": \"<string>\",\n  \"Visibility\": \"<integer>\",\n  \"NotifyFollowers\": false,\n  \"DoNotSendEmail\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "62f1434d-1c90-4c3d-bfce-196d489db49d",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 100 - You don't have location access to perform this operation;\r\n            <br/> 503 - Validation fails. Invalid WorkRequest Id or Note value;\r\n            <br/> 8020 - Invalid work request identifier.Returned if workrequestId is &lt;= 0;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workrequestId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workrequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Note\": \"<string>\",\n  \"MailedTo\": \"<string>\",\n  \"Visibility\": \"<integer>\",\n  \"NotifyFollowers\": false,\n  \"DoNotSendEmail\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TradeInUseLandlordResponsibilities\",\n    \"InvalidWoCurrency\"\n  ],\n  \"ErrorCode\": \"SaveMliAuditReportResult\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "620a31c8-e28d-47dc-9357-336c6cac6723",
+              "name": "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workrequestId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workrequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Note\": \"<string>\",\n  \"MailedTo\": \"<string>\",\n  \"Visibility\": \"<integer>\",\n  \"NotifyFollowers\": false,\n  \"DoNotSendEmail\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TradeInUseLandlordResponsibilities\",\n    \"InvalidWoCurrency\"\n  ],\n  \"ErrorCode\": \"SaveMliAuditReportResult\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5797abec-c5fc-4b3a-89f4-aa14f3790623",
+              "name": "Indicates that a generic error has occurred on the server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workrequestId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workrequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Note\": \"<string>\",\n  \"MailedTo\": \"<string>\",\n  \"Visibility\": \"<integer>\",\n  \"NotifyFollowers\": false,\n  \"DoNotSendEmail\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TradeInUseLandlordResponsibilities\",\n    \"InvalidWoCurrency\"\n  ],\n  \"ErrorCode\": \"SaveMliAuditReportResult\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "14a62d0b-5b8f-4350-807c-c77bd10400db",
+          "name": "Add Followers to Work request",
+          "request": {
+            "name": "Add Followers to Work request",
+            "description": {
+              "content": "*In limited availability phase.*\r\n            <br />Returns status \"OK\" for successful request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":workrequestId",
+                "notes",
+                "followers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workrequestId",
+                  "description": "(Required) Numeric Id of the Work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"FollowersList\": \"<string>\",\n  \"UserIds\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5df1785c-20a7-43b7-beb9-41ae6a0b2adf",
+              "name": "Created indicates that the request resulted in a new resource created before the response was sent.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workrequestId",
+                    "notes",
+                    "followers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workrequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"FollowersList\": \"<string>\",\n  \"UserIds\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ff17045a-a310-4e6a-ba18-265502738e5c",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.<br>Error codes:<br>503 - Request data is empty;<br>There is no followers in request;<br>Empty tracking number (workrequest Id);",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workrequestId",
+                    "notes",
+                    "followers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workrequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"FollowersList\": \"<string>\",\n  \"UserIds\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TradeInUseLandlordResponsibilities\",\n    \"InvalidWoCurrency\"\n  ],\n  \"ErrorCode\": \"SaveMliAuditReportResult\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bcc831d7-33dd-49b0-95fd-6a650563a1f5",
+              "name": "Indicates that the requested resource does not exist on the server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workrequestId",
+                    "notes",
+                    "followers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workrequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"FollowersList\": \"<string>\",\n  \"UserIds\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bef73abc-08b0-4178-a858-11a96800e7ac",
+          "name": "Remove Follower from Work request",
+          "request": {
+            "name": "Remove Follower from Work request",
+            "description": {
+              "content": "*In limited availability phase.*\r\n            <br />Returns status \"OK\" for successful request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":workrequestId",
+                "notes",
+                "followers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<string>",
+                  "description": "(Required) Follower email."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workrequestId",
+                  "description": "(Required) Numeric Id of the Work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "abe6b533-7042-4155-9a8d-e895c892958d",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workrequestId",
+                    "notes",
+                    "followers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workrequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b3cd2b01-2dec-4bb2-8050-750de3cf25e2",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.<br>Error codes:<br>503 - Request data is empty;<br>There is no followers in request;<br>Empty tracking number (workorder Id);",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workrequestId",
+                    "notes",
+                    "followers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workrequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TradeInUseLandlordResponsibilities\",\n    \"InvalidWoCurrency\"\n  ],\n  \"ErrorCode\": \"SaveMliAuditReportResult\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "236fba06-4a6a-45ad-a66c-48b282744df7",
+              "name": "Indicates that the requested resource does not exist on the server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workrequestId",
+                    "notes",
+                    "followers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workrequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sb2fixxbook.servicechannel.com:443/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cc50e1b9-620a-4e5b-a53e-92af017e0cfb",
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours WorkRequestNote API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

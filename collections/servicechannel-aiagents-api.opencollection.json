@@ -1,0 +1,219 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours AIAgents API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AIAgents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Initializes a new conversation with the necessary setup by creating\r\n            and configuring the required resources for interaction.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/aiagents/locations/:locationId/InitConversation",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the location."
+              },
+              {
+                "name": "setupId",
+                "value": "",
+                "type": "query",
+                "description": "The identifier of the dashboard setup."
+              }
+            ]
+          },
+          "docs": "Initializes a new conversation with the necessary setup by creating\r\n            and configuring the required resources for interaction."
+        },
+        {
+          "info": {
+            "name": "Sends a message to the specified thread.\r\n            This method ensures that the message is delivered\r\n            according to the provided parameters, including thread and message data.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/aiagents/SendMessage",
+            "params": [
+              {
+                "name": "threadId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the conversation."
+              },
+              {
+                "name": "message",
+                "value": "",
+                "type": "query",
+                "description": "The content of the message to be sent."
+              }
+            ]
+          },
+          "docs": "Sends a message to the specified thread.\r\n            This method ensures that the message is delivered\r\n            according to the provided parameters, including thread and message data."
+        },
+        {
+          "info": {
+            "name": "Sends an image to the specified thread.\r\n            This method ensures that the image content is delivered\r\n            according to the provided parameters, including thread and image data.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/aiagents/SendImage",
+            "params": [
+              {
+                "name": "threadId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the conversation."
+              },
+              {
+                "name": "setupId",
+                "value": "",
+                "type": "query",
+                "description": "The identifier of the dashboard setup."
+              }
+            ]
+          },
+          "docs": "Sends an image to the specified thread.\r\n            This method ensures that the image content is delivered\r\n            according to the provided parameters, including thread and image data."
+        },
+        {
+          "info": {
+            "name": "Retrieves a stream of messages for a specific thread.\r\n            This method establishes and manages a stream to receive continuous messages.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/aiagents/locations/:locationId/ProcessMessageStream",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the location."
+              },
+              {
+                "name": "setupId",
+                "value": "",
+                "type": "query",
+                "description": "The identifier of the dashboard setup."
+              },
+              {
+                "name": "threadId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the conversation."
+              },
+              {
+                "name": "assistantId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the AI agent."
+              },
+              {
+                "name": "enableMetrics",
+                "value": "",
+                "type": "query",
+                "description": "Indicates whether metrics should be enabled. Defaults to false if not specified."
+              }
+            ]
+          },
+          "docs": "Retrieves a stream of messages for a specific thread.\r\n            This method establishes and manages a stream to receive continuous messages."
+        },
+        {
+          "info": {
+            "name": "Deletes a specific conversation from the system.\r\n            This method removes the conversation and all its associated data permanently.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/aiagents/DeleteConversation",
+            "params": [
+              {
+                "name": "threadId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the thread to be deleted."
+              }
+            ]
+          },
+          "docs": "Deletes a specific conversation from the system.\r\n            This method removes the conversation and all its associated data permanently."
+        },
+        {
+          "info": {
+            "name": "Creates a new conversation instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/aiagents/CreateConversation"
+          },
+          "docs": "Creates a new conversation instance"
+        },
+        {
+          "info": {
+            "name": "Retrieves the description of a specific problem based on the provided issue choice.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/aiagents/ProblemDescription",
+            "params": [
+              {
+                "name": "threadId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the conversation."
+              },
+              {
+                "name": "assistantId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the AI agent."
+              },
+              {
+                "name": "enableMetrics",
+                "value": "",
+                "type": "query",
+                "description": "Indicates whether metrics should be enabled. Defaults to false if not specified."
+              }
+            ]
+          },
+          "docs": "Retrieves the description of a specific problem based on the provided issue choice."
+        },
+        {
+          "info": {
+            "name": "Creates a new feedback session for a specific conversation and AI agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/aiagents/CreateFeedbackSession"
+          },
+          "docs": "Creates a new feedback session for a specific conversation and AI agent"
+        },
+        {
+          "info": {
+            "name": "Add a new feedback to exist session for a specific conversation and AI agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/aiagents/AddFeedback"
+          },
+          "docs": "Add a new feedback to exist session for a specific conversation and AI agent"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

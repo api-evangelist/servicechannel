@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours ContractServiceRates API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ContractServiceRates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get applicable Contract Service Rates for Work Order creation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/contractservicerates/get-rates/wo-creation"
+          },
+          "docs": "Returns applicable Contract Service Rates based on the Provider, Trade, Category, Location and Call Date of the Work Order.\r\n            A rate is applicable when there is an active contract (based on Call Date) for the provider, with matching trade, category, and location.\r\n            Returns NTE amount, base amount, variable amount, and currency for each applicable rate.\r\n            ContractedServiceId is required and must reference the listed Contract Service.\r\n            <br /><br />Avail"
+        },
+        {
+          "info": {
+            "name": "Get applicable Contract Service Rates for Work Order edit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/contractservicerates/get-rates/wo-edit"
+          },
+          "docs": "Returns applicable Contract Service Rates based on the Provider, Trade, Category, and Location of the Work Order at the moment of edit.\r\n            A rate is applicable when there is a currently active contract for the provider, with matching trade, category, and location.\r\n            Returns base amount, variable amount, NTE amount, and currency for each applicable rate.\r\n            <br /><br />Available for subscriber usage."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,3409 @@
+{
+  "item": [
+    {
+      "id": "174fa61c-dfee-4c6c-b734-150c4a89227a",
+      "name": "CheckLists",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6fad2a29-0b62-4f4a-af30-5a73610ad0ac",
+          "name": "Submit a response to a checklist question",
+          "request": {
+            "name": "Submit a response to a checklist question",
+            "description": {
+              "content": "Creates a response to the specified checklist question. Learn more about [submitting checklist responses](/guides/checklists/submit-a-checklist-response/).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "checklists",
+                "CheckListResponse"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "Version of the response object. The default value is V1. Specify V2 to receive the response object that contains a list of attachments instead of a single attachment."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "File to attach to the response to a checklist question. Required for questions with the `PictureFlag` parameter set to 2."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8f9cc572-cb2e-43b3-879a-06692bc525f4",
+              "name": "For response version V1: A response to a checklist question is created. A checklist response object and an attachment object are returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "CheckListResponse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"CheckListResponse\": {\n    \"Id\": 8093,\n    \"Answer\": \"string\",\n    \"FreeTextAnswer\": \"string\",\n    \"EntityId\": 6914,\n    \"EntityTypeId\": 7282,\n    \"Attempt\": 9332,\n    \"ProviderId\": 8201,\n    \"TechnicianId\": 5412,\n    \"UpdatedDate\": \"1996-12-30T01:59:18.469Z\",\n    \"UpdatedDateStr\": \"string\",\n    \"UpdatedDateDto\": \"1987-06-02T05:10:30.549Z\",\n    \"CheckListQuestionId\": 7358,\n    \"QuestionOptions\": [\n      {\n        \"Id\": 7115,\n        \"Answer\": \"string\",\n        \"Sequence\": 3822,\n        \"IsConditionalFollowUp\": false,\n        \"ResponseResultInFailure\": false\n      },\n      {\n        \"Id\": 8596,\n        \"Answer\": \"string\",\n        \"Sequence\": 9220,\n        \"IsConditionalFollowUp\": false,\n        \"ResponseResultInFailure\": false\n      }\n    ],\n    \"CheckListQuestionOptionId\": 2254,\n    \"AssetId\": 9938,\n    \"IsPassed\": false,\n    \"LinkedWorkOrderId\": 1066\n  },\n  \"CheckListResponsePicture\": {\n    \"Id\": 1637,\n    \"CheckListResponseId\": 4490,\n    \"DocumentName\": \"string\",\n    \"DocumentPath\": \"string\",\n    \"ThumbnailPath\": \"string\",\n    \"HasThumbnail\": false,\n    \"UpdatedBy\": 832\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b049553-6339-4876-86b1-30e2ca460b0d",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — Work order is not found\r\n            503 — Bad request\r\n            503 — Not all required parameters were specified\r\n            503 — The FreeTextAnswer is required\r\n            503 — The picture is required\r\n            503 — Checkbox responses only support next values: on, off, 1, 0, true, false, yes, no\r\n            503 — The required URL view acknowledgement checkbox only supports the next values: on, 1, true, yes\r\n            503 - The answer is required!\r\n            503 — The Answer is invalid. It must be a number or a string representing a number\r\n            503 — Multiple answers are not allowed to a non-selector type question\r\n            503 — Multiple answer is not allowed to selector type question where AllowMultiSelect is disabled\r\n            503 — The active checklist with specified question (questionId: #) for the specified work order (workOrderId: #) is not found\r\n            503 — AssetIds are required for this checklist question\r\n            503 — There are no checklists for the specified work order. WorkOrderId: {#}\r\n            503 — Question (id: {#}) was not found.\r\n            503 — CheckListResponsePictureId (#) is not valid for CheckListResponse\r\n            503 — The CheckListQuestionId is not valid. An existing checklist response (id: {#}) was created for another question\r\n            503 — The CheckListQuestionOptionID is required\r\n            503 — The ChecklistQuestionOptionIds is required for the selector type question where AllowMultiSelect and AnswerRequired is enabled\r\n            503 — Question option (id: {#}) was not found\r\n            503 — Question option (id: {#}) is not valid for question (id: {#}))\r\n            503 — It is not allowed to use the ChecklistQuestionOptionId parameter and the ChecklistQuestionOptionIds parameter together. Use one of these parameters instead.\r\n            503 — The question has already been answered for this attempt number. QuestionId: {#}",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "CheckListResponse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"ComponentCanNotBeConnectedToComponent\",\n    \"WorkRequestDescriptionIsRequired\"\n  ],\n  \"ErrorCode\": \"OnlyOneAssetWorkOrderPair\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ddab116-6287-4a69-9408-0d80393520ce",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "CheckListResponse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f07ed98-e6c0-4fbb-ba72-e40a1fbb14e4",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "CheckListResponse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ab2f1272-f258-4899-9d47-76886c79f696",
+          "name": "Update a response to a checklist question",
+          "request": {
+            "name": "Update a response to a checklist question",
+            "description": {
+              "content": "[Updates the specified response](/guides/checklists/update-a-checklist-response/) to a checklist question.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "checklists",
+                ":checkListResponseId",
+                "CheckListResponse"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "overrideAttachments",
+                  "value": "false",
+                  "description": "Set to true to remove all existing attachments from the checklist response except for the attachment specified by the `CheckListResponsePictureId` parameter.\r\n            When the CheckListResponsePictureId parameter is not specified and this parameter is set to true, the method removes all existing attachments and adds the file provided in the file parameter to the checklist response.\r\n            When the CheckListResponsePictureId parameter is not specified and this parameter is set to false, the method keeps the existing attachments and adds the new file specified by the file parameter.\r\n            By default, this parameter is set to false."
+                },
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "Version of the response object. The default value is V1. Specify V2 to receive the response object that contains a list of attachments instead of a single attachment."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "checkListResponseId",
+                  "description": "(Required) ID of the response to a checklist question to update.\r\n            Pass the [GET /workorders/{workOrderId}/checklists-responses](/swagger/ui/index?version=3#/WorkOrders/GETv3_workorders__workOrderId__checklists_responses) request to retrieve the response ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "value": "<binary>",
+                  "type": "text",
+                  "description": "File to attach to the response to a checklist question. Required for questions with the `PictureFlag` parameter set to 2."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b3e01023-eccf-4259-9e9c-50291c7f33a1",
+              "name": "The specified response to a checklist question is updated. A checklist response object and an attachment object are returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    ":checkListResponseId",
+                    "CheckListResponse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "overrideAttachments",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "checkListResponseId",
+                      "description": "(Required) ID of the response to a checklist question to update.\r\n            Pass the [GET /workorders/{workOrderId}/checklists-responses](/swagger/ui/index?version=3#/WorkOrders/GETv3_workorders__workOrderId__checklists_responses) request to retrieve the response ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"CheckListResponse\": {\n    \"Id\": 6619,\n    \"Answer\": \"string\",\n    \"FreeTextAnswer\": \"string\",\n    \"EntityId\": 1403,\n    \"EntityTypeId\": 4998,\n    \"Attempt\": 1172,\n    \"ProviderId\": 924,\n    \"TechnicianId\": 9524,\n    \"UpdatedDate\": \"1961-09-23T15:58:54.065Z\",\n    \"UpdatedDateStr\": \"string\",\n    \"UpdatedDateDto\": \"1978-09-25T02:30:52.792Z\",\n    \"CheckListQuestionId\": 6873,\n    \"QuestionOptions\": [\n      {\n        \"Id\": 2974,\n        \"Answer\": \"string\",\n        \"Sequence\": 4803,\n        \"IsConditionalFollowUp\": false,\n        \"ResponseResultInFailure\": false\n      },\n      {\n        \"Id\": 380,\n        \"Answer\": \"string\",\n        \"Sequence\": 5704,\n        \"IsConditionalFollowUp\": false,\n        \"ResponseResultInFailure\": false\n      }\n    ],\n    \"CheckListQuestionOptionId\": 5938,\n    \"AssetId\": 4012,\n    \"IsPassed\": false,\n    \"LinkedWorkOrderId\": 8587\n  },\n  \"CheckListResponsePicture\": {\n    \"Id\": 2588,\n    \"CheckListResponseId\": 8227,\n    \"DocumentName\": \"string\",\n    \"DocumentPath\": \"string\",\n    \"ThumbnailPath\": \"string\",\n    \"HasThumbnail\": false,\n    \"UpdatedBy\": 4665\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "230e4526-93fe-4ab4-96b7-4e0fbf471573",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — Work order is not found\r\n            503 — Bad request\r\n            503 — Not all required parameters were specified\r\n            503 — The FreeTextAnswer is required\r\n            503 — The picture is required\r\n            503 — Checkbox responses only support next values: on, off, 1, 0, true, false, yes, no\r\n            503 — The required URL view acknowledgement checkbox only supports the next values: on, 1, true, yes\r\n            503 - The answer is required!\r\n            503 — The Answer is invalid. It must be a number or a string representing a number\r\n            503 — The CheckListQuestionId is not valid. An existing checklist response (id: {#}) was created for another question\r\n            503 — The Attempt is not valid. An existing checklist response (id: {#}) was created for another attempt\r\n            503 — Multiple answers are not allowed to a non-selector type question\r\n            503 — Multiple answer is not allowed to selector type question where AllowMultiSelect is disabled\r\n            503 — The active checklist with specified question (questionId: #) for the specified work order (workOrderId: #) is not found\r\n            503 — AssetIds are required for this checklist question\r\n            503 — There are no checklists for the specified work order. WorkOrderId: {#}\r\n            503 — Question (id: {#}) was not found\r\n            503 — The CheckListQuestionOptionID is required\r\n            503 — The ChecklistQuestionOptionIds is required for the selector type question where AllowMultiSelect and AnswerRequired is enabled\r\n            503 — Question option (id: {#}) was not found\r\n            503 — Question option (id: {#}) is not valid for question (id: {#}))\r\n            503 — It is not allowed to use the ChecklistQuestionOptionId parameter and the ChecklistQuestionOptionIds parameter together. Use one of these parameters instead\r\n            503 — The Attempt is not valid. An existing checklist response (id: {№}) was created for another attempt\r\n            503 — The CheckListQuestionId is not valid. An existing checklist response (id: {0}) was created for another question.\r\n            503 — The question has already been answered for this attempt number. QuestionId: {#}",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    ":checkListResponseId",
+                    "CheckListResponse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "overrideAttachments",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "checkListResponseId",
+                      "description": "(Required) ID of the response to a checklist question to update.\r\n            Pass the [GET /workorders/{workOrderId}/checklists-responses](/swagger/ui/index?version=3#/WorkOrders/GETv3_workorders__workOrderId__checklists_responses) request to retrieve the response ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33eb5fba-7484-405d-b6f3-d91839bc2b33",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    ":checkListResponseId",
+                    "CheckListResponse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "overrideAttachments",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "checkListResponseId",
+                      "description": "(Required) ID of the response to a checklist question to update.\r\n            Pass the [GET /workorders/{workOrderId}/checklists-responses](/swagger/ui/index?version=3#/WorkOrders/GETv3_workorders__workOrderId__checklists_responses) request to retrieve the response ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a8e48a9-1ccc-4255-8d23-dbcd29b9a524",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    ":checkListResponseId",
+                    "CheckListResponse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "overrideAttachments",
+                      "value": "false"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "checkListResponseId",
+                      "description": "(Required) ID of the response to a checklist question to update.\r\n            Pass the [GET /workorders/{workOrderId}/checklists-responses](/swagger/ui/index?version=3#/WorkOrders/GETv3_workorders__workOrderId__checklists_responses) request to retrieve the response ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f1b715fb-5d2f-439c-84e5-cae0f99d3372",
+          "name": "Get a response to a checklist question",
+          "request": {
+            "name": "Get a response to a checklist question",
+            "description": {},
+            "url": {
+              "path": [
+                "checklists",
+                "ChecklistResponse",
+                "get"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workOrderId",
+                  "value": "<integer>",
+                  "description": "(Required) The work order identifier *(Required)*"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  \"<integer>\",\n  \"<integer>\"\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9e733bce-a02e-4afc-8875-c96d797c74e4",
+              "name": "The specified responses to a checklist questions are returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workOrderId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"<integer>\",\n  \"<integer>\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"ChecklistResponse\": {\n      \"Id\": 4909,\n      \"Answer\": \"string\",\n      \"FreeTextAnswer\": \"string\",\n      \"EntityId\": 3166,\n      \"EntityTypeId\": 7023,\n      \"Attempt\": 6768,\n      \"ProviderId\": 8214,\n      \"TechnicianId\": 4607,\n      \"UpdatedDate\": \"1981-09-20T08:26:59.850Z\",\n      \"UpdatedDateStr\": \"string\",\n      \"UpdatedDateDto\": \"2001-11-20T20:55:56.507Z\",\n      \"CheckListQuestionId\": 1477,\n      \"QuestionOptions\": [\n        {\n          \"Id\": 5013,\n          \"Answer\": \"string\",\n          \"Sequence\": 105,\n          \"IsConditionalFollowUp\": false,\n          \"ResponseResultInFailure\": false\n        },\n        {\n          \"Id\": 4457,\n          \"Answer\": \"string\",\n          \"Sequence\": 6482,\n          \"IsConditionalFollowUp\": false,\n          \"ResponseResultInFailure\": false\n        }\n      ],\n      \"CheckListQuestionOptionId\": 4033,\n      \"AssetId\": 5444,\n      \"IsPassed\": false,\n      \"LinkedWorkOrderId\": 6971\n    },\n    \"ChecklistResponsePictures\": [\n      {\n        \"Id\": 7224,\n        \"CheckListResponseId\": 1655,\n        \"DocumentName\": \"string\",\n        \"DocumentPath\": \"string\",\n        \"ThumbnailPath\": \"string\",\n        \"HasThumbnail\": false,\n        \"UpdatedBy\": 7433\n      },\n      {\n        \"Id\": 4317,\n        \"CheckListResponseId\": 2438,\n        \"DocumentName\": \"string\",\n        \"DocumentPath\": \"string\",\n        \"ThumbnailPath\": \"string\",\n        \"HasThumbnail\": false,\n        \"UpdatedBy\": 5501\n      }\n    ]\n  },\n  {\n    \"ChecklistResponse\": {\n      \"Id\": 4966,\n      \"Answer\": \"string\",\n      \"FreeTextAnswer\": \"string\",\n      \"EntityId\": 1898,\n      \"EntityTypeId\": 4406,\n      \"Attempt\": 6156,\n      \"ProviderId\": 8253,\n      \"TechnicianId\": 1788,\n      \"UpdatedDate\": \"1951-12-31T21:50:25.633Z\",\n      \"UpdatedDateStr\": \"string\",\n      \"UpdatedDateDto\": \"2024-01-24T00:54:06.510Z\",\n      \"CheckListQuestionId\": 3067,\n      \"QuestionOptions\": [\n        {\n          \"Id\": 9707,\n          \"Answer\": \"string\",\n          \"Sequence\": 3948,\n          \"IsConditionalFollowUp\": false,\n          \"ResponseResultInFailure\": false\n        },\n        {\n          \"Id\": 4602,\n          \"Answer\": \"string\",\n          \"Sequence\": 3292,\n          \"IsConditionalFollowUp\": false,\n          \"ResponseResultInFailure\": false\n        }\n      ],\n      \"CheckListQuestionOptionId\": 19,\n      \"AssetId\": 6106,\n      \"IsPassed\": false,\n      \"LinkedWorkOrderId\": 8207\n    },\n    \"ChecklistResponsePictures\": [\n      {\n        \"Id\": 5535,\n        \"CheckListResponseId\": 1070,\n        \"DocumentName\": \"string\",\n        \"DocumentPath\": \"string\",\n        \"ThumbnailPath\": \"string\",\n        \"HasThumbnail\": false,\n        \"UpdatedBy\": 5473\n      },\n      {\n        \"Id\": 2784,\n        \"CheckListResponseId\": 1623,\n        \"DocumentName\": \"string\",\n        \"DocumentPath\": \"string\",\n        \"ThumbnailPath\": \"string\",\n        \"HasThumbnail\": false,\n        \"UpdatedBy\": 5716\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cae680a4-fbf7-4aaf-a4c7-29e0af0c8004",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 - Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workOrderId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"<integer>\",\n  \"<integer>\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9133d314-f591-4417-b068-04e6742755f9",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workOrderId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"<integer>\",\n  \"<integer>\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec34ca3c-3b82-46fb-92f8-19bc43fd6664",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workOrderId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  \"<integer>\",\n  \"<integer>\"\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "696717c6-8dad-4aab-b110-a30ed8229f79",
+          "name": "Upload a checklist response attachment to the storage",
+          "request": {
+            "name": "Upload a checklist response attachment to the storage",
+            "description": {},
+            "url": {
+              "path": [
+                "checklists",
+                "ChecklistResponse",
+                "attachments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "File to attach to the response to a checklist question."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9376221f-09ec-4e93-b7c9-422514570326",
+              "name": "File successfully uploaded to storage. The document path is returned in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "attachments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "File to attach to the response to a checklist question.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"DocumentPath\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b78d936c-0910-49c7-adab-f0b8018955b6",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 - Bad request,\r\n            503 - No checklist response attachment to upload.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "attachments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "File to attach to the response to a checklist question.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6d928b2-b91e-4fa4-9219-7ded30c2423a",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "attachments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "File to attach to the response to a checklist question.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27911bb9-02df-4aaa-ab8b-b9dc3cd50885",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "attachments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "File to attach to the response to a checklist question.",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "881620ca-e9ce-49b2-ad6e-1ffbb85c9eed",
+          "name": "Update a responses to a checklist question in bulk",
+          "request": {
+            "name": "Update a responses to a checklist question in bulk",
+            "description": {},
+            "url": {
+              "path": [
+                "checklists",
+                "ChecklistResponse",
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ChecklistResponseIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ChecklistResponseRequest\": {\n    \"CheckListQuestionId\": \"<integer>\",\n    \"CheckListQuestionOptionID\": \"<integer>\",\n    \"EntityId\": \"<integer>\",\n    \"OverrideAttachments\": false,\n    \"Attachments\": [\n      {\n        \"ChecklistResponsePictureId\": \"<integer>\",\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"ChecklistResponsePictureId\": \"<integer>\",\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ],\n    \"ChecklistQuestionOptionIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Answer\": \"<string>\",\n    \"FreeTextAnswer\": \"<string>\",\n    \"EntityTypeId\": \"<integer>\",\n    \"ProviderId\": \"<integer>\",\n    \"Attempt\": \"<integer>\",\n    \"TechnicianId\": \"<integer>\",\n    \"AuthUserId\": \"<integer>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "498ea5c5-e035-48e9-b634-d8f163ab65c1",
+              "name": "The specified response to a checklist question is updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ChecklistResponseIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ChecklistResponseRequest\": {\n    \"CheckListQuestionId\": \"<integer>\",\n    \"CheckListQuestionOptionID\": \"<integer>\",\n    \"EntityId\": \"<integer>\",\n    \"OverrideAttachments\": false,\n    \"Attachments\": [\n      {\n        \"ChecklistResponsePictureId\": \"<integer>\",\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"ChecklistResponsePictureId\": \"<integer>\",\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ],\n    \"ChecklistQuestionOptionIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Answer\": \"<string>\",\n    \"FreeTextAnswer\": \"<string>\",\n    \"EntityTypeId\": \"<integer>\",\n    \"ProviderId\": \"<integer>\",\n    \"Attempt\": \"<integer>\",\n    \"TechnicianId\": \"<integer>\",\n    \"AuthUserId\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d5eaeb0d-4fb3-49db-998c-f8e7f2009837",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — Work order is not found\r\n            503 — Bad request\r\n            503 — Not all required parameters were specified\r\n            503 — The FreeTextAnswer is required\r\n            503 — The picture is required\r\n            503 — Checkbox responses only support next values: on, off, 1, 0, true, false, yes, no\r\n            503 — The required URL view acknowledgement checkbox only supports the next values: on, 1, true, yes\r\n            503 — Multiple answers are not allowed to a non-selector type question.\r\n            503 — Multiple answer is not allowed to selector type question where AllowMultiSelect is disabled\r\n            503 — The active checklist with specified question (questionId: #) for the specified work order (workOrderId: #) is not found\r\n            503 — Asset ids are not allowed for the checklist which is not displayed for each asset\r\n            503 — AssetIds are required for this checklist question\r\n            503 — Not all assets are associated with the work order. Assets not associated with the work order: {#}\r\n            503 — Assets not found (asset ids: {#})\r\n            503 — Not all types of specified assets match the asset types specified for the checklist question. Assets with wrong types: {#}\r\n            503 — There are no checklists for the specified work order. WorkOrderId: {#}\r\n            503 — Question (id: {#}) was not found.\r\n            503 — CheckListResponsePictureId (#) is not valid for CheckListResponse\r\n            503 — The EntityId is not valid. An existing checklist response (id: {#}) was created for another work order\r\n            503 — The Attempt is not valid. An existing checklist response (id: {#}) was created for another attempt\r\n            503 — The CheckListQuestionId is not valid. An existing checklist response (id: {#}) was created for another question\r\n            503 — CheckListResponsePictureId is not valid for CheckListResponse. Invalid Attachment Ids: {#}\r\n            503 — Checklist response ids are required\r\n            503 — The Answer is invalid. It must be a number or a string representing a number.\r\n            503 — The question has already been answered for this attempt number. QuestionId: {#}",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ChecklistResponseIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ChecklistResponseRequest\": {\n    \"CheckListQuestionId\": \"<integer>\",\n    \"CheckListQuestionOptionID\": \"<integer>\",\n    \"EntityId\": \"<integer>\",\n    \"OverrideAttachments\": false,\n    \"Attachments\": [\n      {\n        \"ChecklistResponsePictureId\": \"<integer>\",\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"ChecklistResponsePictureId\": \"<integer>\",\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ],\n    \"ChecklistQuestionOptionIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Answer\": \"<string>\",\n    \"FreeTextAnswer\": \"<string>\",\n    \"EntityTypeId\": \"<integer>\",\n    \"ProviderId\": \"<integer>\",\n    \"Attempt\": \"<integer>\",\n    \"TechnicianId\": \"<integer>\",\n    \"AuthUserId\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "718f65fa-c478-4a74-86a4-becdb4e9e2c9",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ChecklistResponseIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ChecklistResponseRequest\": {\n    \"CheckListQuestionId\": \"<integer>\",\n    \"CheckListQuestionOptionID\": \"<integer>\",\n    \"EntityId\": \"<integer>\",\n    \"OverrideAttachments\": false,\n    \"Attachments\": [\n      {\n        \"ChecklistResponsePictureId\": \"<integer>\",\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"ChecklistResponsePictureId\": \"<integer>\",\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ],\n    \"ChecklistQuestionOptionIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Answer\": \"<string>\",\n    \"FreeTextAnswer\": \"<string>\",\n    \"EntityTypeId\": \"<integer>\",\n    \"ProviderId\": \"<integer>\",\n    \"Attempt\": \"<integer>\",\n    \"TechnicianId\": \"<integer>\",\n    \"AuthUserId\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8c9fbf1-4211-4f5c-9c33-35e7130970fe",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ChecklistResponseIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ChecklistResponseRequest\": {\n    \"CheckListQuestionId\": \"<integer>\",\n    \"CheckListQuestionOptionID\": \"<integer>\",\n    \"EntityId\": \"<integer>\",\n    \"OverrideAttachments\": false,\n    \"Attachments\": [\n      {\n        \"ChecklistResponsePictureId\": \"<integer>\",\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"ChecklistResponsePictureId\": \"<integer>\",\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ],\n    \"ChecklistQuestionOptionIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Answer\": \"<string>\",\n    \"FreeTextAnswer\": \"<string>\",\n    \"EntityTypeId\": \"<integer>\",\n    \"ProviderId\": \"<integer>\",\n    \"Attempt\": \"<integer>\",\n    \"TechnicianId\": \"<integer>\",\n    \"AuthUserId\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "93e05d69-8ba2-4da8-b8e9-eb438788561d",
+          "name": "Submit checklist responses in bulk",
+          "request": {
+            "name": "Submit checklist responses in bulk",
+            "description": {},
+            "url": {
+              "path": [
+                "checklists",
+                "ChecklistResponse",
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"CheckListResponseRequest\": {\n      \"CheckListQuestionId\": \"<integer>\",\n      \"CheckListQuestionOptionID\": \"<integer>\",\n      \"EntityId\": \"<integer>\",\n      \"ChecklistQuestionOptionIds\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"Answer\": \"<string>\",\n      \"FreeTextAnswer\": \"<string>\",\n      \"EntityTypeId\": \"<integer>\",\n      \"ProviderId\": \"<integer>\",\n      \"Attempt\": \"<integer>\",\n      \"TechnicianId\": \"<integer>\",\n      \"AuthUserId\": \"<integer>\"\n    },\n    \"AssetIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Attachments\": [\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"CheckListResponseRequest\": {\n      \"CheckListQuestionId\": \"<integer>\",\n      \"CheckListQuestionOptionID\": \"<integer>\",\n      \"EntityId\": \"<integer>\",\n      \"ChecklistQuestionOptionIds\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"Answer\": \"<string>\",\n      \"FreeTextAnswer\": \"<string>\",\n      \"EntityTypeId\": \"<integer>\",\n      \"ProviderId\": \"<integer>\",\n      \"Attempt\": \"<integer>\",\n      \"TechnicianId\": \"<integer>\",\n      \"AuthUserId\": \"<integer>\"\n    },\n    \"AssetIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Attachments\": [\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ]\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "87ea728e-8f09-4cb3-976b-76560000ab22",
+              "name": "Responses to a checklist question are created. List of checklist response identifiers is returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"CheckListResponseRequest\": {\n      \"CheckListQuestionId\": \"<integer>\",\n      \"CheckListQuestionOptionID\": \"<integer>\",\n      \"EntityId\": \"<integer>\",\n      \"ChecklistQuestionOptionIds\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"Answer\": \"<string>\",\n      \"FreeTextAnswer\": \"<string>\",\n      \"EntityTypeId\": \"<integer>\",\n      \"ProviderId\": \"<integer>\",\n      \"Attempt\": \"<integer>\",\n      \"TechnicianId\": \"<integer>\",\n      \"AuthUserId\": \"<integer>\"\n    },\n    \"AssetIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Attachments\": [\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"CheckListResponseRequest\": {\n      \"CheckListQuestionId\": \"<integer>\",\n      \"CheckListQuestionOptionID\": \"<integer>\",\n      \"EntityId\": \"<integer>\",\n      \"ChecklistQuestionOptionIds\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"Answer\": \"<string>\",\n      \"FreeTextAnswer\": \"<string>\",\n      \"EntityTypeId\": \"<integer>\",\n      \"ProviderId\": \"<integer>\",\n      \"Attempt\": \"<integer>\",\n      \"TechnicianId\": \"<integer>\",\n      \"AuthUserId\": \"<integer>\"\n    },\n    \"AssetIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Attachments\": [\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  3443,\n  1824\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9dadbff-6f31-431a-864d-3a311c6ff645",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            502 — Work order is not found\r\n            503 — Not all required parameters were specified\r\n            503 — The FreeTextAnswer is required\r\n            503 — The picture is required\r\n            503 — Checkbox responses only support next values: on, off, 1, 0, true, false, yes, no\r\n            503 — The required URL view acknowledgement checkbox only supports the next values: on, 1, true, yes\r\n            503 — Multiple answers are not allowed to a non-selector type question.\r\n            503 — Multiple answer is not allowed to selector type question where AllowMultiSelect is disabled\r\n            503 — The active checklist with specified question (questionId: #) for the specified work order (workOrderId: #) is not found\r\n            503 — Asset ids are not allowed for the checklist which is not displayed for each asset\r\n            503 — AssetIds are required for this checklist question\r\n            503 — Not all assets are associated with the work order. Assets not associated with the work order: {#}\r\n            503 — Assets not found (asset ids: {#})\r\n            503 — Not all types of specified assets match the asset types specified for the checklist question. Assets with wrong types: {#}\r\n            503 — There are no checklists for the specified work order. WorkOrderId: {#}\r\n            503 — Question (id: {#}) was not found\r\n            503 — Checklist responses should be specified for the same work order\r\n            503 — Checklist responses should be specified for the same attempt.\r\n            503 — The Answer is invalid. It must be a number or a string representing a number\r\n            503 — The question has already been answered for this attempt number. QuestionId: {#}.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"CheckListResponseRequest\": {\n      \"CheckListQuestionId\": \"<integer>\",\n      \"CheckListQuestionOptionID\": \"<integer>\",\n      \"EntityId\": \"<integer>\",\n      \"ChecklistQuestionOptionIds\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"Answer\": \"<string>\",\n      \"FreeTextAnswer\": \"<string>\",\n      \"EntityTypeId\": \"<integer>\",\n      \"ProviderId\": \"<integer>\",\n      \"Attempt\": \"<integer>\",\n      \"TechnicianId\": \"<integer>\",\n      \"AuthUserId\": \"<integer>\"\n    },\n    \"AssetIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Attachments\": [\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"CheckListResponseRequest\": {\n      \"CheckListQuestionId\": \"<integer>\",\n      \"CheckListQuestionOptionID\": \"<integer>\",\n      \"EntityId\": \"<integer>\",\n      \"ChecklistQuestionOptionIds\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"Answer\": \"<string>\",\n      \"FreeTextAnswer\": \"<string>\",\n      \"EntityTypeId\": \"<integer>\",\n      \"ProviderId\": \"<integer>\",\n      \"Attempt\": \"<integer>\",\n      \"TechnicianId\": \"<integer>\",\n      \"AuthUserId\": \"<integer>\"\n    },\n    \"AssetIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Attachments\": [\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47358eca-e94c-47f3-92ee-e5270163977d",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"CheckListResponseRequest\": {\n      \"CheckListQuestionId\": \"<integer>\",\n      \"CheckListQuestionOptionID\": \"<integer>\",\n      \"EntityId\": \"<integer>\",\n      \"ChecklistQuestionOptionIds\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"Answer\": \"<string>\",\n      \"FreeTextAnswer\": \"<string>\",\n      \"EntityTypeId\": \"<integer>\",\n      \"ProviderId\": \"<integer>\",\n      \"Attempt\": \"<integer>\",\n      \"TechnicianId\": \"<integer>\",\n      \"AuthUserId\": \"<integer>\"\n    },\n    \"AssetIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Attachments\": [\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"CheckListResponseRequest\": {\n      \"CheckListQuestionId\": \"<integer>\",\n      \"CheckListQuestionOptionID\": \"<integer>\",\n      \"EntityId\": \"<integer>\",\n      \"ChecklistQuestionOptionIds\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"Answer\": \"<string>\",\n      \"FreeTextAnswer\": \"<string>\",\n      \"EntityTypeId\": \"<integer>\",\n      \"ProviderId\": \"<integer>\",\n      \"Attempt\": \"<integer>\",\n      \"TechnicianId\": \"<integer>\",\n      \"AuthUserId\": \"<integer>\"\n    },\n    \"AssetIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Attachments\": [\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c26e2d5-5d0c-45db-94e8-e7881f248e48",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "ChecklistResponse",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"CheckListResponseRequest\": {\n      \"CheckListQuestionId\": \"<integer>\",\n      \"CheckListQuestionOptionID\": \"<integer>\",\n      \"EntityId\": \"<integer>\",\n      \"ChecklistQuestionOptionIds\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"Answer\": \"<string>\",\n      \"FreeTextAnswer\": \"<string>\",\n      \"EntityTypeId\": \"<integer>\",\n      \"ProviderId\": \"<integer>\",\n      \"Attempt\": \"<integer>\",\n      \"TechnicianId\": \"<integer>\",\n      \"AuthUserId\": \"<integer>\"\n    },\n    \"AssetIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Attachments\": [\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"CheckListResponseRequest\": {\n      \"CheckListQuestionId\": \"<integer>\",\n      \"CheckListQuestionOptionID\": \"<integer>\",\n      \"EntityId\": \"<integer>\",\n      \"ChecklistQuestionOptionIds\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"Answer\": \"<string>\",\n      \"FreeTextAnswer\": \"<string>\",\n      \"EntityTypeId\": \"<integer>\",\n      \"ProviderId\": \"<integer>\",\n      \"Attempt\": \"<integer>\",\n      \"TechnicianId\": \"<integer>\",\n      \"AuthUserId\": \"<integer>\"\n    },\n    \"AssetIds\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"Attachments\": [\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      },\n      {\n        \"DocumentName\": \"<string>\",\n        \"DocumentPath\": \"<string>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ebef8376-2099-4d6e-8935-f4d7594e379d",
+          "name": "Get standard checklists",
+          "request": {
+            "name": "Get standard checklists",
+            "description": {
+              "content": "[Returns standard checklists](/guides/checklists/find-and-filter-checklists/) along with their parameters, configured questions, and answer options.\r\n            <br />You can filter checklists by:\r\n             • **Trade**. Specify either `tradeid` or `tradeName`.\r\n             • **Category**. Enter either `categoryid` or `categoryName`.\r\n             • **Location**. Provide either `locationId` or `storeId` if the feature that allows creating checklists for specific locations is enabled for a subscriber.\r\n             • **Checklist**. Pass either `checklistid` or `checkListName` to get a specific checklist, and ignore other parameters.\r\n            <br />Providers should pass `subscriberId` to retrieve checklists created by the desired subscriber.\r\n            <br />The `NumericInput` and `LessMoreOption` fields in the response are obsolete and should not be used.\r\n            <br />Navigate to ServiceChannel University to find out [how subscribers can configure checklists](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/655425975/Configuring+Checklists).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "checklists",
+                "detail"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradeid",
+                  "value": "<integer>",
+                  "description": "Trade ID. To get a list of trades with their IDs, send the [GET /odata/trades](/swagger/ui/index?version=3#/Trades/Trades_GetTrades) request."
+                },
+                {
+                  "disabled": false,
+                  "key": "checklistid",
+                  "value": "<integer>",
+                  "description": "Checklist ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "categoryid",
+                  "value": "<integer>",
+                  "description": "Category ID. Subscribers can retrieve category IDs using the [GET /categories](/swagger/ui/index?version=3#/Categories/GETv3_categories_subscriberIds_0___subscriberIds_0___subscriberIds_1___subscriberIds_1__) method."
+                },
+                {
+                  "disabled": false,
+                  "key": "subscriberId",
+                  "value": "<integer>",
+                  "description": "Unique ID of the subscriber who configured checklists. Should be passed by providers."
+                },
+                {
+                  "disabled": false,
+                  "key": "tradeName",
+                  "value": "<string>",
+                  "description": "Trade name. A trade is an area of work for which a service is performed, such as _Lighting_, _Refrigeration_, or _Plumbing_."
+                },
+                {
+                  "disabled": false,
+                  "key": "checkListName",
+                  "value": "<string>",
+                  "description": "Checklist name."
+                },
+                {
+                  "disabled": false,
+                  "key": "categoryName",
+                  "value": "<string>",
+                  "description": "Category name. A category is the overall classification of a work order, such as _Maintenance_, _Repair_, or _CAPEX_."
+                },
+                {
+                  "disabled": false,
+                  "key": "locationId",
+                  "value": "<integer>",
+                  "description": "Unique ID of a subscriber’s location. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber."
+                },
+                {
+                  "disabled": false,
+                  "key": "storeId",
+                  "value": "<string>",
+                  "description": "Non-unique ID of a subscriber’s location that may appear as a store number. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber."
+                },
+                {
+                  "disabled": false,
+                  "key": "workOrderId",
+                  "value": "<integer>",
+                  "description": "Work Order ID"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9c415580-f4e6-400a-b88c-90760c53c3fa",
+              "name": "The requested standard checklists are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "detail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "checklistid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categoryid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tradeName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checkListName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categoryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workOrderId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"CheckListDetails\": [\n    {\n      \"ChecklistName\": \"string\",\n      \"Id\": 9971,\n      \"IsActive\": false,\n      \"CreatedDate\": \"2001-07-20T10:57:52.784Z\",\n      \"UpdatedDate\": \"1971-01-03T03:15:05.634Z\",\n      \"CreatedBy\": 6543,\n      \"UpdatedBy\": 7761,\n      \"Questions\": [\n        {\n          \"Id\": 8403,\n          \"CheckListId\": 8479,\n          \"Question\": \"string\",\n          \"ShortDescription\": \"string\",\n          \"AnswerRequired\": false,\n          \"PictureFlag\": \"No\",\n          \"Sequence\": 9653,\n          \"QuestionType\": \"NumericInput\",\n          \"CheckListQuestionOptions\": [\n            {\n              \"Id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Answer\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Sequence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"IsConditionalFollowUp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"ResponseResultInFailure\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"GenerateFollowUpWo\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"Id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Answer\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Sequence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"IsConditionalFollowUp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"ResponseResultInFailure\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"GenerateFollowUpWo\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"AnswerCanPersist\": false,\n          \"CheckListTimingType\": \"CheckIn\",\n          \"AcknowledgeUrl\": {\n            \"Url\": \"string\",\n            \"Required\": false\n          },\n          \"AllowMultiSelect\": false,\n          \"ChecklistFailure\": false,\n          \"AssetTypeIds\": [\n            8911,\n            4789\n          ],\n          \"CheckListQuestionNumericType\": {\n            \"Id\": 7816,\n            \"Type\": \"LessThan\",\n            \"SingleValue\": 1556,\n            \"MinValue\": 127,\n            \"MaxValue\": 8159\n          }\n        },\n        {\n          \"Id\": 7200,\n          \"CheckListId\": 8080,\n          \"Question\": \"string\",\n          \"ShortDescription\": \"string\",\n          \"AnswerRequired\": false,\n          \"PictureFlag\": \"No\",\n          \"Sequence\": 7243,\n          \"QuestionType\": \"TextEntry\",\n          \"CheckListQuestionOptions\": [\n            {\n              \"Id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Answer\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Sequence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"IsConditionalFollowUp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"ResponseResultInFailure\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"GenerateFollowUpWo\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"Id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Answer\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Sequence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"IsConditionalFollowUp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"ResponseResultInFailure\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"GenerateFollowUpWo\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"AnswerCanPersist\": false,\n          \"CheckListTimingType\": \"CheckIn\",\n          \"AcknowledgeUrl\": {\n            \"Url\": \"string\",\n            \"Required\": false\n          },\n          \"AllowMultiSelect\": false,\n          \"ChecklistFailure\": false,\n          \"AssetTypeIds\": [\n            9098,\n            8427\n          ],\n          \"CheckListQuestionNumericType\": {\n            \"Id\": 210,\n            \"Type\": \"MoreThan\",\n            \"SingleValue\": 2593,\n            \"MinValue\": 3492,\n            \"MaxValue\": 6939\n          }\n        }\n      ],\n      \"DisplayForEachAsset\": false\n    },\n    {\n      \"ChecklistName\": \"string\",\n      \"Id\": 9574,\n      \"IsActive\": false,\n      \"CreatedDate\": \"1980-09-30T07:03:07.264Z\",\n      \"UpdatedDate\": \"2019-03-10T01:13:02.580Z\",\n      \"CreatedBy\": 767,\n      \"UpdatedBy\": 9610,\n      \"Questions\": [\n        {\n          \"Id\": 1149,\n          \"CheckListId\": 1758,\n          \"Question\": \"string\",\n          \"ShortDescription\": \"string\",\n          \"AnswerRequired\": false,\n          \"PictureFlag\": \"Required\",\n          \"Sequence\": 9545,\n          \"QuestionType\": \"RadioButton\",\n          \"CheckListQuestionOptions\": [\n            {\n              \"Id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Answer\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Sequence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"IsConditionalFollowUp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"ResponseResultInFailure\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"GenerateFollowUpWo\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"Id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Answer\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Sequence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"IsConditionalFollowUp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"ResponseResultInFailure\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"GenerateFollowUpWo\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"AnswerCanPersist\": false,\n          \"CheckListTimingType\": \"CheckOut\",\n          \"AcknowledgeUrl\": {\n            \"Url\": \"string\",\n            \"Required\": false\n          },\n          \"AllowMultiSelect\": false,\n          \"ChecklistFailure\": false,\n          \"AssetTypeIds\": [\n            1224,\n            9797\n          ],\n          \"CheckListQuestionNumericType\": {\n            \"Id\": 519,\n            \"Type\": \"InBetween\",\n            \"SingleValue\": 7105,\n            \"MinValue\": 9479,\n            \"MaxValue\": 7846\n          }\n        },\n        {\n          \"Id\": 8372,\n          \"CheckListId\": 8102,\n          \"Question\": \"string\",\n          \"ShortDescription\": \"string\",\n          \"AnswerRequired\": false,\n          \"PictureFlag\": \"No\",\n          \"Sequence\": 8597,\n          \"QuestionType\": \"NumericInput\",\n          \"CheckListQuestionOptions\": [\n            {\n              \"Id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Answer\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Sequence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"IsConditionalFollowUp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"ResponseResultInFailure\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"GenerateFollowUpWo\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"Id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Answer\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"Sequence\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"IsConditionalFollowUp\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"ResponseResultInFailure\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"GenerateFollowUpWo\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"AnswerCanPersist\": false,\n          \"CheckListTimingType\": \"CheckOut\",\n          \"AcknowledgeUrl\": {\n            \"Url\": \"string\",\n            \"Required\": false\n          },\n          \"AllowMultiSelect\": false,\n          \"ChecklistFailure\": false,\n          \"AssetTypeIds\": [\n            6522,\n            9548\n          ],\n          \"CheckListQuestionNumericType\": {\n            \"Id\": 9646,\n            \"Type\": \"LessThan\",\n            \"SingleValue\": 8642,\n            \"MinValue\": 8868,\n            \"MaxValue\": 4736\n          }\n        }\n      ],\n      \"DisplayForEachAsset\": false\n    }\n  ],\n  \"HasTransferedCheckList\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f62a317-b659-4df3-862a-2c993970a4aa",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 — Bad Request; Subscriber Id should be provided if the api method is called by provider\r\n            503 — A trade can be specified with only one parameter: either tradeId or tradeName\r\n            503 — A category can be specified with only one parameter: either categoryId or categoryName\r\n            503 — A checkList can be specified with only one parameter: either checkListId or checkListName\r\n            503 — A location can be specified with only one parameter: either locationId or storeId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "detail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "checklistid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categoryid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tradeName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checkListName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categoryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workOrderId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d282d018-8756-46c9-ac75-0a988d90d25e",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "detail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "checklistid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categoryid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tradeName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checkListName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categoryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workOrderId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e08f7e43-75e6-444f-b2d5-bc85bb761891",
+              "name": "The request is not allowed.\r\n            <br/>Error codes:\r\n            100 — User does not have access to work order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "detail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "checklistid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categoryid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tradeName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checkListName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categoryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workOrderId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d0e03c4-bf5b-4f72-a313-17963170c0d2",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "detail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "checklistid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categoryid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tradeName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checkListName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categoryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "workOrderId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ff9fc4c-dd83-4054-bc4f-1f7e4c2fdf19",
+          "name": "The requested transfer checklists are in the response",
+          "request": {
+            "name": "The requested transfer checklists are in the response",
+            "description": {},
+            "url": {
+              "path": [
+                "checklists",
+                "TransferCheckListDetail"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workOrderId",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "subscriberId",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e08bde07-6500-4853-b830-ac935f30575d",
+              "name": "The requested transfer checklists are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "TransferCheckListDetail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workOrderId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ChecklistName\": \"string\",\n  \"Id\": 8300,\n  \"IsActive\": false,\n  \"CreatedDate\": \"2024-11-14T19:39:00.266Z\",\n  \"UpdatedDate\": \"1986-03-27T01:00:14.865Z\",\n  \"CreatedBy\": 7192,\n  \"UpdatedBy\": 4378,\n  \"Questions\": [\n    {\n      \"Id\": 4657,\n      \"CheckListId\": 83,\n      \"Question\": \"string\",\n      \"ShortDescription\": \"string\",\n      \"AnswerRequired\": false,\n      \"PictureFlag\": \"Required\",\n      \"Sequence\": 6221,\n      \"QuestionType\": \"TriState\",\n      \"CheckListQuestionOptions\": [\n        {\n          \"Id\": 1549,\n          \"Answer\": \"string\",\n          \"Sequence\": 6316,\n          \"IsConditionalFollowUp\": false,\n          \"ResponseResultInFailure\": false,\n          \"GenerateFollowUpWo\": false\n        },\n        {\n          \"Id\": 306,\n          \"Answer\": \"string\",\n          \"Sequence\": 3699,\n          \"IsConditionalFollowUp\": false,\n          \"ResponseResultInFailure\": false,\n          \"GenerateFollowUpWo\": false\n        }\n      ],\n      \"AnswerCanPersist\": false,\n      \"CheckListTimingType\": \"CheckIn\",\n      \"AcknowledgeUrl\": {\n        \"Url\": \"string\",\n        \"Required\": false\n      },\n      \"AllowMultiSelect\": false,\n      \"ChecklistFailure\": false,\n      \"AssetTypeIds\": [\n        5727,\n        7413\n      ],\n      \"CheckListQuestionNumericType\": {\n        \"Id\": 2563,\n        \"Type\": \"InBetween\",\n        \"SingleValue\": 7970,\n        \"MinValue\": 9008,\n        \"MaxValue\": 5083\n      }\n    },\n    {\n      \"Id\": 7019,\n      \"CheckListId\": 3736,\n      \"Question\": \"string\",\n      \"ShortDescription\": \"string\",\n      \"AnswerRequired\": false,\n      \"PictureFlag\": \"Optional\",\n      \"Sequence\": 8675,\n      \"QuestionType\": \"TextEntry\",\n      \"CheckListQuestionOptions\": [\n        {\n          \"Id\": 1609,\n          \"Answer\": \"string\",\n          \"Sequence\": 4042,\n          \"IsConditionalFollowUp\": false,\n          \"ResponseResultInFailure\": false,\n          \"GenerateFollowUpWo\": false\n        },\n        {\n          \"Id\": 5351,\n          \"Answer\": \"string\",\n          \"Sequence\": 6496,\n          \"IsConditionalFollowUp\": false,\n          \"ResponseResultInFailure\": false,\n          \"GenerateFollowUpWo\": false\n        }\n      ],\n      \"AnswerCanPersist\": false,\n      \"CheckListTimingType\": \"CheckIn\",\n      \"AcknowledgeUrl\": {\n        \"Url\": \"string\",\n        \"Required\": false\n      },\n      \"AllowMultiSelect\": false,\n      \"ChecklistFailure\": false,\n      \"AssetTypeIds\": [\n        2404,\n        8353\n      ],\n      \"CheckListQuestionNumericType\": {\n        \"Id\": 3669,\n        \"Type\": \"MoreThan\",\n        \"SingleValue\": 7623,\n        \"MinValue\": 3590,\n        \"MaxValue\": 3688\n      }\n    }\n  ],\n  \"DisplayForEachAsset\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43724e76-0b5b-41ce-b0eb-64ddbe5d4569",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 — Bad Request; Subscriber Id should be provided if the api method is called by provider",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "TransferCheckListDetail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workOrderId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27ed1abf-b26a-49a8-8bf2-b347767f65a5",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "TransferCheckListDetail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workOrderId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5a41700-b06a-4e08-ac80-5e1eedde9d39",
+              "name": "The request is not allowed.\r\n            <br/>Error codes:\r\n            100 — User does not have access to work order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "TransferCheckListDetail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workOrderId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb1d8868-6ea5-4d00-b71c-6ee57ff2bcc2",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "TransferCheckListDetail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workOrderId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "87ad60eb-205c-4de0-9821-18e4635b6d92",
+          "name": "Get checklists with asset tasks",
+          "request": {
+            "name": "Get checklists with asset tasks",
+            "description": {
+              "content": "Retrieves checklists of the **Asset Task** type along with their parameters and task details. Such checklists contain asset-related tasks that a technician is prompted to complete when working on a service request.\r\n            <br />You can filter checklists by:\r\n             • **Trade**. Specify either `tradeid` or `tradeName`.\r\n             • **Category**. Enter either `categoryid` or `categoryName`.\r\n             • **Location**. Provide either `locationId` or `storeId` if the feature that allows creating checklists for specific locations is enabled for a subscriber.\r\n             • **Checklist**. Pass either `checklistid` or `checkListName` to get a specific checklist, and ignore other parameters.\r\n            <br />Providers should pass `subscriberId` to retrieve checklists created by the desired subscriber.\r\n            <br />Navigate to ServiceChannel University to find out [how subscribers can configure checklists](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/655425975/Configuring+Checklists).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "checklists",
+                "taskslist"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradeid",
+                  "value": "<integer>",
+                  "description": "Trade ID. To get a list of trades with their IDs, send the [GET /odata/trades](/swagger/ui/index?version=3#/Trades/Trades_GetTrades) request."
+                },
+                {
+                  "disabled": false,
+                  "key": "checklistid",
+                  "value": "<integer>",
+                  "description": "Checklist ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "categoryid",
+                  "value": "<integer>",
+                  "description": "Category ID. Subscribers can retrieve category IDs using the [GET /categories](/swagger/ui/index?version=3#/Categories/GETv3_categories_subscriberIds_0___subscriberIds_0___subscriberIds_1___subscriberIds_1__) method."
+                },
+                {
+                  "disabled": false,
+                  "key": "subscriberId",
+                  "value": "<integer>",
+                  "description": "Unique ID of the subscriber who configured checklists. Should be passed by providers."
+                },
+                {
+                  "disabled": false,
+                  "key": "tradeName",
+                  "value": "<string>",
+                  "description": "Trade name. A trade is an area of work for which a service is performed, such as _Lighting_, _Refrigeration_, or _Plumbing_."
+                },
+                {
+                  "disabled": false,
+                  "key": "checkListName",
+                  "value": "<string>",
+                  "description": "Checklist name."
+                },
+                {
+                  "disabled": false,
+                  "key": "categoryName",
+                  "value": "<string>",
+                  "description": "Category name. A category is the overall classification of a work order, such as _Maintenance_, _Repair_, or _CAPEX_."
+                },
+                {
+                  "disabled": false,
+                  "key": "locationId",
+                  "value": "<integer>",
+                  "description": "Unique ID of a subscriber’s location. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber."
+                },
+                {
+                  "disabled": false,
+                  "key": "storeId",
+                  "value": "<string>",
+                  "description": "Non-unique ID of a subscriber’s location that may appear as a store number. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber."
+                },
+                {
+                  "disabled": false,
+                  "key": "providerId",
+                  "value": "<integer>",
+                  "description": "The provider identifier. Required for sub-contractor request. [Required Special permissions]"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ddb47d5b-94fd-429a-8e65-43deef88e201",
+              "name": "The requested asset task checklists are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "taskslist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "checklistid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categoryid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tradeName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checkListName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categoryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ChecklistWithTasks\": [\n    {\n      \"ChecklistName\": \"string\",\n      \"Id\": 1931,\n      \"IsActive\": false,\n      \"CreatedDate\": \"2000-11-19T02:01:06.469Z\",\n      \"UpdatedDate\": \"1947-07-10T00:53:14.849Z\",\n      \"CreatedBy\": 1366,\n      \"UpdatedBy\": 9684,\n      \"Tasks\": [\n        {\n          \"Id\": 8022,\n          \"CheckListId\": 2827,\n          \"TypeId\": 8725,\n          \"TaskTypeId\": \"AssetTask\",\n          \"TaskTypeName\": \"string\",\n          \"Name\": \"string\",\n          \"Description\": \"string\",\n          \"IsActive\": false\n        },\n        {\n          \"Id\": 3061,\n          \"CheckListId\": 6762,\n          \"TypeId\": 9281,\n          \"TaskTypeId\": \"AssetTask\",\n          \"TaskTypeName\": \"string\",\n          \"Name\": \"string\",\n          \"Description\": \"string\",\n          \"IsActive\": false\n        }\n      ]\n    },\n    {\n      \"ChecklistName\": \"string\",\n      \"Id\": 6459,\n      \"IsActive\": false,\n      \"CreatedDate\": \"1996-10-02T12:11:58.490Z\",\n      \"UpdatedDate\": \"2006-05-22T18:05:53.686Z\",\n      \"CreatedBy\": 6106,\n      \"UpdatedBy\": 3927,\n      \"Tasks\": [\n        {\n          \"Id\": 1166,\n          \"CheckListId\": 1449,\n          \"TypeId\": 9847,\n          \"TaskTypeId\": \"AssetTask\",\n          \"TaskTypeName\": \"string\",\n          \"Name\": \"string\",\n          \"Description\": \"string\",\n          \"IsActive\": false\n        },\n        {\n          \"Id\": 1069,\n          \"CheckListId\": 4595,\n          \"TypeId\": 6494,\n          \"TaskTypeId\": \"AssetTask\",\n          \"TaskTypeName\": \"string\",\n          \"Name\": \"string\",\n          \"Description\": \"string\",\n          \"IsActive\": false\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddf10026-eb3c-4406-a75e-bd1492165a5d",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 — Bad Request; Subscriber Id should be provided if the api method is called by provider\r\n            503 — A trade can be specified with only one parameter: either tradeId or tradeName\r\n            503 — A category can be specified with only one parameter: either categoryId or categoryName\r\n            503 — A checkList can be specified with only one parameter: either checkListId or checkListName\r\n            503 — A location can be specified with only one parameter: either locationId or storeId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "taskslist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "checklistid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categoryid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tradeName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checkListName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categoryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c38a198d-8de5-4178-900b-f3473ecc8d3b",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "taskslist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "checklistid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categoryid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tradeName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checkListName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categoryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d4af169-e4e7-42d1-a41c-3d2542ceb642",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "taskslist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "checklistid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categoryid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tradeName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checkListName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categoryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "daaf8a7d-a97c-45b9-b71c-e6b279fcf5a8",
+          "name": "Retrieve checklist types",
+          "request": {
+            "name": "Retrieve checklist types",
+            "description": {
+              "content": "Returns the ID and type of checklists.\r\n            <br />Subscribers can create two types of checklists:\r\n             • **Standard checklist** with questions that a technician is prompted to answer when working on a service request. Send the [GET /checklists/detail](/swagger/ui/index?version=3#/CheckLists/GETv3_checklists_detail_tradeid__tradeid__checklistid__checklistid__categoryid__categoryid__subscriberId__subscriberId__tradeName__tradeName__checkListName__checkListName__categoryName__categoryName__locationId__locationId__storeId__storeId_) request to retrieve standard checklists.\r\n             • **Asset task checklist** with asset-related tasks that a technician should complete when servicing a work order. Pass [GET /checklists/taskslist](/swagger/ui/index?version=3#/CheckLists/GETv3_checklists_taskslist_tradeid__tradeid__checklistid__checklistid__categoryid__categoryid__subscriberId__subscriberId__tradeName__tradeName__checkListName__checkListName__categoryName__categoryName__locationId__locationId__storeId__storeId_) to get asset task checklists.\r\n            <br />You can filter checklists by:\r\n             • **Trade**. Specify either `tradeid` or `tradeName`.\r\n             • **Category**. Enter either `categoryid` or `categoryName`.\r\n             • **Location**. Provide either `locationId` or `storeId` if the feature that allows creating checklists for specific locations is enabled for a subscriber.\r\n             • **Checklist**. Pass either `checklistid` or `checkListName` to get a specific checklist, and ignore other parameters.\r\n            <br />Providers should pass `subscriberId` to retrieve checklists created by the desired subscriber.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "checklists",
+                "types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradeId",
+                  "value": "<integer>",
+                  "description": "Trade ID. To get a list of trades with their IDs, send the [GET /odata/trades](/swagger/ui/index?version=3#/Trades/Trades_GetTrades) request."
+                },
+                {
+                  "disabled": false,
+                  "key": "checklistId",
+                  "value": "<integer>",
+                  "description": "Checklist ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "categoryId",
+                  "value": "<integer>",
+                  "description": "Category ID. Subscribers can retrieve category IDs using the [GET /categories](/swagger/ui/index?version=3#/Categories/GETv3_categories_subscriberIds_0___subscriberIds_0___subscriberIds_1___subscriberIds_1__) method."
+                },
+                {
+                  "disabled": false,
+                  "key": "subscriberId",
+                  "value": "<integer>",
+                  "description": "Unique ID of the subscriber who configured checklists. Should be passed by providers."
+                },
+                {
+                  "disabled": false,
+                  "key": "tradeName",
+                  "value": "<string>",
+                  "description": "Trade name. A trade is an area of work for which a service is performed, such as _Lighting_, _Refrigeration_, or _Plumbing_."
+                },
+                {
+                  "disabled": false,
+                  "key": "checklistName",
+                  "value": "<string>",
+                  "description": "Checklist name."
+                },
+                {
+                  "disabled": false,
+                  "key": "categoryName",
+                  "value": "<string>",
+                  "description": "Category name. A category is the overall classification of a work order, such as _Maintenance_, _Repair_, or _CAPEX_."
+                },
+                {
+                  "disabled": false,
+                  "key": "locationId",
+                  "value": "<integer>",
+                  "description": "Unique ID of a subscriber’s location. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber."
+                },
+                {
+                  "disabled": false,
+                  "key": "storeId",
+                  "value": "<string>",
+                  "description": "Non-unique ID of a subscriber’s location that may appear as a store number. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber."
+                },
+                {
+                  "disabled": false,
+                  "key": "providerId",
+                  "value": "<integer>",
+                  "description": "The provider identifier. Required for sub-contractor request. [Required Special permissions]"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e9d2e490-5445-4acf-a66c-426c8067dd0c",
+              "name": "The ID and type of the requested checklists are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "checklistId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categoryId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tradeName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checklistName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categoryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ChecklistTypes\": [\n    {\n      \"Id\": 658,\n      \"Type\": \"Survey\"\n    },\n    {\n      \"Id\": 5364,\n      \"Type\": \"Survey\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6708994-0b36-4fd6-ab6a-dda61b830838",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 — Bad Request; Subscriber Id should be provided if the api method is called by provider\r\n            503 — A trade can be specified with only one parameter: either tradeId or tradeName\r\n            503 — A category can be specified with only one parameter: either categoryId or categoryName\r\n            503 — A checkList can be specified with only one parameter: either checkListId or checkListName\r\n            503 — A location can be specified with only one parameter: either locationId or storeId",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "checklistId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categoryId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tradeName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checklistName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categoryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5bf02d73-4ca3-4d30-a4fc-0483e729ebf9",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "checklistId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categoryId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tradeName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checklistName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categoryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ca397c1-9187-4eae-a866-0ffdfe87bdd2",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checklists",
+                    "types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "checklistId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categoryId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tradeName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "checklistName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categoryName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"HasCircuitsCantBeChange\",\n    \"InvalidWoIdentifier\"\n  ],\n  \"ErrorCode\": \"InvalidBusinessHoursInitialSetup\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sb2fixxbook.servicechannel.com:443/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7b4c97f1-7dfa-48de-93a6-5f4789a83bb0",
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours CheckLists API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

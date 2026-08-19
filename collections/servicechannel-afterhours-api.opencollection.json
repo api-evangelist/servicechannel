@@ -1,0 +1,119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AfterHours",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Business Hours",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/locations/:locationId/businesshours",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the subscriber’s location you want to retrieve business hours for."
+              }
+            ]
+          },
+          "docs": "Returns opening and closing hours from Monday to Sunday for the specified location."
+        },
+        {
+          "info": {
+            "name": "Update business hours",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/locations/:locationId/businesshours",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the subscriber’s location you want to change business hours for."
+              }
+            ]
+          },
+          "docs": "Modifies the existing business hours for the specified location.\r\n            <br />Send this request [GET /locations/{locationId}/businesshours](/swagger/ui/index?version=3#/AfterHours/GETv3_locations__locationId__businesshours) to get the location business hours.\r\n            <br />Learn [how to manage business hours](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/683409418/Managing+Business+Hours+and+Holidays+for+a+Location) in ServiceChannel University.\r\n            <br />**Examp"
+        },
+        {
+          "info": {
+            "name": "Retrieve location holidays",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/locations/:locationId/holidays",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the subscriber’s location you want to retrieve holidays for."
+              }
+            ]
+          },
+          "docs": "Returns the details of each holiday for the specified location."
+        },
+        {
+          "info": {
+            "name": "Add a holiday",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/locations/:locationId/holidays",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the subscriber’s location you want to add or update holidays for."
+              }
+            ]
+          },
+          "docs": "Adds a holiday to the specified location. \r\n            <br />Send this request [GET /locations/{locationId}/holidays](/swagger/ui/index?version=3#/AfterHours/GETv3_locations__locationId__holidays) to get the location holidays.\r\n            <br />Learn [how to manage holidays for a location](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/683409418/Managing+Business+Hours+and+Holidays+for+a+Location) in ServiceChannel University.\r\n            <br />**Example Request**\r\n            \r\n "
+        },
+        {
+          "info": {
+            "name": "Delete a holiday",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/locations/:locationId/holidays",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the location to delete a holiday from."
+              },
+              {
+                "name": "holidayName",
+                "value": "",
+                "type": "query",
+                "description": "The name of the holiday you want to remove."
+              }
+            ]
+          },
+          "docs": "Permanently removes a holiday from the specified location."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

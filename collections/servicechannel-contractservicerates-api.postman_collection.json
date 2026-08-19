@@ -1,0 +1,467 @@
+{
+  "item": [
+    {
+      "id": "0712e1f8-1170-4a52-a498-7e221d0dcd79",
+      "name": "ContractServiceRates",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9a2a2834-c27a-431f-9c4e-cfbb723a9662",
+          "name": "Get applicable Contract Service Rates for Work Order creation",
+          "request": {
+            "name": "Get applicable Contract Service Rates for Work Order creation",
+            "description": {
+              "content": "Returns applicable Contract Service Rates based on the Provider, Trade, Category, Location and Call Date of the Work Order.\r\n            A rate is applicable when there is an active contract (based on Call Date) for the provider, with matching trade, category, and location.\r\n            Returns NTE amount, base amount, variable amount, and currency for each applicable rate.\r\n            ContractedServiceId is required and must reference the listed Contract Service.\r\n            <br /><br />Available for subscriber usage.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contractservicerates",
+                "get-rates",
+                "wo-creation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"TradeId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"LocationId\": \"<integer>\",\n  \"CallDate\": \"<dateTime>\",\n  \"ContractedServiceId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d3ce699c-1cb9-4eb4-838e-ba27775d21e6",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contractservicerates",
+                    "get-rates",
+                    "wo-creation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"TradeId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"LocationId\": \"<integer>\",\n  \"CallDate\": \"<dateTime>\",\n  \"ContractedServiceId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Rates\": [\n    {\n      \"RateId\": 7013,\n      \"RateName\": \"string\",\n      \"ContractedServiceId\": 9388,\n      \"ContractedServiceName\": \"string\",\n      \"TradeId\": 5857,\n      \"CategoryId\": 8914,\n      \"RateType\": \"string\",\n      \"BaseAmount\": 5709.047836131418,\n      \"VariableAmount\": 5947.807608759379,\n      \"NteAmount\": 1285.1199199902353,\n      \"CurrencyId\": 2515,\n      \"CurrencyAlphabeticCode\": \"string\"\n    },\n    {\n      \"RateId\": 9374,\n      \"RateName\": \"string\",\n      \"ContractedServiceId\": 3527,\n      \"ContractedServiceName\": \"string\",\n      \"TradeId\": 4117,\n      \"CategoryId\": 9209,\n      \"RateType\": \"string\",\n      \"BaseAmount\": 8649.160461388186,\n      \"VariableAmount\": 2083.3332591960475,\n      \"NteAmount\": 6278.9026717111265,\n      \"CurrencyId\": 422,\n      \"CurrencyAlphabeticCode\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6dfb82d4-71c4-420a-9aab-769389dcbee3",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contractservicerates",
+                    "get-rates",
+                    "wo-creation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"TradeId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"LocationId\": \"<integer>\",\n  \"CallDate\": \"<dateTime>\",\n  \"ContractedServiceId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"LocationHierarchyNotFound\",\n    \"InvoiceInvalidLaborAmount\"\n  ],\n  \"ErrorCode\": \"UserFilterCreateUpdateError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90dc3e54-3d5c-4d56-9239-a5fb6c99a8b1",
+              "name": "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contractservicerates",
+                    "get-rates",
+                    "wo-creation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"TradeId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"LocationId\": \"<integer>\",\n  \"CallDate\": \"<dateTime>\",\n  \"ContractedServiceId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"SaveMliAuditReportFilePath\",\n    \"AssignUserWithLocationsToApprovalLevelError\"\n  ],\n  \"ErrorCode\": \"UpdateMlpUserLevelError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cb420236-4fbe-4121-9e76-23ce553801c9",
+          "name": "Get applicable Contract Service Rates for Work Order edit",
+          "request": {
+            "name": "Get applicable Contract Service Rates for Work Order edit",
+            "description": {
+              "content": "Returns applicable Contract Service Rates based on the Provider, Trade, Category, and Location of the Work Order at the moment of edit.\r\n            A rate is applicable when there is a currently active contract for the provider, with matching trade, category, and location.\r\n            Returns base amount, variable amount, NTE amount, and currency for each applicable rate.\r\n            <br /><br />Available for subscriber usage.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contractservicerates",
+                "get-rates",
+                "wo-edit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"TradeId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"LocationId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f9ab5b1e-6f2b-4b0b-b919-8572b9a4d350",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contractservicerates",
+                    "get-rates",
+                    "wo-edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"TradeId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"LocationId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Rates\": [\n    {\n      \"RateId\": 5495,\n      \"RateName\": \"string\",\n      \"ContractedServiceId\": 4752,\n      \"ContractedServiceName\": \"string\",\n      \"TradeId\": 1948,\n      \"CategoryId\": 7236,\n      \"RateType\": \"string\",\n      \"BaseAmount\": 2906.4076587230215,\n      \"VariableAmount\": 5712.587492967822,\n      \"NteAmount\": 7398.023448931741,\n      \"CurrencyId\": 4689,\n      \"CurrencyAlphabeticCode\": \"string\"\n    },\n    {\n      \"RateId\": 7139,\n      \"RateName\": \"string\",\n      \"ContractedServiceId\": 1566,\n      \"ContractedServiceName\": \"string\",\n      \"TradeId\": 1509,\n      \"CategoryId\": 298,\n      \"RateType\": \"string\",\n      \"BaseAmount\": 2122.9844011097243,\n      \"VariableAmount\": 5236.41898721258,\n      \"NteAmount\": 810.0481090969314,\n      \"CurrencyId\": 6591,\n      \"CurrencyAlphabeticCode\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "845a4bbb-c33c-4752-b927-87c212a40ed6",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contractservicerates",
+                    "get-rates",
+                    "wo-edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"TradeId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"LocationId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"SaveMliAuditReportFilePath\",\n    \"AssignUserWithLocationsToApprovalLevelError\"\n  ],\n  \"ErrorCode\": \"UpdateMlpUserLevelError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc39a929-65bf-4d1e-b1f8-bc253a2cc319",
+              "name": "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contractservicerates",
+                    "get-rates",
+                    "wo-edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"TradeId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"LocationId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"SaveMliAuditReportFilePath\",\n    \"AssignUserWithLocationsToApprovalLevelError\"\n  ],\n  \"ErrorCode\": \"UpdateMlpUserLevelError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sb2fixxbook.servicechannel.com:443/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8f3c013c-4e99-4054-b25c-dfeabed6bf24",
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours ContractServiceRates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

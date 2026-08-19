@@ -1,0 +1,323 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Users API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Users collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric identifier of the subscriber. Optional"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query",
+                "description": "Start item index. Optional, 0 by Default"
+              },
+              {
+                "name": "maxCount",
+                "value": "",
+                "type": "query",
+                "description": "Items count to get. Optional, all items by Default."
+              },
+              {
+                "name": "userFilterType",
+                "value": "",
+                "type": "query",
+                "description": "Return only users of a given type. Optional, corporate by default."
+              },
+              {
+                "name": "feedRolesFilter",
+                "value": "",
+                "type": "query",
+                "description": "Return users only with assigned Feed Roles. Optional, return all users by default."
+              },
+              {
+                "name": "includeMliInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include Mli user info in response. Optional, false by default"
+              },
+              {
+                "name": "includeMlpInfo",
+                "value": "",
+                "type": "query",
+                "description": "Include Mlp user info in response. Optional, false by default"
+              },
+              {
+                "name": "includeTotalCount",
+                "value": "",
+                "type": "query",
+                "description": "Include total user count in response. Optional, false by default"
+              }
+            ]
+          },
+          "docs": "Returns the list of all users of the current subscriber (the main user is also included) for successful request.\r\n            <br />**Note**: This method is available to subscriber users with the *Super Admin* secondary role."
+        },
+        {
+          "info": {
+            "name": "Create a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/users"
+          },
+          "docs": "Creates a new user. Returns a unique user ID for a successful request.\r\n            <br />***Note:*** Available for subscribers with the Admin User and Super Admin secondary roles."
+        },
+        {
+          "info": {
+            "name": "Retrieve a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the User to perform action with."
+              }
+            ]
+          },
+          "docs": "Returns the information of the specified user."
+        },
+        {
+          "info": {
+            "name": "Update a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the User to perform action with."
+              }
+            ]
+          },
+          "docs": "Updates the information of the specified user. Returns User Id for successful request.\r\n            <br />**Note**: This method is available to subscriber users with the *Super Admin* secondary role and provider users with admin access."
+        },
+        {
+          "info": {
+            "name": "Patch user's info",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User identifier"
+              }
+            ]
+          },
+          "docs": "Patch user's info"
+        },
+        {
+          "info": {
+            "name": "Disable a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the user."
+              }
+            ]
+          },
+          "docs": "Disables the account of the specified user.\r\n            <br>**Note**: This method is available to subscriber users with the *Super Admin* role and provider users with admin access.</br><br>To enable the user account, use the [PUT /users/{userId}](/swagger/index.html#/Users/PUTv3_users_%7Bid%7D) or [PATCH /users/{userId}](/swagger/index.html#/Users/PATCHv3_users_%7Bid%7D) method.</br><br>Find out more about disabling and enabling users via [Service Automation](https://servicechannel.atlassian.ne"
+        },
+        {
+          "info": {
+            "name": "GETv3_users_current_profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/current/profile"
+          }
+        },
+        {
+          "info": {
+            "name": "GETv3_users_current_menu",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/current/menu"
+          }
+        },
+        {
+          "info": {
+            "name": "Is locked",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/:userId/islocked",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the User to perform action with."
+              }
+            ]
+          },
+          "docs": "Returns true if requested user is locked.\r\n            <br />**Note**: This method is available to subscriber users with the *Super Admin* secondary role."
+        },
+        {
+          "info": {
+            "name": "Returns user features object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/features"
+          },
+          "docs": "Returns user features object"
+        },
+        {
+          "info": {
+            "name": "Returns Subscriber features object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/current/subscriberFeatures"
+          },
+          "docs": "Returns Subscriber features object"
+        },
+        {
+          "info": {
+            "name": "Returns user location note restrictions object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/current/locationNoteRestrictions"
+          },
+          "docs": "Returns user location note restrictions object"
+        },
+        {
+          "info": {
+            "name": "Retrieve provider users with the specified employee ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/employees/:employeeId/users",
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "Non-unique identifier of a provider user."
+              }
+            ]
+          },
+          "docs": "Returns a list of provider users with the specified employee ID. Provider admins can set an employee identifier on the **Employee Details** tab of the user profile.\r\n            <br />**Note**: This method is only available to provider users with admin access."
+        },
+        {
+          "info": {
+            "name": "Retrieve user localization settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/regionalSettings"
+          },
+          "docs": "Retrieve user localization settings"
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/users",
+            "params": [
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "<para>**Note**: This method is available to subscriber users with the *Super Admin* secondary role and provider users with admin access.</para>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

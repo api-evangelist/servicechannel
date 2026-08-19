@@ -1,0 +1,2612 @@
+{
+  "item": [
+    {
+      "id": "6a6f7dd3-399f-4e42-9af5-79d6ff54849a",
+      "name": "Notes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0d2b8622-721d-4de3-a558-c7768905fdc5",
+          "name": "Get work order notes",
+          "request": {
+            "name": "Get work order notes",
+            "description": {
+              "content": "Returns notes and attachments associated with the specified work order. Notes are sorted in descending order by creation date.\r\n            <br />Learn more about work order notes in [SCU](https://servicechannel.atlassian.net/wiki/x/4oPNKQ).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workorders",
+                ":workorderId",
+                "notes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "paging",
+                  "value": "<string>",
+                  "description": "Page numbering to display work order notes.\r\n             • The format is **Page number:Page size**, for example, **1:10**, meaning the 1st page with 10 notes displayed. To view the second page, change the entry to **2:10**.\r\n             • When the field is left empty, you get 10 notes per page with the latest note at the top.\r\n             • To get all WO notes, ensure you specify a large number as the **Page size** that will cover all the notes, for example, **1:9999**."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workorderId",
+                  "description": "(Required) Unique numeric identifier of the work order.\r\n            <br />***Note:*** You need to have access to the WO location per your user settings."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4b5c3541-96b4-4bc4-b772-d70235c4f2c6",
+              "name": "Notes associated with the work order are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "paging",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order.\r\n            <br />***Note:*** You need to have access to the WO location per your user settings."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Notes\": [\n    {\n      \"Id\": 8083,\n      \"DocumentId\": \"string\",\n      \"Number\": 4215,\n      \"NoteData\": \"string\",\n      \"DateCreated\": \"1989-03-30T05:08:16.584Z\",\n      \"ScheduledDate\": \"1963-11-05T10:59:14.023Z\",\n      \"FollowUpDate\": \"1978-04-19T07:30:12.921Z\",\n      \"ActionRequired\": false,\n      \"MailedTo\": \"string\",\n      \"CreatedBy\": \"string\",\n      \"CompanyName\": \"string\",\n      \"Attachments\": [\n        {\n          \"Id\": 9457,\n          \"Description\": \"string\",\n          \"Name\": \"string\",\n          \"TimeStamp\": \"1972-03-15T07:20:59.611Z\",\n          \"Uri\": \"string\",\n          \"NoteId\": 2700,\n          \"Visibility\": 7857,\n          \"IsInvoiceDigitalCopy\": false\n        },\n        {\n          \"Id\": 345,\n          \"Description\": \"string\",\n          \"Name\": \"string\",\n          \"TimeStamp\": \"1969-11-17T02:33:33.871Z\",\n          \"Uri\": \"string\",\n          \"NoteId\": 7770,\n          \"Visibility\": 2795,\n          \"IsInvoiceDigitalCopy\": false\n        }\n      ],\n      \"Visibility\": \"string\",\n      \"NoteType\": \"string\",\n      \"IsAttachmentNote\": false,\n      \"IsPinned\": false,\n      \"ActionResolveDetails\": {\n        \"IsResolved\": false,\n        \"ResolvedDate\": \"2018-10-11T19:36:47.162Z\"\n      }\n    },\n    {\n      \"Id\": 1113,\n      \"DocumentId\": \"string\",\n      \"Number\": 3921,\n      \"NoteData\": \"string\",\n      \"DateCreated\": \"1987-06-17T20:42:59.741Z\",\n      \"ScheduledDate\": \"1992-10-31T13:30:19.864Z\",\n      \"FollowUpDate\": \"1994-09-05T15:50:11.673Z\",\n      \"ActionRequired\": false,\n      \"MailedTo\": \"string\",\n      \"CreatedBy\": \"string\",\n      \"CompanyName\": \"string\",\n      \"Attachments\": [\n        {\n          \"Id\": 7344,\n          \"Description\": \"string\",\n          \"Name\": \"string\",\n          \"TimeStamp\": \"1954-09-18T16:29:13.093Z\",\n          \"Uri\": \"string\",\n          \"NoteId\": 8889,\n          \"Visibility\": 9290,\n          \"IsInvoiceDigitalCopy\": false\n        },\n        {\n          \"Id\": 1741,\n          \"Description\": \"string\",\n          \"Name\": \"string\",\n          \"TimeStamp\": \"1966-01-29T17:03:27.529Z\",\n          \"Uri\": \"string\",\n          \"NoteId\": 5297,\n          \"Visibility\": 5420,\n          \"IsInvoiceDigitalCopy\": false\n        }\n      ],\n      \"Visibility\": \"string\",\n      \"NoteType\": \"string\",\n      \"IsAttachmentNote\": false,\n      \"IsPinned\": false,\n      \"ActionResolveDetails\": {\n        \"IsResolved\": false,\n        \"ResolvedDate\": \"1946-11-04T15:19:20.412Z\"\n      }\n    }\n  ],\n  \"AllNotesCount\": 5273,\n  \"UserNotesCount\": 5418,\n  \"SystemNotesCount\": 3243\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c6ce5e9-d49b-40c6-a449-960888630fee",
+              "name": "The request was not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            917 &mdash; Invalid work order identifier. Returned if workorderId is &lt;= 0\r\n            922 &mdash; Invalid paging parameter. Returned if paging parameter doesn't correspond to valid format\r\n            922 &mdash; Invalid page number\r\n            922 &mdash; Invalid page size\r\n            502 &mdash; Work order is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "paging",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order.\r\n            <br />***Note:*** You need to have access to the WO location per your user settings."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TemplateOpenCloseDateError\",\n    \"UnknownBrandId\"\n  ],\n  \"ErrorCode\": \"UnSupportedApplication\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96cdda2c-6c5f-4301-a1e9-abc3c177d5fc",
+              "name": "The requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 &mdash; API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "paging",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order.\r\n            <br />***Note:*** You need to have access to the WO location per your user settings."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "46bc62dc-0398-4ffa-a6eb-372dff57a906",
+              "name": "The resource you are looking for has been removed, had its name changed, or is temporarily unavailable.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "paging",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order.\r\n            <br />***Note:*** You need to have access to the WO location per your user settings."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ce3d3502-b84a-47cf-a248-c6aacbd54957",
+              "name": "Something went wrong, and the server was unable to complete your request.\r\n            <br/>Error codes:\r\n            501 &mdash; Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "paging",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order.\r\n            <br />***Note:*** You need to have access to the WO location per your user settings."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e00737e9-4d6f-4e26-a538-af15409882b1",
+          "name": "Create a work order note",
+          "request": {
+            "name": "Create a work order note",
+            "description": {
+              "content": "Adds a new note to the specified work order. Returns the note ID for a successful request.\r\n            <br />Learn more about work order notes in [SCU](https://servicechannel.atlassian.net/wiki/x/4oPNKQ).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workorders",
+                ":workorderId",
+                "notes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workorderId",
+                  "description": "(Required) Unique numeric identifier of the work order where a note should be created.\r\n            _**Note:**_ You need to have access to the WO location per your user settings."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Note\": \"<string>\",\n  \"MailedTo\": \"<string>\",\n  \"ActionRequired\": false,\n  \"ScheduledDate\": \"<dateTime>\",\n  \"FollowUpDate\": \"<dateTime>\",\n  \"IsFollowUpDateChanged\": false,\n  \"AttachmentsIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"Visibility\": \"<integer>\",\n  \"Actor\": \"<string>\",\n  \"NotifyFollowers\": false,\n  \"DoNotSendEmail\": false,\n  \"IsPinned\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "48c2de23-2e42-4c3b-99f4-34c00650fd49",
+              "name": "The note has been created and added to the specified work order.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order where a note should be created.\r\n            _**Note:**_ You need to have access to the WO location per your user settings."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Note\": \"<string>\",\n  \"MailedTo\": \"<string>\",\n  \"ActionRequired\": false,\n  \"ScheduledDate\": \"<dateTime>\",\n  \"FollowUpDate\": \"<dateTime>\",\n  \"IsFollowUpDateChanged\": false,\n  \"AttachmentsIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"Visibility\": \"<integer>\",\n  \"Actor\": \"<string>\",\n  \"NotifyFollowers\": false,\n  \"DoNotSendEmail\": false,\n  \"IsPinned\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "65bd01c7-b1f5-4558-8103-1802eaca0366",
+              "name": "The request was not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            100 &mdash; You don't have location access to perform this operation\r\n            503 &mdash; Validation fails. Invalid `WorkOrder Id` or `Note` value\r\n            503 &mdash; Request is empty or null",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order where a note should be created.\r\n            _**Note:**_ You need to have access to the WO location per your user settings."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Note\": \"<string>\",\n  \"MailedTo\": \"<string>\",\n  \"ActionRequired\": false,\n  \"ScheduledDate\": \"<dateTime>\",\n  \"FollowUpDate\": \"<dateTime>\",\n  \"IsFollowUpDateChanged\": false,\n  \"AttachmentsIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"Visibility\": \"<integer>\",\n  \"Actor\": \"<string>\",\n  \"NotifyFollowers\": false,\n  \"DoNotSendEmail\": false,\n  \"IsPinned\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aaaaaa27-8a63-45bf-9cda-db943f1f3fa3",
+              "name": "The requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 &mdash; API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order where a note should be created.\r\n            _**Note:**_ You need to have access to the WO location per your user settings."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Note\": \"<string>\",\n  \"MailedTo\": \"<string>\",\n  \"ActionRequired\": false,\n  \"ScheduledDate\": \"<dateTime>\",\n  \"FollowUpDate\": \"<dateTime>\",\n  \"IsFollowUpDateChanged\": false,\n  \"AttachmentsIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"Visibility\": \"<integer>\",\n  \"Actor\": \"<string>\",\n  \"NotifyFollowers\": false,\n  \"DoNotSendEmail\": false,\n  \"IsPinned\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d9a0348-9f75-40fd-9b78-df120f029de8",
+              "name": "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/>Error codes:\r\n            100 &mdash; User is a provider or does not have the *PinnedNotes* FF enabled and is trying to add a pinned note\r\n            100 &mdash; User has no rights to perform this action",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order where a note should be created.\r\n            _**Note:**_ You need to have access to the WO location per your user settings."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Note\": \"<string>\",\n  \"MailedTo\": \"<string>\",\n  \"ActionRequired\": false,\n  \"ScheduledDate\": \"<dateTime>\",\n  \"FollowUpDate\": \"<dateTime>\",\n  \"IsFollowUpDateChanged\": false,\n  \"AttachmentsIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"Visibility\": \"<integer>\",\n  \"Actor\": \"<string>\",\n  \"NotifyFollowers\": false,\n  \"DoNotSendEmail\": false,\n  \"IsPinned\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "758c383d-5cc9-4cab-9c66-2454b957859b",
+              "name": "Something went wrong, and the server was unable to complete your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order where a note should be created.\r\n            _**Note:**_ You need to have access to the WO location per your user settings."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Note\": \"<string>\",\n  \"MailedTo\": \"<string>\",\n  \"ActionRequired\": false,\n  \"ScheduledDate\": \"<dateTime>\",\n  \"FollowUpDate\": \"<dateTime>\",\n  \"IsFollowUpDateChanged\": false,\n  \"AttachmentsIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"Visibility\": \"<integer>\",\n  \"Actor\": \"<string>\",\n  \"NotifyFollowers\": false,\n  \"DoNotSendEmail\": false,\n  \"IsPinned\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5484b70a-3058-4c4c-885e-c1afcd24e1ca",
+          "name": "Note email recipients",
+          "request": {
+            "name": "Note email recipients",
+            "description": {
+              "content": "<para>List of email recipients, who can be added to the list of note followers</para>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workorders",
+                ":workorderId",
+                "notes",
+                "recipients"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "showExcluded",
+                  "value": "false",
+                  "description": "If set to true, returns all recipients even those that have 'exclude from note recipient' flag in their setup. False by Default."
+                },
+                {
+                  "disabled": false,
+                  "key": "noteVisibility",
+                  "value": "<string>",
+                  "description": "NoteVisibility.Public is used by default"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workorderId",
+                  "description": "(Required) Numeric Id of the Work order to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "20f0d170-54dd-492f-a05b-071ec2d7b4a3",
+              "name": "Request succeeded and the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    "recipients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "showExcluded",
+                      "value": "false"
+                    },
+                    {
+                      "key": "noteVisibility",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Numeric Id of the Work order to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"Id\": 1238,\n    \"UserName\": \"string\",\n    \"Email\": \"string\",\n    \"RecipientType\": \"LocationNoteRecipient\"\n  },\n  {\n    \"Id\": 2304,\n    \"UserName\": \"string\",\n    \"Email\": \"string\",\n    \"RecipientType\": \"RegularRecipient\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98d51dfb-7d2a-46c9-9f11-acc1b5fd7759",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            <br/> 917 - Invalid work order identifier. Returned if workorderId is &lt;= 0;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    "recipients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "showExcluded",
+                      "value": "false"
+                    },
+                    {
+                      "key": "noteVisibility",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Numeric Id of the Work order to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad5aea7b-00e4-4e97-9006-70a9f9783cef",
+              "name": "Unauthorized indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    "recipients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "showExcluded",
+                      "value": "false"
+                    },
+                    {
+                      "key": "noteVisibility",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Numeric Id of the Work order to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1259a48c-adbb-4267-9e20-629b20d8194a",
+              "name": "The requested resource does not exist on the server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    "recipients"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "showExcluded",
+                      "value": "false"
+                    },
+                    {
+                      "key": "noteVisibility",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Numeric Id of the Work order to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e31662d0-8c27-4c18-84b4-f8ebecfe5159",
+          "name": "Add Followers to Work order notes",
+          "request": {
+            "name": "Add Followers to Work order notes",
+            "description": {
+              "content": "<para>Add Followers to Work order.</para>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workorders",
+                ":workorderId",
+                "notes",
+                "followers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workorderId",
+                  "description": "(Required) Numeric Id of the Work order to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"FollowersList\": \"<string>\",\n  \"UserIds\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5ed462ac-a704-4d16-9fb4-bb5e35c1d370",
+              "name": "Created indicates that the request resulted in a new resource created before the response was sent.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    "followers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Numeric Id of the Work order to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"FollowersList\": \"<string>\",\n  \"UserIds\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "12478b49-0ab4-4fd4-8914-19c07ff1cde0",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.<br>Error codes:<br>503 - Request data is empty;<br>There is no followers in request;<br>Empty tracking number (workorder Id);",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    "followers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Numeric Id of the Work order to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"FollowersList\": \"<string>\",\n  \"UserIds\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06f47708-a5cb-4c36-89bd-d7a7295c3cd2",
+              "name": "Indicates that the requested resource does not exist on the server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    "followers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Numeric Id of the Work order to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"FollowersList\": \"<string>\",\n  \"UserIds\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0b9155f7-092c-4c8c-8038-32da1aa9918b",
+          "name": "Remove Follower from Work order notes",
+          "request": {
+            "name": "Remove Follower from Work order notes",
+            "description": {
+              "content": "<para>Remove Follower from Work order.</para>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workorders",
+                ":workorderId",
+                "notes",
+                "followers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<string>",
+                  "description": "(Required) The follower email address."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workorderId",
+                  "description": "(Required) Numeric Id of the Work order to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8eb2905e-e82b-4240-9a28-7bdda4256102",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    "followers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Numeric Id of the Work order to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ea693227-f938-4544-b723-b1ad7f03ffbc",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.<br>Error codes:<br>503 - Request data is empty;<br>There is no followers in request;<br>Empty tracking number (workorder Id);",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    "followers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Numeric Id of the Work order to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4446148-642d-482b-a317-5c6059fadfb5",
+              "name": "Indicates that the requested resource does not exist on the server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    "followers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Numeric Id of the Work order to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2f123c5f-5dcb-449e-aa2f-1f24c089ea21",
+          "name": "Partially update a work order note",
+          "request": {
+            "name": "Partially update a work order note",
+            "description": {
+              "content": "Updates a work order note partially. For example, pins or unpins the work order note. For a successful request, returns the note ID in the response.\r\n            <br />Available behind the *PinnedNotes* feature flag.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workorders",
+                ":workorderId",
+                "notes",
+                ":noteId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workorderId",
+                  "description": "(Required) Unique numeric identifier of the work order."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "noteId",
+                  "description": "(Required) Unique numeric identifier of the note. To get the `noteId`, run the following method: [GET/workorders/{workorderId}/notes](https://developer.servicechannel.com/swagger/index.html#/Notes/GETv3_workorders_%7BworkorderId%7D_notes%3Fpaging%3D%7Bpaging%7D). One note can be pinned to a single WO at a time."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"IsPinned\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0bd08174-0e4b-4e5f-a9a0-3073e4304da8",
+              "name": "The work order note was successfully patched.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    ":noteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "noteId",
+                      "description": "(Required) Unique numeric identifier of the note. To get the `noteId`, run the following method: [GET/workorders/{workorderId}/notes](https://developer.servicechannel.com/swagger/index.html#/Notes/GETv3_workorders_%7BworkorderId%7D_notes%3Fpaging%3D%7Bpaging%7D). One note can be pinned to a single WO at a time."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"IsPinned\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d0020578-9e16-42f5-9b54-d4eb663481fd",
+              "name": "The request was not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 &mdash; Request data is empty\r\n            503 &mdash; Empty tracking number (workorder Id)\r\n            1301 &mdash; Request is empty or null",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    ":noteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "noteId",
+                      "description": "(Required) Unique numeric identifier of the note. To get the `noteId`, run the following method: [GET/workorders/{workorderId}/notes](https://developer.servicechannel.com/swagger/index.html#/Notes/GETv3_workorders_%7BworkorderId%7D_notes%3Fpaging%3D%7Bpaging%7D). One note can be pinned to a single WO at a time."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"IsPinned\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01d5a8ff-e9f1-47c2-9479-903552c072f1",
+              "name": "The requested resource requires authentication.\r\n            <br/>Error codes:\r\n            504 &mdash; API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    ":noteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "noteId",
+                      "description": "(Required) Unique numeric identifier of the note. To get the `noteId`, run the following method: [GET/workorders/{workorderId}/notes](https://developer.servicechannel.com/swagger/index.html#/Notes/GETv3_workorders_%7BworkorderId%7D_notes%3Fpaging%3D%7Bpaging%7D). One note can be pinned to a single WO at a time."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"IsPinned\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0289083-6134-4250-999a-7a955d867a75",
+              "name": "You are not authorized to request this resource, or the resource is unavailable for some reason.\r\n            <br/>Error codes:\r\n            100 &mdash; User has no rights to perform this action",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    ":noteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "noteId",
+                      "description": "(Required) Unique numeric identifier of the note. To get the `noteId`, run the following method: [GET/workorders/{workorderId}/notes](https://developer.servicechannel.com/swagger/index.html#/Notes/GETv3_workorders_%7BworkorderId%7D_notes%3Fpaging%3D%7Bpaging%7D). One note can be pinned to a single WO at a time."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"IsPinned\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "beb81bd7-0b04-42d6-a6ec-f8b876fbee91",
+              "name": "The requested resource does not exist on the server.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    ":noteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "noteId",
+                      "description": "(Required) Unique numeric identifier of the note. To get the `noteId`, run the following method: [GET/workorders/{workorderId}/notes](https://developer.servicechannel.com/swagger/index.html#/Notes/GETv3_workorders_%7BworkorderId%7D_notes%3Fpaging%3D%7Bpaging%7D). One note can be pinned to a single WO at a time."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"IsPinned\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "false",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b418d5b6-f7a2-4a63-afc4-f4ae055e6e9f",
+              "name": "Something went wrong, and the server was unable to complete your request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workorders",
+                    ":workorderId",
+                    "notes",
+                    ":noteId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) Unique numeric identifier of the work order."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "noteId",
+                      "description": "(Required) Unique numeric identifier of the note. To get the `noteId`, run the following method: [GET/workorders/{workorderId}/notes](https://developer.servicechannel.com/swagger/index.html#/Notes/GETv3_workorders_%7BworkorderId%7D_notes%3Fpaging%3D%7Bpaging%7D). One note can be pinned to a single WO at a time."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"IsPinned\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e0686740-1bc5-4737-a2e4-6ac67a63872e",
+          "name": "Retrieve work order notes",
+          "request": {
+            "name": "Retrieve work order notes",
+            "description": {
+              "content": "Returns work order notes and attachments for the specified WO ID.\r\n            <br />Supports filtering and sorting within the response.\r\n             • **$expand:** Expand a navigation property. For example, enter **`attachments`**. To include specific fields for the expanded property, combine with the **`$select`** query option, for example, **`attachments($select=Id,Name)`**.\r\n             • **$select:** Select a set of properties to return. For example, **`Id,NoteData,CompanyName,CreatedBy`**.\r\n             • **$filter:** Filter notes by the specified property in the response. For example, **`NoteType eq 'UsersNote'`**.\r\n             • **$orderby:** Order notes by the specified property in the response — in ascending **`asc`** or descending **`desc`** order. For example, **`DateCreated asc`** or **`DateCreated desc`**. \r\n             • **$top:** Return the specified number of notes in the response.\r\n             • **$skip:** Skip the specified number of notes in the response.\r\n             • **$count:** Include the count of the matching notes in the response.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "odata",
+                "workorders({{workorderId}})",
+                "notes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Expand a navigation property."
+                },
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Select a set of properties to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "$filter",
+                  "value": "<string>",
+                  "description": "Filter a collection of resources addressed by a request URL."
+                },
+                {
+                  "disabled": false,
+                  "key": "$orderby",
+                  "value": "<string>",
+                  "description": "Order resources by the specified property in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Return the specified number of items in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$skip",
+                  "value": "<integer>",
+                  "description": "Skip the specified number of items in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$count",
+                  "value": "<boolean>",
+                  "description": "Include the count of the matching resources in the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "63ee0d31-1218-4950-8953-0e647ef43632",
+              "name": "Notes associated with the work order are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workorders({{workorderId}})",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"Id\": 2265,\n    \"DocumentId\": \"string\",\n    \"GroupId\": \"string\",\n    \"Number\": 1812,\n    \"NoteData\": \"string\",\n    \"DateCreated\": \"1981-01-14T22:56:08.960Z\",\n    \"ScheduledDate\": \"2018-06-24T19:35:16.006Z\",\n    \"FollowUpDate\": \"2007-06-18T21:09:52.351Z\",\n    \"ActionRequired\": false,\n    \"MailedTo\": \"string\",\n    \"CreatedBy\": \"string\",\n    \"CompanyName\": \"string\",\n    \"Attachments\": [\n      {\n        \"Id\": 9042,\n        \"Description\": \"string\",\n        \"Name\": \"string\",\n        \"TimeStamp\": \"2006-08-31T16:10:16.896Z\",\n        \"Uri\": \"string\",\n        \"NoteId\": 9226,\n        \"Visibility\": 4124,\n        \"IsInvoiceDigitalCopy\": false,\n        \"UploadBy\": \"string\"\n      },\n      {\n        \"Id\": 2220,\n        \"Description\": \"string\",\n        \"Name\": \"string\",\n        \"TimeStamp\": \"2006-07-29T01:39:26.331Z\",\n        \"Uri\": \"string\",\n        \"NoteId\": 7139,\n        \"Visibility\": 3953,\n        \"IsInvoiceDigitalCopy\": false,\n        \"UploadBy\": \"string\"\n      }\n    ],\n    \"IsPinned\": false,\n    \"Visibility\": \"string\",\n    \"NoteType\": \"SystemNote\",\n    \"IsAttachmentNote\": false,\n    \"ActionResolveDetails\": {\n      \"IsResolved\": false,\n      \"ResolvedDate\": \"1993-07-02T18:23:02.358Z\"\n    }\n  },\n  {\n    \"Id\": 2567,\n    \"DocumentId\": \"string\",\n    \"GroupId\": \"string\",\n    \"Number\": 5631,\n    \"NoteData\": \"string\",\n    \"DateCreated\": \"1995-08-26T01:00:34.449Z\",\n    \"ScheduledDate\": \"1990-05-23T01:15:21.802Z\",\n    \"FollowUpDate\": \"2011-01-12T16:41:25.230Z\",\n    \"ActionRequired\": false,\n    \"MailedTo\": \"string\",\n    \"CreatedBy\": \"string\",\n    \"CompanyName\": \"string\",\n    \"Attachments\": [\n      {\n        \"Id\": 4604,\n        \"Description\": \"string\",\n        \"Name\": \"string\",\n        \"TimeStamp\": \"1952-06-26T04:16:32.981Z\",\n        \"Uri\": \"string\",\n        \"NoteId\": 5958,\n        \"Visibility\": 3299,\n        \"IsInvoiceDigitalCopy\": false,\n        \"UploadBy\": \"string\"\n      },\n      {\n        \"Id\": 3216,\n        \"Description\": \"string\",\n        \"Name\": \"string\",\n        \"TimeStamp\": \"1972-01-19T14:19:36.429Z\",\n        \"Uri\": \"string\",\n        \"NoteId\": 2820,\n        \"Visibility\": 2765,\n        \"IsInvoiceDigitalCopy\": false,\n        \"UploadBy\": \"string\"\n      }\n    ],\n    \"IsPinned\": false,\n    \"Visibility\": \"string\",\n    \"NoteType\": \"SystemNote\",\n    \"IsAttachmentNote\": false,\n    \"ActionResolveDetails\": {\n      \"IsResolved\": false,\n      \"ResolvedDate\": \"1955-04-09T07:06:59.607Z\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24059df7-b584-43bf-bcf2-f1095b33a8b1",
+              "name": "The request was not accepted due to bad syntax, missing parameters, insufficient data, etc.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workorders({{workorderId}})",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b56e1752-1731-435b-b0a8-4865803e3284",
+              "name": "The resource you are looking for has been removed, had its name changed, or is temporarily unavailable.\r\n        <br/>Error codes:\r\n        502 &mdash; Work order is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workorders({{workorderId}})",
+                    "notes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6faf9a68-3253-45cf-a655-94e8370ae9d1",
+          "name": "Get a work order note by note ID",
+          "request": {
+            "name": "Get a work order note by note ID",
+            "description": {
+              "content": "Returns a specific note that matches the entered work order ID and note ID.\r\n            <br />Supports filtering and sorting within the response.\r\n             • **$expand:** Expand a navigation property. For example, `attachments`. To include specific fields for the expanded property, combine with the `$select` query option, for example, `attachments($select=Id,Name)`. \r\n             • **$select:** Select a set of properties to return. For example, `Id,NoteData,CompanyName,CreatedBy`. \r\n             • **$filter:** Not applicable for this method.\r\n             • **$orderby:** Not applicable for this method.\r\n             • **$top:** Not applicable for this method.\r\n             • **$skip:** Not applicable for this method.\r\n             • **$count:** Include the count of the matching resources in the response.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "odata",
+                "workorders({{workorderId}})",
+                "notes({{noteId}})"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$expand",
+                  "value": "<string>",
+                  "description": "Expand a navigation property."
+                },
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Select a set of properties to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "$filter",
+                  "value": "<string>",
+                  "description": "Filter a collection of resources addressed by a request URL."
+                },
+                {
+                  "disabled": false,
+                  "key": "$orderby",
+                  "value": "<string>",
+                  "description": "Order resources by the specified property in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Return the specified number of items in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$skip",
+                  "value": "<integer>",
+                  "description": "Skip the specified number of items in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$count",
+                  "value": "<boolean>",
+                  "description": "Include the count of the matching resources in the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3f65facb-392b-44a7-8e49-6ca2d81a072a",
+              "name": "The requested work order note is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workorders({{workorderId}})",
+                    "notes({{noteId}})"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"Id\": 2528,\n    \"DocumentId\": \"string\",\n    \"GroupId\": \"string\",\n    \"Number\": 5,\n    \"NoteData\": \"string\",\n    \"DateCreated\": \"1990-06-04T12:11:04.115Z\",\n    \"ScheduledDate\": \"1968-12-17T03:21:18.981Z\",\n    \"FollowUpDate\": \"1951-11-30T17:13:26.301Z\",\n    \"ActionRequired\": false,\n    \"MailedTo\": \"string\",\n    \"CreatedBy\": \"string\",\n    \"CompanyName\": \"string\",\n    \"Attachments\": [\n      {\n        \"Id\": 7099,\n        \"Description\": \"string\",\n        \"Name\": \"string\",\n        \"TimeStamp\": \"1981-12-08T20:29:07.893Z\",\n        \"Uri\": \"string\",\n        \"NoteId\": 8707,\n        \"Visibility\": 9290,\n        \"IsInvoiceDigitalCopy\": false,\n        \"UploadBy\": \"string\"\n      },\n      {\n        \"Id\": 2344,\n        \"Description\": \"string\",\n        \"Name\": \"string\",\n        \"TimeStamp\": \"2004-11-01T01:24:36.566Z\",\n        \"Uri\": \"string\",\n        \"NoteId\": 3112,\n        \"Visibility\": 2375,\n        \"IsInvoiceDigitalCopy\": false,\n        \"UploadBy\": \"string\"\n      }\n    ],\n    \"IsPinned\": false,\n    \"Visibility\": \"string\",\n    \"NoteType\": \"UsersNote\",\n    \"IsAttachmentNote\": false,\n    \"ActionResolveDetails\": {\n      \"IsResolved\": false,\n      \"ResolvedDate\": \"2000-04-23T05:38:47.010Z\"\n    }\n  },\n  {\n    \"Id\": 5630,\n    \"DocumentId\": \"string\",\n    \"GroupId\": \"string\",\n    \"Number\": 4011,\n    \"NoteData\": \"string\",\n    \"DateCreated\": \"1982-12-06T07:01:45.514Z\",\n    \"ScheduledDate\": \"2021-07-16T05:11:22.406Z\",\n    \"FollowUpDate\": \"2021-06-10T01:28:47.315Z\",\n    \"ActionRequired\": false,\n    \"MailedTo\": \"string\",\n    \"CreatedBy\": \"string\",\n    \"CompanyName\": \"string\",\n    \"Attachments\": [\n      {\n        \"Id\": 3809,\n        \"Description\": \"string\",\n        \"Name\": \"string\",\n        \"TimeStamp\": \"1977-10-30T21:09:15.569Z\",\n        \"Uri\": \"string\",\n        \"NoteId\": 1458,\n        \"Visibility\": 3168,\n        \"IsInvoiceDigitalCopy\": false,\n        \"UploadBy\": \"string\"\n      },\n      {\n        \"Id\": 9767,\n        \"Description\": \"string\",\n        \"Name\": \"string\",\n        \"TimeStamp\": \"2018-09-12T14:44:33.425Z\",\n        \"Uri\": \"string\",\n        \"NoteId\": 5297,\n        \"Visibility\": 7250,\n        \"IsInvoiceDigitalCopy\": false,\n        \"UploadBy\": \"string\"\n      }\n    ],\n    \"IsPinned\": false,\n    \"Visibility\": \"string\",\n    \"NoteType\": \"SystemNote\",\n    \"IsAttachmentNote\": false,\n    \"ActionResolveDetails\": {\n      \"IsResolved\": false,\n      \"ResolvedDate\": \"1970-02-27T17:24:23.613Z\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9ddc875a-485e-4156-8622-b94407493067",
+              "name": "The request was not accepted due to bad syntax, missing parameters, insufficient data, etc.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workorders({{workorderId}})",
+                    "notes({{noteId}})"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9d42323-5189-4681-bfc5-fd1b9ab83210",
+              "name": "The resource you are looking for has been removed, had its name changed, or is temporarily unavailable.\r\n        <br/>Error codes:\r\n        502 &mdash; Work order is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "odata",
+                    "workorders({{workorderId}})",
+                    "notes({{noteId}})"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$expand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$count",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UnknownStoreId\",\n    \"ContractServicePMServiceCantChangeTrade\"\n  ],\n  \"ErrorCode\": \"TemplateMissedProviderError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sb2fixxbook.servicechannel.com:443/api",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) Tracking number of the work order.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<integer>",
+      "key": "workorderId"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) Unique numeric identifier of the work order note. To get a note ID, run the [GET/workorders/{workorderId}/notes](https://developer.servicechannel.com/swagger/index.html#/Notes/GETv3_workorders_%7BworkorderId%7D_notes%3Fpaging%3D%7Bpaging%7D) method.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<long>",
+      "key": "noteId"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c3592a65-3de5-452f-94e2-18edfa9bec6e",
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Notes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

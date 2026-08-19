@@ -1,0 +1,286 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours ResolutionCodes API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ResolutionCodes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get resolution codes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resolutionCodes",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "Unique subscriber identifier."
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query",
+                "description": "Trade to return resolution codes for. A trade is an area of work for which a service is performed, such as _HVAC_, _Refrigeration_, or _Plumbing_.\r\n            <b>The value of this or the TradeId attribute is required.</b>\r\n            Parameter is obsolete. Please use <b>TradeId</b> instead"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Category to return resolution codes for. A category is the overall classification of a work order, such as _Maintenance_, _Repair_, or _CAPEX_.\r\n            <b>The value of this or the CategoryId attribute is required.</b>\r\n            Parameter is obsolete. Please use <b>CategoryId</b> instead"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "Unique identifier of a subscriber’s location."
+              },
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "query",
+                "description": "Unique provider identifier. Should be passed by subscriber users."
+              },
+              {
+                "name": "assetCategoryIds",
+                "value": "",
+                "type": "query",
+                "description": "IDs of asset categories to return resolution codes for. You can specify up to 5 asset categories if you have access to this functionality."
+              },
+              {
+                "name": "keyword",
+                "value": "",
+                "type": "query",
+                "description": "Keyword contained in resolution codes to perform the search by."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Results page number."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of objects on the results page. The default is 10."
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query",
+                "description": "TradeId to return resolution codes for. If 'tradeId' is passed, 'trade' parameter is ignored\r\n            <b>The value of this or the Trade attribute is required.</b>"
+              },
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "query",
+                "description": "CategoryId to return resolution codes for. If 'categoryId' is passed, 'category' parameter is ignored\r\n            <b>The value of this or the Category attribute is required.</b>"
+              }
+            ]
+          },
+          "docs": "Returns a list of resolution codes. Resolution codes are set up for trades and describe actions that a technician takes to resolve a problem upon working on a service request."
+        },
+        {
+          "info": {
+            "name": "Add or update resolution codes for a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/resolutionCodes"
+          },
+          "docs": "Associates resolution codes with the specified work order. If resolution codes are already added to a work order, you can change them by sending the request.\r\n            <br />Learn [how providers can add or edit resolution codes](https://servicechannel.atlassian.net/wiki/spaces/SCUCP/pages/1688502858/Resolution+and+Root+Causes+Codes+in+Provider+Automation#ResolutionandRootCausesCodesinProviderAutomation-ProcessingRRCsProcessingResolutionandRootCauseCodes) in ServiceChannel University.\r\n       "
+        },
+        {
+          "info": {
+            "name": "Get resolution codes and root causes for a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resolutionCodes/:workOrderId",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the work order to return resolution codes and root causes for."
+              }
+            ]
+          },
+          "docs": "Returns resolution codes and root causes for the specified work order.\r\n             • A **resolution code** is an action that a technician takes to resolve a problem upon working on a service request.\r\n             • A **root cause** is a reason why the problem occurred to begin with.\r\n            <br />Resolution codes and root causes are set up for specific trades and are standardized. If there are resolution codes and root causes configured for a work order trade, a technician is prompted to"
+        },
+        {
+          "info": {
+            "name": "Get root causes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resolutionCodes/rootCauses",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "Unique subscriber identifier."
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query",
+                "description": "Trade to return root causes for. A trade is an area of work for which a service is performed, such as _HVAC_, _Refrigeration_, or _Plumbing_.\r\n            <b>The value of this or the TradeId attribute is required.</b>\r\n            Parameter is obsolete. Please use <b>TradeId</b> instead"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Category to return root causes for. A category is the overall classification of a work order, such as _Maintenance_, _Repair_, or _CAPEX_.\r\n            <b>The value of this or the CategoryId attribute is required.</b>\r\n            Parameter is obsolete. Please use <b>CategoryId</b> instead"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "Unique identifier of a subscriber’s location."
+              },
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "query",
+                "description": "Unique provider identifier. Should be passed by subscriber users."
+              },
+              {
+                "name": "assetCategoryIds",
+                "value": "",
+                "type": "query",
+                "description": "IDs of asset categories to return root causes for. You can specify up to 5 asset categories if you have access to this functionality."
+              },
+              {
+                "name": "keyword",
+                "value": "",
+                "type": "query",
+                "description": "Keyword contained in root causes to perform the search by."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Results page number."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of objects on the results page. The default is 10."
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query",
+                "description": "TradeId to return root causes for. If 'tradeId' is passed, 'trade' parameter is ignored\r\n            <b>The value of this or the Trade attribute is required.</b>"
+              },
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "query",
+                "description": "CategoryId to return root causes for. If 'categoryId' is passed, 'category' parameter is ignored\r\n            <b>The value of this or the Category attribute is required.</b>"
+              }
+            ]
+          },
+          "docs": "Returns a list of root causes. Root causes are set up for trades and describe reasons why the problem occurred to begin with."
+        },
+        {
+          "info": {
+            "name": "Add or update root causes for a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/resolutionCodes/rootCauses"
+          },
+          "docs": "For users who have access to asset categories, associates root causes with the specified work order. If root causes are already added to a work order, you can replace them by sending the request. You need to specify one root cause for each asset category of a work order.\r\n            <br />Get root cause IDs using the [GET /resolutionCodes/rootCauses](/swagger/ui/index?version=3#/ResolutionCodes/GETv3_resolutionCodes_rootCauses_subscriberId__subscriberId__trade__trade__category__category__locati"
+        },
+        {
+          "info": {
+            "name": "Add or update root causes for a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/resolutionCodes/rootCauses/:workOrderId",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order to add, update, or delete a root cause for."
+              },
+              {
+                "name": "rootCauseId",
+                "value": "",
+                "type": "query",
+                "description": "ID of the root cause to associate with the work order. Ignore this parameter to remove the current root causes from the work order."
+              },
+              {
+                "name": "rootCauseText",
+                "value": "",
+                "type": "query",
+                "description": "Comment explaining your understanding of the root cause of the work order.<br />Enabled for root causes with the `HasFreeText` attribute. The maximum length is 100 characters."
+              }
+            ]
+          },
+          "docs": "For users who don't have access to asset categories, associates a root cause with the specified work order. If a root cause is already added to a work order, you can change it by sending the request.\r\n            <br />Before adding a root cause, use the [GET /resolutionCodes/rootCauses](/swagger/ui/index?version=3#/ResolutionCodes/GETv3_resolutionCodes_rootCauses_subscriberId__subscriberId__trade__trade__category__category__locationId__locationId__providerId__providerId__assetCategoryIds_0___as"
+        },
+        {
+          "info": {
+            "name": "Retrieve asset categories for a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resolutionCodes/:workOrderId/assetCategories",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order to return asset categories for."
+              }
+            ]
+          },
+          "docs": "Returns asset categories associated with the specified work order. Asset categories represent a standardized classification of asset types.\r\n            <br />***Note:*** Only users who have access to asset categories can send this request."
+        },
+        {
+          "info": {
+            "name": "Add or update asset categories for a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/resolutionCodes/:workOrderId/assetCategories",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order to add asset categories to."
+              }
+            ]
+          },
+          "docs": "Associates asset categories with the specified work order. Sending this request replaces the current asset categories.\r\n            <br />Asset categories represent a standardized classification of asset types. You can add no more than 5 asset categories to a work order.\r\n            <br />***Note:*** Only users who have access to asset categories can send this request.    \r\n            <br />**Example Request**\r\n            \r\n               POST /resolutionCodes/{workOrderId}/assetCategories\r\n "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

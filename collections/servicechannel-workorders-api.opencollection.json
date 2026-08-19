@@ -1,0 +1,1993 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours WorkOrders API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "WorkOrders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Work Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "UID of location."
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "query",
+                "description": "StoreId of location. Used to find location for which search will be performed. Applicable to subscribers only."
+              },
+              {
+                "name": "otherLocationId",
+                "value": "",
+                "type": "query",
+                "description": "UID of location, exact search by default"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "UID of work order, exact search by default"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Category of work order, exact search by default"
+              },
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "query",
+                "description": "CategoryId, ID of categories to return work orders for"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Status of work order, exact search by default"
+              },
+              {
+                "name": "extendedStatus",
+                "value": "",
+                "type": "query",
+                "description": "Extended status of work order, exact search by default"
+              },
+              {
+                "name": "number",
+                "value": "",
+                "type": "query",
+                "description": "Work order number, 'starts with' search criteria by default"
+              },
+              {
+                "name": "serviceId",
+                "value": "",
+                "type": "query",
+                "description": "'starts with' search criteria by default"
+              },
+              {
+                "name": "priority",
+                "value": "",
+                "type": "query",
+                "description": "Priority of work order, exact search by default"
+              },
+              {
+                "name": "purchaseNumber",
+                "value": "",
+                "type": "query",
+                "description": "Purchase number of work order, 'starts with' search criteria by default"
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query",
+                "description": "Trade, 'starts with' search criteria by default"
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query",
+                "description": "TradeId, ID of trades to return work orders for"
+              },
+              {
+                "name": "scheduledDate",
+                "value": "",
+                "type": "query",
+                "description": "Scheduled date"
+              },
+              {
+                "name": "expirationDate",
+                "value": "",
+                "type": "query",
+                "description": "Expiration date"
+              },
+              {
+                "name": "callDate",
+                "value": "",
+                "type": "query",
+                "description": "Call date"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort resources by the specified property in the response."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Results page number."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of objects on the results page. The default and maximum per page is 50."
+              }
+            ]
+          },
+          "docs": "Performs search of workorders by specified filter expression and returns list of work orders with all details.\r\n            <br />One page contains 50 items by default (\"pageSize\"=50). To get next 50 items use the \"page\" parameter (for example page=2 and so on)."
+        },
+        {
+          "info": {
+            "name": "Create a Work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders"
+          },
+          "docs": "Creates a new Work order. Returns Work order Id for successful request.\r\n            <br />Available for provider and subscriber usage.\r\n            <br />Additional info:\r\n            <br />Updates GL code based on passed Category param according to settings in Admin module {go to Admin =&gt; Accounting =&gt; GlCodes to see user GL codes}.\r\n            Similar logic is used when you create Work order through next path: Dashboard =&gt; Request Service."
+        },
+        {
+          "info": {
+            "name": "Update a Work order Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/status",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Updates Work Order status with optional Note. Returns Work order Id for successful request.\r\n            <br /><br />This method can only be used for users with 'WorkOrderStatusChange' permissions.\r\n            Available for provider and subscriber usage."
+        },
+        {
+          "info": {
+            "name": "Update Work order Priority",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/priority",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Updates Work Order priority. Returns Work order Id for successful request.\r\n            <br /><br />This method can only be used for users with 'WorkOrderFullEdit' permissions."
+        },
+        {
+          "info": {
+            "name": "Update the work order category",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/category",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order you want to update the category for."
+              }
+            ]
+          },
+          "docs": "Updates the category of the specified work order (WO) with the passed value. Note that you cannot update the category of an invoiced service request.\r\n            <br />If the WO category does not have a GL code mapping with the WO trade, you will get an error message listing valid categories for this trade based on existing GL codes. You can retrieve valid categories for a specific trade by sending the [GET /categories/glcodes](/swagger/ui/index?version=3#/Categories/GETv3_categories_glcodes_lo"
+        },
+        {
+          "info": {
+            "name": "Update Work order NTE",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/nte",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Updates Work Order NTE. Returns Work order Id for successful request.\r\n            <br /><br />This method can only be used for users with 'WorkOrderFullEdit' permissions."
+        },
+        {
+          "info": {
+            "name": "Create Work orders project approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders/:workOrderId/projectApproval",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Create Work orders project approval. Returns successfully updated id.\r\n            <br /><br />This method can only be used for users with 'WorkOrderFullEdit' permissions."
+        },
+        {
+          "info": {
+            "name": "Update Work orders NTE project approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workOrderId/projectApproval",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Update Work orders NTE project approval. Returns successfully updated id.\r\n            <br /><br />This method can only be used for users with 'WorkOrderFullEdit' permissions."
+        },
+        {
+          "info": {
+            "name": "Update Work order Scheduled Date",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/scheduledate",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              },
+              {
+                "name": "rescheduleReasonCode",
+                "value": "",
+                "type": "query",
+                "description": "Numeric reschedule reason code. Optional."
+              }
+            ]
+          },
+          "docs": "Updates Work Order Scheduled Date. Returns Work order Id for successful request.\r\n            <br /><br />Available for provider and subscriber usage.\r\n            This method can only be used for users with 'WorkOrderScheduledDateChange' permissions."
+        },
+        {
+          "info": {
+            "name": "Update Work order Description",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/description",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Updates Work Order Description. Returns Work order Id for successful request.\r\n            <br /><br />This method can only be used for users with 'WorkOrderFullEdit' permissions."
+        },
+        {
+          "info": {
+            "name": "Change Work order Trade",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/trade",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Change Work order Trade"
+        },
+        {
+          "info": {
+            "name": "Add Work order Resolution",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders/:workorderId/resolution",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Adds Resolution to Work order. Returns Resolution Id for successful request."
+        },
+        {
+          "info": {
+            "name": "Update Work order Caller",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/caller",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Updates Work order Caller. Returns Work order Id for successful request.\r\n            <br /><br />This method can only be used for users with 'WorkOrderFullEdit' permissions."
+        },
+        {
+          "info": {
+            "name": "Update Work order Purchase Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/ponumber",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Updates Work order Purchase Number. Returns Work order Id for successful request.\r\n            <br /><br />This method can only be used for users with 'WorkOrderFullEdit' permissions."
+        },
+        {
+          "info": {
+            "name": "Update Work Order Projected Completion Date",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workOrderId/projectedCompletionDate",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Updates Work Order Projected Completion Date. Returns Work order Id for successful request.\r\n            <br /><br />Available for provider and subscriber usage.\r\n            This method can only be used for work orders of subscribers that have \"ShowEstimatedCompletionDate\" and \"ShowEstimatedCompletionDate2_0\" and \"ShowEstimatedCompletionDate3_0\" features enabled."
+        },
+        {
+          "info": {
+            "name": "Update Work order Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/wonumber",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Updates Work order Number.\r\n            <br /><br />This method can only be used for users with 'WorkOrderFullEdit' permissions."
+        },
+        {
+          "info": {
+            "name": "Update ProjectId",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/projectid",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Updates ProjectId."
+        },
+        {
+          "info": {
+            "name": "Unlink ProjectId",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/projectid/unlink",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Unlink ProjectId."
+        },
+        {
+          "info": {
+            "name": "Update weather type",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/weatherTypeId",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber Id to use (if logged in as a provider)."
+              }
+            ]
+          },
+          "docs": "Updates weather type.\r\n            <br /><br />This method can only be used for users with 'WorkOrderFullEdit' permissions."
+        },
+        {
+          "info": {
+            "name": "Update issue choice on WO",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/issueChoice",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber Id to use (if logged in as a provider)."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "UID of location"
+              }
+            ]
+          },
+          "docs": "Update issue choice on WO"
+        },
+        {
+          "info": {
+            "name": "Reassign Work Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/reassign",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Reassign Work Order to another provider. Returns Work order Id for successful request.\r\n            <br /><br />Available for provider and subscriber usage."
+        },
+        {
+          "info": {
+            "name": "Work order reassignment reasons",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/reassign/reasons",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "This parameter is required only for provider."
+              }
+            ]
+          },
+          "docs": "List Work order reassignment reasons.\r\n            <br /><br />Available for provider and subscriber usage.\r\n            <br /><br />SubscriberId is used to determine provider access to the action ('WorkOrderReassign' EffectiveProviderPermissions, calculated flag. Calculated by ProviderAuthorizationHandler)"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workorderId",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "A single Work order object with all its details."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Work order related information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/issueinfo/:workorderId",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "A single issue info."
+        },
+        {
+          "info": {
+            "name": "Validate Check-In action",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workorderId/validateCheckIn",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              },
+              {
+                "name": "workTypeId",
+                "value": "",
+                "type": "query",
+                "description": "Optional, type work Id. 1 - 'Repair', 2 - 'Travel'\r\n            Default value is 1 ('Repair'). Supports custom types."
+              },
+              {
+                "name": "latitude",
+                "value": "",
+                "type": "query",
+                "description": "Global position. Latitude"
+              },
+              {
+                "name": "longitude",
+                "value": "",
+                "type": "query",
+                "description": "Global position. Longitude"
+              }
+            ]
+          },
+          "docs": "Validate Check-In action"
+        },
+        {
+          "info": {
+            "name": "Validate Check-Out action",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workorderId/validateCheckOut",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              },
+              {
+                "name": "workTypeId",
+                "value": "",
+                "type": "query",
+                "description": "Optional, type work Id. 1 - 'Repair', 2 - 'Travel'\r\n            Default value is 1 ('Repair'). Supports custom types."
+              },
+              {
+                "name": "latitude",
+                "value": "",
+                "type": "query",
+                "description": "Global position. Latitude"
+              },
+              {
+                "name": "longitude",
+                "value": "",
+                "type": "query",
+                "description": "Global position. Longitude"
+              }
+            ]
+          },
+          "docs": "Validate Check-Out action"
+        },
+        {
+          "info": {
+            "name": "Perform a check-in",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders/:workorderId/universalCheckIn",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of the work order for which you want to report a check-in."
+              }
+            ]
+          },
+          "docs": "Creates a check-in record of the indicated work type: travel, repair, or custom. Returns `MechanicId` for a successful request.\r\n            See the [Check-In/Out guide](/guides/checkin/about-check-in-out/) for code snippets and detailed instructions.\r\n            <br />***Note:*** [Special permission](/guides/checkin/before-you-start/#check-inout-permissions) is required for the Travel and Repair work types.\r\n            <br />**Example Request**\r\n            \r\n                POST /workorders/"
+        },
+        {
+          "info": {
+            "name": "Perform a check-out",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders/:workorderId/universalCheckOut",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of the work order for which you want to report a check-out."
+              }
+            ]
+          },
+          "docs": "Creates a check-out record of the indicated work type: travel, repair, or custom. Returns `MechanicId` for a successful request.\r\n            See the [Check-In/Out guide](/guides/checkin/about-check-in-out/) for code snippets and detailed instructions.\r\n            <br />***Note:*** [Special permission](/guides/checkin/before-you-start/#check-inout-permissions) is required for the Travel and Repair work types.\r\n            <br />**Example Request**\r\n            \r\n                POST /workorders"
+        },
+        {
+          "info": {
+            "name": "Get checklist responses for a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workOrderId/checklists-responses",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the work order to return checklist responses for."
+              },
+              {
+                "name": "getAll",
+                "value": "",
+                "type": "query",
+                "description": "Flag to get responses from all completed checklists."
+              }
+            ]
+          },
+          "docs": "[Returns checklist responses](/guides/checklists/get-checklist-responses-for-a-wo/) submitted for the specified work order."
+        },
+        {
+          "info": {
+            "name": "Retrieve work orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/odata/workorders/filter"
+          },
+          "docs": "Returns a list of work orders created within the last 90 days if not specified otherwise in `$filter`. The maximum date range between the work order `CallDate` and the current date is 365 days.\r\n            <br />The default number of work orders in the response is 50. To retrieve more work orders, use the `$skip` parameter.\r\n            <br />***Note***: You can also get a list of work orders by using one of the following methods: [GET /odata/workorders](/swagger/ui/index?version=3#/WorkOrders/"
+        },
+        {
+          "info": {
+            "name": "Statistics Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/statistics",
+            "params": [
+              {
+                "name": "daysPeriod",
+                "value": "",
+                "type": "query",
+                "description": "Days Period to perform action with (30 by default)."
+              }
+            ]
+          },
+          "docs": "Retrieves list of all Work order Statistics. Only for providers usage."
+        },
+        {
+          "info": {
+            "name": "Categories Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/categories",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "This parameter is required only for provider."
+              },
+              {
+                "name": "sortExpr",
+                "value": "",
+                "type": "query",
+                "description": "Gets or sets sort expression."
+              }
+            ]
+          },
+          "docs": "Retrieves list of all Work order categories."
+        },
+        {
+          "info": {
+            "name": "Get work order statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/statuses",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric identifier of the subscriber. This parameter is required only for providers."
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query",
+                "description": "Numeric identifier of the trade. Works only if the *LimitStatusesByTrade* FF is on. It returns extended statuses that are available for the specified trade. Entering the `tradeId` will show which statuses are available based on the **Excluded Trades** setting in Admin.\r\n            <br />To get a trade ID, run the [GET/trades/GetExistsTrades](https://developer.servicechannel.com/swagger/index.html#/Trades/GETv3_trades_GetExistsTrades) method."
+              }
+            ]
+          },
+          "docs": "Returns available work order statuses for the specified subscriber.\r\n            <br />Use the returned ID value as an alternative to the primary status name when updating a status via the [PUT/workorders/{workorderId}/status](https://developer.servicechannel.com/swagger/index.html#/WorkOrders/PUTv3_workorders_%7BworkorderId%7D_status) method."
+        },
+        {
+          "info": {
+            "name": "Get work order statuses that relate to a specific work order.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workorderId/statuses",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric identifier of a work order to retrieve statuses for."
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric identifier of the subscriber. This parameter is required only for providers."
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query",
+                "description": "Numeric identifier of the trade. Works only if the *LimitStatusesByTrade* FF is on. It returns extended statuses that are available for the specified trade. Entering the `tradeId` will show which statuses are available based on the **Excluded Trades** setting in Admin.\r\n            <br />To get a trade ID, run the [GET/trades/GetExistsTrades](https://developer.servicechannel.com/swagger/index.html#/Trades/GETv3_trades_GetExistsTrades) method."
+              }
+            ]
+          },
+          "docs": "Returns work order statuses based on the user role and Admin permissions.\r\n            <br />Use the returned ID value as an alternative to the primary status name when updating a status via the [PUT/workorders/{workorderId}/status](https://developer.servicechannel.com/swagger/index.html#/WorkOrders/PUTv3_workorders_%7BworkorderId%7D_status) method."
+        },
+        {
+          "info": {
+            "name": "Starred Work Order Ids Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/starred"
+          },
+          "docs": "Retrieves list of work order ids starred by the current user."
+        },
+        {
+          "info": {
+            "name": "Get work order labels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/label",
+            "params": [
+              {
+                "name": "keyword",
+                "value": "",
+                "type": "query",
+                "description": "Keyword contained in labels."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Results page number. Page numbering starts from 1."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of labels on the results page."
+              }
+            ]
+          },
+          "docs": "Returns a list of labels which are used on work orders. The response body contains label names, label IDs, and the total number of labels."
+        },
+        {
+          "info": {
+            "name": "Update a work order label",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/label",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order"
+              }
+            ]
+          },
+          "docs": "Adds a label to the specified work order. \r\n            <br />***Note***: If the work order already has a label, this method will replace the label with a new one."
+        },
+        {
+          "info": {
+            "name": "Delete a work order label",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/workorders/:workorderId/label",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order"
+              }
+            ]
+          },
+          "docs": "Removes a label from the specified work order."
+        },
+        {
+          "info": {
+            "name": "Create work order labels",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders/labels"
+          },
+          "docs": "Create work order labels"
+        },
+        {
+          "info": {
+            "name": "Add labels to work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/labels",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order."
+              }
+            ]
+          },
+          "docs": "Add labels to work order"
+        },
+        {
+          "info": {
+            "name": "Delete labels from work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/workorders/:workorderId/labels",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order"
+              }
+            ]
+          },
+          "docs": "Delete labels from work order"
+        },
+        {
+          "info": {
+            "name": "Update work order servicenowid",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/servicenowid",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Work order id"
+              }
+            ]
+          },
+          "docs": "Update work order servicenowid."
+        },
+        {
+          "info": {
+            "name": "Create Stripe charge",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders/:workorderId/addstripecharge",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Work order id"
+              }
+            ]
+          },
+          "docs": "<para>Creates charge through Stripe with provider stripe account as destination.</para>\r\n<para>Also increases NTE by charge amount.</para>"
+        },
+        {
+          "info": {
+            "name": "Creates link between two Work Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/link",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Parent Work Order id"
+              },
+              {
+                "name": "workorderIdToLink",
+                "value": "",
+                "type": "query",
+                "description": "Work Order Id that links to parent. Optional."
+              }
+            ]
+          },
+          "docs": "<para>Current Work Order marked as a parent, linking Work Order marked as follow Up.</para>\r\n<para>If you set 'workorderIdToLink' parameter then 'WorkorderIds' parameter of requested body will be ignored.</para>\r\n<br />\r\n<br />Available for provider and subscriber usage."
+        },
+        {
+          "info": {
+            "name": "Removes link between two Work Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/unlink",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Parent Work Order id"
+              },
+              {
+                "name": "linkedWorkorderId",
+                "value": "",
+                "type": "query",
+                "description": "Work Order Id that Unlinks from parent. Optional."
+              }
+            ]
+          },
+          "docs": "<para>Current Work Order is parent, followUp Work Order is linked Work Order</para>\r\n<para>If you set 'linkedWorkorderId' parameter then 'WorkorderIds' parameter of requested body will be ignored.</para>\r\n<br />\r\n<br />Available for provider and subscriber usage."
+        },
+        {
+          "info": {
+            "name": "Leave feedback for a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders/:workorderId/feedback",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Leave feedback for a work order"
+        },
+        {
+          "info": {
+            "name": "Get work orders feedbacks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/feedback/list",
+            "params": [
+              {
+                "name": "workOrdersIds",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get work orders feedbacks"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/providerforreassignment",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "query",
+                "description": "Numeric Id of the Work order to perform action with."
+              },
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "query",
+                "description": "Numeric Id of the previously assigned Provider."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "Numeric Id of the Location."
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query",
+                "description": "Trade."
+              }
+            ]
+          },
+          "docs": "A single Provider object with all its details."
+        },
+        {
+          "info": {
+            "name": "Submit solved issue during troubleshooting",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders/solvedissue"
+          },
+          "docs": "Submit solved issue during troubleshooting"
+        },
+        {
+          "info": {
+            "name": "Work types Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/worktypes",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "This parameter is required only for provider."
+              }
+            ]
+          },
+          "docs": "Retrieves list of Work types."
+        },
+        {
+          "info": {
+            "name": "Retrieve list of technicians assigned to the specified work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workorderId/techniciansAssigned",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve list of technicians assigned to the specified work order"
+        },
+        {
+          "info": {
+            "name": "Retrieve the status of refrigerant use on a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workorderId/refrigerantUseStatus",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work order to return the status of refrigerant use for."
+              }
+            ]
+          },
+          "docs": "Returns the status of refrigerant use on the specified work order:\r\n             • `null`: There is no information on the use of refrigerant.\r\n             • `true`: Refrigerant was used upon execution of the service request.\r\n             • `false`: Refrigerant wasn't used when performing work on the service request.\r\n            <br />Once you try out this method, you can use the `refrigerantWasUsed` value as an input parameter for updating the status of refrigerant use in the [PUT / workorder"
+        },
+        {
+          "info": {
+            "name": "Retrieve the leak detection result on a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workOrderId/leakWasDetected",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order."
+              }
+            ]
+          },
+          "docs": "Returns the information about the leak detected on the specified work order. This answer is saved when the user answers the question “Did you find a leak?” while entering a leak inspection on a refrigerated work order.\r\n            <br />***Note***: The *RTMultiLeakFlow* feature flag should be enabled.\r\n            <br />The possible values in the response are the following:\r\n             • `true`: The user detected a refrigerant leak and set the answer to \"Yes\".\r\n             • `false`: The use"
+        },
+        {
+          "info": {
+            "name": "Update the status of refrigerant use on a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/markRefrigerantUse",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order to update the status of refrigerant use for."
+              },
+              {
+                "name": "refrigerantWasUsed",
+                "value": "",
+                "type": "query",
+                "description": "Defines if refrigerant was used on the work order.To get the current `refrigerantWasUsed` value, use the [GET /workorders/{workOrderId}/refrigerantUseStatus](https://developer.servicechannel.com/swagger/index.html#/WorkOrders/GETv3_workorders_%7BworkorderId%7D_refrigerantUseStatus) method."
+              },
+              {
+                "name": "actor",
+                "value": "",
+                "type": "query",
+                "description": "Name of the person on whose behalf you are performing the action."
+              }
+            ]
+          },
+          "docs": "Updates the status of refrigerant use on the specified work order.\r\n            <br />Set the `refrigerantWasUsed` parameter to either `true` or `false` to mark whether refrigerant was used on the service request or not."
+        },
+        {
+          "info": {
+            "name": "Update the leak inspection information",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workOrderId/UpdateWorkOrderLeakInspectionInfo",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order."
+              },
+              {
+                "name": "refrigerantWasUsed",
+                "value": "",
+                "type": "query",
+                "description": "Defines if refrigerant was used on the work order. To get the current `refrigerantWasUsed` value, use the [GET /workorders/{workOrderId}/refrigerantUseStatus](https://developer.servicechannel.com/swagger/index.html#/WorkOrders/GETv3_workorders_%7BworkorderId%7D_refrigerantUseStatus) method."
+              },
+              {
+                "name": "leakWasDetected",
+                "value": "",
+                "type": "query",
+                "description": "Defines if a leak was detected on the work order. To get the current `leakWasDetected` value, use the [GET /workorders/{workOrderId}/leakWasDetected](https://developer.servicechannel.com/swagger/index.html#/WorkOrders/GETv3_workorders_%7BworkOrderId%7D_leakWasDetected) method."
+              }
+            ]
+          },
+          "docs": "Update the leak inspection information on the specified work order. \r\n            <br />***Note***: The *RTMultiLeakFlow* feature flag should be enabled."
+        },
+        {
+          "info": {
+            "name": "Get the Weather Event associated to a work order (if set)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workOrderId/weatherEvent",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the work order."
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "This parameter is required only for provider."
+              }
+            ]
+          },
+          "docs": "Retrieves the set Weather Event related to a work order."
+        },
+        {
+          "info": {
+            "name": "Mark if refrigerant was used",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/SetMoeNumber",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Work Order id"
+              },
+              {
+                "name": "moeNumber",
+                "value": "",
+                "type": "query",
+                "description": "MOE Number"
+              }
+            ]
+          },
+          "docs": "Mark if refrigerant was used"
+        },
+        {
+          "info": {
+            "name": "Checks features of Work order subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workorderId/features",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              },
+              {
+                "name": "features",
+                "value": "",
+                "type": "query",
+                "description": "Features to check"
+              }
+            ]
+          },
+          "docs": "Checks features of Work order subscriber"
+        },
+        {
+          "info": {
+            "name": "Get analytics on a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workOrderId/analytics",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order to get analytics from."
+              }
+            ]
+          },
+          "docs": "Retrieves analytics on the specified work order. \r\n            <br />Analytics are based on the following flags: \r\n             • **IVR**. Tracks the proper Check-In/Out process and indicates whether the work order has both Check-In and Check-Out records and completes with a Check-Out. \r\n             • **SLA**. Tracks estimated time of arrival (ETA) and indicates whether the work order met the original ETA. \r\n             • **FirstTimeCompletionFlag**. Indicates whether the work order was comple"
+        },
+        {
+          "info": {
+            "name": "Check if the certificate is linked to WOs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/isTechnicianCertificateUsedOnWorkOrders",
+            "params": [
+              {
+                "name": "certificateId",
+                "value": "",
+                "type": "query",
+                "description": "Numeric ID of the certificate assigned to the technician.\r\n            <br />To get the certificate ID, run the `Get/RefrigerantCertifications` method in [Contractor Tools API Swagger](https://ctoolsapi.servicechannel.com/swagger/index.html?urls.primaryName=ContractorTools.API%20v1).\r\n            <br />***Note:*** The tech’s certificates are uploaded and managed in the tech’s profile in Provider Automation or the SC Provider mobile app."
+              }
+            ]
+          },
+          "docs": "Verifies whether there are work orders associated with the certificate ID. Returns either `true` or `false` in the response. Use this method to see if the certificate can be deleted.\r\n            <br />For providers only."
+        },
+        {
+          "info": {
+            "name": "Assign the tech’s certificate to the work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workOrderId/technicianCertificate",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order to be associated with the certificate."
+              }
+            ]
+          },
+          "docs": "Associates the existing certificate of the technician with the work order. The WO should belong to the HVAC or Refrigeration trade. The method also adds the technician as the responsible tech who performed the service."
+        },
+        {
+          "info": {
+            "name": "Accept a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workOrderId/accept",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order."
+              }
+            ]
+          },
+          "docs": "Allows a provider to accept a work order with an optional note.\r\n            <br />When a work order is successfully accepted, it changes its status from *Open* to *In Progress / Dispatch Confirmed*. \r\n            <br />***Note***: Providers only can use this method."
+        },
+        {
+          "info": {
+            "name": "Decline a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workOrderId/decline",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order."
+              }
+            ]
+          },
+          "docs": "Allows a provider to decline a work order with a note. \r\n            <br />When a provider declines a work order, the order changes its status from *Open* to *Open / Declined* or becomes automatically reassigned to another provider if the *WOMultipleAutoReassign* feature flag is turned on for the subscriber. \r\n            <br />***Note***: Providers only can use this method."
+        },
+        {
+          "info": {
+            "name": "Gets the work order checklist failure state.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workOrderId/checklistFailureState",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "The work order identifier."
+              }
+            ]
+          },
+          "docs": "Gets the work order checklist failure state."
+        },
+        {
+          "info": {
+            "name": "Retrieve a GPS radius for a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workorderId/GPSRadius",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order."
+              }
+            ]
+          },
+          "docs": "Returns the geolocation radius of the location for the specified work order.  \r\n            <br />The GPS radius is calculated based on [Site Access rules](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/1466435001/Site+Access). If the rules are not set up, the default GPS radius is 2 miles."
+        },
+        {
+          "info": {
+            "name": "Add Followers to Work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders/:workorderId/followers",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              }
+            ]
+          },
+          "docs": "Add Followers to Work order."
+        },
+        {
+          "info": {
+            "name": "Remove Follower from Work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/workorders/:workorderId/followers",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work order to perform action with."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "The follower email address."
+              }
+            ]
+          },
+          "docs": "Remove Follower from Work order."
+        },
+        {
+          "info": {
+            "name": "PUTv3_subscribers_{subscriberId}_workorders_{workorderId}_reassign",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/subscribers/:subscriberId/workorders/:workorderId/reassign",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Retrieve work orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/workorders",
+            "params": [
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Returns a list of work orders created within the last 90 days if not specified otherwise in `$filter`. The maximum date range between the work order `CallDate` and the current date is 365 days. \r\n            <br />The default number of work orders in the response is 50. To retrieve more work orders, use the `$skip` parameter.\r\n            <br />***Note***: You can also get a list of work orders by using one of the following methods: [GET /workorders](/swagger/ui/index?version=3#/WorkOrders/GETv3"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Work Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/workorders(:workorderId)",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Retrieve a Work Orders"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Work Order CheckIn Activity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/workorders(:workorderId)/Service.CheckInActivity(loadBlocked=:loadBlocked)",
+            "params": [
+              {
+                "name": "loadBlocked",
+                "value": "",
+                "type": "path",
+                "description": "To retrieve all check-in/out attempts, including unsuccessful ones, set the value to true. Default value is false."
+              },
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Retrieve a Work Order CheckIn Activity"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Work Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/locations(:locationId)/workorders",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Retrieve a Work Orders.\r\n            <br />One page contains 50 items by default. To get next 50 items use the \"$skip\" parameter (for example $skip=50 and so on).\r\n            <br />The filter expressions by defaul is \"$filter CallDate ge (Now+90 days)\". \r\n            <br />The maximum CallDate value is 365 days even if provided."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Duplicate Work Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/locations(:locationId)/workorders/Service.GetDuplicates()",
+            "params": [
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Location identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve a Duplicate Work Orders\r\n            <br />One page contains 50 items by default. To get next 50 items use the \"$skip\" parameter (for example $skip=50 and so on)."
+        },
+        {
+          "info": {
+            "name": "Retrieve Work Order Recalls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/locations(:locationId)/workorders/Service.GetRecalls()",
+            "params": [
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Location identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve Work Order Recalls\r\n            <br />One page contains 50 items by default. To get next 50 items use the \"$skip\" parameter (for example $skip=50 and so on)."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Work Orders near by a site.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/workorders/Service.NearBy(latitude=:latitude,longitude=:longitude)",
+            "params": [
+              {
+                "name": "longitude",
+                "value": "",
+                "type": "path",
+                "description": "Longitude of a site"
+              },
+              {
+                "name": "latitude",
+                "value": "",
+                "type": "path",
+                "description": "Latitude of a site"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Retrieve a Work Orders near by a site orderred by Location distance (by default). \r\n            <br />One page contains 50 items by default. To get next 50 items use the \"$skip\" parameter (for example $skip=50 and so on).\r\n            <br />The filter expressions by defaul is \"$filter CallDate ge (Now+90 days)\". \r\n            <br />The maximum CallDate value is 365 days even if provided."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

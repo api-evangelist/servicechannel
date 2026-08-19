@@ -1,0 +1,937 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Locations API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Locations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve stores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stores",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Unique location identifier."
+              },
+              {
+                "name": "storeIdentifier",
+                "value": "",
+                "type": "query",
+                "description": "Alphanumeric location identifier in the client’s system. Assigned by and unique per subscriber."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Location name."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort resources by the specified property in the response."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Results page number."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of objects on the results page. The default and maximum per page is 50."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Locations, also called Stores, if neither of the filters is used. You can get the details for a certain store by specifying any of the following parameters: `Id`, `storeIdentifier`, `name`.\r\n            <br /> You can use either of these methods to get a list of the subscriber’s locations: [GET /locations](/swagger/ui/index?version=3#/Locations/GETv3_locations_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET /stores](/"
+        },
+        {
+          "info": {
+            "name": "Retrieve stores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/locations",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Unique location identifier."
+              },
+              {
+                "name": "storeIdentifier",
+                "value": "",
+                "type": "query",
+                "description": "Alphanumeric location identifier in the client’s system. Assigned by and unique per subscriber."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Location name."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort resources by the specified property in the response."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Results page number."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of objects on the results page. The default and maximum per page is 50."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Locations, also called Stores, if neither of the filters is used. You can get the details for a certain store by specifying any of the following parameters: `Id`, `storeIdentifier`, `name`.\r\n            <br /> You can use either of these methods to get a list of the subscriber’s locations: [GET /locations](/swagger/ui/index?version=3#/Locations/GETv3_locations_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET /stores](/"
+        },
+        {
+          "info": {
+            "name": "Get stores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/users/current/stores"
+          },
+          "docs": "Returns a list of stores with the LocationIDs and subscriber IDs, along with the location address details. The method is available to subscribers only.\r\n            <br /> To get more detailed information, use one of these methods: [GET /stores](/swagger/ui/index?version=3#/Locations/GETv3_stores_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET /locations](/swagger/ui/index?version=3#/Locations/GETv3_locations_Id__Id__storeIdentifier__store"
+        },
+        {
+          "info": {
+            "name": "Retrieve a location",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/locations/:locationId",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the location to return the details for."
+              }
+            ]
+          },
+          "docs": "Returns the details for the specified location.\r\n            <br /> To receive details of several locations, use one of these methods: [GET /stores](/swagger/ui/index?version=3#/Locations/GETv3_stores_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET /locations](/swagger/ui/index?version=3#/Locations/GETv3_locations_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET /odata/locations](/swa"
+        },
+        {
+          "info": {
+            "name": "Update a location",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/locations/:locationId",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the subscriber’s location which information you want to update."
+              }
+            ]
+          },
+          "docs": "Modifies information of the existing location.You can use either of the following methods to retrieve location details: [GET/stores](/swagger/ui/index?version=3#/Locations/GETv3_stores_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET/locations](/swagger/ui/index?version=3#/Locations/GETv3_locations_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_).\r\n             <br />***Note:*** Method is av"
+        },
+        {
+          "info": {
+            "name": "Retrieve location notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/locations/:locationId/notes",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the location you want to receive notes for."
+              },
+              {
+                "name": "privateNotes",
+                "value": "",
+                "type": "query",
+                "description": "Should privateNotes be included. Settings from dashboardSetup by default"
+              }
+            ]
+          },
+          "docs": "Returns the location notes for the specified location."
+        },
+        {
+          "info": {
+            "name": "Add a location note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/locations/:locationId/notes",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the location you want to update a note for."
+              }
+            ]
+          },
+          "docs": "Adds a location note for the specified location. If a note is already added, you can change it by sending the request, or leave the `Value` parameter empty to delete the note.\r\n             <br /> To retrieve location IDs along with the location notes, send either of these requests: [GET/stores](/swagger/ui/index?version=3#/Locations/GETv3_stores_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET/locations](/swagger/ui/index?version=3#/Locati"
+        },
+        {
+          "info": {
+            "name": "Add location notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/locations/:storeId/updateNotes",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "Unique storeId of the location you want to update a note for."
+              }
+            ]
+          },
+          "docs": "Add location notes for the specified location. If a note is already added, you can change it by sending the request, or leave the `Value` parameter empty to delete the note.\r\n             <br /> ***Note***: To retrieve store IDs along with the location notes, send either of these requests: [GET/stores](/swagger/ui/index?version=3#/Locations/GETv3_stores_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET/locations](/swagger/ui/index?version=3#"
+        },
+        {
+          "info": {
+            "name": "Get unassigned contracts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/locations/UnassignedContracts"
+          },
+          "docs": "Returns subscriber’s locations with open trades that have unassigned providers.\r\n            <br /> ***Note***: Method could be outdated causing faulty results."
+        },
+        {
+          "info": {
+            "name": "Get an evacuation plan map of a location",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/locations/:locationId/evacuationmaps",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the location to return the details for."
+              }
+            ]
+          },
+          "docs": "Returns evacuation plan map attachments details for the specified location.\r\n            <br /> Visit ServiceChannel University to learn about [Location Emergency Evacuation Plan Map(s)](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/710312376/Location+Emergency+Evacuation+Plan+Map+s)."
+        },
+        {
+          "info": {
+            "name": "Check whether the location is open or closed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/locations/CheckIfLocationIsOpen",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "Unique location identifier"
+              },
+              {
+                "name": "checkTime",
+                "value": "",
+                "type": "query",
+                "description": "Date and time to check if the location is open"
+              }
+            ]
+          },
+          "docs": "Returns information on the specified location if it is open or closed now. If the `checkTime` parameter is not provided, the location is checked at the current time.\r\n            <br /> Learn about [managing business hours](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/683507788/Managing+Business+Hours) in ServiceChannel University."
+        },
+        {
+          "info": {
+            "name": "Get locations by filters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/GetFilteredLocations"
+          },
+          "docs": "Returns locations based on the filters applied.\r\n             By default closed locations are not included in the response. To include them, set the `IncludeClosedLocations` parameter to `true`."
+        },
+        {
+          "info": {
+            "name": "Create a location with location notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/locations/LocationWithNotes"
+          },
+          "docs": "Create or update a location along with location notes.\r\n             <br />**Note:** Method takes a dynamic list of parameters as input.\r\n             <br />**Example request**\r\n            \r\n                 POST /locations/LocationWithNotes\r\n                 {\r\n                  \"StoreId\":\"TestStore\",\r\n                  \"Name\": \"CSR Flagship\",\r\n                  \"MainAddress\": \"18 E. 16th Street\",\r\n                  \"AddlAddress\": \"3rd Floor, Innovation Center\",\r\n                  \"Latitude\": "
+        },
+        {
+          "info": {
+            "name": "Get provider location assignments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/providers/GetProviderLocationAssignments"
+          },
+          "docs": "Returns a list of stores with the LocationIDs and StoreIds, along with the first contract (assignment) created date and whether the location is primary or not.\r\n            <br />The method is available to providers only."
+        },
+        {
+          "info": {
+            "name": "Get provider primary location assignments by Provider Ids",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/providers/GetPrimaryLocationAssignmentsForProviderIds",
+            "params": [
+              {
+                "name": "providerIds",
+                "value": "",
+                "type": "query",
+                "description": "An array of Provider Ids."
+              },
+              {
+                "name": "dateFrom",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the time period for which you want to retrieve location assignments. The format is `YYYY-MM-DDThh:mm:ss.ssZ`."
+              },
+              {
+                "name": "dateTo",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the time period for which you want to retrieve location assignments. The format is `YYYY-MM-DDThh:mm:ss.ssZ`"
+              }
+            ]
+          },
+          "docs": "Get provider primary location assignments by Provider Ids"
+        },
+        {
+          "info": {
+            "name": "Get Locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/GetLocationsMobile",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Number of the current page"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Limit to return items"
+              },
+              {
+                "name": "latitude",
+                "value": "",
+                "type": "query",
+                "description": "The latitude of the user location"
+              },
+              {
+                "name": "longitude",
+                "value": "",
+                "type": "query",
+                "description": "The longitude of the user location"
+              },
+              {
+                "name": "searchExpression",
+                "value": "",
+                "type": "query",
+                "description": "User input text"
+              },
+              {
+                "name": "onlyOpened",
+                "value": "",
+                "type": "query",
+                "description": "Include only open locations"
+              },
+              {
+                "name": "locationIds",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated location ID array"
+              }
+            ]
+          },
+          "docs": "Get Locations"
+        },
+        {
+          "info": {
+            "name": "Get location districts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/GetLocationDistricts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Number of the current page"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Limit to return items"
+              },
+              {
+                "name": "searchExpression",
+                "value": "",
+                "type": "query",
+                "description": "User input text"
+              }
+            ]
+          },
+          "docs": "Get location districts"
+        },
+        {
+          "info": {
+            "name": "Get user districts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/GetUserDistricts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Number of the current page"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Limit to return items"
+              },
+              {
+                "name": "searchExpression",
+                "value": "",
+                "type": "query",
+                "description": "User input text"
+              }
+            ]
+          },
+          "docs": "Get user districts"
+        },
+        {
+          "info": {
+            "name": "Get user regions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/GetUserRegions",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Number of the current page"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Limit to return items"
+              },
+              {
+                "name": "searchExpression",
+                "value": "",
+                "type": "query",
+                "description": "User input text"
+              }
+            ]
+          },
+          "docs": "Get user regions"
+        },
+        {
+          "info": {
+            "name": "Retrieve address format pattern per list of country ISO codes or per list of address types Ids",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/locations/addressformats",
+            "params": [
+              {
+                "name": "c",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of address types (Id, Pattern)."
+        },
+        {
+          "info": {
+            "name": "Retrieve Locations by location ids",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/filter"
+          },
+          "docs": "Returns a list of locations."
+        },
+        {
+          "info": {
+            "name": "Get landlord responsibilities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/landlord-responsibilities-by-storeId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get landlord responsibilities"
+        },
+        {
+          "info": {
+            "name": "Get landlord responsibilities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/landlord-responsibilities-by-locationId",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get landlord responsibilities"
+        },
+        {
+          "info": {
+            "name": "Create landlord responsibility",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/landlord-responsibilities"
+          },
+          "docs": "Create landlord responsibility"
+        },
+        {
+          "info": {
+            "name": "Update Landlord Responsibility",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/landlord-responsibilities"
+          },
+          "docs": "Update Landlord Responsibility"
+        },
+        {
+          "info": {
+            "name": "Delete Landlord Responsibility",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/landlord-responsibilities/:responsibilityId",
+            "params": [
+              {
+                "name": "responsibilityId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Landlord Responsibility"
+        },
+        {
+          "info": {
+            "name": "Get a Location’s Attachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/locations/:storeId/attachments",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a list of attachments."
+        },
+        {
+          "info": {
+            "name": "Create a Location Attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/locations/:storeId/attachments",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fileDescription",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isEvacuationPlan",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Create a Location Attachment"
+        },
+        {
+          "info": {
+            "name": "Delete a Location Attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/locations/:storeId/attachments/:attachmentId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "attachmentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a Location Attachment"
+        },
+        {
+          "info": {
+            "name": "GetExistsLocations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/locations/GetExistsLocations"
+          },
+          "docs": "GetExistsLocations"
+        },
+        {
+          "info": {
+            "name": "GetExistsRegions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/locations/GetExistsRegions"
+          },
+          "docs": "GetExistsRegions"
+        },
+        {
+          "info": {
+            "name": "GetExistsDistricts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/locations/GetExistsDistricts"
+          },
+          "docs": "GetExistsDistricts"
+        },
+        {
+          "info": {
+            "name": "Retrieve provider's locations (include retired)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/providers/current/locationsWithRetired"
+          },
+          "docs": "Returns a list of all Locations."
+        },
+        {
+          "info": {
+            "name": "GetLocationHierarchy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/locations/:locationId/hierarchy",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "locationId"
+              }
+            ]
+          },
+          "docs": "GetLocationHierarchy"
+        },
+        {
+          "info": {
+            "name": "Get Location Attachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/locations/:locationId/locationAttachments",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a list of attachments."
+        },
+        {
+          "info": {
+            "name": "Retrieve locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/locations",
+            "params": [
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Returns a list of locations. You can use filter parameters to make your request more specific.\r\n            <br /> You can also get a list of locations by using one of the following methods: [GET /stores](/swagger/ui/index?version=3#/Locations/GETv3_stores_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page__Page__PageSize__PageSize_), [GET /locations](/swagger/ui/index?version=3#/Locations/GETv3_locations_Id__Id__storeIdentifier__storeIdentifier__Name__Name__Sort__Sort__Page_"
+        },
+        {
+          "info": {
+            "name": "Get locations by geographic coordinates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/locations/Service.NearBy(latitude=:latitude,longitude=:longitude)",
+            "params": [
+              {
+                "name": "longitude",
+                "value": "",
+                "type": "path",
+                "description": "Location’s global position. Longitude."
+              },
+              {
+                "name": "latitude",
+                "value": "",
+                "type": "path",
+                "description": "Location’s global position. Latitude."
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Returns locations that are near the longitude and latitude specified in the request. Use the filter parameters to make the request more specific."
+        },
+        {
+          "info": {
+            "name": "Retrieve locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/locations/Service.ForServiceRequest()",
+            "params": [
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Returns a list of locations of a service request. You can use filter parameters to make the request more specific."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

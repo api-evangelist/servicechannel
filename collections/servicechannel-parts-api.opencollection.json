@@ -1,0 +1,217 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Parts API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Parts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a Work order parts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workorderId/parts",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "The Work order identity"
+              }
+            ]
+          },
+          "docs": "Get a Work order parts. Returns Work order parts collection for successful request.\r\n            <br /><br />Available for provider and subscriber usage."
+        },
+        {
+          "info": {
+            "name": "Create Work order parts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders/:workorderId/parts",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "A new Work order identity"
+              }
+            ]
+          },
+          "docs": "Available only for provider."
+        },
+        {
+          "info": {
+            "name": "Update Work order parts",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/parts",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "The Work order identity"
+              }
+            ]
+          },
+          "docs": "Available only for provider."
+        },
+        {
+          "info": {
+            "name": "Delete Work order parts",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/workorders/:workorderId/parts",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "The Work order identity"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "The Work order part identity collection for delete"
+              }
+            ]
+          },
+          "docs": "Available only for provider."
+        },
+        {
+          "info": {
+            "name": "Get a Work order parts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workorderId/:includeConnectorParts/partsV1",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "The Work order identity"
+              },
+              {
+                "name": "includeConnectorParts",
+                "value": "",
+                "type": "path",
+                "description": "Include Connector Parts"
+              }
+            ]
+          },
+          "docs": "Get a Work order parts. Returns Work order parts collection for successful request.\r\n            <br /><br />Available for provider and subscriber usage."
+        },
+        {
+          "info": {
+            "name": "GETv3_workorders_{workorderId}_inventory_refrigerantusage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workorderId/inventory/refrigerantusage",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Update multiple part uses for a work order and an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders/inventory/parts/bulkPartUsage"
+          },
+          "docs": "Creates, updates, or deletes multiple part uses for the **work order + asset** pair.\r\n             • Supports both refrigerant and non-refrigerant parts. \r\n             • Supports inventory and vendor-supplied parts.\r\n            <br />**Example request for removing part use records:**\r\n            \r\n               { \r\n                \"DeleteItems\": [\r\n                { \r\n                    \"PartId\": 58069830,\r\n                    \"DeletionReason\": \"Incorrect Quantity\",\r\n                    \"In"
+        },
+        {
+          "info": {
+            "name": "Retrieve work order parts usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workorders/:workorderId/partsUsage",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve work order parts usage"
+        },
+        {
+          "info": {
+            "name": "Verifies that user is associated with parts usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/parts/isTechCertificationUsedOnRefrigerantTracking",
+            "params": [
+              {
+                "name": "authUserId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "technicianId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "certificationNumber",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Verifies that user is associated with parts usage"
+        },
+        {
+          "info": {
+            "name": "Checks materials usage across multiple work orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/parts/workorders/wasmaterialsused",
+            "params": [
+              {
+                "name": "recIds",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Checks materials usage across multiple work orders"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

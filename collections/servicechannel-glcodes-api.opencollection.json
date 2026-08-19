@@ -1,0 +1,165 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours GlCodes API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GlCodes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Approval codes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/GlCodes/GetApprovalCodes",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "Location Id. Numeric id of location."
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Category name. A category is the overall classification of a work order, such as MAINTENANCE, REPAIR, or WARRANTY. Maximum is 50 characters."
+              }
+            ]
+          },
+          "docs": "Gets the list of approval codes."
+        },
+        {
+          "info": {
+            "name": "Add a GL Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/GlCodes/CreateGlCode",
+            "params": [
+              {
+                "name": "glCode",
+                "value": "",
+                "type": "query",
+                "description": "Numeric identifier of a GL Code."
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query",
+                "description": "Trade name. A trade is an area of work for which a service is performed, such as LIGHTING, ALARMS, or ELECTRICAL. Maximum is 80 characters."
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Category name. A category is the overall classification of a work order, such as MAINTENANCE, REPAIR, or WARRANTY. Maximum is 50 characters."
+              },
+              {
+                "name": "location",
+                "value": "",
+                "type": "query",
+                "description": "Store ID. The numeric identifier of the store in the client's system. Assigned by and unique per subscriber."
+              }
+            ]
+          },
+          "docs": "Creates a GL Code with a new trade, category, or location.\r\n            <br />Send the [GET /GlCodes/RetrieveGlCodes](/swagger/ui/index?version=3#/GlCodes/GETv3_GlCodes_RetrieveGlCodes_trade__trade__category__category__location__location_) request to get the list of GL Codes."
+        },
+        {
+          "info": {
+            "name": "Update a GL Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/GlCodes/UpdateGlCode",
+            "params": [
+              {
+                "name": "glCode",
+                "value": "",
+                "type": "query",
+                "description": "Numeric identifier of a GL Code."
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query",
+                "description": "Trade name. A trade is an area of work for which a service is performed, such as LIGHTING, ALARMS, or ELECTRICAL. Maximum is 80 characters."
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Category name. A category is the overall classification of a work order, such as MAINTENANCE, REPAIR, or WARRANTY. Maximum is 50 characters."
+              },
+              {
+                "name": "location",
+                "value": "",
+                "type": "query",
+                "description": "Store ID. The numeric identifier of the store in the client's system. Assigned by and unique per subscriber."
+              }
+            ]
+          },
+          "docs": "Updates a GL Code number leaving the trade, category, and/or location of the code unchanged. You need to specify all code parameters to update it.\r\n            <br />Use the [POST /GlCodes/CreateGlCode](/swagger/ui/index?version=3#/GlCodes/POSTv3_GlCodes_CreateGlCode_glCode__glCode__trade__trade__category__category__location__location_) method to create a new GL Code."
+        },
+        {
+          "info": {
+            "name": "Delete a GL Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/GlCodes/DeleteGlCode",
+            "params": [
+              {
+                "name": "glCode",
+                "value": "",
+                "type": "query",
+                "description": "Numeric identifier of a GL Code."
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query",
+                "description": "Trade name. A trade is an area of work for which a service is performed, such as LIGHTING, ALARMS, or ELECTRICAL. Maximum is 80 characters."
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Category name. A category is the overall classification of a work order, such as MAINTENANCE, REPAIR, or WARRANTY. Maximum is 50 characters."
+              },
+              {
+                "name": "location",
+                "value": "",
+                "type": "query",
+                "description": "Store ID. The numeric identifier of the store in the client's system. Assigned by and unique per subscriber."
+              }
+            ]
+          },
+          "docs": "Removes the specified GL Code from the subscriber’s system. You need to specify all code parameters to delete it."
+        },
+        {
+          "info": {
+            "name": "GetExistsGlCodes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/GlCodes/GetExistsGlCodes"
+          },
+          "docs": "GetExistsGlCodes"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

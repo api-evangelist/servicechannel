@@ -1,0 +1,288 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours WorkActivities API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "WorkActivities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update the specified work activity of a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/workorders/:workorderId/workactivities/:workactivityId",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work order for which you want to update a work activity."
+              },
+              {
+                "name": "workactivityId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work activity to update."
+              }
+            ]
+          },
+          "docs": "Updates the specified work activity of a work order by setting the check-in and check-out date and time values passed in the request.\r\n            <br />Before updating a work activity, please consider the following:\r\n             • You can update work activities only for work orders in the *In Progress* primary status.\r\n             • The check-in date and time cannot be greater than the check-out date and time.\r\n             • The check-in date and time cannot be earlier than the scheduled dat"
+        },
+        {
+          "info": {
+            "name": "Create a work activity for the specified work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workorders/:workorderId/workactivities",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work order for which you want to create a work activity."
+              }
+            ]
+          },
+          "docs": "Creates a new work activity for the specified work order. The work activity type can be either *Travel* or *Repair*. Note that custom types may be configured for a subscriber.\r\n            <br />Before creating a work activity, please consider the following:\r\n             • You can create work activities only for work orders in the *In Progress* primary status.\r\n             • The check-in date and time cannot be greater than the check-out date and time.\r\n             • The check-in date and tim"
+        },
+        {
+          "info": {
+            "name": "Delete the specified work activities of a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/workorders/:workorderId/workactivities",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work order for which you want to delete work activities."
+              },
+              {
+                "name": "workactivityIds",
+                "value": "",
+                "type": "query",
+                "description": "The unique numeric identifiers of the work activities to delete."
+              }
+            ]
+          },
+          "docs": "Delete one or more work activities of the specified work order. When you pass multiple work activity IDs, the request will succeed if at least one ID is valid.\r\n            <br />***Note:*** Both subscribers and providers can use this method."
+        },
+        {
+          "info": {
+            "name": "List work activities of the specified work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/workorders(:workorderId)/workactivities",
+            "params": [
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work order for which you want to retrieve work activities."
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Returns work activities of the specified work order.\r\n            <br />A work activity details information about the technician's work on a service request: the time when the technician started and finished their work, the type of activity they carried out, the number of technicians who rendered the service, and other details related to the labor performed.\r\n            <br />***Note:*** Both subscribers and providers can use this method."
+        },
+        {
+          "info": {
+            "name": "List work activities created by a provider user within the specified time period",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/workactivities/Service.ForTimeInterval(dtMin=:dtMin, dtMax=:dtMax, userId=:userId)",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "PIN of the provider user who created work activities."
+              },
+              {
+                "name": "dtMax",
+                "value": "",
+                "type": "path",
+                "description": "The end date of the time period for which you want to retrieve work activities. The format is `YYYY-MM-DD`."
+              },
+              {
+                "name": "dtMin",
+                "value": "",
+                "type": "path",
+                "description": "The start date of the time period for which you want to retrieve work activities. The format is `YYYY-MM-DD`."
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Returns work activities created by the specified provider user within the set time period.\r\n            <br />A work activity details information about the technician’s work on a service request: the time when the technician started and finished their work, the type of activity they carried out, the number of technicians who rendered the service, and other details related to the labor performed.\r\n            <br />***Note:*** This method is only available to provider users."
+        },
+        {
+          "info": {
+            "name": "Retrieve the specified work activity of a work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/workorders(:workorderId)/workactivities(:workactivityId)",
+            "params": [
+              {
+                "name": "workactivityId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work activity to return."
+              },
+              {
+                "name": "workorderId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the work order for which you want to retrieve a work activity."
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Returns the specified work activity of a work order.\r\n            <br />A work activity details information about the technician's work on a service request: the time when the technician started and finished their work, the type of activity they carried out, the number of technicians who rendered the service, and other details related to the labor performed.\r\n            <br />***Note:*** Both subscribers and providers can use this method."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

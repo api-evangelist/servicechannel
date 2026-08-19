@@ -1,0 +1,210 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours MliConfiguration API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "MliConfiguration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get MLI levels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/mliConfiguration/Levels"
+          },
+          "docs": "Returns IDs and names of all MLI levels of the current subscriber.\r\n            <br />Learn more about [MLI levels configuration](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/601555312/Configuring+MLI+Levels) in ServiceChannel University."
+        },
+        {
+          "info": {
+            "name": "Get MLI level users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/mliConfiguration/Levels/:levelId/Users",
+            "params": [
+              {
+                "name": "levelId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric identifier of the MLI level."
+              }
+            ]
+          },
+          "docs": "Returns the users assigned to the specified level. The response body is empty if no user has been assigned to this level.\r\n            <br />You can use the [GET /mliConfiguration/Levels](/swagger/ui/index?version=3#/MliConfiguration/GETv3_mliConfiguration_Levels) method to get the MLI levels IDs. Send the [POST /MliConfiguration/Levels/{levelId}/Users/{userId}](/swagger/ui/index?version=3#/MliConfiguration/POSTv3_MliConfiguration_Levels__levelId__Users__userId_) request to assign users to the M"
+        },
+        {
+          "info": {
+            "name": "Add a user to an MLI level",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/MliConfiguration/Levels/:levelId/Users/:userId",
+            "params": [
+              {
+                "name": "levelId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric identifier of the MLI level."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the user."
+              }
+            ]
+          },
+          "docs": "Assigns a user to an existing MLI level. Get users’ IDs by sending the [GET /users](/swagger/ui/index?version=3#/Users/GETv3_users_subscriberId__subscriberId__startIndex__startIndex__maxCount__maxCount_) request.\r\n            <br />You can assign a user to an existing location by using the [POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId}](/swagger/ui/index?version=3#/MliConfiguration/POSTv3_MliConfiguration_Levels__levelId__Users__userId__Locations__locationId_) met"
+        },
+        {
+          "info": {
+            "name": "Remove a user from an MLI level",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/mliConfiguration/Levels/:levelId/Users/:userId",
+            "params": [
+              {
+                "name": "levelId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric identifier of the MLI level."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the user."
+              }
+            ]
+          },
+          "docs": "Removes the specified user from a particular MLI level. To unassign a user from an existing location, send the [DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId}](/swagger/ui/index?version=3#/MliConfiguration/DELETEv3_MliConfiguration_Levels__levelId__Users__userId__Locations__locationId_) request."
+        },
+        {
+          "info": {
+            "name": "Add a location to a user’s MLI level",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/MliConfiguration/Levels/:levelId/Users/:userId/Locations/:locationId",
+            "params": [
+              {
+                "name": "levelId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric identifier of the MLI level."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the user."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the location."
+              }
+            ]
+          },
+          "docs": "Assigns the specified location to a particular user and user’s MLI level. A location can be removed from a user by sending the [DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId}](/swagger/ui/index?version=3#/MliConfiguration/DELETEv3_MliConfiguration_Levels__levelId__Users__userId__Locations__locationId_) request."
+        },
+        {
+          "info": {
+            "name": "Remove a location from a user’s MLI level",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/MliConfiguration/Levels/:levelId/Users/:userId/Locations/:locationId",
+            "params": [
+              {
+                "name": "levelId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric identifier of the MLI level."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the user."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the location."
+              }
+            ]
+          },
+          "docs": "Removes the specified location from a particular user and MLI level. To assign a location to a user and MLI level, send the [POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId}](/swagger/ui/index?version=3#/MliConfiguration/POSTv3_MliConfiguration_Levels__levelId__Users__userId__Locations__locationId_) request."
+        },
+        {
+          "info": {
+            "name": "Remove all locations from a user’s MLI level",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/MliConfiguration/levels/:levelId/users/:userId/locations/unassign-all",
+            "params": [
+              {
+                "name": "levelId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric identifier of the MLI level."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the user."
+              }
+            ]
+          },
+          "docs": "Removes all locations from a particular user and MLI level. To assign all locations to a user and MLI level, send the [POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/assign-all](/swagger/ui/index?version=3#/MliConfiguration/POSTv3_MliConfiguration_Levels__levelId__Users__userId__Locations_assign_all) request."
+        },
+        {
+          "info": {
+            "name": "Assign all locations to a user’s MLI level",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/MliConfiguration/levels/:levelId/users/:userId/locations/assign-all",
+            "params": [
+              {
+                "name": "levelId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric identifier of the MLI level."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the user."
+              }
+            ]
+          },
+          "docs": "Assigns all locations to a particular user and MLI level. To remove locations from a user and MLI level, send the [DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/unassign-all](/swagger/ui/index?version=3#/MliConfiguration/DELETEv3_MliConfiguration_Levels__levelId__Users__userId__Locations_unassign_all) request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

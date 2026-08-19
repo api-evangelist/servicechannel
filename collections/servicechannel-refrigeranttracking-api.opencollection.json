@@ -1,0 +1,818 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours RefrigerantTracking API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "RefrigerantTracking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get refrigerant charge descriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/ChargeDescriptions"
+          },
+          "docs": "Shows a list of refrigerant charge descriptions and their IDs. Charge descriptions represent different methods of adding the refrigerant to a system. The descriptions are universal and available to users upon adding a charge record for a refrigerated asset.\r\n            <br />For both subscribers and providers."
+        },
+        {
+          "info": {
+            "name": "Get leak tracking preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric identifier of the subscriber."
+              }
+            ]
+          },
+          "docs": "Shows refrigerant leak tracking preferences, including Commercial Refrigerant Trigger Rate, HVAC Trigger Rate, PM Leak Inspection NTE, and more, configured for the subscriber. \r\n            <br />When the *RefrigerationTracking* feature flag is turned off for the subscriber, the method returns the default — EPA standard — values."
+        },
+        {
+          "info": {
+            "name": "Get rack equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking"
+          },
+          "docs": "Returns rack assets for the specified subscriber and location. Only assets with the **Refrigerant Usage Type** set to **Rack** will be sent in the response.\r\n            <br />To check the rack connection, use the [GET/refrigeranttracking/rack](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_rack%3Fid%3D%7Bid%7D) method."
+        },
+        {
+          "info": {
+            "name": "Update/Insert Leak Tracking Preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/refrigeranttracking"
+          },
+          "docs": "Update/Insert Leak Tracking Preferences. Returns Success/NoSuccess request."
+        },
+        {
+          "info": {
+            "name": "Get Rack Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/rack",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Rack Connection"
+        },
+        {
+          "info": {
+            "name": "Create/Update Rack Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/rack"
+          },
+          "docs": "Create/Update Rack Connection"
+        },
+        {
+          "info": {
+            "name": "Get Refrigerant settings by locationId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/:locationId/GetRefrigerantSettings",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Location Id"
+              }
+            ]
+          },
+          "docs": "GetRefrigerantSettingsByLocationId"
+        },
+        {
+          "info": {
+            "name": "Check if refrigerant tracking is enabled for the location(s)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/CheckRefrigerantTrackingAvailable"
+          },
+          "docs": "Verifies whether the refrigerant tracking settings are enabled for the specified location(s)."
+        },
+        {
+          "info": {
+            "name": "Check if refrigerant tracking is enabled for the location(s)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/CheckRefrigerantTrackingAvailable_v1"
+          },
+          "docs": "Verifies whether the refrigerant tracking settings are enabled for the specified location(s). Additionally, returns the unit of measure for each location:\r\n             • `0`: Pounds and decimals of pounds\r\n             • `1`: Pounds and ounces\r\n             • `2`: Kilograms and grams"
+        },
+        {
+          "info": {
+            "name": "Get reason codes for refrigerant use",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/:subscriberId/GetRefrigerantUseReasonCodes",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the subscriber."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of reason codes for the refrigerant part use. For example, leak or repair."
+        },
+        {
+          "info": {
+            "name": "Get refrigerant usage summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/:assetId/refrigerantusagesummary",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get refrigerant usage summary"
+        },
+        {
+          "info": {
+            "name": "Get SubscriberIds With RefrigerantTracking Feature Flag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/subscribers"
+          },
+          "docs": "Get SubscriberIds With RefrigerantTracking Feature Flag"
+        },
+        {
+          "info": {
+            "name": "Complete/update a leak event",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/refrigeranttracking/leakrecord"
+          },
+          "docs": "Allows users to close a leak event by setting the completion date. Other leak information can be updated as well for both in-progress and completed leak events. \r\n            <br />***Note:*** When the *RTMultiLeakFlow* feature flag is on, you can only add or update the completion date via this method. Other parameters cannot be modified. Note that at least one leak record should be associated with the event."
+        },
+        {
+          "info": {
+            "name": "UpdateLeakRecord With Returns Detail Operation Result",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/refrigeranttracking/leakrecordV1"
+          },
+          "docs": "UpdateLeakRecord With Returns Detail Operation Result"
+        },
+        {
+          "info": {
+            "name": "Get leak events by `workorderID`",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/:trackingNumber/leakRecord",
+            "params": [
+              {
+                "name": "trackingNumber",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order."
+              }
+            ]
+          },
+          "docs": "Returns [leak events](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/573898951/Viewing+Refrigerant+Leak+Events) generated on the certain work order and associated leak records."
+        },
+        {
+          "info": {
+            "name": "Creates Follow Up wo for non-closed leak records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/CreateLeakRecordFollowupWo",
+            "params": [
+              {
+                "name": "leakRecordId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "currentTrackingNumber",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Creates Follow Up wo for non-closed leak records"
+        },
+        {
+          "info": {
+            "name": "Retrieve leak record fault codes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/leakRecord/faultCodes"
+          },
+          "docs": "Retrieve leak record fault codes"
+        },
+        {
+          "info": {
+            "name": "GETv3_refrigeranttracking_isRefrigerantTrackingAvailable_{locationId}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/isRefrigerantTrackingAvailable/:locationId",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Retrieve leak record action codes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/leakRecord/actionCodes"
+          },
+          "docs": "Retrieve leak record action codes"
+        },
+        {
+          "info": {
+            "name": "Add leak note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/leakNote"
+          },
+          "docs": "Add leak note"
+        },
+        {
+          "info": {
+            "name": "Get leak locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/:subscriberId/leaklocations",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get leak locations"
+        },
+        {
+          "info": {
+            "name": "Get leak areas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/leakareas"
+          },
+          "docs": "Shows the predefined list of the areas where the leak can be located. A leak area refers to the specific location where the leak occurred, for example, in a receiver or compressor."
+        },
+        {
+          "info": {
+            "name": "Add leak detector audit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/addLeakDetectorAudit"
+          },
+          "docs": "Add leak detector audit"
+        },
+        {
+          "info": {
+            "name": "get leak detector last audit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/getLeakDetectorLastAudit",
+            "params": [
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "recId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "get leak detector last audit"
+        },
+        {
+          "info": {
+            "name": "Create Charge History",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/createChargeHistory"
+          },
+          "docs": "Create Charge History"
+        },
+        {
+          "info": {
+            "name": "Add Update Refrigeration Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/addUpdateRefrigerationDetails",
+            "params": [
+              {
+                "name": "equipmentId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Add Update Refrigeration Details"
+        },
+        {
+          "info": {
+            "name": "POSTv3_refrigeranttracking_AddOrUpdateRefrigerationTypes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/AddOrUpdateRefrigerationTypes"
+          }
+        },
+        {
+          "info": {
+            "name": "Add/Update Refrigeration Details for an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/SaveRefrigerationDetails"
+          },
+          "docs": "Add/Update Refrigeration Details for an asset"
+        },
+        {
+          "info": {
+            "name": "Get refrigerant types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/RefrigerantTypes",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get refrigerant types"
+        },
+        {
+          "info": {
+            "name": "Get Leak Verification Methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/LeakVerificationMethods"
+          },
+          "docs": "Get Leak Verification Methods"
+        },
+        {
+          "info": {
+            "name": "Get refrigerant use types for equipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/:assetTypeId/getRefrigerantUseTypes",
+            "params": [
+              {
+                "name": "assetTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get refrigerant use types for equipment"
+        },
+        {
+          "info": {
+            "name": "Get Rack Type List Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/GetRackTypeListItems"
+          },
+          "docs": "Get Rack Type List Items"
+        },
+        {
+          "info": {
+            "name": "Get Operational Statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/OperationalStatuses"
+          },
+          "docs": "Get Operational Statuses"
+        },
+        {
+          "info": {
+            "name": "Get physical locations of refrigeration systems",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/SystemLocations"
+          },
+          "docs": "Returns the list of available physical locations and their IDs for refrigeration and HVAC systems. For example, indoors, outdoors, and partially indoors/outdoors. Applicable to assets that are regulated by the CARB."
+        },
+        {
+          "info": {
+            "name": "Check If WO Status Is Limited By RTSetup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/:workOrderId/isCompletedStatusesLimitedByRTSetup",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Check If WO Status Is Limited By RTSetup"
+        },
+        {
+          "info": {
+            "name": "Check If Used Refrigerant Is Valid For Invoiceble Statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/:workOrderId/checkRefrigerantWasUsedIsValidForInvoiceableStatuses",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "refrigerantWasUsed",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Check If Used Refrigerant Is Valid For Invoiceble Statuses"
+        },
+        {
+          "info": {
+            "name": "Create Leak Record Follow Up WorkOrder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/:workOrderId/createLeakRecordFollowUpWoForStatusUpdate",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create Leak Record Follow Up WorkOrder"
+        },
+        {
+          "info": {
+            "name": "Add WOLeakVerification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/WOLeakVerification"
+          },
+          "docs": "Add WOLeakVerification"
+        },
+        {
+          "info": {
+            "name": "Update WOLeakVerification",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/refrigeranttracking/WOLeakVerification"
+          },
+          "docs": "Update WOLeakVerification"
+        },
+        {
+          "info": {
+            "name": "Get leak verification methods for EPA Leak Inspection WOs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/WOLeakVerification/:trackingNumber",
+            "params": [
+              {
+                "name": "trackingNumber",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the PM work order."
+              }
+            ]
+          },
+          "docs": "Retrieves leak verification methods by WO tracking number. Only for Planned Maintenance work orders of the **EPA Leak Inspection** category where compliance acknowledgement is enabled by the subscriber.\r\n             • `1`: Soap Bubble Test\r\n             • `2`: Electronic Leak Detection\r\n             • `3`: Ultrasonic Leak Detection\r\n             • `4`: Pressure Test\r\n             • `5`: Vacuum Test\r\n             • `6`: Fluorescent Dye Test\r\n             • `7`: Infrared Test\r\n             • `8`:"
+        },
+        {
+          "info": {
+            "name": "Add a leak record to a work order and an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/LeakRecordImmeasurable"
+          },
+          "docs": "Creates a leak record for the unique pair **WO + Asset**. Returns the leak record ID in the response.\r\n            <br />With the *RTMultiLeakFlow* feature flag turned on, it is possible to add several leak records."
+        },
+        {
+          "info": {
+            "name": "Update a leak record",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/refrigeranttracking/LeakRecordImmeasurable"
+          },
+          "docs": "Updates the specified leak record."
+        },
+        {
+          "info": {
+            "name": "Get leak records by `workorderID` and `assetID`",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/LeakRecordImmeasurable/:trackingNumber",
+            "params": [
+              {
+                "name": "trackingNumber",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order."
+              },
+              {
+                "name": "assetid",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric identifier of the asset."
+              }
+            ]
+          },
+          "docs": "Returns leak records which are created for a certain work order and an asset."
+        },
+        {
+          "info": {
+            "name": "Delete a leak record",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/refrigeranttracking/DeleteLeakRecordImmeasurable",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric identifier of the leak record.\r\n            <br />To get the leak record ID, use the [GET /refrigeranttracking/LeakRecordImmeasurable/{trackingNumber}](/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_LeakRecordImmeasurable_%7BtrackingNumber%7D%3Fassetid%3D%7Bassetid%7D) method."
+              }
+            ]
+          },
+          "docs": "Removes a leak record from the work order and the asset."
+        },
+        {
+          "info": {
+            "name": "Get leak events with leak records by `workorderID`",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/leakrecords/:trackingNumber",
+            "params": [
+              {
+                "name": "trackingNumber",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order."
+              }
+            ]
+          },
+          "docs": "Returns [leak events](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/573898951/Viewing+Refrigerant+Leak+Events) with leak records for the specified work order."
+        },
+        {
+          "info": {
+            "name": "Update multiple leak records for a work order and an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/BulkLeakrecords"
+          },
+          "docs": "Creates, updates, or deletes multiple leak records for the **work order + asset** pair.\r\n            <br />***Note:*** Leak records should belong to a unique pair of **WO + asset** to perform bulk operations with them. \r\n            <br />***Note:*** Available with the *RTMultiLeakFlow* feature flag.\r\n            <br />**Example request for adding multiple leak records:**\r\n            \r\n                { \r\n                    \"AddItems\": [\r\n                        {\r\n                        \"Rep"
+        },
+        {
+          "info": {
+            "name": "Update multiple leak records for a work order and an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/BulkLeakRecordsAndAudit"
+          },
+          "docs": "Creates, updates, or deletes multiple leak records for a work order and an asset.\r\n            <br />***Note***: Leak records should belong to a unique pair `WO + Asset`, to perform bulk operations with them."
+        },
+        {
+          "info": {
+            "name": "Get leak immeasurable verification history",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/GetLeakRecordsVerificationHistory"
+          },
+          "docs": "Returns leak verification history for the list of leak immeasurable."
+        },
+        {
+          "info": {
+            "name": "Add Leak Inspection Compliance Acknowledgement",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/LeakInspectionComplianceAcknowledgement"
+          },
+          "docs": "Add Leak Inspection Compliance Acknowledgement"
+        },
+        {
+          "info": {
+            "name": "Get Leak Inspections Compliance Acknowledgement by trackingNumber and assetId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/MultiAssetLeakInspectionComplianceAcknowledgement",
+            "params": [
+              {
+                "name": "trackingNumber",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "assetid",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Leak Inspections Compliance Acknowledgement by trackingNumber and assetId"
+        },
+        {
+          "info": {
+            "name": "Add Leak Inspections Compliance Acknowledgement",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/MultiAssetLeakInspectionComplianceAcknowledgement"
+          },
+          "docs": "Add Leak Inspections Compliance Acknowledgement"
+        },
+        {
+          "info": {
+            "name": "Check if a WO requires secondary leak verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refrigeranttracking/:workOrderId/isSecondaryLeakVerificationRequired",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the work order."
+              }
+            ]
+          },
+          "docs": "Checks if a work order has the associated leak record where the secondary leak verification date and method haven’t been provided yet.\r\n            <br />Possible response values:\r\n             • `true`: There is an incomplete leak record linked to the specified work order ID. The secondary verification date and method are missing.\r\n             • `false`: There are no leak events for the specified work order ID, or the leak event associated with the WO was completed, with the secondary leak ver"
+        },
+        {
+          "info": {
+            "name": "Delete retrofit/retire plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/refrigeranttracking/DeleteRetrofitRetirePlan",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric identifier of the plan."
+              }
+            ]
+          },
+          "docs": "Removes plan with related part usages."
+        },
+        {
+          "info": {
+            "name": "Add retrofit retire plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/AddRetrofitRetirePlan"
+          },
+          "docs": "Add retrofit retire plan"
+        },
+        {
+          "info": {
+            "name": "Update retrofit retire plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refrigeranttracking/UpdateRetrofitRetirePlan"
+          },
+          "docs": "Update retrofit retire plan"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,207 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Rfps API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Rfps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an RFP",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/rfps"
+          },
+          "docs": "Creates a request for proposal (RFP). Returns a unique RFP ID for a successful request.\r\n            <br />***Note:*** Subscribers can create RFPs [using the API](/guides/proposals/create-and-manage-RFPs/#create-an-rfp) or via [Service Automation](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/560300086/Creating+an+RFP).\r\n            <br />**Example Request**\r\n            \r\n                POST /rfps\r\n                {\r\n                   \"Number\": \"\",\r\n                   \"PONumber\":"
+        },
+        {
+          "info": {
+            "name": "Assign an RFP to another provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/rfps/:rfpId/assign",
+            "params": [
+              {
+                "name": "rfpId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the RFP to assign to the specified provider."
+              }
+            ]
+          },
+          "docs": "Assigns the RFP to the specified provider. Returns a unique RFP ID for a successful request.\r\n            <br />***Note:*** The provider you want to assign the RFP to should have access to the location and trade for which the RFP was created.\r\n            <br />Learn more about [assigning an RFP to another provider](/guides/proposals/create-and-manage-RFPs/#assign-an-rfp-to-another-provider).\r\n            <br />**Example Request**\r\n            \r\n                PUT /rfps/{rfpId}/assign\r\n        "
+        },
+        {
+          "info": {
+            "name": "Delete an RFP by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/rfps/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the RFP to delete."
+              }
+            ]
+          },
+          "docs": "Permanently deletes the specified RFP by its ID. It cannot be undone. Find out more about [deleting RFPs via the API](/guides/proposals/create-and-manage-RFPs/#delete-an-rfp)."
+        },
+        {
+          "info": {
+            "name": "Delete an RFP by the RFP number and location ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/rfps/:number/locations/:locationId",
+            "params": [
+              {
+                "name": "number",
+                "value": "",
+                "type": "path",
+                "description": "The non-unique identifier of the RFP to delete."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the location for which the RFP was created."
+              }
+            ]
+          },
+          "docs": "Permanently deletes the RFP by the specified RFP number and location ID. It cannot be undone.\r\n            <br />***Note:*** The RFP number is not unique. If multiple RFPs with the same number were created for a location, all of them are deleted when you pass the request.\r\n            <br />Learn more about [deleting RFPs via the API](/guides/proposals/create-and-manage-RFPs/#delete-an-rfp)."
+        },
+        {
+          "info": {
+            "name": "Retrieve Rfps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/rfps",
+            "params": [
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Retrieve Rfps\r\n            <br /> Dates without 'Dto' endings return UTC date format.\r\n            <br /> Dates without 'Dto' endings are not recommended for using."
+        },
+        {
+          "info": {
+            "name": "Retrieve Rfp",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/rfps(:rfpId)",
+            "params": [
+              {
+                "name": "rfpId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Retrieve Rfp"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

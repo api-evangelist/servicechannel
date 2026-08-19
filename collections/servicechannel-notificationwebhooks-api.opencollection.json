@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours NotificationWebHooks API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "NotificationWebHooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List existing webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/NotificationWebHooks"
+          },
+          "docs": "Returns a list of webhooks for the current subscriber or provider."
+        },
+        {
+          "info": {
+            "name": "Create a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/NotificationWebHooks"
+          },
+          "docs": "Creates a new webhook for the specified [event types](/guides/wh/types-of-events/). Returns a unique webhook ID for a successful request.\r\n            See [Event Objects](/guides/wh/event-objects/) for example notification objects and descriptions of their fields.\r\n            <br />***Note:*** You can create webhooks using API or via the [Service Automation Admin](/guides/wh/create-and-manage-webhooks-in-UI/).\r\n            <br />**Example Request**\r\n            \r\n                POST /Notificat"
+        },
+        {
+          "info": {
+            "name": "Get a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/NotificationWebHooks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of the webhook to return."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of the specified webhook."
+        },
+        {
+          "info": {
+            "name": "Update a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/NotificationWebHooks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of the webhook to update."
+              }
+            ]
+          },
+          "docs": "Updates the specified webhook by setting the values of the parameters passed.\r\n            <br />**Example Request**\r\n            \r\n                PUT /NotificationWebHooks/{id}\r\n                {\r\n                  \"Subscriptions\": [\r\n                    {\r\n                      \"Id\": 1111,\r\n                      \"Name\": \"Subscription to new WOs\",\r\n                      \"EventTypes\": [\r\n                        \"WorkOrderCreated\"\r\n                      ],\r\n                      \"Rules\": {\r\n    "
+        },
+        {
+          "info": {
+            "name": "Delete a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/NotificationWebHooks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of the webhook to delete."
+              }
+            ]
+          },
+          "docs": "Permanently deletes the specified webhook. It cannot be undone."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

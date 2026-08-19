@@ -1,0 +1,867 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Proposals API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Proposals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve statistics on RFPs and proposals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals/statistics",
+            "params": [
+              {
+                "name": "daysPeriod",
+                "value": "",
+                "type": "query",
+                "description": "Time period set as the number of days prior to the current date for which statistics on RFPs and proposals are returned. The default is 30."
+              }
+            ]
+          },
+          "docs": "Returns statistics on requests for proposals (RFPs) and proposals for the specified time period for the current provider:\r\n             • RFPs awaiting response\r\n             • Open proposals\r\n             • Approved proposals\r\n             • Proposals in the _On Hold_ and _Reviewed_ statuses\r\n             • Rejected proposals"
+        },
+        {
+          "info": {
+            "name": "Retrieve users who can be added to the list of email recipients to notify of a proposal approval or rejection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals/:proposalId/recipients",
+            "params": [
+              {
+                "name": "proposalId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the proposal."
+              }
+            ]
+          },
+          "docs": "Returns users who can be added to the list of email recipients to notify when the specified proposal is approved or rejected.\r\n            <br />***Note:*** This method is only available to subscriber users."
+        },
+        {
+          "info": {
+            "name": "Validate a proposal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals/:proposalId/validate",
+            "params": [
+              {
+                "name": "proposalId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the proposal to validate."
+              }
+            ]
+          },
+          "docs": "Checks if the specified proposal exists for the current user."
+        },
+        {
+          "info": {
+            "name": "Reject a proposal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/:proposalId/reject",
+            "params": [
+              {
+                "name": "proposalId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the proposal to reject."
+              },
+              {
+                "name": "useProposalAlertEmails",
+                "value": "",
+                "type": "query",
+                "description": "Defines if a proposal rejection notification is sent to all users listed in the **Proposals/Proposal Alerts** section of **Dispatch Preferences**.\r\n            If the parameter value is `true`, users from the **Proposals/Proposal Alerts** list get a notification if the `ProviderEmail` and `UserEmail` parameters are not passed. If set to `false` or not passed, this parameter is ignored."
+              }
+            ]
+          },
+          "docs": "Updates the status of the specified proposal to *Rejected*.\r\n            <br />You can send a proposal rejection notification to a specific user or to all users from the **Proposals/Proposal Alerts** list.\r\n             • `ProviderEmail` and `UserEmail`. Use these parameters to send a proposal rejection notification to a specific user. If passed, any of these parameters prevails over `useProposalAlertEmails`. In case you pass a value to the `ProviderEmail` or `UserEmail` parameter in the request"
+        },
+        {
+          "info": {
+            "name": "Reject proposals",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/ProposalsReject"
+          },
+          "docs": "Updates the status of the specified proposal to *Rejected*.\r\n            <br />***Note:*** This method is only available to subscriber users."
+        },
+        {
+          "info": {
+            "name": "Retrieve proposals that can be reject",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals/GetProposalsToReject",
+            "params": [
+              {
+                "name": "trackingNumber",
+                "value": "",
+                "type": "query",
+                "description": "The unique numeric identifier of the WO."
+              }
+            ]
+          },
+          "docs": "Returns list of the proposals that can be reject.\r\n            <br />***Note:*** This method is only available to subscriber users."
+        },
+        {
+          "info": {
+            "name": "Put a proposal on hold",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/:proposalId/onhold",
+            "params": [
+              {
+                "name": "proposalId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the proposal to put on hold."
+              }
+            ]
+          },
+          "docs": "Updates the status of the specified proposal to *On Hold*.\r\n            <br />***Note:*** This method is only available to subscriber users.\r\n            <br />**Example Request**\r\n            \r\n                PUT /proposals/{proposalId}/onhold\r\n                {\r\n                   \"Comments\": \"The proposal needs further review\",\r\n                   \"ProviderEmail\": \"\",\r\n                   \"UserEmail\": \"\",\r\n                   \"RejectReasonCodeId\": 0,\r\n                   \"ActionSource\": \"Standa"
+        },
+        {
+          "info": {
+            "name": "Approve a proposal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/:proposalId/approve",
+            "params": [
+              {
+                "name": "proposalId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the proposal to approve."
+              }
+            ]
+          },
+          "docs": "Updates the status of the specified proposal to *Approved*.\r\n            <br />***Note:*** This method is only available to subscriber users.\r\n            <br />**Example Request**\r\n            \r\n                PUT /proposals/{proposalId}/approve\r\n                {\r\n                   \"Comments\": \"The project starts earlier than expected\",\r\n                   \"ProviderEmail\": \"\",\r\n                   \"UserEmail\": \"\",\r\n                   \"RejectReasonCodeId\": 0,\r\n                   \"ActionSource\""
+        },
+        {
+          "info": {
+            "name": "Open a proposal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/:proposalId/open",
+            "params": [
+              {
+                "name": "proposalId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the proposal to open."
+              }
+            ]
+          },
+          "docs": "Updates the status of the specified proposal to *Open*.\r\n            <br />***Note:*** This method is only available to subscriber users.\r\n            <br />**Example Request**\r\n            \r\n                PUT /proposals/{proposalId}/open\r\n                {\r\n                   \"Comments\": \"The project is resumed\",\r\n                   \"ProviderEmail\": \"\",\r\n                   \"UserEmail\": \"\",\r\n                   \"RejectReasonCodeId\": 0,\r\n                   \"ActionSource\": \"Standard\",\r\n          "
+        },
+        {
+          "info": {
+            "name": "Attach a work order to a proposal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/:proposalId/assignWO",
+            "params": [
+              {
+                "name": "proposalId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the proposal to attach the work order to."
+              },
+              {
+                "name": "isFromProjectsModule",
+                "value": "",
+                "type": "query",
+                "description": "Is request from projects module."
+              }
+            ]
+          },
+          "docs": "Links the specified work order to the proposal. If the proposal already has a linked service request, the attached work order is updated. See [Link a WO to a Proposal](/guides/proposals/link-a-WO-to-a-proposal/) for more information.\r\n            <br />***Note:*** This method is only available to subscriber users."
+        },
+        {
+          "info": {
+            "name": "Escalate a proposal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/:proposalId/escalate",
+            "params": [
+              {
+                "name": "proposalId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the proposal to escalate."
+              }
+            ]
+          },
+          "docs": "Escalates the specified proposal to another user in the subscriber’s multi-level proposal (MLP) approval hierarchy. The proposal can be approved, rejected, put on hold, or returned upon escalation. You can attach an existing work order or create a new one while submitting the request.\r\n            <br />***Note:*** This method is only available to subscribers with the MLP setting enabled.\r\n            <br />MLP users can [escalate a proposal](/guides/proposals/assign-or-escalate-a-proposal/#esca"
+        },
+        {
+          "info": {
+            "name": "Assign a proposal to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/:proposalId/assignUser",
+            "params": [
+              {
+                "name": "proposalId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the proposal to assign to the specified user."
+              }
+            ]
+          },
+          "docs": "Assigns the proposal to the specified user in the subscriber’s organization. If the proposal already has an assignee, the appointed user is updated.\r\n            <br />***Note:*** You cannot [assign a proposal](/guides/proposals/assign-or-escalate-a-proposal/#assign-a-proposal-to-a-user) in the *Approved* or *Rejected* status.\r\n            <br />**Example Request**\r\n            \r\n                PUT /proposals/{proposalId}/assignUser\r\n                {\r\n                   \"UserId\": 1417703,\r\n   "
+        },
+        {
+          "info": {
+            "name": "Retrieve proposals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals",
+            "params": [
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query",
+                "description": "Proposal statuses separated by commas. Valid values: *Open*, *On Hold*, *Approved*, *Rejected*, *Void*, *Reviewed*.\r\n            Proposals in all statuses are returned if the value is not passed."
+              },
+              {
+                "name": "assignedTo",
+                "value": "",
+                "type": "query",
+                "description": "The unique numeric identifier of the user who is assigned the proposals."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to skip in the response (starting from the first one)."
+              },
+              {
+                "name": "top",
+                "value": "",
+                "type": "query",
+                "description": "The number of entries to return. The default value is 50."
+              }
+            ]
+          },
+          "docs": "Returns proposals based on the specified input parameters for the current subscriber."
+        },
+        {
+          "info": {
+            "name": "Get Proposals",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/proposals/GetProposals"
+          },
+          "docs": "Get Proposals"
+        },
+        {
+          "info": {
+            "name": "Retrieve users who can be assigned a proposal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals/:proposalId/users",
+            "params": [
+              {
+                "name": "proposalId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the proposal."
+              }
+            ]
+          },
+          "docs": "Returns a list of users in the subscriber’s organization who can be assigned the specified proposal. You can send this request to retrieve the user ID before [assigning a proposal](/guides/proposals/assign-or-escalate-a-proposal/#assign-a-proposal-to-a-user)."
+        },
+        {
+          "info": {
+            "name": "Retrieve proposal rejection reasons",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals/RejectionReasons"
+          },
+          "docs": "Returns numeric identifiers and descriptions of the reasons for rejecting a proposal."
+        },
+        {
+          "info": {
+            "name": "Retrieve proposal approval reasons",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals/ApprovalReasons",
+            "params": [
+              {
+                "name": "Trade",
+                "value": "",
+                "type": "query",
+                "description": "The type of work a provider performs. Has a narrower definition than `Category`. Obsoleted, outdated. Please use TradeId instead."
+              },
+              {
+                "name": "TradeId",
+                "value": "",
+                "type": "query",
+                "description": "The type of work a provider performs. Has a narrower definition than `CategoryId`."
+              },
+              {
+                "name": "Category",
+                "value": "",
+                "type": "query",
+                "description": "The overall classification of the performed work. Obsoleted, outdated. Please use CategoryId instead."
+              },
+              {
+                "name": "CategoryId",
+                "value": "",
+                "type": "query",
+                "description": "The overall classification of the performed work."
+              }
+            ]
+          },
+          "docs": "Returns the reasons for approving a proposal for the current subscriber.\r\n            <br />Admin users can manage proposal approval reasons in Service Automation in **Admin** &gt; **Proposals** &gt; **Proposal Approve Reasons** if the subscriber has this feature enabled.\r\n            <br />Method either uses Trade and Category, or TradeId and CategoryId parameters in pairs. Trade and Category parameters are outdated. It is advised to use TradeId and CategoryId instead."
+        },
+        {
+          "info": {
+            "name": "Retrieve the reasons for assigning a proposal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals/AssignReasons",
+            "params": [
+              {
+                "name": "Trade",
+                "value": "",
+                "type": "query",
+                "description": "The type of work a provider performs. Has a narrower definition than `Category`. Obsoleted, outdated. Please use TradeId instead."
+              },
+              {
+                "name": "Category",
+                "value": "",
+                "type": "query",
+                "description": "The overall classification of the performed work. Obsoleted, outdated. Please use CategoryId instead."
+              },
+              {
+                "name": "TradeId",
+                "value": "",
+                "type": "query",
+                "description": "The type of work a provider performs. Has a narrower definition than `CategoryId`."
+              },
+              {
+                "name": "CategoryId",
+                "value": "",
+                "type": "query",
+                "description": "The overall classification of the performed work."
+              }
+            ]
+          },
+          "docs": "Returns the reasons for assigning a proposal to another user in the subscriber’s organization.\r\n            <br />Admin users can manage the reasons for assigning proposals in Service Automation in **Admin** &gt; **Proposals** &gt; **Proposal Assign Reasons** if the subscriber has this feature enabled.\r\n            <br />Method either uses Trade and Category, or TradeId and CategoryId parameters in pairs. Trade and Category parameters are outdated. It is advised to use TradeId and CategoryId ins"
+        },
+        {
+          "info": {
+            "name": "Get proposal actions by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals/proposalIds",
+            "params": [
+              {
+                "name": "proposalIds",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric identifier of the proposal."
+              }
+            ]
+          },
+          "docs": "Returns available actions for the specified proposals:\r\n             • **Edit.** Proposals that can be changed by your client.\r\n             • **Open.** Proposals that haven't been reviewed by your client.\r\n             • **On hold.** Proposals that require your client’s further review before being approved or rejected.\r\n             • **Approve.** Proposals that have been already approved by your client.\r\n             • **Reject.** Proposals that have been rejected by your client.\r\n            "
+        },
+        {
+          "info": {
+            "name": "Get users by level name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals/GetUsersByLevelName",
+            "params": [
+              {
+                "name": "levelName",
+                "value": "",
+                "type": "query",
+                "description": "MLP level name."
+              }
+            ]
+          },
+          "docs": "Returns the usernames of employees appointed to the specified MLP level.\r\n            <br />You can get MLP levels information for the current subscriber by sending the [GET /proposals/GetMlpLevelsForSubscriber](/swagger/ui/index?version=3#/Proposals/GETv3_proposals_GetMlpLevelsForSubscriber) request.\r\n            <br />Refer to ServiceChannel University to learn more about [how to configure MLP levels](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/621282301/Configuring+MLP+Levels)."
+        },
+        {
+          "info": {
+            "name": "Get MLP levels for a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals/GetMlpLevelsForSubscriber"
+          },
+          "docs": "Returns all MLP levels with their information for the current subscriber.\r\n            <br />To retrieve all users assigned to a particular level, use the [GET /proposals/GetUsersByLevelName](/swagger/ui/index?version=3#/Proposals/GETv3_proposals_GetUsersByLevelName_levelName__levelName_) method."
+        },
+        {
+          "info": {
+            "name": "Add a user to an MLP level",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/AddUserToMlpLevel",
+            "params": [
+              {
+                "name": "userName",
+                "value": "",
+                "type": "query",
+                "description": "Username to log into the system. The field is case sensitive."
+              },
+              {
+                "name": "levelName",
+                "value": "",
+                "type": "query",
+                "description": "MLP level name."
+              }
+            ]
+          },
+          "docs": "Assigns a user to an existing MLP level. Get a username by sending the [GET /users](/swagger/ui/index?version=3#/Users/GETv3_users_subscriberId__subscriberId__startIndex__startIndex__maxCount__maxCount_) request.\r\n            <br />Once you assign a user to an MLP level, you can assign a location to the user and MLP level by using the [PUT /proposals/AddLocationToUserLevel](/swagger/ui/index?version=3#/Proposals/PUTv3_proposals_AddLocationToUserLevel_userName__userName__location__location_) meth"
+        },
+        {
+          "info": {
+            "name": "Remove a user from an MLP level",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/RemoveUserFromMlpLevel",
+            "params": [
+              {
+                "name": "userName",
+                "value": "",
+                "type": "query",
+                "description": "Username to log into the system."
+              }
+            ]
+          },
+          "docs": "Removes the specified user from the assigned MLP level.\r\n            <br />To assign a user to an MLP level, use the [PUT /proposals/AddUserToMlpLevel](/swagger/ui/index?version=3#/Proposals/PUTv3_proposals_AddUserToLevelLocation) method."
+        },
+        {
+          "info": {
+            "name": "Add a location to a user’s MLP level",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/AssignLocationToMlpUser",
+            "params": [
+              {
+                "name": "userName",
+                "value": "",
+                "type": "query",
+                "description": "Username to log into the system."
+              },
+              {
+                "name": "location",
+                "value": "",
+                "type": "query",
+                "description": "Alphanumeric location identifier in the client’s system."
+              }
+            ]
+          },
+          "docs": "Assigns a particular location to the specified user along with the MLP level.\r\n            <br />You can remove a location from the user and MLP level by using the [PUT /proposals/RemoveLocationFromUserLevel](/swagger/ui/index?version=3#/Proposals/PUTv3_proposals_RemoveLocationFromUserLevel_userName__userName__location__location_) method."
+        },
+        {
+          "info": {
+            "name": "Remove a location from a user’s MLP level",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/RemoveLocationFromMlpUser",
+            "params": [
+              {
+                "name": "userName",
+                "value": "",
+                "type": "query",
+                "description": "Username to log into the system."
+              },
+              {
+                "name": "location",
+                "value": "",
+                "type": "query",
+                "description": "Alphanumeric location identifier in the client’s system."
+              }
+            ]
+          },
+          "docs": "Removes the specified location from the user and user’s MLP level.\r\n            <br />To add a location, send the [PUT /proposals/AddLocationToUserLevel](/swagger/ui/index?version=3#/Proposals/PUTv3_proposals_AddLocationToUserLevel_userName__userName__location__location_) request."
+        },
+        {
+          "info": {
+            "name": "Delete Proposal and Rfp reference with projectId by rfpId",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/:rfpId",
+            "params": [
+              {
+                "name": "rfpId",
+                "value": "",
+                "type": "path",
+                "description": "The unique numeric identifier of the RFP."
+              }
+            ]
+          },
+          "docs": "Delete Proposal and Rfp reference with projectId by rfpId"
+        },
+        {
+          "info": {
+            "name": "GETv3_proposals_GetProposalsAssociatedWithWorkOderExceptRfp?trackingNumber={trackingNumber}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals/GetProposalsAssociatedWithWorkOderExceptRfp",
+            "params": [
+              {
+                "name": "trackingNumber",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Assign a ProjectId to a ProposalId and Rfp",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/AssignProjectIdToProposalAndRfp",
+            "params": [
+              {
+                "name": "proposalId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Assign a ProjectId to a ProposalId and Rfp"
+        },
+        {
+          "info": {
+            "name": "Whether the user can be deleted from MLP level.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/proposals/RemoveMlpUserValidationAsync",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query",
+                "description": "The User Id."
+              }
+            ]
+          },
+          "docs": "Whether the user can be deleted from MLP level."
+        },
+        {
+          "info": {
+            "name": "Get proposals linked to the work order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals/GetProposalsAssociatedWithWorkOrderAsync",
+            "params": [
+              {
+                "name": "trackingNumber",
+                "value": "",
+                "type": "query",
+                "description": "Tracking number of the work order."
+              }
+            ]
+          },
+          "docs": "Searches for proposals associated with the work order by the WO tracking number."
+        },
+        {
+          "info": {
+            "name": "Check the possibility of creating a proposal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/proposals/CheckProposalCreation",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves the result on the availability of creating a proposal via API based on user’s permissions and a combination of the input values: `subscriberId` + `providerId` + `locationId ` + `tradeId` + `currency`. When the combination of the input values does not allow creating a proposal using API, the method returns the following response: “Proposal form is not supported via API. Please use the UI instead.” \r\n            <br /> Having received the successful response, copy the response model from"
+        },
+        {
+          "info": {
+            "name": "Create a proposal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/proposals/CreateProposal"
+          },
+          "docs": "Creates a proposal and returns its ID in the response. Once a proposal is created via API, an email is sent to the addressees listed in the `notificationEmails` parameter and a proposal appears in the ServiceChannel system. Use the response model of the [GET /proposals/CheckProposalCreation](https://developer.servicechannel.com/swagger/index.html#/Proposals/GETv3_proposals_CheckProposalCreation%3FSubscriberId%3D%7BSubscriberId%7D%26ProviderId%3D%7BProviderId%7D%26LocationId%3D%7BLocationId%7D%26"
+        },
+        {
+          "info": {
+            "name": "Retrieve Proposals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/proposals",
+            "params": [
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Retrieve Proposals\r\n            <br />The filter expressions by defaul is \"$filter CreatedDate ge (Now-90 days)\".\r\n            <br />The maximum CreatedDate value is 365 days even if provided.\r\n            <br />Dates without 'Dto' endings return UTC date format.\r\n            <br />Dates without 'Dto' endings are not recommended for using."
+        },
+        {
+          "info": {
+            "name": "Retrieve Rfp Proposals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/rfps(:rfpId)/proposals",
+            "params": [
+              {
+                "name": "rfpId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Retrieve Rfp Proposals"
+        },
+        {
+          "info": {
+            "name": "Retrieve proposal categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/proposals(:proposalId)/Service.Categories()",
+            "params": [
+              {
+                "name": "proposalId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the proposal."
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Returns proposal categories for the specified proposal ID.\r\n            <br />***Note:*** A proposal category represents a specific section in the proposal form. It can contain proposal costs information, for example, materials, installation labor, freight, etc.; or it can hold a question with answers configured for the proposal form.\r\n            <br />Supports filtering and sorting in the response.\r\n             • **$expand:** Not supported for this method.\r\n             • **$select:** Not sup"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

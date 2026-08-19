@@ -1,0 +1,1215 @@
+{
+  "item": [
+    {
+      "id": "10601ce4-e788-4a54-9403-2f7ccffee61d",
+      "name": "Contracts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d03bae53-0491-48cd-8ccd-12472c1b11c4",
+          "name": "Retire Provider Contract. When 'Trade' and 'StoreId' are not specified then provider is 'retired' from all subscriber's stores.",
+          "request": {
+            "name": "Retire Provider Contract. When 'Trade' and 'StoreId' are not specified then provider is 'retired' from all subscriber's stores.",
+            "description": {
+              "content": "Available only for Subscriber Super Admin user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contracts",
+                "retire"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"StoreId\": \"<string>\",\n  \"Trade\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1f93af7c-22a8-45d9-916b-6aa912bae3ee",
+              "name": "Indicates that the request succeeded. When 'Trade' and 'StoreId' are not specified then provider is 'retired' from all subscriber's stores.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contracts",
+                    "retire"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"StoreId\": \"<string>\",\n  \"Trade\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4db7724b-49e6-433b-bc72-42587df4e918",
+          "name": "Returns provider active contracts by providerId, locationId and trade",
+          "request": {
+            "name": "Returns provider active contracts by providerId, locationId and trade",
+            "description": {
+              "content": "Available only for Subscriber user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contracts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "locationId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "locationDbId",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "providerId",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "trade",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "tradeId",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5af4b66f-0d70-44e8-8aec-88ca717d7688",
+              "name": "The requested contracts are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contracts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationDbId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "trade",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Contracts\": [\n    {\n      \"Id\": 4944,\n      \"Rank\": 5287,\n      \"Contractor\": {\n        \"Phone\": \"string\",\n        \"FullName\": \"string\",\n        \"Address1\": \"string\",\n        \"Address2\": \"string\",\n        \"City\": \"string\",\n        \"State\": \"string\",\n        \"Zip\": \"string\",\n        \"Country\": \"string\",\n        \"MainContact\": \"string\",\n        \"DateCreated\": \"2013-10-15T23:35:02.999Z\",\n        \"LastUserDate\": \"string\",\n        \"SuperUser\": \"string\",\n        \"WebSite\": \"string\",\n        \"Email\": \"string\",\n        \"TaxId\": \"string\",\n        \"Trade\": \"string\",\n        \"ProcessingEmail\": \"string\",\n        \"FaxNumber\": \"string\",\n        \"SuiteFloor\": \"string\",\n        \"MailInfo\": \"string\",\n        \"ImageFile\": \"string\",\n        \"ReturnMail\": \"string\",\n        \"MailFrequency\": 6958,\n        \"FormId\": 8882,\n        \"Pager\": \"string\",\n        \"NightRequest\": 3994,\n        \"ShortFormatEmail\": \"string\",\n        \"LastTrainingDate\": \"1974-10-19T12:53:50.051Z\",\n        \"LastTrainingDateStr\": \"string\",\n        \"IsInternal\": false,\n        \"IsOnOffShoreFeatureEnabled\": false,\n        \"Id\": 8168,\n        \"Name\": \"string\",\n        \"DoNotDispatch\": false\n      },\n      \"Client\": {\n        \"Name\": \"string\",\n        \"Id\": 6670,\n        \"ShortName\": \"string\",\n        \"Email\": \"string\",\n        \"Users\": [\n          {\n            \"Id\": 6705,\n            \"SubscriberId\": 4847,\n            \"UserName\": \"/3{';$K\",\n            \"FullName\": \"string\",\n            \"Email\": \"string\",\n            \"PsmEmail\": \"string\",\n            \"Disabled\": false,\n            \"IsLocked\": false,\n            \"Roles\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"Permissions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"UserType\": \"Dashboard\",\n            \"Dashboard\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Access\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Limits\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"FeedRole\": \"string\",\n            \"MliUserInfo\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"MlpUserInfo\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"Id\": 7298,\n            \"SubscriberId\": 6226,\n            \"UserName\": \"UR3OUrK/0\",\n            \"FullName\": \"string\",\n            \"Email\": \"string\",\n            \"PsmEmail\": \"string\",\n            \"Disabled\": false,\n            \"IsLocked\": false,\n            \"Roles\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"Permissions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"UserType\": \"Corporate\",\n            \"Dashboard\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Access\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Limits\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"FeedRole\": \"string\",\n            \"MliUserInfo\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"MlpUserInfo\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"PrimaryCurrency\": {\n          \"Id\": 3014,\n          \"AlphabeticalCode\": \"string\",\n          \"DecimalCount\": 6183,\n          \"Entity\": \"string\",\n          \"CurrencyName\": \"string\",\n          \"NumericCode\": \"string\",\n          \"Rate\": 7121.967646494693\n        },\n        \"IsOutsourcedWorkOn\": false,\n        \"Address1\": \"string\",\n        \"Address2\": \"string\",\n        \"Country\": \"string\",\n        \"State\": \"string\",\n        \"City\": \"string\",\n        \"Zip\": \"string\",\n        \"Phone\": \"string\",\n        \"Fax\": \"string\",\n        \"ContactName\": \"string\",\n        \"TimeFormat\": \"string\",\n        \"DateFormat\": \"string\",\n        \"DecimalSeparator\": \"string\"\n      },\n      \"Trade\": {\n        \"Id\": 4044,\n        \"Name\": \"string\",\n        \"SubscriberId\": 3625\n      },\n      \"Location\": {\n        \"Id\": 2850,\n        \"SubscriberId\": 8534,\n        \"SubscriberName\": \"string\",\n        \"StoreId\": \"string\",\n        \"Name\": \"string\",\n        \"ShortName\": \"string\",\n        \"Latitude\": 6795.433218335181,\n        \"Longitude\": 7633.630034052313,\n        \"Distance\": 8666.598162524255,\n        \"Radius\": 4831.80187903169,\n        \"LocationTypeId\": 2318,\n        \"Address1\": \"string\",\n        \"Address2\": \"string\",\n        \"City\": \"string\",\n        \"State\": \"string\",\n        \"StateId\": 9262,\n        \"Region\": \"string\",\n        \"District\": \"string\",\n        \"Zip\": \"string\",\n        \"Country\": \"string\",\n        \"CountryId\": 7703,\n        \"ClosedDate\": \"1991-08-22T18:02:07.048Z\",\n        \"OpenDate\": \"1960-08-17T15:22:31.748Z\",\n        \"Status\": \"string\",\n        \"Email\": \"string\",\n        \"FaxNumber\": \"string\",\n        \"Phone\": \"string\",\n        \"Contact\": \"string\",\n        \"HasInventory\": false,\n        \"SquareValue\": 4257.087034885979,\n        \"SquareMeasure\": \"string\",\n        \"TimeZoneInfoId\": 3485,\n        \"TimeZoneShortDescription\": \"string\",\n        \"TimeZoneMsName\": \"string\",\n        \"TimeZoneIanaName\": \"string\",\n        \"TypeLabel\": \"string\",\n        \"Supplier\": \"string\",\n        \"CountyId\": 98,\n        \"Notes\": [\n          {\n            \"Id\": 3761,\n            \"HeaderId\": 1024,\n            \"Value\": \"string\",\n            \"Header\": \"string\"\n          },\n          {\n            \"Id\": 3546,\n            \"HeaderId\": 3968,\n            \"Value\": \"string\",\n            \"Header\": \"string\"\n          }\n        ],\n        \"TimeShiftToEST\": 4448,\n        \"AddressTypeId\": 2322,\n        \"FormattedAddress\": \"string\",\n        \"LocationFormattedAddressTail\": \"string\",\n        \"IsInternational\": false,\n        \"Address\": \"string\"\n      },\n      \"Category\": {\n        \"Name\": \"string\",\n        \"HasDependency\": false,\n        \"PrimaryCategory\": {\n          \"Id\": 9962,\n          \"Name\": \"string\",\n          \"SubscriberId\": 7991,\n          \"UserId\": 7064\n        },\n        \"Id\": 5211,\n        \"SubscriberId\": 6618,\n        \"UserId\": 4181\n      }\n    },\n    {\n      \"Id\": 7520,\n      \"Rank\": 5275,\n      \"Contractor\": {\n        \"Phone\": \"string\",\n        \"FullName\": \"string\",\n        \"Address1\": \"string\",\n        \"Address2\": \"string\",\n        \"City\": \"string\",\n        \"State\": \"string\",\n        \"Zip\": \"string\",\n        \"Country\": \"string\",\n        \"MainContact\": \"string\",\n        \"DateCreated\": \"1956-12-09T18:35:50.300Z\",\n        \"LastUserDate\": \"string\",\n        \"SuperUser\": \"string\",\n        \"WebSite\": \"string\",\n        \"Email\": \"string\",\n        \"TaxId\": \"string\",\n        \"Trade\": \"string\",\n        \"ProcessingEmail\": \"string\",\n        \"FaxNumber\": \"string\",\n        \"SuiteFloor\": \"string\",\n        \"MailInfo\": \"string\",\n        \"ImageFile\": \"string\",\n        \"ReturnMail\": \"string\",\n        \"MailFrequency\": 4524,\n        \"FormId\": 5588,\n        \"Pager\": \"string\",\n        \"NightRequest\": 1675,\n        \"ShortFormatEmail\": \"string\",\n        \"LastTrainingDate\": \"1989-04-08T12:37:53.591Z\",\n        \"LastTrainingDateStr\": \"string\",\n        \"IsInternal\": false,\n        \"IsOnOffShoreFeatureEnabled\": false,\n        \"Id\": 6577,\n        \"Name\": \"string\",\n        \"DoNotDispatch\": false\n      },\n      \"Client\": {\n        \"Name\": \"string\",\n        \"Id\": 4421,\n        \"ShortName\": \"string\",\n        \"Email\": \"string\",\n        \"Users\": [\n          {\n            \"Id\": 5869,\n            \"SubscriberId\": 484,\n            \"UserName\": \"\",\n            \"FullName\": \"string\",\n            \"Email\": \"string\",\n            \"PsmEmail\": \"string\",\n            \"Disabled\": false,\n            \"IsLocked\": false,\n            \"Roles\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"Permissions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"UserType\": \"Corporate\",\n            \"Dashboard\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Access\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Limits\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"FeedRole\": \"string\",\n            \"MliUserInfo\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"MlpUserInfo\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"Id\": 8384,\n            \"SubscriberId\": 5294,\n            \"UserName\": \"I*n|5\\\\=eMZ59\",\n            \"FullName\": \"string\",\n            \"Email\": \"string\",\n            \"PsmEmail\": \"string\",\n            \"Disabled\": false,\n            \"IsLocked\": false,\n            \"Roles\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"Permissions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"UserType\": \"ServiceChannel\",\n            \"Dashboard\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Access\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"Limits\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"FeedRole\": \"string\",\n            \"MliUserInfo\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"MlpUserInfo\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"PrimaryCurrency\": {\n          \"Id\": 2116,\n          \"AlphabeticalCode\": \"string\",\n          \"DecimalCount\": 2457,\n          \"Entity\": \"string\",\n          \"CurrencyName\": \"string\",\n          \"NumericCode\": \"string\",\n          \"Rate\": 4949.478423058613\n        },\n        \"IsOutsourcedWorkOn\": false,\n        \"Address1\": \"string\",\n        \"Address2\": \"string\",\n        \"Country\": \"string\",\n        \"State\": \"string\",\n        \"City\": \"string\",\n        \"Zip\": \"string\",\n        \"Phone\": \"string\",\n        \"Fax\": \"string\",\n        \"ContactName\": \"string\",\n        \"TimeFormat\": \"string\",\n        \"DateFormat\": \"string\",\n        \"DecimalSeparator\": \"string\"\n      },\n      \"Trade\": {\n        \"Id\": 4864,\n        \"Name\": \"string\",\n        \"SubscriberId\": 3539\n      },\n      \"Location\": {\n        \"Id\": 5288,\n        \"SubscriberId\": 117,\n        \"SubscriberName\": \"string\",\n        \"StoreId\": \"string\",\n        \"Name\": \"string\",\n        \"ShortName\": \"string\",\n        \"Latitude\": 6407.5967773946,\n        \"Longitude\": 3962.6016097154825,\n        \"Distance\": 3012.9366833443337,\n        \"Radius\": 9364.772766018015,\n        \"LocationTypeId\": 1417,\n        \"Address1\": \"string\",\n        \"Address2\": \"string\",\n        \"City\": \"string\",\n        \"State\": \"string\",\n        \"StateId\": 5480,\n        \"Region\": \"string\",\n        \"District\": \"string\",\n        \"Zip\": \"string\",\n        \"Country\": \"string\",\n        \"CountryId\": 1730,\n        \"ClosedDate\": \"1962-09-10T11:24:12.974Z\",\n        \"OpenDate\": \"1955-12-03T23:31:10.927Z\",\n        \"Status\": \"string\",\n        \"Email\": \"string\",\n        \"FaxNumber\": \"string\",\n        \"Phone\": \"string\",\n        \"Contact\": \"string\",\n        \"HasInventory\": false,\n        \"SquareValue\": 3946.6264264863917,\n        \"SquareMeasure\": \"string\",\n        \"TimeZoneInfoId\": 3278,\n        \"TimeZoneShortDescription\": \"string\",\n        \"TimeZoneMsName\": \"string\",\n        \"TimeZoneIanaName\": \"string\",\n        \"TypeLabel\": \"string\",\n        \"Supplier\": \"string\",\n        \"CountyId\": 1221,\n        \"Notes\": [\n          {\n            \"Id\": 6128,\n            \"HeaderId\": 1009,\n            \"Value\": \"string\",\n            \"Header\": \"string\"\n          },\n          {\n            \"Id\": 551,\n            \"HeaderId\": 4942,\n            \"Value\": \"string\",\n            \"Header\": \"string\"\n          }\n        ],\n        \"TimeShiftToEST\": 1691,\n        \"AddressTypeId\": 4623,\n        \"FormattedAddress\": \"string\",\n        \"LocationFormattedAddressTail\": \"string\",\n        \"IsInternational\": false,\n        \"Address\": \"string\"\n      },\n      \"Category\": {\n        \"Name\": \"string\",\n        \"HasDependency\": false,\n        \"PrimaryCategory\": {\n          \"Id\": 2078,\n          \"Name\": \"string\",\n          \"SubscriberId\": 8475,\n          \"UserId\": 3070\n        },\n        \"Id\": 8741,\n        \"SubscriberId\": 15,\n        \"UserId\": 7260\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf93d67c-f00d-4543-89c9-bb9eb0887951",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            503 — Bad Request; locationId or locationDbId should be provided\r\n            503 — Location not found\r\n            503 — Trade not found\r\n            503 — Provider not found\r\n            503 — User does not have Location access to perform this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contracts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationDbId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "trade",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TemplateDuplicatedLocationFoundError\",\n    \"TemplateMissedStoreIdError\"\n  ],\n  \"ErrorCode\": \"UnAuthorized\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6fdb0494-daea-494f-8bd9-ac93ea19fe95",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contracts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationDbId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "trade",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TimeoutExpiredError\",\n    \"InvoiceDoesntExist\"\n  ],\n  \"ErrorCode\": \"ReAssignLocationsToApprovalLevelAndUserError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b90dcbb-d20f-47d9-b369-72180b17899d",
+              "name": "The request is not allowed.\r\n            <br/>Error codes:\r\n            100 — Only for subscribers usage",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contracts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationDbId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "trade",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TimeoutExpiredError\",\n    \"InvoiceDoesntExist\"\n  ],\n  \"ErrorCode\": \"ReAssignLocationsToApprovalLevelAndUserError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81cba165-2164-40dc-882b-517ea43d02c0",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contracts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locationDbId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "trade",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TimeoutExpiredError\",\n    \"InvoiceDoesntExist\"\n  ],\n  \"ErrorCode\": \"ReAssignLocationsToApprovalLevelAndUserError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b5b07508-c561-40e5-926d-5722d99254d9",
+          "name": "Get Primary Ranked Providers of all primary ranked providers for all Trades for a given subscriber",
+          "request": {
+            "name": "Get Primary Ranked Providers of all primary ranked providers for all Trades for a given subscriber",
+            "description": {
+              "content": "Returns a list of all primary ranked providers for all Trades for a given subscriber\r\n            <br />The method is available to providers only.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "GetPrimaryRankedProviders",
+                ":subscriberId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "subscriberId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "30a23f9c-1797-45aa-95fd-62e670ef96c9",
+              "name": "The primary ranked providers are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetPrimaryRankedProviders",
+                    ":subscriberId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriberId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b8c002c6-fa4f-4f5c-9ad2-191081363009",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetPrimaryRankedProviders",
+                    ":subscriberId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriberId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TimeoutExpiredError\",\n    \"InvoiceDoesntExist\"\n  ],\n  \"ErrorCode\": \"ReAssignLocationsToApprovalLevelAndUserError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a75e95d3-5869-41bb-9bc4-5599b425af0a",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetPrimaryRankedProviders",
+                    ":subscriberId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriberId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TimeoutExpiredError\",\n    \"InvoiceDoesntExist\"\n  ],\n  \"ErrorCode\": \"ReAssignLocationsToApprovalLevelAndUserError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "88843dce-041e-4ab4-a41d-30e9424f27de",
+          "name": "Get trades for primary ranked provider",
+          "request": {
+            "name": "Get trades for primary ranked provider",
+            "description": {
+              "content": "Returns a list of all trades for primary ranked provider\r\n            <br />The method is available to providers only.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "GetPrimaryRankedProviderTrades",
+                ":subscriberId",
+                ":providerId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "subscriberId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "providerId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f14f4720-8946-48a2-81e8-c18d22b8d58a",
+              "name": "The primary ranked provider trades are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetPrimaryRankedProviderTrades",
+                    ":subscriberId",
+                    ":providerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriberId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "providerId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a9315e26-5b38-4e72-96f5-f08c8b2c99b1",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetPrimaryRankedProviderTrades",
+                    ":subscriberId",
+                    ":providerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriberId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "providerId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TimeoutExpiredError\",\n    \"InvoiceDoesntExist\"\n  ],\n  \"ErrorCode\": \"ReAssignLocationsToApprovalLevelAndUserError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d07b7706-c4db-4847-adc7-17a7cf01a511",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetPrimaryRankedProviderTrades",
+                    ":subscriberId",
+                    ":providerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriberId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "providerId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TimeoutExpiredError\",\n    \"InvoiceDoesntExist\"\n  ],\n  \"ErrorCode\": \"ReAssignLocationsToApprovalLevelAndUserError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2b9efdb3-4b89-49e3-90b5-376488fe7cb4",
+          "name": "Get locations for primary ranked provider",
+          "request": {
+            "name": "Get locations for primary ranked provider",
+            "description": {
+              "content": "Returns a list of all locations for primary ranked provider\r\n            <br />The method is available to providers only.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "GetPrimaryRankedProviderLocations",
+                ":subscriberId",
+                ":providerId",
+                ":tradeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "subscriberId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "providerId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "tradeId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e8630f47-92f0-4432-b137-723aa0d113bb",
+              "name": "The primary ranked provider locations are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetPrimaryRankedProviderLocations",
+                    ":subscriberId",
+                    ":providerId",
+                    ":tradeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriberId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "providerId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "tradeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "75ce0f5f-e4bb-49e2-85c1-d2f2be84123c",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetPrimaryRankedProviderLocations",
+                    ":subscriberId",
+                    ":providerId",
+                    ":tradeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriberId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "providerId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "tradeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TimeoutExpiredError\",\n    \"InvoiceDoesntExist\"\n  ],\n  \"ErrorCode\": \"ReAssignLocationsToApprovalLevelAndUserError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cb6b553-002f-47ae-ab1f-744d3354f778",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "GetPrimaryRankedProviderLocations",
+                    ":subscriberId",
+                    ":providerId",
+                    ":tradeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriberId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "providerId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "tradeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"TimeoutExpiredError\",\n    \"InvoiceDoesntExist\"\n  ],\n  \"ErrorCode\": \"ReAssignLocationsToApprovalLevelAndUserError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sb2fixxbook.servicechannel.com:443/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ed181bbd-2191-4aeb-bfbb-f245af4b3ec6",
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Contracts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

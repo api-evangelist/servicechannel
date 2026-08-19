@@ -1,0 +1,410 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours AssetTypes API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AssetTypes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GETv3_AssetTypes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes"
+          }
+        },
+        {
+          "info": {
+            "name": "POSTv3_AssetTypes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/AssetTypes"
+          }
+        },
+        {
+          "info": {
+            "name": "GETv3_AssetTypes_{assetTypeId}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes/:assetTypeId",
+            "params": [
+              {
+                "name": "assetTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "PUTv3_AssetTypes_{assetTypeId}",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/AssetTypes/:assetTypeId",
+            "params": [
+              {
+                "name": "assetTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update Asset Type\r\n            Don't specify AdditiolanTrades if no changes in Additiolan Trades needed\r\n            Set AdditiolanTrades = [] to delete existing Additiolan Trades for asset type\r\n            If AdditiolanTrades contains records then these trades will be set as Additional Trades to asset type."
+        },
+        {
+          "info": {
+            "name": "DELETEv3_AssetTypes_{assetTypeId}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/AssetTypes/:assetTypeId",
+            "params": [
+              {
+                "name": "assetTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GETv3_AssetTypes_byids?ids[0]={ids[0]}&ids[1]={ids[1]}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes/byids",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GETv3_AssetTypes_GetAssetTypeAttributes_{assetTypeId}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes/GetAssetTypeAttributes/:assetTypeId",
+            "params": [
+              {
+                "name": "assetTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GETv3_AssetTypes_GetAssetTypeTrades_{assetTypeId}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes/GetAssetTypeTrades/:assetTypeId",
+            "params": [
+              {
+                "name": "assetTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Get asset type groups by SubscriberId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes/GetAssetTypeGroups",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric identifier of the subscriber."
+              }
+            ]
+          },
+          "docs": "Returns a list of asset type groups for the specified subscriber."
+        },
+        {
+          "info": {
+            "name": "Get asset categories by SubscriberId and TradeNames",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/AssetTypes/GetSubscriberAssetTypeCategories"
+          },
+          "docs": "Returns an asset category containing asset types that belong to the specified trade for the specified subscriber.\r\n            <br />\r\n            ***Note***: `TradeNames` is an optional parameter. When you skip it, the response shows all asset categories containing asset types."
+        },
+        {
+          "info": {
+            "name": "Get asset categories by Ids",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/AssetTypes/GetAssetTypeCategoriesByIds"
+          },
+          "docs": "Returns asset categories names based on their numeric identifiers.\r\n            <br />\r\n            ***Note***: To get all asset categories, send the request without specifying any Id. Asset categories from the list may contain asset types or may be empty, as this method retrieves asset categories from the standardized list."
+        },
+        {
+          "info": {
+            "name": "Get asset categories by AssetIds",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/AssetTypes/GetAssetTypeCategoriesByAssetIds"
+          },
+          "docs": "Returns an asset category that contains the specified asset."
+        },
+        {
+          "info": {
+            "name": "POSTv3_AssetTypes_GetAssetTypesByLocation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/AssetTypes/GetAssetTypesByLocation"
+          }
+        },
+        {
+          "info": {
+            "name": "Add AssetTypeGroup Attachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/AssetTypes/assets/:assetGroupId/groupattachments",
+            "params": [
+              {
+                "name": "assetGroupId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Add AssetTypeGroup Attachments"
+        },
+        {
+          "info": {
+            "name": "Get asset type meters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes/AssetTypeMeters/:assetTypeId",
+            "params": [
+              {
+                "name": "assetTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the asset type you want to get information on. Send the [GET /AssetTypes](/swagger/ui/index?version=3#/AssetTypes/GETv3_AssetTypes) request to get an asset type ID."
+              }
+            ]
+          },
+          "docs": "Returns a list of meters and their parameters associated with an asset type and created by the current subscriber.\r\n            <br />You can get the details for a particular level by using the [GET/AssetTypes/AssetTypeMeter/{assetTypeMeterId}](/swagger/ui/index?version=3#/AssetTypes/GETv3_AssetTypes_AssetTypeMeter__assetTypeMeterId_) method.\r\n            <br />Learn more about [asset meter reading](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/834469973/Asset+Meter+Reading) in Serv"
+        },
+        {
+          "info": {
+            "name": "Get an asset type meter details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes/AssetTypeMeter/:assetTypeMeterId",
+            "params": [
+              {
+                "name": "assetTypeMeterId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the asset type meter you want to get the details of.\r\n            <br />Pass the [GET /AssetTypes/AssetTypeMeters/{assetTypeId}](/swagger/ui/index?version=3#/AssetTypes/GETv3_AssetTypes_AssetTypeMeters__assetTypeId_) method to acquire an ID of an asset type meter."
+              }
+            ]
+          },
+          "docs": "Returns the details of the specified asset type meter for the current subscriber."
+        },
+        {
+          "info": {
+            "name": "Add an asset type meter",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/AssetTypes/AssetTypeMeter"
+          },
+          "docs": "Creates a new asset type meter for a particular asset type for the current subscriber."
+        },
+        {
+          "info": {
+            "name": "Update an asset type meter",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/AssetTypes/AssetTypeMeter"
+          },
+          "docs": "Modifies information of an already existing asset type meter.\r\n            <br />**Note**. All request parameters should be filled out: those you want to add or edit along with the parameters you want to leave unchanged.\r\n            <br />**Example Request**\r\n            \r\n                   PUT /AssetTypes/AssetTypeMeter\r\n                   {\r\n                       \"Id\": 16,\r\n                       \"Name\": \"Music System\",\r\n                       \"MaxValue\": \"500.00\",\r\n                       \""
+        },
+        {
+          "info": {
+            "name": "GETv3_AssetTypes_GetAssetTypesAvailableForSubscriber_{subscriberId}?tradeId={tradeId}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes/GetAssetTypesAvailableForSubscriber/:subscriberId",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Get Asset Types With Create Permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes/asettypes/GetAssetTypesWithCreatePermission",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Asset Types With Create Permission"
+        },
+        {
+          "info": {
+            "name": "Get asset categories by tradeId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes/AssetTypes/AssetCategoriesByTradeId/:tradeId",
+            "params": [
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the trade. \r\n            Pass the [GET / AssetTypes](/swagger/ui/index?version=3#/AssetTypes/GETv3_AssetTypes) or [GET /assets/{assetId}](/swagger/ui/index?version=3#/Assets/GETv3_assets__assetId__locationId__locationId__storeId__storeId__tagId__tagId__trackingNumber__trackingNumber_) method to retrieve `tradeId`."
+              }
+            ]
+          },
+          "docs": "Returns a list of asset categories associated with the specified trade.\r\n            <br />\r\n            ***Note***:  This method retrieves asset categories from the standardized list, that is why asset categories may contain asset types and may not. To get asset categories containing asset types that belong to the certain trade, pass the [POST /AssetTypes/GetSubscriberAssetTypeCategories](/swagger/ui/index?version=3#/AssetTypes/POSTv3_AssetTypes_GetSubscriberAssetTypeCategories) method.\r\n      "
+        },
+        {
+          "info": {
+            "name": "Get Asset Types For Create By TradeId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes/asettypes/AssetTypesForCreate",
+            "params": [
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Asset Types For Create By TradeId"
+        },
+        {
+          "info": {
+            "name": "Get Primary Asset Types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes/asettypes/GetPrimaryAssetTypesAsync"
+          },
+          "docs": "Get Primary Asset Types"
+        },
+        {
+          "info": {
+            "name": "Get Primary Asset Type Brands",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes/asettypes/GetPrimaryAssetTypeBrandsAsync/:primaryAssetTypeId",
+            "params": [
+              {
+                "name": "primaryAssetTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Primary Asset Type Brands"
+        },
+        {
+          "info": {
+            "name": "Get Asset Type Brands",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/AssetTypes/asettypes/GetAssetTypeBrandsAsync/:assetTypeId",
+            "params": [
+              {
+                "name": "assetTypeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Asset Type Brands"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1627 @@
+{
+  "item": [
+    {
+      "id": "81c35f9e-26a7-4148-8b65-b999dcf8fdae",
+      "name": "AfterHours",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "64ba8a08-0830-46c3-bee4-3512db1f904e",
+          "name": "Retrieve Business Hours",
+          "request": {
+            "name": "Retrieve Business Hours",
+            "description": {
+              "content": "Returns opening and closing hours from Monday to Sunday for the specified location.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "locations",
+                ":locationId",
+                "businesshours"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "locationId",
+                  "description": "(Required) Unique identifier of the subscriber’s location you want to retrieve business hours for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c98f8bdd-c979-4b98-bf5a-5dc00f349697",
+              "name": "Business hours are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "businesshours"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to retrieve business hours for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"TimeZoneShortDescription\": \"string\",\n  \"BusinessHours\": [\n    {\n      \"DayOfWeek\": \"string\",\n      \"OpenTime\": \"string\",\n      \"CloseTime\": \"string\",\n      \"ClosedAllDay\": false\n    },\n    {\n      \"DayOfWeek\": \"string\",\n      \"OpenTime\": \"string\",\n      \"CloseTime\": \"string\",\n      \"ClosedAllDay\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a30e9477-ece8-4787-b924-4e603f75a8b4",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            601 — Location is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "businesshours"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to retrieve business hours for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"GetLocationsForApprovalLevelAndAssignedUserError\",\n    \"TradeInUseProposalError\"\n  ],\n  \"ErrorCode\": \"PaymenowBannersForProvidersOnly\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91f0ff23-9eea-4f25-9c48-15a206f7febd",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "businesshours"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to retrieve business hours for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86ae0c9e-0c4d-478b-93fd-b80c54aa769b",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "businesshours"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to retrieve business hours for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "037918df-4760-4698-9100-b9db32609100",
+          "name": "Update business hours",
+          "request": {
+            "name": "Update business hours",
+            "description": {
+              "content": "Modifies the existing business hours for the specified location.\r\n            <br />Send this request [GET /locations/{locationId}/businesshours](/swagger/ui/index?version=3#/AfterHours/GETv3_locations__locationId__businesshours) to get the location business hours.\r\n            <br />Learn [how to manage business hours](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/683409418/Managing+Business+Hours+and+Holidays+for+a+Location) in ServiceChannel University.\r\n            <br />**Example Request**\r\n            \r\n                POST / locations/{locationId}/businesshours\r\n                {\r\n                  \"businessHours\": [\r\n                    {\r\n                      \"DayOfWeek\": \"Monday\",\r\n                      \"OpenTime\": \"10:15 AM\",\r\n                      \"CloseTime\": \"06:00 PM\",\r\n                      \"ClosedAllDay\": false\r\n                    }\r\n                }",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "locations",
+                ":locationId",
+                "businesshours"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "locationId",
+                  "description": "(Required) Unique identifier of the subscriber’s location you want to change business hours for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"businessHours\": [\n    {\n      \"DayOfWeek\": \"<string>\",\n      \"OpenTime\": \"<string>\",\n      \"CloseTime\": \"<string>\",\n      \"ClosedAllDay\": false\n    },\n    {\n      \"DayOfWeek\": \"<string>\",\n      \"OpenTime\": \"<string>\",\n      \"CloseTime\": \"<string>\",\n      \"ClosedAllDay\": false\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "228d375e-13eb-45c5-ace5-94a3d1a2e34d",
+              "name": "Business hours are updated for the specified location.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "businesshours"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to change business hours for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessHours\": [\n    {\n      \"DayOfWeek\": \"<string>\",\n      \"OpenTime\": \"<string>\",\n      \"CloseTime\": \"<string>\",\n      \"ClosedAllDay\": false\n    },\n    {\n      \"DayOfWeek\": \"<string>\",\n      \"OpenTime\": \"<string>\",\n      \"CloseTime\": \"<string>\",\n      \"ClosedAllDay\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5d21d68a-6823-4ea2-ae6d-749fe4edca3e",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            <br/> 613 — Incorrect format of the Open Time or Close Time. Valid format: HH:mm or hh:mm tt (for example, 23:59 or 11:59 PM).\r\n            <br/> 614 — Business Hours should not overlap between days of the week\r\n            <br/> 615 — Incorrect format of the day of the week. Valid values: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.\r\n            <br/> 616 — Duplicate 'Day of the Week' value;\r\n            <br/> 617 — Business Hours are not set for the location. For the initial setup, configure Business Hours for each day of the week.\r\n            <br/> 618 — Open Time or Close Time cannot be empty for a specific day of the week\r\n            <br/> 628 — Incorrect format of the `Close All Day` value. Valid values: true, false.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "businesshours"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to change business hours for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessHours\": [\n    {\n      \"DayOfWeek\": \"<string>\",\n      \"OpenTime\": \"<string>\",\n      \"CloseTime\": \"<string>\",\n      \"ClosedAllDay\": false\n    },\n    {\n      \"DayOfWeek\": \"<string>\",\n      \"OpenTime\": \"<string>\",\n      \"CloseTime\": \"<string>\",\n      \"ClosedAllDay\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62de9b35-1947-4ccd-bc9e-5df33c7a2a07",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            <br/> 504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "businesshours"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to change business hours for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessHours\": [\n    {\n      \"DayOfWeek\": \"<string>\",\n      \"OpenTime\": \"<string>\",\n      \"CloseTime\": \"<string>\",\n      \"ClosedAllDay\": false\n    },\n    {\n      \"DayOfWeek\": \"<string>\",\n      \"OpenTime\": \"<string>\",\n      \"CloseTime\": \"<string>\",\n      \"ClosedAllDay\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fae56235-26a7-4435-bc0c-6fc0965a0011",
+              "name": "The requested resource does not exist on the server.\r\n            <br/>Error codes:\r\n            <br/> 601 — Location is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "businesshours"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to change business hours for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessHours\": [\n    {\n      \"DayOfWeek\": \"<string>\",\n      \"OpenTime\": \"<string>\",\n      \"CloseTime\": \"<string>\",\n      \"ClosedAllDay\": false\n    },\n    {\n      \"DayOfWeek\": \"<string>\",\n      \"OpenTime\": \"<string>\",\n      \"CloseTime\": \"<string>\",\n      \"ClosedAllDay\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b967bf21-2317-4585-b2a9-db9d21a26d01",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "businesshours"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to change business hours for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businessHours\": [\n    {\n      \"DayOfWeek\": \"<string>\",\n      \"OpenTime\": \"<string>\",\n      \"CloseTime\": \"<string>\",\n      \"ClosedAllDay\": false\n    },\n    {\n      \"DayOfWeek\": \"<string>\",\n      \"OpenTime\": \"<string>\",\n      \"CloseTime\": \"<string>\",\n      \"ClosedAllDay\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8fd703a2-d0ab-443e-8904-cfa3961d560a",
+          "name": "Retrieve location holidays",
+          "request": {
+            "name": "Retrieve location holidays",
+            "description": {
+              "content": "Returns the details of each holiday for the specified location.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "locations",
+                ":locationId",
+                "holidays"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "locationId",
+                  "description": "(Required) Unique identifier of the subscriber’s location you want to retrieve holidays for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "16c0f958-5094-4277-9e67-7b8de7c0a67d",
+              "name": "Location holidays are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to retrieve holidays for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"TimeZoneShortDescription\": \"string\",\n  \"Holidays\": [\n    {\n      \"HolidayName\": \"string\",\n      \"StartDate\": \"1987-05-24T17:31:37.408Z\",\n      \"OpenTime\": \"string\",\n      \"CloseTime\": \"string\",\n      \"ClosedAllDay\": false,\n      \"Frequency\": \"string\",\n      \"RepeatEvery\": \"string\",\n      \"RepeatBy\": \"string\",\n      \"RepeatOnDays\": [\n        \"string\",\n        \"string\"\n      ],\n      \"RepeatOnMonths\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"HolidayName\": \"string\",\n      \"StartDate\": \"1993-09-27T14:01:09.421Z\",\n      \"OpenTime\": \"string\",\n      \"CloseTime\": \"string\",\n      \"ClosedAllDay\": false,\n      \"Frequency\": \"string\",\n      \"RepeatEvery\": \"string\",\n      \"RepeatBy\": \"string\",\n      \"RepeatOnDays\": [\n        \"string\",\n        \"string\"\n      ],\n      \"RepeatOnMonths\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df98736e-84c4-47ee-b19d-203bc8b761db",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            <br/> 601 — Location is not found;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to retrieve holidays for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acaccd7f-e7d5-48e3-abfd-18be7d50ca5c",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            <br/> 504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to retrieve holidays for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37f3f23c-241d-4a90-baa2-787ccc7c028d",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to retrieve holidays for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "131fe8f3-a4a5-48ed-971e-72e21ff55b21",
+          "name": "Add a holiday",
+          "request": {
+            "name": "Add a holiday",
+            "description": {
+              "content": "Adds a holiday to the specified location. \r\n            <br />Send this request [GET /locations/{locationId}/holidays](/swagger/ui/index?version=3#/AfterHours/GETv3_locations__locationId__holidays) to get the location holidays.\r\n            <br />Learn [how to manage holidays for a location](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/683409418/Managing+Business+Hours+and+Holidays+for+a+Location) in ServiceChannel University.\r\n            <br />**Example Request**\r\n            \r\n                POST /locations/{locationId}/holidays\r\n                {\r\n                 \"HolidayName\": \"Happy Weekend\",\r\n                 \"OpenTime\": \"10:00 AM\",\r\n                 \"CloseTime\": \"06:00 PM\",\r\n                 \"ClosedAllDay\": false,\r\n                 \"Frequency\": \"Yearly\",\r\n                 \"StartDate\": \"2021-07-03T00:10:00.308Z\",\r\n                 \"RepeatEvery\": \"1\",\r\n                 \"RepeatBy\": \"DayOfWeek\",\r\n                 \"RepeatOnDays\": [\r\n                   \"Saturday\", \"Sunday\"\r\n                 ],\r\n                 \"RepeatOnMonths\": [\r\n                   “June”, \"July\", \"August\"\r\n                 ]\r\n                }",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "locations",
+                ":locationId",
+                "holidays"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "locationId",
+                  "description": "(Required) Unique identifier of the subscriber’s location you want to add or update holidays for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"HolidayName\": \"<string>\",\n  \"OpenTime\": \"<string>\",\n  \"CloseTime\": \"<string>\",\n  \"ClosedAllDay\": false,\n  \"Frequency\": \"<string>\",\n  \"StartDate\": \"<dateTime>\",\n  \"RepeatEvery\": \"<byte>\",\n  \"RepeatBy\": \"<string>\",\n  \"RepeatOnDays\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"RepeatOnMonths\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c89fe0c3-56e7-43f3-b835-a36e78127574",
+              "name": "The holiday is added to the specified location.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to add or update holidays for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"HolidayName\": \"<string>\",\n  \"OpenTime\": \"<string>\",\n  \"CloseTime\": \"<string>\",\n  \"ClosedAllDay\": false,\n  \"Frequency\": \"<string>\",\n  \"StartDate\": \"<dateTime>\",\n  \"RepeatEvery\": \"<byte>\",\n  \"RepeatBy\": \"<string>\",\n  \"RepeatOnDays\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"RepeatOnMonths\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"HolidayIds\": [\n    871,\n    5446\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d60d4574-dcab-4a85-b3e9-f4881020621a",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            <br/> 616 — Duplicate 'Day of the Week' value\r\n            <br/> 619 — Incorrect format of the `Repeat by status` value. Valid values: DayOfWeek, DayOfMonth.\r\n            <br/> 620 — List of days cannot be empty when submitting the `Weekly` frequency\r\n            <br/> 621 — List of months cannot be empty when submitting the `Yearly` frequency\r\n            <br/> 622 — Incorrect month format. Valid values: January, February, March, April, May, June, July, August, September, October, November, December.\r\n            <br/> 623 — The `Holiday Name` value cannot be empty. The maximum length is 100 characters.\r\n            <br/> 624 — Incorrect format of the 'Repeat every' value. The value should be a number between 1 and 60.\r\n            <br/> 625 — The same month is specified twice in the 'Month' value\r\n            <br/> 626 — Incorrect format of the frequency. Valid values: Weekly, Monthly, Yearly, Singular.\r\n            <br/> 627 — Start date cannot be an empty value\r\n            <br/> 628 — Incorrect format of the `Close All Day` value. Valid values: true, false.\r\n            <br/> 3502 — The holiday name is already in use. Please suggest another name.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to add or update holidays for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"HolidayName\": \"<string>\",\n  \"OpenTime\": \"<string>\",\n  \"CloseTime\": \"<string>\",\n  \"ClosedAllDay\": false,\n  \"Frequency\": \"<string>\",\n  \"StartDate\": \"<dateTime>\",\n  \"RepeatEvery\": \"<byte>\",\n  \"RepeatBy\": \"<string>\",\n  \"RepeatOnDays\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"RepeatOnMonths\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd6f4407-e0aa-4737-9871-774049649da9",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            <br/> 504 — API call rejected by security permissions;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to add or update holidays for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"HolidayName\": \"<string>\",\n  \"OpenTime\": \"<string>\",\n  \"CloseTime\": \"<string>\",\n  \"ClosedAllDay\": false,\n  \"Frequency\": \"<string>\",\n  \"StartDate\": \"<dateTime>\",\n  \"RepeatEvery\": \"<byte>\",\n  \"RepeatBy\": \"<string>\",\n  \"RepeatOnDays\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"RepeatOnMonths\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fefd55af-8cae-4cde-8468-1766efa7d7d4",
+              "name": "The requested resource does not exist on the server.\r\n            <br/>Error codes:\r\n            <br/> 601 — Location is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to add or update holidays for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"HolidayName\": \"<string>\",\n  \"OpenTime\": \"<string>\",\n  \"CloseTime\": \"<string>\",\n  \"ClosedAllDay\": false,\n  \"Frequency\": \"<string>\",\n  \"StartDate\": \"<dateTime>\",\n  \"RepeatEvery\": \"<byte>\",\n  \"RepeatBy\": \"<string>\",\n  \"RepeatOnDays\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"RepeatOnMonths\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53578bf9-1cf0-4c39-895d-0fc46dbeb5bd",
+              "name": "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            <br/>501 — Object reference not set to an instance of an object;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the subscriber’s location you want to add or update holidays for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"HolidayName\": \"<string>\",\n  \"OpenTime\": \"<string>\",\n  \"CloseTime\": \"<string>\",\n  \"ClosedAllDay\": false,\n  \"Frequency\": \"<string>\",\n  \"StartDate\": \"<dateTime>\",\n  \"RepeatEvery\": \"<byte>\",\n  \"RepeatBy\": \"<string>\",\n  \"RepeatOnDays\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"RepeatOnMonths\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e37dc7a1-57f7-4bbb-8b93-d837d1458e68",
+          "name": "Delete a holiday",
+          "request": {
+            "name": "Delete a holiday",
+            "description": {
+              "content": "Permanently removes a holiday from the specified location.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "locations",
+                ":locationId",
+                "holidays"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "holidayName",
+                  "value": "<string>",
+                  "description": "(Required) The name of the holiday you want to remove."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "locationId",
+                  "description": "(Required) Unique identifier of the location to delete a holiday from."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0f8661d9-3b1e-41b5-b987-16c3810ac084",
+              "name": "ID of the deleted holiday is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "holidayName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the location to delete a holiday from."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"HolidayIds\": [\n    4648,\n    6332\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e5552e0-b5d6-4af4-8be3-af04e3514eb6",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            <br/> 601 — Location is not found\r\n            <br/> 623 — The `Holiday Name` value cannot be empty. The maximum length is 100 characters.\r\n            <br/> 629 — The holiday doesn't exist at the location",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "holidayName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the location to delete a holiday from."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc52b263-3a62-42cc-b5d3-c7c6fc472afe",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            <br/> 504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "holidayName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the location to delete a holiday from."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "484c7495-5091-48c9-bdac-0b5262b3d1db",
+              "name": "The requested resource does not exist on the server.\r\n            <br/>Error codes:\r\n            <br/> 601 — Location is not found\r\n            <br/> 601 — Invalid Location Id",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "holidayName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the location to delete a holiday from."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a408960-9000-4f53-a9b6-169644f31199",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "locations",
+                    ":locationId",
+                    "holidays"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "holidayName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "locationId",
+                      "description": "(Required) Unique identifier of the location to delete a holiday from."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"RetrofitRetireWasCancelledNoLeak\",\n    \"InvalidWorkRequestId\"\n  ],\n  \"ErrorCode\": \"BusinessHoursDeleteFailed\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sb2fixxbook.servicechannel.com:443/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "dfe5b7a6-6014-4898-a08a-4e56a354e1a4",
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

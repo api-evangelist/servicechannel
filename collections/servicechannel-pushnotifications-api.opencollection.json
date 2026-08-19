@@ -1,0 +1,133 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours PushNotifications API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "PushNotifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Subscribe to Push Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/locations/:locationId/subscribe",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Location to perform action with."
+              }
+            ]
+          },
+          "docs": "Subscribe Push Notification.\r\n            <br /><br />Available for subscriber usage."
+        },
+        {
+          "info": {
+            "name": "List existing email subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/locations/:locationId/push",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "deviceToken",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of email subscriptions"
+        },
+        {
+          "info": {
+            "name": "Unsubscribe from Push Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/unsubscribe",
+            "params": [
+              {
+                "name": "deviceToken",
+                "value": "",
+                "type": "query",
+                "description": "Device token: \"35353-335345-FAC342...\""
+              }
+            ]
+          },
+          "docs": "Unsubscribe from Push Notifications.\r\n            <br /><br />Available for subscriber usage."
+        },
+        {
+          "info": {
+            "name": "Unsubscribe from Push Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/locations/:locationId/unsubscribe",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Location to perform action with."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Numeric Id of the Subscription to perform action with."
+              },
+              {
+                "name": "deviceToken",
+                "value": "",
+                "type": "query",
+                "description": "Required Device Token."
+              },
+              {
+                "name": "deviceType",
+                "value": "",
+                "type": "query",
+                "description": "Device type: Android, iOS, Amazon"
+              },
+              {
+                "name": "notificationType",
+                "value": "",
+                "type": "query",
+                "description": "Notification type: Check In , ...."
+              },
+              {
+                "name": "application",
+                "value": "",
+                "type": "query",
+                "description": "Application : ScMobile, FTM, ..."
+              },
+              {
+                "name": "notificationRules.rules",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Unsubscribe from Push Notifications.\r\n            <br /><br />Available for subscriber usage."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

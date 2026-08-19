@@ -1,0 +1,276 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Trades API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Trades",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POSTv3_trades_IsRefrigerant?subscriberId={subscriberId}&tradeName={tradeName}&tradeId={tradeId}",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/trades/IsRefrigerant",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tradeName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "POSTv3_trades",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/trades"
+          }
+        },
+        {
+          "info": {
+            "name": "POSTv3_trades_batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/trades/batch"
+          }
+        },
+        {
+          "info": {
+            "name": "POSTv3_trades_LocationProviderTrades",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/trades/LocationProviderTrades"
+          }
+        },
+        {
+          "info": {
+            "name": "Get Primary Trade For Provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/trades/GetPrimaryTrade",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tradeName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Primary Trade For Provider"
+        },
+        {
+          "info": {
+            "name": "GetExistsTrades",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/trades/GetExistsTrades"
+          },
+          "docs": "GetExistsTrades"
+        },
+        {
+          "info": {
+            "name": "Verify whether the location is excluded for the trade selected",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/trades/CheckTradeLocationExclusion",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Verify whether the location is excluded for the trade selected"
+        },
+        {
+          "info": {
+            "name": "Get trades by primary trade",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/trades/GetTradesByPrimaryTrade",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "primaryTrade",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get trades by primary trade"
+        },
+        {
+          "info": {
+            "name": "Trades Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/trades",
+            "params": [
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "List trades.\r\n            <br /><br />Available for provider and subscriber usage."
+        },
+        {
+          "info": {
+            "name": "Location Trades",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/locations(:locationId)/trades",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric id of the Location to perform action with."
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "List Location Trades. Method returns trades for specified location which have providers with rank 1 and higher.\r\n            <br /><br />Available for subscriber and provider usage."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

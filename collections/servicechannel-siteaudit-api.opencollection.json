@@ -1,0 +1,498 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours SiteAudit API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SiteAudit",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get available audit types for specified location",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/locations/:locationId/siteaudit/templateTypes",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Location identifier"
+              }
+            ]
+          },
+          "docs": "Get available audit types for specified location"
+        },
+        {
+          "info": {
+            "name": "Get audit data for specified location and audit type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/locations/:locationId/siteaudit/templateTypes/:templateTypeId/auditInfo",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Location identifier"
+              },
+              {
+                "name": "templateTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Audit type identifier"
+              }
+            ]
+          },
+          "docs": "Audit can be created from:\r\n            - completed audit data\r\n            - setup (templates) data\r\n            - mixed completed + setup\r\n            How audit data is combined depends on the loaded setup file to the system and/or availability \r\n            of previous finished audit data."
+        },
+        {
+          "info": {
+            "name": "Post (save) completed audit to the database",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/subscribers/current/locations/:locationId/siteaudit/templateTypes/:templateTypeId/auditInfo",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Location identifier"
+              },
+              {
+                "name": "templateTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Audit type identifier"
+              }
+            ]
+          },
+          "docs": "Post (save) completed audit to the database"
+        },
+        {
+          "info": {
+            "name": "Get audit data for specified location and audit type for new templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/locations/:locationId/siteaudit/templateTypes/:templateTypeId/auditInfoWeighted",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Location identifier"
+              },
+              {
+                "name": "templateTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Audit type identifier"
+              }
+            ]
+          },
+          "docs": "Audit can be created from:\r\n            - completed audit data\r\n            - setup (templates) data\r\n            - mixed completed + setup\r\n            How audit data is combined depends on the loaded setup file to the system and/or availability \r\n            of previous finished audit data."
+        },
+        {
+          "info": {
+            "name": "Post (save) completed audit of new type to the database",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/subscribers/current/locations/:locationId/siteaudit/templateTypes/:templateTypeId/auditInfoWeighted",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path",
+                "description": "Location identifier"
+              },
+              {
+                "name": "templateTypeId",
+                "value": "",
+                "type": "path",
+                "description": "Audit type identifier"
+              }
+            ]
+          },
+          "docs": "Post (save) completed audit of new type to the database"
+        },
+        {
+          "info": {
+            "name": "Save completed audit to the database",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/subscribers/current/locations/auditInfo"
+          },
+          "docs": "Save completed audit to the database"
+        },
+        {
+          "info": {
+            "name": "Get audit data for specified location and audit type without template information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/locations/auditinfo",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "Location identifier"
+              },
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "query",
+                "description": "Audit type identifier"
+              }
+            ]
+          },
+          "docs": "Setup data for areas-checklist-checklistItems relationship data are not provided in this method."
+        },
+        {
+          "info": {
+            "name": "Get checklist templates by audit template.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/locations/auditinfo/checklist/templates",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "query",
+                "description": "Audit type identifier"
+              }
+            ]
+          },
+          "docs": "Get checklist templates by audit template."
+        },
+        {
+          "info": {
+            "name": "Get checklistitem templates by audit template.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/locations/auditinfo/checklistitem/templates",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "query",
+                "description": "Audit type identifier"
+              },
+              {
+                "name": "checkListTemplateId",
+                "value": "",
+                "type": "query",
+                "description": "Check list template identifier"
+              }
+            ]
+          },
+          "docs": "Get checklistitem templates by audit template."
+        },
+        {
+          "info": {
+            "name": "Get details for specified checklist item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/siteaudit/checkListItems/:checkListItemId",
+            "params": [
+              {
+                "name": "checkListItemId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of checklist item"
+              }
+            ]
+          },
+          "docs": "Details include:\r\n            - comments with attachments\r\n            - workorders\r\n            - quantity"
+        },
+        {
+          "info": {
+            "name": "Get completed site audits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/siteaudit/audits/completed",
+            "params": [
+              {
+                "name": "daysPeriod",
+                "value": "",
+                "type": "query",
+                "description": "Number of days in the past from the current moment. Allows you to find site audits completed over the specified period of time. Any number of days can be entered (no limits).\r\n            <br />When you leave the field empty, the method will return completed audits for the past 365 days."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of completed site audits and their details for the current subscriber."
+        },
+        {
+          "info": {
+            "name": "Get site audit reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/siteaudit/report",
+            "params": [
+              {
+                "name": "auditId",
+                "value": "",
+                "type": "query",
+                "description": "The numeric identifier of the site audit report to return."
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "The date from which you want to return site audit reports. The format is `YYYY-MM-DDThh:mm:ss.sssZ`."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "The date until which you want to return site audit reports. The format is `YYYY-MM-DDThh:mm:ss.sssZ`."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "The two-letter [ISO 3166-1 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the location country."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "The numeric identifier of the subscriber's property."
+              },
+              {
+                "name": "area",
+                "value": "",
+                "type": "query",
+                "description": "The audited area within the location."
+              }
+            ]
+          },
+          "docs": "Returns a site audit report, its part, or several reports for the current subscriber.\r\n            <br />**Required parameters:**\r\n             • **Option 1**. `auditId`. Use to get a site audit report by ID.\r\n             • **Option 2**. The combination of `fromDate` and `toDate`. Use to get site audit reports for a specific period.\r\n            <br />***Note:*** Site audit reports are also known as *site planning reports* or just *audits*. See [Site Planning Manager](https://servicechannel.atl"
+        },
+        {
+          "info": {
+            "name": "Get information on a completed audit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/siteaudit/completed/:auditId",
+            "params": [
+              {
+                "name": "auditId",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier of the site audit. To get the audit ID, you can run the `GET/subscribers/current/siteaudit/report` method."
+              }
+            ]
+          },
+          "docs": "Returns details of a completed site audit."
+        },
+        {
+          "info": {
+            "name": "Save completed audit to the database",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/subscribers/current/siteaudit/completed"
+          },
+          "docs": "Save completed audit to the database"
+        },
+        {
+          "info": {
+            "name": "Modify details of a completed audit",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/subscribers/current/siteaudit/completed"
+          },
+          "docs": "Allows users to update, delete, and add information for completed site audits. The following audit parameters can be modified:\r\n             • `Areas`\r\n             • `CheckLists`\r\n             • `CheckListItems`\r\n             • `WorkOrderIds`\r\n             • `Quantity`\r\n             • `Issues`\r\n             • `Attachments`\r\n            <br />Use the [GET/subscribers/current/siteaudit/completed/{auditId}](https://developer.servicechannel.com/swagger/index.html#/SiteAudit/GETv3_subscribers_curren"
+        },
+        {
+          "info": {
+            "name": "Get site audit by Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/siteaudit/:auditId",
+            "params": [
+              {
+                "name": "auditId",
+                "value": "",
+                "type": "path",
+                "description": "The numeric identifier of the site audit to return."
+              }
+            ]
+          },
+          "docs": "Get site audit by Id"
+        },
+        {
+          "info": {
+            "name": "Save audit with open status to the database",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/subscribers/current/siteaudit/open"
+          },
+          "docs": "Save audit with open status to the database"
+        },
+        {
+          "info": {
+            "name": "Update audit with open status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/subscribers/current/siteaudit/open"
+          },
+          "docs": "Update audit with open status"
+        },
+        {
+          "info": {
+            "name": "Get the list of filtered site audits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/siteaudit/audits/filtered",
+            "params": [
+              {
+                "name": "searchValue",
+                "value": "",
+                "type": "query",
+                "description": "Text field where the following search criteria can be entered:\r\n             • Location ID as specified by the subscriber in the location details\r\n             • Location name\r\n             • Username\r\n             • Audit type\r\n            <br />The value you enter will be searched for across all these 4 criteria."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Site audit status: *Open*, *Completed*, *Undefined*."
+              },
+              {
+                "name": "pageIndex",
+                "value": "",
+                "type": "query",
+                "description": "Sequence of pages. Enter `1` to view the first page; enter `2` to view the next page; etc."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of site audits that should be displayed in the response. No limits per page. When left empty, the default number of 20 audits is used."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Optional start date for filtering audits. If provided, only audits created or completed after this date will be included."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "Optional end date for filtering audits. If provided, only audits created or completed before this date will be included."
+              }
+            ]
+          },
+          "docs": "Allows filtering site audits by status, location ID, location name, username, and audit type. Returns filtered audits for the last 30 days."
+        },
+        {
+          "info": {
+            "name": "Remove open audit",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/subscribers/current/siteaudit/open/:auditId",
+            "params": [
+              {
+                "name": "auditId",
+                "value": "",
+                "type": "path",
+                "description": "Audit Id"
+              }
+            ]
+          },
+          "docs": "Remove open audit"
+        },
+        {
+          "info": {
+            "name": "Check if the site audit can be created",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/locations/checkAuditInfo",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "Location Id"
+              },
+              {
+                "name": "templateTypeId",
+                "value": "",
+                "type": "query",
+                "description": "Template Type Id"
+              }
+            ]
+          },
+          "docs": "Check if the site audit can be created"
+        },
+        {
+          "info": {
+            "name": "Get an array of workOrderIDs linked to the Site Audit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscribers/current/siteaudit/:auditId/linkedWorkOrderIds",
+            "params": [
+              {
+                "name": "auditId",
+                "value": "",
+                "type": "path",
+                "description": "Audit Id"
+              }
+            ]
+          },
+          "docs": "Get an array of workOrderIDs linked to the Site Audit"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

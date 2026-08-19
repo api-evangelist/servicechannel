@@ -1,0 +1,3832 @@
+{
+  "item": [
+    {
+      "id": "b921b2da-06b2-4bce-bf64-388d233a930f",
+      "name": "WorkRequests",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f77e92e1-cfde-46ae-ad07-dc5211278eef",
+          "name": "Creates a work request",
+          "request": {
+            "name": "Creates a work request",
+            "description": {
+              "content": "*In limited availability phase.*",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"SubscriberId\": \"<integer>\",\n  \"ProviderId\": \"<integer>\",\n  \"EventId\": \"<string>\",\n  \"LocationId\": \"<integer>\",\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\",\n  \"Description\": \"<string>\",\n  \"TradeId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"PriorityId\": \"<integer>\",\n  \"Caller\": \"<string>\",\n  \"CallDate\": \"<string>\",\n  \"ScheduledDate\": \"<string>\",\n  \"AssetId\": \"<integer>\",\n  \"Nte\": {\n    \"Value\": \"<double>\",\n    \"CurrencyId\": \"<integer>\"\n  },\n  \"Issue\": {\n    \"AreaId\": \"<integer>\",\n    \"ProblemType\": \"<string>\",\n    \"Equipment\": \"<string>\",\n    \"ProblemCode\": \"<string>\",\n    \"SetupId\": \"<integer>\"\n  },\n  \"Attachments\": [\n    {\n      \"Description\": \"<string>\",\n      \"FileName\": \"<string>\",\n      \"OriginalName\": \"<string>\",\n      \"Visibility\": \"<integer>\"\n    },\n    {\n      \"Description\": \"<string>\",\n      \"FileName\": \"<string>\",\n      \"OriginalName\": \"<string>\",\n      \"Visibility\": \"<integer>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7e25cefd-9ea8-44e6-b1fe-2e9162da5ae8",
+              "name": "Created indicates that the request resulted in a new resource created before the response was sent.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"SubscriberId\": \"<integer>\",\n  \"ProviderId\": \"<integer>\",\n  \"EventId\": \"<string>\",\n  \"LocationId\": \"<integer>\",\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\",\n  \"Description\": \"<string>\",\n  \"TradeId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"PriorityId\": \"<integer>\",\n  \"Caller\": \"<string>\",\n  \"CallDate\": \"<string>\",\n  \"ScheduledDate\": \"<string>\",\n  \"AssetId\": \"<integer>\",\n  \"Nte\": {\n    \"Value\": \"<double>\",\n    \"CurrencyId\": \"<integer>\"\n  },\n  \"Issue\": {\n    \"AreaId\": \"<integer>\",\n    \"ProblemType\": \"<string>\",\n    \"Equipment\": \"<string>\",\n    \"ProblemCode\": \"<string>\",\n    \"SetupId\": \"<integer>\"\n  },\n  \"Attachments\": [\n    {\n      \"Description\": \"<string>\",\n      \"FileName\": \"<string>\",\n      \"OriginalName\": \"<string>\",\n      \"Visibility\": \"<integer>\"\n    },\n    {\n      \"Description\": \"<string>\",\n      \"FileName\": \"<string>\",\n      \"OriginalName\": \"<string>\",\n      \"Visibility\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": 3705\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78a21132-2e4d-4935-a3d4-6f60165e5e32",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:\r\n            101 - Invalid provider id\r\n            301 - Contract not found for specified subscribers location, provider and trade\r\n            401 - Invalid subscriber\r\n            601 - Location is not found\r\n            701 - Invalid trade\r\n            8001 — Description is required\r\n            8002 — Call Date is required\r\n            8003 — Issue is required\r\n            8005 - CallDate has wrong format\r\n            8006 - ScheduledDate has wrong format\r\n            8007 - Invalid status\r\n            8008 - Invalid extended status\r\n            8009 - Invalid category\r\n            8010 - Invalid priority\r\n            8011 - Invalid currency\r\n            8012 - Invalid setup\r\n            8013 - Invalid area\r\n            8014 - Invalid asset\r\n            8017 - ProblemCode is required\r\n            8018 - ProblemType is required\r\n            8019 - ScheduledDate must be greater than CallDate",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"SubscriberId\": \"<integer>\",\n  \"ProviderId\": \"<integer>\",\n  \"EventId\": \"<string>\",\n  \"LocationId\": \"<integer>\",\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\",\n  \"Description\": \"<string>\",\n  \"TradeId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"PriorityId\": \"<integer>\",\n  \"Caller\": \"<string>\",\n  \"CallDate\": \"<string>\",\n  \"ScheduledDate\": \"<string>\",\n  \"AssetId\": \"<integer>\",\n  \"Nte\": {\n    \"Value\": \"<double>\",\n    \"CurrencyId\": \"<integer>\"\n  },\n  \"Issue\": {\n    \"AreaId\": \"<integer>\",\n    \"ProblemType\": \"<string>\",\n    \"Equipment\": \"<string>\",\n    \"ProblemCode\": \"<string>\",\n    \"SetupId\": \"<integer>\"\n  },\n  \"Attachments\": [\n    {\n      \"Description\": \"<string>\",\n      \"FileName\": \"<string>\",\n      \"OriginalName\": \"<string>\",\n      \"Visibility\": \"<integer>\"\n    },\n    {\n      \"Description\": \"<string>\",\n      \"FileName\": \"<string>\",\n      \"OriginalName\": \"<string>\",\n      \"Visibility\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"LeakRecordHasWrongDateValue\",\n    \"InvoiceAddUsersToMliLevelsError\"\n  ],\n  \"ErrorCode\": \"DistrictMustBeEmpty\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "868c04dc-046e-4052-aeeb-b1b02a58cba9",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"SubscriberId\": \"<integer>\",\n  \"ProviderId\": \"<integer>\",\n  \"EventId\": \"<string>\",\n  \"LocationId\": \"<integer>\",\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\",\n  \"Description\": \"<string>\",\n  \"TradeId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"PriorityId\": \"<integer>\",\n  \"Caller\": \"<string>\",\n  \"CallDate\": \"<string>\",\n  \"ScheduledDate\": \"<string>\",\n  \"AssetId\": \"<integer>\",\n  \"Nte\": {\n    \"Value\": \"<double>\",\n    \"CurrencyId\": \"<integer>\"\n  },\n  \"Issue\": {\n    \"AreaId\": \"<integer>\",\n    \"ProblemType\": \"<string>\",\n    \"Equipment\": \"<string>\",\n    \"ProblemCode\": \"<string>\",\n    \"SetupId\": \"<integer>\"\n  },\n  \"Attachments\": [\n    {\n      \"Description\": \"<string>\",\n      \"FileName\": \"<string>\",\n      \"OriginalName\": \"<string>\",\n      \"Visibility\": \"<integer>\"\n    },\n    {\n      \"Description\": \"<string>\",\n      \"FileName\": \"<string>\",\n      \"OriginalName\": \"<string>\",\n      \"Visibility\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "620efe95-016d-4652-81f2-8791025759f0",
+              "name": "Indicates that a generic error has occurred on the server.\r\n            <br/>Error codes:\r\n            501 - Internal Error code",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"SubscriberId\": \"<integer>\",\n  \"ProviderId\": \"<integer>\",\n  \"EventId\": \"<string>\",\n  \"LocationId\": \"<integer>\",\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\",\n  \"Description\": \"<string>\",\n  \"TradeId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"PriorityId\": \"<integer>\",\n  \"Caller\": \"<string>\",\n  \"CallDate\": \"<string>\",\n  \"ScheduledDate\": \"<string>\",\n  \"AssetId\": \"<integer>\",\n  \"Nte\": {\n    \"Value\": \"<double>\",\n    \"CurrencyId\": \"<integer>\"\n  },\n  \"Issue\": {\n    \"AreaId\": \"<integer>\",\n    \"ProblemType\": \"<string>\",\n    \"Equipment\": \"<string>\",\n    \"ProblemCode\": \"<string>\",\n    \"SetupId\": \"<integer>\"\n  },\n  \"Attachments\": [\n    {\n      \"Description\": \"<string>\",\n      \"FileName\": \"<string>\",\n      \"OriginalName\": \"<string>\",\n      \"Visibility\": \"<integer>\"\n    },\n    {\n      \"Description\": \"<string>\",\n      \"FileName\": \"<string>\",\n      \"OriginalName\": \"<string>\",\n      \"Visibility\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f2a69764-e057-4fcc-bde2-be1d03de9227",
+          "name": "Retrieve a work request",
+          "request": {
+            "name": "Retrieve a work request",
+            "description": {
+              "content": "*In limited availability phase.*",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Numeric Id of the work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4e42be04-e249-4720-82d1-2e682b4413ac",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Id\": 3287,\n  \"SubscriberId\": 4749,\n  \"SubscriberShortName\": \"string\",\n  \"ProviderId\": 7642,\n  \"ProviderShortName\": \"string\",\n  \"LocationId\": 9742,\n  \"LocationStoreId\": \"string\",\n  \"EventId\": \"string\",\n  \"StatusId\": 8510,\n  \"StatusName\": \"string\",\n  \"ExtendedStatusId\": 5868,\n  \"ExtendedStatusName\": \"string\",\n  \"ClosedReasonId\": 1899,\n  \"ClosedReasonName\": \"string\",\n  \"Description\": \"string\",\n  \"TradeId\": 5520,\n  \"TradeName\": \"string\",\n  \"CategoryId\": 2715,\n  \"CategoryName\": \"string\",\n  \"PriorityId\": 7101,\n  \"PriorityName\": \"string\",\n  \"Caller\": \"string\",\n  \"CallDate\": \"2018-11-18T22:05:43.604Z\",\n  \"ClosedDate\": \"1972-08-09T21:47:29.394Z\",\n  \"ScheduledDate\": \"1997-02-10T12:07:18.029Z\",\n  \"WorkOrderId\": 8988,\n  \"AssetId\": 3445,\n  \"Nte\": {\n    \"Value\": 4233.592256994829,\n    \"CurrencyId\": 2668,\n    \"CurrencyAlphabeticCode\": \"string\"\n  },\n  \"Issue\": {\n    \"AreaId\": 486,\n    \"AreaName\": \"string\",\n    \"ProblemType\": \"string\",\n    \"Equipment\": \"string\",\n    \"ProblemCode\": \"string\",\n    \"SetupId\": 8877\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1297536-bad0-46ec-8ef7-27a75a634bab",
+              "name": "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c03fecf5-0517-4df4-a089-78008777e498",
+              "name": "The requested resource does not exist on the server.\r\n            <br/>Error codes:\r\n            502 — Data not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "88f0ae8b-5cff-46bf-aa4f-57b6d81a32b5",
+          "name": "Delete a work request",
+          "request": {
+            "name": "Delete a work request",
+            "description": {
+              "content": "*In limited availability phase.*",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Numeric Id of the work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a02470af-4c94-4814-ac02-312e1da1a39a",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c6bdfa4a-07eb-4e5f-a447-7362f30e2abb",
+              "name": "Indicates that the requested resource requires authentication.\r\n            <br/>Error codes:\r\n            <br/> 504 - API call rejected by security permissions;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3528802-823a-4112-a63f-99629739ac78",
+              "name": "The requested resource does not exist on the server.\r\n            <br/>Error codes:\r\n            502 — Data not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b10aef8f-f0e1-49fd-bf8b-5384e596edc9",
+          "name": "Update a work request",
+          "request": {
+            "name": "Update a work request",
+            "description": {
+              "content": "*In limited availability phase.*",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":workRequestId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workRequestId",
+                  "description": "(Required) Numeric Id of the work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\",\n  \"ClosedReasonId\": \"<integer>\",\n  \"WorkOrderId\": \"<integer>\",\n  \"PriorityId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"ScheduledDate\": \"<string>\",\n  \"Description\": \"<string>\",\n  \"TradeId\": \"<integer>\",\n  \"NTE\": \"<double>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "60e89d2c-8c42-42ad-a7ca-80950c0bcb80",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\",\n  \"ClosedReasonId\": \"<integer>\",\n  \"WorkOrderId\": \"<integer>\",\n  \"PriorityId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"ScheduledDate\": \"<string>\",\n  \"Description\": \"<string>\",\n  \"TradeId\": \"<integer>\",\n  \"NTE\": \"<double>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6a12a767-02d2-4333-9936-b8def62611c5",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            301 - Contract not found for specified subscribers location, provider and trade\r\n            502 - WorkRequest not found\r\n            701 - Invalid trade\r\n            8006 - ScheduledDate has wrong format\r\n            8007 - Invalid status\r\n            8008 - Invalid extended status\r\n            8009 - Invalid category\r\n            8010 - Invalid priority     \r\n            8011 - Invalid currency\r\n            8019 - ScheduledDate must be greater than CallDate\r\n            8107 - Work request is closed\r\n            8108 - Closed reason is required for Closed status\r\n            8109 - Work order id is required for this closed reason\r\n            8110 - Invalid closed reason\r\n            8111 - Closed reason could be set only for Closed status\r\n            8112 - Invalid work order id\r\n            8113 - Work order id could be set only for Closed status\r\n            8114 - Work order id could be set only for &apos;Work order created&apos; reason",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\",\n  \"ClosedReasonId\": \"<integer>\",\n  \"WorkOrderId\": \"<integer>\",\n  \"PriorityId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"ScheduledDate\": \"<string>\",\n  \"Description\": \"<string>\",\n  \"TradeId\": \"<integer>\",\n  \"NTE\": \"<double>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f9f3780-f963-464a-b6d5-e28e0e9525a4",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\",\n  \"ClosedReasonId\": \"<integer>\",\n  \"WorkOrderId\": \"<integer>\",\n  \"PriorityId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"ScheduledDate\": \"<string>\",\n  \"Description\": \"<string>\",\n  \"TradeId\": \"<integer>\",\n  \"NTE\": \"<double>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "082bb1a1-7043-48ee-9e0a-4d0e8122b920",
+              "name": "Indicates that a generic error has occurred on the server.\r\n            <br/>Error codes:\r\n            501 - Internal Error code",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\",\n  \"ClosedReasonId\": \"<integer>\",\n  \"WorkOrderId\": \"<integer>\",\n  \"PriorityId\": \"<integer>\",\n  \"CategoryId\": \"<integer>\",\n  \"ScheduledDate\": \"<string>\",\n  \"Description\": \"<string>\",\n  \"TradeId\": \"<integer>\",\n  \"NTE\": \"<double>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "25d66b27-5adb-4176-9aab-26cf5f66ef44",
+          "name": "Update a work request status",
+          "request": {
+            "name": "Update a work request status",
+            "description": {
+              "content": "*In limited availability phase.*",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":workRequestId",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workRequestId",
+                  "description": "(Required) Numeric Id of the work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ae584ff6-4aa5-4f63-8dee-ef8d05f32026",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "08d72935-4d01-4ad9-995f-f807eda3a93f",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            502 - WorkRequest not found\r\n            8007 - Invalid status\r\n            8008 - Invalid extended status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5da5e52f-b308-4877-b4e9-91940e7d6943",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b4dd7ce-8ef5-4c30-b989-ba815e46884c",
+              "name": "Indicates that a generic error has occurred on the server.\r\n            <br/>Error codes:\r\n            501 - Internal Error code",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"StatusId\": \"<integer>\",\n  \"ExtendedStatusId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c2909668-22e4-4ac4-ac8d-cdf3c1c0427c",
+          "name": "Update work request priority",
+          "request": {
+            "name": "Update work request priority",
+            "description": {
+              "content": "*In limited availability phase.*",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":workRequestId",
+                "priority"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "priorityId",
+                  "value": "<integer>",
+                  "description": "(Required) Priority Id."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workRequestId",
+                  "description": "(Required) Numeric Id of the work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "05312e6d-5283-4e41-8116-9706f2194147",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "priority"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "priorityId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a4d53b72-839a-4ba0-a401-3e3d95829367",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            502 - WorkRequest not found\r\n            8010 - Invalid priority",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "priority"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "priorityId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f1c6abf-4bb9-46b1-9509-95327f12b2df",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "priority"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "priorityId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32eb476a-0615-4b3f-b91c-fc4ead5391c0",
+              "name": "Indicates that a generic error has occurred on the server.\r\n            <br/>Error codes:\r\n            501 - Internal Error code",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "priority"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "priorityId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35dc2a58-4123-4c26-9046-67c4398e8450",
+          "name": "Update work request category",
+          "request": {
+            "name": "Update work request category",
+            "description": {
+              "content": "*In limited availability phase.*",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":workRequestId",
+                "category"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "categoryId",
+                  "value": "<integer>",
+                  "description": "(Required) Category Id."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workRequestId",
+                  "description": "(Required) Numeric Id of the work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3fec7f42-371e-4cb8-a53a-4fe7a80c52fd",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "category"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "categoryId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9f21cb23-1dc3-4ac7-b7c4-d2e8728b4fd6",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            502 - WorkRequest not found\r\n            8009 - Invalid category",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "category"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "categoryId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28f2b3e8-52e2-4d21-9cc4-1fb563cf04d4",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "category"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "categoryId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb498580-14f2-490a-9db0-a65678f97c5b",
+              "name": "Indicates that a generic error has occurred on the server.\r\n            <br/>Error codes:\r\n            501 - Internal Error code",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "category"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "categoryId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3f889d09-23c2-4abf-8742-fd73686ef3be",
+          "name": "Update work request NTE",
+          "request": {
+            "name": "Update work request NTE",
+            "description": {
+              "content": "*In limited availability phase.*",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":workRequestId",
+                "nte"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workRequestId",
+                  "description": "(Required) Numeric Id of the work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Value\": \"<double>\",\n  \"CurrencyId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1f5f0cf2-b0b5-4e0f-b66e-a02c21571d3d",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "nte"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Value\": \"<double>\",\n  \"CurrencyId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b3826e3c-9c91-4393-80be-7ac3a57cc9d0",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            502 - WorkRequest not found\r\n            8011 - Invalid currency",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "nte"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Value\": \"<double>\",\n  \"CurrencyId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b68d42a-8207-4d3c-b310-51c533c514bb",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "nte"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Value\": \"<double>\",\n  \"CurrencyId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ce8d398-1d22-42cb-ac03-145b0b0a627c",
+              "name": "Indicates that a generic error has occurred on the server.\r\n            <br/>Error codes:\r\n            501 - Internal Error code",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "nte"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Value\": \"<double>\",\n  \"CurrencyId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1be36fa8-62d6-4a2b-a56c-b3ee421ffd3b",
+          "name": "Update work request schedule date",
+          "request": {
+            "name": "Update work request schedule date",
+            "description": {
+              "content": "*In limited availability phase.*",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":workRequestId",
+                "scheduledate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "scheduledDate",
+                  "value": "<string>",
+                  "description": "(Required) Scheduled date."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workRequestId",
+                  "description": "(Required) Numeric Id of the work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6e8d2e8e-08ba-4020-b1b0-fd27deca1d7e",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "scheduledate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scheduledDate",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "14773a4c-2250-439f-aa1a-45aafcb6a093",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            502 - WorkRequest not found\r\n            8006 - ScheduledDate has wrong format\r\n            8019 - ScheduledDate must be greater than CallDate",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "scheduledate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scheduledDate",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d61fa55-18d2-4d45-9a7d-5786437bc518",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "scheduledate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scheduledDate",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c1672fe-1413-4c11-9aa5-5e9b6c1555c4",
+              "name": "Indicates that a generic error has occurred on the server.\r\n            <br/>Error codes:\r\n            501 - Internal Error code",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "scheduledate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scheduledDate",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "238b9595-54af-4509-8161-c7620cbfcb86",
+          "name": "Update work request description",
+          "request": {
+            "name": "Update work request description",
+            "description": {
+              "content": "*In limited availability phase.*",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":workRequestId",
+                "description"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workRequestId",
+                  "description": "(Required) Numeric Id of the work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Value\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "80f14a1f-d4b8-4d7a-8f0e-ca0f041d1f22",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "description"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Value\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1ec283f9-3b3a-495c-ac45-249295296e2b",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            502 - WorkRequest not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "description"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Value\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c09eb314-d67e-4268-99fd-d9eb029bd644",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "description"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Value\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a7df33e-d422-468c-bcc5-f43e6002e847",
+              "name": "Indicates that a generic error has occurred on the server.\r\n            <br/>Error codes:\r\n            501 - Internal Error code",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "description"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Value\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3809fcc8-9806-476a-abbf-3f6e607bb2cf",
+          "name": "Update work request trade",
+          "request": {
+            "name": "Update work request trade",
+            "description": {
+              "content": "*In limited availability phase.*",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":workRequestId",
+                "trade"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradeId",
+                  "value": "<integer>",
+                  "description": "(Required) Trade id."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workRequestId",
+                  "description": "(Required) Numeric Id of the Work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "379f3f7b-6fdc-4f6f-8d4f-0ec6962cb1a4",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "trade"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1f3a0fa5-3e50-4366-b128-e35943492b81",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            301 - Contract not found for specified subscribers location, provider and trade\r\n            502 - WorkRequest not found\r\n            701 - Invalid trade",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "trade"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "700bcc17-7d1b-4eb8-9b56-9e397de707eb",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "trade"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e2d887b-7136-44a1-ae7e-2052ce37febb",
+              "name": "Indicates that a generic error has occurred on the server.\r\n            <br/>Error codes:\r\n            501 - Internal Error code",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "trade"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradeId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the Work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b56dcf66-f4a4-467a-9a53-5f3314c82d6c",
+          "name": "Reassign work request to another provider",
+          "request": {
+            "name": "Reassign work request to another provider",
+            "description": {
+              "content": "*In limited availability phase.*",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                ":workRequestId",
+                "reassign"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workRequestId",
+                  "description": "(Required) Numeric Id of the work request to perform action with."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"TradeId\": \"<integer>\",\n  \"CurrencyId\": \"<integer>\",\n  \"Nte\": \"<double>\",\n  \"PriorityId\": \"<integer>\",\n  \"ScheduledDate\": \"<string>\",\n  \"CategoryId\": \"<integer>\",\n  \"Description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4c527016-805c-47a6-88a5-749ce3da1db9",
+              "name": "Indicates that the request succeeded and that the requested information is in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "reassign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"TradeId\": \"<integer>\",\n  \"CurrencyId\": \"<integer>\",\n  \"Nte\": \"<double>\",\n  \"PriorityId\": \"<integer>\",\n  \"ScheduledDate\": \"<string>\",\n  \"CategoryId\": \"<integer>\",\n  \"Description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0a1ba39d-5c37-410b-b7fd-3bde059d0a62",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br/>Error codes:\r\n            100 - Invalid provider id passed\r\n            301 - Contract not found for specified subscribers location, provider and trade\r\n            502 - WorkRequest not found\r\n            503 - Provider should be changed\r\n            701 - Invalid trade\r\n            8006 - ScheduledDate has wrong format\r\n            8009 - Invalid category\r\n            8010 - Invalid priority\r\n            8011 - Invalid currency\r\n            8019 - ScheduledDate must be greater than CallDate",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "reassign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"TradeId\": \"<integer>\",\n  \"CurrencyId\": \"<integer>\",\n  \"Nte\": \"<double>\",\n  \"PriorityId\": \"<integer>\",\n  \"ScheduledDate\": \"<string>\",\n  \"CategoryId\": \"<integer>\",\n  \"Description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e624ec7-5365-49bb-9c22-7c8b7dfbc1a9",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "reassign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"TradeId\": \"<integer>\",\n  \"CurrencyId\": \"<integer>\",\n  \"Nte\": \"<double>\",\n  \"PriorityId\": \"<integer>\",\n  \"ScheduledDate\": \"<string>\",\n  \"CategoryId\": \"<integer>\",\n  \"Description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e862b28-8c63-4117-91ed-93ace45ead15",
+              "name": "Indicates that a generic error has occurred on the server.\r\n            <br/>Error codes:\r\n            501 - Internal Error code",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    ":workRequestId",
+                    "reassign"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workRequestId",
+                      "description": "(Required) Numeric Id of the work request to perform action with."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ProviderId\": \"<integer>\",\n  \"TradeId\": \"<integer>\",\n  \"CurrencyId\": \"<integer>\",\n  \"Nte\": \"<double>\",\n  \"PriorityId\": \"<integer>\",\n  \"ScheduledDate\": \"<string>\",\n  \"CategoryId\": \"<integer>\",\n  \"Description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b29b3492-c8f0-4676-be1d-f3a308340602",
+          "name": "Performs search of work requests by specified filter expression.  \r\n            One page contains 50 items by default (\"PageSize\"=50). \r\n            To get next 50 items use the “Page” parameter (for example Page=2 and so on).",
+          "request": {
+            "name": "Performs search of work requests by specified filter expression.  \r\n            One page contains 50 items by default (\"PageSize\"=50). \r\n            To get next 50 items use the “Page” parameter (for example Page=2 and so on).",
+            "description": {
+              "content": "*In limited availability phase.*",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "workrequests",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"SubscriberIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ProviderIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"LocationIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"CategoryIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"StatusIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ExtendedStatusIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"PriorityIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"TradeIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ClosedReasonIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"EventIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"WorkOrderIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"AssetIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"CallDateFrom\": \"<string>\",\n  \"CallDateTo\": \"<string>\",\n  \"ScheduledDateFrom\": \"<string>\",\n  \"ScheduledDateTo\": \"<string>\",\n  \"ClosedDateFrom\": \"<string>\",\n  \"ClosedDateTo\": \"<string>\",\n  \"SortField\": \"<string>\",\n  \"SortDirection\": \"<string>\",\n  \"Page\": \"<integer>\",\n  \"PageSize\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "601864c2-524b-4174-a95d-54141cae4342",
+              "name": "Work requests are in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"SubscriberIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ProviderIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"LocationIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"CategoryIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"StatusIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ExtendedStatusIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"PriorityIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"TradeIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ClosedReasonIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"EventIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"WorkOrderIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"AssetIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"CallDateFrom\": \"<string>\",\n  \"CallDateTo\": \"<string>\",\n  \"ScheduledDateFrom\": \"<string>\",\n  \"ScheduledDateTo\": \"<string>\",\n  \"ClosedDateFrom\": \"<string>\",\n  \"ClosedDateTo\": \"<string>\",\n  \"SortField\": \"<string>\",\n  \"SortDirection\": \"<string>\",\n  \"Page\": \"<integer>\",\n  \"PageSize\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"Id\": 8661,\n    \"SubscriberId\": 5316,\n    \"SubscriberShortName\": \"string\",\n    \"ProviderId\": 1244,\n    \"ProviderShortName\": \"string\",\n    \"LocationId\": 7599,\n    \"LocationStoreId\": \"string\",\n    \"EventId\": \"string\",\n    \"StatusId\": 2965,\n    \"StatusName\": \"string\",\n    \"ExtendedStatusId\": 5806,\n    \"ExtendedStatusName\": \"string\",\n    \"ClosedReasonId\": 3440,\n    \"ClosedReasonName\": \"string\",\n    \"Description\": \"string\",\n    \"TradeId\": 8805,\n    \"TradeName\": \"string\",\n    \"CategoryId\": 5797,\n    \"CategoryName\": \"string\",\n    \"PriorityId\": 5310,\n    \"PriorityName\": \"string\",\n    \"Caller\": \"string\",\n    \"CallDate\": \"1954-09-20T16:05:22.989Z\",\n    \"ClosedDate\": \"1950-10-03T15:17:54.340Z\",\n    \"ScheduledDate\": \"1947-02-21T22:04:38.374Z\",\n    \"WorkOrderId\": 4089,\n    \"AssetId\": 4868,\n    \"Nte\": {\n      \"Value\": 2947.9976078840155,\n      \"CurrencyId\": 3468,\n      \"CurrencyAlphabeticCode\": \"string\"\n    },\n    \"Issue\": {\n      \"AreaId\": 1276,\n      \"AreaName\": \"string\",\n      \"ProblemType\": \"string\",\n      \"Equipment\": \"string\",\n      \"ProblemCode\": \"string\",\n      \"SetupId\": 8789\n    }\n  },\n  {\n    \"Id\": 4475,\n    \"SubscriberId\": 8370,\n    \"SubscriberShortName\": \"string\",\n    \"ProviderId\": 2976,\n    \"ProviderShortName\": \"string\",\n    \"LocationId\": 7816,\n    \"LocationStoreId\": \"string\",\n    \"EventId\": \"string\",\n    \"StatusId\": 4179,\n    \"StatusName\": \"string\",\n    \"ExtendedStatusId\": 8439,\n    \"ExtendedStatusName\": \"string\",\n    \"ClosedReasonId\": 620,\n    \"ClosedReasonName\": \"string\",\n    \"Description\": \"string\",\n    \"TradeId\": 1020,\n    \"TradeName\": \"string\",\n    \"CategoryId\": 1515,\n    \"CategoryName\": \"string\",\n    \"PriorityId\": 3517,\n    \"PriorityName\": \"string\",\n    \"Caller\": \"string\",\n    \"CallDate\": \"1974-01-18T10:45:54.732Z\",\n    \"ClosedDate\": \"1960-12-22T02:53:34.968Z\",\n    \"ScheduledDate\": \"1995-02-19T19:01:20.871Z\",\n    \"WorkOrderId\": 1428,\n    \"AssetId\": 9916,\n    \"Nte\": {\n      \"Value\": 4295.216318229392,\n      \"CurrencyId\": 9300,\n      \"CurrencyAlphabeticCode\": \"string\"\n    },\n    \"Issue\": {\n      \"AreaId\": 6923,\n      \"AreaName\": \"string\",\n      \"ProblemType\": \"string\",\n      \"Equipment\": \"string\",\n      \"ProblemCode\": \"string\",\n      \"SetupId\": 5353\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b04d957-2fec-4653-949f-1c24404c2a10",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:           \r\n            8100 - CallDateFrom has wrong format\r\n            8101 - CallDateTo has wrong format\r\n            8102 - ScheduledDateFrom has wrong format\r\n            8103 - ScheduledDateTo has wrong format\r\n            8104 - CloseDateFrom has wrong format\r\n            8105 - CloseDateTo has wrong format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"SubscriberIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ProviderIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"LocationIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"CategoryIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"StatusIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ExtendedStatusIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"PriorityIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"TradeIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ClosedReasonIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"EventIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"WorkOrderIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"AssetIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"CallDateFrom\": \"<string>\",\n  \"CallDateTo\": \"<string>\",\n  \"ScheduledDateFrom\": \"<string>\",\n  \"ScheduledDateTo\": \"<string>\",\n  \"ClosedDateFrom\": \"<string>\",\n  \"ClosedDateTo\": \"<string>\",\n  \"SortField\": \"<string>\",\n  \"SortDirection\": \"<string>\",\n  \"Page\": \"<integer>\",\n  \"PageSize\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dea69a09-2071-4689-9ac4-7c3239aa6111",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"SubscriberIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ProviderIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"LocationIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"CategoryIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"StatusIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ExtendedStatusIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"PriorityIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"TradeIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ClosedReasonIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"EventIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"WorkOrderIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"AssetIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"CallDateFrom\": \"<string>\",\n  \"CallDateTo\": \"<string>\",\n  \"ScheduledDateFrom\": \"<string>\",\n  \"ScheduledDateTo\": \"<string>\",\n  \"ClosedDateFrom\": \"<string>\",\n  \"ClosedDateTo\": \"<string>\",\n  \"SortField\": \"<string>\",\n  \"SortDirection\": \"<string>\",\n  \"Page\": \"<integer>\",\n  \"PageSize\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c33b82e-1f19-43b6-b631-ed819efe3a10",
+              "name": "The server was unable to complete the request due to an internal error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"SubscriberIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ProviderIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"LocationIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"CategoryIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"StatusIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ExtendedStatusIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"PriorityIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"TradeIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"ClosedReasonIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"EventIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"WorkOrderIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"AssetIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"CallDateFrom\": \"<string>\",\n  \"CallDateTo\": \"<string>\",\n  \"ScheduledDateFrom\": \"<string>\",\n  \"ScheduledDateTo\": \"<string>\",\n  \"ClosedDateFrom\": \"<string>\",\n  \"ClosedDateTo\": \"<string>\",\n  \"SortField\": \"<string>\",\n  \"SortDirection\": \"<string>\",\n  \"Page\": \"<integer>\",\n  \"PageSize\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ae06949-4248-4b22-b50a-92fbd5bdd4d3",
+          "name": "Get providers available for reassign",
+          "request": {
+            "name": "Get providers available for reassign",
+            "description": {},
+            "url": {
+              "path": [
+                "workrequests",
+                "providersforreassignment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workRequestId",
+                  "value": "<integer>",
+                  "description": "(Required) Work request id"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f2097954-edb3-4d08-969c-4f4e507d69d4",
+              "name": "Created indicates that the request resulted in a new resource created before the response was sent.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    "providersforreassignment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workRequestId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Rank\": 9494,\n  \"Category\": \"string\",\n  \"Priority\": \"string\",\n  \"Nte\": 2942.4666278718423,\n  \"GeneralEmail\": \"string\",\n  \"IsDefault\": false,\n  \"ServiceRequestEmails\": \"string\",\n  \"Phone\": \"string\",\n  \"FullName\": \"string\",\n  \"Address1\": \"string\",\n  \"Address2\": \"string\",\n  \"City\": \"string\",\n  \"State\": \"string\",\n  \"Zip\": \"string\",\n  \"Country\": \"string\",\n  \"MainContact\": \"string\",\n  \"DateCreated\": \"1973-10-30T19:50:36.232Z\",\n  \"LastUserDate\": \"string\",\n  \"SuperUser\": \"string\",\n  \"WebSite\": \"string\",\n  \"Email\": \"string\",\n  \"TaxId\": \"string\",\n  \"Trade\": \"string\",\n  \"ProcessingEmail\": \"string\",\n  \"FaxNumber\": \"string\",\n  \"SuiteFloor\": \"string\",\n  \"MailInfo\": \"string\",\n  \"ImageFile\": \"string\",\n  \"ReturnMail\": \"string\",\n  \"MailFrequency\": 1255,\n  \"FormId\": 8167,\n  \"Pager\": \"string\",\n  \"NightRequest\": 8825,\n  \"ShortFormatEmail\": \"string\",\n  \"LastTrainingDate\": \"1992-12-13T17:54:03.899Z\",\n  \"LastTrainingDateStr\": \"string\",\n  \"IsInternal\": false,\n  \"IsOnOffShoreFeatureEnabled\": false,\n  \"Id\": 6618,\n  \"Name\": \"string\",\n  \"DoNotDispatch\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c91e9f62-8582-4aed-92eb-1d423e347e18",
+              "name": "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\r\n            <br/>Error codes:           \r\n            503 - Invalid Equipment Id\r\n            503 - Invalid Location Id\r\n            804 - API call rejected by lack of provider permissions\r\n            502 - We could not find the service provider for the problem you have indicated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    "providersforreassignment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workRequestId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d80c2cb3-e2ab-4cb7-b2e8-de59b7d25ab9",
+              "name": "The request is not authorized.\r\n            <br/>Error codes:\r\n            504 — API call rejected by security permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    "providersforreassignment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workRequestId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7590109-24e8-4d67-b589-277b5b27b3ef",
+              "name": "The requested resource does not exist on the server.\r\n            <br/>Error codes:\r\n            502 — We could not find the service provider for the problem you have indicated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    "providersforreassignment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workRequestId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8cab8ab3-86e0-4ace-b914-b38a57cb5d89",
+              "name": "Indicates that a generic error has occurred on the server.\r\n            <br/>Error codes:\r\n            501 - Internal Error code",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "workrequests",
+                    "providersforreassignment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workRequestId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"UserIsNotRTAdmin\",\n    \"InvComplDateNull\"\n  ],\n  \"ErrorCode\": \"EmptyRequest\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sb2fixxbook.servicechannel.com:443/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5be7670b-5e4e-4570-b9fa-803262ee57b9",
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours WorkRequests API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

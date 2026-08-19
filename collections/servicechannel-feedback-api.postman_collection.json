@@ -1,0 +1,1467 @@
+{
+  "item": [
+    {
+      "id": "58a39c79-74bf-4117-8199-4fddddf198e8",
+      "name": "Feedback",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b982f406-47d3-4143-8067-dc4620403e8c",
+          "name": "POS Tv3 feedbacks workorders_{workorder Id}",
+          "request": {
+            "name": "POS Tv3 feedbacks workorders_{workorder Id}",
+            "description": {},
+            "url": {
+              "path": [
+                "feedbacks",
+                "workorders",
+                ":workorderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "workorderId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"SetupId\": \"<integer>\",\n  \"LocationId\": \"<integer>\",\n  \"Answer\": \"<string>\",\n  \"Comment\": \"<string>\",\n  \"StarScore\": \"<integer>\",\n  \"SubscriberId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4d3ba171-de19-445b-9645-457f5c02408d",
+              "name": "Indicates that the request succeeded and that the feedback created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "workorders",
+                    ":workorderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"SetupId\": \"<integer>\",\n  \"LocationId\": \"<integer>\",\n  \"Answer\": \"<string>\",\n  \"Comment\": \"<string>\",\n  \"StarScore\": \"<integer>\",\n  \"SubscriberId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1bb5d7ad-fa5a-41da-be10-4bdc98c35eca",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.\r\n            <br>Error codes:\r\n            <br> 503 - Request is empty or null;\r\n            <br> 904 - Invalid work order status;\r\n            <br> 2601 - Invalid feedback answer;\r\n            <br> 2602 - Invalid work order number;\r\n            <br> 2602 - Invalid subscriber;\r\n            <br> 2603 - Invalid subscriber number;\r\n            <br> 2604 - Invalid feedback score;\r\n            <br> 2605 - Unsatisfactory answer required a comment\r\n            <br> 2606 - Invalid LocationId or SetupId provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "workorders",
+                    ":workorderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"SetupId\": \"<integer>\",\n  \"LocationId\": \"<integer>\",\n  \"Answer\": \"<string>\",\n  \"Comment\": \"<string>\",\n  \"StarScore\": \"<integer>\",\n  \"SubscriberId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidLaborType\",\n    \"WorkRequestIssueIsRequired\"\n  ],\n  \"ErrorCode\": \"AttachmentThumbnailNotAvailable\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49197b49-7166-4415-a9a0-0a120999e732",
+              "name": "Indicates that the requested resource requires authentication.<br>Error codes:<br> 504 - API call rejected by security permissions;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "workorders",
+                    ":workorderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"SetupId\": \"<integer>\",\n  \"LocationId\": \"<integer>\",\n  \"Answer\": \"<string>\",\n  \"Comment\": \"<string>\",\n  \"StarScore\": \"<integer>\",\n  \"SubscriberId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidTimeZoneHeader\",\n    \"AssetCategoryIsRequired\"\n  ],\n  \"ErrorCode\": \"RuleSetActionEndStatusError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df5d86f5-1307-4146-9fa1-9c7baec236f8",
+              "name": "The server was unable to complete the request due to an internal error.\r\n            <br/>Error codes:\r\n            501 - Unspecified internal server error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "workorders",
+                    ":workorderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "workorderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"SetupId\": \"<integer>\",\n  \"LocationId\": \"<integer>\",\n  \"Answer\": \"<string>\",\n  \"Comment\": \"<string>\",\n  \"StarScore\": \"<integer>\",\n  \"SubscriberId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidTimeZoneHeader\",\n    \"AssetCategoryIsRequired\"\n  ],\n  \"ErrorCode\": \"RuleSetActionEndStatusError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3fd6a692-4a82-40af-b4bc-ec3ae9332be3",
+          "name": "GE Tv3 feedbacks workorders?Location Id={Location Id}&Setup Id={Setup Id}&Order By Field={Order By Field}&Order Direction={Order Direction}&Show My Work Orders={Show My Work Orders}&Subscriber Id={Subscriber Id}&Is Star Rating={Is Star Rating}&Load Resolutions={Load Resolutions}&Is Maintenance Only={Is Maintenance Only}&Dashboard Feedback Filters Enabled={Dashboard Feedback Filters Enabled}&With Notes Count={With Notes Count}&Dashboard Universal={Dashboard Universal}&Show Days={Show Days}&Future Completed Date={Future Completed Date}",
+          "request": {
+            "name": "GE Tv3 feedbacks workorders?Location Id={Location Id}&Setup Id={Setup Id}&Order By Field={Order By Field}&Order Direction={Order Direction}&Show My Work Orders={Show My Work Orders}&Subscriber Id={Subscriber Id}&Is Star Rating={Is Star Rating}&Load Resolutions={Load Resolutions}&Is Maintenance Only={Is Maintenance Only}&Dashboard Feedback Filters Enabled={Dashboard Feedback Filters Enabled}&With Notes Count={With Notes Count}&Dashboard Universal={Dashboard Universal}&Show Days={Show Days}&Future Completed Date={Future Completed Date}",
+            "description": {},
+            "url": {
+              "path": [
+                "feedbacks",
+                "workorders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "locationId",
+                  "value": "<integer>",
+                  "description": "LocationId"
+                },
+                {
+                  "disabled": false,
+                  "key": "setupId",
+                  "value": "<integer>",
+                  "description": "Dashboard setupId (optional)"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderByField",
+                  "value": "<string>",
+                  "description": "Order by field"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderDirection",
+                  "value": "<string>",
+                  "description": "Order direction"
+                },
+                {
+                  "disabled": false,
+                  "key": "showMyWorkOrders",
+                  "value": "false",
+                  "description": "Activates filter by current user id"
+                },
+                {
+                  "disabled": false,
+                  "key": "subscriberId",
+                  "value": "<integer>",
+                  "description": "Subscriber Id"
+                },
+                {
+                  "disabled": false,
+                  "key": "isStarRating",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "loadResolutions",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "isMaintenanceOnly",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "dashboardFeedbackFiltersEnabled",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "withNotesCount",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "dashboardUniversal",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "showDays",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "futureCompletedDate",
+                  "value": "false"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7ec01ebf-814c-4138-9b91-3b5ea8e4c5b3",
+              "name": "Return work orders ready for feedback.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "workorders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "setupId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderByField",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderDirection",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "showMyWorkOrders",
+                      "value": "false"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "isStarRating",
+                      "value": "false"
+                    },
+                    {
+                      "key": "loadResolutions",
+                      "value": "false"
+                    },
+                    {
+                      "key": "isMaintenanceOnly",
+                      "value": "false"
+                    },
+                    {
+                      "key": "dashboardFeedbackFiltersEnabled",
+                      "value": "false"
+                    },
+                    {
+                      "key": "withNotesCount",
+                      "value": "false"
+                    },
+                    {
+                      "key": "dashboardUniversal",
+                      "value": "false"
+                    },
+                    {
+                      "key": "showDays",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "futureCompletedDate",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"TrackingNumber\": 8904,\n    \"Description\": \"string\",\n    \"Caller\": \"string\",\n    \"CallDateString\": \"string\",\n    \"CallDate_DTO\": \"1990-07-10T09:26:33.140Z\",\n    \"ScheduledDateString\": \"string\",\n    \"ScheduledDate_DTO\": \"1974-07-02T13:39:38.911Z\",\n    \"CreatedBy\": \"string\",\n    \"Vendor\": \"string\",\n    \"VendorPhone\": \"string\",\n    \"PrioritySub\": \"string\",\n    \"Trade\": \"string\",\n    \"Category\": \"string\",\n    \"Review\": {\n      \"Id\": 8776,\n      \"TrackingNumber\": 1580,\n      \"SubscriberName\": \"string\",\n      \"LocationName\": \"string\",\n      \"UserFullName\": \"string\",\n      \"ReviewedDate\": \"2017-05-03T20:14:48.042Z\",\n      \"StarScore\": 8968,\n      \"Comment\": \"string\"\n    },\n    \"Status\": {\n      \"Primary\": \"string\",\n      \"Extended\": \"string\",\n      \"CanCreateInvoice\": false\n    },\n    \"Area\": \"string\",\n    \"CompletedDate\": \"1962-04-23T05:26:14.693Z\",\n    \"NotesCount\": 2880,\n    \"TradeId\": 9942,\n    \"CategoryId\": 7938,\n    \"PriorityId\": 3259,\n    \"ProviderId\": 5358,\n    \"Resolution\": \"string\",\n    \"Questions\": [\n      {\n        \"SurveyQuestion\": {\n          \"Question\": \"string\",\n          \"Disabled\": false,\n          \"Locations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Trades\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Categories\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Priorities\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Providers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Id\": 817,\n          \"SubscriberId\": 604,\n          \"UserId\": 7379\n        },\n        \"SurveyAnswers\": [\n          {\n            \"Id\": 9182,\n            \"Answer\": \"string\",\n            \"SortOrder\": 6942\n          },\n          {\n            \"Id\": 4571,\n            \"Answer\": \"string\",\n            \"SortOrder\": 784\n          }\n        ],\n        \"LocationIds\": [\n          6330,\n          2078\n        ],\n        \"TradeIds\": [\n          3830,\n          531\n        ],\n        \"CategoryIds\": [\n          6773,\n          8845\n        ],\n        \"PriorityIds\": [\n          5634,\n          1361\n        ],\n        \"ProviderIds\": [\n          349,\n          3546\n        ]\n      },\n      {\n        \"SurveyQuestion\": {\n          \"Question\": \"string\",\n          \"Disabled\": false,\n          \"Locations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Trades\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Categories\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Priorities\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Providers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Id\": 4683,\n          \"SubscriberId\": 2001,\n          \"UserId\": 1274\n        },\n        \"SurveyAnswers\": [\n          {\n            \"Id\": 9408,\n            \"Answer\": \"string\",\n            \"SortOrder\": 5492\n          },\n          {\n            \"Id\": 7385,\n            \"Answer\": \"string\",\n            \"SortOrder\": 3214\n          }\n        ],\n        \"LocationIds\": [\n          2247,\n          4364\n        ],\n        \"TradeIds\": [\n          5146,\n          7479\n        ],\n        \"CategoryIds\": [\n          9556,\n          5304\n        ],\n        \"PriorityIds\": [\n          4664,\n          7888\n        ],\n        \"ProviderIds\": [\n          3935,\n          3473\n        ]\n      }\n    ]\n  },\n  {\n    \"TrackingNumber\": 961,\n    \"Description\": \"string\",\n    \"Caller\": \"string\",\n    \"CallDateString\": \"string\",\n    \"CallDate_DTO\": \"1993-07-11T04:17:38.856Z\",\n    \"ScheduledDateString\": \"string\",\n    \"ScheduledDate_DTO\": \"1987-07-11T14:48:25.265Z\",\n    \"CreatedBy\": \"string\",\n    \"Vendor\": \"string\",\n    \"VendorPhone\": \"string\",\n    \"PrioritySub\": \"string\",\n    \"Trade\": \"string\",\n    \"Category\": \"string\",\n    \"Review\": {\n      \"Id\": 6800,\n      \"TrackingNumber\": 3801,\n      \"SubscriberName\": \"string\",\n      \"LocationName\": \"string\",\n      \"UserFullName\": \"string\",\n      \"ReviewedDate\": \"1998-06-22T22:16:48.552Z\",\n      \"StarScore\": 1068,\n      \"Comment\": \"string\"\n    },\n    \"Status\": {\n      \"Primary\": \"string\",\n      \"Extended\": \"string\",\n      \"CanCreateInvoice\": false\n    },\n    \"Area\": \"string\",\n    \"CompletedDate\": \"2004-01-19T03:16:44.400Z\",\n    \"NotesCount\": 8360,\n    \"TradeId\": 4803,\n    \"CategoryId\": 4011,\n    \"PriorityId\": 1699,\n    \"ProviderId\": 9612,\n    \"Resolution\": \"string\",\n    \"Questions\": [\n      {\n        \"SurveyQuestion\": {\n          \"Question\": \"string\",\n          \"Disabled\": false,\n          \"Locations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Trades\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Categories\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Priorities\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Providers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Id\": 498,\n          \"SubscriberId\": 2433,\n          \"UserId\": 2997\n        },\n        \"SurveyAnswers\": [\n          {\n            \"Id\": 767,\n            \"Answer\": \"string\",\n            \"SortOrder\": 793\n          },\n          {\n            \"Id\": 5094,\n            \"Answer\": \"string\",\n            \"SortOrder\": 8377\n          }\n        ],\n        \"LocationIds\": [\n          1368,\n          457\n        ],\n        \"TradeIds\": [\n          4693,\n          7179\n        ],\n        \"CategoryIds\": [\n          9063,\n          1252\n        ],\n        \"PriorityIds\": [\n          9382,\n          125\n        ],\n        \"ProviderIds\": [\n          1829,\n          9235\n        ]\n      },\n      {\n        \"SurveyQuestion\": {\n          \"Question\": \"string\",\n          \"Disabled\": false,\n          \"Locations\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Trades\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Categories\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Priorities\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Providers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"Id\": 4662,\n          \"SubscriberId\": 1093,\n          \"UserId\": 4635\n        },\n        \"SurveyAnswers\": [\n          {\n            \"Id\": 3099,\n            \"Answer\": \"string\",\n            \"SortOrder\": 7729\n          },\n          {\n            \"Id\": 6991,\n            \"Answer\": \"string\",\n            \"SortOrder\": 2222\n          }\n        ],\n        \"LocationIds\": [\n          1442,\n          855\n        ],\n        \"TradeIds\": [\n          5122,\n          6226\n        ],\n        \"CategoryIds\": [\n          5699,\n          9790\n        ],\n        \"PriorityIds\": [\n          6627,\n          9305\n        ],\n        \"ProviderIds\": [\n          1569,\n          2690\n        ]\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd55797b-9fb7-427f-a7a1-425a0a179e0d",
+              "name": "Indicates that the requested resource requires authentication.<br>Error codes:<br> 504 - API call rejected by security permissions;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "workorders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "setupId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderByField",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderDirection",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "showMyWorkOrders",
+                      "value": "false"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "isStarRating",
+                      "value": "false"
+                    },
+                    {
+                      "key": "loadResolutions",
+                      "value": "false"
+                    },
+                    {
+                      "key": "isMaintenanceOnly",
+                      "value": "false"
+                    },
+                    {
+                      "key": "dashboardFeedbackFiltersEnabled",
+                      "value": "false"
+                    },
+                    {
+                      "key": "withNotesCount",
+                      "value": "false"
+                    },
+                    {
+                      "key": "dashboardUniversal",
+                      "value": "false"
+                    },
+                    {
+                      "key": "showDays",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "futureCompletedDate",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidTimeZoneHeader\",\n    \"AssetCategoryIsRequired\"\n  ],\n  \"ErrorCode\": \"RuleSetActionEndStatusError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "84ff8185-5b9f-45ba-8c31-a1a818415fef",
+          "name": "GE Tv3 feedbacks workorders count?location Id={location Id}&subscriber Id={subscriber Id}",
+          "request": {
+            "name": "GE Tv3 feedbacks workorders count?location Id={location Id}&subscriber Id={subscriber Id}",
+            "description": {},
+            "url": {
+              "path": [
+                "feedbacks",
+                "workorders",
+                "count"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "locationId",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subscriberId",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "102cb968-f6e9-4746-8fa6-114e21fc8349",
+              "name": "Return count of work orders ready for feedback.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "workorders",
+                    "count"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "8962",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a51385ff-6c32-4e03-8f40-a36357d1b9f0",
+              "name": "Indicates that the requested resource requires authentication.<br>Error codes:<br> 504 - API call rejected by security permissions;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "workorders",
+                    "count"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locationId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidTimeZoneHeader\",\n    \"AssetCategoryIsRequired\"\n  ],\n  \"ErrorCode\": \"RuleSetActionEndStatusError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d0e69442-6eff-4077-8cae-947e0a427108",
+          "name": "GE Tv3 feedbacks reviews?Provider Id={Provider Id}&Search Within={Search Within}&Page Size={Page Size}&Page Offset={Page Offset}&Sort By={Sort By}&Subscriber Id={Subscriber Id}",
+          "request": {
+            "name": "GE Tv3 feedbacks reviews?Provider Id={Provider Id}&Search Within={Search Within}&Page Size={Page Size}&Page Offset={Page Offset}&Sort By={Sort By}&Subscriber Id={Subscriber Id}",
+            "description": {},
+            "url": {
+              "path": [
+                "feedbacks",
+                "reviews"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "providerId",
+                  "value": "<integer>",
+                  "description": "Provider Id"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchWithin",
+                  "value": "<string>",
+                  "description": "Search within reviews comment"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "Response page size (default 10)"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageOffset",
+                  "value": "<integer>",
+                  "description": "Response page offset (default 0)"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>",
+                  "description": "Sort by field (default by Recent)"
+                },
+                {
+                  "disabled": false,
+                  "key": "subscriberId",
+                  "value": "<integer>",
+                  "description": "Subscriber Id"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1afa2e88-9f6b-44b6-ab2d-410d69a8599a",
+              "name": "Return feedback reviews.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "reviews"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "searchWithin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageOffset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Reviews\": [\n    {\n      \"Id\": 5543,\n      \"TrackingNumber\": 8803,\n      \"SubscriberName\": \"string\",\n      \"LocationName\": \"string\",\n      \"UserFullName\": \"string\",\n      \"ReviewedDate\": \"2015-11-14T04:22:13.815Z\",\n      \"StarScore\": 3385,\n      \"Comment\": \"string\"\n    },\n    {\n      \"Id\": 857,\n      \"TrackingNumber\": 5846,\n      \"SubscriberName\": \"string\",\n      \"LocationName\": \"string\",\n      \"UserFullName\": \"string\",\n      \"ReviewedDate\": \"1997-01-07T04:02:58.865Z\",\n      \"StarScore\": 3014,\n      \"Comment\": \"string\"\n    }\n  ],\n  \"TotalCount\": 7781,\n  \"TotalFilteredCount\": 7713,\n  \"PageSize\": 1994,\n  \"PageOffset\": 1327\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ca166d7-8b2a-44ec-bb28-f5a744aec94f",
+          "name": "POS Tv3 feedbacks reviews",
+          "request": {
+            "name": "POS Tv3 feedbacks reviews",
+            "description": {},
+            "url": {
+              "path": [
+                "feedbacks",
+                "reviews"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"LocationId\": \"<integer>\",\n  \"ProviderId\": \"<integer>\",\n  \"StarScore\": \"<integer>\",\n  \"Comment\": \"<string>\",\n  \"Id\": \"<integer>\",\n  \"SubscriberId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a6ecfee3-fd5a-4b9c-ba36-493d0d46dc34",
+              "name": "Indicates that the request succeeded and that the provider review created or updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "reviews"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"LocationId\": \"<integer>\",\n  \"ProviderId\": \"<integer>\",\n  \"StarScore\": \"<integer>\",\n  \"Comment\": \"<string>\",\n  \"Id\": \"<integer>\",\n  \"SubscriberId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"LocationId\": \"<integer>\",\n  \"ProviderId\": \"<integer>\",\n  \"StarScore\": \"<integer>\",\n  \"Comment\": \"<string>\",\n  \"Id\": \"<integer>\",\n  \"SubscriberId\": \"<integer>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02be7916-df6a-42b2-ab50-ac518893d431",
+              "name": "Indicates that the requested resource requires authentication.<br>Error codes:<br> 504 - API call rejected by security permissions;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "reviews"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"LocationId\": \"<integer>\",\n  \"ProviderId\": \"<integer>\",\n  \"StarScore\": \"<integer>\",\n  \"Comment\": \"<string>\",\n  \"Id\": \"<integer>\",\n  \"SubscriberId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidTimeZoneHeader\",\n    \"AssetCategoryIsRequired\"\n  ],\n  \"ErrorCode\": \"RuleSetActionEndStatusError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b559ab2-e726-4806-ba7a-7c413a6b6749",
+              "name": "Indicates that the requested resource requires provider rateable feature",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "reviews"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"LocationId\": \"<integer>\",\n  \"ProviderId\": \"<integer>\",\n  \"StarScore\": \"<integer>\",\n  \"Comment\": \"<string>\",\n  \"Id\": \"<integer>\",\n  \"SubscriberId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e48a21a-0b00-4171-a677-0cb759637d5a",
+          "name": "GE Tv3 feedbacks reviews info?Provider Id={Provider Id}&Subscriber Id={Subscriber Id}",
+          "request": {
+            "name": "GE Tv3 feedbacks reviews info?Provider Id={Provider Id}&Subscriber Id={Subscriber Id}",
+            "description": {},
+            "url": {
+              "path": [
+                "feedbacks",
+                "reviews",
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "providerId",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subscriberId",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4d2a0824-3964-47ce-98fe-25602bf9c2b8",
+              "name": "Return info model about provider ratings",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "reviews",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "providerId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aa1a8b06-2716-4268-b54e-d74e39cc2f45",
+          "name": "GE Tv3 feedbacks by Workorders?work Orders Ids[0]={work Orders Ids[0]}&work Orders Ids[1]={work Orders Ids[1]}&subscriber Id={subscriber Id}",
+          "request": {
+            "name": "GE Tv3 feedbacks by Workorders?work Orders Ids[0]={work Orders Ids[0]}&work Orders Ids[1]={work Orders Ids[1]}&subscriber Id={subscriber Id}",
+            "description": {},
+            "url": {
+              "path": [
+                "feedbacks",
+                "byWorkorders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workOrdersIds",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "workOrdersIds",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "subscriberId",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e0ceedde-a0f3-488e-a9a4-e2b2a0935fe5",
+              "name": "Indicates that the request succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "byWorkorders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workOrdersIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "workOrdersIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Reviews\": [\n    {\n      \"Id\": 1528,\n      \"TrackingNumber\": 5297,\n      \"SubscriberName\": \"string\",\n      \"LocationName\": \"string\",\n      \"UserFullName\": \"string\",\n      \"ReviewedDate\": \"1989-10-15T01:04:57.129Z\",\n      \"StarScore\": 4732,\n      \"Comment\": \"string\"\n    },\n    {\n      \"Id\": 6581,\n      \"TrackingNumber\": 7077,\n      \"SubscriberName\": \"string\",\n      \"LocationName\": \"string\",\n      \"UserFullName\": \"string\",\n      \"ReviewedDate\": \"1969-02-13T17:49:08.241Z\",\n      \"StarScore\": 6515,\n      \"Comment\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83ffd355-cfab-4e40-8c48-f230243c6b32",
+              "name": "Bad Request - the request could not be understood or was missing required parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "byWorkorders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workOrdersIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "workOrdersIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidTimeZoneHeader\",\n    \"AssetCategoryIsRequired\"\n  ],\n  \"ErrorCode\": \"RuleSetActionEndStatusError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db3330ab-bb4a-4a14-837c-948e7392748e",
+              "name": "Indicates that the requested resource requires authentication.<br>Error codes:<br> 504 - API call rejected by security permissions;",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "feedbacks",
+                    "byWorkorders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workOrdersIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "workOrdersIds",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subscriberId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ErrorCodes\": [\n    \"InvalidTimeZoneHeader\",\n    \"AssetCategoryIsRequired\"\n  ],\n  \"ErrorCode\": \"RuleSetActionEndStatusError\",\n  \"ErrorMessage\": \"string\",\n  \"Data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://sb2fixxbook.servicechannel.com:443/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://sb2login.servicechannel.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c1b1b256-6558-43d6-adae-5d02fb4855fb",
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Feedback API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

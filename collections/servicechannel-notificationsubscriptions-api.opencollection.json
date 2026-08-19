@@ -1,0 +1,193 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours NotificationSubscriptions API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "NotificationSubscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List existing subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/NotificationSubscriptions/Http"
+          },
+          "docs": "Returns a list of subscriptions for the current subscriber or provider."
+        },
+        {
+          "info": {
+            "name": "Create a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/NotificationSubscriptions/Http"
+          },
+          "docs": "Creates a new subscription to the specified [event types](/guides/wh/types-of-events/). Returns a unique subscription ID for a successful request.\r\n            See [Event Objects](/guides/wh/event-objects/) for example notification objects and descriptions of their fields.\r\n            <br />**Example Request**\r\n            \r\n                POST /NotificationSubscriptions/Http\r\n                {\r\n                  \"Url\": \"https://your-company.com/webhook-target-URL\",\r\n                  \"Enabled"
+        },
+        {
+          "info": {
+            "name": "Get a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/NotificationSubscriptions/Http/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of the subscription to return."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of the specified subscription."
+        },
+        {
+          "info": {
+            "name": "Update a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/NotificationSubscriptions/Http/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of the subscription to update."
+              }
+            ]
+          },
+          "docs": "Updates the specified subscription by setting the values of the parameters passed.\r\n            <br />**Example Request**\r\n            \r\n                PUT /NotificationSubscriptions/Http/{id}\r\n                {\r\n                  \"Id\": 1111,\r\n                  \"Url\": \"https://your-company.com/webhook-target-URL\",\r\n                  \"Enabled\": true,\r\n                  \"Name\": \"Subscription to new WOs\",\r\n                  \"EventTypes\": [\r\n                    \"WorkOrderCreated\"\r\n                 "
+        },
+        {
+          "info": {
+            "name": "Delete a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/NotificationSubscriptions/Http/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of the subscription to delete."
+              }
+            ]
+          },
+          "docs": "Permanently deletes the specified subscription. It cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Get MSTeams Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/NotificationSubscriptions/msteams",
+            "params": [
+              {
+                "name": "conversationId",
+                "value": "",
+                "type": "query",
+                "description": "Conversation Identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of the specified subscription."
+        },
+        {
+          "info": {
+            "name": "Subscribe to Notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/NotificationSubscriptions"
+          },
+          "docs": "Creates a new Subscription. Returns a unique subscription ID for a successful request.\r\n            See [Event Objects](/guides/wh/event-objects/) for example notification objects and descriptions of their fields.\r\n            <br />**Example Request**\r\n            \r\n                POST /NotificationSubscriptions/Subscribe\r\n                {\r\n                  \"Name\": \"New Subscription\",\r\n                  \"IsEnabled\": true,\r\n                  \"Type\": \"MSBot\",\r\n                  \"Content\": \r\n  "
+        },
+        {
+          "info": {
+            "name": "UnSubscribe",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/NotificationSubscriptions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of the subscription."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "type of the subscription."
+              }
+            ]
+          },
+          "docs": "Permanently deletes the specified subscription. It cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Get a signing key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/NotificationSubscriptions/SigningKey"
+          },
+          "docs": "Retrieves the current subscriber's or provider's signing key.\r\n            A signing key is used to generate event signatures. Use your key to [verify that notifications are sent by SC](/guides/wh/receive-events-and-respond/#verify-an-event)."
+        },
+        {
+          "info": {
+            "name": "Regenerate a signing key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/NotificationSubscriptions/SigningKey"
+          },
+          "docs": "Regenerates the current subscriber's or provider's signing key. The previous signing key becomes invalid."
+        },
+        {
+          "info": {
+            "name": "Get providers exclusion list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/GetProvidersExclusionList",
+            "params": [
+              {
+                "name": "emailNotificationType",
+                "value": "",
+                "type": "query",
+                "description": "1 - Declined WO; 2 - WO Assigned to User; 4 - ETA Missed; 5 - LNH Autocopy"
+              }
+            ]
+          },
+          "docs": "List providers who opted out to not receive the notifications"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

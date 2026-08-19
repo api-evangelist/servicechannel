@@ -1,0 +1,418 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Providers API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Providers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Providers_ProviderData",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/providers/ProviderData"
+          }
+        },
+        {
+          "info": {
+            "name": "Retrieve the list of subscribers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/providers/subscribers",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric identifier of the provider."
+              }
+            ]
+          },
+          "docs": "Returns the names and IDs of subscribers whose private network the provider is in."
+        },
+        {
+          "info": {
+            "name": "GETv3_api_providers_info_{id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/providers/info/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Delete provider of subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/providers/RemoveProviderSubscriberLink"
+          },
+          "docs": "Delete provider of subscriber."
+        },
+        {
+          "info": {
+            "name": "Create blank provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/providers"
+          },
+          "docs": "Create blank provider."
+        },
+        {
+          "info": {
+            "name": "GETv3_providers_current_problemtypes?subscriberId={subscriberId}&dashboardId={dashboardId}&locationId={locationId}&areaId={areaId}&trade={trade}&problemType={problemType}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/providers/current/problemtypes",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "dashboardId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "areaId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "problemType",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Providers For Subscriber User by Trade",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/providers/getbytrade",
+            "params": [
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List of Providers."
+        },
+        {
+          "info": {
+            "name": "Providers For Subscriber User by Trade",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/providers/getbytradeid",
+            "params": [
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List of Providers."
+        },
+        {
+          "info": {
+            "name": "POSTv3_providers_{providerId}_feedback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/providers/:providerId/feedback",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Set isDoNotDispatch value for providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/providers/updateDispatchSetting"
+          },
+          "docs": "Set isDoNotDispatch value for providers"
+        },
+        {
+          "info": {
+            "name": "Allows one to get information whether the SDIMobileInt flag is enabled.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/providers/IsSdiMobileEnabled",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "Subscriber id"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "Location id"
+              }
+            ]
+          },
+          "docs": "True - if the FF is enabled for a provider and subscriber or for a provider and location.\r\n            Otherwise it returns false."
+        },
+        {
+          "info": {
+            "name": "Returns provider ranks for specified Fixxbook primary trade and locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/providers/GetProvidersRankingStatus"
+          },
+          "docs": "Returns provider ranks for specified Fixxbook primary trade and locations"
+        },
+        {
+          "info": {
+            "name": "Get recent providers for the given location.\r\n            \"Recent\" means a provider has completed WOs for a certain time.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/locations(:locationId)/providers/Service.GetRecent(days=:days)",
+            "params": [
+              {
+                "name": "days",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Get recent providers for the given location.\r\n            \"Recent\" means a provider has completed WOs for a certain time."
+        },
+        {
+          "info": {
+            "name": "Get provider by provider id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/detailedProviders/Service.Get(providerId=:providerId)",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Get provider by provider id."
+        },
+        {
+          "info": {
+            "name": "Retrieve providers feedback rating data.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/odata/locations(:locationId)/providers/Service.GetLast(days=:days)",
+            "params": [
+              {
+                "name": "days",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "$expand",
+                "value": "",
+                "type": "query",
+                "description": "Expand a navigation property."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Select a set of properties to return."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter a collection of resources addressed by a request URL."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Order resources by the specified property in the response."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Return the specified number of items in the response."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Skip the specified number of items in the response."
+              },
+              {
+                "name": "$count",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of the matching resources in the response."
+              }
+            ]
+          },
+          "docs": "Retrieve providers feedback rating data."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

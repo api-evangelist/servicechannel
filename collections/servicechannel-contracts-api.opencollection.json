@@ -1,0 +1,136 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours Contracts API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contracts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retire Provider Contract. When 'Trade' and 'StoreId' are not specified then provider is 'retired' from all subscriber's stores.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/contracts/retire"
+          },
+          "docs": "Available only for Subscriber Super Admin user."
+        },
+        {
+          "info": {
+            "name": "Returns provider active contracts by providerId, locationId and trade",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/contracts",
+            "params": [
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "locationDbId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Available only for Subscriber user."
+        },
+        {
+          "info": {
+            "name": "Get Primary Ranked Providers of all primary ranked providers for all Trades for a given subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/GetPrimaryRankedProviders/:subscriberId",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a list of all primary ranked providers for all Trades for a given subscriber\r\n            <br />The method is available to providers only."
+        },
+        {
+          "info": {
+            "name": "Get trades for primary ranked provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/GetPrimaryRankedProviderTrades/:subscriberId/:providerId",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a list of all trades for primary ranked provider\r\n            <br />The method is available to providers only."
+        },
+        {
+          "info": {
+            "name": "Get locations for primary ranked provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/GetPrimaryRankedProviderLocations/:subscriberId/:providerId/:tradeId",
+            "params": [
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a list of all locations for primary ranked provider\r\n            <br />The method is available to providers only."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

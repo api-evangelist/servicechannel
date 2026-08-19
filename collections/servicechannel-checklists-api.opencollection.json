@@ -1,0 +1,362 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours CheckLists API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CheckLists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit a response to a checklist question",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/checklists/CheckListResponse",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Version of the response object. The default value is V1. Specify V2 to receive the response object that contains a list of attachments instead of a single attachment."
+              }
+            ]
+          },
+          "docs": "Creates a response to the specified checklist question. Learn more about [submitting checklist responses](/guides/checklists/submit-a-checklist-response/)."
+        },
+        {
+          "info": {
+            "name": "Update a response to a checklist question",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/checklists/:checkListResponseId/CheckListResponse",
+            "params": [
+              {
+                "name": "checkListResponseId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the response to a checklist question to update.\r\n            Pass the [GET /workorders/{workOrderId}/checklists-responses](/swagger/ui/index?version=3#/WorkOrders/GETv3_workorders__workOrderId__checklists_responses) request to retrieve the response ID."
+              },
+              {
+                "name": "overrideAttachments",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to remove all existing attachments from the checklist response except for the attachment specified by the `CheckListResponsePictureId` parameter.\r\n            When the CheckListResponsePictureId parameter is not specified and this parameter is set to true, the method removes all existing attachments and adds the file provided in the file parameter to the checklist response.\r\n            When the CheckListResponsePictureId parameter is not specified and this parameter is set to false, the method keeps the existing attachments and adds the new file specified by the file parameter.\r\n            By default, this parameter is set to false."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Version of the response object. The default value is V1. Specify V2 to receive the response object that contains a list of attachments instead of a single attachment."
+              }
+            ]
+          },
+          "docs": "[Updates the specified response](/guides/checklists/update-a-checklist-response/) to a checklist question."
+        },
+        {
+          "info": {
+            "name": "Get a response to a checklist question",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/checklists/ChecklistResponse/get",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "query",
+                "description": "The work order identifier *(Required)*"
+              }
+            ]
+          },
+          "docs": "Get a response to a checklist question"
+        },
+        {
+          "info": {
+            "name": "Upload a checklist response attachment to the storage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/checklists/ChecklistResponse/attachments"
+          },
+          "docs": "Upload a checklist response attachment to the storage"
+        },
+        {
+          "info": {
+            "name": "Submit checklist responses in bulk",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/checklists/ChecklistResponse/bulk"
+          },
+          "docs": "Submit checklist responses in bulk"
+        },
+        {
+          "info": {
+            "name": "Update a responses to a checklist question in bulk",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/checklists/ChecklistResponse/bulk"
+          },
+          "docs": "Update a responses to a checklist question in bulk"
+        },
+        {
+          "info": {
+            "name": "Get standard checklists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/checklists/detail",
+            "params": [
+              {
+                "name": "tradeid",
+                "value": "",
+                "type": "query",
+                "description": "Trade ID. To get a list of trades with their IDs, send the [GET /odata/trades](/swagger/ui/index?version=3#/Trades/Trades_GetTrades) request."
+              },
+              {
+                "name": "checklistid",
+                "value": "",
+                "type": "query",
+                "description": "Checklist ID."
+              },
+              {
+                "name": "categoryid",
+                "value": "",
+                "type": "query",
+                "description": "Category ID. Subscribers can retrieve category IDs using the [GET /categories](/swagger/ui/index?version=3#/Categories/GETv3_categories_subscriberIds_0___subscriberIds_0___subscriberIds_1___subscriberIds_1__) method."
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "Unique ID of the subscriber who configured checklists. Should be passed by providers."
+              },
+              {
+                "name": "tradeName",
+                "value": "",
+                "type": "query",
+                "description": "Trade name. A trade is an area of work for which a service is performed, such as _Lighting_, _Refrigeration_, or _Plumbing_."
+              },
+              {
+                "name": "checkListName",
+                "value": "",
+                "type": "query",
+                "description": "Checklist name."
+              },
+              {
+                "name": "categoryName",
+                "value": "",
+                "type": "query",
+                "description": "Category name. A category is the overall classification of a work order, such as _Maintenance_, _Repair_, or _CAPEX_."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "Unique ID of a subscriber’s location. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber."
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "query",
+                "description": "Non-unique ID of a subscriber’s location that may appear as a store number. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber."
+              },
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "query",
+                "description": "Work Order ID"
+              }
+            ]
+          },
+          "docs": "[Returns standard checklists](/guides/checklists/find-and-filter-checklists/) along with their parameters, configured questions, and answer options.\r\n            <br />You can filter checklists by:\r\n             • **Trade**. Specify either `tradeid` or `tradeName`.\r\n             • **Category**. Enter either `categoryid` or `categoryName`.\r\n             • **Location**. Provide either `locationId` or `storeId` if the feature that allows creating checklists for specific locations is enabled for a s"
+        },
+        {
+          "info": {
+            "name": "The requested transfer checklists are in the response",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/checklists/TransferCheckListDetail",
+            "params": [
+              {
+                "name": "workOrderId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "The requested transfer checklists are in the response"
+        },
+        {
+          "info": {
+            "name": "Get checklists with asset tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/checklists/taskslist",
+            "params": [
+              {
+                "name": "tradeid",
+                "value": "",
+                "type": "query",
+                "description": "Trade ID. To get a list of trades with their IDs, send the [GET /odata/trades](/swagger/ui/index?version=3#/Trades/Trades_GetTrades) request."
+              },
+              {
+                "name": "checklistid",
+                "value": "",
+                "type": "query",
+                "description": "Checklist ID."
+              },
+              {
+                "name": "categoryid",
+                "value": "",
+                "type": "query",
+                "description": "Category ID. Subscribers can retrieve category IDs using the [GET /categories](/swagger/ui/index?version=3#/Categories/GETv3_categories_subscriberIds_0___subscriberIds_0___subscriberIds_1___subscriberIds_1__) method."
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "Unique ID of the subscriber who configured checklists. Should be passed by providers."
+              },
+              {
+                "name": "tradeName",
+                "value": "",
+                "type": "query",
+                "description": "Trade name. A trade is an area of work for which a service is performed, such as _Lighting_, _Refrigeration_, or _Plumbing_."
+              },
+              {
+                "name": "checkListName",
+                "value": "",
+                "type": "query",
+                "description": "Checklist name."
+              },
+              {
+                "name": "categoryName",
+                "value": "",
+                "type": "query",
+                "description": "Category name. A category is the overall classification of a work order, such as _Maintenance_, _Repair_, or _CAPEX_."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "Unique ID of a subscriber’s location. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber."
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "query",
+                "description": "Non-unique ID of a subscriber’s location that may appear as a store number. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber."
+              },
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "query",
+                "description": "The provider identifier. Required for sub-contractor request. [Required Special permissions]"
+              }
+            ]
+          },
+          "docs": "Retrieves checklists of the **Asset Task** type along with their parameters and task details. Such checklists contain asset-related tasks that a technician is prompted to complete when working on a service request.\r\n            <br />You can filter checklists by:\r\n             • **Trade**. Specify either `tradeid` or `tradeName`.\r\n             • **Category**. Enter either `categoryid` or `categoryName`.\r\n             • **Location**. Provide either `locationId` or `storeId` if the feature that al"
+        },
+        {
+          "info": {
+            "name": "Retrieve checklist types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/checklists/types",
+            "params": [
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "query",
+                "description": "Trade ID. To get a list of trades with their IDs, send the [GET /odata/trades](/swagger/ui/index?version=3#/Trades/Trades_GetTrades) request."
+              },
+              {
+                "name": "checklistId",
+                "value": "",
+                "type": "query",
+                "description": "Checklist ID."
+              },
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "query",
+                "description": "Category ID. Subscribers can retrieve category IDs using the [GET /categories](/swagger/ui/index?version=3#/Categories/GETv3_categories_subscriberIds_0___subscriberIds_0___subscriberIds_1___subscriberIds_1__) method."
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "query",
+                "description": "Unique ID of the subscriber who configured checklists. Should be passed by providers."
+              },
+              {
+                "name": "tradeName",
+                "value": "",
+                "type": "query",
+                "description": "Trade name. A trade is an area of work for which a service is performed, such as _Lighting_, _Refrigeration_, or _Plumbing_."
+              },
+              {
+                "name": "checklistName",
+                "value": "",
+                "type": "query",
+                "description": "Checklist name."
+              },
+              {
+                "name": "categoryName",
+                "value": "",
+                "type": "query",
+                "description": "Category name. A category is the overall classification of a work order, such as _Maintenance_, _Repair_, or _CAPEX_."
+              },
+              {
+                "name": "locationId",
+                "value": "",
+                "type": "query",
+                "description": "Unique ID of a subscriber’s location. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber."
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "query",
+                "description": "Non-unique ID of a subscriber’s location that may appear as a store number. This parameter is ignored if the feature that allows creating checklists for specific locations is disabled for a subscriber."
+              },
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "query",
+                "description": "The provider identifier. Required for sub-contractor request. [Required Special permissions]"
+              }
+            ]
+          },
+          "docs": "Returns the ID and type of checklists.\r\n            <br />Subscribers can create two types of checklists:\r\n             • **Standard checklist** with questions that a technician is prompted to answer when working on a service request. Send the [GET /checklists/detail](/swagger/ui/index?version=3#/CheckLists/GETv3_checklists_detail_tradeid__tradeid__checklistid__checklistid__categoryid__categoryid__subscriberId__subscriberId__tradeName__tradeName__checkListName__checkListName__categoryName__categ"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours DoNotDispatch API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DoNotDispatch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add a provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/doNotDispatch/addProvider/:providerId",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique provider identifier."
+              },
+              {
+                "name": "doNotDispatchReason",
+                "value": "",
+                "type": "query",
+                "description": "(*Optional*) Reason for assigning a provider the *Do Not Dispatch* status."
+              }
+            ]
+          },
+          "docs": "Adds the specified provider to the *Do Not Dispatch* list, which prevents dispatching new work orders to this provider.\r\n            <br />You can remove providers from the *Do Not Dispatch* list by using the [DELETE /doNotDispatch/removeProvider/{providerId}](https://developer.servicechannel.com/swagger/ui/index?version=3#/DoNotDispatch/DoNotDispatch_RemoveProvider) method. To retrieve the list of providers with the *Do Not Dispatch* flag, send the [GET /DoNotDispatch/getProviders](https://deve"
+        },
+        {
+          "info": {
+            "name": "Remove a provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/doNotDispatch/removeProvider/:providerId",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique provider identifier."
+              }
+            ]
+          },
+          "docs": "Removes the specified provider from the *Do Not Dispatch* list. You can remove one provider at a time.\r\n            <br />To add a provider to this list, send the [POST /doNotDispatch/addProvider/{providerId}](https://developer.servicechannel.com/swagger/ui/index?version=3#/DoNotDispatch/DoNotDispatch_AddProvider) request.\r\n            <br />Refer to ServiceChannel University to learn [how to manage “Do Not Dispatch” providers](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/812548755"
+        },
+        {
+          "info": {
+            "name": "Retrieve providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/doNotDispatch/getProviders",
+            "params": [
+              {
+                "name": "trade",
+                "value": "",
+                "type": "query",
+                "description": "(*Optional*) Type of work a provider performs."
+              }
+            ]
+          },
+          "docs": "Returns a list of providers included in the *Do Not Dispatch* list. Use the `trade` parameter to specify your request.\r\n            <br />You can use the [POST /doNotDispatch/addProvider/{providerId}](https://developer.servicechannel.com/swagger/ui/index?version=3#/DoNotDispatch/DoNotDispatch_AddProvider) method to add a provider to the *Do Not Dispatch* list or the  [DELETE /doNotDispatch/removeProvider/{providerId}](https://developer.servicechannel.com/swagger/ui/index?version=3#/DoNotDispatch"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

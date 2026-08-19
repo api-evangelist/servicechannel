@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fixxbook.Bearer.Api.V1 AfterHours WorkRequestNote API",
+    "version": "bearer.v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "WorkRequestNote",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Work request Notes Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/workrequests/:workrequestId/notes",
+            "params": [
+              {
+                "name": "workrequestId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work request to perform action with."
+              },
+              {
+                "name": "pageNumber",
+                "value": "",
+                "type": "query",
+                "description": "Page number."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Page size."
+              }
+            ]
+          },
+          "docs": "*In limited availability phase.*\r\n            <br />Returns list of work request notes, sorted descending by creation date."
+        },
+        {
+          "info": {
+            "name": "Creates a work request note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workrequests/:workrequestId/notes",
+            "params": [
+              {
+                "name": "workrequestId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work request to perform action with."
+              }
+            ]
+          },
+          "docs": "*In limited availability phase.*\r\n            <br />Returns Note Id for successful request."
+        },
+        {
+          "info": {
+            "name": "Add Followers to Work request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/workrequests/:workrequestId/notes/followers",
+            "params": [
+              {
+                "name": "workrequestId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work request to perform action with."
+              }
+            ]
+          },
+          "docs": "*In limited availability phase.*\r\n            <br />Returns status \"OK\" for successful request."
+        },
+        {
+          "info": {
+            "name": "Remove Follower from Work request",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/workrequests/:workrequestId/notes/followers",
+            "params": [
+              {
+                "name": "workrequestId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric Id of the Work request to perform action with."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Follower email."
+              }
+            ]
+          },
+          "docs": "*In limited availability phase.*\r\n            <br />Returns status \"OK\" for successful request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
