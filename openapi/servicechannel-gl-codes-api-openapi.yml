@@ -1,241 +1,48 @@
 openapi: 3.2.0
 info:
   version: '3'
-  title: ServiceChannel API - v.3 Mli Configuration API
+  title: ServiceChannel API - v.3 Gl Codes API
   description: The ServiceChannel API is a RESTful and stateless API.
 servers:
 - url: https://sb2api.servicechannel.com/v3
 security:
 - oauth2: []
 tags:
-- name: MliConfiguration
+- name: GL Codes
 paths:
-  /mliConfiguration/Levels:
+  /GlCodes/GetApprovalCodes:
     get:
       tags:
-      - MliConfiguration
-      summary: Get MLI levels
-      description: 'Returns IDs and names of all MLI levels of the current subscriber.
-
-
-        Learn more about MLI levels configuration in ServiceChannel University.'
-      operationId: GETv3_mliConfiguration_Levels
-      responses:
-        '200':
-          description: MLI levels are in the response.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel'
-            text/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /mliConfiguration/Levels/{levelId}/Users:
-    get:
-      tags:
-      - MliConfiguration
-      summary: Get MLI level users
-      description: 'Returns the users assigned to the specified level. The response body is empty if no user has been assigned to this level.
-
-
-        You can use the GET /mliConfiguration/Levels method to get the MLI levels IDs. Send the POST /MliConfiguration/Levels/{levelId}/Users/{userId} request to assign users to the MLI level.'
-      operationId: GETv3_mliConfiguration_Levels_{levelId}_Users
+      - GL Codes
+      summary: Get Approval codes
+      description: Gets the list of approval codes.
+      operationId: GETv3_GlCodes_GetApprovalCodes?locationId={locationId}&category={category}
       parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: The users assigned to the specified MLI level are in the response.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.User.Api.AssignedUser'
-            text/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.User.Api.AssignedUser'
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Approval levels getting error"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/Levels/{levelId}/Users/{userId}:
-    post:
-      tags:
-      - MliConfiguration
-      summary: Add a user to an MLI level
-      description: 'Assigns a user to an existing MLI level. Get users’ IDs by sending the GET /users request.
-
-
-        You can assign a user to an existing location by using the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} method.
-
-
-        ***Note***: Each user can be added to only one MLI level. If a user should be assigned to another MLI level, you first need to remove this user from the MLI level they currently belong to.'
-      operationId: POSTv3_MliConfiguration_Levels_{levelId}_Users_{userId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: Returns the created user ID from table dat_Division_User.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1129 — Err: failed to assign users\n            1131 — Err: Approval level doesn’t exist\n            1149 — User has already been assigned to another level\n            1150 — User does not exist"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /mliConfiguration/Levels/{levelId}/Users/{userId}:
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove a user from an MLI level
-      description: Removes the specified user from a particular MLI level. To unassign a user from an existing location, send the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: DELETEv3_mliConfiguration_Levels_{levelId}_Users_{userId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: The specified user is successfully removed from the MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Err: Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1150 — User does not exist"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId}:
-    post:
-      tags:
-      - MliConfiguration
-      summary: Add a location to a user’s MLI level
-      description: Assigns the specified location to a particular user and user’s MLI level. A location can be removed from a user by sending the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: POSTv3_MliConfiguration_Levels_{levelId}_Users_{userId}_Locations_{locationId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
       - name: locationId
-        in: path
-        description: Unique numeric identifier of the location.
-        required: true
+        in: query
+        description: Location Id. Numeric id of location.
+        required: false
         schema:
           type: integer
           format: int32
+      - name: category
+        in: query
+        description: Category name. A category is the overall classification of a work order, such as MAINTENANCE, REPAIR, or WARRANTY. Maximum is 50 characters.
+        required: false
+        schema:
+          type: string
       responses:
         '200':
-          description: Returns the created location ID from table dat_Location_Division.
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ApprovalCodes.GetApprovalCodesWithOptionsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ApprovalCodes.GetApprovalCodesWithOptionsResponse'
         '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Err: Approval level doesn’t exist\n            1130 — Failed to assign the location to the user\n            1130 — User is not assigned to the level\n            1130 — Err: Failed to assign locations to the approval level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User does not exist\n            1301 — Request parameters are empty"
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 503 - Request is empty or null."
           content:
             application/json:
               schema:
@@ -244,7 +51,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
+          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
           content:
             application/json:
               schema:
@@ -252,113 +59,8 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove a location from a user’s MLI level
-      description: Removes the specified location from a particular user and MLI level. To assign a location to a user and MLI level, send the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: DELETEv3_MliConfiguration_Levels_{levelId}_Users_{userId}_Locations_{locationId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: path
-        description: Unique numeric identifier of the location.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: The specified location is successfully removed from the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Location is not assigned to the user\n            1130 — Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User doesn’t exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/levels/{levelId}/users/{userId}/locations/unassign-all:
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove all locations from a user’s MLI level
-      description: Removes all locations from a particular user and MLI level. To assign all locations to a user and MLI level, send the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/assign-all request.
-      operationId: DELETEv3_MliConfiguration_levels_{levelId}_users_{userId}_locations_unassign-all
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: All locations are successfully removed from the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Location is not assigned to the user\n            1130 — Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User doesn’t exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
+        '500':
+          description: Indicates that a generic error has occurred on the server.
           content:
             application/json:
               schema:
@@ -368,33 +70,53 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Subscribers
-  /MliConfiguration/levels/{levelId}/users/{userId}/locations/assign-all:
+  /GlCodes/CreateGlCode:
     post:
       tags:
-      - MliConfiguration
-      summary: Assign all locations to a user’s MLI level
-      description: Assigns all locations to a particular user and MLI level. To remove locations from a user and MLI level, send the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/unassign-all request.
-      operationId: POSTv3_MliConfiguration_levels_{levelId}_users_{userId}_locations_assign-all
+      - GL Codes
+      summary: Add a GL Code
+      description: 'Creates a GL Code with a new trade, category, or location.
+
+
+        Send the GET /GlCodes/RetrieveGlCodes request to get the list of GL Codes.'
+      operationId: POSTv3_GlCodes_CreateGlCode?glCode={glCode}&trade={trade}&category={category}&location={location}
       parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
+      - name: glCode
+        in: query
+        description: Numeric identifier of a GL Code.
         required: true
         schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
+          type: string
+      - name: trade
+        in: query
+        description: Trade name. A trade is an area of work for which a service is performed, such as LIGHTING, ALARMS, or ELECTRICAL. Maximum is 80 characters.
+        required: false
         schema:
-          type: integer
-          format: int32
+          type: string
+      - name: category
+        in: query
+        description: Category name. A category is the overall classification of a work order, such as MAINTENANCE, REPAIR, or WARRANTY. Maximum is 50 characters.
+        required: false
+        schema:
+          type: string
+      - name: location
+        in: query
+        description: Store ID. The numeric identifier of the store in the client's system. Assigned by and unique per subscriber.
+        required: false
+        schema:
+          type: string
       responses:
-        '204':
-          description: All locations are successfully assigned to the user’s MLI level.
+        '201':
+          description: The created GL Code ID is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
         '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Err: Approval level doesn’t exist\n            1130 — Failed to assign the location to the user\n            1130 — User is not assigned to the level\n            1130 — Err: Failed to assign locations to the approval level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User does not exist\n            1301 — Request parameters are empty"
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            401 — Invalid subsriber ID\n            606 — Location is not found\n            704 — Invalid trade value for the subscriber\n            705 — Invalid category value for the subscriber\n            706 — GL Code already exists"
           content:
             application/json:
               schema:
@@ -403,7 +125,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
           content:
             application/json:
               schema:
@@ -411,8 +133,8 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
+        '500':
+          description: The server was unable to complete the request due to an internal error.
           content:
             application/json:
               schema:
@@ -420,34 +142,199 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /GlCodes/UpdateGlCode:
+    put:
+      tags:
+      - GL Codes
+      summary: Update a GL Code
+      description: 'Updates a GL Code number leaving the trade, category, and/or location of the code unchanged. You need to specify all code parameters to update it.
+
+
+        Use the POST /GlCodes/CreateGlCode method to create a new GL Code.'
+      operationId: PUTv3_GlCodes_UpdateGlCode?glCode={glCode}&trade={trade}&category={category}&location={location}
+      parameters:
+      - name: glCode
+        in: query
+        description: Numeric identifier of a GL Code.
+        required: true
+        schema:
+          type: string
+      - name: trade
+        in: query
+        description: Trade name. A trade is an area of work for which a service is performed, such as LIGHTING, ALARMS, or ELECTRICAL. Maximum is 80 characters.
+        required: false
+        schema:
+          type: string
+      - name: category
+        in: query
+        description: Category name. A category is the overall classification of a work order, such as MAINTENANCE, REPAIR, or WARRANTY. Maximum is 50 characters.
+        required: false
+        schema:
+          type: string
+      - name: location
+        in: query
+        description: Store ID. The numeric identifier of the store in the client's system. Assigned by and unique per subscriber.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The updated GL Code ID is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            401 — Invalid subsriber ID\n            606 — Location is not found\n            704 — Invalid trade value for the subscriber\n            705 — Invalid category value for the subscriber\n            707 — GL Code does not exist\n            708 — At least one field trade/category/location is required"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /GlCodes/DeleteGlCode:
+    delete:
+      tags:
+      - GL Codes
+      summary: Delete a GL Code
+      description: Removes the specified GL Code from the subscriber’s system. You need to specify all code parameters to delete it.
+      operationId: DELETEv3_GlCodes_DeleteGlCode?glCode={glCode}&trade={trade}&category={category}&location={location}
+      parameters:
+      - name: glCode
+        in: query
+        description: Numeric identifier of a GL Code.
+        required: true
+        schema:
+          type: string
+      - name: trade
+        in: query
+        description: Trade name. A trade is an area of work for which a service is performed, such as LIGHTING, ALARMS, or ELECTRICAL. Maximum is 80 characters.
+        required: false
+        schema:
+          type: string
+      - name: category
+        in: query
+        description: Category name. A category is the overall classification of a work order, such as MAINTENANCE, REPAIR, or WARRANTY. Maximum is 50 characters.
+        required: false
+        schema:
+          type: string
+      - name: location
+        in: query
+        description: Store ID. The numeric identifier of the store in the client's system. Assigned by and unique per subscriber.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The deleted GL Code ID is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            401 — Invalid subsriber ID\n            606 — Location is not found\n            704 — Invalid trade value for the subscriber\n            705 — Invalid category value for the subscriber\n            707 — GL Code does not exist"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /GlCodes/GetExistsGlCodes:
+    get:
+      tags:
+      - GL Codes
+      summary: GetExistsGlCodes
+      operationId: GETv3_GlCodes_GetExistsGlCodes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
       deprecated: false
       x-access: Subscribers
 components:
   schemas:
-    ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel:
-      description: MLI level object.
+    ServiceChannel.Api.Model.Entities.ApprovalCodes.AdditionalApprovalCodeOption:
       type: object
       properties:
         Id:
           format: int32
-          description: Unique numeric identifier of an MLI level.
           type: integer
-        Name:
-          description: MLI level name.
+        AdditionalApprovalCodeId:
+          format: int32
+          type: integer
+        OptionValue:
           type: string
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.User.Api.AssignedUser:
-      description: Assigned user object details.
+    ServiceChannel.Services.Messaging.ApprovalCodes.GetApprovalCodesWithOptionsResponse:
+      description: Holds response.
       type: object
       properties:
-        Id:
+        ApprovalCodes:
+          description: Gets or sets ApprovalCodes.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.ApprovalCodes.ApprovalCodeWithOptions'
+        ErrorCode:
           format: int32
-          description: Unique user identifier.
+          description: 'Numeric identifier that determines the nature of an error. Possible values: `0` - success, otherwise - error.'
           type: integer
-        UserId:
-          description: Username to log into the system.
+        Message:
+          description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
           type: string
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
@@ -2086,6 +1973,55 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Api.Model.Entities.ApprovalCodes.ApprovalCodeWithOptions:
+      type: object
+      properties:
+        LocationId:
+          format: int32
+          type: integer
+        LocationName:
+          type: string
+        LocationStoreId:
+          type: string
+        EditableAtLineItemLevel:
+          default: false
+          type: boolean
+        ValueFormat:
+          format: int32
+          type: integer
+        DefaultOptionId:
+          format: int32
+          type: integer
+        DefaultOption:
+          type: string
+        Options:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.ApprovalCodes.AdditionalApprovalCodeOption'
+        Id:
+          format: int32
+          type: integer
+        CategoryId:
+          format: int32
+          type: integer
+        Category:
+          type: string
+        Name:
+          type: string
+        Code:
+          type: string
+        OrderNumber:
+          format: int32
+          type: integer
+        SubscriberId:
+          format: int32
+          type: integer
+        IsEnabled:
+          default: false
+          type: boolean
   securitySchemes:
     oauth2:
       type: oauth2

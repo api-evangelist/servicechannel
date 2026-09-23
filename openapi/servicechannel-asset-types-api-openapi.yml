@@ -1,41 +1,36 @@
 openapi: 3.2.0
 info:
   version: '3'
-  title: ServiceChannel API - v.3 Mli Configuration API
+  title: ServiceChannel API - v.3 Asset Types API
   description: The ServiceChannel API is a RESTful and stateless API.
 servers:
 - url: https://sb2api.servicechannel.com/v3
 security:
 - oauth2: []
 tags:
-- name: MliConfiguration
+- name: Asset Types
 paths:
-  /mliConfiguration/Levels:
+  /AssetTypes:
     get:
       tags:
-      - MliConfiguration
-      summary: Get MLI levels
-      description: 'Returns IDs and names of all MLI levels of the current subscriber.
-
-
-        Learn more about MLI levels configuration in ServiceChannel University.'
-      operationId: GETv3_mliConfiguration_Levels
+      - Asset Types
+      operationId: GETv3_AssetTypes
       responses:
         '200':
-          description: MLI levels are in the response.
+          description: Request succeeded and the requested information is in the response.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel'
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetType'
             text/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel'
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetType'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
           content:
             application/json:
               schema:
@@ -45,91 +40,24 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Any
-  /mliConfiguration/Levels/{levelId}/Users:
-    get:
-      tags:
-      - MliConfiguration
-      summary: Get MLI level users
-      description: 'Returns the users assigned to the specified level. The response body is empty if no user has been assigned to this level.
-
-
-        You can use the GET /mliConfiguration/Levels method to get the MLI levels IDs. Send the POST /MliConfiguration/Levels/{levelId}/Users/{userId} request to assign users to the MLI level.'
-      operationId: GETv3_mliConfiguration_Levels_{levelId}_Users
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: The users assigned to the specified MLI level are in the response.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.User.Api.AssignedUser'
-            text/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.User.Api.AssignedUser'
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Approval levels getting error"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/Levels/{levelId}/Users/{userId}:
+      summary: GETv3 asset types
+      x-summary-source: derived
     post:
       tags:
-      - MliConfiguration
-      summary: Add a user to an MLI level
-      description: 'Assigns a user to an existing MLI level. Get users’ IDs by sending the GET /users request.
-
-
-        You can assign a user to an existing location by using the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} method.
-
-
-        ***Note***: Each user can be added to only one MLI level. If a user should be assigned to another MLI level, you first need to remove this user from the MLI level they currently belong to.'
-      operationId: POSTv3_MliConfiguration_Levels_{levelId}_Users_{userId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
+      - Asset Types
+      operationId: POSTv3_AssetTypes
       responses:
-        '200':
-          description: Returns the created user ID from table dat_Division_User.
+        '201':
+          description: Request succeeded and the requested information is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AddAssetTypeResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AddAssetTypeResponse'
         '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1129 — Err: failed to assign users\n            1131 — Err: Approval level doesn’t exist\n            1149 — User has already been assigned to another level\n            1150 — User does not exist"
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            3100 — Asset Type Name is already in use.\n            3106 — Asset Type Name is Missing.\n            703 — Primary trade not found."
           content:
             application/json:
               schema:
@@ -138,227 +66,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /mliConfiguration/Levels/{levelId}/Users/{userId}:
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove a user from an MLI level
-      description: Removes the specified user from a particular MLI level. To unassign a user from an existing location, send the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: DELETEv3_mliConfiguration_Levels_{levelId}_Users_{userId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: The specified user is successfully removed from the MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Err: Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1150 — User does not exist"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId}:
-    post:
-      tags:
-      - MliConfiguration
-      summary: Add a location to a user’s MLI level
-      description: Assigns the specified location to a particular user and user’s MLI level. A location can be removed from a user by sending the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: POSTv3_MliConfiguration_Levels_{levelId}_Users_{userId}_Locations_{locationId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: path
-        description: Unique numeric identifier of the location.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: Returns the created location ID from table dat_Location_Division.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Err: Approval level doesn’t exist\n            1130 — Failed to assign the location to the user\n            1130 — User is not assigned to the level\n            1130 — Err: Failed to assign locations to the approval level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User does not exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove a location from a user’s MLI level
-      description: Removes the specified location from a particular user and MLI level. To assign a location to a user and MLI level, send the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: DELETEv3_MliConfiguration_Levels_{levelId}_Users_{userId}_Locations_{locationId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: path
-        description: Unique numeric identifier of the location.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: The specified location is successfully removed from the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Location is not assigned to the user\n            1130 — Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User doesn’t exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/levels/{levelId}/users/{userId}/locations/unassign-all:
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove all locations from a user’s MLI level
-      description: Removes all locations from a particular user and MLI level. To assign all locations to a user and MLI level, send the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/assign-all request.
-      operationId: DELETEv3_MliConfiguration_levels_{levelId}_users_{userId}_locations_unassign-all
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: All locations are successfully removed from the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Location is not assigned to the user\n            1130 — Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User doesn’t exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
           content:
             application/json:
               schema:
@@ -368,33 +76,85 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Subscribers
-  /MliConfiguration/levels/{levelId}/users/{userId}/locations/assign-all:
-    post:
-      tags:
-      - MliConfiguration
-      summary: Assign all locations to a user’s MLI level
-      description: Assigns all locations to a particular user and MLI level. To remove locations from a user and MLI level, send the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/unassign-all request.
-      operationId: POSTv3_MliConfiguration_levels_{levelId}_users_{userId}_locations_assign-all
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AddAssetTypeRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AddAssetTypeRequest'
         required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
+      summary: POSTv3 asset types
+      x-summary-source: derived
+  /AssetTypes/{assetTypeId}:
+    get:
+      tags:
+      - Asset Types
+      operationId: GETv3_AssetTypes_{assetTypeId}
+      parameters:
+      - name: assetTypeId
         in: path
-        description: Unique numeric identifier of the user.
         required: true
         schema:
           type: integer
           format: int32
       responses:
-        '204':
-          description: All locations are successfully assigned to the user’s MLI level.
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetType'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetType'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            502 — Asset Type not found."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      summary: GETv3 asset types {asset type id}
+      x-summary-source: derived
+    put:
+      tags:
+      - Asset Types
+      summary: PUTv3 asset types {asset type id}
+      description: 'Update Asset Type
+
+        Don''t specify AdditiolanTrades if no changes in Additiolan Trades needed
+
+        Set AdditiolanTrades = [] to delete existing Additiolan Trades for asset type
+
+        If AdditiolanTrades contains records then these trades will be set as Additional Trades to asset type.'
+      operationId: PUTv3_AssetTypes_{assetTypeId}
+      parameters:
+      - name: assetTypeId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
         '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Err: Approval level doesn’t exist\n            1130 — Failed to assign the location to the user\n            1130 — User is not assigned to the level\n            1130 — Err: Failed to assign locations to the approval level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User does not exist\n            1301 — Request parameters are empty"
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            3101 — Asset Type Doesn't Exist!.\n            3102 — Asset Type already contains assets. Refrigerant Purpose can not be changed!\n            703 — Trade not found."
           content:
             application/json:
               schema:
@@ -403,7 +163,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
           content:
             application/json:
               schema:
@@ -411,8 +171,993 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
+      deprecated: false
+      x-access: Subscribers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetType'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetType'
+        required: true
+      x-summary-source: derived
+    delete:
+      tags:
+      - Asset Types
+      operationId: DELETEv3_AssetTypes_{assetTypeId}
+      parameters:
+      - name: assetTypeId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            502 — Asset Type not found.\n            3103 — Failed to delete asset type\n            3104 — Failed to delete asset type. Existing assets found.\n            3108 — Failed to delete asset type. Existing proposals found.\n            3105 — Cant modify asset type ParentId.\n            504 — API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+      summary: DELETEv3 asset types {asset type id}
+      x-summary-source: derived
+  /AssetTypes/byids:
+    get:
+      tags:
+      - Asset Types
+      operationId: GETv3_AssetTypes_byids?ids[0]={ids[0]}&ids[1]={ids[1]}
+      parameters:
+      - name: ids
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetType'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetType'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      summary: GETv3 asset types byids?ids[0]={ids[0]}&ids[1]={ids[1]}
+      x-summary-source: derived
+  /AssetTypes/GetAssetTypeAttributes/{assetTypeId}:
+    get:
+      tags:
+      - Asset Types
+      operationId: GETv3_AssetTypes_GetAssetTypeAttributes_{assetTypeId}
+      parameters:
+      - name: assetTypeId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeAttributeExternal'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeAttributeExternal'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            502 — Asset Type not found."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      summary: GETv3 asset types get asset type attributes {asset type id}
+      x-summary-source: derived
+  /AssetTypes/GetAssetTypeTrades/{assetTypeId}:
+    get:
+      tags:
+      - Asset Types
+      operationId: GETv3_AssetTypes_GetAssetTypeTrades_{assetTypeId}
+      parameters:
+      - name: assetTypeId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            502 — Asset Type not found."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      summary: GETv3 asset types get asset type trades {asset type id}
+      x-summary-source: derived
+  /AssetTypes/GetAssetTypeGroups:
+    get:
+      tags:
+      - Asset Types
+      summary: Get asset type groups by SubscriberId
+      description: Returns a list of asset type groups for the specified subscriber.
+      operationId: GETv3_AssetTypes_GetAssetTypeGroups?subscriberId={subscriberId}
+      parameters:
+      - name: subscriberId
+        in: query
+        description: Unique numeric identifier of the subscriber.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Asset type groups are in the response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.AssetTypes.AssetTypeGroup'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.AssetTypes.AssetTypeGroup'
+        '400':
+          description: "The request was not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            503 — Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Something went wrong, and the server was unable to complete your request.\n            <br/>Error codes:\n            501 — Object reference is not set to an instance of an object"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/GetSubscriberAssetTypeCategories:
+    post:
+      tags:
+      - Asset Types
+      summary: Get asset categories by SubscriberId and TradeNames
+      description: 'Returns an asset category containing asset types that belong to the specified trade for the specified subscriber.
+
+
+        ***Note***: `TradeNames` is an optional parameter. When you skip it, the response shows all asset categories containing asset types.'
+      operationId: POSTv3_AssetTypes_GetSubscriberAssetTypeCategories
+      responses:
+        '200':
+          description: Asset categories are in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeCategory'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeCategory'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Something went wrong, and the server was unable to complete your request.\n            <br/>Error codes:\n            501 — Object reference is not set to an instance of an object\n            501 — Value cannot be null"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.GetSubscriberAssetCategoriesRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.GetSubscriberAssetCategoriesRequest'
+        description: Request model to retrieve a list of asset categories.
+        required: true
+  /AssetTypes/GetAssetTypeCategoriesByIds:
+    post:
+      tags:
+      - Asset Types
+      summary: Get asset categories by Ids
+      description: 'Returns asset categories names based on their numeric identifiers.
+
+
+        ***Note***: To get all asset categories, send the request without specifying any Id. Asset categories from the list may contain asset types or may be empty, as this method retrieves asset categories from the standardized list.'
+      operationId: POSTv3_AssetTypes_GetAssetTypeCategoriesByIds
+      responses:
+        '200':
+          description: Asset categories names are in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeCategory'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeCategory'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Something went wrong, and the server was unable to complete your request.\n            <br/>Error codes:\n            501 — Object reference is not set to an instance of an object"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.GetByIdsRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.GetByIdsRequest'
+        description: Request model to retrieve asset categories names.
+        required: true
+  /AssetTypes/GetAssetTypeCategoriesByAssetIds:
+    post:
+      tags:
+      - Asset Types
+      summary: Get asset categories by AssetIds
+      description: Returns an asset category that contains the specified asset.
+      operationId: POSTv3_AssetTypes_GetAssetTypeCategoriesByAssetIds
+      responses:
+        '200':
+          description: Asset categories are in the response.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeCategory'
+            text/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeCategory'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Something went wrong, and the server was unable to complete your request.\n            <br/>Error codes:\n            501 — Object reference not set to an instance of an object\n            501 — Unable to create a null constant value. Only entity types, enumeration types, or primitive types are supported in this context"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.GetByIdsRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.GetByIdsRequest'
+        description: Request model to retrieve a list of asset categories.
+        required: true
+  /AssetTypes/GetAssetTypesByLocation:
+    post:
+      tags:
+      - Asset Types
+      operationId: POSTv3_AssetTypes_GetAssetTypesByLocation
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            502 — Asset Type not found."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Core.InternalRequests.Assets.GetAssetTypesByLocationRequestInternal'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Core.InternalRequests.Assets.GetAssetTypesByLocationRequestInternal'
+        required: true
+      summary: POSTv3 asset types get asset types by location
+      x-summary-source: derived
+  /AssetTypes/assets/{assetGroupId}/groupattachments:
+    post:
+      tags:
+      - Asset Types
+      summary: Add AssetTypeGroup Attachments
+      operationId: POSTv3_AssetTypes_assets_{assetGroupId}_groupattachments
+      parameters:
+      - name: assetGroupId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Created indicates that the request resulted in a new resource created before the response was sent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AddAssetTypeGroupAttachmentResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AddAssetTypeGroupAttachmentResponse'
+        '400':
+          description: "Bad Request - the request could not be executed or was missing required parameters.\n            <br/>Error codes:\n            502 — AssetTypeGroup Not found;\n            503 — Bad Request;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that a generic error has occurred on the server.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  description: File to attach to AssetTypeGroup
+                  format: binary
+              required:
+              - file
+  /AssetTypes/AssetTypeMeters/{assetTypeId}:
+    get:
+      tags:
+      - Asset Types
+      summary: Get asset type meters
+      description: 'Returns a list of meters and their parameters associated with an asset type and created by the current subscriber.
+
+
+        You can get the details for a particular level by using the GET/AssetTypes/AssetTypeMeter/{assetTypeMeterId} method.
+
+
+        Learn more about asset meter reading in ServiceChannel University.'
+      operationId: GETv3_AssetTypes_AssetTypeMeters_{assetTypeId}
+      parameters:
+      - name: assetTypeId
+        in: path
+        description: Unique numeric identifier of the asset type you want to get information on. Send the [GET /AssetTypes](/swagger/ui/index?version=3#/AssetTypes/GETv3_AssetTypes) request to get an asset type ID.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The requested asset type meters are in the response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeMeterResponseItem'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeMeterResponseItem'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: The request URI is incorrect, or the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/AssetTypeMeter/{assetTypeMeterId}:
+    get:
+      tags:
+      - Asset Types
+      summary: Get an asset type meter details
+      description: Returns the details of the specified asset type meter for the current subscriber.
+      operationId: GETv3_AssetTypes_AssetTypeMeter_{assetTypeMeterId}
+      parameters:
+      - name: assetTypeMeterId
+        in: path
+        description: "Unique numeric identifier of the asset type meter you want to get the details of.\n            <br />Pass the [GET /AssetTypes/AssetTypeMeters/{assetTypeId}](/swagger/ui/index?version=3#/AssetTypes/GETv3_AssetTypes_AssetTypeMeters__assetTypeId_) method to acquire an ID of an asset type meter."
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The asset type meter details are in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeMeterResponseItem'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeMeterResponseItem'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: The request URI is incorrect, or the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/AssetTypeMeter:
+    put:
+      tags:
+      - Asset Types
+      summary: Update an asset type meter
+      description: 'Modifies information of an already existing asset type meter.
+
+
+        **Note**. All request parameters should be filled out: those you want to add or edit along with the parameters you want to leave unchanged.
+
+
+        **Example Request**
+
+
+        PUT /AssetTypes/AssetTypeMeter
+
+        {
+
+        "Id": 16,
+
+        "Name": "Music System",
+
+        "MaxValue": "500.00",
+
+        "Notes": ,
+
+        "Inactive": false,
+
+        "EditOnWO": true,
+
+        "AssetTypeId": 7632,
+
+        "UnitOfMeasure": 250
+
+        }'
+      operationId: PUTv3_AssetTypes_AssetTypeMeter
+      responses:
+        '200':
+          description: The asset type meter is successfully updated.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Failed to Update Asset Type Meter"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 — Object reference not set to an instance of an object"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeMeterRequestItem'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeMeterRequestItem'
+        description: Request to add or update the asset type meter details.
+        required: true
+    post:
+      tags:
+      - Asset Types
+      summary: Add an asset type meter
+      description: Creates a new asset type meter for a particular asset type for the current subscriber.
+      operationId: POSTv3_AssetTypes_AssetTypeMeter
+      responses:
+        '200':
+          description: The asset type meter is successfully added.
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Failed to Create Asset Type Meter"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 — Object reference not set to an instance of an object"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeMeterRequestItem'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeMeterRequestItem'
+        description: "Request to add an asset type meter. \n            <br />Pass the following parameters in the request:\n            <br /> • **Id** (*Required*). Enter 0 or null so that when the asset type meter is created the system can assign a unique numeric ID to it.\n            <br /> • **Name** (*Required*). Name of an asset type meter.\n            <br /> • **Notes**. Comments provided by a user who added the asset type meter.\n            <br /> • **Inactive**. Set the asset type meter to the active on inactive status. Valid values: *true*, *false* or 1 - true, 0 - false.\n            <br /> • **EditOnWO**. Define whether technicians are allowed to enter data on work orders for the asset. Valid values: *true*, *false* or 1 - true, 0 - false.\n            <br /> • **AssetTypeId** (*Required*). ID of an asset type to assign the meter to.\n            <br /> • **UnitOfMeasure** (*Required*). Unique numeric identifier of a unit of measurement in the system."
+        required: true
+  /AssetTypes/GetAssetTypesAvailableForSubscriber/{subscriberId}:
+    get:
+      tags:
+      - Asset Types
+      operationId: GETv3_AssetTypes_GetAssetTypesAvailableForSubscriber_{subscriberId}?tradeId={tradeId}
+      parameters:
+      - name: subscriberId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: tradeId
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetType'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetType'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            502 — Asset Types not found."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      summary: GETv3 asset types get asset types available for subscriber {subscriber…
+      x-summary-source: derived
+  /AssetTypes/asettypes/GetAssetTypesWithCreatePermission:
+    get:
+      tags:
+      - Asset Types
+      summary: Get Asset Types With Create Permission
+      operationId: GETv3_AssetTypes_asettypes_GetAssetTypesWithCreatePermission?subscriberId={subscriberId}&tradeId={tradeId}
+      parameters:
+      - name: subscriberId
+        in: query
+        description: ''
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: tradeId
+        in: query
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Providers
+  /AssetTypes/AssetTypes/AssetCategoriesByTradeId/{tradeId}:
+    get:
+      tags:
+      - Asset Types
+      summary: Get asset categories by tradeId
+      description: 'Returns a list of asset categories associated with the specified trade.
+
+
+        ***Note***: This method retrieves asset categories from the standardized list, that is why asset categories may contain asset types and may not. To get asset categories containing asset types that belong to the certain trade, pass the POST /AssetTypes/GetSubscriberAssetTypeCategories method.
+
+
+        For more information, refer to Adding Asset Category and Asset Types in ServiceChannel University.'
+      operationId: GETv3_AssetTypes_AssetTypes_AssetCategoriesByTradeId_{tradeId}
+      parameters:
+      - name: tradeId
+        in: path
+        description: "Unique numeric identifier of the trade. \n            Pass the [GET / AssetTypes](/swagger/ui/index?version=3#/AssetTypes/GETv3_AssetTypes) or [GET /assets/{assetId}](/swagger/ui/index?version=3#/Assets/GETv3_assets__assetId__locationId__locationId__storeId__storeId__tagId__tagId__trackingNumber__trackingNumber_) method to retrieve `tradeId`."
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Asset categories are in the response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeCategory'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetTypeCategory'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: The request URI is incorrect, or the resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Something went wrong, and the server was unable to complete your request.\n            <br/>Error codes:\n            501 — Object reference is not set to an instance of an object"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /AssetTypes/asettypes/AssetTypesForCreate:
+    get:
+      tags:
+      - Asset Types
+      summary: Get Asset Types For Create By TradeId
+      operationId: GETv3_AssetTypes_asettypes_AssetTypesForCreate?tradeId={tradeId}
+      parameters:
+      - name: tradeId
+        in: query
+        description: ''
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /AssetTypes/asettypes/GetPrimaryAssetTypesAsync:
+    get:
+      tags:
+      - Asset Types
+      summary: Get Primary Asset Types
+      operationId: GETv3_AssetTypes_asettypes_GetPrimaryAssetTypesAsync
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /AssetTypes/asettypes/GetPrimaryAssetTypeBrandsAsync/{primaryAssetTypeId}:
+    get:
+      tags:
+      - Asset Types
+      summary: Get Primary Asset Type Brands
+      operationId: GETv3_AssetTypes_asettypes_GetPrimaryAssetTypeBrandsAsync_{primaryAssetTypeId}
+      parameters:
+      - name: primaryAssetTypeId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /AssetTypes/asettypes/GetAssetTypeBrandsAsync/{assetTypeId}:
+    get:
+      tags:
+      - Asset Types
+      summary: Get Asset Type Brands
+      operationId: GETv3_AssetTypes_asettypes_GetAssetTypeBrandsAsync_{assetTypeId}
+      parameters:
+      - name: assetTypeId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+        '401':
+          description: "Unauthorized indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            504 — API call rejected by security permissions;"
           content:
             application/json:
               schema:
@@ -424,30 +1169,30 @@ paths:
       x-access: Subscribers
 components:
   schemas:
-    ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel:
-      description: MLI level object.
+    ServiceChannel.Services.Messaging.Assets.AddAssetTypeResponse:
+      description: Add Trade Response
       type: object
       properties:
         Id:
           format: int32
-          description: Unique numeric identifier of an MLI level.
+          type: integer
+        ErrorCode:
+          format: int32
+          description: 'Numeric identifier that determines the nature of an error. Possible values: `0` - success, otherwise - error.'
+          type: integer
+        Message:
+          description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
+          type: string
+    ServiceChannel.Services.Messaging.Assets.AssetTypeCategory:
+      description: Asset category object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the asset category.
           type: integer
         Name:
-          description: MLI level name.
-          type: string
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.User.Api.AssignedUser:
-      description: Assigned user object details.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique user identifier.
-          type: integer
-        UserId:
-          description: Username to log into the system.
+          description: Asset category name.
           type: string
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
@@ -2086,6 +2831,384 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    ServiceChannel.Services.Messaging.Assets.AssetAttributeSelectOption:
+      type: object
+      properties:
+        AssetTypeAttributeSelectOptionId:
+          format: int32
+          type: integer
+        AssetTypeAttributeId:
+          format: int32
+          type: integer
+        AssetAttributeSelectOptionId:
+          format: int32
+          type: integer
+        AssetAttributeId:
+          format: int32
+          type: integer
+        Text:
+          type: string
+        Selected:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Assets.AssetTypeAttributeExternal:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        DefaultValue:
+          type: string
+        Required:
+          default: false
+          type: boolean
+        Viewable:
+          default: false
+          type: boolean
+        Hidden:
+          default: false
+          type: boolean
+        Editable:
+          default: false
+          type: boolean
+        AutoGeneratedValue:
+          type: string
+        SortPosition:
+          format: int32
+          type: integer
+        IsCustom:
+          default: false
+          type: boolean
+        AttributeType:
+          enum:
+          - String
+          - Integer
+          - Date
+          - Money
+          - Choice
+          - MultipleChoice
+          - Boolean
+          type: string
+        SingleOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetAttributeSelectOption'
+        MultipleOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetAttributeSelectOption'
+    ServiceChannel.Services.Core.InternalRequests.Assets.GetAssetTypesByLocationRequestInternal:
+      type: object
+      properties:
+        LocationIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        TradeIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        IncludeDeactivated:
+          default: false
+          type: boolean
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Services.Messaging.Assets.GetSubscriberAssetCategoriesRequest:
+      description: Asset categories request object.
+      type: object
+      properties:
+        SubscriberId:
+          format: int32
+          description: Unique numeric identifier of the subscriber.
+          type: integer
+        TradeNames:
+          description: The names of the trades, such as HVAC or PLUMBING.
+          type: array
+          items:
+            type: string
+    ServiceChannel.Services.Messaging.Assets.AssetTypeMeterRequestItem:
+      description: Object with an asset type meter details.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of an asset type meter.
+          type: integer
+        Name:
+          description: Asset type meter name given by a user.
+          type: string
+        MaxValue:
+          description: Maximum value that a user can enter when recording a meter reading on an asset.
+          type: string
+        Notes:
+          description: Comment added to a meter when creating or editing an asset type meter.
+          type: string
+        Inactive:
+          description: Defines whether a meter is active or has been deactivated. **Possible values:** *true*, *false*. Note that readings can be recorded for active meters only.
+          default: false
+          type: boolean
+        EditOnWO:
+          description: Defines whether a user can record asset meter readings on a work order via Dashboard. **Possible values:** *true*, *false*.
+          default: false
+          type: boolean
+        AssetTypeId:
+          format: int32
+          description: Unique numeric identifier of an asset type.
+          type: integer
+        UnitOfMeasure:
+          format: int32
+          description: Number of the unit of measure associated with a meter. This is a sequence number of the unit of measure as it is listed in the overlay for creating a meter.
+          type: integer
+    ServiceChannel.Services.Messaging.Assets.AssetTypeMeterResponseItem:
+      description: Object with an asset type meter details.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of an asset type meter.
+          type: integer
+        Name:
+          description: Asset type meter name given by a user.
+          type: string
+        MaxValue:
+          description: Maximum value that a user can enter when recording a meter reading on an asset.
+          type: string
+        Notes:
+          description: Maximum value that a user can enter when recording a meter reading on an asset.
+          type: string
+        Inactive:
+          description: Defines whether a meter is active or has been deactivated. **Possible values:** *true*, *false*. Note that readings can be recorded for active meters only.
+          default: false
+          type: boolean
+        EditOnWO:
+          description: Defines whether a user can record asset meter readings on a work order via Dashboard. **Possible values:** *true*, *false*.
+          default: false
+          type: boolean
+        AssetTypeId:
+          format: int32
+          description: Unique numeric identifier of an asset type.
+          type: integer
+        UnitOfMeasure:
+          format: int32
+          description: Number of the unit of measure associated with a meter. This is a sequence number of the unit of measure as it is listed in the overlay for creating a meter.
+          type: integer
+        UnitOfMeasureName:
+          description: Unit Of Measure Name
+          type: string
+    ServiceChannel.Services.Messaging.Assets.AddAssetTypeGroupAttachmentResponse:
+      type: object
+      properties:
+        IsSuccess:
+          default: false
+          type: boolean
+        Message:
+          type: string
+        Id:
+          format: int32
+          description: Unique numeric identifier of the asset type group.
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Unique numeric identifier of the subscriber.
+          type: integer
+        Name:
+          description: The name of the asset type group.
+          type: string
+        FileName:
+          description: The file name of the image attached to the asset type group. For example, *audioequipment.png* or *AEE323FF8091.jpeg*.
+          type: string
+        FilePath:
+          description: Path snippet to the full-size image version attached to the asset type group. For example, *#assets/6cb4f87b-3d5f-49ba-9971-11442dcf3d1e*.
+          type: string
+        ThumbnailPath:
+          description: Path snippet to the reduced-size image version attached to the asset type group. For example, *#assets/7bc49564-5ac4-4002-9ffc-2282483e6df8*.
+          type: string
+        AssetTypeIds:
+          description: A list of unique numeric identifiers of the asset types.
+          type: array
+          items:
+            format: int32
+            type: integer
+        ImgPath:
+          description: Path to the cloud location of the full-size image version attached to the asset type group.
+          type: string
+          readOnly: true
+        Uri:
+          description: The URI of the full-size image version attached to the asset type group.
+          type: string
+        ThumbnailUri:
+          description: The URI of the reduced-size image version attached to the asset type group.
+          type: string
+        AssetTypeCategoryId:
+          format: int32
+          description: Unique numeric identifier of the asset category.
+          type: integer
+    ServiceChannel.Services.Messaging.Assets.AssetType:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        IsActive:
+          default: false
+          type: boolean
+        HasEquipment:
+          default: false
+          type: boolean
+        SubscriberId:
+          format: int32
+          type: integer
+        Parent:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetType'
+        Name:
+          type: string
+        PrimaryTrade:
+          type: string
+        TradeId:
+          format: int32
+          type: integer
+        ParentId:
+          format: int32
+          type: integer
+        RefrigerantPurposeId:
+          format: int32
+          type: integer
+        RefrigerantPurposeName:
+          type: string
+        AdditionalTrades:
+          type: array
+          items:
+            type: string
+        AdditionalTradesIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        IsCircuit:
+          default: false
+          type: boolean
+        UserId:
+          format: int32
+          type: integer
+        AssetTypeGroupId:
+          format: int32
+          type: integer
+        PrimaryAssetTypeId:
+          format: int32
+          type: integer
+        BrandIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.Assets.AddAssetTypeRequest:
+      type: object
+      properties:
+        ValidateTradeByName:
+          default: false
+          type: boolean
+        AllowAdditionalTradesOnInheritance:
+          default: false
+          type: boolean
+        Name:
+          type: string
+        PrimaryTrade:
+          type: string
+        TradeId:
+          format: int32
+          type: integer
+        ParentId:
+          format: int32
+          type: integer
+        RefrigerantPurposeId:
+          format: int32
+          type: integer
+        RefrigerantPurposeName:
+          type: string
+        AdditionalTrades:
+          type: array
+          items:
+            type: string
+        AdditionalTradesIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        IsCircuit:
+          default: false
+          type: boolean
+        UserId:
+          format: int32
+          type: integer
+        AssetTypeGroupId:
+          format: int32
+          type: integer
+        PrimaryAssetTypeId:
+          format: int32
+          type: integer
+        BrandIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.AssetTypes.AssetTypeGroup:
+      description: Asset type group object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the asset type group.
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Unique numeric identifier of the subscriber.
+          type: integer
+        Name:
+          description: The name of the asset type group.
+          type: string
+        FileName:
+          description: The file name of the image attached to the asset type group. For example, *audioequipment.png* or *AEE323FF8091.jpeg*.
+          type: string
+        FilePath:
+          description: Path snippet to the full-size image version attached to the asset type group. For example, *#assets/6cb4f87b-3d5f-49ba-9971-11442dcf3d1e*.
+          type: string
+        ThumbnailPath:
+          description: Path snippet to the reduced-size image version attached to the asset type group. For example, *#assets/7bc49564-5ac4-4002-9ffc-2282483e6df8*.
+          type: string
+        AssetTypeIds:
+          description: A list of unique numeric identifiers of the asset types.
+          type: array
+          items:
+            format: int32
+            type: integer
+        ImgPath:
+          description: Path to the cloud location of the full-size image version attached to the asset type group.
+          type: string
+          readOnly: true
+        Uri:
+          description: The URI of the full-size image version attached to the asset type group.
+          type: string
+        ThumbnailUri:
+          description: The URI of the reduced-size image version attached to the asset type group.
+          type: string
+        AssetTypeCategoryId:
+          format: int32
+          description: Unique numeric identifier of the asset category.
+          type: integer
+    ServiceChannel.Services.Messaging.GetByIdsRequest:
+      type: object
+      properties:
+        Ids:
+          description: A list of unique numeric identifiers.
+          type: array
+          items:
+            format: int32
+            type: integer
   securitySchemes:
     oauth2:
       type: oauth2

@@ -1,32 +1,25 @@
 openapi: 3.2.0
 info:
   version: '3'
-  title: ServiceChannel API - v.3 Issue List API
+  title: ServiceChannel API - v.3 Site Audit API
   description: The ServiceChannel API is a RESTful and stateless API.
 servers:
 - url: https://sb2api.servicechannel.com/v3
 security:
 - oauth2: []
 tags:
-- name: IssueList
+- name: Site Audit
 paths:
-  /api/subscribers/{subscriberId}/storedashboards/{dashboardId}/issuelist:
+  /subscribers/current/locations/{locationId}/siteaudit/templateTypes:
     get:
       tags:
-      - IssueList
-      summary: The get
-      operationId: GETv3_api_subscribers_{subscriberId}_storedashboards_{dashboardId}_issuelist
+      - Site Audit
+      summary: Get available audit types for specified location
+      operationId: GETv3_subscribers_current_locations_{locationId}_siteaudit_templateTypes
       parameters:
-      - name: subscriberId
+      - name: locationId
         in: path
-        description: The subscriber id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: dashboardId
-        in: path
-        description: The dashboard id.
+        description: Location identifier
         required: true
         schema:
           type: integer
@@ -42,37 +35,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/System.Object'
       deprecated: false
-      x-access: Any
-  /api/subscribers/{subscriberId}/issuelists:
+      x-access: Subscribers
+  /subscribers/current/locations/{locationId}/siteaudit/templateTypes/{templateTypeId}/auditInfo:
     get:
       tags:
-      - IssueList
-      summary: The post
-      operationId: GETv3_api_subscribers_{subscriberId}_issuelists?keyword={keyword}&pageIndex={pageIndex}&pageSize={pageSize}
+      - Site Audit
+      summary: Get audit data for specified location and audit type
+      description: 'Audit can be created from:
+
+        - completed audit data
+
+        - setup (templates) data
+
+        - mixed completed + setup
+
+        How audit data is combined depends on the loaded setup file to the system and/or availability
+
+        of previous finished audit data.'
+      operationId: GETv3_subscribers_current_locations_{locationId}_siteaudit_templateTypes_{templateTypeId}_auditInfo
       parameters:
-      - name: subscriberId
+      - name: locationId
         in: path
-        description: The subscriber Id.
+        description: Location identifier
         required: true
         schema:
           type: integer
           format: int32
-      - name: keyword
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: pageIndex
-        in: query
-        description: The page index.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: pageSize
-        in: query
-        description: The page size.
-        required: false
+      - name: templateTypeId
+        in: path
+        description: Audit type identifier
+        required: true
         schema:
           type: integer
           format: int32
@@ -87,18 +79,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/System.Object'
       deprecated: false
-      x-access: Any
+      x-access: Subscribers
     post:
       tags:
-      - IssueList
-      summary: The post
-      operationId: POSTv3_api_subscribers_{subscriberId}_issuelists
+      - Site Audit
+      summary: Post (save) completed audit to the database
+      operationId: POSTv3_subscribers_current_locations_{locationId}_siteaudit_templateTypes_{templateTypeId}_auditInfo
       parameters:
-      - name: subscriberId
+      - name: locationId
         in: path
+        description: Location identifier
         required: true
         schema:
-          type: string
+          type: integer
+          format: int32
+      - name: templateTypeId
+        in: path
+        description: Audit type identifier
+        required: true
+        schema:
+          type: integer
+          format: int32
       responses:
         '200':
           description: OK
@@ -110,42 +111,46 @@ paths:
               schema:
                 $ref: '#/components/schemas/System.Object'
       deprecated: false
-      x-access: Any
+      x-access: Subscribers
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.PostIssueListRequest'
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternalOld'
           text/json:
             schema:
-              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.PostIssueListRequest'
-        description: The request.
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternalOld'
+        description: Completed audit data
         required: true
-  /api/subscribers/{subscriberId}/issuelists/history:
+  /subscribers/current/locations/{locationId}/siteaudit/templateTypes/{templateTypeId}/auditInfoWeighted:
     get:
       tags:
-      - IssueList
-      summary: The get issue list history
-      operationId: GETv3_api_subscribers_{subscriberId}_issuelists_history?pageIndex={pageIndex}&pageSize={pageSize}
+      - Site Audit
+      summary: Get audit data for specified location and audit type for new templates
+      description: 'Audit can be created from:
+
+        - completed audit data
+
+        - setup (templates) data
+
+        - mixed completed + setup
+
+        How audit data is combined depends on the loaded setup file to the system and/or availability
+
+        of previous finished audit data.'
+      operationId: GETv3_subscribers_current_locations_{locationId}_siteaudit_templateTypes_{templateTypeId}_auditInfoWeighted
       parameters:
-      - name: subscriberId
+      - name: locationId
         in: path
-        description: The subscriber id.
+        description: Location identifier
         required: true
         schema:
           type: integer
           format: int32
-      - name: pageIndex
-        in: query
-        description: The page index.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: pageSize
-        in: query
-        description: The page size.
-        required: false
+      - name: templateTypeId
+        in: path
+        description: Audit type identifier
+        required: true
         schema:
           type: integer
           format: int32
@@ -160,828 +165,708 @@ paths:
               schema:
                 $ref: '#/components/schemas/System.Object'
       deprecated: false
-      x-access: Any
-  /api/subscribers/{subscriberId}/storedashboards/{dashboardId}/issuelist/{issueListId}:
+      x-access: Subscribers
+    post:
+      tags:
+      - Site Audit
+      summary: Post (save) completed audit of new type to the database
+      operationId: POSTv3_subscribers_current_locations_{locationId}_siteaudit_templateTypes_{templateTypeId}_auditInfoWeighted
+      parameters:
+      - name: locationId
+        in: path
+        description: Location identifier
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: templateTypeId
+        in: path
+        description: Audit type identifier
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+      deprecated: false
+      x-access: Subscribers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditDataWeightedExternal'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditDataWeightedExternal'
+        description: Completed audit data
+        required: true
+  /subscribers/current/locations/auditInfo:
+    post:
+      tags:
+      - Site Audit
+      summary: Save completed audit to the database
+      operationId: POSTv3_subscribers_current_locations_auditInfo
+      responses:
+        '200':
+          description: The audit info for the requested location is provided in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SaveAuditDataResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SaveAuditDataResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            1010 - Invalid site audit parameters"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternal'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternal'
+        description: Request object
+        required: true
+  /subscribers/current/locations/auditinfo:
+    get:
+      tags:
+      - Site Audit
+      summary: Get audit data for specified location and audit type without template…
+      description: Setup data for areas-checklist-checklistItems relationship data are not provided in this method.
+      operationId: GETv3_subscribers_current_locations_auditinfo?locationId={locationId}&templateId={templateId}
+      parameters:
+      - name: locationId
+        in: query
+        description: Location identifier
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: templateId
+        in: query
+        description: Audit type identifier
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The audit info for the requested location is provided in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.GetAuditInfo'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.GetAuditInfo'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            1010 - Invalid site audit parameters"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/locations/auditinfo/checklist/templates:
+    get:
+      tags:
+      - Site Audit
+      summary: Get checklist templates by audit template
+      operationId: GETv3_subscribers_current_locations_auditinfo_checklist_templates?templateId={templateId}
+      parameters:
+      - name: templateId
+        in: query
+        description: Audit type identifier
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Checklist templates are provided in the response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListTemplateExternal'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListTemplateExternal'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            1010 - Invalid site audit parameters"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/locations/auditinfo/checklistitem/templates:
+    get:
+      tags:
+      - Site Audit
+      summary: Get checklistitem templates by audit template
+      operationId: GETv3_subscribers_current_locations_auditinfo_checklistitem_templates?templateId={templateId}&checkListTemplateId={checkListTemplateId}
+      parameters:
+      - name: templateId
+        in: query
+        description: Audit type identifier
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: checkListTemplateId
+        in: query
+        description: Check list template identifier
+        required: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Checklist templates are provided in the response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternal'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternal'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            1010 - Invalid site audit parameters"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/checkListItems/{checkListItemId}:
+    get:
+      tags:
+      - Site Audit
+      summary: Get details for specified checklist item
+      description: 'Details include:
+
+        - comments with attachments
+
+        - workorders
+
+        - quantity'
+      operationId: GETv3_subscribers_current_siteaudit_checkListItems_{checkListItemId}
+      parameters:
+      - name: checkListItemId
+        in: path
+        description: Identifier of checklist item
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The requested completed audit list is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemDetailsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemDetailsResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/audits/completed:
+    get:
+      tags:
+      - Site Audit
+      summary: Get completed site audits
+      description: Retrieves a list of completed site audits and their details for the current subscriber.
+      operationId: GETv3_subscribers_current_siteaudit_audits_completed?daysPeriod={daysPeriod}
+      parameters:
+      - name: daysPeriod
+        in: query
+        description: "Number of days in the past from the current moment. Allows you to find site audits completed over the specified period of time. Any number of days can be entered (no limits).\n            <br />When you leave the field empty, the method will return completed audits for the past 365 days."
+        required: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The list of completed audits is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditListResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditListResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 &mdash; Missing or incorrect authentication credentials"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 &mdash; Unspecified internal server error occurred"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/report:
+    get:
+      tags:
+      - Site Audit
+      summary: Get site audit reports
+      description: 'Returns a site audit report, its part, or several reports for the current subscriber.
+
+
+        **Required parameters:**
+
+        • **Option 1**. `auditId`. Use to get a site audit report by ID.
+
+        • **Option 2**. The combination of `fromDate` and `toDate`. Use to get site audit reports for a specific period.
+
+
+        ***Note:*** Site audit reports are also known as *site planning reports* or just *audits*. See Site Planning Manager for more info.'
+      operationId: GETv3_subscribers_current_siteaudit_report?auditId={auditId}&fromDate={fromDate}&toDate={toDate}&country={country}&locationId={locationId}&area={area}
+      parameters:
+      - name: auditId
+        in: query
+        description: The numeric identifier of the site audit report to return.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: fromDate
+        in: query
+        description: The date from which you want to return site audit reports. The format is `YYYY-MM-DDThh:mm:ss.sssZ`.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: toDate
+        in: query
+        description: The date until which you want to return site audit reports. The format is `YYYY-MM-DDThh:mm:ss.sssZ`.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: country
+        in: query
+        description: The two-letter [ISO 3166-1 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the location country.
+        required: false
+        schema:
+          type: string
+      - name: locationId
+        in: query
+        description: The numeric identifier of the subscriber's property.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: area
+        in: query
+        description: The audited area within the location.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested site audit reports are in the response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditReportExternal'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditReportExternal'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            1010 - Invalid site audit parameters"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/completed/{auditId}:
+    get:
+      tags:
+      - Site Audit
+      summary: Get information on a completed audit
+      description: Returns details of a completed site audit.
+      operationId: GETv3_subscribers_current_siteaudit_completed_{auditId}
+      parameters:
+      - name: auditId
+        in: path
+        description: Unique numeric identifier of the site audit. To get the audit ID, you can run the `GET/subscribers/current/siteaudit/report` method.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The requested site audit info is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditInfo'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditInfo'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            608 &mdash; Do not have access to the location"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 &mdash; Missing or incorrect authentication credentials"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\n            <br/>Error codes:\n            1008 &mdash; Audit not found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 &mdash; Unspecified internal server error occurred"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /subscribers/current/siteaudit/completed:
     put:
       tags:
-      - IssueList
-      summary: The set issue list for dashboard
-      operationId: PUTv3_api_subscribers_{subscriberId}_storedashboards_{dashboardId}_issuelist_{issueListId}
-      parameters:
-      - name: subscriberId
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: dashboardId
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: issueListId
-        in: path
-        required: true
-        schema:
-          type: string
+      - Site Audit
+      summary: Modify details of a completed audit
+      description: 'Allows users to update, delete, and add information for completed site audits. The following audit parameters can be modified:
+
+        • `Areas`
+
+        • `CheckLists`
+
+        • `CheckListItems`
+
+        • `WorkOrderIds`
+
+        • `Quantity`
+
+        • `Issues`
+
+        • `Attachments`
+
+
+        Use the GET/subscribers/current/siteaudit/completed/{auditId} method to get the audit you want to modify.'
+      operationId: PUTv3_subscribers_current_siteaudit_completed
       responses:
         '200':
-          description: OK
+          description: The site audit was successfully updated.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/System.Object'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedCompletedAuditResponse'
             text/json:
               schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Any
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.SetIssueListForDashboardRequest'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.SetIssueListForDashboardRequest'
-        description: The request.
-        required: true
-  /api/subscribers/{subscriberId}/storedashboards/{dashboardId}/issuelist/fields:
-    get:
-      tags:
-      - IssueList
-      summary: The get global fields
-      operationId: GETv3_api_subscribers_{subscriberId}_storedashboards_{dashboardId}_issuelist_fields
-      parameters:
-      - name: subscriberId
-        in: path
-        description: The subscriber id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: dashboardId
-        in: path
-        description: The dashboard id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedCompletedAuditResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            608 &mdash; Do not have access to the location\n            1009 &mdash; An error occurred while updating the entries. See the inner exception for details\n            1009 &mdash; Validation failed: Site audit must contain at least one checklist item\n            1009 &mdash; Validation failed: The range must contain the score\n            1009 &mdash; Validation failed: The range must contain the pass threshold value\n            1009 &mdash; Unexpected error"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/System.Object'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
             text/json:
               schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Any
-  /issuelist/globalfields:
-    get:
-      tags:
-      - IssueList
-      summary: The get global fields.
-      operationId: GETv3_issuelist_globalfields?locationId={locationId}&subscriberId={subscriberId}&setupId={setupId}
-      parameters:
-      - name: locationId
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: subscriberId
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: setupId
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The requested resource requires authentication.\n            <br/>Error codes:\n            504 &mdash; API call rejected by security permissions"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/System.Object'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
             text/json:
               schema:
-                $ref: '#/components/schemas/System.Object'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\n            <br/>Error codes:\n            1008 &mdash; The requested audit was not found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Something went wrong, and the server was unable to complete your request.\n            <br/>Error codes:\n            501 &mdash; Unspecified internal server error occurred"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Subscribers
-  /providers/current/subscribers/{subscriberId}/applicationissuelist/globalfields:
-    get:
-      tags:
-      - IssueList
-      summary: The get global fields.
-      operationId: GETv3_providers_current_subscribers_{subscriberId}_applicationissuelist_globalfields?locationId={locationId}
-      parameters:
-      - name: subscriberId
-        in: path
-        description: The subscriber id is required.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: query
-        description: Numeric id of location.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Providers
-  /api/subscribers/{subscriberId}/storedashboards/{dashboardId}/issuelist/areas/{areaId}/problemtypes:
-    get:
-      tags:
-      - IssueList
-      summary: The get problem types
-      operationId: GETv3_api_subscribers_{subscriberId}_storedashboards_{dashboardId}_issuelist_areas_{areaId}_problemtypes
-      parameters:
-      - name: subscriberId
-        in: path
-        description: The subscriber id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: dashboardId
-        in: path
-        description: The dashboard id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: areaId
-        in: path
-        description: The area id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Any
-  /subscribers/current/storedashboards/current/issuelist/areas/{areaId}/problemtypes:
-    get:
-      tags:
-      - IssueList
-      summary: Get Problem types
-      description: List Problem types. Returns Problem types for successful request.
-      operationId: GETv3_subscribers_current_storedashboards_current_issuelist_areas_{areaId}_problemtypes?locationId={locationId}&setupId={setupId}&subscriberId={subscriberId}
-      parameters:
-      - name: areaId
-        in: path
-        description: Numeric id of the Location Area.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: query
-        description: Numeric id of location.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: setupId
-        in: query
-        description: Numeric id of the Store Dashboard setup.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: subscriberId
-        in: query
-        description: Numeric id of subscriber.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: Indicates that the request succeeded and that the requested information is in the response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetProblemTypesResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetProblemTypesResponse'
-        '400':
-          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 1000 - Invalid setupId(dashboard) for current user;\n            <br/> 1001 - No issue list is available, please load it through issue list converter;"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /providers/current/applicationissuelist/areas/{areaId}/problemtypes:
-    get:
-      tags:
-      - IssueList
-      summary: Get Problem types
-      description: List Problem types. Returns Problem types for successful request.
-      operationId: GETv3_providers_current_applicationissuelist_areas_{areaId}_problemtypes?locationId={locationId}&setupId={setupId}&subscriberId={subscriberId}
-      parameters:
-      - name: areaId
-        in: path
-        description: Numeric id of the Location Area.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: query
-        description: Numeric id of location.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: setupId
-        in: query
-        description: Numeric id of the Store Dashboard setup.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: subscriberId
-        in: query
-        description: Numeric id of subscriber.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: Indicates that the request succeeded and that the requested information is in the response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetProblemTypesResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetProblemTypesResponse'
-        '400':
-          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 1000 - Invalid setupId(dashboard) for current user;\n            <br/> 1001 - No issue list is available, please load it through issue list converter;"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /issuelist/problemtypes:
-    get:
-      tags:
-      - IssueList
-      summary: Get Problem types
-      description: List Problem types. Returns Problem types for successful request.
-      operationId: GETv3_issuelist_problemtypes?areaId={areaId}&locationId={locationId}&setupId={setupId}&subscriberId={subscriberId}
-      parameters:
-      - name: areaId
-        in: query
-        description: Numeric id of the Location Area.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: query
-        description: Numeric id of location.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: setupId
-        in: query
-        description: Numeric id of the Store Dashboard setup.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: subscriberId
-        in: query
-        description: Numeric id of subscriber.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: Indicates that the request succeeded and that the requested information is in the response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetProblemTypesResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetProblemTypesResponse'
-        '400':
-          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 1000 - Invalid setupId(dashboard) for current user;\n            <br/> 1001 - No issue list is available, please load it through issue list converter;"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /api/subscribers/{subscriberId}/storedashboards/{dashboardId}/issuelist/areas/{areaId}/items:
-    get:
-      tags:
-      - IssueList
-      summary: The get items filtered by area type and location
-      operationId: GETv3_api_subscribers_{subscriberId}_storedashboards_{dashboardId}_issuelist_areas_{areaId}_items?problemType={problemType}&locationId={locationId}
-      parameters:
-      - name: subscriberId
-        in: path
-        description: The subsriber id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: dashboardId
-        in: path
-        description: The dashboard id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: areaId
-        in: path
-        description: The area Id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: problemType
-        in: query
-        description: The problem type.
-        required: true
-        schema:
-          type: string
-      - name: locationId
-        in: query
-        description: The location id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Any
-  /api/subscribers/{subscriberId}/issuelist/headers:
-    get:
-      tags:
-      - IssueList
-      operationId: GETv3_api_subscribers_{subscriberId}_issuelist_headers
-      parameters:
-      - name: subscriberId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Any
-      summary: GETv3 api subscribers {subscriber id} issuelist headers
-      x-summary-source: derived
-  /api/subscribers/{subscriberId}/storedashboards/{dashboardId}/issuelist/areas/{areaId}/problems:
-    get:
-      tags:
-      - IssueList
-      summary: The get problems filtered by area type and location
-      operationId: GETv3_api_subscribers_{subscriberId}_storedashboards_{dashboardId}_issuelist_areas_{areaId}_problems?problemType={problemType}&item={item}
-      parameters:
-      - name: subscriberId
-        in: path
-        description: The subsriber id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: dashboardId
-        in: path
-        description: The dashboard id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: areaId
-        in: path
-        description: The area id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: problemType
-        in: query
-        description: The problem type.
-        required: true
-        schema:
-          type: string
-      - name: item
-        in: query
-        description: The item.
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Any
-  /api/subscribers/{subscriberId}/storedashboards/{dashboardId}/issuelist/issuechoice:
-    get:
-      tags:
-      - IssueList
-      summary: The get issue choice
-      operationId: GETv3_api_subscribers_{subscriberId}_storedashboards_{dashboardId}_issuelist_issuechoice
-      parameters:
-      - name: subscriberId
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: dashboardId
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Any
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueChoiceRequest'
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditDataExternal'
           text/json:
             schema:
-              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueChoiceRequest'
-        description: Get Issue Choice request
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditDataExternal'
+        description: Request parameters for updating a completed site audit.
         required: true
     post:
       tags:
-      - IssueList
-      summary: Find issue choice
-      operationId: POSTv3_api_subscribers_{subscriberId}_storedashboards_{dashboardId}_issuelist_issuechoice
-      parameters:
-      - name: subscriberId
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: dashboardId
-        in: path
-        required: true
-        schema:
-          type: string
+      - Site Audit
+      summary: Save completed audit to the database
+      operationId: POSTv3_subscribers_current_siteaudit_completed
       responses:
-        '200':
-          description: OK
+        '201':
+          description: The audit with status completed is created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/System.Object'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SaveAuditDataResponse'
             text/json:
               schema:
-                $ref: '#/components/schemas/System.Object'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SaveAuditDataResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            608 - Do not have access to the location.\n            999 - Invalid site audit linked work orders\n            1005 - Save site audit error.\n            1007 - Inactive template type.\n            1010 - Invalid site audit parameters"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
-      x-access: Any
+      x-access: Subscribers
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueChoiceRequest'
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternal'
           text/json:
             schema:
-              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueChoiceRequest'
-        description: Get Issue Choice request
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternal'
+        description: Request object
         required: true
-  /subscribers/current/storedashboards/current/issuelist/issuechoice:
+  /subscribers/current/siteaudit/{auditId}:
     get:
       tags:
-      - IssueList
-      operationId: GETv3_subscribers_current_storedashboards_current_issuelist_issuechoice?problemType={problemType}&equipmentType={equipmentType}&problemCode={problemCode}&locationId={locationId}&setupId={setupId}
+      - Site Audit
+      summary: Get site audit by Id
+      operationId: GETv3_subscribers_current_siteaudit_{auditId}
       parameters:
-      - name: problemType
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: equipmentType
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: problemCode
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: locationId
-        in: query
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: setupId
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Subscribers
-      summary: GETv3 subscribers current storedashboards current issuelist issuechoice?problem…
-      x-summary-source: derived
-  /issuelist/issuechoice:
-    get:
-      tags:
-      - IssueList
-      operationId: GETv3_issuelist_issuechoice?problemType={problemType}&equipmentType={equipmentType}&problemCode={problemCode}&locationId={locationId}&setupId={setupId}
-      parameters:
-      - name: problemType
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: equipmentType
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: problemCode
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: locationId
-        in: query
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: setupId
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Subscribers
-      summary: GETv3 issuelist issuechoice?problem type={problem type}&equipment…
-      x-summary-source: derived
-  /subscribers/current/storedashboards/current/issuelist/specific/issuechoice:
-    get:
-      tags:
-      - IssueList
-      summary: Get specific issue choice
-      operationId: GETv3_subscribers_current_storedashboards_current_issuelist_specific_issuechoice?SubscriberId={SubscriberId}&DashboardSetupId={DashboardSetupId}&Trade={Trade}&Priority={Priority}&Category={Category}
-      parameters:
-      - name: subscriberId
-        in: query
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: dashboardSetupId
-        in: query
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: trade
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: priority
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: category
-        in: query
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Any
-  /api/subscribers/{subscriberId}/storedashboards/{dashboardId}/issuelist/issuechoice/fields:
-    get:
-      tags:
-      - IssueList
-      summary: The get issue choice fiels
-      operationId: GETv3_api_subscribers_{subscriberId}_storedashboards_{dashboardId}_issuelist_issuechoice_fields?problemType={problemType}&item={item}&problem={problem}
-      parameters:
-      - name: subscriberId
+      - name: auditId
         in: path
-        description: The subscriber id.
+        description: The numeric identifier of the site audit to return.
         required: true
-        schema:
-          type: integer
-          format: int32
-      - name: dashboardId
-        in: path
-        description: The dashboard id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: problemType
-        in: query
-        description: The problem type.
-        required: true
-        schema:
-          type: string
-      - name: item
-        in: query
-        description: The item.
-        required: true
-        schema:
-          type: string
-      - name: problem
-        in: query
-        description: The problem.
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Any
-  /subscribers/current/storedashboards/current/issuelist/areas:
-    get:
-      tags:
-      - IssueList
-      summary: Get Areas
-      description: 'List Issue Areas. Returns Issue Areas for successful request.
-
-
-        Available for subscriber usage.'
-      operationId: GETv3_subscribers_current_storedashboards_current_issuelist_areas?locationId={locationId}&setupId={setupId}
-      parameters:
-      - name: locationId
-        in: query
-        description: selected locationId.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: setupId
-        in: query
-        description: Numeric id of the Store Dashboard setup.
-        required: false
         schema:
           type: integer
           format: int32
       responses:
         '200':
-          description: Indicates that the request succeeded and that the requested information is in the response.
+          description: The requested site audit info is in the response.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueAreasResponse'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditInfoExternal'
             text/json:
               schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueAreasResponse'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditInfoExternal'
         '400':
-          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 1000 - Invalid setupId(dashboard) for current user;"
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            608 - Do not have access to the location"
           content:
             application/json:
               schema:
@@ -990,7 +875,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\n            <br/>Error codes:\n            1008 - Audit not found"
           content:
             application/json:
               schema:
@@ -999,7 +893,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '500':
-          description: Indicates that a generic error has occurred on the server.
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
           content:
             application/json:
               schema:
@@ -1009,43 +903,24 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Subscribers
-  /issuelist/areas:
-    get:
+  /subscribers/current/siteaudit/open:
+    put:
       tags:
-      - IssueList
-      summary: Get Areas
-      description: 'List Issue Areas. Returns Issue Areas for successful request.
-
-
-        Available for subscriber usage.'
-      operationId: GETv3_issuelist_areas?locationId={locationId}&setupId={setupId}
-      parameters:
-      - name: locationId
-        in: query
-        description: selected locationId.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: setupId
-        in: query
-        description: Numeric id of the Store Dashboard setup.
-        required: false
-        schema:
-          type: integer
-          format: int32
+      - Site Audit
+      summary: Update audit with open status
+      operationId: PUTv3_subscribers_current_siteaudit_open
       responses:
         '200':
-          description: Indicates that the request succeeded and that the requested information is in the response.
+          description: The site audit with open status is successfully updated.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueAreasResponse'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedOpenAuditResponse'
             text/json:
               schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueAreasResponse'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedOpenAuditResponse'
         '400':
-          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 1000 - Invalid setupId(dashboard) for current user;"
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            608 - Do not have access to the location.\n            1003 - Site audit has already been completed\n            1009 - Unexpected error"
           content:
             application/json:
               schema:
@@ -1054,7 +929,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\n            <br/>Error codes:\n            1008 - Audit not found"
           content:
             application/json:
               schema:
@@ -1063,7 +947,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '500':
-          description: Indicates that a generic error has occurred on the server.
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
           content:
             application/json:
               schema:
@@ -1073,43 +957,33 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Subscribers
-  /providers/current/subscribers/{subscriberId}/applicationissuelist/areas:
-    get:
-      tags:
-      - IssueList
-      summary: Get Areas
-      description: 'List Issue Areas. Returns Issue Areas for successful request.
-
-
-        Available for provider usage.'
-      operationId: GETv3_providers_current_subscribers_{subscriberId}_applicationissuelist_areas?locationId={locationId}
-      parameters:
-      - name: subscriberId
-        in: path
-        description: The subscriber id is required.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditDataExternal'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditDataExternal'
+        description: Open audit info
         required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: query
-        description: Numeric id of location.
-        required: false
-        schema:
-          type: integer
-          format: int32
+    post:
+      tags:
+      - Site Audit
+      summary: Save audit with open status to the database
+      operationId: POSTv3_subscribers_current_siteaudit_open
       responses:
-        '200':
-          description: Indicates that the request succeeded and that the requested information is in the response.
+        '201':
+          description: The audit with status open is created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueAreasResponse'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SaveAuditDataResponse'
             text/json:
               schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueAreasResponse'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SaveAuditDataResponse'
         '400':
-          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 1000 - Invalid setupId(dashboard) for current user;"
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            601 - Invalid location Id.\n            1006 - Save site audit error.\n            1010 - Invalid site audit parameters"
           content:
             application/json:
               schema:
@@ -1118,7 +992,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
           content:
             application/json:
               schema:
@@ -1127,116 +1001,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '500':
-          description: Indicates that a generic error has occurred on the server.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Providers
-  /providers/current/subscriber/{subscriberId}/location/{locationId}/applicationissuelist/problemtypes:
-    get:
-      tags:
-      - IssueList
-      operationId: GETv3_providers_current_subscriber_{subscriberId}_location_{locationId}_applicationissuelist_problemtypes
-      parameters:
-      - name: subscriberId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Providers
-      summary: GETv3 providers current subscriber {subscriber id} location {location id}…
-      x-summary-source: derived
-  /subscribers/current/storedashboards/current/issuelist/areas/{areaId}/equipmenttypes:
-    get:
-      tags:
-      - IssueList
-      summary: Get Equipment items
-      description: 'List equipment items.
-
-
-        Available for subscriber usage.'
-      operationId: GETv3_subscribers_current_storedashboards_current_issuelist_areas_{areaId}_equipmenttypes?locationId={locationId}&problemType={problemType}&setupId={setupId}
-      parameters:
-      - name: locationId
-        in: query
-        description: Numeric id of the Location.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: areaId
-        in: path
-        description: Numeric id of the Location Area.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: problemType
-        in: query
-        description: Problem type.
-        required: true
-        schema:
-          type: string
-      - name: setupId
-        in: query
-        description: Numeric id of the Store Dashboard setup.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: Indicates that the request succeeded and that the requested information is in the response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueEquipmentTypesResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueEquipmentTypesResponse'
-        '400':
-          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 1000 - Invalid setupId(dashboard) for current user;\n            <br/> 1001 - No issue list is available, please load it through issue list converter;"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '500':
-          description: Indicates that a generic error has occurred on the server.
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
           content:
             application/json:
               schema:
@@ -1246,65 +1011,80 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Subscribers
-  /issuelist/items:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternal'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternal'
+        description: Request object
+        required: true
+  /subscribers/current/siteaudit/audits/filtered:
     get:
       tags:
-      - IssueList
-      summary: Get Equipment items
-      description: 'List equipment items.
-
-
-        Available for subscriber usage.'
-      operationId: GETv3_issuelist_items?locationId={locationId}&areaId={areaId}&problemType={problemType}&setupId={setupId}
+      - Site Audit
+      summary: Get the list of filtered site audits
+      description: Allows filtering site audits by status, location ID, location name, username, and audit type. Returns filtered audits for the last 30 days.
+      operationId: GETv3_subscribers_current_siteaudit_audits_filtered?searchValue={searchValue}&status={status}&pageIndex={pageIndex}&pageSize={pageSize}&startDate={startDate}&endDate={endDate}
       parameters:
-      - name: locationId
+      - name: searchValue
         in: query
-        description: Numeric id of the Location.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: areaId
-        in: query
-        description: Numeric id of the Location Area.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: problemType
-        in: query
-        description: Problem type.
-        required: true
+        description: "Text field where the following search criteria can be entered:\n             • Location ID as specified by the subscriber in the location details\n             • Location name\n             • Username\n             • Audit type\n            <br />The value you enter will be searched for across all these 4 criteria."
+        required: false
         schema:
           type: string
-      - name: setupId
+      - name: status
         in: query
-        description: Numeric id of the Store Dashboard setup.
+        description: 'Site audit status: *Open*, *Completed*, *Undefined*.'
+        required: false
+        schema:
+          type: string
+          enum:
+          - Undefined
+          - Open
+          - Completed
+      - name: pageIndex
+        in: query
+        description: Sequence of pages. Enter `1` to view the first page; enter `2` to view the next page; etc.
         required: false
         schema:
           type: integer
           format: int32
+      - name: pageSize
+        in: query
+        description: Number of site audits that should be displayed in the response. No limits per page. When left empty, the default number of 20 audits is used.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      - name: startDate
+        in: query
+        description: Optional start date for filtering audits. If provided, only audits created or completed after this date will be included.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: endDate
+        in: query
+        description: Optional end date for filtering audits. If provided, only audits created or completed before this date will be included.
+        required: false
+        schema:
+          type: string
+          format: date-time
       responses:
         '200':
-          description: Indicates that the request succeeded and that the requested information is in the response.
+          description: The list of filtered site audits is in the response.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueEquipmentTypesResponse'
+                $ref: '#/components/schemas/ServiceChannel.Services.RequestHandlers.SiteAudit.GetFilteredAuditListResponse'
             text/json:
               schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueEquipmentTypesResponse'
-        '400':
-          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 1000 - Invalid setupId(dashboard) for current user;\n            <br/> 1001 - No issue list is available, please load it through issue list converter;"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+                $ref: '#/components/schemas/ServiceChannel.Services.RequestHandlers.SiteAudit.GetFilteredAuditListResponse'
         '401':
-          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
+          description: "The requested resource requires authentication.\n            <br/>Error codes:\n            504 &mdash; API call rejected by security permissions"
           content:
             application/json:
               schema:
@@ -1313,7 +1093,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '500':
-          description: Indicates that a generic error has occurred on the server.
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 &mdash; Unspecified internal server error occurred"
           content:
             application/json:
               schema:
@@ -1323,49 +1103,25 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Subscribers
-  /subscribers/current/dashboard/{setupId}/issuelist/equipmenttypes:
-    get:
+  /subscribers/current/siteaudit/open/{auditId}:
+    delete:
       tags:
-      - IssueList
-      summary: Get Equipment items not filtered by location
-      description: 'List equipment items not filtered by location.
-
-
-        Available for subscriber usage.'
-      operationId: GETv3_subscribers_current_dashboard_{setupId}_issuelist_equipmenttypes?areaId={areaId}&problemType={problemType}
+      - Site Audit
+      summary: Remove open audit
+      operationId: DELETEv3_subscribers_current_siteaudit_open_{auditId}
       parameters:
-      - name: setupId
+      - name: auditId
         in: path
-        description: Numeric id of the Store Dashboard setup.
+        description: Audit Id
         required: true
         schema:
           type: integer
           format: int32
-      - name: areaId
-        in: query
-        description: Numeric id of the Location Area.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: problemType
-        in: query
-        description: Problem type.
-        required: true
-        schema:
-          type: string
       responses:
         '200':
-          description: Indicates that the request succeeded and that the requested information is in the response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueEquipmentTypesResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueEquipmentTypesResponse'
+          description: The site audit info is successfully deleted.
         '400':
-          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 1000 - Invalid setupId(dashboard) for current user;\n            <br/> 1001 - No issue list is available, please load it through issue list converter;"
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            1006 - RemoveSiteAuditError.\n            1010 - InvalidSiteAuditParameters"
           content:
             application/json:
               schema:
@@ -1374,7 +1130,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\n            <br/>Error codes:\n            1008 - Audit not found"
           content:
             application/json:
               schema:
@@ -1383,7 +1148,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '500':
-          description: Indicates that a generic error has occurred on the server.
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
           content:
             application/json:
               schema:
@@ -1393,56 +1158,32 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Subscribers
-  /providers/current/subscribers/{subscriberId}/applicationissuelist/items:
+  /subscribers/current/locations/checkAuditInfo:
     get:
       tags:
-      - IssueList
-      summary: Get Equipment items
-      description: 'List equipment items.
-
-
-        Available for provider usage.'
-      operationId: GETv3_providers_current_subscribers_{subscriberId}_applicationissuelist_items?locationId={locationId}&areaId={areaId}&problemType={problemType}
+      - Site Audit
+      summary: Check if the site audit can be created
+      operationId: GETv3_subscribers_current_locations_checkAuditInfo?locationId={locationId}&templateTypeId={templateTypeId}
       parameters:
-      - name: subscriberId
-        in: path
-        description: This parameter is required.
-        required: true
-        schema:
-          type: integer
-          format: int32
       - name: locationId
         in: query
-        description: Numeric id of the Location.
+        description: Location Id
         required: true
         schema:
           type: integer
           format: int32
-      - name: areaId
+      - name: templateTypeId
         in: query
-        description: Numeric id of the Location Area.
+        description: Template Type Id
         required: true
         schema:
           type: integer
           format: int32
-      - name: problemType
-        in: query
-        description: Problem type.
-        required: true
-        schema:
-          type: string
       responses:
         '200':
-          description: Indicates that the request succeeded and that the requested information is in the response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueEquipmentTypesResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueEquipmentTypesResponse'
+          description: The site audit can be created.
         '400':
-          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 1000 - Invalid setupId(dashboard) for current user;\n            <br/> 1001 - No issue list is available, please load it through issue list converter;"
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            1010 - InvalidSiteAuditParameters"
           content:
             application/json:
               schema:
@@ -1451,7 +1192,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
           content:
             application/json:
               schema:
@@ -1460,90 +1201,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '500':
-          description: Indicates that a generic error has occurred on the server.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Providers
-  /subscribers/current/storedashboards/current/issuelist/areas/{areaId}/problemcodes:
-    get:
-      tags:
-      - IssueList
-      summary: Get Problem codes
-      description: 'List problem codes.
-
-
-        Available for subscriber usage.'
-      operationId: GETv3_subscribers_current_storedashboards_current_issuelist_areas_{areaId}_problemcodes?problemType={problemType}&equipmentType={equipmentType}&locationId={locationId}&setupId={setupId}
-      parameters:
-      - name: areaId
-        in: path
-        description: Numeric id of the Location Area.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: problemType
-        in: query
-        description: Problem type.
-        required: true
-        schema:
-          type: string
-      - name: equipmentType
-        in: query
-        description: Equipment type.
-        required: true
-        schema:
-          type: string
-      - name: locationId
-        in: query
-        description: selected locationId.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: setupId
-        in: query
-        description: Numeric id of the Store Dashboard setup.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: Indicates that the request succeeded and that the requested information is in the response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetProblemsFilteredByAreaTypeAndLocationResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetProblemsFilteredByAreaTypeAndLocationResponse'
-        '400':
-          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 1000 - Invalid setupId(dashboard) for current user;\n            <br/> 1001 - No issue list is available, please load it through issue list converter;"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '500':
-          description: Indicates that a generic error has occurred on the server.
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
           content:
             application/json:
               schema:
@@ -1553,71 +1211,25 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Subscribers
-  /issuelist/problems:
+  /subscribers/current/siteaudit/{auditId}/linkedWorkOrderIds:
     get:
       tags:
-      - IssueList
-      summary: Get Problem codes
-      description: 'List problem codes.
-
-
-        Available for subscriber usage.'
-      operationId: GETv3_issuelist_problems?areaId={areaId}&problemType={problemType}&equipmentType={equipmentType}&locationId={locationId}&setupId={setupId}
+      - Site Audit
+      summary: Get an array of workOrderIDs linked to the Site Audit
+      operationId: GETv3_subscribers_current_siteaudit_{auditId}_linkedWorkOrderIds
       parameters:
-      - name: areaId
-        in: query
-        description: Numeric id of the Location Area.
+      - name: auditId
+        in: path
+        description: Audit Id
         required: true
-        schema:
-          type: integer
-          format: int32
-      - name: problemType
-        in: query
-        description: Problem type.
-        required: true
-        schema:
-          type: string
-      - name: equipmentType
-        in: query
-        description: Equipment type.
-        required: true
-        schema:
-          type: string
-      - name: locationId
-        in: query
-        description: selected locationId.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: setupId
-        in: query
-        description: Numeric id of the Store Dashboard setup.
-        required: false
         schema:
           type: integer
           format: int32
       responses:
         '200':
-          description: Indicates that the request succeeded and that the requested information is in the response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetProblemsFilteredByAreaTypeAndLocationResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetProblemsFilteredByAreaTypeAndLocationResponse'
-        '400':
-          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 1000 - Invalid setupId(dashboard) for current user;\n            <br/> 1001 - No issue list is available, please load it through issue list converter;"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+          description: The requested workOrderId list is in the response.
         '401':
-          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
           content:
             application/json:
               schema:
@@ -1626,7 +1238,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '500':
-          description: Indicates that a generic error has occurred on the server.
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
           content:
             application/json:
               schema:
@@ -1636,370 +1248,1467 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Subscribers
-  /providers/current/subscribers/{subscriberId}/applicationissuelist/problems:
-    get:
-      tags:
-      - IssueList
-      summary: Get Problem codes
-      description: 'List problem codes.
-
-
-        Available for provider usage.'
-      operationId: GETv3_providers_current_subscribers_{subscriberId}_applicationissuelist_problems?areaId={areaId}&problemType={problemType}&equipmentType={equipmentType}&locationId={locationId}
-      parameters:
-      - name: subscriberId
-        in: path
-        description: This parametr is required.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: areaId
-        in: query
-        description: Numeric id of the Location Area.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: problemType
-        in: query
-        description: Problem type.
-        required: true
-        schema:
-          type: string
-      - name: equipmentType
-        in: query
-        description: Equipment type.
-        required: true
-        schema:
-          type: string
-      - name: locationId
-        in: query
-        description: Numeric id of location.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: Indicates that the request succeeded and that the requested information is in the response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetProblemsFilteredByAreaTypeAndLocationResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetProblemsFilteredByAreaTypeAndLocationResponse'
-        '400':
-          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 1000 - Invalid setupId(dashboard) for current user;\n            <br/> 1001 - No issue list is available, please load it through issue list converter;"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '500':
-          description: Indicates that a generic error has occurred on the server.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Providers
-  /providers/current/applicationissuelist/issueitems:
-    get:
-      tags:
-      - IssueList
-      operationId: GETv3_providers_current_applicationissuelist_issueitems?subscriberId={subscriberId}&locationId={locationId}&areaId={areaId}&trade={trade}&problemType={problemType}
-      parameters:
-      - name: subscriberId
-        in: query
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: query
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: areaId
-        in: query
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: trade
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: problemType
-        in: query
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Providers
-      summary: GETv3 providers current applicationissuelist issueitems?subscriber…
-      x-summary-source: derived
-  /subscribers/current/storedashboards/current/issuelist/field:
-    get:
-      tags:
-      - IssueList
-      operationId: GETv3_subscribers_current_storedashboards_current_issuelist_field?id={id}&setupId={setupId}
-      parameters:
-      - name: id
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: setupId
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Subscribers
-      summary: GETv3 subscribers current storedashboards current issuelist field?id={id}&setup…
-      x-summary-source: derived
-  /issuelist/field:
-    get:
-      tags:
-      - IssueList
-      operationId: GETv3_issuelist_field?id={id}&setupId={setupId}
-      parameters:
-      - name: id
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: setupId
-        in: query
-        required: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Subscribers
-      summary: GETv3 issuelist field?id={id}&setup id={setup id}
-      x-summary-source: derived
-  /api/subscribers/{subscriberId}/storedashboards/issuelist/items:
-    get:
-      tags:
-      - IssueList
-      summary: The get
-      operationId: GETv3_api_subscribers_{subscriberId}_storedashboards_issuelist_items?equipmentType={equipmentType}&assetTypeId={assetTypeId}&locationId={locationId}&setupId={setupId}
-      parameters:
-      - name: subscriberId
-        in: path
-        description: The subscriber id.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: equipmentType
-        in: query
-        description: The Equipment Type.
-        required: false
-        schema:
-          type: string
-      - name: assetTypeId
-        in: query
-        description: ''
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: query
-        description: The location id.
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: setupId
-        in: query
-        description: ''
-        required: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Any
-  /providers/current/subscribers/{subscriberId}/issuelist:
-    get:
-      tags:
-      - IssueList
-      summary: Retrieves the issue list for a FTM provider
-      operationId: GETv3_providers_current_subscribers_{subscriberId}_issuelist?assetId={assetId}&locationId={locationId}
-      parameters:
-      - name: subscriberId
-        in: path
-        description: ''
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: assetId
-        in: query
-        description: Optional asset ID
-        required: false
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: query
-        description: Optional location ID
-        required: false
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Providers
-  /issuelist/issuechoiceinfo/{trackingNumber}:
-    get:
-      tags:
-      - IssueList
-      summary: The get issue choice info
-      operationId: GETv3_issuelist_issuechoiceinfo_{trackingNumber}
-      parameters:
-      - name: trackingNumber
-        in: path
-        description: The Tracking Number.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/System.Object'
-      deprecated: false
-      x-access: Any
 components:
   schemas:
-    ServiceChannel.Services.Messaging.IssueLists.GetIssueChoiceRequest:
-      description: Get Issue Choice request
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListExternal:
       type: object
       properties:
+        Name:
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          type: integer
+        CheckListItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternal'
+    ServiceChannel.Services.RequestHandlers.SiteAudit.GetFilteredAuditListResponse:
+      type: object
+      properties:
+        UserName:
+          type: string
+        Locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.LocationExternal'
+        TemplateTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditTypeExternal'
+        FilteredAudits:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditInfoExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternalOld:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        SortOrder:
+          format: int32
+          type: integer
+        CheckLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListExternalOld'
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditInfoExternal:
+      description: General details of a completed audit.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the site audit.
+          type: integer
+        StoreId:
+          format: int32
+          description: Unique numeric identifier of the location where the site audit was conducted.
+          type: integer
+        UserId:
+          format: int32
+          description: Unique numeric identifier of the user (auditor) who conducted the site audit.
+          type: integer
+        UserName:
+          description: Display name of the user (auditor) who conducted the site audit.
+          type: string
+        TemplateTypeId:
+          format: int32
+          description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
+          type: integer
+        StartDate:
+          format: date-time
+          description: Date and time when the user started the audit in the SC Mobile app or in Service Automation. The format is `YYYY-MM-DDThh:mm:ss.ss`.
+          type: string
+        FinishDate:
+          format: date-time
+          description: Date and time when the site audit was completed. The format is `YYYY-MM-DDThh:mm:ss.ss`.
+          type: string
+        FinishDateStr:
+          description: Date when the site audit was completed. The format is `MMM DD, YYYY`.
+          type: string
+        Status:
+          description: "Unique numeric identifier of the status. Possible response values:\n             • `1`: The site audit status is *Open*.\n             • `2`: The site audit status is *Completed*."
+          enum:
+          - Undefined
+          - Open
+          - Completed
+          type: string
+        Emails:
+          description: Email address(es) to which the audit results were sent out by the auditor upon completing the audit.
+          type: string
+        Areas:
+          description: List of areas that were inspected during the site audit, for example, *Interior* or *Exterior*.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditAreaExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditIssueAttachmentExternal:
+      description: Parameters for updating the attachments added to the checklist item.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Attachment ID.
+          type: integer
+        FileName:
+          description: File name of the attachment.
+          type: string
+        RemoteName:
+          description: Remote name of the attached file.
+          type: string
+        RemoteNameResized:
+          description: File name that has been resized.
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListTemplateExternal:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        SortOrder:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedCompletedAuditResponse:
+      description: Object containing response parameters.
+      type: object
+      properties:
+        IsSuccess:
+          description: Returns `true` when the completed audit details have been successfully updated.
+          default: false
+          type: boolean
+        Sent:
+          description: Returns the success message when the updated site audit information is sent out to the specified email address.
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedCheckListExternal:
+      description: Parameters for updating the checklist.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the checklist.
+          type: integer
+        Name:
+          description: Checklist name, for example, *Restroom* or *Dining room*.
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          description: Sorting order of the checklist.
+          type: integer
+        CheckListItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedCheckListItemExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListWeightedExternal:
+      type: object
+      properties:
+        Name:
+          type: string
+        TemplateName:
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          type: integer
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        CheckListItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemWeightedExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueExternal:
+      description: Comment added to the checklist item.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Comment ID.
+          type: integer
+        Date:
+          format: date-time
+          description: Date and time when the comment was added to the checklist item. The format is `YYYY-MM-DDThh:mm:ss.ss`.
+          type: string
+        DateStr:
+          description: Date when the comment was added to the checklist item. The format is `MMM DD, YYYY`.
+          type: string
+        Description:
+          description: Comment added to the checklist item during the audit.
+          type: string
+        Persistent:
+          description: "Shows whether or not the comment should be saved for future audits. Possible response values:\n             • `true`: When the auditor sets the corresponding toggle in the SC Mobile app or in Service Automation to save the checklist item comment for future audits.\n             • `false`: When the comment should not be preserved and displayed for future audits."
+          default: false
+          type: boolean
+        UserName:
+          description: Username of the auditor who added the comment to the checklist item during the inspection.
+          type: string
+        Attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueAttachmentExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueAttachmentModelExternal:
+      type: object
+      properties:
+        RemoteName:
+          type: string
+        RemoteNameResized:
+          type: string
+        FileName:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.GetAuditInfo:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        StartDate:
+          format: date-time
+          type: string
+        Emails:
+          type: string
+        Areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Description:
+          type: string
+        Date:
+          format: date-time
+          type: string
+        Attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.IssueAttachmentExternal'
+        Persistent:
+          default: false
+          type: boolean
+        UserName:
+          type: string
+    ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckListItem:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        Description:
+          type: string
+        Score:
+          format: int32
+          type: integer
+        System:
+          format: int32
+          type: integer
+        Date:
+          format: date-time
+          type: string
+        DateStr:
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        CheckListItemImpact:
+          type: string
+        UseNumericRatingSystem:
+          default: false
+          type: boolean
+        PassThreshold:
+          format: int32
+          type: integer
+        Range:
+          type: array
+          items:
+            format: int32
+            type: integer
+        Issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueExternal'
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditQuantityExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.LocationExternal:
+      description: Object containing location details.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the location — generated by the system.
+          type: integer
         SubscriberId:
           format: int32
-          description: The subsriber id.
+          description: Unique numeric identifier of the subscriber.
           type: integer
-        SetupId:
+        StoreId:
+          description: Unique numeric identifier of the location — specified by the user.
+          type: string
+        Name:
+          description: Location name.
+          type: string
+        ShortName:
+          description: Short name of the location.
+          type: string
+        Address:
+          description: Location address.
+          type: string
+        City:
+          description: Location city.
+          type: string
+        State:
+          description: Location state.
+          type: string
+        Country:
+          description: Location country.
+          type: string
+        Zip:
+          description: Location ZIP code.
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.AuditAreaWeightedExternal:
+      type: object
+      properties:
+        Id:
           format: int32
-          description: The dashboard Id.
           type: integer
-        ProblemType:
-          description: The problem type.
+        Name:
           type: string
-        EquipmentType:
-          description: The equipment type.
+        SortOrder:
+          format: int32
+          type: integer
+        CheckLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListWeightedExternal'
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListExternal:
+      description: Information on the checklists.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the checklist.
+          type: integer
+        Name:
+          description: Checklist name, for example, *Restroom* or *Dining room*.
           type: string
-        ProblemCode:
-          description: The problem code
+        Unlisted:
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          description: Sorting order of the checklist.
+          type: integer
+        CheckListItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListItemExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditListResponse:
+      description: Object containing general info on completed audits.
+      type: object
+      properties:
+        UserName:
+          description: Username of the person who has authorized and is sending the API request.
           type: string
+        Locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.LocationExternal'
+        TemplateTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditTypeExternal'
+        CompletedAudits:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditInfoExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditQuantityExternal:
+      description: Quantity or dollar cost of the inspected checklist items.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Quantity record ID.
+          type: integer
+        Value:
+          format: int32
+          description: Value showing either the quantity or the dollar amount of the items that have been inspected.
+          type: integer
+        Unit:
+          description: 'Shows whether the auditor captured the **Quantity** or the **Dollar Cost** of the inspected item. Possible response values: `Quantity` and `Dollars`.'
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.AuditReportIssueExternal:
+      description: The details of issues created by the auditor for the inspected checklist item. Issues are also known as action items.
+      type: object
+      properties:
+        IssueType:
+          description: The type of the action item, either `WO` or `Comment`.
+          type: string
+        IssueDescription:
+          description: '`Comment type`: auditor''s comment added to the action item or its attachment. `WO type`: work order description that includes the area, problem type, asset, problem, and auditor’s description of the problem.'
+          type: string
+        AttachmentPaths:
+          description: The paths to the attachments added to the checklist item.
+          type: array
+          items:
+            type: string
+        IssueId:
+          format: int32
+          description: '`Comment type`: numeric identifier of the action item. `WO type`: numeric identifier of the work order, also known as WO tracking number.'
+          type: integer
+        WorkOrderPriority:
+          description: The name of the work order priority if the action item belongs to the WO type.
+          type: string
+        Date:
+          format: date-time
+          description: The date and time when the auditor created the action item.
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.AuditInfoExternal:
+      description: Object containing audit details.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the completed audit.
+          type: integer
         LocationId:
           format: int32
-          description: Location Id
+          description: Unique numeric identifier of the location — generated by the system.
+          type: integer
+        StartDate:
+          format: date-time
+          description: Date and time when the site audit was started. The format is YYYY-MM-DDThh:mm:ss.sss.
+          type: string
+        EndDate:
+          format: date-time
+          description: Date and time when the site audit was completed. The format is YYYY-MM-DDThh:mm:ss.sss.
+          type: string
+        Status:
+          description: Unique numeric identifier of the status. The response value `2` stands for the *Completed* status.
+          enum:
+          - Undefined
+          - Open
+          - Completed
+          type: string
+        TemplateTypeId:
+          format: int32
+          description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
+          type: integer
+        UserName:
+          description: Username of the person who conducted the audit.
+          type: string
+        UnauditedItems:
+          format: int32
+          description: Number of checklist items that were not audited.
+          type: integer
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternal:
+      type: object
+      properties:
+        Name:
+          type: string
+        Description:
+          type: string
+        Score:
+          format: int32
+          type: integer
+        System:
+          enum:
+          - PassFail
+          - Numeric
+          - Weighted
+          - Percentage
+          type: string
+        Date:
+          format: date-time
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        Issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
+        CheckListItemImpact:
+          type: string
+        PassThreshold:
+          format: int32
+          type: integer
+        Range:
+          type: array
+          items:
+            format: int32
+            type: integer
+        StatisticItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticWeightedExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticWeightedExternal:
+      type: object
+      properties:
+        CheckListItemId:
+          format: int32
+          type: integer
+        Date:
+          format: date-time
+          type: string
+        Score:
+          format: int32
+          type: integer
+        System:
+          format: int32
+          type: integer
+        Range:
+          type: array
+          items:
+            format: int32
+            type: integer
+        PassThreshold:
+          format: int32
+          type: integer
+        WorkOrdersCount:
+          format: int32
+          type: integer
+        CommentsCount:
+          format: int32
+          type: integer
+        AttachmentsCount:
+          format: int32
+          type: integer
+        QuantityCount:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.SiteAudit.WorkOrder:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        ProblemCode:
+          type: string
+        Priority:
+          type: string
+        ScheduledDate:
+          format: date-time
+          type: string
+        Description:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueModelExternal:
+      type: object
+      properties:
+        Date:
+          type: string
+        Comment:
+          type: string
+        UserName:
+          type: string
+        Attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueAttachmentModelExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternalOld:
+      type: object
+      properties:
+        StartDate:
+          format: date-time
+          type: string
+        FinishDate:
+          format: date-time
+          type: string
+        Areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternalOld'
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        Emails:
+          type: string
+        SendEmails:
+          default: false
+          type: boolean
+        Source:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedCheckListItemExternal:
+      description: Parameters for updating the checklist items.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the checklist item.
+          type: integer
+        Name:
+          description: Checklist item name, for example, *Hand dryer* or *Sink*.
+          type: string
+        Description:
+          description: Detailed description/instruction for the checklist item.
+          type: string
+        Score:
+          format: int32
+          description: "Shows how the checklist item was rated. The response value depends on the rating system applied:\n             • `1`: In the **Pass/Fail** rating system, it stands for the **Fail** answer.\n             • `2`: In the **Pass/Fail** rating system, it stands for the **Pass** answer. \n             • `numeric value`: In the **Weighted** rating system, a custom numeric value is assigned to each option: **Good**, **Fair**, and **Fail**.\n             • `0–10`: In the **Numeric** rating system, a value from 0 to 10 can be used to rate the item.\n             • `0–100`: In the **Percentage** rating system, a value from 0% to 100% can be used to rate the item."
+          type: integer
+        System:
+          format: int32
+          description: "Rating system that was applied to the checklist item. Possible values:\n             • `1`: For the **Pass/Fail** rating system\n             • `2`: For the **Numeric** rating system\n             • `3`: For the **Weighted** rating system\n             • `4`: For the **Percentage** rating system. When this rating system is used, the `Score` value is displayed in percentages.\n            <br />Learn more about each rating system in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/550928611/Building+a+Site+Audit+in+an+Excel+Template)."
+          type: integer
+        Date:
+          format: date-time
+          description: Date and time when the checklist item was inspected and rated. The format is YYYY-MM-DDThh:mm:ss.sssZ.
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        CheckListItemImpact:
+          description: "Checklist item’s impact on the total audit score. Possible input values:\n             • `Veto`: Means that this item has the highest impact on the audit score. When at least one of the veto checklist items is rated as **Fail**, the total score of the audit drops to 1%.\n             • `Ignore`: Means that this item is ignored when the audit score is calculated.\n             • `Empty value`: Means that this checklist item is counted as a regular item."
+          type: string
+        UseNumericRatingSystem:
+          default: false
+          type: boolean
+        PassThreshold:
+          format: int32
+          description: Minimum rating value that is sufficient to pass the audit. Can be in numbers or in percentages based on the rating system applied to the checklist item. See the `System` parameter.
+          type: integer
+        Range:
+          description: Range of numbers displayed to the user during the audit, allowing the auditor to rate the item. Permits selecting a score on a 0–10 scale or from 0% to 100%.
+          type: array
+          items:
+            format: int32
+            type: integer
+        Issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditIssueExternal'
+        WorkOrderIds:
+          description: Tracking numbers of the work orders created in the event of the checklist item inspection.
+          type: array
+          items:
+            format: int32
+            type: integer
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditQuantityExternal'
+          description: Quantity of items that have been inspected.
+    ServiceChannel.Services.Messaging.SiteAudit.AuditTypeExternal:
+      description: Object containing information on audit template types.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the template. The template determines the audit type.
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Unique numeric identifier of the subscriber.
+          type: integer
+        Name:
+          description: Template name.
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditAreaExternal:
+      description: Information on the inspected areas.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the area that was inspected.
+          type: integer
+        Name:
+          description: Area name, for example, *Exterior* or *Interior*.
+          type: string
+        SortOrder:
+          format: int32
+          description: Sorting order of the area.
+          type: integer
+        CheckLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListExternal'
+    ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckList:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          type: integer
+        CheckListItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckListItem'
+    ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternal:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        SortOrder:
+          format: int32
+          type: integer
+        CheckLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternalOld:
+      type: object
+      properties:
+        Name:
+          type: string
+        Description:
+          type: string
+        Status:
+          format: int32
+          type: integer
+        StatusNumeric:
+          format: int32
+          type: integer
+        UseNumericRatingSystem:
+          default: false
+          type: boolean
+        Date:
+          format: date-time
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        Issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
+        CheckListItemImpact:
+          type: string
+        StatisticItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditInfoExternal:
+      description: Object containing audit details.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the completed audit.
+          type: integer
+        LocationId:
+          format: int32
+          description: Unique numeric identifier of the location — generated by the system.
+          type: integer
+        StartDate:
+          format: date-time
+          description: Date and time when the site audit was started. The format is YYYY-MM-DDThh:mm:ss.sss.
+          type: string
+        EndDate:
+          format: date-time
+          description: Date and time when the site audit was completed. The format is YYYY-MM-DDThh:mm:ss.sss.
+          type: string
+        TemplateTypeId:
+          format: int32
+          description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
+          type: integer
+        UserName:
+          description: Username of the person who conducted the audit.
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditDataExternal:
+      description: Parameters for updating general audit info.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the completed site audit.
+          type: integer
+        StoreId:
+          format: int32
+          description: Unique numeric identifier of the location where the site audit was conducted.
+          type: integer
+        TemplateTypeId:
+          format: int32
+          description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
+          type: integer
+        Language:
+          description: Language that was used to conduct the audit. Use the two-letter abbreviation, for example, **EN**.
+          type: string
+        SendEmails:
+          description: "Specifies whether an email notification was sent out upon completing the site audit. Possible input values:\n             • `true`: The audit results were sent to the specified recipient(s). Use the `Emails` parameter to add the recipients.\n             • `false`: The audit results were not emailed to anyone."
+          default: false
+          type: boolean
+        Emails:
+          description: "Email address(es) to which the audit results were sent out upon completing the audit. Check the `Sent` parameter in the response to see whether the audit results were successfully sent out to the specified recipients.\n            <br />Learn more about the email list for site audits in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/552173744/Configuring+an+Email+List+for+Site+Audit+Reports)."
+          type: string
+        Status:
+          description: Site audit status. Set the status value to `2` (`Completed`).
+          enum:
+          - Undefined
+          - Open
+          - Completed
+          type: string
+        Source:
+          type: string
+        Areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditAreaExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.AuditAreaRequest:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        SortOrder:
+          format: int32
+          type: integer
+        CheckLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListRequest'
+    ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditArea:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        SortOrder:
+          format: int32
+          type: integer
+        CheckLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckList'
+    ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternal:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        StoreId:
+          format: int32
+          type: integer
+        TemplateTypeId:
+          format: int32
+          type: integer
+        StartDate:
+          format: date-time
+          type: string
+        FinishDate:
+          format: date-time
+          type: string
+        SendEmails:
+          default: false
+          type: boolean
+        Emails:
+          type: string
+        Areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaRequest'
+        Language:
+          type: string
+        Status:
+          enum:
+          - Undefined
+          - Open
+          - Completed
+          type: string
+        Source:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.AuditReportExternal:
+      description: The site audit report object. Depending on the features enabled for your company, the object structure may differ from the example below.
+      type: object
+      properties:
+        TemplateTypeName:
+          description: The site audit type.
+          type: string
+        AuditId:
+          format: int32
+          description: The numeric identifier of the site audit report.
+          type: integer
+        StoreId:
+          description: The internal identifier of the subscriber’s property.
+          type: string
+        LocationName:
+          description: The name of the subscriber’s property.
+          type: string
+        Region:
+          description: The region where the property is located.
+          type: string
+        District:
+          description: The district where the property is located.
+          type: string
+        AreaName:
+          description: The name of the audited area within the location.
+          type: string
+        CheckListName:
+          description: The name of the checklist.
+          type: string
+        CheckListItemName:
+          description: The name of the checklist item inspected by the auditor.
+          type: string
+        CheckListItemDescription:
+          description: Detailed instructions for the auditor on how to check or rate the checklist item.
+          type: string
+        Status:
+          description: This field is obsolete. Use field "Score" with "PassThreshold" and "RatingSystem" fields  please.
+          type: string
+        Score:
+          format: int32
+          description: The score that the auditor gave on the checklist item
+          type: integer
+        PassThreshold:
+          format: int32
+          description: Pass threshold
+          type: integer
+        RatingSystem:
+          description: Rating system
+          type: string
+        CheckListItemQuantity:
+          description: The quantity of the checklist item or its cost in dollars depending on the `Unit`.
+          type: string
+        Unit:
+          description: 'The unit of measure of the checklist item: `Quantity` or `Dollars`.'
+          type: string
+        CheckListDate:
+          format: date-time
+          description: The date and time when the auditor completed the audit of the checklist item.
+          type: string
+        TimeOffset:
+          format: int32
+          description: The UTC offset, or the difference in hours from the UTC time.
+          type: integer
+        UserName:
+          description: The username of the auditor who uploaded the completed audit.
+          type: string
+        CheckListItemId:
+          format: int32
+          description: The numeric identifier of the checklist item.
+          type: integer
+        AuditStartDate:
+          format: date-time
+          description: The date and time when the auditor started the site audit.
+          type: string
+        AuditFinishDate:
+          format: date-time
+          description: The date and time when the auditor completed the site audit.
+          type: string
+        AuditIssues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditReportIssueExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListRequest:
+      type: object
+      properties:
+        Name:
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          type: integer
+        CheckListItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemRequest'
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditIssueExternal:
+      description: Parameters for updating the comment added to the checklist item.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Comment ID.
+          type: integer
+        Date:
+          format: date-time
+          description: Date and time when the comment was added to the checklist item. The format is YYYY-MM-DDThh:mm:ss.sss.
+          type: string
+        Description:
+          description: Text of the comment added to the checklist item during the audit.
+          type: string
+        Persistent:
+          description: "Shows whether the comment should be saved for future audits. Possible input values:\n             • `true`: To save the checklist item comment for future audits, set the parameter value to `true`.\n             • `false`: When the comment should not be preserved and displayed for future audits, set the parameter value to `false`."
+          default: false
+          type: boolean
+        Attachments:
+          description: Images or videos attached to the checklist item during the inspection.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditIssueAttachmentExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueAttachmentExternal:
+      description: Checklist item attachments.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Attachment ID.
+          type: integer
+        FileName:
+          description: File name of the attachment.
+          type: string
+        RemoteName:
+          description: Remote name of the attached file.
+          type: string
+        RemoteNameResized:
+          description: Attachment file name that has been resized.
+          type: string
+        ContentType:
+          description: Type of the attached file, for example, *image* or *video*.
+          type: string
+        ContentUrl:
+          description: Web address (or Uniform Resource Locator) that points to the attached file.
+          type: string
+        ContentUrlResized:
+          description: Web address (or Uniform Resource Locator) that points to the resized version of the original image.
+          type: string
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Services.Messaging.SiteAudit.AuditDataWeightedExternal:
+      type: object
+      properties:
+        StartDate:
+          format: date-time
+          type: string
+        FinishDate:
+          format: date-time
+          type: string
+        Areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaWeightedExternal'
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        Emails:
+          type: string
+        SendEmails:
+          default: false
+          type: boolean
+        Language:
+          type: string
+        Source:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditQuantityExternal:
+      description: Parameters for updating the quantity or dollar cost of the inspected checklist items.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Quantity record ID.
+          type: integer
+        Value:
+          format: int32
+          description: Value showing either the quantity or the dollar cost of the inspected items. Check the `Type` parameter’s value.
+          type: integer
+        Type:
+          description: 'Value type. Possible values: `Quantity` and `Dollar`.'
+          enum:
+          - Dollar
+          - Quantity
+          type: string
+        Unit:
+          description: 'Shows whether the auditor captured the **Quantity** or the **Dollar cost** of the inspected item. Possible values: `Quantity` and `Dollar`.'
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListItemExternal:
+      description: Information on the inspected checklist items.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the checklist item.
+          type: integer
+        Name:
+          description: Item name, for example, *Hand dryer* or *Sink*.
+          type: string
+        Description:
+          description: Detailed description/instruction for the checklist item.
+          type: string
+        Score:
+          format: int32
+          description: "Shows how the checklist item was rated. The response value depends on the rating system applied.\n             • `-1`: The item was marked as **Not applicable**.\n             • `1`: In the **Pass/Fail** rating system, it stands for the **Fail** answer.\n             • `2`: In the **Pass/Fail** rating system, it stands for the **Pass** answer.\n             • `numeric value`: In the **Weighted** rating system, a custom numeric value is assigned to each option: **Good**, **Fair**, and **Fail**.\n             • `0–10`: In the **Numeric** rating system, a value from 0 to 10 can be used to rate the item.\n             • `0–100`: In the **Percentage** rating system, a value from 0% to 100% can be used to rate the item."
+          type: integer
+        System:
+          format: int32
+          description: "Rating system that was applied to the checklist item. Possible response values:\n             • `1`: For the **Pass/Fail** rating system\n             • `2`: For the **Numeric** rating system\n             • `3`: For the **Weighted** rating system\n             • `4`: For the **Percentage** rating system. When this rating system is used, the `Score` value is displayed in percentages.\n            <br />Learn more about each rating system in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/550928611/Building+a+Site+Audit+in+an+Excel+Template)."
+          type: integer
+        Date:
+          format: date-time
+          description: Date and time when the checklist item was inspected and rated. The format is `YYYY-MM-DDThh:mm:ss.sss`.
+          type: string
+        DateStr:
+          description: Date when the checklist item was inspected and rated. The format is `MMM DD, YYYY`.
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        CheckListItemImpact:
+          description: "Checklist item’s impact on the total audit score. Possible response values:\n             • `Veto`: Means that this item has the highest impact on the audit score. When at least one of the veto checklist items is rated as **Fail**, the total score of the audit drops to 1%.\n             • `Ignore`: Means that this item is ignored when the audit score is calculated.\n             • `Empty value`: When the method returns an empty value, it means that this checklist item is counted as a regular item."
+          type: string
+        UseNumericRatingSystem:
+          default: false
+          type: boolean
+        PassThreshold:
+          format: int32
+          description: Minimum rating value that is sufficient to pass the audit. Can be in numbers or percentages based on the rating system applied to the checklist item. See the `System` parameter.
+          type: integer
+        Range:
+          description: Range of numbers displayed to the user during the audit, allowing the auditor to rate the item. Permits selecting a score on a 0–10 scale or from 0% to 100%.
+          type: array
+          items:
+            format: int32
+            type: integer
+        Issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueExternal'
+        WorkOrderIds:
+          description: Tracking numbers of the work orders created in the event of the checklist item inspection.
+          type: array
+          items:
+            format: int32
+            type: integer
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditQuantityExternal'
+        PreviousAuditInfoList:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditInfoModelExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemRequest:
+      type: object
+      properties:
+        Name:
+          type: string
+        Description:
+          type: string
+        Score:
+          format: int32
+          type: integer
+        System:
+          enum:
+          - PassFail
+          - Numeric
+          - Weighted
+          - Percentage
+          type: string
+        Range:
+          type: array
+          items:
+            format: int32
+            type: integer
+        PassThreshold:
+          format: int32
+          type: integer
+        Date:
+          format: date-time
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        Issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
+        CheckListItemImpact:
+          type: string
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditInfoModelExternal:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Date:
+          type: string
+        Score:
+          format: int32
           type: integer
         AreaName:
-          description: Name of the area
           type: string
-    ServiceChannel.Services.Messaging.IssueLists.GetProblemTypesResponse:
-      type: object
-      properties:
-        ProblemGroupNames:
+        CheckListName:
+          type: string
+        ItemName:
+          type: string
+        Range:
           type: array
           items:
-            type: string
-    ServiceChannel.Services.Messaging.IssueLists.GetIssueAreasResponse:
-      type: object
-      properties:
-        IssueAreas:
-          description: The List of issue areas.
+            format: int32
+            type: integer
+        PassThreshold:
+          format: int32
+          type: integer
+        System:
+          format: int32
+          type: integer
+        Comments:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.IssueArea'
-    ServiceChannel.Services.Messaging.IssueLists.GetIssueEquipmentTypesResponse:
-      type: object
-      properties:
-        IssueEquipmentTypes:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueModelExternal'
+        WorkOrderIds:
           type: array
           items:
-            type: string
+            format: int32
+            type: integer
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditQuantityModelExternal'
+        CanBeExpanded:
+          default: false
+          type: boolean
+          readOnly: true
+    ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal:
+      type: object
+      properties:
+        Value:
+          format: int32
+          type: integer
+        Type:
+          enum:
+          - Dollar
+          - Quantity
+          type: string
+        Unit:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemWeightedExternal:
+      type: object
+      properties:
+        Name:
+          type: string
+        Description:
+          type: string
+        Score:
+          format: int32
+          type: integer
+        System:
+          enum:
+          - PassFail
+          - Numeric
+          - Weighted
+          - Percentage
+          type: string
+        Date:
+          format: date-time
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        Issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
+        CheckListItemImpact:
+          type: string
+        PassThreshold:
+          format: int32
+          type: integer
+        Range:
+          type: array
+          items:
+            format: int32
+            type: integer
+        StatisticItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticWeightedExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemDetailsResponse:
+      type: object
+      properties:
+        CheckListItemId:
+          format: int32
+          type: integer
+        Workorders:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.WorkOrder'
+        Comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticExternal:
+      type: object
+      properties:
+        CheckListItemId:
+          format: int32
+          type: integer
+        Date:
+          format: date-time
+          type: string
+        Status:
+          format: int32
+          type: integer
+        StatusNumeric:
+          format: int32
+          type: integer
+        UseNumericRatingSystem:
+          default: false
+          type: boolean
+        WorkOrdersCount:
+          format: int32
+          type: integer
+        CommentsCount:
+          format: int32
+          type: integer
+        AttachmentsCount:
+          format: int32
+          type: integer
+        QuantityCount:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedOpenAuditResponse:
+      type: object
+      properties:
+        IsSuccess:
+          default: false
+          type: boolean
+        Sent:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListExternalOld:
+      type: object
+      properties:
+        Name:
+          type: string
+        TemplateName:
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          type: integer
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        CheckListItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternalOld'
+    ServiceChannel.Services.Messaging.SiteAudit.IssueAttachmentExternal:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        RemoteName:
+          type: string
+        RemoteNameResized:
+          type: string
+        FileName:
+          type: string
+        ContentUrl:
+          type: string
+        ContentUrlResized:
+          type: string
+        ContentType:
+          type: string
+    ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditInfo:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        StoreId:
+          format: int32
+          type: integer
+        UserId:
+          format: int32
+          type: integer
+        TemplateTypeId:
+          format: int32
+          type: integer
+        StartDate:
+          format: date-time
+          type: string
+        FinishDate:
+          format: date-time
+          type: string
+        FinishDateStr:
+          type: string
+        Status:
+          enum:
+          - Undefined
+          - Open
+          - Completed
+          type: string
+        Emails:
+          type: string
+        Areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditArea'
+    ServiceChannel.Services.Messaging.SiteAudit.SaveAuditDataResponse:
+      type: object
+      properties:
+        Saved:
+          default: false
+          type: boolean
+        Sent:
+          type: string
+        AuditId:
+          format: int32
+          type: integer
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -3637,54 +4346,33 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.IssueLists.IssueArea:
-      description: The issue area.
+    ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditQuantityModelExternal:
       type: object
       properties:
-        ID:
+        Value:
           format: int32
-          description: Area ID.
+          type: integer
+        Unit:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditAreaExternal:
+      description: Parameters for updating the areas.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the area that was inspected.
           type: integer
         Name:
-          description: Area Name.
+          description: Area name that was inspected, for example, *Exterior* or *Interior*.
           type: string
-    ServiceChannel.Services.Messaging.IssueLists.GetProblemsFilteredByAreaTypeAndLocationResponse:
-      type: object
-      properties:
-        Problems:
-          description: List of Problems
+        SortOrder:
+          format: int32
+          description: Sorting order of the area.
+          type: integer
+        CheckLists:
           type: array
           items:
-            type: string
-    ServiceChannel.Services.Messaging.IssueLists.SetIssueListForDashboardRequest:
-      type: object
-      properties:
-        IssueListId:
-          format: int32
-          type: integer
-        SubscriberId:
-          format: int32
-          type: integer
-        DashboardId:
-          format: int32
-          type: integer
-        UserName:
-          type: string
-    ServiceChannel.Services.Messaging.IssueLists.PostIssueListRequest:
-      type: object
-      properties:
-        IssueListData:
-          type: string
-        IssueListName:
-          type: string
-        SubscriberId:
-          format: int32
-          type: integer
-        UserName:
-          type: string
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedCheckListExternal'
   securitySchemes:
     oauth2:
       type: oauth2

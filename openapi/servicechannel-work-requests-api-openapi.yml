@@ -1,41 +1,176 @@
 openapi: 3.2.0
 info:
   version: '3'
-  title: ServiceChannel API - v.3 Mli Configuration API
+  title: ServiceChannel API - v.3 Work Requests API
   description: The ServiceChannel API is a RESTful and stateless API.
 servers:
 - url: https://sb2api.servicechannel.com/v3
 security:
 - oauth2: []
 tags:
-- name: MliConfiguration
+- name: Work Requests
 paths:
-  /mliConfiguration/Levels:
+  /workrequests:
+    post:
+      tags:
+      - Work Requests
+      summary: Creates a work request
+      description: '*In limited availability phase.*'
+      operationId: POSTv3_workrequests
+      responses:
+        '201':
+          description: Created indicates that the request resulted in a new resource created before the response was sent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            101 - Invalid provider id\n            301 - Contract not found for specified subscribers location, provider and trade\n            401 - Invalid subscriber\n            601 - Location is not found\n            701 - Invalid trade\n            8001 — Description is required\n            8002 — Call Date is required\n            8003 — Issue is required\n            8005 - CallDate has wrong format\n            8006 - ScheduledDate has wrong format\n            8007 - Invalid status\n            8008 - Invalid extended status\n            8009 - Invalid category\n            8010 - Invalid priority\n            8011 - Invalid currency\n            8012 - Invalid setup\n            8013 - Invalid area\n            8014 - Invalid asset\n            8017 - ProblemCode is required\n            8018 - ProblemType is required\n            8019 - ScheduledDate must be greater than CallDate"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Indicates that a generic error has occurred on the server.\n            <br/>Error codes:\n            501 - Internal Error code"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestRequest'
+        required: true
+  /workrequests/{id}:
     get:
       tags:
-      - MliConfiguration
-      summary: Get MLI levels
-      description: 'Returns IDs and names of all MLI levels of the current subscriber.
-
-
-        Learn more about MLI levels configuration in ServiceChannel University.'
-      operationId: GETv3_mliConfiguration_Levels
+      - Work Requests
+      summary: Retrieve a work request
+      description: '*In limited availability phase.*'
+      operationId: GETv3_workrequests_{id}
+      parameters:
+      - name: id
+        in: path
+        description: Numeric Id of the work request to perform action with.
+        required: true
+        schema:
+          type: integer
+          format: int32
       responses:
         '200':
-          description: MLI levels are in the response.
+          description: Indicates that the request succeeded and that the requested information is in the response.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.WorkRequest'
             text/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.WorkRequest'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
+          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\n            <br/>Error codes:\n            502 — Data not found"
+      deprecated: false
+      x-access: Any
+    delete:
+      tags:
+      - Work Requests
+      summary: Delete a work request
+      description: '*In limited availability phase.*'
+      operationId: DELETEv3_workrequests_{id}
+      parameters:
+      - name: id
+        in: path
+        description: Numeric Id of the work request to perform action with.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+        '401':
+          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\n            <br/>Error codes:\n            502 — Data not found"
+      deprecated: false
+      x-access: Any
+  /workrequests/{workRequestId}:
+    put:
+      tags:
+      - Work Requests
+      summary: Update a work request
+      description: '*In limited availability phase.*'
+      operationId: PUTv3_workrequests_{workRequestId}
+      parameters:
+      - name: workRequestId
+        in: path
+        description: Numeric Id of the work request to perform action with.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            301 - Contract not found for specified subscribers location, provider and trade\n            502 - WorkRequest not found\n            701 - Invalid trade\n            8006 - ScheduledDate has wrong format\n            8007 - Invalid status\n            8008 - Invalid extended status\n            8009 - Invalid category\n            8010 - Invalid priority     \n            8011 - Invalid currency\n            8019 - ScheduledDate must be greater than CallDate\n            8107 - Work request is closed\n            8108 - Closed reason is required for Closed status\n            8109 - Work order id is required for this closed reason\n            8110 - Invalid closed reason\n            8111 - Closed reason could be set only for Closed status\n            8112 - Invalid work order id\n            8113 - Work order id could be set only for Closed status\n            8114 - Work order id could be set only for &apos;Work order created&apos; reason"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Indicates that a generic error has occurred on the server.\n            <br/>Error codes:\n            501 - Internal Error code"
           content:
             application/json:
               schema:
@@ -45,40 +180,544 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Any
-  /mliConfiguration/Levels/{levelId}/Users:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.UpdateWorkRequestRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.UpdateWorkRequestRequest'
+        description: The update request.
+        required: true
+  /workrequests/{workRequestId}/status:
+    put:
+      tags:
+      - Work Requests
+      summary: Update a work request status
+      description: '*In limited availability phase.*'
+      operationId: PUTv3_workrequests_{workRequestId}_status
+      parameters:
+      - name: workRequestId
+        in: path
+        description: Numeric Id of the work request to perform action with.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            502 - WorkRequest not found\n            8007 - Invalid status\n            8008 - Invalid extended status"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Indicates that a generic error has occurred on the server.\n            <br/>Error codes:\n            501 - Internal Error code"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestStatusRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestStatusRequest'
+        description: The update request. Work request Status.
+        required: true
+  /workrequests/{workRequestId}/priority:
+    put:
+      tags:
+      - Work Requests
+      summary: Update work request priority
+      description: '*In limited availability phase.*'
+      operationId: PUTv3_workrequests_{workRequestId}_priority?priorityId={priorityId}
+      parameters:
+      - name: workRequestId
+        in: path
+        description: Numeric Id of the work request to perform action with.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: priorityId
+        in: query
+        description: Priority Id.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            502 - WorkRequest not found\n            8010 - Invalid priority"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Indicates that a generic error has occurred on the server.\n            <br/>Error codes:\n            501 - Internal Error code"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /workrequests/{workRequestId}/category:
+    put:
+      tags:
+      - Work Requests
+      summary: Update work request category
+      description: '*In limited availability phase.*'
+      operationId: PUTv3_workrequests_{workRequestId}_category?categoryId={categoryId}
+      parameters:
+      - name: workRequestId
+        in: path
+        description: Numeric Id of the work request to perform action with.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: categoryId
+        in: query
+        description: Category Id.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            502 - WorkRequest not found\n            8009 - Invalid category"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Indicates that a generic error has occurred on the server.\n            <br/>Error codes:\n            501 - Internal Error code"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /workrequests/{workRequestId}/nte:
+    put:
+      tags:
+      - Work Requests
+      summary: Update work request NTE
+      description: '*In limited availability phase.*'
+      operationId: PUTv3_workrequests_{workRequestId}_nte
+      parameters:
+      - name: workRequestId
+        in: path
+        description: Numeric Id of the work request to perform action with.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            502 - WorkRequest not found\n            8011 - Invalid currency"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Indicates that a generic error has occurred on the server.\n            <br/>Error codes:\n            501 - Internal Error code"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestNteRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestNteRequest'
+        description: The update request. Work request NTE.
+        required: true
+  /workrequests/{workRequestId}/scheduledate:
+    put:
+      tags:
+      - Work Requests
+      summary: Update work request schedule date
+      description: '*In limited availability phase.*'
+      operationId: PUTv3_workrequests_{workRequestId}_scheduledate?scheduledDate={scheduledDate}
+      parameters:
+      - name: workRequestId
+        in: path
+        description: Numeric Id of the work request to perform action with.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: scheduledDate
+        in: query
+        description: Scheduled date.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            502 - WorkRequest not found\n            8006 - ScheduledDate has wrong format\n            8019 - ScheduledDate must be greater than CallDate"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Indicates that a generic error has occurred on the server.\n            <br/>Error codes:\n            501 - Internal Error code"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /workrequests/{workRequestId}/description:
+    put:
+      tags:
+      - Work Requests
+      summary: Update work request description
+      description: '*In limited availability phase.*'
+      operationId: PUTv3_workrequests_{workRequestId}_description
+      parameters:
+      - name: workRequestId
+        in: path
+        description: Numeric Id of the work request to perform action with.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            502 - WorkRequest not found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Indicates that a generic error has occurred on the server.\n            <br/>Error codes:\n            501 - Internal Error code"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestStringFieldsRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestStringFieldsRequest'
+        description: The update request. Work request description.
+        required: true
+  /workrequests/{workRequestId}/trade:
+    put:
+      tags:
+      - Work Requests
+      summary: Update work request trade
+      description: '*In limited availability phase.*'
+      operationId: PUTv3_workrequests_{workRequestId}_trade?tradeId={tradeId}
+      parameters:
+      - name: workRequestId
+        in: path
+        description: Numeric Id of the Work request to perform action with.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: tradeId
+        in: query
+        description: Trade id.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            301 - Contract not found for specified subscribers location, provider and trade\n            502 - WorkRequest not found\n            701 - Invalid trade"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Indicates that a generic error has occurred on the server.\n            <br/>Error codes:\n            501 - Internal Error code"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+  /workrequests/{workRequestId}/reassign:
+    put:
+      tags:
+      - Work Requests
+      summary: Reassign work request to another provider
+      description: '*In limited availability phase.*'
+      operationId: PUTv3_workrequests_{workRequestId}_reassign
+      parameters:
+      - name: workRequestId
+        in: path
+        description: Numeric Id of the work request to perform action with.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Indicates that the request succeeded and that the requested information is in the response.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            100 - Invalid provider id passed\n            301 - Contract not found for specified subscribers location, provider and trade\n            502 - WorkRequest not found\n            503 - Provider should be changed\n            701 - Invalid trade\n            8006 - ScheduledDate has wrong format\n            8009 - Invalid category\n            8010 - Invalid priority\n            8011 - Invalid currency\n            8019 - ScheduledDate must be greater than CallDate"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "Indicates that a generic error has occurred on the server.\n            <br/>Error codes:\n            501 - Internal Error code"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.ReassignWorkRequestRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.ReassignWorkRequestRequest'
+        description: The request to perform action with.
+        required: true
+  /workrequests/search:
+    post:
+      tags:
+      - Work Requests
+      summary: Performs search of work requests by specified filter expression.
+      description: '*In limited availability phase.*'
+      operationId: POSTv3_workrequests_search
+      responses:
+        '200':
+          description: Work requests are in the response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.WorkRequest'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.WorkRequest'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:           \n            8100 - CallDateFrom has wrong format\n            8101 - CallDateTo has wrong format\n            8102 - ScheduledDateFrom has wrong format\n            8103 - ScheduledDateTo has wrong format\n            8104 - CloseDateFrom has wrong format\n            8105 - CloseDateTo has wrong format"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: The server was unable to complete the request due to an internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.SearchWorkRequestRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.SearchWorkRequestRequest'
+        required: true
+  /workrequests/providersforreassignment:
     get:
       tags:
-      - MliConfiguration
-      summary: Get MLI level users
-      description: 'Returns the users assigned to the specified level. The response body is empty if no user has been assigned to this level.
-
-
-        You can use the GET /mliConfiguration/Levels method to get the MLI levels IDs. Send the POST /MliConfiguration/Levels/{levelId}/Users/{userId} request to assign users to the MLI level.'
-      operationId: GETv3_mliConfiguration_Levels_{levelId}_Users
+      - Work Requests
+      summary: Get providers available for reassign
+      operationId: GETv3_workrequests_providersforreassignment?workRequestId={workRequestId}
       parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
+      - name: workRequestId
+        in: query
+        description: Work request id
         required: true
         schema:
           type: integer
           format: int32
       responses:
-        '200':
-          description: The users assigned to the specified MLI level are in the response.
+        '201':
+          description: Created indicates that the request resulted in a new resource created before the response was sent.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.User.Api.AssignedUser'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.ServiceRequestProvider'
             text/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.User.Api.AssignedUser'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.ServiceRequestProvider'
         '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Approval levels getting error"
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:           \n            503 - Invalid Equipment Id\n            503 - Invalid Location Id\n            804 - API call rejected by lack of provider permissions\n            502 - We could not find the service provider for the problem you have indicated"
           content:
             application/json:
               schema:
@@ -87,7 +726,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 — API call rejected by security permissions"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '404':
+          description: "The requested resource does not exist on the server.\n            <br/>Error codes:\n            502 — We could not find the service provider for the problem you have indicated"
+        '500':
+          description: "Indicates that a generic error has occurred on the server.\n            <br/>Error codes:\n            501 - Internal Error code"
           content:
             application/json:
               schema:
@@ -97,357 +747,518 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Any
-  /MliConfiguration/Levels/{levelId}/Users/{userId}:
-    post:
-      tags:
-      - MliConfiguration
-      summary: Add a user to an MLI level
-      description: 'Assigns a user to an existing MLI level. Get users’ IDs by sending the GET /users request.
-
-
-        You can assign a user to an existing location by using the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} method.
-
-
-        ***Note***: Each user can be added to only one MLI level. If a user should be assigned to another MLI level, you first need to remove this user from the MLI level they currently belong to.'
-      operationId: POSTv3_MliConfiguration_Levels_{levelId}_Users_{userId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: Returns the created user ID from table dat_Division_User.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1129 — Err: failed to assign users\n            1131 — Err: Approval level doesn’t exist\n            1149 — User has already been assigned to another level\n            1150 — User does not exist"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /mliConfiguration/Levels/{levelId}/Users/{userId}:
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove a user from an MLI level
-      description: Removes the specified user from a particular MLI level. To unassign a user from an existing location, send the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: DELETEv3_mliConfiguration_Levels_{levelId}_Users_{userId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: The specified user is successfully removed from the MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Err: Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1150 — User does not exist"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId}:
-    post:
-      tags:
-      - MliConfiguration
-      summary: Add a location to a user’s MLI level
-      description: Assigns the specified location to a particular user and user’s MLI level. A location can be removed from a user by sending the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: POSTv3_MliConfiguration_Levels_{levelId}_Users_{userId}_Locations_{locationId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: path
-        description: Unique numeric identifier of the location.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: Returns the created location ID from table dat_Location_Division.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Err: Approval level doesn’t exist\n            1130 — Failed to assign the location to the user\n            1130 — User is not assigned to the level\n            1130 — Err: Failed to assign locations to the approval level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User does not exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove a location from a user’s MLI level
-      description: Removes the specified location from a particular user and MLI level. To assign a location to a user and MLI level, send the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: DELETEv3_MliConfiguration_Levels_{levelId}_Users_{userId}_Locations_{locationId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: path
-        description: Unique numeric identifier of the location.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: The specified location is successfully removed from the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Location is not assigned to the user\n            1130 — Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User doesn’t exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/levels/{levelId}/users/{userId}/locations/unassign-all:
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove all locations from a user’s MLI level
-      description: Removes all locations from a particular user and MLI level. To assign all locations to a user and MLI level, send the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/assign-all request.
-      operationId: DELETEv3_MliConfiguration_levels_{levelId}_users_{userId}_locations_unassign-all
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: All locations are successfully removed from the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Location is not assigned to the user\n            1130 — Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User doesn’t exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Subscribers
-  /MliConfiguration/levels/{levelId}/users/{userId}/locations/assign-all:
-    post:
-      tags:
-      - MliConfiguration
-      summary: Assign all locations to a user’s MLI level
-      description: Assigns all locations to a particular user and MLI level. To remove locations from a user and MLI level, send the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/unassign-all request.
-      operationId: POSTv3_MliConfiguration_levels_{levelId}_users_{userId}_locations_assign-all
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: All locations are successfully assigned to the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Err: Approval level doesn’t exist\n            1130 — Failed to assign the location to the user\n            1130 — User is not assigned to the level\n            1130 — Err: Failed to assign locations to the approval level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User does not exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Subscribers
 components:
   schemas:
-    ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel:
-      description: MLI level object.
+    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestRequest:
+      description: Request to create a work request
+      type: object
+      properties:
+        SubscriberId:
+          format: int32
+          description: Subscriber Id
+          type: integer
+        ProviderId:
+          format: int32
+          description: Provider Id
+          type: integer
+        EventId:
+          description: Optional. Guid of IoT event. For example, B216E711-420F-4D32-9080-762CBFD4E732
+          type: string
+        LocationId:
+          format: int32
+          description: Location Id
+          type: integer
+        StatusId:
+          format: int32
+          description: WorkRequest status Id
+          type: integer
+        ExtendedStatusId:
+          format: int32
+          description: WorkRequest extended status Id
+          type: integer
+        Description:
+          description: Description. Free text.
+          type: string
+        TradeId:
+          format: int32
+          description: Trade Id
+          type: integer
+        CategoryId:
+          format: int32
+          description: Catgory Id
+          type: integer
+        PriorityId:
+          format: int32
+          description: Priority Id
+          type: integer
+        Caller:
+          description: Optional. Caller
+          type: string
+        CallDate:
+          description: Call date. In UTC
+          type: string
+        ScheduledDate:
+          description: Optional. Scheduled date. In UTC
+          type: string
+        AssetId:
+          format: int32
+          description: Optional. Asset Id
+          type: integer
+        Nte:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestNteRequest'
+          description: Optional. NTE info
+        Issue:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestIssueRequest'
+          description: Issue info
+        Attachments:
+          description: Optional. Attachments
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestAttachmentRequest'
+    ServiceChannel.Services.Messaging.WorkRequests.SearchWorkRequestRequest:
+      description: Object to perform search for work requests
+      type: object
+      properties:
+        Ids:
+          description: Ids
+          type: array
+          items:
+            format: int32
+            type: integer
+        SubscriberIds:
+          description: Subscriber Ids
+          type: array
+          items:
+            format: int32
+            type: integer
+        ProviderIds:
+          description: Provider Ids
+          type: array
+          items:
+            format: int32
+            type: integer
+        LocationIds:
+          description: Location Ids
+          type: array
+          items:
+            format: int32
+            type: integer
+        CategoryIds:
+          description: Category Ids
+          type: array
+          items:
+            format: int32
+            type: integer
+        StatusIds:
+          description: Status Ids
+          type: array
+          items:
+            format: int32
+            type: integer
+        ExtendedStatusIds:
+          description: Extended Status Ids
+          type: array
+          items:
+            format: int32
+            type: integer
+        PriorityIds:
+          description: Priority Ids
+          type: array
+          items:
+            format: int32
+            type: integer
+        TradeIds:
+          description: Trade Ids
+          type: array
+          items:
+            format: int32
+            type: integer
+        ClosedReasonIds:
+          description: Closed Reason Ids
+          type: array
+          items:
+            format: int32
+            type: integer
+        EventIds:
+          description: Event Ids
+          type: array
+          items:
+            type: string
+        WorkOrderIds:
+          description: Work Order Ids
+          type: array
+          items:
+            format: int32
+            type: integer
+        AssetIds:
+          description: Asset Ids
+          type: array
+          items:
+            format: int32
+            type: integer
+        CallDateFrom:
+          description: Minimum Call Date
+          type: string
+        CallDateTo:
+          description: Maximum Call Date
+          type: string
+        ScheduledDateFrom:
+          description: Minimum Scheduled Date
+          type: string
+        ScheduledDateTo:
+          description: Maximum Scheduled Date
+          type: string
+        ClosedDateFrom:
+          description: Minimum Closed Date
+          type: string
+        ClosedDateTo:
+          description: Maximum Closed Date
+          type: string
+        SortField:
+          description: Sort Field
+          enum:
+          - Id
+          - CallDate
+          - ScheduledDate
+          - ClosedDate
+          type: string
+        SortDirection:
+          description: Sort direction
+          enum:
+          - Asc
+          - Desc
+          type: string
+        Page:
+          format: int32
+          description: Page. Zero based
+          type: integer
+        PageSize:
+          format: int32
+          description: Page Size
+          type: integer
+    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestAttachmentRequest:
+      description: Request to add attachments to a work request
+      type: object
+      properties:
+        Description:
+          description: Description
+          type: string
+        FileName:
+          description: 'File name of a uploaded attachment. For example, #workorders/0DD13443-EAF4-4A1D-930B-992EFC8ED3E0'
+          type: string
+        OriginalName:
+          description: Original file name. For example, my-file.pdf
+          type: string
+        Visibility:
+          format: int32
+          description: Visibility
+          type: integer
+    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestResponse:
+      description: Response for work request creation
       type: object
       properties:
         Id:
           format: int32
-          description: Unique numeric identifier of an MLI level.
+          description: Id of the created work request
+          type: integer
+    ServiceChannel.Services.Messaging.Providers.ServiceRequestProvider:
+      type: object
+      properties:
+        Rank:
+          format: int32
+          description: Rank
+          type: integer
+        Category:
+          description: Category
+          type: string
+        Priority:
+          description: Priority
+          type: string
+        Nte:
+          format: double
+          description: Nte
+          type: number
+        GeneralEmail:
+          description: General Email
+          type: string
+        IsDefault:
+          description: Is Default
+          default: false
+          type: boolean
+        ServiceRequestEmails:
+          description: ServiceRequestEmails
+          type: string
+        Phone:
+          type: string
+        FullName:
+          description: Full Name
+          type: string
+        Address1:
+          description: Address1
+          type: string
+        Address2:
+          description: Adress2
+          type: string
+        City:
+          description: City
+          type: string
+        State:
+          description: State
+          type: string
+        Zip:
+          description: Zip
+          type: string
+        Country:
+          description: Country
+          type: string
+        MainContact:
+          description: Main Contact
+          type: string
+        DateCreated:
+          format: date-time
+          description: Date Created
+          type: string
+        LastUserDate:
+          description: Last User Date
+          type: string
+        SuperUser:
+          description: SuperUser
+          type: string
+        WebSite:
+          description: WebSite
+          type: string
+        Email:
+          description: Email
+          type: string
+        TaxId:
+          description: Tax Id
+          type: string
+        Trade:
+          description: Trade
+          type: string
+        ProcessingEmail:
+          description: Processing Email
+          type: string
+        FaxNumber:
+          description: Fax Number
+          type: string
+        SuiteFloor:
+          description: Suite Floor
+          type: string
+        MailInfo:
+          description: Mail Info
+          type: string
+        ImageFile:
+          description: Image File
+          type: string
+        ReturnMail:
+          description: Return Mail
+          type: string
+        MailFrequency:
+          format: int32
+          description: Mail Frequency
+          type: integer
+        FormId:
+          format: int32
+          description: Form Id
+          type: integer
+        Pager:
+          description: Pager
+          type: string
+        NightRequest:
+          format: int32
+          description: NightRequest
+          type: integer
+        ShortFormatEmail:
+          description: Short Format Email
+          type: string
+        LastTrainingDate:
+          format: date-time
+          description: Last Training Date
+          type: string
+        LastTrainingDateStr:
+          description: Last Training Date as a string
+          type: string
+        IsInternal:
+          description: Is Internal
+          default: false
+          type: boolean
+        IsOnOffShoreFeatureEnabled:
+          description: Is OnOffShoreFeature Enabled
+          default: false
+          type: boolean
+        Id:
+          format: int32
+          description: Id
           type: integer
         Name:
-          description: MLI level name.
+          description: Name
           type: string
-    System.Object:
+        DoNotDispatch:
+          description: DoNotDispatch enabled?
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.WorkRequests.WorkRequestNte:
+      description: Work Request Nte
       type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.User.Api.AssignedUser:
-      description: Assigned user object details.
+      properties:
+        Value:
+          format: double
+          description: Value
+          type: number
+        CurrencyId:
+          format: int32
+          description: Currency Id
+          type: integer
+        CurrencyAlphabeticCode:
+          description: Currency Alphabetic Code
+          type: string
+    ServiceChannel.Services.Messaging.WorkRequests.WorkRequest:
+      description: Work Request
       type: object
       properties:
         Id:
           format: int32
-          description: Unique user identifier.
+          description: Id
           type: integer
-        UserId:
-          description: Username to log into the system.
+        SubscriberId:
+          format: int32
+          description: Subscriber Id
+          type: integer
+        SubscriberShortName:
+          description: Subscriber Short Name
+          type: string
+        ProviderId:
+          format: int32
+          description: Provider Id
+          type: integer
+        ProviderShortName:
+          description: Provider Short Name
+          type: string
+        LocationId:
+          format: int32
+          description: Location Id
+          type: integer
+        LocationStoreId:
+          description: Location Store Id
+          type: string
+        EventId:
+          description: Event Id
+          type: string
+        StatusId:
+          format: int32
+          description: Status Id
+          type: integer
+        StatusName:
+          description: Status Name
+          type: string
+        ExtendedStatusId:
+          format: int32
+          description: Extended Status Id
+          type: integer
+        ExtendedStatusName:
+          description: Extended Status Name
+          type: string
+        ClosedReasonId:
+          format: int32
+          description: Closed Reason Id
+          type: integer
+        ClosedReasonName:
+          description: Closed Reason Name
+          type: string
+        Description:
+          description: Description
+          type: string
+        TradeId:
+          format: int32
+          description: Trade Id
+          type: integer
+        TradeName:
+          description: Trade Name
+          type: string
+        CategoryId:
+          format: int32
+          description: Category Id
+          type: integer
+        CategoryName:
+          description: Category Name
+          type: string
+        PriorityId:
+          format: int32
+          description: Priority Id
+          type: integer
+        PriorityName:
+          description: Priority Name
+          type: string
+        Caller:
+          description: Caller
+          type: string
+        CallDate:
+          format: date-time
+          description: Call Date
+          type: string
+        ClosedDate:
+          format: date-time
+          description: Closed Date
+          type: string
+        ScheduledDate:
+          format: date-time
+          description: Scheduled Date
+          type: string
+        WorkOrderId:
+          format: int32
+          description: Work Order Id
+          type: integer
+        AssetId:
+          format: int32
+          description: Asset Id
+          type: integer
+        Nte:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.WorkRequestNte'
+          description: NTE
+        Issue:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.WorkRequestIssue'
+          description: Issue information
+    ServiceChannel.Services.Messaging.WorkRequests.ReassignWorkRequestRequest:
+      description: Reassign Work Request to other Provider
+      type: object
+      properties:
+        ProviderId:
+          format: int32
+          description: Provider id to assign.
+          type: integer
+        TradeId:
+          format: int32
+          description: Optional, by default current Work Request Trade
+          type: integer
+        CurrencyId:
+          format: int32
+          description: Optional, by default current Work Request Currency
+          type: integer
+        Nte:
+          format: double
+          description: Optional Nte value, by default current Work Request NTE
+          type: number
+        PriorityId:
+          format: int32
+          description: Optional, by default current Work Request Priority
+          type: integer
+        ScheduledDate:
+          description: Optional, by default current Work Request ScheduledDate
+          type: string
+        CategoryId:
+          format: int32
+          description: Optional, by default current Work Request Category
+          type: integer
+        Description:
+          description: Optional
+          type: string
+    ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestStringFieldsRequest:
+      description: Request to update the value of a work request parameter.
+      type: object
+      properties:
+        Value:
+          description: Value of the work request parameter to update.
           type: string
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
@@ -2086,6 +2897,132 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestNteRequest:
+      description: Request to set NTE for a work request
+      type: object
+      properties:
+        Value:
+          format: double
+          description: Value
+          type: number
+        CurrencyId:
+          format: int32
+          description: Currency Id
+          type: integer
+    ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestStatusRequest:
+      description: Request to change a work request status
+      type: object
+      properties:
+        StatusId:
+          format: int32
+          description: WorkRequest status Id
+          type: integer
+        ExtendedStatusId:
+          format: int32
+          description: WorkRequest extended status Id
+          type: integer
+    ServiceChannel.Services.Messaging.WorkRequests.UpdateWorkRequestRequest:
+      description: Request to update a work request properties
+      type: object
+      properties:
+        StatusId:
+          format: int32
+          description: Status Id
+          type: integer
+        ExtendedStatusId:
+          format: int32
+          description: Extended Status Id
+          type: integer
+        ClosedReasonId:
+          format: int32
+          description: Closed Reason Id
+          type: integer
+        WorkOrderId:
+          format: int32
+          description: Work Order Id
+          type: integer
+        PriorityId:
+          format: int32
+          description: Priority Id
+          type: integer
+        CategoryId:
+          format: int32
+          description: Category Id
+          type: integer
+        ScheduledDate:
+          description: Scheduled date
+          type: string
+        Description:
+          description: Description
+          type: string
+        TradeId:
+          format: int32
+          description: Trade Id
+          type: integer
+        NTE:
+          format: double
+          description: NTE value
+          type: number
+    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestIssueRequest:
+      description: Request to set issue parameters for a work request
+      type: object
+      properties:
+        AreaId:
+          format: int32
+          description: Area Id
+          type: integer
+        ProblemType:
+          description: Problem type
+          type: string
+        Equipment:
+          description: Equipment
+          type: string
+        ProblemCode:
+          description: Problem code
+          type: string
+        SetupId:
+          format: int32
+          description: Setup(dashboard) Id
+          type: integer
+    ServiceChannel.Services.Messaging.WorkRequests.WorkRequestIssue:
+      description: Work Request Issue
+      type: object
+      properties:
+        AreaId:
+          format: int32
+          description: Area Id
+          type: integer
+        AreaName:
+          description: Area Name
+          type: string
+        ProblemType:
+          description: Problem Type
+          type: string
+        Equipment:
+          description: Equipment
+          type: string
+        ProblemCode:
+          description: Problem Code
+          type: string
+        SetupId:
+          format: int32
+          description: Setup Id
+          type: integer
+    ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestNteRequest:
+      description: Request to change NTE for a work request
+      type: object
+      properties:
+        Value:
+          format: double
+          description: Value
+          type: number
+        CurrencyId:
+          format: int32
+          description: Currency Id
+          type: integer
   securitySchemes:
     oauth2:
       type: oauth2

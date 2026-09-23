@@ -1,0 +1,141 @@
+openapi: 3.2.0
+info:
+  version: '3'
+  title: ServiceChannel API - v.3 Single Sign On API
+  description: The ServiceChannel API is a RESTful and stateless API.
+servers:
+- url: https://sb2api.servicechannel.com/v3
+security:
+- oauth2: []
+tags:
+- name: Single Sign On
+paths:
+  /sso/clients/register:
+    post:
+      tags:
+      - Single Sign On
+      operationId: POSTv3_sso_clients_register
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SingleSignOn.RegisterSsoClientRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SingleSignOn.RegisterSsoClientRequest'
+        required: true
+      summary: POSTv3 sso clients register
+      x-summary-source: derived
+  /sso/clients/{clientIdentifier}/delete:
+    delete:
+      tags:
+      - Single Sign On
+      operationId: DELETEv3_sso_clients_{clientIdentifier}_delete
+      parameters:
+      - name: clientIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+      deprecated: false
+      x-access: Any
+      summary: DELETEv3 sso clients {client identifier} delete
+      x-summary-source: derived
+  /sso/clients/{clientIdentifier}/deactivate:
+    put:
+      tags:
+      - Single Sign On
+      operationId: PUTv3_sso_clients_{clientIdentifier}_deactivate
+      parameters:
+      - name: clientIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+      deprecated: false
+      x-access: Any
+      summary: PUTv3 sso clients {client identifier} deactivate
+      x-summary-source: derived
+  /sso/clients/{clientIdentifier}/activate:
+    put:
+      tags:
+      - Single Sign On
+      operationId: PUTv3_sso_clients_{clientIdentifier}_activate
+      parameters:
+      - name: clientIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.Object'
+      deprecated: false
+      x-access: Any
+      summary: PUTv3 sso clients {client identifier} activate
+      x-summary-source: derived
+components:
+  schemas:
+    ServiceChannel.Services.Messaging.SingleSignOn.RegisterSsoClientRequest:
+      type: object
+      properties:
+        InvitationKey:
+          description: SSO invitation key to identify user
+          type: string
+        ClientIdentifier:
+          description: Unique client id, for. ex. IMEI of the mobile device
+          type: string
+        ClientDescription:
+          description: Description, for ex. mobile device description(Brand, Model, Number)
+          type: string
+    System.Object:
+      type: object
+      properties: {}
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes: {}
+          authorizationUrl: https://sb2login.servicechannel.com/oauth/authorize
+          tokenUrl: https://sb2login.servicechannel.com/oauth/token
+      description: OAuth2 Authorization

@@ -1,41 +1,38 @@
 openapi: 3.2.0
 info:
   version: '3'
-  title: ServiceChannel API - v.3 Mli Configuration API
+  title: ServiceChannel API - v.3 Notification Web Hooks API
   description: The ServiceChannel API is a RESTful and stateless API.
 servers:
 - url: https://sb2api.servicechannel.com/v3
 security:
 - oauth2: []
 tags:
-- name: MliConfiguration
+- name: Notification Web Hooks
 paths:
-  /mliConfiguration/Levels:
+  /NotificationWebHooks:
     get:
       tags:
-      - MliConfiguration
-      summary: Get MLI levels
-      description: 'Returns IDs and names of all MLI levels of the current subscriber.
-
-
-        Learn more about MLI levels configuration in ServiceChannel University.'
-      operationId: GETv3_mliConfiguration_Levels
+      - Notification Web Hooks
+      summary: List existing webhooks
+      description: Returns a list of webhooks for the current subscriber or provider.
+      operationId: GETv3_NotificationWebHooks
       responses:
         '200':
-          description: MLI levels are in the response.
+          description: The webhooks are in the response.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel'
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.WebHooks.WebHook'
             text/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel'
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.WebHooks.WebHook'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
           content:
             application/json:
               schema:
@@ -45,40 +42,140 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Any
-  /mliConfiguration/Levels/{levelId}/Users:
+    post:
+      tags:
+      - Notification Web Hooks
+      summary: Create a webhook
+      description: 'Creates a new webhook for the specified event types. Returns a unique webhook ID for a successful request.
+
+        See Event Objects for example notification objects and descriptions of their fields.
+
+
+        ***Note:*** You can create webhooks using API or via the Service Automation Admin.
+
+
+        **Example Request**
+
+
+        POST /NotificationWebHooks
+
+        {
+
+        "Subscriptions": [
+
+        {
+
+        "Name": "Subscription to new WOs",
+
+        "EventTypes": [
+
+        "WorkOrderCreated"
+
+        ],
+
+        "Rules": {
+
+        "Trades": [
+
+        "GLASS"
+
+        ],
+
+        "Categories": [
+
+        "MAINTENANCE"
+
+        ],
+
+        "Statuses": [
+
+        "COMPLETED/CONFIRMED"
+
+        ]
+
+        }
+
+        }
+
+        ],
+
+        "Enabled": true,
+
+        "Name": "New WO webhook",
+
+        "Description": "I want to receive notifications when new WOs of GLASS trade and MAINTENANCE category are created.",
+
+        "Url": "https://your-company.com/webhook-target-URL"
+
+        }'
+      operationId: POSTv3_NotificationWebHooks
+      responses:
+        '201':
+          description: The webhook is created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.WebHooks.AddWebHookResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.WebHooks.AddWebHookResponse'
+        '400':
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            503 - Required data missing or incorrect"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.WebHooks.AddWebHookRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.WebHooks.AddWebHookRequest'
+        description: The webhook object that needs to be created.
+        required: true
+  /NotificationWebHooks/{id}:
     get:
       tags:
-      - MliConfiguration
-      summary: Get MLI level users
-      description: 'Returns the users assigned to the specified level. The response body is empty if no user has been assigned to this level.
-
-
-        You can use the GET /mliConfiguration/Levels method to get the MLI levels IDs. Send the POST /MliConfiguration/Levels/{levelId}/Users/{userId} request to assign users to the MLI level.'
-      operationId: GETv3_mliConfiguration_Levels_{levelId}_Users
+      - Notification Web Hooks
+      summary: Get a webhook
+      description: Retrieves the details of the specified webhook.
+      operationId: GETv3_NotificationWebHooks_{id}
       parameters:
-      - name: levelId
+      - name: id
         in: path
-        description: Numeric identifier of the MLI level.
+        description: The unique ID of the webhook to return.
         required: true
         schema:
           type: integer
           format: int32
       responses:
         '200':
-          description: The users assigned to the specified MLI level are in the response.
+          description: The requested webhook is in the response.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.User.Api.AssignedUser'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.WebHooks.WebHook'
             text/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.User.Api.AssignedUser'
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.WebHooks.WebHook'
         '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Approval levels getting error"
+          description: "The requested data are not found.\n            <br/>Error codes:\n            502 - Webhook not found"
           content:
             application/json:
               schema:
@@ -87,7 +184,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
           content:
             application/json:
               schema:
@@ -97,39 +194,85 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Any
-  /MliConfiguration/Levels/{levelId}/Users/{userId}:
-    post:
+    put:
       tags:
-      - MliConfiguration
-      summary: Add a user to an MLI level
-      description: 'Assigns a user to an existing MLI level. Get users’ IDs by sending the GET /users request.
+      - Notification Web Hooks
+      summary: Update a webhook
+      description: 'Updates the specified webhook by setting the values of the parameters passed.
 
 
-        You can assign a user to an existing location by using the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} method.
+        **Example Request**
 
 
-        ***Note***: Each user can be added to only one MLI level. If a user should be assigned to another MLI level, you first need to remove this user from the MLI level they currently belong to.'
-      operationId: POSTv3_MliConfiguration_Levels_{levelId}_Users_{userId}
+        PUT /NotificationWebHooks/{id}
+
+        {
+
+        "Subscriptions": [
+
+        {
+
+        "Id": 1111,
+
+        "Name": "Subscription to new WOs",
+
+        "EventTypes": [
+
+        "WorkOrderCreated"
+
+        ],
+
+        "Rules": {
+
+        "Trades": [
+
+        "GLASS"
+
+        ],
+
+        "Categories": [
+
+        "MAINTENANCE"
+
+        ],
+
+        "Statuses": [
+
+        "COMPLETED/CONFIRMED"
+
+        ]
+
+        }
+
+        }
+
+        ],
+
+        "Id": 1,
+
+        "Enabled": true,
+
+        "Name": "New WO webhook",
+
+        "Description": "I want to receive notifications when new WOs of GLASS trade and MAINTENANCE category are created.",
+
+        "Url": "https://your-company.com/webhook-target-URL"
+
+        }'
+      operationId: PUTv3_NotificationWebHooks_{id}
       parameters:
-      - name: levelId
+      - name: id
         in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
+        description: The unique ID of the webhook to update.
         required: true
         schema:
           type: integer
           format: int32
       responses:
-        '200':
-          description: Returns the created user ID from table dat_Division_User.
+        '204':
+          description: The webhook is updated, and the response is intentionally blank.
         '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1129 — Err: failed to assign users\n            1131 — Err: Approval level doesn’t exist\n            1149 — User has already been assigned to another level\n            1150 — User does not exist"
+          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/>Error codes:\n            502 - Webhook not found\n            503 - Required data missing or incorrect"
           content:
             application/json:
               schema:
@@ -138,16 +281,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
           content:
             application/json:
               schema:
@@ -157,85 +291,35 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Any
-  /mliConfiguration/Levels/{levelId}/Users/{userId}:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.WebHooks.WebHook'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.WebHooks.WebHook'
+        description: The webhook object that needs to be updated.
+        required: true
     delete:
       tags:
-      - MliConfiguration
-      summary: Remove a user from an MLI level
-      description: Removes the specified user from a particular MLI level. To unassign a user from an existing location, send the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: DELETEv3_mliConfiguration_Levels_{levelId}_Users_{userId}
+      - Notification Web Hooks
+      summary: Delete a webhook
+      description: Permanently deletes the specified webhook. It cannot be undone.
+      operationId: DELETEv3_NotificationWebHooks_{id}
       parameters:
-      - name: levelId
+      - name: id
         in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
+        description: The unique ID of the webhook to delete.
         required: true
         schema:
           type: integer
           format: int32
       responses:
         '204':
-          description: The specified user is successfully removed from the MLI level.
+          description: The webhook is deleted, and the response is intentionally blank.
         '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Err: Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1150 — User does not exist"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId}:
-    post:
-      tags:
-      - MliConfiguration
-      summary: Add a location to a user’s MLI level
-      description: Assigns the specified location to a particular user and user’s MLI level. A location can be removed from a user by sending the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: POSTv3_MliConfiguration_Levels_{levelId}_Users_{userId}_Locations_{locationId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: path
-        description: Unique numeric identifier of the location.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: Returns the created location ID from table dat_Location_Division.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Err: Approval level doesn’t exist\n            1130 — Failed to assign the location to the user\n            1130 — User is not assigned to the level\n            1130 — Err: Failed to assign locations to the approval level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User does not exist\n            1301 — Request parameters are empty"
+          description: "The requested data are not found.\n            <br/>Error codes:\n            502 - Webhook not found"
           content:
             application/json:
               schema:
@@ -244,16 +328,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
+          description: "The request is not authorized.\n            <br/>Error codes:\n            504 - Missing or incorrect authentication credentials"
           content:
             application/json:
               schema:
@@ -263,192 +338,8 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Any
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove a location from a user’s MLI level
-      description: Removes the specified location from a particular user and MLI level. To assign a location to a user and MLI level, send the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: DELETEv3_MliConfiguration_Levels_{levelId}_Users_{userId}_Locations_{locationId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: path
-        description: Unique numeric identifier of the location.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: The specified location is successfully removed from the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Location is not assigned to the user\n            1130 — Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User doesn’t exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/levels/{levelId}/users/{userId}/locations/unassign-all:
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove all locations from a user’s MLI level
-      description: Removes all locations from a particular user and MLI level. To assign all locations to a user and MLI level, send the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/assign-all request.
-      operationId: DELETEv3_MliConfiguration_levels_{levelId}_users_{userId}_locations_unassign-all
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: All locations are successfully removed from the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Location is not assigned to the user\n            1130 — Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User doesn’t exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Subscribers
-  /MliConfiguration/levels/{levelId}/users/{userId}/locations/assign-all:
-    post:
-      tags:
-      - MliConfiguration
-      summary: Assign all locations to a user’s MLI level
-      description: Assigns all locations to a particular user and MLI level. To remove locations from a user and MLI level, send the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/unassign-all request.
-      operationId: POSTv3_MliConfiguration_levels_{levelId}_users_{userId}_locations_assign-all
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: All locations are successfully assigned to the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Err: Approval level doesn’t exist\n            1130 — Failed to assign the location to the user\n            1130 — User is not assigned to the level\n            1130 — Err: Failed to assign locations to the approval level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User does not exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Subscribers
 components:
   schemas:
-    ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel:
-      description: MLI level object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of an MLI level.
-          type: integer
-        Name:
-          description: MLI level name.
-          type: string
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.User.Api.AssignedUser:
-      description: Assigned user object details.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique user identifier.
-          type: integer
-        UserId:
-          description: Username to log into the system.
-          type: string
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2086,6 +1977,388 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionsRules:
+      description: The event rules used to receive events matching only certain criteria.
+      type: object
+      properties:
+        Trades:
+          description: The trades that the events should belong to.
+          type: array
+          items:
+            type: string
+        Categories:
+          description: The categories that the events should belong to.
+          type: array
+          items:
+            type: string
+        Statuses:
+          description: The statuses that the events should belong to.
+          type: array
+          items:
+            type: string
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Services.Messaging.Notifications.WebHookSubscription:
+      required:
+      - Name
+      - EventTypes
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: The unique subscription ID. Generated automatically and cannot be modified.
+          type: integer
+        Name:
+          description: The user-friendly name for the subscription.
+          type: string
+        EventTypes:
+          description: The list of events to subscribe to. Events within one subscription should belong to one object.
+          type: array
+          items:
+            enum:
+            - WorkOrderCreated
+            - WorkOrderNoteAdded
+            - WorkOrderNotePinned
+            - WorkOrderNoteUnpinned
+            - WorkOrderNoteActionResolved
+            - WorkOrderStatusChanged
+            - WorkOrderAttachmentAdded
+            - WorkOrderAttachmentDeleted
+            - WorkOrderNumberChanged
+            - WorkOrderCallerChanged
+            - WorkOrderMoeNumberChanged
+            - WorkOrderServiceNowIdChanged
+            - WorkOrderPriorityChanged
+            - WorkOrderScheduledDateChanged
+            - WorkOrderTradeChanged
+            - WorkOrderNteChanged
+            - WorkOrderCategoryChanged
+            - WorkOrderProviderChanged
+            - WorkOrderDescriptionChanged
+            - WorkOrderResolutionCreated
+            - RefrigerantWasUsedChanged
+            - WorkOrderResolutionUpdated
+            - WorkOrderResolutionCodeUpdated
+            - WorkOrderRootCauseCodeUpdated
+            - WorkOrderAssetAttached
+            - WorkOrderAssetDetached
+            - WorkOrderAssetValidated
+            - WorkOrderLabelAdded
+            - WorkOrderLabelDeleted
+            - WorkOrderWeatherTypeChanged
+            - WorkOrderWeatherTypeDeleted
+            - WorkOrderVerbalApprovalChanged
+            - WorkOrderGLCodeChanged
+            - WorkOrderAdditionalApprovalCodesChanged
+            - WorkOrderFeedbackRequested
+            - WorkOrderAssigneeChanged
+            - WorkOrderAssigneeDeleted
+            - WorkOrderProjectLink
+            - WorkOrderProjectUnlink
+            - WorkOrderRecallChanged
+            - WorkOrderRecallDeleted
+            - WorkOrderIssueChoiceChanged
+            - WorkOrderTechnicianAssigned
+            - WorkOrderTechnicianUnassigned
+            - WorkOrderTechnicianAccepted
+            - WorkOrderTechnicianDeclined
+            - WorkOrderCertifiedTechnicianAssigned
+            - WorkOrderLinksAdded
+            - WorkOrderLinksDeleted
+            - WorkOrderStarAdded
+            - WorkOrderStarRemoved
+            - WorkOrderWorkActivityAdded
+            - WorkOrderWorkActivityDeleted
+            - WorkOrderWorkActivityChanged
+            - WorkOrderCheckIn
+            - WorkOrderCheckOut
+            - BadgeScanRequired
+            - InvoiceCreated
+            - InvoiceOpen
+            - InvoiceApproved
+            - InvoiceOnHold
+            - InvoiceReviewed
+            - InvoiceRejected
+            - InvoiceApprovalCodeChanged
+            - InvoiceAdditionalApprovalCodesChanged
+            - InvoiceStarAdded
+            - InvoiceStarRemoved
+            - InvoiceDisputed
+            - InvoiceVoided
+            - InvoicePaid
+            - ProposalCreated
+            - ProposalOpen
+            - ProposalApproved
+            - ProposalOnHold
+            - ProposalRejected
+            - ProposalReviewed
+            - ProposalUserAssigned
+            - ProposalWorkOrderAssigned
+            - ProposalAttachmentAdded
+            - ProposalScheduled
+            - ProposalVoided
+            - ProposalPendingExternalApproval
+            - FbInvitationAccepted
+            - CalendarIntegrationAdded
+            - CalendarIntegrationUpdated
+            - LocationCreated
+            - LocationUpdated
+            - LocationDeleted
+            - LocationNoteHeaderCreated
+            - LocationNoteHeaderUpdated
+            - LocationNoteHeaderDeleted
+            - LocationNotesChanged
+            - SubscriberTradeCreated
+            - SubscriberTradeUpdated
+            - SubscriberTradeDeleted
+            - SubscriberPriorityCreated
+            - SubscriberPriorityUpdated
+            - SubscriberPriorityDeleted
+            - SubscriberStatusCreated
+            - SubscriberStatusUpdated
+            - SubscriberStatusDeleted
+            - SubscriberCategoryCreated
+            - SubscriberCategoryUpdated
+            - SubscriberCategoryDeleted
+            - SubscriberGlCodeCreated
+            - SubscriberGlCodeUpdated
+            - SubscriberGlCodeDeleted
+            - SubscriberAdditionalApprovalCodeCreated
+            - SubscriberAdditionalApprovalCodeUpdated
+            - SubscriberNameUpdated
+            - ProviderTradeAssigned
+            - ProviderTradeUnassigned
+            - ProviderTradeUpdated
+            - ProviderNameUpdated
+            - LeakRecordCreated
+            - LeakRecordUpdated
+            - LeakRecordDeleted
+            - CheckListResponseAdded
+            - CheckListResponseUpdated
+            - CheckListCreated
+            - CheckListUpdated
+            - CheckListDeleted
+            - IssueListAssigned
+            - AssetCreated
+            - AssetUpdated
+            - AssetAttachmentAdded
+            - AssetAttachmentDeleted
+            - AssetRefrigerantChanged
+            type: string
+        Rules:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionsRules'
+    ServiceChannel.Services.Messaging.Notifications.WebHooks.AddWebHookResponse:
+      description: Add WebHook Response
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: The unique webhook ID. Generated automatically and cannot be modified.
+          type: integer
+        SubscriptionsResponses:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.Notifications.WebHooks.AddWebHookRequest:
+      required:
+      - Name
+      - Url
+      type: object
+      properties:
+        Subscriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.NotificationRequestBase'
+        Enabled:
+          description: Defines if the webhook is active or inactive.
+          default: false
+          type: boolean
+        Name:
+          description: The user-friendly name for the webhook.
+          type: string
+        Description:
+          description: The description of the webhook.
+          type: string
+        Url:
+          description: The URL to which the events should be delivered.
+          type: string
+    ServiceChannel.Services.Messaging.Notifications.WebHooks.WebHook:
+      required:
+      - Name
+      - Url
+      type: object
+      properties:
+        Subscriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.WebHookSubscription'
+        Id:
+          format: int32
+          description: The unique webhook ID. Generated automatically and cannot be modified.
+          type: integer
+        ResetOptions:
+          default: false
+          type: boolean
+        Enabled:
+          description: Defines if the webhook is active or inactive.
+          default: false
+          type: boolean
+        Name:
+          description: The user-friendly name for the webhook.
+          type: string
+        Description:
+          description: The description of the webhook.
+          type: string
+        Url:
+          description: The URL to which the events should be delivered.
+          type: string
+    ServiceChannel.Services.Messaging.Notifications.NotificationRequestBase:
+      required:
+      - Name
+      - EventTypes
+      type: object
+      properties:
+        Name:
+          description: The user-friendly name for the subscription.
+          type: string
+        EventTypes:
+          description: The list of events to subscribe to. Events within one subscription should belong to one object.
+          type: array
+          items:
+            enum:
+            - WorkOrderCreated
+            - WorkOrderNoteAdded
+            - WorkOrderNotePinned
+            - WorkOrderNoteUnpinned
+            - WorkOrderNoteActionResolved
+            - WorkOrderStatusChanged
+            - WorkOrderAttachmentAdded
+            - WorkOrderAttachmentDeleted
+            - WorkOrderNumberChanged
+            - WorkOrderCallerChanged
+            - WorkOrderMoeNumberChanged
+            - WorkOrderServiceNowIdChanged
+            - WorkOrderPriorityChanged
+            - WorkOrderScheduledDateChanged
+            - WorkOrderTradeChanged
+            - WorkOrderNteChanged
+            - WorkOrderCategoryChanged
+            - WorkOrderProviderChanged
+            - WorkOrderDescriptionChanged
+            - WorkOrderResolutionCreated
+            - RefrigerantWasUsedChanged
+            - WorkOrderResolutionUpdated
+            - WorkOrderResolutionCodeUpdated
+            - WorkOrderRootCauseCodeUpdated
+            - WorkOrderAssetAttached
+            - WorkOrderAssetDetached
+            - WorkOrderAssetValidated
+            - WorkOrderLabelAdded
+            - WorkOrderLabelDeleted
+            - WorkOrderWeatherTypeChanged
+            - WorkOrderWeatherTypeDeleted
+            - WorkOrderVerbalApprovalChanged
+            - WorkOrderGLCodeChanged
+            - WorkOrderAdditionalApprovalCodesChanged
+            - WorkOrderFeedbackRequested
+            - WorkOrderAssigneeChanged
+            - WorkOrderAssigneeDeleted
+            - WorkOrderProjectLink
+            - WorkOrderProjectUnlink
+            - WorkOrderRecallChanged
+            - WorkOrderRecallDeleted
+            - WorkOrderIssueChoiceChanged
+            - WorkOrderTechnicianAssigned
+            - WorkOrderTechnicianUnassigned
+            - WorkOrderTechnicianAccepted
+            - WorkOrderTechnicianDeclined
+            - WorkOrderCertifiedTechnicianAssigned
+            - WorkOrderLinksAdded
+            - WorkOrderLinksDeleted
+            - WorkOrderStarAdded
+            - WorkOrderStarRemoved
+            - WorkOrderWorkActivityAdded
+            - WorkOrderWorkActivityDeleted
+            - WorkOrderWorkActivityChanged
+            - WorkOrderCheckIn
+            - WorkOrderCheckOut
+            - BadgeScanRequired
+            - InvoiceCreated
+            - InvoiceOpen
+            - InvoiceApproved
+            - InvoiceOnHold
+            - InvoiceReviewed
+            - InvoiceRejected
+            - InvoiceApprovalCodeChanged
+            - InvoiceAdditionalApprovalCodesChanged
+            - InvoiceStarAdded
+            - InvoiceStarRemoved
+            - InvoiceDisputed
+            - InvoiceVoided
+            - InvoicePaid
+            - ProposalCreated
+            - ProposalOpen
+            - ProposalApproved
+            - ProposalOnHold
+            - ProposalRejected
+            - ProposalReviewed
+            - ProposalUserAssigned
+            - ProposalWorkOrderAssigned
+            - ProposalAttachmentAdded
+            - ProposalScheduled
+            - ProposalVoided
+            - ProposalPendingExternalApproval
+            - FbInvitationAccepted
+            - CalendarIntegrationAdded
+            - CalendarIntegrationUpdated
+            - LocationCreated
+            - LocationUpdated
+            - LocationDeleted
+            - LocationNoteHeaderCreated
+            - LocationNoteHeaderUpdated
+            - LocationNoteHeaderDeleted
+            - LocationNotesChanged
+            - SubscriberTradeCreated
+            - SubscriberTradeUpdated
+            - SubscriberTradeDeleted
+            - SubscriberPriorityCreated
+            - SubscriberPriorityUpdated
+            - SubscriberPriorityDeleted
+            - SubscriberStatusCreated
+            - SubscriberStatusUpdated
+            - SubscriberStatusDeleted
+            - SubscriberCategoryCreated
+            - SubscriberCategoryUpdated
+            - SubscriberCategoryDeleted
+            - SubscriberGlCodeCreated
+            - SubscriberGlCodeUpdated
+            - SubscriberGlCodeDeleted
+            - SubscriberAdditionalApprovalCodeCreated
+            - SubscriberAdditionalApprovalCodeUpdated
+            - SubscriberNameUpdated
+            - ProviderTradeAssigned
+            - ProviderTradeUnassigned
+            - ProviderTradeUpdated
+            - ProviderNameUpdated
+            - LeakRecordCreated
+            - LeakRecordUpdated
+            - LeakRecordDeleted
+            - CheckListResponseAdded
+            - CheckListResponseUpdated
+            - CheckListCreated
+            - CheckListUpdated
+            - CheckListDeleted
+            - IssueListAssigned
+            - AssetCreated
+            - AssetUpdated
+            - AssetAttachmentAdded
+            - AssetAttachmentDeleted
+            - AssetRefrigerantChanged
+            type: string
+        Rules:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionsRules'
   securitySchemes:
     oauth2:
       type: oauth2

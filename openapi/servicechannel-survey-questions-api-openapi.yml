@@ -1,41 +1,54 @@
 openapi: 3.2.0
 info:
   version: '3'
-  title: ServiceChannel API - v.3 Mli Configuration API
+  title: ServiceChannel API - v.3 Survey Questions API
   description: The ServiceChannel API is a RESTful and stateless API.
 servers:
 - url: https://sb2api.servicechannel.com/v3
 security:
 - oauth2: []
 tags:
-- name: MliConfiguration
+- name: Survey Questions
 paths:
-  /mliConfiguration/Levels:
+  /surveyquestions/getwithanswers/{locationId}:
     get:
       tags:
-      - MliConfiguration
-      summary: Get MLI levels
-      description: 'Returns IDs and names of all MLI levels of the current subscriber.
-
-
-        Learn more about MLI levels configuration in ServiceChannel University.'
-      operationId: GETv3_mliConfiguration_Levels
+      - Survey Questions
+      summary: Get questions with possible answers for specific location
+      operationId: GETv3_surveyquestions_getwithanswers_{locationId}
+      parameters:
+      - name: locationId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: integer
+          format: int32
       responses:
         '200':
-          description: MLI levels are in the response.
+          description: Indicates that the request succeeded and that the requested information is in the response.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel'
+                  $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestionWithAnswers'
             text/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel'
+                  $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestionWithAnswers'
+        '400':
+          description: Bad Request - the request could not be understood or was missing required parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
+          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
           content:
             application/json:
               schema:
@@ -45,40 +58,88 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Any
-  /mliConfiguration/Levels/{levelId}/Users:
+  /surveyquestions/addanswers/{locationId}:
+    post:
+      tags:
+      - Survey Questions
+      summary: Submit answered questions
+      operationId: POSTv3_surveyquestions_addanswers_{locationId}
+      parameters:
+      - name: locationId
+        in: path
+        description: ''
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '201':
+          description: Indicates that the request succeeded and that new Answers are added.
+        '400':
+          description: Bad Request - the request could not be understood or was missing required parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: Indicates that the requested resource requires authentication.<br>Error codes:<br> 504 - API call rejected by security permissions;
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: Indicates that an error has occured wile creation of a new Subscriber.
+      deprecated: false
+      x-access: Any
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyAnsweredQuestion'
+          text/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyAnsweredQuestion'
+        required: true
+  /surveyquestions/workorderanswers/{workOrderId}:
     get:
       tags:
-      - MliConfiguration
-      summary: Get MLI level users
-      description: 'Returns the users assigned to the specified level. The response body is empty if no user has been assigned to this level.
-
-
-        You can use the GET /mliConfiguration/Levels method to get the MLI levels IDs. Send the POST /MliConfiguration/Levels/{levelId}/Users/{userId} request to assign users to the MLI level.'
-      operationId: GETv3_mliConfiguration_Levels_{levelId}_Users
+      - Survey Questions
+      summary: Get workorder survey answers with questions
+      operationId: GETv3_surveyquestions_workorderanswers_{workOrderId}
       parameters:
-      - name: levelId
+      - name: workOrderId
         in: path
-        description: Numeric identifier of the MLI level.
+        description: ''
         required: true
         schema:
           type: integer
           format: int32
       responses:
         '200':
-          description: The users assigned to the specified MLI level are in the response.
+          description: Indicates that the request succeeded and that the requested information is in the response.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.User.Api.AssignedUser'
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SurveyQuestion.WorkorderAnsweredQuestionResponse'
             text/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.User.Api.AssignedUser'
+                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SurveyQuestion.WorkorderAnsweredQuestionResponse'
         '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Approval levels getting error"
+          description: Bad Request - the request could not be understood or was missing required parameters.
           content:
             application/json:
               schema:
@@ -87,7 +148,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
+          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
           content:
             application/json:
               schema:
@@ -97,39 +158,32 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Any
-  /MliConfiguration/Levels/{levelId}/Users/{userId}:
-    post:
+  /surveyquestions/{workOrderId}:
+    get:
       tags:
-      - MliConfiguration
-      summary: Add a user to an MLI level
-      description: 'Assigns a user to an existing MLI level. Get users’ IDs by sending the GET /users request.
-
-
-        You can assign a user to an existing location by using the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} method.
-
-
-        ***Note***: Each user can be added to only one MLI level. If a user should be assigned to another MLI level, you first need to remove this user from the MLI level they currently belong to.'
-      operationId: POSTv3_MliConfiguration_Levels_{levelId}_Users_{userId}
+      - Survey Questions
+      summary: Get survey questions by workorderid
+      operationId: GETv3_surveyquestions_{workOrderId}
       parameters:
-      - name: levelId
+      - name: workOrderId
         in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
+        description: ''
         required: true
         schema:
           type: integer
           format: int32
       responses:
         '200':
-          description: Returns the created user ID from table dat_Division_User.
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SurveyQuestion.GetSurveyQuestionsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SurveyQuestion.GetSurveyQuestionsResponse'
         '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1129 — Err: failed to assign users\n            1131 — Err: Approval level doesn’t exist\n            1149 — User has already been assigned to another level\n            1150 — User does not exist"
+          description: Bad Request - the request could not be understood or was missing required parameters.
           content:
             application/json:
               schema:
@@ -138,7 +192,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
+          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
           content:
             application/json:
               schema:
@@ -147,7 +201,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
+          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/>Error codes:\n            <br/> 804 - User does not have access to work order;"
           content:
             application/json:
               schema:
@@ -157,85 +211,36 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Any
-  /mliConfiguration/Levels/{levelId}/Users/{userId}:
-    delete:
+  /surveyquestions/getWithAnswersForWorkOrder/{trackingNumber}:
+    get:
       tags:
-      - MliConfiguration
-      summary: Remove a user from an MLI level
-      description: Removes the specified user from a particular MLI level. To unassign a user from an existing location, send the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: DELETEv3_mliConfiguration_Levels_{levelId}_Users_{userId}
+      - Survey Questions
+      summary: Get questions with possible answers for a specific work order
+      operationId: GETv3_surveyquestions_getWithAnswersForWorkOrder_{trackingNumber}
       parameters:
-      - name: levelId
+      - name: trackingNumber
         in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: The specified user is successfully removed from the MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Err: Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1150 — User does not exist"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId}:
-    post:
-      tags:
-      - MliConfiguration
-      summary: Add a location to a user’s MLI level
-      description: Assigns the specified location to a particular user and user’s MLI level. A location can be removed from a user by sending the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: POSTv3_MliConfiguration_Levels_{levelId}_Users_{userId}_Locations_{locationId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: path
-        description: Unique numeric identifier of the location.
+        description: ''
         required: true
         schema:
           type: integer
           format: int32
       responses:
         '200':
-          description: Returns the created location ID from table dat_Location_Division.
+          description: Indicates that the request succeeded and that the requested information is in the response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestionWithAnswers'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestionWithAnswers'
         '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Err: Approval level doesn’t exist\n            1130 — Failed to assign the location to the user\n            1130 — User is not assigned to the level\n            1130 — Err: Failed to assign locations to the approval level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User does not exist\n            1301 — Request parameters are empty"
+          description: Bad Request - the request could not be understood or was missing required parameters.
           content:
             application/json:
               schema:
@@ -244,16 +249,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
+          description: "Indicates that the requested resource requires authentication.\n            <br/>Error codes:\n            <br/> 504 - API call rejected by security permissions;"
           content:
             application/json:
               schema:
@@ -263,192 +259,118 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Any
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove a location from a user’s MLI level
-      description: Removes the specified location from a particular user and MLI level. To assign a location to a user and MLI level, send the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: DELETEv3_MliConfiguration_Levels_{levelId}_Users_{userId}_Locations_{locationId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: path
-        description: Unique numeric identifier of the location.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: The specified location is successfully removed from the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Location is not assigned to the user\n            1130 — Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User doesn’t exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/levels/{levelId}/users/{userId}/locations/unassign-all:
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove all locations from a user’s MLI level
-      description: Removes all locations from a particular user and MLI level. To assign all locations to a user and MLI level, send the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/assign-all request.
-      operationId: DELETEv3_MliConfiguration_levels_{levelId}_users_{userId}_locations_unassign-all
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: All locations are successfully removed from the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Location is not assigned to the user\n            1130 — Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User doesn’t exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Subscribers
-  /MliConfiguration/levels/{levelId}/users/{userId}/locations/assign-all:
-    post:
-      tags:
-      - MliConfiguration
-      summary: Assign all locations to a user’s MLI level
-      description: Assigns all locations to a particular user and MLI level. To remove locations from a user and MLI level, send the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/unassign-all request.
-      operationId: POSTv3_MliConfiguration_levels_{levelId}_users_{userId}_locations_assign-all
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: All locations are successfully assigned to the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Err: Approval level doesn’t exist\n            1130 — Failed to assign the location to the user\n            1130 — User is not assigned to the level\n            1130 — Err: Failed to assign locations to the approval level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User does not exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Subscribers
 components:
   schemas:
-    ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel:
-      description: MLI level object.
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyCategory:
       type: object
       properties:
         Id:
           format: int32
-          description: Unique numeric identifier of an MLI level.
           type: integer
         Name:
-          description: MLI level name.
           type: string
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.User.Api.AssignedUser:
-      description: Assigned user object details.
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyAnswer:
       type: object
       properties:
         Id:
           format: int32
-          description: Unique user identifier.
+          type: integer
+        Answer:
+          type: string
+        SortOrder:
+          format: int32
+          type: integer
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyPriority:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestionWithAnswers:
+      type: object
+      properties:
+        SurveyQuestion:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestion'
+        SurveyAnswers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyAnswer'
+        LocationIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        TradeIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        CategoryIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        PriorityIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        ProviderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyAnsweredQuestion:
+      type: object
+      properties:
+        WorkorderId:
+          format: int32
+          type: integer
+        QuestionId:
+          format: int32
+          type: integer
+        AnswerId:
+          format: int32
+          type: integer
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestion:
+      type: object
+      properties:
+        Question:
+          type: string
+        Disabled:
+          default: false
+          type: boolean
+        Locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyLocation'
+        Trades:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyTrade'
+        Categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyCategory'
+        Priorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyPriority'
+        Providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyProvider'
+        Id:
+          format: int32
+          type: integer
+        SubscriberId:
+          format: int32
           type: integer
         UserId:
-          description: Username to log into the system.
-          type: string
+          format: int32
+          type: integer
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2086,6 +2008,60 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    ServiceChannel.Services.Messaging.SurveyQuestion.WorkorderAnsweredQuestionResponse:
+      type: object
+      properties:
+        Question:
+          type: string
+        Answer:
+          type: string
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyTrade:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyLocation:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+    ServiceChannel.Services.Messaging.SurveyQuestion.GetSurveyQuestionsResponse:
+      description: holds response
+      type: object
+      properties:
+        SurveyQuestions:
+          description: Gets or sets Trades.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestion'
+        ItemsCount:
+          format: int32
+          description: Gets or sets ItemsCount.
+          type: integer
+        ErrorCode:
+          format: int32
+          description: 'Numeric identifier that determines the nature of an error. Possible values: `0` - success, otherwise - error.'
+          type: integer
+        Message:
+          description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
+          type: string
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyProvider:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2

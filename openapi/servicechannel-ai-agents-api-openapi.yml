@@ -1,241 +1,48 @@
 openapi: 3.2.0
 info:
   version: '3'
-  title: ServiceChannel API - v.3 Mli Configuration API
+  title: ServiceChannel API - v.3 AI Agents API
   description: The ServiceChannel API is a RESTful and stateless API.
 servers:
 - url: https://sb2api.servicechannel.com/v3
 security:
 - oauth2: []
 tags:
-- name: MliConfiguration
+- name: AI Agents
 paths:
-  /mliConfiguration/Levels:
+  /aiagents/locations/{locationId}/InitConversation:
     get:
       tags:
-      - MliConfiguration
-      summary: Get MLI levels
-      description: 'Returns IDs and names of all MLI levels of the current subscriber.
-
-
-        Learn more about MLI levels configuration in ServiceChannel University.'
-      operationId: GETv3_mliConfiguration_Levels
-      responses:
-        '200':
-          description: MLI levels are in the response.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel'
-            text/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /mliConfiguration/Levels/{levelId}/Users:
-    get:
-      tags:
-      - MliConfiguration
-      summary: Get MLI level users
-      description: 'Returns the users assigned to the specified level. The response body is empty if no user has been assigned to this level.
-
-
-        You can use the GET /mliConfiguration/Levels method to get the MLI levels IDs. Send the POST /MliConfiguration/Levels/{levelId}/Users/{userId} request to assign users to the MLI level.'
-      operationId: GETv3_mliConfiguration_Levels_{levelId}_Users
+      - AI Agents
+      summary: Initializes a new conversation with the necessary setup by creating and…
+      operationId: GETv3_aiagents_locations_{locationId}_InitConversation?setupId={setupId}
       parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: The users assigned to the specified MLI level are in the response.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.User.Api.AssignedUser'
-            text/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ServiceChannel.Services.Messaging.User.Api.AssignedUser'
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Approval levels getting error"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/Levels/{levelId}/Users/{userId}:
-    post:
-      tags:
-      - MliConfiguration
-      summary: Add a user to an MLI level
-      description: 'Assigns a user to an existing MLI level. Get users’ IDs by sending the GET /users request.
-
-
-        You can assign a user to an existing location by using the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} method.
-
-
-        ***Note***: Each user can be added to only one MLI level. If a user should be assigned to another MLI level, you first need to remove this user from the MLI level they currently belong to.'
-      operationId: POSTv3_MliConfiguration_Levels_{levelId}_Users_{userId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '200':
-          description: Returns the created user ID from table dat_Division_User.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1129 — Err: failed to assign users\n            1131 — Err: Approval level doesn’t exist\n            1149 — User has already been assigned to another level\n            1150 — User does not exist"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /mliConfiguration/Levels/{levelId}/Users/{userId}:
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove a user from an MLI level
-      description: Removes the specified user from a particular MLI level. To unassign a user from an existing location, send the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: DELETEv3_mliConfiguration_Levels_{levelId}_Users_{userId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: The specified user is successfully removed from the MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Err: Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1150 — User does not exist"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId}:
-    post:
-      tags:
-      - MliConfiguration
-      summary: Add a location to a user’s MLI level
-      description: Assigns the specified location to a particular user and user’s MLI level. A location can be removed from a user by sending the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: POSTv3_MliConfiguration_Levels_{levelId}_Users_{userId}_Locations_{locationId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
       - name: locationId
         in: path
-        description: Unique numeric identifier of the location.
+        description: The unique identifier of the location.
         required: true
+        schema:
+          type: integer
+          format: int32
+      - name: setupId
+        in: query
+        description: The identifier of the dashboard setup.
+        required: false
         schema:
           type: integer
           format: int32
       responses:
         '200':
-          description: Returns the created location ID from table dat_Location_Division.
+          description: Request succeeded and the requested information is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.AzureOpenAI.Assistant.ChatSessionModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.AzureOpenAI.Assistant.ChatSessionModel'
         '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Err: Approval level doesn’t exist\n            1130 — Failed to assign the location to the user\n            1130 — User is not assigned to the level\n            1130 — Err: Failed to assign locations to the approval level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User does not exist\n            1301 — Request parameters are empty"
+          description: "Access denied.\n            <br>Error codes:\n            1000 - The setupId does not belong to the Subscriber;"
           content:
             application/json:
               schema:
@@ -244,7 +51,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
+          description: "Indicates that the requested resource requires authentication.\n            <br>Error codes:\n            504 - API call rejected by security permissions;"
           content:
             application/json:
               schema:
@@ -253,7 +60,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
+          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/>Error codes: \n            100 — User has no rights to perform this action."
           content:
             application/json:
               schema:
@@ -261,104 +68,8 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove a location from a user’s MLI level
-      description: Removes the specified location from a particular user and MLI level. To assign a location to a user and MLI level, send the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/{locationId} request.
-      operationId: DELETEv3_MliConfiguration_Levels_{levelId}_Users_{userId}_Locations_{locationId}
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: locationId
-        in: path
-        description: Unique numeric identifier of the location.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: The specified location is successfully removed from the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Location is not assigned to the user\n            1130 — Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User doesn’t exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-      deprecated: false
-      x-access: Any
-  /MliConfiguration/levels/{levelId}/users/{userId}/locations/unassign-all:
-    delete:
-      tags:
-      - MliConfiguration
-      summary: Remove all locations from a user’s MLI level
-      description: Removes all locations from a particular user and MLI level. To assign all locations to a user and MLI level, send the POST /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/assign-all request.
-      operationId: DELETEv3_MliConfiguration_levels_{levelId}_users_{userId}_locations_unassign-all
-      parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
-        required: true
-        schema:
-          type: integer
-          format: int32
-      responses:
-        '204':
-          description: All locations are successfully removed from the user’s MLI level.
-        '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1130 — Location is not assigned to the user\n            1130 — Approval level doesn’t exist\n            1130 — User is not assigned to the level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User doesn’t exist\n            1301 — Request parameters are empty"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
           content:
             application/json:
               schema:
@@ -368,33 +79,30 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Subscribers
-  /MliConfiguration/levels/{levelId}/users/{userId}/locations/assign-all:
+  /aiagents/SendMessage:
     post:
       tags:
-      - MliConfiguration
-      summary: Assign all locations to a user’s MLI level
-      description: Assigns all locations to a particular user and MLI level. To remove locations from a user and MLI level, send the DELETE /MliConfiguration/Levels/{levelId}/Users/{userId}/Locations/unassign-all request.
-      operationId: POSTv3_MliConfiguration_levels_{levelId}_users_{userId}_locations_assign-all
+      - AI Agents
+      summary: Sends a message to the specified thread.
+      operationId: POSTv3_aiagents_SendMessage?threadId={threadId}&message={message}
       parameters:
-      - name: levelId
-        in: path
-        description: Numeric identifier of the MLI level.
+      - name: threadId
+        in: query
+        description: The unique identifier of the conversation.
         required: true
         schema:
-          type: integer
-          format: int32
-      - name: userId
-        in: path
-        description: Unique numeric identifier of the user.
+          type: string
+      - name: message
+        in: query
+        description: The content of the message to be sent.
         required: true
         schema:
-          type: integer
-          format: int32
+          type: string
       responses:
-        '204':
-          description: All locations are successfully assigned to the user’s MLI level.
+        '200':
+          description: Indicates that the message has been sent.
         '400':
-          description: "The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.\n            <br/> Error codes:\n            1128 — Err: Approval level doesn’t exist\n            1130 — Failed to assign the location to the user\n            1130 — User is not assigned to the level\n            1130 — Err: Failed to assign locations to the approval level\n            1130 — Location doesn’t exist for the current subscriber\n            1150 — User does not exist\n            1301 — Request parameters are empty"
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
           content:
             application/json:
               schema:
@@ -403,7 +111,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
         '401':
-          description: "The request is not authorized.\n            <br/> Error codes:\n            504 — API call rejected by security permissions"
+          description: "Indicates that the requested resource requires authentication.\n            <br>Error codes:\n            504 - API call rejected by security permissions;"
           content:
             application/json:
               schema:
@@ -411,8 +119,8 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
-        '403':
-          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/> Error codes:\n            100 — User has no rights to perform this action"
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
           content:
             application/json:
               schema:
@@ -422,33 +130,480 @@ paths:
                 $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
       deprecated: false
       x-access: Subscribers
+  /aiagents/SendImage:
+    post:
+      tags:
+      - AI Agents
+      summary: Sends an image to the specified thread.
+      operationId: POSTv3_aiagents_SendImage?threadId={threadId}&setupId={setupId}
+      parameters:
+      - name: threadId
+        in: query
+        description: The unique identifier of the conversation.
+        required: true
+        schema:
+          type: string
+      - name: setupId
+        in: query
+        description: The identifier of the dashboard setup.
+        required: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Indicates that the image data has been sent.
+        '401':
+          description: "Indicates that the requested resource requires authentication.\n            <br>Error codes:\n            504 - API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  description: Photo to attach the conversation
+                  format: binary
+              required:
+              - file
+  /aiagents/locations/{locationId}/ProcessMessageStream:
+    get:
+      tags:
+      - AI Agents
+      summary: Retrieves a stream of messages for a specific thread.
+      operationId: GETv3_aiagents_locations_{locationId}_ProcessMessageStream?setupId={setupId}&threadId={threadId}&assistantId={assistantId}&enableMetrics={enableMetrics}
+      parameters:
+      - name: locationId
+        in: path
+        description: The unique identifier of the location.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: setupId
+        in: query
+        description: The identifier of the dashboard setup.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: threadId
+        in: query
+        description: The unique identifier of the conversation.
+        required: true
+        schema:
+          type: string
+      - name: assistantId
+        in: query
+        description: The unique identifier of the AI agent.
+        required: true
+        schema:
+          type: string
+      - name: enableMetrics
+        in: query
+        description: Indicates whether metrics should be enabled. Defaults to false if not specified.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Message stream successfully received.
+        '401':
+          description: "Indicates that the requested resource requires authentication.\n            <br>Error codes:\n            504 - API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /aiagents/DeleteConversation:
+    delete:
+      tags:
+      - AI Agents
+      summary: Deletes a specific conversation from the system.
+      operationId: DELETEv3_aiagents_DeleteConversation?threadId={threadId}
+      parameters:
+      - name: threadId
+        in: query
+        description: The unique identifier of the thread to be deleted.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Indicates that the conversation has been deleted.
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 503 - Request is invalid"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\n            <br>Error codes:\n            504 - API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /aiagents/CreateConversation:
+    post:
+      tags:
+      - AI Agents
+      summary: Creates a new conversation instance
+      operationId: POSTv3_aiagents_CreateConversation
+      responses:
+        '201':
+          description: Indicates that the conversation has been created.
+          content:
+            application/json:
+              schema:
+                type: string
+            text/json:
+              schema:
+                type: string
+        '400':
+          description: "Bad Request - the request could not be understood or was missing required parameters.\n            <br/>Error codes:\n            <br/> 503 - Request is invalid"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '401':
+          description: "Indicates that the requested resource requires authentication.\n            <br>Error codes:\n            504 - API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /aiagents/ProblemDescription:
+    get:
+      tags:
+      - AI Agents
+      summary: Retrieves the description of a specific problem based on the provided issue…
+      operationId: GETv3_aiagents_ProblemDescription?threadId={threadId}&assistantId={assistantId}&enableMetrics={enableMetrics}
+      parameters:
+      - name: threadId
+        in: query
+        description: The unique identifier of the conversation.
+        required: true
+        schema:
+          type: string
+      - name: assistantId
+        in: query
+        description: The unique identifier of the AI agent.
+        required: true
+        schema:
+          type: string
+      - name: enableMetrics
+        in: query
+        description: Indicates whether metrics should be enabled. Defaults to false if not specified.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.Assistant.AssistantResponse_System.String'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.Assistant.AssistantResponse_System.String'
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+        '401':
+          description: "Indicates that the requested resource requires authentication.\n            <br>Error codes:\n            504 - API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/>Error codes: \n            100 — User has no rights to perform this action."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+  /aiagents/CreateFeedbackSession:
+    post:
+      tags:
+      - AI Agents
+      summary: Creates a new feedback session for a specific conversation and AI agent
+      operationId: POSTv3_aiagents_CreateFeedbackSession
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.WorkOrdersAi.WoAiFeedbackSessionResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.WorkOrdersAi.WoAiFeedbackSessionResponse'
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+        '401':
+          description: "Indicates that the requested resource requires authentication.\n            <br>Error codes:\n            504 - API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/>Error codes: \n            100 — User has no rights to perform this action."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.DashboardAiAgents.WoAiCreateFeedbackSessionRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.DashboardAiAgents.WoAiCreateFeedbackSessionRequest'
+        description: Model to create a new feedback session
+        required: true
+  /aiagents/AddFeedback:
+    post:
+      tags:
+      - AI Agents
+      summary: Add a new feedback to exist session for a specific conversation and AI agent
+      operationId: POSTv3_aiagents_AddFeedback
+      responses:
+        '200':
+          description: Request succeeded and the requested information is in the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.WorkOrdersAi.WoAiFeedbackSessionResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.WorkOrdersAi.WoAiFeedbackSessionResponse'
+        '400':
+          description: The request is not accepted due to bad syntax, missing parameters, insufficient data, etc.
+        '401':
+          description: "Indicates that the requested resource requires authentication.\n            <br>Error codes:\n            504 - API call rejected by security permissions;"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '403':
+          description: "You are not authorized to request this resource, or the resource is unavailable for some reason.\n            <br/>Error codes: \n            100 — User has no rights to perform this action."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+        '500':
+          description: "The server was unable to complete the request due to an internal error.\n            <br/>Error codes:\n            501 - Unspecified internal server error occurred"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ErrorResponse'
+      deprecated: false
+      x-access: Subscribers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.DashboardAiAgents.WoAiAddFeedbackRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.DashboardAiAgents.WoAiAddFeedbackRequest'
+        description: Model to create a new feedback
+        required: true
 components:
   schemas:
-    ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel:
-      description: MLI level object.
+    ServiceChannel.Services.WebApi.Models.Request.DashboardAiAgents.WoAiAddFeedbackRequest:
+      description: Model for adding feedback to an existing WoAI feedback session.
+      required:
+      - SessionId
+      - AssistantStep
+      - ThreadId
       type: object
       properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of an MLI level.
-          type: integer
-        Name:
-          description: MLI level name.
+        SessionId:
+          description: SessionId of the existing feedback session to which the feedback will be added.
           type: string
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.User.Api.AssignedUser:
-      description: Assigned user object details.
+        Rating:
+          format: int32
+          description: Rating provided by the user for the assistant's response, typically on a scale (e.g., 1-5).
+          maximum: 5
+          minimum: 1
+          type: integer
+        Reaction:
+          description: Reaction provided by the user, indicating their sentiment towards the assistant's response (e.g., Positive = 3, Negative = 1, Neutral = 2).
+          enum:
+          - Negative
+          - Neutral
+          - Positive
+          type: string
+        Feedback:
+          description: Textual feedback provided by the user, offering more detailed insights into their experience with the assistant's response.
+          type: string
+        AssistantStep:
+          description: Step of the assistant's response of creating work order process (issueChoice, assets, duplicates, troubleshooting, summary)
+          type: string
+        ThreadId:
+          description: Identifier for the conversation thread, allowing feedback to be associated with a specific interaction session with the assistant.
+          type: string
+        TotalTokens:
+          format: int32
+          description: Total number of tokens used in the assistant's response
+          maximum: 2147483647
+          minimum: 1
+          type: integer
+        ElapsedSeconds:
+          format: int32
+          description: Time taken in seconds for the assistant to generate the response
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        LocationId:
+          format: int32
+          description: LocationId associated with the work order
+          maximum: 2147483647
+          minimum: 1
+          type: integer
+    ServiceChannel.Api.Model.Dashboard.Assistant.AssistantMetrics:
       type: object
       properties:
-        Id:
+        ElapsedSeconds:
           format: int32
-          description: Unique user identifier.
           type: integer
-        UserId:
-          description: Username to log into the system.
+        Usage:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.Assistant.UsageTokens'
+    ServiceChannel.Services.WebApi.Models.Request.DashboardAiAgents.WoAiCreateFeedbackSessionRequest:
+      description: Model for first step of creating a feedback session, which is to create the session and return the session id. The session id will be used for adding feedbacks in the following steps.
+      required:
+      - ClientSessionId
+      - AssistantStep
+      - ThreadId
+      type: object
+      properties:
+        ClientSessionId:
+          description: Id of the session, generated at initialization of assistant session
           type: string
+        Rating:
+          format: int32
+          description: Rating provided by the user for the assistant's response, typically on a scale (e.g., 1-5).
+          maximum: 5
+          minimum: 1
+          type: integer
+        Reaction:
+          description: Reaction provided by the user, indicating their sentiment towards the assistant's response (e.g., Positive = 3, Negative = 1, Neutral = 2).
+          enum:
+          - Negative
+          - Neutral
+          - Positive
+          type: string
+        Feedback:
+          description: Textual feedback provided by the user, offering more detailed insights into their experience with the assistant's response.
+          type: string
+        AssistantStep:
+          description: Step of the assistant's response of creating work order process (issueChoice, assets, duplicates, troubleshooting, summary)
+          type: string
+        ThreadId:
+          description: Identifier for the conversation thread, allowing feedback to be associated with a specific interaction session with the assistant.
+          type: string
+        TotalTokens:
+          format: int32
+          description: Total number of tokens used in the assistant's response
+          maximum: 2147483647
+          minimum: 1
+          type: integer
+        ElapsedSeconds:
+          format: int32
+          description: Time taken in seconds for the assistant to generate the response
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        LocationId:
+          format: int32
+          description: LocationId associated with the work order
+          maximum: 2147483647
+          minimum: 1
+          type: integer
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2086,6 +2241,87 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Api.Model.Dashboard.Assistant.AssistantResponse_System.String:
+      type: object
+      properties:
+        Result:
+          type: string
+        Metrics:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.Assistant.AssistantMetrics'
+    ServiceChannel.Api.Model.Dashboard.Assistant.UsageTokens:
+      type: object
+      properties:
+        PromptTokens:
+          format: int32
+          type: integer
+        CompletionTokens:
+          format: int32
+          type: integer
+        TotalTokens:
+          format: int32
+          type: integer
+    ServiceChannel.Api.Model.Dashboard.WorkOrdersAi.WoAiFeedbackEntryResponse:
+      type: object
+      properties:
+        Sequence:
+          format: int32
+          type: integer
+        SubmittedAt:
+          format: date-time
+          type: string
+        Rating:
+          format: int32
+          type: integer
+        Reaction:
+          enum:
+          - Negative
+          - Neutral
+          - Positive
+          type: string
+        Feedback:
+          type: string
+        Extensions:
+          type: object
+          additionalProperties:
+            type: string
+    ServiceChannel.Api.Model.Dashboard.WorkOrdersAi.WoAiFeedbackSessionResponse:
+      type: object
+      properties:
+        SessionId:
+          type: string
+        Type:
+          type: string
+        TargetId:
+          type: string
+        EntryCount:
+          format: int32
+          type: integer
+        CreatedAt:
+          format: date-time
+          type: string
+        UpdatedAt:
+          format: date-time
+          type: string
+        LatestEntry:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.WorkOrdersAi.WoAiFeedbackEntryResponse'
+        History:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.WorkOrdersAi.WoAiFeedbackEntryResponse'
+    ServiceChannel.Services.Messaging.AzureOpenAI.Assistant.ChatSessionModel:
+      type: object
+      properties:
+        AssistantId:
+          type: string
+        ThreadId:
+          description: OpenAi thread identifier for the conversation
+          type: string
+        ClientSessionId:
+          description: Client-generated session identifier used by the WO Core team as TargetId.
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2
