@@ -741,49 +741,6 @@ components:
           $ref: '#/components/schemas/DNDSettingModel'
         PaymentTerms:
           $ref: '#/components/schemas/PaymentTermsModel'
-    SubscriberApiModel:
-      description: Object containing details about subscribers whose private network the provider is in.
-      type: object
-      properties:
-        SubscriberId:
-          format: int32
-          description: Unique numeric identifier of the subscriber
-          type: integer
-        SubscriberName:
-          description: Subscriber name
-          type: string
-        LinkIsActive:
-          description: "Defines whether a link between the provider and the subscriber is active:\n            1 — The link between the provider and subscriber is active.\n            0 — The link between the provider and subscriber is not active for one of the following reasons:\n            a) The provider has accepted the client invitation, and the subscriber hasn’t accepted yet. The invitation status is *Pending*. Learn how to manage client invitations for [US-based](https://servicechannel.atlassian.net/wiki/spaces/SCUCP/pages/2372469831/Manage+Client+Invitations) and [non-US-based](https://servicechannel.atlassian.net/wiki/spaces/SCUCP/pages/2276492550/Managing+Client+Invitations) providers in ServiceChannel University.\n            b) The subscriber has deactivated the provider."
-          type: boolean
-    DNDSettingModel:
-      type: object
-      properties:
-        IsDND:
-          type: boolean
-        ReasonForFlagging:
-          type: string
-    CompanyModel:
-      required:
-      - Email
-      type: object
-      properties:
-        CompanyName:
-          maxLength: 100
-          minLength: 0
-          type: string
-        Email:
-          maxLength: 255
-          minLength: 0
-          pattern: ^[\w!#$%&'*+\-\/=?\^_`{|}~]+(\.[\w!#$%&'*+\-\/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,63})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$
-          type: string
-        TaxId:
-          maxLength: 100
-          minLength: 0
-          type: string
-        IsActive:
-          type: boolean
-        AddressInformation:
-          $ref: '#/components/schemas/AddressInformationModel'
     PaymentTermsModel:
       type: object
       properties:
@@ -794,6 +751,9 @@ components:
           maxLength: 50
           minLength: 0
           type: string
+    Object:
+      type: object
+      properties: {}
     AddressInformationModel:
       type: object
       properties:
@@ -821,385 +781,70 @@ components:
           maxLength: 10
           minLength: 0
           type: string
-    Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.Providers.GetProvidersRankingStatusRequest:
-      type: object
-      properties:
-        Trade:
-          type: string
-        Providers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.ProviderLocations'
-    ServiceChannel.Services.WebApi.Models.UpdateDispatchSettingModel:
-      description: The model for update isDoNotDispatch value for providers.
+    SubscriberApiModel:
+      description: Object containing details about subscribers whose private network the provider is in.
       type: object
       properties:
         SubscriberId:
           format: int32
-          description: "The id of a calling subscriber.\n            This id is the one who sets isDoNotDispatch value or is an aggregator of other subscribers.\n            If it is the aggregator then subscriberId and subscriberIds from SubscriberProviders pairs do not match."
+          description: Unique numeric identifier of the subscriber
           type: integer
-        DoNotDispatch:
-          description: The flag to set isDoNotDispatch value for providers.
-          default: false
+        SubscriberName:
+          description: Subscriber name
+          type: string
+        LinkIsActive:
+          description: "Defines whether a link between the provider and the subscriber is active:\n            1 — The link between the provider and subscriber is active.\n            0 — The link between the provider and subscriber is not active for one of the following reasons:\n            a) The provider has accepted the client invitation, and the subscriber hasn’t accepted yet. The invitation status is *Pending*. Learn how to manage client invitations for [US-based](https://servicechannel.atlassian.net/wiki/spaces/SCUCP/pages/2372469831/Manage+Client+Invitations) and [non-US-based](https://servicechannel.atlassian.net/wiki/spaces/SCUCP/pages/2276492550/Managing+Client+Invitations) providers in ServiceChannel University.\n            b) The subscriber has deactivated the provider."
           type: boolean
-        SubscriberIdProviderIds:
-          description: The list of pairs subscriber and providers to set isDoNotDispatch value.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.SubscriberIdProviderIdsPair'
-    ServiceChannel.Services.Messaging.Trade.Trade:
-      description: Trade object.
+    CompanyModel:
+      required:
+      - Email
       type: object
       properties:
-        Id:
-          format: int32
-          description: Numeric identifier of the trade.
-          type: integer
-        Name:
-          description: Trade name.
+        CompanyName:
+          maxLength: 100
+          minLength: 0
           type: string
+        Email:
+          maxLength: 255
+          minLength: 0
+          pattern: ^[\w!#$%&'*+\-\/=?\^_`{|}~]+(\.[\w!#$%&'*+\-\/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,63})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$
+          type: string
+        TaxId:
+          maxLength: 100
+          minLength: 0
+          type: string
+        IsActive:
+          type: boolean
+        AddressInformation:
+          $ref: '#/components/schemas/AddressInformationModel'
+    DNDSettingModel:
+      type: object
+      properties:
+        IsDND:
+          type: boolean
+        ReasonForFlagging:
+          type: string
+    ServiceChannel.Services.Messaging.Providers.RemoveProviderSubscriberLinkRequest:
+      type: object
+      properties:
+        ProviderId:
+          format: int32
+          type: integer
         SubscriberId:
           format: int32
-          description: Unique subscriber ID.
           type: integer
-    ServiceChannel.Services.Messaging.Providers.ProviderFeedbackRequest:
+    ServiceChannel.Services.Messaging.Users.Limit:
+      description: Object for limit details set for a subscriber user.
       type: object
       properties:
-        StarScore:
+        Amount:
+          format: double
+          description: Limit amount.
+          type: number
+        CurrencyId:
           format: int32
-          description: StarScore 1..5
+          description: Identifier of the currency the limit is set in.
           type: integer
-        Comment:
-          description: Comment
-          type: string
-    ServiceChannel.Services.WebApi.Models.Response.Providers.GetProvidersByTradeIdResponse:
-      type: object
-      properties:
-        Providers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Providers.GetProvidersByTradeIdResponseItem'
-          readOnly: true
-    ServiceChannel.Services.Messaging.Providers.ExtendedReviewedProvider:
-      description: A provider entity with common reviews information
-      type: object
-      properties:
-        ReviewsInfo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.ReviewsInfo'
-          description: Stores common provider reviews information.
-        MyProviderReview:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.UserReview'
-          description: Whether the provider has the current user review or not.
-        AnyMyReviews:
-          description: Whether the provider has any reviews with current user
-          default: false
-          type: boolean
-        Trades:
-          description: Trades which the provider serves for the current subscriber.
-          type: array
-          items:
-            type: string
-        Phone:
-          type: string
-        FullName:
-          description: Full Name
-          type: string
-        Address1:
-          description: Address1
-          type: string
-        Address2:
-          description: Adress2
-          type: string
-        City:
-          description: City
-          type: string
-        State:
-          description: State
-          type: string
-        Zip:
-          description: Zip
-          type: string
-        Country:
-          description: Country
-          type: string
-        MainContact:
-          description: Main Contact
-          type: string
-        DateCreated:
-          format: date-time
-          description: Date Created
-          type: string
-        LastUserDate:
-          description: Last User Date
-          type: string
-        SuperUser:
-          description: SuperUser
-          type: string
-        WebSite:
-          description: WebSite
-          type: string
-        Email:
-          description: Email
-          type: string
-        TaxId:
-          description: Tax Id
-          type: string
-        Trade:
-          description: Trade
-          type: string
-        ProcessingEmail:
-          description: Processing Email
-          type: string
-        FaxNumber:
-          description: Fax Number
-          type: string
-        SuiteFloor:
-          description: Suite Floor
-          type: string
-        MailInfo:
-          description: Mail Info
-          type: string
-        ImageFile:
-          description: Image File
-          type: string
-        ReturnMail:
-          description: Return Mail
-          type: string
-        MailFrequency:
-          format: int32
-          description: Mail Frequency
-          type: integer
-        FormId:
-          format: int32
-          description: Form Id
-          type: integer
-        Pager:
-          description: Pager
-          type: string
-        NightRequest:
-          format: int32
-          description: NightRequest
-          type: integer
-        ShortFormatEmail:
-          description: Short Format Email
-          type: string
-        LastTrainingDate:
-          format: date-time
-          description: Last Training Date
-          type: string
-        LastTrainingDateStr:
-          description: Last Training Date as a string
-          type: string
-        IsInternal:
-          description: Is Internal
-          default: false
-          type: boolean
-        IsOnOffShoreFeatureEnabled:
-          description: Is OnOffShoreFeature Enabled
-          default: false
-          type: boolean
-        Id:
-          format: int32
-          description: Id
-          type: integer
-        Name:
-          description: Name
-          type: string
-        DoNotDispatch:
-          description: DoNotDispatch enabled?
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Contracts.Contract:
-      description: Contract object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Numeric identifier of the provider’s assignment.
-          type: integer
-        Rank:
-          format: int32
-          description: Provider’s rank for the trade and location combo in the subscriber’s system.
-          type: integer
-        Contractor:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.Provider'
-        Client:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Subscribers.Subscriber'
-        Trade:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Trade.Trade'
-        Location:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Location.Location'
-        Category:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.Category'
-    ServiceChannel.Services.Messaging.Users.MliUserInfo:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        MliLevel:
-          type: string
-        MliLocations:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.Providers.Provider:
-      type: object
-      properties:
-        Phone:
-          type: string
-        FullName:
-          description: Full Name
-          type: string
-        Address1:
-          description: Address1
-          type: string
-        Address2:
-          description: Adress2
-          type: string
-        City:
-          description: City
-          type: string
-        State:
-          description: State
-          type: string
-        Zip:
-          description: Zip
-          type: string
-        Country:
-          description: Country
-          type: string
-        MainContact:
-          description: Main Contact
-          type: string
-        DateCreated:
-          format: date-time
-          description: Date Created
-          type: string
-        LastUserDate:
-          description: Last User Date
-          type: string
-        SuperUser:
-          description: SuperUser
-          type: string
-        WebSite:
-          description: WebSite
-          type: string
-        Email:
-          description: Email
-          type: string
-        TaxId:
-          description: Tax Id
-          type: string
-        Trade:
-          description: Trade
-          type: string
-        ProcessingEmail:
-          description: Processing Email
-          type: string
-        FaxNumber:
-          description: Fax Number
-          type: string
-        SuiteFloor:
-          description: Suite Floor
-          type: string
-        MailInfo:
-          description: Mail Info
-          type: string
-        ImageFile:
-          description: Image File
-          type: string
-        ReturnMail:
-          description: Return Mail
-          type: string
-        MailFrequency:
-          format: int32
-          description: Mail Frequency
-          type: integer
-        FormId:
-          format: int32
-          description: Form Id
-          type: integer
-        Pager:
-          description: Pager
-          type: string
-        NightRequest:
-          format: int32
-          description: NightRequest
-          type: integer
-        ShortFormatEmail:
-          description: Short Format Email
-          type: string
-        LastTrainingDate:
-          format: date-time
-          description: Last Training Date
-          type: string
-        LastTrainingDateStr:
-          description: Last Training Date as a string
-          type: string
-        IsInternal:
-          description: Is Internal
-          default: false
-          type: boolean
-        IsOnOffShoreFeatureEnabled:
-          description: Is OnOffShoreFeature Enabled
-          default: false
-          type: boolean
-        Id:
-          format: int32
-          description: Id
-          type: integer
-        Name:
-          description: Name
-          type: string
-        DoNotDispatch:
-          description: DoNotDispatch enabled?
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Users.MlpUserInfo:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        MlpLevel:
-          type: string
-        MlpLocations:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.Users.LimitOptions:
-      description: Object for NTE, proposal, and invoice limits set for a subscriber user.
-      type: object
-      properties:
-        NteLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
-        ProposalLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
-        InvoiceLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
-    ServiceChannel.Services.Messaging.Providers.ProviderInfo:
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Id
-          type: integer
-        Name:
-          description: Name
-          type: string
-        DoNotDispatch:
-          description: DoNotDispatch enabled?
-          default: false
-          type: boolean
     ServiceChannel.Services.Messaging.Users.AccessOptions:
       description: Object listing locations, districts, regions, and trades a subscriber user has access to. Learn more about [granting access based on locations, districts, and regions](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/585107276/Location+District+Region+Access+Tab) in ServiceChannel University.
       type: object
@@ -1224,103 +869,25 @@ components:
           type: array
           items:
             type: string
-    ServiceChannel.Services.Messaging.Users.DashboardInfo:
-      description: Dashboard details object.
+    ServiceChannel.Services.Messaging.Feedback.ProviderFeedback:
+      description: A feedback given to a certain provider.
       type: object
       properties:
         Id:
           format: int32
-          description: Unique dashboard identifier.
+          description: Gets or sets a feedback id.
           type: integer
-        Name:
-          description: Dashboard name.
-          type: string
-        RedirectToDashboard:
-          description: Defines whether a subscriber user is redirected to a dashboard once they log in.
-          default: false
-          type: boolean
-    ServiceChannel.Services.WebApi.Models.Response.Providers.GetProvidersByTradeIdResponseItem:
-      type: object
-      properties:
-        Id:
+        StarScore:
           format: int32
+          description: Gets or sets a star score.
           type: integer
-          readOnly: true
-        Name:
+        Comment:
+          description: Gets or sets a comment.
           type: string
-          readOnly: true
-        DoNotDispatch:
-          default: false
-          type: boolean
-          readOnly: true
-    ServiceChannel.Services.Messaging.Providers.ProviderLocations:
-      type: object
-      properties:
-        ProviderId:
-          format: int32
-          type: integer
-        LocationIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.Currencies.Currency:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        AlphabeticalCode:
+        Date:
+          format: date-time
+          description: Gets or sets a date when the feedback was left.
           type: string
-        DecimalCount:
-          format: int32
-          type: integer
-        Entity:
-          type: string
-        CurrencyName:
-          type: string
-        NumericCode:
-          type: string
-        Rate:
-          format: double
-          type: number
-    ServiceChannel.Services.Messaging.Users.Limit:
-      description: Object for limit details set for a subscriber user.
-      type: object
-      properties:
-        Amount:
-          format: double
-          description: Limit amount.
-          type: number
-        CurrencyId:
-          format: int32
-          description: Identifier of the currency the limit is set in.
-          type: integer
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.Providers.CreateBlankProviderRequest:
-      type: object
-      properties:
-        UserId:
-          pattern: ^$|(^\S+).(\S).(\S)$
-          type: string
-        Email:
-          type: string
-        ProviderName:
-          type: string
-        AuthUserId:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.Providers.CreateBlankProviderResponse:
-      type: object
-      properties:
-        ProviderId:
-          format: int32
-          type: integer
-        UserId:
-          format: int32
-          type: integer
     ServiceChannel.Services.Messaging.Location.Location:
       description: General location details object.
       type: object
@@ -1474,15 +1041,26 @@ components:
           readOnly: true
         Address:
           type: string
-    ServiceChannel.Services.Messaging.Providers.RemoveProviderSubscriberLinkRequest:
+    ServiceChannel.Services.Messaging.Currencies.Currency:
       type: object
       properties:
-        ProviderId:
+        Id:
           format: int32
           type: integer
-        SubscriberId:
+        AlphabeticalCode:
+          type: string
+        DecimalCount:
           format: int32
           type: integer
+        Entity:
+          type: string
+        CurrencyName:
+          type: string
+        NumericCode:
+          type: string
+        Rate:
+          format: double
+          type: number
     ServiceChannel.Services.Messaging.LocationNote.LocationNote:
       description: Object with the location note details.
       type: object
@@ -1501,63 +1079,52 @@ components:
         Header:
           description: Name of the note.
           type: string
-    ServiceChannel.Services.Messaging.Subscribers.Subscriber:
-      required:
-      - Name
+    ServiceChannel.Services.Messaging.Providers.CreateBlankProviderResponse:
+      type: object
+      properties:
+        ProviderId:
+          format: int32
+          type: integer
+        UserId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.Trade.Trade:
+      description: Trade object.
       type: object
       properties:
         Id:
           format: int32
+          description: Numeric identifier of the trade.
           type: integer
-        ShortName:
-          type: string
-        Email:
-          type: string
-        Users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.User'
-        PrimaryCurrency:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
-        IsOutsourcedWorkOn:
-          default: false
-          type: boolean
         Name:
-          description: "Required Name\n            Name - name of the subscriber"
+          description: Trade name.
           type: string
-        Address1:
-          description: Optional
-          type: string
-        Address2:
-          description: Optional
-          type: string
-        Country:
-          description: Optional
-          type: string
-        State:
-          description: Optional
-          type: string
-        City:
-          description: Optional
-          type: string
-        Zip:
-          description: Optional
-          type: string
-        Phone:
-          description: Optional
-          type: string
-        Fax:
-          description: Optional
-          type: string
-        ContactName:
-          description: Optional
-          type: string
-        TimeFormat:
-          type: string
-        DateFormat:
-          type: string
-        DecimalSeparator:
-          type: string
+        SubscriberId:
+          format: int32
+          description: Unique subscriber ID.
+          type: integer
+    ServiceChannel.Services.Messaging.Contracts.Contract:
+      description: Contract object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Numeric identifier of the provider’s assignment.
+          type: integer
+        Rank:
+          format: int32
+          description: Provider’s rank for the trade and location combo in the subscriber’s system.
+          type: integer
+        Contractor:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.Provider'
+        Client:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Subscribers.Subscriber'
+        Trade:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Trade.Trade'
+        Location:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Location.Location'
+        Category:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.Category'
     ServiceChannel.Api.Model.Entities.Category:
       type: object
       properties:
@@ -1577,25 +1144,578 @@ components:
         UserId:
           format: int32
           type: integer
-    ServiceChannel.Services.Messaging.Feedback.ProviderFeedback:
-      description: A feedback given to a certain provider.
+    ServiceChannel.Services.Messaging.Providers.ReviewedProvider:
+      description: "A provider entity with common reviews information\n            and the current user feedback"
+      type: object
+      properties:
+        ReviewsInfo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.ReviewsInfo'
+          description: Stores common provider reviews information.
+        MyFeedback:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.ProviderFeedback'
+          description: Stores a feedback left by the current user.
+        Phone:
+          type: string
+        FullName:
+          description: Full Name
+          type: string
+        Address1:
+          description: Address1
+          type: string
+        Address2:
+          description: Adress2
+          type: string
+        City:
+          description: City
+          type: string
+        State:
+          description: State
+          type: string
+        Zip:
+          description: Zip
+          type: string
+        Country:
+          description: Country
+          type: string
+        MainContact:
+          description: Main Contact
+          type: string
+        DateCreated:
+          format: date-time
+          description: Date Created
+          type: string
+        LastUserDate:
+          description: Last User Date
+          type: string
+        SuperUser:
+          description: SuperUser
+          type: string
+        WebSite:
+          description: WebSite
+          type: string
+        Email:
+          description: Email
+          type: string
+        TaxId:
+          description: Tax Id
+          type: string
+        Trade:
+          description: Trade
+          type: string
+        ProcessingEmail:
+          description: Processing Email
+          type: string
+        FaxNumber:
+          description: Fax Number
+          type: string
+        SuiteFloor:
+          description: Suite Floor
+          type: string
+        MailInfo:
+          description: Mail Info
+          type: string
+        ImageFile:
+          description: Image File
+          type: string
+        ReturnMail:
+          description: Return Mail
+          type: string
+        MailFrequency:
+          format: int32
+          description: Mail Frequency
+          type: integer
+        FormId:
+          format: int32
+          description: Form Id
+          type: integer
+        Pager:
+          description: Pager
+          type: string
+        NightRequest:
+          format: int32
+          description: NightRequest
+          type: integer
+        ShortFormatEmail:
+          description: Short Format Email
+          type: string
+        LastTrainingDate:
+          format: date-time
+          description: Last Training Date
+          type: string
+        LastTrainingDateStr:
+          description: Last Training Date as a string
+          type: string
+        IsInternal:
+          description: Is Internal
+          default: false
+          type: boolean
+        IsOnOffShoreFeatureEnabled:
+          description: Is OnOffShoreFeature Enabled
+          default: false
+          type: boolean
+        Id:
+          format: int32
+          description: Id
+          type: integer
+        Name:
+          description: Name
+          type: string
+        DoNotDispatch:
+          description: DoNotDispatch enabled?
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Feedback.ReviewsInfo:
+      description: A container to hold common provider reviews information.
+      type: object
+      properties:
+        AverageRating:
+          format: double
+          description: An average rating based on some reviews.
+          type: number
+        ReviewsNumber:
+          format: int32
+          description: A reviews number.
+          type: integer
+        RecentReviewDate:
+          format: date-time
+          description: A recent review date
+          type: string
+    ServiceChannel.Services.WebApi.Models.SubscriberIdProviderIdsPair:
+      type: object
+      properties:
+        SubscriberId:
+          format: int32
+          type: integer
+        ProviderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.Users.MliUserInfo:
       type: object
       properties:
         Id:
           format: int32
-          description: Gets or sets a feedback id.
           type: integer
-        StarScore:
+        MliLevel:
+          type: string
+        MliLocations:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.Users.MlpUserInfo:
+      type: object
+      properties:
+        Id:
           format: int32
-          description: Gets or sets a star score.
           type: integer
-        Comment:
-          description: Gets or sets a comment.
+        MlpLevel:
           type: string
-        Date:
+        MlpLocations:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.Users.LimitOptions:
+      description: Object for NTE, proposal, and invoice limits set for a subscriber user.
+      type: object
+      properties:
+        NteLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
+        ProposalLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
+        InvoiceLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
+    ServiceChannel.Services.Messaging.Providers.ProviderLocations:
+      type: object
+      properties:
+        ProviderId:
+          format: int32
+          type: integer
+        LocationIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.WebApi.Models.UpdateDispatchSettingModel:
+      description: The model for update isDoNotDispatch value for providers.
+      type: object
+      properties:
+        SubscriberId:
+          format: int32
+          description: "The id of a calling subscriber.\n            This id is the one who sets isDoNotDispatch value or is an aggregator of other subscribers.\n            If it is the aggregator then subscriberId and subscriberIds from SubscriberProviders pairs do not match."
+          type: integer
+        DoNotDispatch:
+          description: The flag to set isDoNotDispatch value for providers.
+          default: false
+          type: boolean
+        SubscriberIdProviderIds:
+          description: The list of pairs subscriber and providers to set isDoNotDispatch value.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.SubscriberIdProviderIdsPair'
+    ServiceChannel.Services.Messaging.Providers.CreateBlankProviderRequest:
+      type: object
+      properties:
+        UserId:
+          pattern: ^$|(^\S+).(\S).(\S)$
+          type: string
+        Email:
+          type: string
+        ProviderName:
+          type: string
+        AuthUserId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.WebApi.Models.Response.Providers.GetProvidersByTradeIdResponse:
+      type: object
+      properties:
+        Providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Providers.GetProvidersByTradeIdResponseItem'
+          readOnly: true
+    ServiceChannel.Services.Messaging.Providers.DetailedProvider:
+      description: Provider with detailed information according to the current subscriber.
+      type: object
+      properties:
+        Contracts:
+          description: Contracts provider working at for the current subscriber.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Contracts.Contract'
+        ReviewsInfo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.ReviewsInfo'
+          description: Provider reviews information.
+        MyProviderReview:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.UserReview'
+          description: My review for the current provider.
+        ContactEmail:
+          description: Provider Contact email.
+          type: string
+        Phone:
+          type: string
+        FullName:
+          description: Full Name
+          type: string
+        Address1:
+          description: Address1
+          type: string
+        Address2:
+          description: Adress2
+          type: string
+        City:
+          description: City
+          type: string
+        State:
+          description: State
+          type: string
+        Zip:
+          description: Zip
+          type: string
+        Country:
+          description: Country
+          type: string
+        MainContact:
+          description: Main Contact
+          type: string
+        DateCreated:
           format: date-time
-          description: Gets or sets a date when the feedback was left.
+          description: Date Created
           type: string
+        LastUserDate:
+          description: Last User Date
+          type: string
+        SuperUser:
+          description: SuperUser
+          type: string
+        WebSite:
+          description: WebSite
+          type: string
+        Email:
+          description: Email
+          type: string
+        TaxId:
+          description: Tax Id
+          type: string
+        Trade:
+          description: Trade
+          type: string
+        ProcessingEmail:
+          description: Processing Email
+          type: string
+        FaxNumber:
+          description: Fax Number
+          type: string
+        SuiteFloor:
+          description: Suite Floor
+          type: string
+        MailInfo:
+          description: Mail Info
+          type: string
+        ImageFile:
+          description: Image File
+          type: string
+        ReturnMail:
+          description: Return Mail
+          type: string
+        MailFrequency:
+          format: int32
+          description: Mail Frequency
+          type: integer
+        FormId:
+          format: int32
+          description: Form Id
+          type: integer
+        Pager:
+          description: Pager
+          type: string
+        NightRequest:
+          format: int32
+          description: NightRequest
+          type: integer
+        ShortFormatEmail:
+          description: Short Format Email
+          type: string
+        LastTrainingDate:
+          format: date-time
+          description: Last Training Date
+          type: string
+        LastTrainingDateStr:
+          description: Last Training Date as a string
+          type: string
+        IsInternal:
+          description: Is Internal
+          default: false
+          type: boolean
+        IsOnOffShoreFeatureEnabled:
+          description: Is OnOffShoreFeature Enabled
+          default: false
+          type: boolean
+        Id:
+          format: int32
+          description: Id
+          type: integer
+        Name:
+          description: Name
+          type: string
+        DoNotDispatch:
+          description: DoNotDispatch enabled?
+          default: false
+          type: boolean
+    ServiceChannel.Services.WebApi.Models.Response.Providers.GetProvidersByTradeIdResponseItem:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+          readOnly: true
+        Name:
+          type: string
+          readOnly: true
+        DoNotDispatch:
+          default: false
+          type: boolean
+          readOnly: true
+    ServiceChannel.Services.Messaging.Users.User:
+      description: User details object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique user identifier.
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Unique subscriber ID.
+          type: integer
+        UserName:
+          description: Username of the user.<br /> • For subscriber users, the username appears as **User Id** on the "General Info" tab of the user profile page.<br /> • For provider users, the username is listed as **UserID** under "Access" on the "General" tab of the user profile page.
+          pattern: ^$|(^\S+).(\S).(\S)$
+          type: string
+        FullName:
+          description: Full name of the user.<br /> • For subscriber users, the full name appears as **User Name** on the "General Info" tab of the user profile page.<br /> • For provider users, you can see their first and last name under "Basic" on the "General" tab of the user profile page.
+          type: string
+        Email:
+          description: User’s email address.
+          type: string
+        PsmEmail:
+          description: Email address through which a user can reset their password.
+          type: string
+        Disabled:
+          description: Defines if a user is deactivated.
+          default: false
+          type: boolean
+        IsLocked:
+          description: Defines if a user is locked.
+          default: false
+          type: boolean
+        Roles:
+          description: Secondary roles assigned to a subscriber user that determine their permissions and level of access to various Service Automation modules.
+          type: array
+          items:
+            type: string
+        Permissions:
+          description: Permissions assigned to a subscriber user that determine whether they have full or read-only access to various Service Automation modules.
+          type: array
+          items:
+            type: string
+        UserType:
+          description: Subscriber user type defining their level of access to ServiceChannel:<br /> • `Corporate` — a user can work in Service Automation.<br /> • `Dashboard` — a user can only access the dashboard assigned to them.<br />`0` is returned for provider users.
+          enum:
+          - Corporate
+          - Dashboard
+          - ServiceChannel
+          type: string
+        Dashboard:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.DashboardInfo'
+          description: Dashboard a subscriber user has access to.
+        Access:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.AccessOptions'
+          description: List of locations, districts, regions, and trades a subscriber user has access to.
+        Limits:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.LimitOptions'
+          description: NTE, proposal, and invoice limits set for a subscriber user.
+        FeedRole:
+          type: string
+        MliUserInfo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MliUserInfo'
+          description: ''
+        MlpUserInfo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MlpUserInfo'
+    ServiceChannel.Services.Messaging.Providers.ExtendedReviewedProvider:
+      description: A provider entity with common reviews information
+      type: object
+      properties:
+        ReviewsInfo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.ReviewsInfo'
+          description: Stores common provider reviews information.
+        MyProviderReview:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.UserReview'
+          description: Whether the provider has the current user review or not.
+        AnyMyReviews:
+          description: Whether the provider has any reviews with current user
+          default: false
+          type: boolean
+        Trades:
+          description: Trades which the provider serves for the current subscriber.
+          type: array
+          items:
+            type: string
+        Phone:
+          type: string
+        FullName:
+          description: Full Name
+          type: string
+        Address1:
+          description: Address1
+          type: string
+        Address2:
+          description: Adress2
+          type: string
+        City:
+          description: City
+          type: string
+        State:
+          description: State
+          type: string
+        Zip:
+          description: Zip
+          type: string
+        Country:
+          description: Country
+          type: string
+        MainContact:
+          description: Main Contact
+          type: string
+        DateCreated:
+          format: date-time
+          description: Date Created
+          type: string
+        LastUserDate:
+          description: Last User Date
+          type: string
+        SuperUser:
+          description: SuperUser
+          type: string
+        WebSite:
+          description: WebSite
+          type: string
+        Email:
+          description: Email
+          type: string
+        TaxId:
+          description: Tax Id
+          type: string
+        Trade:
+          description: Trade
+          type: string
+        ProcessingEmail:
+          description: Processing Email
+          type: string
+        FaxNumber:
+          description: Fax Number
+          type: string
+        SuiteFloor:
+          description: Suite Floor
+          type: string
+        MailInfo:
+          description: Mail Info
+          type: string
+        ImageFile:
+          description: Image File
+          type: string
+        ReturnMail:
+          description: Return Mail
+          type: string
+        MailFrequency:
+          format: int32
+          description: Mail Frequency
+          type: integer
+        FormId:
+          format: int32
+          description: Form Id
+          type: integer
+        Pager:
+          description: Pager
+          type: string
+        NightRequest:
+          format: int32
+          description: NightRequest
+          type: integer
+        ShortFormatEmail:
+          description: Short Format Email
+          type: string
+        LastTrainingDate:
+          format: date-time
+          description: Last Training Date
+          type: string
+        LastTrainingDateStr:
+          description: Last Training Date as a string
+          type: string
+        IsInternal:
+          description: Is Internal
+          default: false
+          type: boolean
+        IsOnOffShoreFeatureEnabled:
+          description: Is OnOffShoreFeature Enabled
+          default: false
+          type: boolean
+        Id:
+          format: int32
+          description: Id
+          type: integer
+        Name:
+          description: Name
+          type: string
+        DoNotDispatch:
+          description: DoNotDispatch enabled?
+          default: false
+          type: boolean
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -3233,243 +3353,60 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.Providers.ReviewedProvider:
-      description: "A provider entity with common reviews information\n            and the current user feedback"
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Services.Messaging.Providers.ProviderFeedbackRequest:
       type: object
       properties:
-        ReviewsInfo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.ReviewsInfo'
-          description: Stores common provider reviews information.
-        MyFeedback:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.ProviderFeedback'
-          description: Stores a feedback left by the current user.
-        Phone:
-          type: string
-        FullName:
-          description: Full Name
-          type: string
-        Address1:
-          description: Address1
-          type: string
-        Address2:
-          description: Adress2
-          type: string
-        City:
-          description: City
-          type: string
-        State:
-          description: State
-          type: string
-        Zip:
-          description: Zip
-          type: string
-        Country:
-          description: Country
-          type: string
-        MainContact:
-          description: Main Contact
-          type: string
-        DateCreated:
-          format: date-time
-          description: Date Created
-          type: string
-        LastUserDate:
-          description: Last User Date
-          type: string
-        SuperUser:
-          description: SuperUser
-          type: string
-        WebSite:
-          description: WebSite
-          type: string
-        Email:
-          description: Email
-          type: string
-        TaxId:
-          description: Tax Id
-          type: string
-        Trade:
-          description: Trade
-          type: string
-        ProcessingEmail:
-          description: Processing Email
-          type: string
-        FaxNumber:
-          description: Fax Number
-          type: string
-        SuiteFloor:
-          description: Suite Floor
-          type: string
-        MailInfo:
-          description: Mail Info
-          type: string
-        ImageFile:
-          description: Image File
-          type: string
-        ReturnMail:
-          description: Return Mail
-          type: string
-        MailFrequency:
+        StarScore:
           format: int32
-          description: Mail Frequency
+          description: StarScore 1..5
           type: integer
-        FormId:
-          format: int32
-          description: Form Id
-          type: integer
-        Pager:
-          description: Pager
+        Comment:
+          description: Comment
           type: string
-        NightRequest:
-          format: int32
-          description: NightRequest
-          type: integer
-        ShortFormatEmail:
-          description: Short Format Email
-          type: string
-        LastTrainingDate:
-          format: date-time
-          description: Last Training Date
-          type: string
-        LastTrainingDateStr:
-          description: Last Training Date as a string
-          type: string
-        IsInternal:
-          description: Is Internal
-          default: false
-          type: boolean
-        IsOnOffShoreFeatureEnabled:
-          description: Is OnOffShoreFeature Enabled
-          default: false
-          type: boolean
+    ServiceChannel.Api.Model.Entities.PrimaryCategory:
+      type: object
+      properties:
         Id:
           format: int32
-          description: Id
           type: integer
         Name:
-          description: Name
           type: string
-        DoNotDispatch:
-          description: DoNotDispatch enabled?
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Providers.DetailedProvider:
-      description: Provider with detailed information according to the current subscriber.
+        SubscriberId:
+          format: int32
+          type: integer
+        UserId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.Users.DashboardInfo:
+      description: Dashboard details object.
       type: object
       properties:
-        Contracts:
-          description: Contracts provider working at for the current subscriber.
+        Id:
+          format: int32
+          description: Unique dashboard identifier.
+          type: integer
+        Name:
+          description: Dashboard name.
+          type: string
+        RedirectToDashboard:
+          description: Defines whether a subscriber user is redirected to a dashboard once they log in.
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Providers.GetProvidersRankingStatusRequest:
+      type: object
+      properties:
+        Trade:
+          type: string
+        Providers:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Contracts.Contract'
-        ReviewsInfo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.ReviewsInfo'
-          description: Provider reviews information.
-        MyProviderReview:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.UserReview'
-          description: My review for the current provider.
-        ContactEmail:
-          description: Provider Contact email.
-          type: string
-        Phone:
-          type: string
-        FullName:
-          description: Full Name
-          type: string
-        Address1:
-          description: Address1
-          type: string
-        Address2:
-          description: Adress2
-          type: string
-        City:
-          description: City
-          type: string
-        State:
-          description: State
-          type: string
-        Zip:
-          description: Zip
-          type: string
-        Country:
-          description: Country
-          type: string
-        MainContact:
-          description: Main Contact
-          type: string
-        DateCreated:
-          format: date-time
-          description: Date Created
-          type: string
-        LastUserDate:
-          description: Last User Date
-          type: string
-        SuperUser:
-          description: SuperUser
-          type: string
-        WebSite:
-          description: WebSite
-          type: string
-        Email:
-          description: Email
-          type: string
-        TaxId:
-          description: Tax Id
-          type: string
-        Trade:
-          description: Trade
-          type: string
-        ProcessingEmail:
-          description: Processing Email
-          type: string
-        FaxNumber:
-          description: Fax Number
-          type: string
-        SuiteFloor:
-          description: Suite Floor
-          type: string
-        MailInfo:
-          description: Mail Info
-          type: string
-        ImageFile:
-          description: Image File
-          type: string
-        ReturnMail:
-          description: Return Mail
-          type: string
-        MailFrequency:
-          format: int32
-          description: Mail Frequency
-          type: integer
-        FormId:
-          format: int32
-          description: Form Id
-          type: integer
-        Pager:
-          description: Pager
-          type: string
-        NightRequest:
-          format: int32
-          description: NightRequest
-          type: integer
-        ShortFormatEmail:
-          description: Short Format Email
-          type: string
-        LastTrainingDate:
-          format: date-time
-          description: Last Training Date
-          type: string
-        LastTrainingDateStr:
-          description: Last Training Date as a string
-          type: string
-        IsInternal:
-          description: Is Internal
-          default: false
-          type: boolean
-        IsOnOffShoreFeatureEnabled:
-          description: Is OnOffShoreFeature Enabled
-          default: false
-          type: boolean
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.ProviderLocations'
+    ServiceChannel.Services.Messaging.Providers.ProviderInfo:
+      type: object
+      properties:
         Id:
           format: int32
           description: Id
@@ -3500,113 +3437,176 @@ components:
         Comment:
           description: Review comment
           type: string
-    ServiceChannel.Services.Messaging.Users.User:
-      description: User details object.
+    ServiceChannel.Services.Messaging.Providers.Provider:
       type: object
       properties:
-        Id:
-          format: int32
-          description: Unique user identifier.
-          type: integer
-        SubscriberId:
-          format: int32
-          description: Unique subscriber ID.
-          type: integer
-        UserName:
-          description: Username of the user.<br /> • For subscriber users, the username appears as **User Id** on the "General Info" tab of the user profile page.<br /> • For provider users, the username is listed as **UserID** under "Access" on the "General" tab of the user profile page.
-          pattern: ^$|(^\S+).(\S).(\S)$
+        Phone:
           type: string
         FullName:
-          description: Full name of the user.<br /> • For subscriber users, the full name appears as **User Name** on the "General Info" tab of the user profile page.<br /> • For provider users, you can see their first and last name under "Basic" on the "General" tab of the user profile page.
+          description: Full Name
+          type: string
+        Address1:
+          description: Address1
+          type: string
+        Address2:
+          description: Adress2
+          type: string
+        City:
+          description: City
+          type: string
+        State:
+          description: State
+          type: string
+        Zip:
+          description: Zip
+          type: string
+        Country:
+          description: Country
+          type: string
+        MainContact:
+          description: Main Contact
+          type: string
+        DateCreated:
+          format: date-time
+          description: Date Created
+          type: string
+        LastUserDate:
+          description: Last User Date
+          type: string
+        SuperUser:
+          description: SuperUser
+          type: string
+        WebSite:
+          description: WebSite
           type: string
         Email:
-          description: User’s email address.
+          description: Email
           type: string
-        PsmEmail:
-          description: Email address through which a user can reset their password.
+        TaxId:
+          description: Tax Id
           type: string
-        Disabled:
-          description: Defines if a user is deactivated.
-          default: false
-          type: boolean
-        IsLocked:
-          description: Defines if a user is locked.
-          default: false
-          type: boolean
-        Roles:
-          description: Secondary roles assigned to a subscriber user that determine their permissions and level of access to various Service Automation modules.
-          type: array
-          items:
-            type: string
-        Permissions:
-          description: Permissions assigned to a subscriber user that determine whether they have full or read-only access to various Service Automation modules.
-          type: array
-          items:
-            type: string
-        UserType:
-          description: Subscriber user type defining their level of access to ServiceChannel:<br /> • `Corporate` — a user can work in Service Automation.<br /> • `Dashboard` — a user can only access the dashboard assigned to them.<br />`0` is returned for provider users.
-          enum:
-          - Corporate
-          - Dashboard
-          - ServiceChannel
+        Trade:
+          description: Trade
           type: string
-        Dashboard:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.DashboardInfo'
-          description: Dashboard a subscriber user has access to.
-        Access:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.AccessOptions'
-          description: List of locations, districts, regions, and trades a subscriber user has access to.
-        Limits:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.LimitOptions'
-          description: NTE, proposal, and invoice limits set for a subscriber user.
-        FeedRole:
+        ProcessingEmail:
+          description: Processing Email
           type: string
-        MliUserInfo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MliUserInfo'
-          description: ''
-        MlpUserInfo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MlpUserInfo'
-    ServiceChannel.Services.Messaging.Feedback.ReviewsInfo:
-      description: A container to hold common provider reviews information.
-      type: object
-      properties:
-        AverageRating:
-          format: double
-          description: An average rating based on some reviews.
-          type: number
-        ReviewsNumber:
+        FaxNumber:
+          description: Fax Number
+          type: string
+        SuiteFloor:
+          description: Suite Floor
+          type: string
+        MailInfo:
+          description: Mail Info
+          type: string
+        ImageFile:
+          description: Image File
+          type: string
+        ReturnMail:
+          description: Return Mail
+          type: string
+        MailFrequency:
           format: int32
-          description: A reviews number.
+          description: Mail Frequency
           type: integer
-        RecentReviewDate:
+        FormId:
+          format: int32
+          description: Form Id
+          type: integer
+        Pager:
+          description: Pager
+          type: string
+        NightRequest:
+          format: int32
+          description: NightRequest
+          type: integer
+        ShortFormatEmail:
+          description: Short Format Email
+          type: string
+        LastTrainingDate:
           format: date-time
-          description: A recent review date
+          description: Last Training Date
           type: string
-    ServiceChannel.Services.WebApi.Models.SubscriberIdProviderIdsPair:
-      type: object
-      properties:
-        SubscriberId:
+        LastTrainingDateStr:
+          description: Last Training Date as a string
+          type: string
+        IsInternal:
+          description: Is Internal
+          default: false
+          type: boolean
+        IsOnOffShoreFeatureEnabled:
+          description: Is OnOffShoreFeature Enabled
+          default: false
+          type: boolean
+        Id:
           format: int32
+          description: Id
           type: integer
-        ProviderIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Api.Model.Entities.PrimaryCategory:
+        Name:
+          description: Name
+          type: string
+        DoNotDispatch:
+          description: DoNotDispatch enabled?
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Subscribers.Subscriber:
+      required:
+      - Name
       type: object
       properties:
         Id:
           format: int32
           type: integer
-        Name:
+        ShortName:
           type: string
-        SubscriberId:
-          format: int32
-          type: integer
-        UserId:
-          format: int32
-          type: integer
+        Email:
+          type: string
+        Users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.User'
+        PrimaryCurrency:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
+        IsOutsourcedWorkOn:
+          default: false
+          type: boolean
+        Name:
+          description: "Required Name\n            Name - name of the subscriber"
+          type: string
+        Address1:
+          description: Optional
+          type: string
+        Address2:
+          description: Optional
+          type: string
+        Country:
+          description: Optional
+          type: string
+        State:
+          description: Optional
+          type: string
+        City:
+          description: Optional
+          type: string
+        Zip:
+          description: Optional
+          type: string
+        Phone:
+          description: Optional
+          type: string
+        Fax:
+          description: Optional
+          type: string
+        ContactName:
+          description: Optional
+          type: string
+        TimeFormat:
+          type: string
+        DateFormat:
+          type: string
+        DecimalSeparator:
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2

@@ -579,78 +579,6 @@ paths:
       x-access: Any
 components:
   schemas:
-    ServiceChannel.Services.Messaging.Notes.Note:
-      description: Object containing notes for the specified work order ID.
-      type: object
-      properties:
-        Id:
-          format: int64
-          description: Unique numeric identifier of the work order note.
-          type: integer
-        DocumentId:
-          description: UUID of the work order note.
-          type: string
-        GroupId:
-          description: Numeric identifier of the note group. Some notes can have the same `GroupId`. For example, when a user note is posted along with a WO status change, the `GroupId` will be identical for these two notes. Referring to the `GroupId` helps you easily find the user note associated with the status change. Can be null (for example, for historical notes).
-          type: string
-        Number:
-          format: int32
-          description: Sequential number of the note.
-          type: integer
-        NoteData:
-          description: Content of the note.
-          type: string
-        DateCreated:
-          format: date-time
-          description: Date and time when the note was added to the work order. The format is `YYYY-MM-DDThh:mm:ss.sssssss±hh:mm`, where `±hh:mm` represents the time zone offset from UTC.
-          type: string
-        ScheduledDate:
-          format: date-time
-          description: Scheduled date of the work order. The format is `YYYY-MM-DDThh:mm:ss±hh:mm`, where `±hh:mm` represents the time zone offset from UTC.
-          type: string
-        FollowUpDate:
-          format: date-time
-          description: Follow-up date specified on the note is used to revisit a work order at a later time, for example, to ensure the provider clocked in or updated the work order by the specified date. The format is `YYYY-MM-DDThh:mm:ss±hh:mm`, where `±hh:mm` represents the time zone offset from UTC.
-          type: string
-        ActionRequired:
-          description: Indicates whether the recipient of the note is required to take further action on a work order. Check also the `ActionResolveDetails` parameter to see if the issue has been resolved.
-          default: false
-          type: boolean
-        MailedTo:
-          description: Email address(es) to which the note has been sent.
-          type: string
-        CreatedBy:
-          description: Describes who created the note.
-          type: string
-        CompanyName:
-          description: Describes who created the note. Works as the `CreatedBy` parameter. ***Note:*** Obsolete parameter.
-          type: string
-        Attachments:
-          description: Files added along with the note.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Attachments.Attachment'
-        IsPinned:
-          description: "Indicates whether the note is pinned to the top of the notes list. Possible response values:\n             • `true`: The note is pinned, signifying the most important or pressing note right now for this work order. Only one note can be pinned on a single work order.\n             • `false`: The note isn’t pinned.\n            <br />Available with the *PinnedNotes* feature flag."
-          default: false
-          type: boolean
-        Visibility:
-          format: byte
-          description: "Defines which parties can view the note. Visibility also works in Universal Connector, where there are three primary parties: *Subscriber*, *External Subscriber*, and *Provider*. Possible response values:\n             • `0`: Visible to everyone (subscriber, external subscriber, provider). \n             • `1`: Visible to the subscriber and the provider. Not visible to the external subscriber.\n             • `2`: Visible to the subscriber and the external subscriber. Not visible to the provider.\n             • `3`: Visible to the subscriber only.\n            <br />Available with the *PrivateProviderNotesAndAttachments* feature flag. For Universal Connector clients, the *PrivateClientNotesAndAttachments* feature should be turned on."
-          type: string
-        NoteType:
-          description: "Type of the note. Possible response values:\n             • `SystemNote`: Notes added automatically by the system.\n             • `UsersNote`: Notes posted by users."
-          enum:
-          - SystemNote
-          - UsersNote
-          type: string
-        IsAttachmentNote:
-          description: 'Specifies whether the WO note has attachments. Possible values: `true` and `false`.'
-          default: false
-          type: boolean
-        ActionResolveDetails:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notes.ActionResolveDetails'
-          description: Applicable to notes that were marked with the **Action Required** flag. Shows whether the issue has been resolved.
     ServiceChannel.Services.WebApi.Models.Response.Notes.NoteAttachmentResponse:
       description: Represents the response details of a note attachment.
       type: object
@@ -684,6 +612,204 @@ components:
           description: "Indicates whether the attachment is a digital copy of an invoice. Possible response values: `true` and `false`.\n            <br />Available with the *InvoiceRequireDigitalCopy* feature flag."
           default: false
           type: boolean
+    ServiceChannel.Services.Messaging.Notes.ActionResolveDetails:
+      description: Details regarding the resolution status of an action-required note.
+      type: object
+      properties:
+        IsResolved:
+          description: 'Indicates whether the action has been resolved. Possible response values: `true` and `false`. Applicable to work order notes that were marked with the **Action Required** flag.'
+          default: false
+          type: boolean
+        ResolvedDate:
+          format: date-time
+          description: Date and time when the action was resolved. The format is `YYYY-MM-DDThh:mm:ss.sssss±hh:mm`, where `±hh:mm` represents the time zone offset from UTC.
+          type: string
+    ServiceChannel.Services.Messaging.Workorders.CreateWoNoteRequest:
+      description: Represents a request to create a work order note.
+      required:
+      - Note
+      type: object
+      properties:
+        Note:
+          description: Note text. Required.
+          type: string
+        MailedTo:
+          description: "Email address(es) of people who should receive an email notification about the new note. Separate multiple addresses with a semicolon.\n            <br />To prevent sending email alerts, leave it empty."
+          type: string
+        ActionRequired:
+          description: 'Defines whether the note should be marked with the **Action Required** flag. Possible values: `true` and `false`.'
+          default: false
+          type: boolean
+        ScheduledDate:
+          format: date-time
+          description: "Scheduled date of the work order. The format is `YYYY-MM-DDThh:mm:ss.sssZ`.\n            <br />To change the scheduled date of the work order via this method, ensure you have the *ChangeScheduledDateViaAddNoteApiMethod* feature turned on as well as the following permission enabled: *WorkOrderScheduledDateChange*.\n            <br />Without this feature and permission, the updated scheduled date will be reflected on the note but won’t automatically update the scheduled date on the work order.\n            <br />To prevent updating the scheduled date, leave the `ScheduledDate` empty."
+          type: string
+        FollowUpDate:
+          format: date-time
+          description: "To mark a note with the **Follow Up** flag, specify the follow-up date and time. It is used to revisit a work order at a later time, for example, to ensure the provider clocked in or updated the work order by the specified date. The format is `YYYY-MM-DDThh:mm:ss.sssZ`. Additionally, set the `IsFollowUpDateChanged` parameter to `true` if you specify the follow-up date.\n            <br />When no follow-up is required, leave it empty."
+          type: string
+        IsFollowUpDateChanged:
+          description: "Indicates whether the follow-up date should be changed. Possible input values:\n             • Enter `true` if you specify the `FollowUpDate`.\n             • Enter `false` if you don't specify the `FollowUpDate`."
+          default: false
+          type: boolean
+        AttachmentsIds:
+          description: 'Attachment IDs that should be associated with the note. Only files already linked to the work order can be attached to the note. To get attachment IDs, run the following method: GET/odata/workorders({workorderId})/attachments.'
+          type: array
+          items:
+            format: int32
+            type: integer
+        Visibility:
+          format: int32
+          description: "Defines which parties can view the note. Visibility also works in Universal Connector, where there are three primary parties: *Subscriber*, *External Subscriber*, and *Provider*. Possible input values: \n             • `0`: Visible to everyone (subscriber, external subscriber, provider).\n             • `1`: Visible to the subscriber and the provider. Not visible to the external subscriber.\n             • `2`: Visible to the subscriber and the external subscriber. Not visible to the provider.\n             • `3`: Visible to the subscriber only.\n            <br />Available with the *PrivateProviderNotesAndAttachments* feature flag. For Universal Connector clients, the *PrivateClientNotesAndAttachments* feature should be turned on."
+          type: integer
+        Actor:
+          description: Defines who is adding a note.
+          type: string
+        NotifyFollowers:
+          description: "Defines whether the WO followers should be notified about the new note. Possible values:\n             • `true`: WO followers will be notified.\n             • `false`: WO followers will not be notified."
+          default: false
+          type: boolean
+        DoNotSendEmail:
+          description: 'A flag indicating whether to suppress sending email notifications for the note. Possible input values: `true` and `false`.'
+          default: false
+          type: boolean
+        IsPinned:
+          description: "Indicates if the note should be pinned and displayed at the top of the notes list. Only one note can be pinned to a single work order.\n             • `true`: The note will be pinned.\n             • `false`: The note shouldn’t be pinned.\n            <br />Available to subscribers only — behind the *PinnedNotes* feature flag."
+          default: false
+          type: boolean
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Services.Messaging.Notes.EmailRecipientResponse:
+      description: The email notification recipient object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: The unique numeric identifier of the user who can be added to the list of email notification recipients.
+          type: integer
+        UserName:
+          description: The username of the email notification recipient.
+          type: string
+        Email:
+          description: The email address of the notification recipient.
+          type: string
+        RecipientType:
+          description: Defines the type of the email notification recipient.
+          enum:
+          - Undefined
+          - RegularRecipient
+          - Provider
+          - Follower
+          - LocationNoteRecipient
+          type: string
+    ServiceChannel.Services.WebApi.Models.Response.Notes.NoteResponse:
+      description: Object containing note details.
+      type: object
+      properties:
+        Id:
+          format: int64
+          description: Unique numeric identifier of the work order note.
+          type: integer
+        DocumentId:
+          description: Unique universal identifier of the work order note.
+          type: string
+        Number:
+          format: int32
+          description: Sequential number of the note.
+          type: integer
+        NoteData:
+          description: Content of the note.
+          type: string
+        DateCreated:
+          format: date-time
+          description: Date and time when the note was added to the work order. The format is `YYYY-MM-DDThh:mm:ss.sssssssZ`.
+          type: string
+        ScheduledDate:
+          format: date-time
+          description: Scheduled date of the work order. The format is `YYYY-MM-DDThh:mm:ssZ`.
+          type: string
+        FollowUpDate:
+          format: date-time
+          description: Follow-up date specified on the note is used to revisit a work order at a later time, for example, to ensure the provider clocked in or updated the work order by the specified date. The format is `YYYY-MM-DDThh:mm:ssZ`.
+          type: string
+        ActionRequired:
+          description: Indicates whether the recipient of the note is required to take further action on a work order. Check also the `ActionResolveDetails` parameter to see if the issue has been resolved.
+          default: false
+          type: boolean
+        MailedTo:
+          description: Email address(es) to which the note has been sent.
+          type: string
+        CreatedBy:
+          description: Describes who created the note.
+          type: string
+        CompanyName:
+          description: Name of the subscriber or provider company associated with the note.
+          type: string
+        Attachments:
+          description: Files added along with the note.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Notes.NoteAttachmentResponse'
+        Visibility:
+          format: byte
+          description: "Defines which parties can view the note. Visibility also works in Universal Connector, where there are three primary parties: *Subscriber*, *External Subscriber*, and *Provider*. Possible response values:  \n             • `0`: Visible to everyone (subscriber, external subscriber, provider).\n             • `1`: Visible to the subscriber and the provider. Not visible to the external subscriber.\n             • `2`: Visible to the subscriber and the external subscriber. Not visible to the provider.\n             • `3`: Visible to the subscriber only.\n            <br />Available with the *PrivateProviderNotesAndAttachments* feature flag. For Universal Connector clients, the *PrivateClientNotesAndAttachments* feature should be turned on."
+          type: string
+        NoteType:
+          description: "Type of the note:\n             • `SystemNote`: Notes added automatically by the system.\n             • `UsersNote`: Notes posted by users."
+          type: string
+        IsAttachmentNote:
+          description: Indicates whether the note serves as an attachment note.
+          default: false
+          type: boolean
+        IsPinned:
+          description: "Indicates whether the note is pinned to the top of the notes list. Possible response values:\n             • `true`: The note is pinned, signifying the most important or pressing note right now for this work order. Only one note can be pinned on a single work order.\n             • `false`: The note isn’t pinned.\n            <br />Available with the *PinnedNotes* feature flag."
+          default: false
+          type: boolean
+        ActionResolveDetails:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Notes.ActionResolveDetailsResponse'
+          description: Applicable to notes that were marked with the **Action Required** flag. Shows whether the issue has been resolved.
+    ServiceChannel.Services.WebApi.Models.Response.Notes.ActionResolveDetailsResponse:
+      description: Details regarding the resolution status of an action-required note.
+      type: object
+      properties:
+        IsResolved:
+          description: 'Indicates whether the action has been resolved. Possible response values: `true` and `false`. Applicable to work order notes that were marked with the **Action Required** flag.'
+          default: false
+          type: boolean
+        ResolvedDate:
+          format: date-time
+          description: Date and time when the action was resolved. The format is `YYYY-MM-DDThh:mm:ss.ssssss`.
+          type: string
+    ServiceChannel.Services.WebApi.Models.Request.Notes.PartialUpdateWorkOrderNoteRequest:
+      description: Object for pinning/unpinning the work order note.
+      type: object
+      properties:
+        IsPinned:
+          description: "Indicates whether the note should be pinned to the top of the notes list. Possible input values:\n             • `true`: The note is pinned.\n             • `false`: The note isn’t pinned."
+          default: false
+          type: boolean
+    ServiceChannel.Services.WebApi.Models.Response.Notes.GetNotesResponse:
+      description: Object containing a collection of notes and their counts.
+      type: object
+      properties:
+        Notes:
+          description: Notes associated with the specified work order.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Notes.NoteResponse'
+        AllNotesCount:
+          format: int32
+          description: Total count of all notes.
+          type: integer
+        UserNotesCount:
+          format: int32
+          description: Count of notes created by users.
+          type: integer
+        SystemNotesCount:
+          format: int32
+          description: Count of system-generated notes.
+          type: integer
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2321,6 +2447,18 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    ServiceChannel.Services.Messaging.Workorders.AddFollowersRequest:
+      required:
+      - FollowersList
+      - UserIds
+      type: object
+      properties:
+        FollowersList:
+          description: Required, Followers List
+          type: string
+        UserIds:
+          description: Required, User Ids
+          type: string
     ServiceChannel.Services.Messaging.Attachments.Attachment:
       description: Object containing information about an attachment.
       type: object
@@ -2357,35 +2495,8 @@ components:
         UploadBy:
           description: User who uploaded the attachment.
           type: string
-    ServiceChannel.Services.WebApi.Models.Response.Notes.ActionResolveDetailsResponse:
-      description: Details regarding the resolution status of an action-required note.
-      type: object
-      properties:
-        IsResolved:
-          description: 'Indicates whether the action has been resolved. Possible response values: `true` and `false`. Applicable to work order notes that were marked with the **Action Required** flag.'
-          default: false
-          type: boolean
-        ResolvedDate:
-          format: date-time
-          description: Date and time when the action was resolved. The format is `YYYY-MM-DDThh:mm:ss.ssssss`.
-          type: string
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.Workorders.AddFollowersRequest:
-      required:
-      - FollowersList
-      - UserIds
-      type: object
-      properties:
-        FollowersList:
-          description: Required, Followers List
-          type: string
-        UserIds:
-          description: Required, User Ids
-          type: string
-    ServiceChannel.Services.WebApi.Models.Response.Notes.NoteResponse:
-      description: Object containing note details.
+    ServiceChannel.Services.Messaging.Notes.Note:
+      description: Object containing notes for the specified work order ID.
       type: object
       properties:
         Id:
@@ -2393,7 +2504,10 @@ components:
           description: Unique numeric identifier of the work order note.
           type: integer
         DocumentId:
-          description: Unique universal identifier of the work order note.
+          description: UUID of the work order note.
+          type: string
+        GroupId:
+          description: Numeric identifier of the note group. Some notes can have the same `GroupId`. For example, when a user note is posted along with a WO status change, the `GroupId` will be identical for these two notes. Referring to the `GroupId` helps you easily find the user note associated with the status change. Can be null (for example, for historical notes).
           type: string
         Number:
           format: int32
@@ -2404,15 +2518,15 @@ components:
           type: string
         DateCreated:
           format: date-time
-          description: Date and time when the note was added to the work order. The format is `YYYY-MM-DDThh:mm:ss.sssssssZ`.
+          description: Date and time when the note was added to the work order. The format is `YYYY-MM-DDThh:mm:ss.sssssss±hh:mm`, where `±hh:mm` represents the time zone offset from UTC.
           type: string
         ScheduledDate:
           format: date-time
-          description: Scheduled date of the work order. The format is `YYYY-MM-DDThh:mm:ssZ`.
+          description: Scheduled date of the work order. The format is `YYYY-MM-DDThh:mm:ss±hh:mm`, where `±hh:mm` represents the time zone offset from UTC.
           type: string
         FollowUpDate:
           format: date-time
-          description: Follow-up date specified on the note is used to revisit a work order at a later time, for example, to ensure the provider clocked in or updated the work order by the specified date. The format is `YYYY-MM-DDThh:mm:ssZ`.
+          description: Follow-up date specified on the note is used to revisit a work order at a later time, for example, to ensure the provider clocked in or updated the work order by the specified date. The format is `YYYY-MM-DDThh:mm:ss±hh:mm`, where `±hh:mm` represents the time zone offset from UTC.
           type: string
         ActionRequired:
           description: Indicates whether the recipient of the note is required to take further action on a work order. Check also the `ActionResolveDetails` parameter to see if the issue has been resolved.
@@ -2425,148 +2539,34 @@ components:
           description: Describes who created the note.
           type: string
         CompanyName:
-          description: Name of the subscriber or provider company associated with the note.
+          description: Describes who created the note. Works as the `CreatedBy` parameter. ***Note:*** Obsolete parameter.
           type: string
         Attachments:
           description: Files added along with the note.
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Notes.NoteAttachmentResponse'
-        Visibility:
-          format: byte
-          description: "Defines which parties can view the note. Visibility also works in Universal Connector, where there are three primary parties: *Subscriber*, *External Subscriber*, and *Provider*. Possible response values:  \n             • `0`: Visible to everyone (subscriber, external subscriber, provider).\n             • `1`: Visible to the subscriber and the provider. Not visible to the external subscriber.\n             • `2`: Visible to the subscriber and the external subscriber. Not visible to the provider.\n             • `3`: Visible to the subscriber only.\n            <br />Available with the *PrivateProviderNotesAndAttachments* feature flag. For Universal Connector clients, the *PrivateClientNotesAndAttachments* feature should be turned on."
-          type: string
-        NoteType:
-          description: "Type of the note:\n             • `SystemNote`: Notes added automatically by the system.\n             • `UsersNote`: Notes posted by users."
-          type: string
-        IsAttachmentNote:
-          description: Indicates whether the note serves as an attachment note.
-          default: false
-          type: boolean
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Attachments.Attachment'
         IsPinned:
           description: "Indicates whether the note is pinned to the top of the notes list. Possible response values:\n             • `true`: The note is pinned, signifying the most important or pressing note right now for this work order. Only one note can be pinned on a single work order.\n             • `false`: The note isn’t pinned.\n            <br />Available with the *PinnedNotes* feature flag."
           default: false
           type: boolean
-        ActionResolveDetails:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Notes.ActionResolveDetailsResponse'
-          description: Applicable to notes that were marked with the **Action Required** flag. Shows whether the issue has been resolved.
-    ServiceChannel.Services.Messaging.Workorders.CreateWoNoteRequest:
-      description: Represents a request to create a work order note.
-      required:
-      - Note
-      type: object
-      properties:
-        Note:
-          description: Note text. Required.
-          type: string
-        MailedTo:
-          description: "Email address(es) of people who should receive an email notification about the new note. Separate multiple addresses with a semicolon.\n            <br />To prevent sending email alerts, leave it empty."
-          type: string
-        ActionRequired:
-          description: 'Defines whether the note should be marked with the **Action Required** flag. Possible values: `true` and `false`.'
-          default: false
-          type: boolean
-        ScheduledDate:
-          format: date-time
-          description: "Scheduled date of the work order. The format is `YYYY-MM-DDThh:mm:ss.sssZ`.\n            <br />To change the scheduled date of the work order via this method, ensure you have the *ChangeScheduledDateViaAddNoteApiMethod* feature turned on as well as the following permission enabled: *WorkOrderScheduledDateChange*.\n            <br />Without this feature and permission, the updated scheduled date will be reflected on the note but won’t automatically update the scheduled date on the work order.\n            <br />To prevent updating the scheduled date, leave the `ScheduledDate` empty."
-          type: string
-        FollowUpDate:
-          format: date-time
-          description: "To mark a note with the **Follow Up** flag, specify the follow-up date and time. It is used to revisit a work order at a later time, for example, to ensure the provider clocked in or updated the work order by the specified date. The format is `YYYY-MM-DDThh:mm:ss.sssZ`. Additionally, set the `IsFollowUpDateChanged` parameter to `true` if you specify the follow-up date.\n            <br />When no follow-up is required, leave it empty."
-          type: string
-        IsFollowUpDateChanged:
-          description: "Indicates whether the follow-up date should be changed. Possible input values:\n             • Enter `true` if you specify the `FollowUpDate`.\n             • Enter `false` if you don't specify the `FollowUpDate`."
-          default: false
-          type: boolean
-        AttachmentsIds:
-          description: 'Attachment IDs that should be associated with the note. Only files already linked to the work order can be attached to the note. To get attachment IDs, run the following method: GET/odata/workorders({workorderId})/attachments.'
-          type: array
-          items:
-            format: int32
-            type: integer
         Visibility:
-          format: int32
-          description: "Defines which parties can view the note. Visibility also works in Universal Connector, where there are three primary parties: *Subscriber*, *External Subscriber*, and *Provider*. Possible input values: \n             • `0`: Visible to everyone (subscriber, external subscriber, provider).\n             • `1`: Visible to the subscriber and the provider. Not visible to the external subscriber.\n             • `2`: Visible to the subscriber and the external subscriber. Not visible to the provider.\n             • `3`: Visible to the subscriber only.\n            <br />Available with the *PrivateProviderNotesAndAttachments* feature flag. For Universal Connector clients, the *PrivateClientNotesAndAttachments* feature should be turned on."
-          type: integer
-        Actor:
-          description: Defines who is adding a note.
+          format: byte
+          description: "Defines which parties can view the note. Visibility also works in Universal Connector, where there are three primary parties: *Subscriber*, *External Subscriber*, and *Provider*. Possible response values:\n             • `0`: Visible to everyone (subscriber, external subscriber, provider). \n             • `1`: Visible to the subscriber and the provider. Not visible to the external subscriber.\n             • `2`: Visible to the subscriber and the external subscriber. Not visible to the provider.\n             • `3`: Visible to the subscriber only.\n            <br />Available with the *PrivateProviderNotesAndAttachments* feature flag. For Universal Connector clients, the *PrivateClientNotesAndAttachments* feature should be turned on."
           type: string
-        NotifyFollowers:
-          description: "Defines whether the WO followers should be notified about the new note. Possible values:\n             • `true`: WO followers will be notified.\n             • `false`: WO followers will not be notified."
-          default: false
-          type: boolean
-        DoNotSendEmail:
-          description: 'A flag indicating whether to suppress sending email notifications for the note. Possible input values: `true` and `false`.'
-          default: false
-          type: boolean
-        IsPinned:
-          description: "Indicates if the note should be pinned and displayed at the top of the notes list. Only one note can be pinned to a single work order.\n             • `true`: The note will be pinned.\n             • `false`: The note shouldn’t be pinned.\n            <br />Available to subscribers only — behind the *PinnedNotes* feature flag."
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Notes.EmailRecipientResponse:
-      description: The email notification recipient object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: The unique numeric identifier of the user who can be added to the list of email notification recipients.
-          type: integer
-        UserName:
-          description: The username of the email notification recipient.
-          type: string
-        Email:
-          description: The email address of the notification recipient.
-          type: string
-        RecipientType:
-          description: Defines the type of the email notification recipient.
+        NoteType:
+          description: "Type of the note. Possible response values:\n             • `SystemNote`: Notes added automatically by the system.\n             • `UsersNote`: Notes posted by users."
           enum:
-          - Undefined
-          - RegularRecipient
-          - Provider
-          - Follower
-          - LocationNoteRecipient
+          - SystemNote
+          - UsersNote
           type: string
-    ServiceChannel.Services.WebApi.Models.Response.Notes.GetNotesResponse:
-      description: Object containing a collection of notes and their counts.
-      type: object
-      properties:
-        Notes:
-          description: Notes associated with the specified work order.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Notes.NoteResponse'
-        AllNotesCount:
-          format: int32
-          description: Total count of all notes.
-          type: integer
-        UserNotesCount:
-          format: int32
-          description: Count of notes created by users.
-          type: integer
-        SystemNotesCount:
-          format: int32
-          description: Count of system-generated notes.
-          type: integer
-    ServiceChannel.Services.WebApi.Models.Request.Notes.PartialUpdateWorkOrderNoteRequest:
-      description: Object for pinning/unpinning the work order note.
-      type: object
-      properties:
-        IsPinned:
-          description: "Indicates whether the note should be pinned to the top of the notes list. Possible input values:\n             • `true`: The note is pinned.\n             • `false`: The note isn’t pinned."
+        IsAttachmentNote:
+          description: 'Specifies whether the WO note has attachments. Possible values: `true` and `false`.'
           default: false
           type: boolean
-    ServiceChannel.Services.Messaging.Notes.ActionResolveDetails:
-      description: Details regarding the resolution status of an action-required note.
-      type: object
-      properties:
-        IsResolved:
-          description: 'Indicates whether the action has been resolved. Possible response values: `true` and `false`. Applicable to work order notes that were marked with the **Action Required** flag.'
-          default: false
-          type: boolean
-        ResolvedDate:
-          format: date-time
-          description: Date and time when the action was resolved. The format is `YYYY-MM-DDThh:mm:ss.sssss±hh:mm`, where `±hh:mm` represents the time zone offset from UTC.
-          type: string
+        ActionResolveDetails:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notes.ActionResolveDetails'
+          description: Applicable to notes that were marked with the **Action Required** flag. Shows whether the issue has been resolved.
   securitySchemes:
     oauth2:
       type: oauth2

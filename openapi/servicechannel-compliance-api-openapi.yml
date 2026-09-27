@@ -270,31 +270,26 @@ paths:
                   format: binary
 components:
   schemas:
-    ? ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_ServiceChannel.Api.Model.Workorders.Compliance.WorkOrderComplianceStatus
-    : type: object
-      properties:
-        Value:
-          enum:
-          - Open
-          - Expired
-          - InvalidDocument
-          - Pass
-          - PassWithRecommendation
-          - Fail
-          - FailWithRemediation
-          type: string
-    ? ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_ServiceChannel.Api.Model.Workorders.Compliance.ComplianceAttachment
-    : type: object
-      properties:
-        Value:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Workorders.Compliance.ComplianceAttachment'
-    ServiceChannel.Services.WebApi.Models.Response.Compliance.GetComplianceHistoryResponse:
+    ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_System.Nullable_System.DateTimeOffset:
       type: object
       properties:
-        Items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Compliance.ComplianceHistoryItem'
+        Value:
+          format: date-time
+          type: string
+    ServiceChannel.Api.Model.Workorders.Compliance.ComplianceAttachment:
+      type: object
+      properties:
+        Name:
+          type: string
+        Uri:
+          type: string
+    ServiceChannel.Services.WebApi.Models.Response.Compliance.ComplianceAttachment:
+      type: object
+      properties:
+        Name:
+          type: string
+        Uri:
+          type: string
     ServiceChannel.Services.WebApi.Models.Response.Compliance.ComplianceUser:
       type: object
       properties:
@@ -309,13 +304,90 @@ components:
           type: string
         Email:
           type: string
-    ServiceChannel.Services.WebApi.Models.Response.Compliance.ComplianceAttachment:
+    ? ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_ServiceChannel.Api.Model.Workorders.Compliance.WorkOrderComplianceStatus
+    : type: object
+      properties:
+        Value:
+          enum:
+          - Open
+          - Expired
+          - InvalidDocument
+          - Pass
+          - PassWithRecommendation
+          - Fail
+          - FailWithRemediation
+          type: string
+    ServiceChannel.Services.WebApi.Models.Response.Compliance.GetComplianceHistoryResponse:
       type: object
       properties:
-        Name:
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Compliance.ComplianceHistoryItem'
+    ServiceChannel.Services.WebApi.Models.Response.Compliance.ComplianceHistoryItem:
+      type: object
+      properties:
+        Status:
           type: string
-        Uri:
+        Attachment:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Compliance.ComplianceAttachment'
+        ValidFromDate:
+          format: date-time
           type: string
+        ValidToDate:
+          format: date-time
+          type: string
+        RemediationDueDate:
+          format: date-time
+          type: string
+        Comment:
+          type: string
+        UpdatedBy:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Compliance.ComplianceUser'
+        UpdatedDate:
+          format: date-time
+          type: string
+    ServiceChannel.Services.WebApi.Models.Request.Compliance.PartialUpdateWorkOrderComplianceRequest:
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_ServiceChannel.Api.Model.Workorders.Compliance.WorkOrderComplianceStatus'
+        Attachment:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_ServiceChannel.Api.Model.Workorders.Compliance.ComplianceAttachment'
+        ValidFromDate:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_System.Nullable_System.DateTimeOffset'
+        ValidToDate:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_System.Nullable_System.DateTimeOffset'
+        RemediationDueDate:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_System.Nullable_System.DateTimeOffset'
+        Comment:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_System.String'
+    ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_System.String:
+      type: object
+      properties:
+        Value:
+          type: string
+    ServiceChannel.Services.WebApi.Models.Response.Compliance.GetComplianceResponse:
+      type: object
+      properties:
+        Status:
+          type: string
+        Attachment:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Compliance.ComplianceAttachment'
+        ValidFromDate:
+          format: date-time
+          type: string
+        ValidToDate:
+          format: date-time
+          type: string
+        RemediationDueDate:
+          format: date-time
+          type: string
+        Comment:
+          type: string
+        HistoryItemsCount:
+          format: int32
+          type: integer
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -1953,86 +2025,14 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.WebApi.Models.Request.Compliance.PartialUpdateWorkOrderComplianceRequest:
-      type: object
+    ? ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_ServiceChannel.Api.Model.Workorders.Compliance.ComplianceAttachment
+    : type: object
       properties:
-        Status:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_ServiceChannel.Api.Model.Workorders.Compliance.WorkOrderComplianceStatus'
-        Attachment:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_ServiceChannel.Api.Model.Workorders.Compliance.ComplianceAttachment'
-        ValidFromDate:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_System.Nullable_System.DateTimeOffset'
-        ValidToDate:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_System.Nullable_System.DateTimeOffset'
-        RemediationDueDate:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_System.Nullable_System.DateTimeOffset'
-        Comment:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_System.String'
+        Value:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Workorders.Compliance.ComplianceAttachment'
     System.Object:
       type: object
       properties: {}
-    ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_System.Nullable_System.DateTimeOffset:
-      type: object
-      properties:
-        Value:
-          format: date-time
-          type: string
-    ServiceChannel.Services.WebApi.Models.Response.Compliance.ComplianceHistoryItem:
-      type: object
-      properties:
-        Status:
-          type: string
-        Attachment:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Compliance.ComplianceAttachment'
-        ValidFromDate:
-          format: date-time
-          type: string
-        ValidToDate:
-          format: date-time
-          type: string
-        RemediationDueDate:
-          format: date-time
-          type: string
-        Comment:
-          type: string
-        UpdatedBy:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Compliance.ComplianceUser'
-        UpdatedDate:
-          format: date-time
-          type: string
-    ServiceChannel.Services.WebApi.Models.Request.Compliance.PatchedDataWrapper_System.String:
-      type: object
-      properties:
-        Value:
-          type: string
-    ServiceChannel.Api.Model.Workorders.Compliance.ComplianceAttachment:
-      type: object
-      properties:
-        Name:
-          type: string
-        Uri:
-          type: string
-    ServiceChannel.Services.WebApi.Models.Response.Compliance.GetComplianceResponse:
-      type: object
-      properties:
-        Status:
-          type: string
-        Attachment:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Compliance.ComplianceAttachment'
-        ValidFromDate:
-          format: date-time
-          type: string
-        ValidToDate:
-          format: date-time
-          type: string
-        RemediationDueDate:
-          format: date-time
-          type: string
-        Comment:
-          type: string
-        HistoryItemsCount:
-          format: int32
-          type: integer
   securitySchemes:
     oauth2:
       type: oauth2

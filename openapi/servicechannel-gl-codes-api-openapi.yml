@@ -309,33 +309,52 @@ paths:
       x-access: Subscribers
 components:
   schemas:
-    ServiceChannel.Api.Model.Entities.ApprovalCodes.AdditionalApprovalCodeOption:
+    ServiceChannel.Api.Model.Entities.ApprovalCodes.ApprovalCodeWithOptions:
       type: object
       properties:
+        LocationId:
+          format: int32
+          type: integer
+        LocationName:
+          type: string
+        LocationStoreId:
+          type: string
+        EditableAtLineItemLevel:
+          default: false
+          type: boolean
+        ValueFormat:
+          format: int32
+          type: integer
+        DefaultOptionId:
+          format: int32
+          type: integer
+        DefaultOption:
+          type: string
+        Options:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.ApprovalCodes.AdditionalApprovalCodeOption'
         Id:
           format: int32
           type: integer
-        AdditionalApprovalCodeId:
+        CategoryId:
           format: int32
           type: integer
-        OptionValue:
+        Category:
           type: string
-    ServiceChannel.Services.Messaging.ApprovalCodes.GetApprovalCodesWithOptionsResponse:
-      description: Holds response.
-      type: object
-      properties:
-        ApprovalCodes:
-          description: Gets or sets ApprovalCodes.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.ApprovalCodes.ApprovalCodeWithOptions'
-        ErrorCode:
+        Name:
+          type: string
+        Code:
+          type: string
+        OrderNumber:
           format: int32
-          description: 'Numeric identifier that determines the nature of an error. Possible values: `0` - success, otherwise - error.'
           type: integer
-        Message:
-          description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
-          type: string
+        SubscriberId:
+          format: int32
+          type: integer
+        IsEnabled:
+          default: false
+          type: boolean
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -1973,55 +1992,36 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    ServiceChannel.Services.Messaging.ApprovalCodes.GetApprovalCodesWithOptionsResponse:
+      description: Holds response.
+      type: object
+      properties:
+        ApprovalCodes:
+          description: Gets or sets ApprovalCodes.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.ApprovalCodes.ApprovalCodeWithOptions'
+        ErrorCode:
+          format: int32
+          description: 'Numeric identifier that determines the nature of an error. Possible values: `0` - success, otherwise - error.'
+          type: integer
+        Message:
+          description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
+          type: string
     System.Object:
       type: object
       properties: {}
-    ServiceChannel.Api.Model.Entities.ApprovalCodes.ApprovalCodeWithOptions:
+    ServiceChannel.Api.Model.Entities.ApprovalCodes.AdditionalApprovalCodeOption:
       type: object
       properties:
-        LocationId:
-          format: int32
-          type: integer
-        LocationName:
-          type: string
-        LocationStoreId:
-          type: string
-        EditableAtLineItemLevel:
-          default: false
-          type: boolean
-        ValueFormat:
-          format: int32
-          type: integer
-        DefaultOptionId:
-          format: int32
-          type: integer
-        DefaultOption:
-          type: string
-        Options:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.ApprovalCodes.AdditionalApprovalCodeOption'
         Id:
           format: int32
           type: integer
-        CategoryId:
+        AdditionalApprovalCodeId:
           format: int32
           type: integer
-        Category:
+        OptionValue:
           type: string
-        Name:
-          type: string
-        Code:
-          type: string
-        OrderNumber:
-          format: int32
-          type: integer
-        SubscriberId:
-          format: int32
-          type: integer
-        IsEnabled:
-          default: false
-          type: boolean
   securitySchemes:
     oauth2:
       type: oauth2

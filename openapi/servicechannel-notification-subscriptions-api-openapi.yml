@@ -590,12 +590,373 @@ paths:
       x-access: Any
 components:
   schemas:
-    ServiceChannel.Services.Messaging.Notifications.SigningKeyResponse:
+    ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionsRules:
+      description: The event rules used to receive events matching only certain criteria.
       type: object
       properties:
-        Key:
-          description: The current subscriber's or provider's signing key.
+        Trades:
+          description: The trades that the events should belong to.
+          type: array
+          items:
+            type: string
+        Categories:
+          description: The categories that the events should belong to.
+          type: array
+          items:
+            type: string
+        Statuses:
+          description: The statuses that the events should belong to.
+          type: array
+          items:
+            type: string
+    ServiceChannel.Services.Messaging.Notifications.AddHttpNotificationSubscriptionRequest:
+      required:
+      - Url
+      - Name
+      - EventTypes
+      type: object
+      properties:
+        Url:
+          description: The URL to which the events should be delivered.
           type: string
+        Enabled:
+          description: Defines if the subscription is active or inactive.
+          default: false
+          type: boolean
+        Name:
+          description: The user-friendly name for the subscription.
+          type: string
+        EventTypes:
+          description: The list of events to subscribe to. Events within one subscription should belong to one object.
+          type: array
+          items:
+            enum:
+            - WorkOrderCreated
+            - WorkOrderNoteAdded
+            - WorkOrderNotePinned
+            - WorkOrderNoteUnpinned
+            - WorkOrderNoteActionResolved
+            - WorkOrderStatusChanged
+            - WorkOrderAttachmentAdded
+            - WorkOrderAttachmentDeleted
+            - WorkOrderNumberChanged
+            - WorkOrderCallerChanged
+            - WorkOrderMoeNumberChanged
+            - WorkOrderServiceNowIdChanged
+            - WorkOrderPriorityChanged
+            - WorkOrderScheduledDateChanged
+            - WorkOrderTradeChanged
+            - WorkOrderNteChanged
+            - WorkOrderCategoryChanged
+            - WorkOrderProviderChanged
+            - WorkOrderDescriptionChanged
+            - WorkOrderResolutionCreated
+            - RefrigerantWasUsedChanged
+            - WorkOrderResolutionUpdated
+            - WorkOrderResolutionCodeUpdated
+            - WorkOrderRootCauseCodeUpdated
+            - WorkOrderAssetAttached
+            - WorkOrderAssetDetached
+            - WorkOrderAssetValidated
+            - WorkOrderLabelAdded
+            - WorkOrderLabelDeleted
+            - WorkOrderWeatherTypeChanged
+            - WorkOrderWeatherTypeDeleted
+            - WorkOrderVerbalApprovalChanged
+            - WorkOrderGLCodeChanged
+            - WorkOrderAdditionalApprovalCodesChanged
+            - WorkOrderFeedbackRequested
+            - WorkOrderAssigneeChanged
+            - WorkOrderAssigneeDeleted
+            - WorkOrderProjectLink
+            - WorkOrderProjectUnlink
+            - WorkOrderRecallChanged
+            - WorkOrderRecallDeleted
+            - WorkOrderIssueChoiceChanged
+            - WorkOrderTechnicianAssigned
+            - WorkOrderTechnicianUnassigned
+            - WorkOrderTechnicianAccepted
+            - WorkOrderTechnicianDeclined
+            - WorkOrderCertifiedTechnicianAssigned
+            - WorkOrderLinksAdded
+            - WorkOrderLinksDeleted
+            - WorkOrderStarAdded
+            - WorkOrderStarRemoved
+            - WorkOrderWorkActivityAdded
+            - WorkOrderWorkActivityDeleted
+            - WorkOrderWorkActivityChanged
+            - WorkOrderCheckIn
+            - WorkOrderCheckOut
+            - BadgeScanRequired
+            - InvoiceCreated
+            - InvoiceOpen
+            - InvoiceApproved
+            - InvoiceOnHold
+            - InvoiceReviewed
+            - InvoiceRejected
+            - InvoiceApprovalCodeChanged
+            - InvoiceAdditionalApprovalCodesChanged
+            - InvoiceStarAdded
+            - InvoiceStarRemoved
+            - InvoiceDisputed
+            - InvoiceVoided
+            - InvoicePaid
+            - ProposalCreated
+            - ProposalOpen
+            - ProposalApproved
+            - ProposalOnHold
+            - ProposalRejected
+            - ProposalReviewed
+            - ProposalUserAssigned
+            - ProposalWorkOrderAssigned
+            - ProposalAttachmentAdded
+            - ProposalScheduled
+            - ProposalVoided
+            - ProposalPendingExternalApproval
+            - FbInvitationAccepted
+            - CalendarIntegrationAdded
+            - CalendarIntegrationUpdated
+            - LocationCreated
+            - LocationUpdated
+            - LocationDeleted
+            - LocationNoteHeaderCreated
+            - LocationNoteHeaderUpdated
+            - LocationNoteHeaderDeleted
+            - LocationNotesChanged
+            - SubscriberTradeCreated
+            - SubscriberTradeUpdated
+            - SubscriberTradeDeleted
+            - SubscriberPriorityCreated
+            - SubscriberPriorityUpdated
+            - SubscriberPriorityDeleted
+            - SubscriberStatusCreated
+            - SubscriberStatusUpdated
+            - SubscriberStatusDeleted
+            - SubscriberCategoryCreated
+            - SubscriberCategoryUpdated
+            - SubscriberCategoryDeleted
+            - SubscriberGlCodeCreated
+            - SubscriberGlCodeUpdated
+            - SubscriberGlCodeDeleted
+            - SubscriberAdditionalApprovalCodeCreated
+            - SubscriberAdditionalApprovalCodeUpdated
+            - SubscriberNameUpdated
+            - ProviderTradeAssigned
+            - ProviderTradeUnassigned
+            - ProviderTradeUpdated
+            - ProviderNameUpdated
+            - LeakRecordCreated
+            - LeakRecordUpdated
+            - LeakRecordDeleted
+            - CheckListResponseAdded
+            - CheckListResponseUpdated
+            - CheckListCreated
+            - CheckListUpdated
+            - CheckListDeleted
+            - IssueListAssigned
+            - AssetCreated
+            - AssetUpdated
+            - AssetAttachmentAdded
+            - AssetAttachmentDeleted
+            - AssetRefrigerantChanged
+            type: string
+        Rules:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionsRules'
+    ServiceChannel.Services.Messaging.Notifications.MSBotNotificationSubscriptionResponse:
+      description: MSBotNotificationSubscriptionResponse
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Subscription identifier
+          type: integer
+        UserId:
+          format: int32
+          description: Service Channel User identifier
+          type: integer
+        UserEmailAddress:
+          description: Service Channel User Email Address
+          type: string
+        SubscriberId:
+          format: int32
+          description: Subscriber identifier
+          type: integer
+        ProviderId:
+          format: int32
+          description: Provider identifier
+          type: integer
+        IsEnabled:
+          description: Is Enabled
+          default: false
+          type: boolean
+        ConversationReference:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.MSBotConversationReference'
+          description: Conversation Reference
+    ServiceChannel.Services.Messaging.Notifications.HttpNotificationSubscription:
+      required:
+      - Url
+      - Name
+      - EventTypes
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: The unique subscription ID. Generated automatically and cannot be modified.
+          type: integer
+        Url:
+          description: The URL to which the events should be delivered.
+          type: string
+        Enabled:
+          description: Defines if the subscription is active or inactive.
+          default: false
+          type: boolean
+        Name:
+          description: The user-friendly name for the subscription.
+          type: string
+        EventTypes:
+          description: The list of events to subscribe to. Events within one subscription should belong to one object.
+          type: array
+          items:
+            enum:
+            - WorkOrderCreated
+            - WorkOrderNoteAdded
+            - WorkOrderNotePinned
+            - WorkOrderNoteUnpinned
+            - WorkOrderNoteActionResolved
+            - WorkOrderStatusChanged
+            - WorkOrderAttachmentAdded
+            - WorkOrderAttachmentDeleted
+            - WorkOrderNumberChanged
+            - WorkOrderCallerChanged
+            - WorkOrderMoeNumberChanged
+            - WorkOrderServiceNowIdChanged
+            - WorkOrderPriorityChanged
+            - WorkOrderScheduledDateChanged
+            - WorkOrderTradeChanged
+            - WorkOrderNteChanged
+            - WorkOrderCategoryChanged
+            - WorkOrderProviderChanged
+            - WorkOrderDescriptionChanged
+            - WorkOrderResolutionCreated
+            - RefrigerantWasUsedChanged
+            - WorkOrderResolutionUpdated
+            - WorkOrderResolutionCodeUpdated
+            - WorkOrderRootCauseCodeUpdated
+            - WorkOrderAssetAttached
+            - WorkOrderAssetDetached
+            - WorkOrderAssetValidated
+            - WorkOrderLabelAdded
+            - WorkOrderLabelDeleted
+            - WorkOrderWeatherTypeChanged
+            - WorkOrderWeatherTypeDeleted
+            - WorkOrderVerbalApprovalChanged
+            - WorkOrderGLCodeChanged
+            - WorkOrderAdditionalApprovalCodesChanged
+            - WorkOrderFeedbackRequested
+            - WorkOrderAssigneeChanged
+            - WorkOrderAssigneeDeleted
+            - WorkOrderProjectLink
+            - WorkOrderProjectUnlink
+            - WorkOrderRecallChanged
+            - WorkOrderRecallDeleted
+            - WorkOrderIssueChoiceChanged
+            - WorkOrderTechnicianAssigned
+            - WorkOrderTechnicianUnassigned
+            - WorkOrderTechnicianAccepted
+            - WorkOrderTechnicianDeclined
+            - WorkOrderCertifiedTechnicianAssigned
+            - WorkOrderLinksAdded
+            - WorkOrderLinksDeleted
+            - WorkOrderStarAdded
+            - WorkOrderStarRemoved
+            - WorkOrderWorkActivityAdded
+            - WorkOrderWorkActivityDeleted
+            - WorkOrderWorkActivityChanged
+            - WorkOrderCheckIn
+            - WorkOrderCheckOut
+            - BadgeScanRequired
+            - InvoiceCreated
+            - InvoiceOpen
+            - InvoiceApproved
+            - InvoiceOnHold
+            - InvoiceReviewed
+            - InvoiceRejected
+            - InvoiceApprovalCodeChanged
+            - InvoiceAdditionalApprovalCodesChanged
+            - InvoiceStarAdded
+            - InvoiceStarRemoved
+            - InvoiceDisputed
+            - InvoiceVoided
+            - InvoicePaid
+            - ProposalCreated
+            - ProposalOpen
+            - ProposalApproved
+            - ProposalOnHold
+            - ProposalRejected
+            - ProposalReviewed
+            - ProposalUserAssigned
+            - ProposalWorkOrderAssigned
+            - ProposalAttachmentAdded
+            - ProposalScheduled
+            - ProposalVoided
+            - ProposalPendingExternalApproval
+            - FbInvitationAccepted
+            - CalendarIntegrationAdded
+            - CalendarIntegrationUpdated
+            - LocationCreated
+            - LocationUpdated
+            - LocationDeleted
+            - LocationNoteHeaderCreated
+            - LocationNoteHeaderUpdated
+            - LocationNoteHeaderDeleted
+            - LocationNotesChanged
+            - SubscriberTradeCreated
+            - SubscriberTradeUpdated
+            - SubscriberTradeDeleted
+            - SubscriberPriorityCreated
+            - SubscriberPriorityUpdated
+            - SubscriberPriorityDeleted
+            - SubscriberStatusCreated
+            - SubscriberStatusUpdated
+            - SubscriberStatusDeleted
+            - SubscriberCategoryCreated
+            - SubscriberCategoryUpdated
+            - SubscriberCategoryDeleted
+            - SubscriberGlCodeCreated
+            - SubscriberGlCodeUpdated
+            - SubscriberGlCodeDeleted
+            - SubscriberAdditionalApprovalCodeCreated
+            - SubscriberAdditionalApprovalCodeUpdated
+            - SubscriberNameUpdated
+            - ProviderTradeAssigned
+            - ProviderTradeUnassigned
+            - ProviderTradeUpdated
+            - ProviderNameUpdated
+            - LeakRecordCreated
+            - LeakRecordUpdated
+            - LeakRecordDeleted
+            - CheckListResponseAdded
+            - CheckListResponseUpdated
+            - CheckListCreated
+            - CheckListUpdated
+            - CheckListDeleted
+            - IssueListAssigned
+            - AssetCreated
+            - AssetUpdated
+            - AssetAttachmentAdded
+            - AssetAttachmentDeleted
+            - AssetRefrigerantChanged
+            type: string
+        Rules:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionsRules'
+    ServiceChannel.Services.Messaging.Notifications.AddNotificationSubsciptionResponse:
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: The unique subscription ID. Generated automatically and cannot be modified.
+          type: integer
+          readOnly: true
     ServiceChannel.Services.Messaging.Notifications.MSBotConversationReference:
       description: MSBotConversationReference
       type: object
@@ -2252,181 +2613,25 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.Notifications.AddHttpNotificationSubscriptionRequest:
-      required:
-      - Url
-      - Name
-      - EventTypes
+    ServiceChannel.Services.Messaging.Notifications.SigningKeyResponse:
       type: object
       properties:
-        Url:
-          description: The URL to which the events should be delivered.
+        Key:
+          description: The current subscriber's or provider's signing key.
           type: string
-        Enabled:
-          description: Defines if the subscription is active or inactive.
-          default: false
-          type: boolean
-        Name:
-          description: The user-friendly name for the subscription.
-          type: string
-        EventTypes:
-          description: The list of events to subscribe to. Events within one subscription should belong to one object.
-          type: array
-          items:
-            enum:
-            - WorkOrderCreated
-            - WorkOrderNoteAdded
-            - WorkOrderNotePinned
-            - WorkOrderNoteUnpinned
-            - WorkOrderNoteActionResolved
-            - WorkOrderStatusChanged
-            - WorkOrderAttachmentAdded
-            - WorkOrderAttachmentDeleted
-            - WorkOrderNumberChanged
-            - WorkOrderCallerChanged
-            - WorkOrderMoeNumberChanged
-            - WorkOrderServiceNowIdChanged
-            - WorkOrderPriorityChanged
-            - WorkOrderScheduledDateChanged
-            - WorkOrderTradeChanged
-            - WorkOrderNteChanged
-            - WorkOrderCategoryChanged
-            - WorkOrderProviderChanged
-            - WorkOrderDescriptionChanged
-            - WorkOrderResolutionCreated
-            - RefrigerantWasUsedChanged
-            - WorkOrderResolutionUpdated
-            - WorkOrderResolutionCodeUpdated
-            - WorkOrderRootCauseCodeUpdated
-            - WorkOrderAssetAttached
-            - WorkOrderAssetDetached
-            - WorkOrderAssetValidated
-            - WorkOrderLabelAdded
-            - WorkOrderLabelDeleted
-            - WorkOrderWeatherTypeChanged
-            - WorkOrderWeatherTypeDeleted
-            - WorkOrderVerbalApprovalChanged
-            - WorkOrderGLCodeChanged
-            - WorkOrderAdditionalApprovalCodesChanged
-            - WorkOrderFeedbackRequested
-            - WorkOrderAssigneeChanged
-            - WorkOrderAssigneeDeleted
-            - WorkOrderProjectLink
-            - WorkOrderProjectUnlink
-            - WorkOrderRecallChanged
-            - WorkOrderRecallDeleted
-            - WorkOrderIssueChoiceChanged
-            - WorkOrderTechnicianAssigned
-            - WorkOrderTechnicianUnassigned
-            - WorkOrderTechnicianAccepted
-            - WorkOrderTechnicianDeclined
-            - WorkOrderCertifiedTechnicianAssigned
-            - WorkOrderLinksAdded
-            - WorkOrderLinksDeleted
-            - WorkOrderStarAdded
-            - WorkOrderStarRemoved
-            - WorkOrderWorkActivityAdded
-            - WorkOrderWorkActivityDeleted
-            - WorkOrderWorkActivityChanged
-            - WorkOrderCheckIn
-            - WorkOrderCheckOut
-            - BadgeScanRequired
-            - InvoiceCreated
-            - InvoiceOpen
-            - InvoiceApproved
-            - InvoiceOnHold
-            - InvoiceReviewed
-            - InvoiceRejected
-            - InvoiceApprovalCodeChanged
-            - InvoiceAdditionalApprovalCodesChanged
-            - InvoiceStarAdded
-            - InvoiceStarRemoved
-            - InvoiceDisputed
-            - InvoiceVoided
-            - InvoicePaid
-            - ProposalCreated
-            - ProposalOpen
-            - ProposalApproved
-            - ProposalOnHold
-            - ProposalRejected
-            - ProposalReviewed
-            - ProposalUserAssigned
-            - ProposalWorkOrderAssigned
-            - ProposalAttachmentAdded
-            - ProposalScheduled
-            - ProposalVoided
-            - ProposalPendingExternalApproval
-            - FbInvitationAccepted
-            - CalendarIntegrationAdded
-            - CalendarIntegrationUpdated
-            - LocationCreated
-            - LocationUpdated
-            - LocationDeleted
-            - LocationNoteHeaderCreated
-            - LocationNoteHeaderUpdated
-            - LocationNoteHeaderDeleted
-            - LocationNotesChanged
-            - SubscriberTradeCreated
-            - SubscriberTradeUpdated
-            - SubscriberTradeDeleted
-            - SubscriberPriorityCreated
-            - SubscriberPriorityUpdated
-            - SubscriberPriorityDeleted
-            - SubscriberStatusCreated
-            - SubscriberStatusUpdated
-            - SubscriberStatusDeleted
-            - SubscriberCategoryCreated
-            - SubscriberCategoryUpdated
-            - SubscriberCategoryDeleted
-            - SubscriberGlCodeCreated
-            - SubscriberGlCodeUpdated
-            - SubscriberGlCodeDeleted
-            - SubscriberAdditionalApprovalCodeCreated
-            - SubscriberAdditionalApprovalCodeUpdated
-            - SubscriberNameUpdated
-            - ProviderTradeAssigned
-            - ProviderTradeUnassigned
-            - ProviderTradeUpdated
-            - ProviderNameUpdated
-            - LeakRecordCreated
-            - LeakRecordUpdated
-            - LeakRecordDeleted
-            - CheckListResponseAdded
-            - CheckListResponseUpdated
-            - CheckListCreated
-            - CheckListUpdated
-            - CheckListDeleted
-            - IssueListAssigned
-            - AssetCreated
-            - AssetUpdated
-            - AssetAttachmentAdded
-            - AssetAttachmentDeleted
-            - AssetRefrigerantChanged
-            type: string
-        Rules:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionsRules'
-    ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionsRules:
-      description: The event rules used to receive events matching only certain criteria.
-      type: object
-      properties:
-        Trades:
-          description: The trades that the events should belong to.
-          type: array
-          items:
-            type: string
-        Categories:
-          description: The categories that the events should belong to.
-          type: array
-          items:
-            type: string
-        Statuses:
-          description: The statuses that the events should belong to.
-          type: array
-          items:
-            type: string
     System.Object:
       type: object
       properties: {}
+    ServiceChannel.Services.Messaging.Permission.ProvidersExclusionListResponse:
+      description: ProvidersExclusionListResponse
+      type: object
+      properties:
+        ProviderIds:
+          description: Provider ids
+          type: array
+          items:
+            format: int32
+            type: integer
     ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionRequest:
       description: NotificationSubscriptionRequest
       required:
@@ -2449,211 +2654,6 @@ components:
         Content:
           $ref: '#/components/schemas/System.Object'
           description: Content
-    ServiceChannel.Services.Messaging.Permission.ProvidersExclusionListResponse:
-      description: ProvidersExclusionListResponse
-      type: object
-      properties:
-        ProviderIds:
-          description: Provider ids
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.Notifications.AddNotificationSubsciptionResponse:
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: The unique subscription ID. Generated automatically and cannot be modified.
-          type: integer
-          readOnly: true
-    ServiceChannel.Services.Messaging.Notifications.MSBotNotificationSubscriptionResponse:
-      description: MSBotNotificationSubscriptionResponse
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Subscription identifier
-          type: integer
-        UserId:
-          format: int32
-          description: Service Channel User identifier
-          type: integer
-        UserEmailAddress:
-          description: Service Channel User Email Address
-          type: string
-        SubscriberId:
-          format: int32
-          description: Subscriber identifier
-          type: integer
-        ProviderId:
-          format: int32
-          description: Provider identifier
-          type: integer
-        IsEnabled:
-          description: Is Enabled
-          default: false
-          type: boolean
-        ConversationReference:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.MSBotConversationReference'
-          description: Conversation Reference
-    ServiceChannel.Services.Messaging.Notifications.HttpNotificationSubscription:
-      required:
-      - Url
-      - Name
-      - EventTypes
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: The unique subscription ID. Generated automatically and cannot be modified.
-          type: integer
-        Url:
-          description: The URL to which the events should be delivered.
-          type: string
-        Enabled:
-          description: Defines if the subscription is active or inactive.
-          default: false
-          type: boolean
-        Name:
-          description: The user-friendly name for the subscription.
-          type: string
-        EventTypes:
-          description: The list of events to subscribe to. Events within one subscription should belong to one object.
-          type: array
-          items:
-            enum:
-            - WorkOrderCreated
-            - WorkOrderNoteAdded
-            - WorkOrderNotePinned
-            - WorkOrderNoteUnpinned
-            - WorkOrderNoteActionResolved
-            - WorkOrderStatusChanged
-            - WorkOrderAttachmentAdded
-            - WorkOrderAttachmentDeleted
-            - WorkOrderNumberChanged
-            - WorkOrderCallerChanged
-            - WorkOrderMoeNumberChanged
-            - WorkOrderServiceNowIdChanged
-            - WorkOrderPriorityChanged
-            - WorkOrderScheduledDateChanged
-            - WorkOrderTradeChanged
-            - WorkOrderNteChanged
-            - WorkOrderCategoryChanged
-            - WorkOrderProviderChanged
-            - WorkOrderDescriptionChanged
-            - WorkOrderResolutionCreated
-            - RefrigerantWasUsedChanged
-            - WorkOrderResolutionUpdated
-            - WorkOrderResolutionCodeUpdated
-            - WorkOrderRootCauseCodeUpdated
-            - WorkOrderAssetAttached
-            - WorkOrderAssetDetached
-            - WorkOrderAssetValidated
-            - WorkOrderLabelAdded
-            - WorkOrderLabelDeleted
-            - WorkOrderWeatherTypeChanged
-            - WorkOrderWeatherTypeDeleted
-            - WorkOrderVerbalApprovalChanged
-            - WorkOrderGLCodeChanged
-            - WorkOrderAdditionalApprovalCodesChanged
-            - WorkOrderFeedbackRequested
-            - WorkOrderAssigneeChanged
-            - WorkOrderAssigneeDeleted
-            - WorkOrderProjectLink
-            - WorkOrderProjectUnlink
-            - WorkOrderRecallChanged
-            - WorkOrderRecallDeleted
-            - WorkOrderIssueChoiceChanged
-            - WorkOrderTechnicianAssigned
-            - WorkOrderTechnicianUnassigned
-            - WorkOrderTechnicianAccepted
-            - WorkOrderTechnicianDeclined
-            - WorkOrderCertifiedTechnicianAssigned
-            - WorkOrderLinksAdded
-            - WorkOrderLinksDeleted
-            - WorkOrderStarAdded
-            - WorkOrderStarRemoved
-            - WorkOrderWorkActivityAdded
-            - WorkOrderWorkActivityDeleted
-            - WorkOrderWorkActivityChanged
-            - WorkOrderCheckIn
-            - WorkOrderCheckOut
-            - BadgeScanRequired
-            - InvoiceCreated
-            - InvoiceOpen
-            - InvoiceApproved
-            - InvoiceOnHold
-            - InvoiceReviewed
-            - InvoiceRejected
-            - InvoiceApprovalCodeChanged
-            - InvoiceAdditionalApprovalCodesChanged
-            - InvoiceStarAdded
-            - InvoiceStarRemoved
-            - InvoiceDisputed
-            - InvoiceVoided
-            - InvoicePaid
-            - ProposalCreated
-            - ProposalOpen
-            - ProposalApproved
-            - ProposalOnHold
-            - ProposalRejected
-            - ProposalReviewed
-            - ProposalUserAssigned
-            - ProposalWorkOrderAssigned
-            - ProposalAttachmentAdded
-            - ProposalScheduled
-            - ProposalVoided
-            - ProposalPendingExternalApproval
-            - FbInvitationAccepted
-            - CalendarIntegrationAdded
-            - CalendarIntegrationUpdated
-            - LocationCreated
-            - LocationUpdated
-            - LocationDeleted
-            - LocationNoteHeaderCreated
-            - LocationNoteHeaderUpdated
-            - LocationNoteHeaderDeleted
-            - LocationNotesChanged
-            - SubscriberTradeCreated
-            - SubscriberTradeUpdated
-            - SubscriberTradeDeleted
-            - SubscriberPriorityCreated
-            - SubscriberPriorityUpdated
-            - SubscriberPriorityDeleted
-            - SubscriberStatusCreated
-            - SubscriberStatusUpdated
-            - SubscriberStatusDeleted
-            - SubscriberCategoryCreated
-            - SubscriberCategoryUpdated
-            - SubscriberCategoryDeleted
-            - SubscriberGlCodeCreated
-            - SubscriberGlCodeUpdated
-            - SubscriberGlCodeDeleted
-            - SubscriberAdditionalApprovalCodeCreated
-            - SubscriberAdditionalApprovalCodeUpdated
-            - SubscriberNameUpdated
-            - ProviderTradeAssigned
-            - ProviderTradeUnassigned
-            - ProviderTradeUpdated
-            - ProviderNameUpdated
-            - LeakRecordCreated
-            - LeakRecordUpdated
-            - LeakRecordDeleted
-            - CheckListResponseAdded
-            - CheckListResponseUpdated
-            - CheckListCreated
-            - CheckListUpdated
-            - CheckListDeleted
-            - IssueListAssigned
-            - AssetCreated
-            - AssetUpdated
-            - AssetAttachmentAdded
-            - AssetAttachmentDeleted
-            - AssetRefrigerantChanged
-            type: string
-        Rules:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionsRules'
   securitySchemes:
     oauth2:
       type: oauth2

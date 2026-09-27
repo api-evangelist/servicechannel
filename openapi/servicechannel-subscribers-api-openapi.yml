@@ -460,6 +460,27 @@ paths:
       x-access: Subscribers
 components:
   schemas:
+    ServiceChannel.Services.Messaging.Trade.GetSubscriberTradesResponse:
+      type: object
+      properties:
+        Trades:
+          type: object
+          additionalProperties:
+            type: string
+    ServiceChannel.Services.Messaging.Subscribers.GetSubscriberPropertyResponse:
+      description: Defines subscriber's property response structure
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Property identifier
+          type: integer
+        Name:
+          description: Property name
+          type: string
+        Value:
+          $ref: '#/components/schemas/System.Object'
+          description: Property value
     ServiceChannel.Services.Messaging.Subscribers.UpdateSubscriberInfoRequest:
       description: UpdateSubscriberInfoRequest
       required:
@@ -506,13 +527,6 @@ components:
           type: string
         DecimalSeparator:
           type: string
-    ServiceChannel.Services.Messaging.Trade.GetSubscriberTradesResponse:
-      type: object
-      properties:
-        Trades:
-          type: object
-          additionalProperties:
-            type: string
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2150,6 +2164,14 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    ServiceChannel.Services.Messaging.Subscribers.DashboardInfo:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
     ServiceChannel.Services.Messaging.Subscribers.SysadminContactFixxbook:
       description: SysadminContactFixxbook
       type: object
@@ -2172,6 +2194,9 @@ components:
         Fax:
           description: Fax
           type: string
+    System.Object:
+      type: object
+      properties: {}
     ServiceChannel.Services.Messaging.Subscribers.RegisterSubscriberRequest:
       description: RegisterSubscriberRequest
       required:
@@ -2235,31 +2260,6 @@ components:
           type: string
         DecimalSeparator:
           type: string
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.Subscribers.DashboardInfo:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-    ServiceChannel.Services.Messaging.Subscribers.GetSubscriberPropertyResponse:
-      description: Defines subscriber's property response structure
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Property identifier
-          type: integer
-        Name:
-          description: Property name
-          type: string
-        Value:
-          $ref: '#/components/schemas/System.Object'
-          description: Property value
   securitySchemes:
     oauth2:
       type: oauth2

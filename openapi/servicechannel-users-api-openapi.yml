@@ -777,175 +777,180 @@ paths:
       x-access: Any
 components:
   schemas:
-    ServiceChannel.Services.Messaging.MenuItem:
+    ServiceChannel.Services.Messaging.Users.User:
+      description: User details object.
       type: object
       properties:
-        Name:
-          type: string
-        Url:
-          type: string
         Id:
-          enum:
-          - None
-          - Track_WOPO
-          - Console
-          - WorkOrders_WorkOrderList
-          - Proposals
-          - RFPsProposals_CreateProposal
-          - RFPsProposals_ViewProposals
-          - RFPsProposals_ViewProcessRFP
-          - RFPsProposals_ViewProcessBulkRFP
-          - RFPsProposals_MySavedProposalReports
-          - RFPsProposals_ViewProcessProposals
-          - RFPsProposals_CreateRFP
-          - Invoices
-          - PaymentManager
-          - ServiceHealth
-          - Home
-          - CreateServiceRequest_ServiceRequestDashboard
-          - CreateServiceRequest_ClassicServiceRequest
-          - WorkOrders_MySavedLiveReports
-          - WorkOrders_OpenCallsOnly
-          - WorkOrders_InProgressCallsOnly
-          - WorkOrders_OpenAndInProgress
-          - WorkOrders_OpenAndInProgressExcludingPartsOnOrder
-          - WorkOrders_OpenAndInProgressExcludingReferredToFM
-          - WorkOrders_OpenAndInProgressExcludingMaintenance
-          - WorkOrders_CompletedCallsOnly
-          - WorkOrders_InvoicedCallsOnly
-          - WorkOrders_AllCalls
-          - WorkOrders_AllCallsLongFormat
-          - WorkOrders_AllCallsUserAssignment
-          - WorkOrders_ArchiveReports_MySavedArchiveReports
-          - WorkOrders_ArchiveReports_CallHistory
-          - WorkOrders_ArchiveReports_AccrualReport
-          - WorkOrders_ArchiveReports_OriginalETAMmissed
-          - WorkOrders_ArchiveReports_ExcessiveCalls
-          - WorkOrders_AuditReports_DataExtract
-          - QuickView
-          - LocationsAndProviderAssignments
-          - PlannedMaintenance_PMServices
-          - PlannedMaintenance_PMLocations
-          - PlannedMaintenance_PMTemplates
-          - SitePlanningReports
-          - AssetsEquipment_Administration
-          - AssetsEquipment_Summary
-          - AssetsEquipment_ManageAssets
-          - AssetsEquipment_ManageAssetTypes
-          - AssetsEquipment_RefrigerantLeakEvents
-          - AssetsEquipment_ImportedAssets
-          - Inventory
-          - CompliancePrivateNetwork
-          - Admin_LocationSettings_LocationNoteHeaders
-          - Admin_LocationSettings_BusinessHours
-          - Admin_WOProperties_Categories
-          - Admin_WOProperties_Priorities
-          - Admin_WOProperties_Statuses
-          - Admin_WOProperties_TradesNTEs
-          - Admin_Accounting_AdditionalApprovalCodes
-          - Admin_Accounting_GLCodes
-          - Admin_Accounting_ImportGLCodeTemplate
-          - Admin_Invoices_General
-          - Admin_Invoices_MLIConfiguration
-          - Admin_Invoices_AutoApproval
-          - Admin_Proposals_MLPConfiguration
-          - Admin_Proposals_AutoApproval
-          - Admin_Proposals_General
-          - Admin_Proposals_ProposalApproveReasons
-          - Admin_Proposals_ProposalAssignReasons
-          - Admin_Permissions_Users
-          - Admin_Permissions_Mobile
-          - Admin_Permissions_Security
-          - Admin_Permissions_ImpersonateUser
-          - Admin_Permissions_APIIntegration
-          - Admin_Permissions_Webhooks
-          - Admin_Permissions_Notifications
-          - Admin_SiteAccessRules
-          - Admin_SitePlanningSetup
-          - Admin_Providers
-          - Admin_Subscribers
-          - Admin_Connector
-          - Admin_UserAccount
-          - Admin_Tools_Surveys
-          - Admin_Tools_CheckLists
-          - Admin_Tools_Announcements
-          - Admin_Tools_RemapProviders
-          - Admin_Tools_UploadTemplates
-          - Admin_Tools_SuppressionListRemoval
-          - Admin_Tools_QuickView
-          - Admin_QualitySurvey_SurveyQuestions
-          - Admin_QualitySurvey_SurveyReport
-          - Admin_Mobile_CIWO
-          - Admin_Mobile_GPS
-          - Admin_UserManagement
-          - Admin_Locations
-          - ServiceProviders
-          - AnalyticsProView
-          - Logout
-          - ReportAnIssue
-          - MobileAccessCode
-          - HelpLinkForSubscribers
-          - HelpLinkForProviders
-          - ProviderSearch
-          - Projects
-          - Admin_Projects_ApprovalConfiguration
-          - Admin_Projects_TypesAndCategories
-          - Admin_Projects_Config
-          - Admin_Spaces_SpacesManager
-          - Admin_Tools_UniversalConnectorSetup
-          - Spaces_Analytics
-          - Spaces_Dashboard
-          - Spaces_Manager
-          - Spaces_Plotter
-          - Spaces_Viewer
-          - Admin_UniversalConnectorConfig
-          - Admin_IssueListSetup
-          - Admin_DashboardSettings
-          - Admin_Proposals_NewMLPConfiguration
-          - Admin_BudgetInsights
-          - PartnerPortal
-          - Admin_PlatformIntelligence_AnomalyOverrides
-          - Admin_PlatformIntelligence_WoSummary
-          - FtmBackToSubscriber
-          - Admin_AIActionHub_RuleBuilder
-          - Admin_AIActionHub_ActionLogs
-          - Admin_AIActionHub_Settings
-          - AIActionHub_Tasks
-          - ClientTraining
+          format: int32
+          description: Unique user identifier.
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Unique subscriber ID.
+          type: integer
+        UserName:
+          description: Username of the user.<br /> • For subscriber users, the username appears as **User Id** on the "General Info" tab of the user profile page.<br /> • For provider users, the username is listed as **UserID** under "Access" on the "General" tab of the user profile page.
+          pattern: ^$|(^\S+).(\S).(\S)$
           type: string
-        Items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MenuItem'
-        IsAbsoluteUrl:
+        FullName:
+          description: Full name of the user.<br /> • For subscriber users, the full name appears as **User Name** on the "General Info" tab of the user profile page.<br /> • For provider users, you can see their first and last name under "Basic" on the "General" tab of the user profile page.
+          type: string
+        Email:
+          description: User’s email address.
+          type: string
+        PsmEmail:
+          description: Email address through which a user can reset their password.
+          type: string
+        Disabled:
+          description: Defines if a user is deactivated.
           default: false
           type: boolean
-    ServiceChannel.Services.Messaging.Users.MliUserInfo:
+        IsLocked:
+          description: Defines if a user is locked.
+          default: false
+          type: boolean
+        Roles:
+          description: Secondary roles assigned to a subscriber user that determine their permissions and level of access to various Service Automation modules.
+          type: array
+          items:
+            type: string
+        Permissions:
+          description: Permissions assigned to a subscriber user that determine whether they have full or read-only access to various Service Automation modules.
+          type: array
+          items:
+            type: string
+        UserType:
+          description: Subscriber user type defining their level of access to ServiceChannel:<br /> • `Corporate` — a user can work in Service Automation.<br /> • `Dashboard` — a user can only access the dashboard assigned to them.<br />`0` is returned for provider users.
+          enum:
+          - Corporate
+          - Dashboard
+          - ServiceChannel
+          type: string
+        Dashboard:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.DashboardInfo'
+          description: Dashboard a subscriber user has access to.
+        Access:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.AccessOptions'
+          description: List of locations, districts, regions, and trades a subscriber user has access to.
+        Limits:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.LimitOptions'
+          description: NTE, proposal, and invoice limits set for a subscriber user.
+        FeedRole:
+          type: string
+        MliUserInfo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MliUserInfo'
+          description: ''
+        MlpUserInfo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MlpUserInfo'
+    ServiceChannel.Services.Messaging.User.UserLocalizationSettings:
+      type: object
+      properties:
+        DateFormat:
+          type: string
+        TimeFormat:
+          type: string
+        DecimalSeparator:
+          type: string
+        Language:
+          type: string
+    ServiceChannel.Services.Messaging.Users.Limit:
+      description: Object for limit details set for a subscriber user.
+      type: object
+      properties:
+        Amount:
+          format: double
+          description: Limit amount.
+          type: number
+        CurrencyId:
+          format: int32
+          description: Identifier of the currency the limit is set in.
+          type: integer
+    ServiceChannel.Services.Messaging.Users.AccessOptions:
+      description: Object listing locations, districts, regions, and trades a subscriber user has access to. Learn more about [granting access based on locations, districts, and regions](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/585107276/Location+District+Region+Access+Tab) in ServiceChannel University.
+      type: object
+      properties:
+        Locations:
+          description: Locations a user has access to.
+          type: array
+          items:
+            type: string
+        Districts:
+          description: Districts a user has access to.
+          type: array
+          items:
+            type: string
+        Regions:
+          description: Regions a user has access to.
+          type: array
+          items:
+            type: string
+        Trades:
+          description: Trades a user is permitted to work with.
+          type: array
+          items:
+            type: string
+    ServiceChannel.Services.Messaging.Users.GetUserResponse:
+      description: GetUserResponse class definition
       type: object
       properties:
         Id:
           format: int32
+          description: Get User's Id
           type: integer
-        MliLevel:
+        InfoSubscriberId:
+          format: int32
+          description: Get User's SubscriberId
+          type: integer
+        UserName:
+          description: Get User's UserName
           type: string
-        MliLocations:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.Users.MlpUserInfo:
+        Email:
+          description: Get User's Email
+          type: string
+        Password:
+          description: Gets or sets Password.
+          type: string
+        FeedRole:
+          description: Get User's FeedRole
+          type: string
+        LocationAccess:
+          description: Get User's LocationAccess
+          type: string
+        User:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.User'
+          description: Gets or sets User.
+    ServiceChannel.Services.Messaging.Users.AddUserRequest:
+      description: AddUserRequest class definition
       type: object
       properties:
+        UserName:
+          description: Gets or sets User name.
+          pattern: ^$|(^\S+).(\S).(\S)$
+          type: string
         Id:
           format: int32
+          description: Get or set User's identifier (id)
           type: integer
-        MlpLevel:
+        InfoSubscriberId:
+          format: int32
+          description: Gets or sets InfoSubscriberId.
+          type: integer
+        Password:
+          description: Gets or sets Password.
           type: string
-        MlpLocations:
-          type: array
-          items:
-            format: int32
-            type: integer
+        Email:
+          description: Gets or sets Email.
+          type: string
+        LocationAccess:
+          description: Gets or sets LocationAccess.
+          type: string
+        FeedRole:
+          description: Gets or sets FeedRole.
+          type: string
+        User:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.User'
+          description: Gets or sets User.
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2583,162 +2588,19 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.User.UserLocalizationSettings:
+    ServiceChannel.Services.Messaging.MenuResponse:
       type: object
       properties:
-        DateFormat:
-          type: string
-        TimeFormat:
-          type: string
-        DecimalSeparator:
-          type: string
-        Language:
-          type: string
-    ServiceChannel.Services.Messaging.Users.Limit:
-      description: Object for limit details set for a subscriber user.
-      type: object
-      properties:
-        Amount:
-          format: double
-          description: Limit amount.
-          type: number
-        CurrencyId:
-          format: int32
-          description: Identifier of the currency the limit is set in.
-          type: integer
-    ServiceChannel.Services.Messaging.Users.LimitOptions:
-      description: Object for NTE, proposal, and invoice limits set for a subscriber user.
-      type: object
-      properties:
-        NteLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
-        ProposalLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
-        InvoiceLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
-    ServiceChannel.Services.Messaging.Users.GetUserResponse:
-      description: GetUserResponse class definition
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Get User's Id
-          type: integer
-        InfoSubscriberId:
-          format: int32
-          description: Get User's SubscriberId
-          type: integer
-        UserName:
-          description: Get User's UserName
-          type: string
-        Email:
-          description: Get User's Email
-          type: string
-        Password:
-          description: Gets or sets Password.
-          type: string
-        FeedRole:
-          description: Get User's FeedRole
-          type: string
-        LocationAccess:
-          description: Get User's LocationAccess
-          type: string
-        User:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.User'
-          description: Gets or sets User.
-    ServiceChannel.Services.Messaging.Users.AccessOptions:
-      description: Object listing locations, districts, regions, and trades a subscriber user has access to. Learn more about [granting access based on locations, districts, and regions](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/585107276/Location+District+Region+Access+Tab) in ServiceChannel University.
-      type: object
-      properties:
-        Locations:
-          description: Locations a user has access to.
+        MainMenu:
           type: array
           items:
-            type: string
-        Districts:
-          description: Districts a user has access to.
-          type: array
-          items:
-            type: string
-        Regions:
-          description: Regions a user has access to.
-          type: array
-          items:
-            type: string
-        Trades:
-          description: Trades a user is permitted to work with.
-          type: array
-          items:
-            type: string
-    ServiceChannel.Services.Messaging.Users.User:
-      description: User details object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique user identifier.
-          type: integer
-        SubscriberId:
-          format: int32
-          description: Unique subscriber ID.
-          type: integer
-        UserName:
-          description: Username of the user.<br /> • For subscriber users, the username appears as **User Id** on the "General Info" tab of the user profile page.<br /> • For provider users, the username is listed as **UserID** under "Access" on the "General" tab of the user profile page.
-          pattern: ^$|(^\S+).(\S).(\S)$
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MenuItem'
+        AccountMenu:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MenuItem'
+        LogoUrl:
           type: string
-        FullName:
-          description: Full name of the user.<br /> • For subscriber users, the full name appears as **User Name** on the "General Info" tab of the user profile page.<br /> • For provider users, you can see their first and last name under "Basic" on the "General" tab of the user profile page.
+        LogoHref:
           type: string
-        Email:
-          description: User’s email address.
-          type: string
-        PsmEmail:
-          description: Email address through which a user can reset their password.
-          type: string
-        Disabled:
-          description: Defines if a user is deactivated.
-          default: false
-          type: boolean
-        IsLocked:
-          description: Defines if a user is locked.
-          default: false
-          type: boolean
-        Roles:
-          description: Secondary roles assigned to a subscriber user that determine their permissions and level of access to various Service Automation modules.
-          type: array
-          items:
-            type: string
-        Permissions:
-          description: Permissions assigned to a subscriber user that determine whether they have full or read-only access to various Service Automation modules.
-          type: array
-          items:
-            type: string
-        UserType:
-          description: Subscriber user type defining their level of access to ServiceChannel:<br /> • `Corporate` — a user can work in Service Automation.<br /> • `Dashboard` — a user can only access the dashboard assigned to them.<br />`0` is returned for provider users.
-          enum:
-          - Corporate
-          - Dashboard
-          - ServiceChannel
-          type: string
-        Dashboard:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.DashboardInfo'
-          description: Dashboard a subscriber user has access to.
-        Access:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.AccessOptions'
-          description: List of locations, districts, regions, and trades a subscriber user has access to.
-        Limits:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.LimitOptions'
-          description: NTE, proposal, and invoice limits set for a subscriber user.
-        FeedRole:
-          type: string
-        MliUserInfo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MliUserInfo'
-          description: ''
-        MlpUserInfo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MlpUserInfo'
     ServiceChannel.Services.Messaging.ApplicationAccess.FeatureResponse:
       description: Feature response entity.
       type: object
@@ -2778,40 +2640,35 @@ components:
         User:
           $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.User'
           description: Gets or sets User.
+    ServiceChannel.Services.Messaging.Users.MliUserInfo:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        MliLevel:
+          type: string
+        MliLocations:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.Users.MlpUserInfo:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        MlpLevel:
+          type: string
+        MlpLocations:
+          type: array
+          items:
+            format: int32
+            type: integer
     System.Object:
       type: object
       properties: {}
-    ServiceChannel.Services.Messaging.Users.AddUserRequest:
-      description: AddUserRequest class definition
-      type: object
-      properties:
-        UserName:
-          description: Gets or sets User name.
-          pattern: ^$|(^\S+).(\S).(\S)$
-          type: string
-        Id:
-          format: int32
-          description: Get or set User's identifier (id)
-          type: integer
-        InfoSubscriberId:
-          format: int32
-          description: Gets or sets InfoSubscriberId.
-          type: integer
-        Password:
-          description: Gets or sets Password.
-          type: string
-        Email:
-          description: Gets or sets Email.
-          type: string
-        LocationAccess:
-          description: Gets or sets LocationAccess.
-          type: string
-        FeedRole:
-          description: Gets or sets FeedRole.
-          type: string
-        User:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.User'
-          description: Gets or sets User.
     ServiceChannel.Services.Messaging.Users.DashboardInfo:
       description: Dashboard details object.
       type: object
@@ -2827,19 +2684,19 @@ components:
           description: Defines whether a subscriber user is redirected to a dashboard once they log in.
           default: false
           type: boolean
-    ServiceChannel.Services.Messaging.MenuResponse:
+    ServiceChannel.Services.Messaging.Users.LimitOptions:
+      description: Object for NTE, proposal, and invoice limits set for a subscriber user.
       type: object
       properties:
-        MainMenu:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MenuItem'
-        AccountMenu:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MenuItem'
-        LogoUrl:
-          type: string
-        LogoHref:
-          type: string
+        NteLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
+        ProposalLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
+        InvoiceLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
     ServiceChannel.Services.Messaging.User.UserLocationNoteRestrictionResponse:
       type: object
       properties:
@@ -2849,6 +2706,149 @@ components:
           type: array
           items:
             type: string
+    ServiceChannel.Services.Messaging.MenuItem:
+      type: object
+      properties:
+        Name:
+          type: string
+        Url:
+          type: string
+        Id:
+          enum:
+          - None
+          - Track_WOPO
+          - Console
+          - WorkOrders_WorkOrderList
+          - Proposals
+          - RFPsProposals_CreateProposal
+          - RFPsProposals_ViewProposals
+          - RFPsProposals_ViewProcessRFP
+          - RFPsProposals_ViewProcessBulkRFP
+          - RFPsProposals_MySavedProposalReports
+          - RFPsProposals_ViewProcessProposals
+          - RFPsProposals_CreateRFP
+          - Invoices
+          - PaymentManager
+          - ServiceHealth
+          - Home
+          - CreateServiceRequest_ServiceRequestDashboard
+          - CreateServiceRequest_ClassicServiceRequest
+          - WorkOrders_MySavedLiveReports
+          - WorkOrders_OpenCallsOnly
+          - WorkOrders_InProgressCallsOnly
+          - WorkOrders_OpenAndInProgress
+          - WorkOrders_OpenAndInProgressExcludingPartsOnOrder
+          - WorkOrders_OpenAndInProgressExcludingReferredToFM
+          - WorkOrders_OpenAndInProgressExcludingMaintenance
+          - WorkOrders_CompletedCallsOnly
+          - WorkOrders_InvoicedCallsOnly
+          - WorkOrders_AllCalls
+          - WorkOrders_AllCallsLongFormat
+          - WorkOrders_AllCallsUserAssignment
+          - WorkOrders_ArchiveReports_MySavedArchiveReports
+          - WorkOrders_ArchiveReports_CallHistory
+          - WorkOrders_ArchiveReports_AccrualReport
+          - WorkOrders_ArchiveReports_OriginalETAMmissed
+          - WorkOrders_ArchiveReports_ExcessiveCalls
+          - WorkOrders_AuditReports_DataExtract
+          - QuickView
+          - LocationsAndProviderAssignments
+          - PlannedMaintenance_PMServices
+          - PlannedMaintenance_PMLocations
+          - PlannedMaintenance_PMTemplates
+          - SitePlanningReports
+          - AssetsEquipment_Administration
+          - AssetsEquipment_Summary
+          - AssetsEquipment_ManageAssets
+          - AssetsEquipment_ManageAssetTypes
+          - AssetsEquipment_RefrigerantLeakEvents
+          - AssetsEquipment_ImportedAssets
+          - Inventory
+          - CompliancePrivateNetwork
+          - Admin_LocationSettings_LocationNoteHeaders
+          - Admin_LocationSettings_BusinessHours
+          - Admin_WOProperties_Categories
+          - Admin_WOProperties_Priorities
+          - Admin_WOProperties_Statuses
+          - Admin_WOProperties_TradesNTEs
+          - Admin_Accounting_AdditionalApprovalCodes
+          - Admin_Accounting_GLCodes
+          - Admin_Accounting_ImportGLCodeTemplate
+          - Admin_Invoices_General
+          - Admin_Invoices_MLIConfiguration
+          - Admin_Invoices_AutoApproval
+          - Admin_Proposals_MLPConfiguration
+          - Admin_Proposals_AutoApproval
+          - Admin_Proposals_General
+          - Admin_Proposals_ProposalApproveReasons
+          - Admin_Proposals_ProposalAssignReasons
+          - Admin_Permissions_Users
+          - Admin_Permissions_Mobile
+          - Admin_Permissions_Security
+          - Admin_Permissions_ImpersonateUser
+          - Admin_Permissions_APIIntegration
+          - Admin_Permissions_Webhooks
+          - Admin_Permissions_Notifications
+          - Admin_SiteAccessRules
+          - Admin_SitePlanningSetup
+          - Admin_Providers
+          - Admin_Subscribers
+          - Admin_Connector
+          - Admin_UserAccount
+          - Admin_Tools_Surveys
+          - Admin_Tools_CheckLists
+          - Admin_Tools_Announcements
+          - Admin_Tools_RemapProviders
+          - Admin_Tools_UploadTemplates
+          - Admin_Tools_SuppressionListRemoval
+          - Admin_Tools_QuickView
+          - Admin_QualitySurvey_SurveyQuestions
+          - Admin_QualitySurvey_SurveyReport
+          - Admin_Mobile_CIWO
+          - Admin_Mobile_GPS
+          - Admin_UserManagement
+          - Admin_Locations
+          - ServiceProviders
+          - AnalyticsProView
+          - Logout
+          - ReportAnIssue
+          - MobileAccessCode
+          - HelpLinkForSubscribers
+          - HelpLinkForProviders
+          - ProviderSearch
+          - Projects
+          - Admin_Projects_ApprovalConfiguration
+          - Admin_Projects_TypesAndCategories
+          - Admin_Projects_Config
+          - Admin_Spaces_SpacesManager
+          - Admin_Tools_UniversalConnectorSetup
+          - Spaces_Analytics
+          - Spaces_Dashboard
+          - Spaces_Manager
+          - Spaces_Plotter
+          - Spaces_Viewer
+          - Admin_UniversalConnectorConfig
+          - Admin_IssueListSetup
+          - Admin_DashboardSettings
+          - Admin_Proposals_NewMLPConfiguration
+          - Admin_BudgetInsights
+          - PartnerPortal
+          - Admin_PlatformIntelligence_AnomalyOverrides
+          - Admin_PlatformIntelligence_WoSummary
+          - FtmBackToSubscriber
+          - Admin_AIActionHub_RuleBuilder
+          - Admin_AIActionHub_ActionLogs
+          - Admin_AIActionHub_Settings
+          - AIActionHub_Tasks
+          - ClientTraining
+          type: string
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.MenuItem'
+        IsAbsoluteUrl:
+          default: false
+          type: boolean
   securitySchemes:
     oauth2:
       type: oauth2

@@ -599,37 +599,32 @@ paths:
       x-access: Any
 components:
   schemas:
-    ServiceChannel.Services.WebApi.Models.Response.WasMaterialUsedResponse:
+    ServiceChannel.Services.Messaging.RefrigerantTracking.DeleteWorkOrderPartRefrigerantItem:
+      description: Object for deleting part use records in bulk
       type: object
       properties:
-        ResponseItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.WasMaterialUsedApiModel'
-    ServiceChannel.Services.Messaging.Inventory.InventoryLocation:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        LocationId:
-          format: int32
-          type: integer
         PartId:
           format: int32
+          description: Unique numeric identifier of the part use record that should be removed. Use the [GET/workorders/{workorderId}/partsUsage](https://developer.servicechannel.com/swagger/index.html#/Parts/GETv3_workorders_%7BworkorderId%7D_partsUsage) method to identify the required part use record ID.
           type: integer
-        Qty:
-          format: double
-          type: number
-        UnitPrice:
-          format: double
-          type: number
-        LocationName:
+        InventoryLocationGuid:
+          description: GUID of the inventory location.
           type: string
-        StoreId:
+        DeletionReason:
+          format: byte
+          description: "Reason for removing the refrigerant part use record. Possible values:\n             • `Wrong Part`\n             • `Wrong Asset`\n             • `Incorrect Quantity`\n             • `Other`"
           type: string
-        LocationGuid:
+        DeletionReasonDescription:
+          description: When the `DeletionReason` is set to `Other`, the `DeletionReasonDescription` parameter provides additional information on why the part use record is being removed. Shouldn’t exceed 150 characters.
           type: string
+        InventoryPartId:
+          format: int32
+          description: Unique numeric identifier of the inventory part. To get the inventory part ID, use the [GET/Setup/parts](https://inventoryapi.servicechannel.com/swagger/index.html) method.
+          type: integer
+        IsInventoryPart:
+          description: "Specifies whether the part you are trying to remove is listed in the inventory catalog for the location or the part is supplied by the vendor. Possible input values:\n             • `true`: Indicates an inventory part\n             • `false`: Indicates a vendor-supplied part"
+          default: false
+          type: boolean
     ServiceChannel.Services.Messaging.RefrigerantTracking.WorkOrderPartRefrigerantBulkChangeRequest:
       description: Object for modifying part use records in bulk
       type: object
@@ -672,20 +667,29 @@ components:
         Price:
           format: double
           type: number
-    ServiceChannel.Services.Messaging.Parts.RefrigerantUsageResponse:
+    ServiceChannel.Services.Messaging.Inventory.InventoryLocation:
       type: object
       properties:
-        TriggerQuantity:
+        Id:
+          format: int32
+          type: integer
+        LocationId:
+          format: int32
+          type: integer
+        PartId:
+          format: int32
+          type: integer
+        Qty:
           format: double
           type: number
-        LeakRate:
+        UnitPrice:
           format: double
           type: number
-        Charge:
-          format: double
-          type: number
-        CalculationMethod:
-          format: byte
+        LocationName:
+          type: string
+        StoreId:
+          type: string
+        LocationGuid:
           type: string
     ServiceChannel.Services.Messaging.RefrigerantTracking.UpdateWorkOrderPartRefrigerantItem:
       description: Object for updating part use records in bulk
@@ -772,6 +776,249 @@ components:
           format: int32
           description: Unique numeric identifier of the work order associated with the `AssetId`. Only one work order can be processed in the request.
           type: integer
+    ServiceChannel.Services.Messaging.RefrigerantTracking.WorkOrderPartRefrigerantResponse:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        AssetId:
+          format: int32
+          type: integer
+        TagId:
+          type: string
+        RecId:
+          format: int32
+          type: integer
+        CertifiedTechnicianId:
+          format: int32
+          type: integer
+        Quantity:
+          format: double
+          type: number
+        QuantityMetrics:
+          format: double
+          type: number
+        QuantityStr:
+          type: string
+        UnitCost:
+          format: double
+          type: number
+        IsRefrigerant:
+          default: false
+          type: boolean
+        IsInventoryPart:
+          default: false
+          type: boolean
+        UseDate:
+          format: date-time
+          type: string
+        ReasonCode:
+          format: int32
+          type: integer
+        ReasonCodeId:
+          format: int32
+          type: integer
+        PartNumber:
+          type: string
+        Description:
+          type: string
+        WOStatus:
+          type: string
+        ProblemType:
+          type: string
+        InventoryLocationId:
+          format: int32
+          type: integer
+        InventoryLocationGuid:
+          description: GUID of inventory part location
+          type: string
+        InventoryLocationName:
+          type: string
+        InventoryPartId:
+          format: int32
+          type: integer
+        PartName:
+          type: string
+        PartGroup:
+          type: string
+        SupplierName:
+          type: string
+        RefrigerantChargeOptionsId:
+          format: int32
+          type: integer
+        RefrigerantChargeVendor:
+          type: string
+        ReasonCodeStr:
+          type: string
+        RefrigerantUsePurpose:
+          format: int32
+          type: integer
+        RefrigerantTypeName:
+          type: string
+        RefrigerantTypeId:
+          format: int32
+          type: integer
+        IsSupplierPart:
+          default: false
+          type: boolean
+        IsConnectorWOPart:
+          default: false
+          type: boolean
+        SubscriberTrackingNumber:
+          format: int32
+          type: integer
+        SubscriberAssetId:
+          format: int32
+          type: integer
+        CreatedByUserId:
+          type: string
+        ModifiedByUserId:
+          type: string
+        IsRetrofit:
+          format: byte
+          type: string
+        RefrigerantPartNumber:
+          type: string
+        InventoryLocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Inventory.InventoryLocation'
+        SupplierPartId:
+          type: string
+        LeakRate:
+          format: double
+          type: number
+    ServiceChannel.Services.WebApi.Models.Response.WasMaterialUsedApiModel:
+      type: object
+      properties:
+        RecId:
+          format: int32
+          type: integer
+        WasMaterialsUsed:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Workorders.CreateWorkOrderPartRequest:
+      type: object
+      properties:
+        Quantity:
+          format: double
+          type: number
+        Description:
+          type: string
+        Price:
+          format: double
+          type: number
+    ServiceChannel.Services.Messaging.RefrigerantTracking.AddWorkOrderPartRefrigerantItem:
+      description: Object for adding part use records in bulk
+      type: object
+      properties:
+        AssetId:
+          format: int32
+          description: Unique numeric identifier of the asset to which the new part use records should be added. Only one asset can be processed in the request. For a non-refrigerant part use, the `AssetId` is not required.
+          type: integer
+        RecId:
+          format: int32
+          description: Unique numeric identifier of the work order associated with the `AssetId`. Only one work order can be processed in the request.
+          type: integer
+        Quantity:
+          format: double
+          description: Quantity of parts used.
+          type: number
+        UnitCost:
+          format: double
+          description: Cost of each part.
+          type: number
+        IsRefrigerant:
+          description: 'Specifies whether the part you are trying to add is classified as a refrigerant. Possible input values: `true` and `false`.'
+          default: false
+          type: boolean
+        IsInventoryPart:
+          description: "Specifies whether the part you are trying to add is listed in the inventory catalog for the location or the part is supplied by the vendor. Possible input values:\n             • `true`: Indicates an inventory part\n             • `false`: Indicates a vendor-supplied part"
+          default: false
+          type: boolean
+        UseDate:
+          format: date-time
+          description: Date and time when the part was used. The format is `YYYY-MM-DDThh:mm:ss.sssZ`.
+          type: string
+        UseDateStr:
+          description: Date and time when the part was used. The format is `YYYY-MM-DDThh:mm:ss.sssZ`.
+          type: string
+        ReasonCode:
+          format: int32
+          description: "Reason code name for the refrigerant part use — as configured by the subscriber. Possible values:\n             • `Leak`\n             • `Repair`\n             • `Adjustment`\n             • `System Expansion`\n             • `Removal`\n             • `Initial Charge`\n             • `Retrofit`\n             • `Removed Reused` \n            <br />To get the list of reason codes for the subscriber, use the [GET/refrigeranttracking/{subscriberId}/GetRefrigerantUseReasonCodes](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_%7BsubscriberId%7D_GetRefrigerantUseReasonCodes) method."
+          type: integer
+        ReasonCodeId:
+          format: int32
+          description: Unique numeric identifier of the refrigerant use reason code. To get the list of reason code IDs for the subscriber, use the [GET/refrigeranttracking/{subscriberId}/GetRefrigerantUseReasonCodes](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_%7BsubscriberId%7D_GetRefrigerantUseReasonCodes) method.
+          type: integer
+        PartNumber:
+          description: Part number. Shouldn’t exceed 50 characters.
+          type: string
+        PartName:
+          description: Part name. Shouldn’t exceed 100 characters.
+          type: string
+        PartGroup:
+          description: Part group. Required only if the `IsRefrigerant` is set to `true`.
+          type: string
+        PartGroupId:
+          format: int32
+          description: Unique numeric identifier of the part group. Required only if the `IsRefrigerant` is set to `true`.
+          type: integer
+        SupplierName:
+          description: Name of a company that supplies the part.
+          type: string
+        Description:
+          description: Part description. Any additional information on the part. Shouldn’t exceed 250 characters.
+          type: string
+        RefrigerantChargeOptionsId:
+          format: int32
+          description: "Unique numeric identifier of the charge method used. Possible values:\n             • `1`: Calculation\n             • `2`: Established\n             • `3`: Manufacturer Tag\n             • `4`: Measurement\n             • `5`: MFG Info (Established Range)\n             • `6`: Onsite Documentation\n             • `7`: Approximate\n            <br />To get charge options and their IDs, use the [GET/refrigeranttracking/ChargeDescriptions](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_ChargeDescriptions) method."
+          type: integer
+        RefrigerantChargeVendor:
+          description: Provider who identified the initial charge of the system. Only applicable when the `ReasonCode` is set to `Initial Charge`.
+          type: string
+        InventoryLocationId:
+          format: int32
+          description: Unique numeric identifier of the inventory location where the inventory part is stored.
+          type: integer
+        InventoryLocationGuid:
+          description: GUID of the inventory location.
+          type: string
+        InventoryPartId:
+          format: int32
+          description: Unique numeric identifier of the inventory part. To get the inventory part ID, use the [GET/Setup/parts](https://inventoryapi.servicechannel.com/swagger/index.html) method.
+          type: integer
+        RefrigerantUseReason:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantUseReasonCode'
+        RefrigerantRemovalStatus:
+          description: "Status that describes what was done with the removed refrigerant in the event of the retrofit plan:\n             • `Destroyed`\n             • `Reused`\n             • `Reclaimed`\n             • `Banked`\n             • `ChargeLost`\n             • `Sold`\n            <br />***Note:*** Applicable for the retrofit plan.\n            <br />Not recommended for use in this request."
+          enum:
+          - Destroyed
+          - Reused
+          - Reclaimed
+          - Banked
+          - ChargeLost
+          - Sold
+          type: string
+        RefrigerantTypeId:
+          format: int32
+          description: Unique numeric identifier of the refrigerant type. To get the list of refrigerant types and their IDs, run the [GET/refrigeranttracking/RefrigerantTypes](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_RefrigerantTypes%3FsubscriberId%3D%7BsubscriberId%7D) method.
+          type: integer
+        RefrigerantTypeName:
+          description: Refrigerant type name.
+          type: string
+        SubmitMoeQtyExceeded:
+          description: For Canadian locations. When the part use meets or exceeds the threshold, set the parameter’s value to `true` to be able to proceed with the request.
+          default: false
+          type: boolean
+        MoeNumber:
+          description: "Agency number that will be assigned to the work order and the leak record. The number can be up to 20 characters. An agency number needs to be entered when the system threshold has been met or exceeded. For Canadian locations only.\n            <br />Available with the *SCP_RTCanadaRefrigeration* feature flag."
+          type: string
+        IsRetrofit:
+          format: byte
+          description: "Specifies whether the part use is associated with a retrofit plan. Possible values:\n             • `true`: The part is linked to a retrofit plan. The `RefrigerantRemovalStatus` should be specified.\n             • `false`: The part isn’t associated with a retrofit plan.\n            <br />Not recommended for use in this request."
+          type: string
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2409,182 +2656,6 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.Workorders.CreateWorkOrderPartRequest:
-      type: object
-      properties:
-        Quantity:
-          format: double
-          type: number
-        Description:
-          type: string
-        Price:
-          format: double
-          type: number
-    ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantUseReasonCode:
-      description: Object containing refrigerant use reasons.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of the refrigerant use reason code.
-          type: integer
-        Order:
-          format: int32
-          description: Order of appearance of a reason code.
-          type: integer
-        Purpose:
-          format: int32
-          description: "Unique numeric identifier of the reason code for the refrigerant part use. Possible values: `0` - Leak, `1` - InitialCharge, `2` - SystemExpansion, `3` - Removal, `4` - Other, `5` - RemovedReused, `6` - Retrofit.\n            <br />Each reason code on the subscriber side is associated with a hardcoded purpose value in the database. Since reason codes can vary across subscribers, the purpose helps identify the valid reason code.\n            <br />***Note:*** Purpose value `0` is assigned to the `Leak` and `Repair` reason codes, indicating that a leak record gets calculated for these reason codes."
-          type: integer
-        Name:
-          description: "Reason code name for the refrigerant part use as configured by the subscriber. Possible values:\n             • `Leak`\n             • `Repair`\n             • `Adjustment`\n             • `System Expansion`\n             • `Removal`\n             • `Initial Charge`\n             • `Retrofit`\n             • `Removed Reused`"
-          type: string
-        SubscriberId:
-          format: int32
-          description: Unique numeric identifier of the subscriber.
-          type: integer
-        IsActive:
-          description: "Defines whether a user can select a reason code when capturing refrigerant use. Possible response values:\n             • `true`: Reason code is enabled.\n             • `false`: Reason code is disabled."
-          default: false
-          type: boolean
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.Assets.TechnicianAssociatedResponse:
-      type: object
-      properties:
-        IsAssociated:
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.RefrigerantTracking.WorkOrderPartRefrigerantResponse:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        AssetId:
-          format: int32
-          type: integer
-        TagId:
-          type: string
-        RecId:
-          format: int32
-          type: integer
-        CertifiedTechnicianId:
-          format: int32
-          type: integer
-        Quantity:
-          format: double
-          type: number
-        QuantityMetrics:
-          format: double
-          type: number
-        QuantityStr:
-          type: string
-        UnitCost:
-          format: double
-          type: number
-        IsRefrigerant:
-          default: false
-          type: boolean
-        IsInventoryPart:
-          default: false
-          type: boolean
-        UseDate:
-          format: date-time
-          type: string
-        ReasonCode:
-          format: int32
-          type: integer
-        ReasonCodeId:
-          format: int32
-          type: integer
-        PartNumber:
-          type: string
-        Description:
-          type: string
-        WOStatus:
-          type: string
-        ProblemType:
-          type: string
-        InventoryLocationId:
-          format: int32
-          type: integer
-        InventoryLocationGuid:
-          description: GUID of inventory part location
-          type: string
-        InventoryLocationName:
-          type: string
-        InventoryPartId:
-          format: int32
-          type: integer
-        PartName:
-          type: string
-        PartGroup:
-          type: string
-        SupplierName:
-          type: string
-        RefrigerantChargeOptionsId:
-          format: int32
-          type: integer
-        RefrigerantChargeVendor:
-          type: string
-        ReasonCodeStr:
-          type: string
-        RefrigerantUsePurpose:
-          format: int32
-          type: integer
-        RefrigerantTypeName:
-          type: string
-        RefrigerantTypeId:
-          format: int32
-          type: integer
-        IsSupplierPart:
-          default: false
-          type: boolean
-        IsConnectorWOPart:
-          default: false
-          type: boolean
-        SubscriberTrackingNumber:
-          format: int32
-          type: integer
-        SubscriberAssetId:
-          format: int32
-          type: integer
-        CreatedByUserId:
-          type: string
-        ModifiedByUserId:
-          type: string
-        IsRetrofit:
-          format: byte
-          type: string
-        RefrigerantPartNumber:
-          type: string
-        InventoryLocations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Inventory.InventoryLocation'
-        SupplierPartId:
-          type: string
-        LeakRate:
-          format: double
-          type: number
-    ServiceChannel.Services.Messaging.Workorders.UpdateWorkOrderPartsCollectionRequest:
-      type: object
-      properties:
-        Parts:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Workorders.UpdateWorkOrderPartRequest'
-    ServiceChannel.Services.WebApi.Models.Response.WasMaterialUsedApiModel:
-      type: object
-      properties:
-        RecId:
-          format: int32
-          type: integer
-        WasMaterialsUsed:
-          default: false
-          type: boolean
     ServiceChannel.Services.Messaging.Workorders.WorkOrderPartResponse:
       type: object
       properties:
@@ -2622,142 +2693,21 @@ components:
           type: boolean
         InventoryLocationName:
           type: string
-    ServiceChannel.Services.Messaging.RefrigerantTracking.AddWorkOrderPartRefrigerantItem:
-      description: Object for adding part use records in bulk
+    ServiceChannel.Services.Messaging.Parts.RefrigerantUsageResponse:
       type: object
       properties:
-        AssetId:
-          format: int32
-          description: Unique numeric identifier of the asset to which the new part use records should be added. Only one asset can be processed in the request. For a non-refrigerant part use, the `AssetId` is not required.
-          type: integer
-        RecId:
-          format: int32
-          description: Unique numeric identifier of the work order associated with the `AssetId`. Only one work order can be processed in the request.
-          type: integer
-        Quantity:
+        TriggerQuantity:
           format: double
-          description: Quantity of parts used.
           type: number
-        UnitCost:
+        LeakRate:
           format: double
-          description: Cost of each part.
           type: number
-        IsRefrigerant:
-          description: 'Specifies whether the part you are trying to add is classified as a refrigerant. Possible input values: `true` and `false`.'
-          default: false
-          type: boolean
-        IsInventoryPart:
-          description: "Specifies whether the part you are trying to add is listed in the inventory catalog for the location or the part is supplied by the vendor. Possible input values:\n             • `true`: Indicates an inventory part\n             • `false`: Indicates a vendor-supplied part"
-          default: false
-          type: boolean
-        UseDate:
-          format: date-time
-          description: Date and time when the part was used. The format is `YYYY-MM-DDThh:mm:ss.sssZ`.
-          type: string
-        UseDateStr:
-          description: Date and time when the part was used. The format is `YYYY-MM-DDThh:mm:ss.sssZ`.
-          type: string
-        ReasonCode:
-          format: int32
-          description: "Reason code name for the refrigerant part use — as configured by the subscriber. Possible values:\n             • `Leak`\n             • `Repair`\n             • `Adjustment`\n             • `System Expansion`\n             • `Removal`\n             • `Initial Charge`\n             • `Retrofit`\n             • `Removed Reused` \n            <br />To get the list of reason codes for the subscriber, use the [GET/refrigeranttracking/{subscriberId}/GetRefrigerantUseReasonCodes](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_%7BsubscriberId%7D_GetRefrigerantUseReasonCodes) method."
-          type: integer
-        ReasonCodeId:
-          format: int32
-          description: Unique numeric identifier of the refrigerant use reason code. To get the list of reason code IDs for the subscriber, use the [GET/refrigeranttracking/{subscriberId}/GetRefrigerantUseReasonCodes](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_%7BsubscriberId%7D_GetRefrigerantUseReasonCodes) method.
-          type: integer
-        PartNumber:
-          description: Part number. Shouldn’t exceed 50 characters.
-          type: string
-        PartName:
-          description: Part name. Shouldn’t exceed 100 characters.
-          type: string
-        PartGroup:
-          description: Part group. Required only if the `IsRefrigerant` is set to `true`.
-          type: string
-        PartGroupId:
-          format: int32
-          description: Unique numeric identifier of the part group. Required only if the `IsRefrigerant` is set to `true`.
-          type: integer
-        SupplierName:
-          description: Name of a company that supplies the part.
-          type: string
-        Description:
-          description: Part description. Any additional information on the part. Shouldn’t exceed 250 characters.
-          type: string
-        RefrigerantChargeOptionsId:
-          format: int32
-          description: "Unique numeric identifier of the charge method used. Possible values:\n             • `1`: Calculation\n             • `2`: Established\n             • `3`: Manufacturer Tag\n             • `4`: Measurement\n             • `5`: MFG Info (Established Range)\n             • `6`: Onsite Documentation\n             • `7`: Approximate\n            <br />To get charge options and their IDs, use the [GET/refrigeranttracking/ChargeDescriptions](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_ChargeDescriptions) method."
-          type: integer
-        RefrigerantChargeVendor:
-          description: Provider who identified the initial charge of the system. Only applicable when the `ReasonCode` is set to `Initial Charge`.
-          type: string
-        InventoryLocationId:
-          format: int32
-          description: Unique numeric identifier of the inventory location where the inventory part is stored.
-          type: integer
-        InventoryLocationGuid:
-          description: GUID of the inventory location.
-          type: string
-        InventoryPartId:
-          format: int32
-          description: Unique numeric identifier of the inventory part. To get the inventory part ID, use the [GET/Setup/parts](https://inventoryapi.servicechannel.com/swagger/index.html) method.
-          type: integer
-        RefrigerantUseReason:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantUseReasonCode'
-        RefrigerantRemovalStatus:
-          description: "Status that describes what was done with the removed refrigerant in the event of the retrofit plan:\n             • `Destroyed`\n             • `Reused`\n             • `Reclaimed`\n             • `Banked`\n             • `ChargeLost`\n             • `Sold`\n            <br />***Note:*** Applicable for the retrofit plan.\n            <br />Not recommended for use in this request."
-          enum:
-          - Destroyed
-          - Reused
-          - Reclaimed
-          - Banked
-          - ChargeLost
-          - Sold
-          type: string
-        RefrigerantTypeId:
-          format: int32
-          description: Unique numeric identifier of the refrigerant type. To get the list of refrigerant types and their IDs, run the [GET/refrigeranttracking/RefrigerantTypes](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_RefrigerantTypes%3FsubscriberId%3D%7BsubscriberId%7D) method.
-          type: integer
-        RefrigerantTypeName:
-          description: Refrigerant type name.
-          type: string
-        SubmitMoeQtyExceeded:
-          description: For Canadian locations. When the part use meets or exceeds the threshold, set the parameter’s value to `true` to be able to proceed with the request.
-          default: false
-          type: boolean
-        MoeNumber:
-          description: "Agency number that will be assigned to the work order and the leak record. The number can be up to 20 characters. An agency number needs to be entered when the system threshold has been met or exceeded. For Canadian locations only.\n            <br />Available with the *SCP_RTCanadaRefrigeration* feature flag."
-          type: string
-        IsRetrofit:
+        Charge:
+          format: double
+          type: number
+        CalculationMethod:
           format: byte
-          description: "Specifies whether the part use is associated with a retrofit plan. Possible values:\n             • `true`: The part is linked to a retrofit plan. The `RefrigerantRemovalStatus` should be specified.\n             • `false`: The part isn’t associated with a retrofit plan.\n            <br />Not recommended for use in this request."
           type: string
-    ServiceChannel.Services.Messaging.RefrigerantTracking.DeleteWorkOrderPartRefrigerantItem:
-      description: Object for deleting part use records in bulk
-      type: object
-      properties:
-        PartId:
-          format: int32
-          description: Unique numeric identifier of the part use record that should be removed. Use the [GET/workorders/{workorderId}/partsUsage](https://developer.servicechannel.com/swagger/index.html#/Parts/GETv3_workorders_%7BworkorderId%7D_partsUsage) method to identify the required part use record ID.
-          type: integer
-        InventoryLocationGuid:
-          description: GUID of the inventory location.
-          type: string
-        DeletionReason:
-          format: byte
-          description: "Reason for removing the refrigerant part use record. Possible values:\n             • `Wrong Part`\n             • `Wrong Asset`\n             • `Incorrect Quantity`\n             • `Other`"
-          type: string
-        DeletionReasonDescription:
-          description: When the `DeletionReason` is set to `Other`, the `DeletionReasonDescription` parameter provides additional information on why the part use record is being removed. Shouldn’t exceed 150 characters.
-          type: string
-        InventoryPartId:
-          format: int32
-          description: Unique numeric identifier of the inventory part. To get the inventory part ID, use the [GET/Setup/parts](https://inventoryapi.servicechannel.com/swagger/index.html) method.
-          type: integer
-        IsInventoryPart:
-          description: "Specifies whether the part you are trying to remove is listed in the inventory catalog for the location or the part is supplied by the vendor. Possible input values:\n             • `true`: Indicates an inventory part\n             • `false`: Indicates a vendor-supplied part"
-          default: false
-          type: boolean
     ServiceChannel.Services.Messaging.Workorders.CreateWorkOrderPartsCollectionRequest:
       type: object
       properties:
@@ -2765,6 +2715,56 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Workorders.CreateWorkOrderPartRequest'
+    ServiceChannel.Services.WebApi.Models.Response.WasMaterialUsedResponse:
+      type: object
+      properties:
+        ResponseItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.WasMaterialUsedApiModel'
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantUseReasonCode:
+      description: Object containing refrigerant use reasons.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the refrigerant use reason code.
+          type: integer
+        Order:
+          format: int32
+          description: Order of appearance of a reason code.
+          type: integer
+        Purpose:
+          format: int32
+          description: "Unique numeric identifier of the reason code for the refrigerant part use. Possible values: `0` - Leak, `1` - InitialCharge, `2` - SystemExpansion, `3` - Removal, `4` - Other, `5` - RemovedReused, `6` - Retrofit.\n            <br />Each reason code on the subscriber side is associated with a hardcoded purpose value in the database. Since reason codes can vary across subscribers, the purpose helps identify the valid reason code.\n            <br />***Note:*** Purpose value `0` is assigned to the `Leak` and `Repair` reason codes, indicating that a leak record gets calculated for these reason codes."
+          type: integer
+        Name:
+          description: "Reason code name for the refrigerant part use as configured by the subscriber. Possible values:\n             • `Leak`\n             • `Repair`\n             • `Adjustment`\n             • `System Expansion`\n             • `Removal`\n             • `Initial Charge`\n             • `Retrofit`\n             • `Removed Reused`"
+          type: string
+        SubscriberId:
+          format: int32
+          description: Unique numeric identifier of the subscriber.
+          type: integer
+        IsActive:
+          description: "Defines whether a user can select a reason code when capturing refrigerant use. Possible response values:\n             • `true`: Reason code is enabled.\n             • `false`: Reason code is disabled."
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Assets.TechnicianAssociatedResponse:
+      type: object
+      properties:
+        IsAssociated:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Workorders.UpdateWorkOrderPartsCollectionRequest:
+      type: object
+      properties:
+        Parts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Workorders.UpdateWorkOrderPartRequest'
   securitySchemes:
     oauth2:
       type: oauth2

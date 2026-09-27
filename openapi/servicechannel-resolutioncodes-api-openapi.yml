@@ -788,17 +788,50 @@ paths:
         required: true
 components:
   schemas:
-    ServiceChannel.Services.Messaging.Assets.AssetTypeCategory:
-      description: Asset category object.
+    ServiceChannel.Services.WebApi.Models.Response.ResolutionCodes.RootCauseResponse:
+      description: Root cause object.
       type: object
       properties:
-        Id:
+        Key:
           format: int32
-          description: Unique numeric identifier of the asset category.
+          description: Root cause identifier.
           type: integer
-        Name:
-          description: Asset category name.
+        Value:
+          description: Root cause name.
           type: string
+        HasFreeText:
+          description: Defines whether a user can enter a comment explaining their understanding of the root cause and specifying the reason why the problem occurred.
+          default: false
+          type: boolean
+        Order:
+          format: int32
+          description: Order of appearance of a root cause.
+          type: integer
+        AssetCategoryIds:
+          description: Asset category ID. A value populates only if two or more categories are specified in assetCategoryIds in the filter.
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.WebApi.Models.Request.ResolutionCodes.UpdateResolutionCodesRequest:
+      description: Request object to add resolution codes to a work order.
+      type: object
+      properties:
+        WorkOrderId:
+          format: int32
+          description: Unique numeric identifier of the work order to add resolution codes to.
+          type: integer
+        ResolutionCodeIds:
+          description: IDs of resolution codes to add to the work order.
+          type: array
+          items:
+            format: int32
+            type: integer
+        ResolutionCodes:
+          description: Details of resolution codes to add to the work order.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.ResolutionCodes.ResolutionCodeRequest'
     ServiceChannel.Services.WebApi.Models.Response.ResolutionCodes.ResolutionCodeInfoResponse:
       description: Resolution code object.
       type: object
@@ -821,28 +854,33 @@ components:
           format: int32
           description: Asset category ID specified by a user with access to asset categories.
           type: integer
-    ServiceChannel.Services.WebApi.Models.Response.ResolutionCodes.RootCauseInfoResponse:
-      description: Root cause object.
+    ServiceChannel.Services.WebApi.Models.Request.ResolutionCodes.UpdateAssetCategoriesRequest:
+      description: Request object to add asset categories to a work order.
       type: object
       properties:
-        Key:
-          format: int32
-          description: Root cause identifier.
-          type: integer
-        Value:
-          description: Root cause name.
-          type: string
-        HasFreeText:
-          description: Defines whether a user can enter a comment explaining their understanding of the root cause and specifying the reason why the problem occurred.
-          default: false
-          type: boolean
-        Text:
-          description: "Comment that a technician enters to provide their understanding of the root cause of a work order explaining the reason why the problem occurred.\n            Comments are enabled for root causes with the `HasFreeText` attribute."
-          type: string
-        AssetCategoryId:
-          format: int32
-          description: Asset category ID specified by a user with access to asset categories.
-          type: integer
+        AssetCategoryIds:
+          description: IDs of asset categories to add to a work order.
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.WebApi.Models.Response.ResolutionCodes.WorkOrderResolutionInfoResponse:
+      description: Object containing the details of resolution codes and root causes of a work order.
+      type: object
+      properties:
+        resolutionCodes:
+          description: Resolution codes of a work order.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.ResolutionCodes.ResolutionCodeInfoResponse'
+        rootCause:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.ResolutionCodes.RootCauseInfoResponse'
+          description: Root cause of a work order.
+        rootCauses:
+          description: Root causes of a work order returned for users with access to asset categories.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.ResolutionCodes.RootCauseInfoResponse'
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2480,73 +2518,6 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.WebApi.Models.Request.ResolutionCodes.UpdateRootCausesRequest:
-      description: Request object to add root causes to a work order.
-      type: object
-      properties:
-        WorkOrderId:
-          format: int32
-          description: Unique numeric identifier of the work order to add root causes to.
-          type: integer
-        RootCauses:
-          description: Details of root causes to add to the work order.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.ResolutionCodes.RootCauseRequest'
-    ServiceChannel.Services.WebApi.Models.Request.ResolutionCodes.UpdateResolutionCodesRequest:
-      description: Request object to add resolution codes to a work order.
-      type: object
-      properties:
-        WorkOrderId:
-          format: int32
-          description: Unique numeric identifier of the work order to add resolution codes to.
-          type: integer
-        ResolutionCodeIds:
-          description: IDs of resolution codes to add to the work order.
-          type: array
-          items:
-            format: int32
-            type: integer
-        ResolutionCodes:
-          description: Details of resolution codes to add to the work order.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.ResolutionCodes.ResolutionCodeRequest'
-    ServiceChannel.Services.WebApi.Models.Request.ResolutionCodes.UpdateAssetCategoriesRequest:
-      description: Request object to add asset categories to a work order.
-      type: object
-      properties:
-        AssetCategoryIds:
-          description: IDs of asset categories to add to a work order.
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.WebApi.Models.Response.ResolutionCodes.RootCauseResponse:
-      description: Root cause object.
-      type: object
-      properties:
-        Key:
-          format: int32
-          description: Root cause identifier.
-          type: integer
-        Value:
-          description: Root cause name.
-          type: string
-        HasFreeText:
-          description: Defines whether a user can enter a comment explaining their understanding of the root cause and specifying the reason why the problem occurred.
-          default: false
-          type: boolean
-        Order:
-          format: int32
-          description: Order of appearance of a root cause.
-          type: integer
-        AssetCategoryIds:
-          description: Asset category ID. A value populates only if two or more categories are specified in assetCategoryIds in the filter.
-          type: array
-          items:
-            format: int32
-            type: integer
     ServiceChannel.Services.WebApi.Models.Request.ResolutionCodes.RootCauseRequest:
       description: Object for details of a root cause to add to a work order.
       type: object
@@ -2562,9 +2533,6 @@ components:
           format: int32
           description: Asset category ID.
           type: integer
-    System.Object:
-      type: object
-      properties: {}
     ServiceChannel.Services.WebApi.Models.Request.ResolutionCodes.ResolutionCodeRequest:
       description: Object for details of a resolution code to add to a work order.
       type: object
@@ -2580,23 +2548,17 @@ components:
           format: int32
           description: Asset category ID to be passed by users with access to asset categories.
           type: integer
-    ServiceChannel.Services.WebApi.Models.Response.ResolutionCodes.WorkOrderResolutionInfoResponse:
-      description: Object containing the details of resolution codes and root causes of a work order.
+    ServiceChannel.Services.Messaging.Assets.AssetTypeCategory:
+      description: Asset category object.
       type: object
       properties:
-        resolutionCodes:
-          description: Resolution codes of a work order.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.ResolutionCodes.ResolutionCodeInfoResponse'
-        rootCause:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.ResolutionCodes.RootCauseInfoResponse'
-          description: Root cause of a work order.
-        rootCauses:
-          description: Root causes of a work order returned for users with access to asset categories.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.ResolutionCodes.RootCauseInfoResponse'
+        Id:
+          format: int32
+          description: Unique numeric identifier of the asset category.
+          type: integer
+        Name:
+          description: Asset category name.
+          type: string
     ServiceChannel.Services.WebApi.Models.Response.ResolutionCodes.ResolutionCodeResponse:
       description: Resolution code object.
       type: object
@@ -2622,6 +2584,44 @@ components:
           items:
             format: int32
             type: integer
+    ServiceChannel.Services.WebApi.Models.Request.ResolutionCodes.UpdateRootCausesRequest:
+      description: Request object to add root causes to a work order.
+      type: object
+      properties:
+        WorkOrderId:
+          format: int32
+          description: Unique numeric identifier of the work order to add root causes to.
+          type: integer
+        RootCauses:
+          description: Details of root causes to add to the work order.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.ResolutionCodes.RootCauseRequest'
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Services.WebApi.Models.Response.ResolutionCodes.RootCauseInfoResponse:
+      description: Root cause object.
+      type: object
+      properties:
+        Key:
+          format: int32
+          description: Root cause identifier.
+          type: integer
+        Value:
+          description: Root cause name.
+          type: string
+        HasFreeText:
+          description: Defines whether a user can enter a comment explaining their understanding of the root cause and specifying the reason why the problem occurred.
+          default: false
+          type: boolean
+        Text:
+          description: "Comment that a technician enters to provide their understanding of the root cause of a work order explaining the reason why the problem occurred.\n            Comments are enabled for root causes with the `HasFreeText` attribute."
+          type: string
+        AssetCategoryId:
+          format: int32
+          description: Asset category ID specified by a user with access to asset categories.
+          type: integer
   securitySchemes:
     oauth2:
       type: oauth2

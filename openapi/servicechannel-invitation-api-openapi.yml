@@ -42,28 +42,6 @@ paths:
         required: true
 components:
   schemas:
-    CompanyModel:
-      required:
-      - Email
-      type: object
-      properties:
-        CompanyName:
-          maxLength: 100
-          minLength: 0
-          type: string
-        Email:
-          maxLength: 255
-          minLength: 0
-          pattern: ^[\w!#$%&'*+\-\/=?\^_`{|}~]+(\.[\w!#$%&'*+\-\/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,63})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$
-          type: string
-        TaxId:
-          maxLength: 100
-          minLength: 0
-          type: string
-        IsActive:
-          type: boolean
-        AddressInformation:
-          $ref: '#/components/schemas/AddressInformationModel'
     PaymentTermsModel:
       type: object
       properties:
@@ -74,6 +52,9 @@ components:
           maxLength: 50
           minLength: 0
           type: string
+    Object:
+      type: object
+      properties: {}
     CreateInvitationModel:
       required:
       - ScSubscriberId
@@ -109,6 +90,28 @@ components:
           minLength: 0
           pattern: ^[\w!#$%&'*+\-\/=?\^_`{|}~]+(\.[\w!#$%&'*+\-\/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,63})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$
           type: string
+    CompanyModel:
+      required:
+      - Email
+      type: object
+      properties:
+        CompanyName:
+          maxLength: 100
+          minLength: 0
+          type: string
+        Email:
+          maxLength: 255
+          minLength: 0
+          pattern: ^[\w!#$%&'*+\-\/=?\^_`{|}~]+(\.[\w!#$%&'*+\-\/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,63})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$
+          type: string
+        TaxId:
+          maxLength: 100
+          minLength: 0
+          type: string
+        IsActive:
+          type: boolean
+        AddressInformation:
+          $ref: '#/components/schemas/AddressInformationModel'
     AddressInformationModel:
       type: object
       properties:
@@ -136,9 +139,6 @@ components:
           maxLength: 10
           minLength: 0
           type: string
-    Object:
-      type: object
-      properties: {}
   securitySchemes:
     oauth2:
       type: oauth2

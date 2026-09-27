@@ -1250,146 +1250,6 @@ paths:
       x-access: Subscribers
 components:
   schemas:
-    ServiceChannel.Services.Messaging.SiteAudit.CheckListExternal:
-      type: object
-      properties:
-        Name:
-          type: string
-        Unlisted:
-          default: false
-          type: boolean
-        SortOrder:
-          format: int32
-          type: integer
-        CheckListItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternal'
-    ServiceChannel.Services.RequestHandlers.SiteAudit.GetFilteredAuditListResponse:
-      type: object
-      properties:
-        UserName:
-          type: string
-        Locations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.LocationExternal'
-        TemplateTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditTypeExternal'
-        FilteredAudits:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditInfoExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternalOld:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-        SortOrder:
-          format: int32
-          type: integer
-        CheckLists:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListExternalOld'
-        WorkOrderIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditInfoExternal:
-      description: General details of a completed audit.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of the site audit.
-          type: integer
-        StoreId:
-          format: int32
-          description: Unique numeric identifier of the location where the site audit was conducted.
-          type: integer
-        UserId:
-          format: int32
-          description: Unique numeric identifier of the user (auditor) who conducted the site audit.
-          type: integer
-        UserName:
-          description: Display name of the user (auditor) who conducted the site audit.
-          type: string
-        TemplateTypeId:
-          format: int32
-          description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
-          type: integer
-        StartDate:
-          format: date-time
-          description: Date and time when the user started the audit in the SC Mobile app or in Service Automation. The format is `YYYY-MM-DDThh:mm:ss.ss`.
-          type: string
-        FinishDate:
-          format: date-time
-          description: Date and time when the site audit was completed. The format is `YYYY-MM-DDThh:mm:ss.ss`.
-          type: string
-        FinishDateStr:
-          description: Date when the site audit was completed. The format is `MMM DD, YYYY`.
-          type: string
-        Status:
-          description: "Unique numeric identifier of the status. Possible response values:\n             • `1`: The site audit status is *Open*.\n             • `2`: The site audit status is *Completed*."
-          enum:
-          - Undefined
-          - Open
-          - Completed
-          type: string
-        Emails:
-          description: Email address(es) to which the audit results were sent out by the auditor upon completing the audit.
-          type: string
-        Areas:
-          description: List of areas that were inspected during the site audit, for example, *Interior* or *Exterior*.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditAreaExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditIssueAttachmentExternal:
-      description: Parameters for updating the attachments added to the checklist item.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Attachment ID.
-          type: integer
-        FileName:
-          description: File name of the attachment.
-          type: string
-        RemoteName:
-          description: Remote name of the attached file.
-          type: string
-        RemoteNameResized:
-          description: File name that has been resized.
-          type: string
-    ServiceChannel.Services.Messaging.SiteAudit.CheckListTemplateExternal:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-        SortOrder:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.SiteAudit.UpdatedCompletedAuditResponse:
-      description: Object containing response parameters.
-      type: object
-      properties:
-        IsSuccess:
-          description: Returns `true` when the completed audit details have been successfully updated.
-          default: false
-          type: boolean
-        Sent:
-          description: Returns the success message when the updated site audit information is sent out to the specified email address.
-          type: string
     ServiceChannel.Services.Messaging.SiteAudit.UpdatedCheckListExternal:
       description: Parameters for updating the checklist.
       type: object
@@ -1412,752 +1272,101 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedCheckListItemExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.CheckListWeightedExternal:
+    ServiceChannel.Services.Messaging.SiteAudit.AuditDataWeightedExternal:
       type: object
       properties:
-        Name:
+        StartDate:
+          format: date-time
           type: string
-        TemplateName:
+        FinishDate:
+          format: date-time
           type: string
-        Unlisted:
-          default: false
-          type: boolean
-        SortOrder:
-          format: int32
-          type: integer
+        Areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaWeightedExternal'
         WorkOrderIds:
           type: array
           items:
             format: int32
             type: integer
-        CheckListItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemWeightedExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueExternal:
-      description: Comment added to the checklist item.
+        Emails:
+          type: string
+        SendEmails:
+          default: false
+          type: boolean
+        Language:
+          type: string
+        Source:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueAttachmentExternal:
+      description: Checklist item attachments.
       type: object
       properties:
         Id:
           format: int32
-          description: Comment ID.
+          description: Attachment ID.
           type: integer
-        Date:
-          format: date-time
-          description: Date and time when the comment was added to the checklist item. The format is `YYYY-MM-DDThh:mm:ss.ss`.
+        FileName:
+          description: File name of the attachment.
           type: string
-        DateStr:
-          description: Date when the comment was added to the checklist item. The format is `MMM DD, YYYY`.
-          type: string
-        Description:
-          description: Comment added to the checklist item during the audit.
-          type: string
-        Persistent:
-          description: "Shows whether or not the comment should be saved for future audits. Possible response values:\n             • `true`: When the auditor sets the corresponding toggle in the SC Mobile app or in Service Automation to save the checklist item comment for future audits.\n             • `false`: When the comment should not be preserved and displayed for future audits."
-          default: false
-          type: boolean
-        UserName:
-          description: Username of the auditor who added the comment to the checklist item during the inspection.
-          type: string
-        Attachments:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueAttachmentExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueAttachmentModelExternal:
-      type: object
-      properties:
         RemoteName:
+          description: Remote name of the attached file.
           type: string
         RemoteNameResized:
+          description: Attachment file name that has been resized.
           type: string
-        FileName:
+        ContentType:
+          description: Type of the attached file, for example, *image* or *video*.
           type: string
-    ServiceChannel.Services.Messaging.SiteAudit.GetAuditInfo:
+        ContentUrl:
+          description: Web address (or Uniform Resource Locator) that points to the attached file.
+          type: string
+        ContentUrlResized:
+          description: Web address (or Uniform Resource Locator) that points to the resized version of the original image.
+          type: string
+    ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditInfo:
       type: object
       properties:
         Id:
           format: int32
           type: integer
+        StoreId:
+          format: int32
+          type: integer
+        UserId:
+          format: int32
+          type: integer
+        TemplateTypeId:
+          format: int32
+          type: integer
         StartDate:
           format: date-time
+          type: string
+        FinishDate:
+          format: date-time
+          type: string
+        FinishDateStr:
+          type: string
+        Status:
+          enum:
+          - Undefined
+          - Open
+          - Completed
           type: string
         Emails:
           type: string
         Areas:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal:
+            $ref: '#/components/schemas/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditArea'
+    ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditQuantityModelExternal:
       type: object
       properties:
-        Id:
-          format: int32
-          type: integer
-        Description:
-          type: string
-        Date:
-          format: date-time
-          type: string
-        Attachments:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.IssueAttachmentExternal'
-        Persistent:
-          default: false
-          type: boolean
-        UserName:
-          type: string
-    ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckListItem:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-        Description:
-          type: string
-        Score:
-          format: int32
-          type: integer
-        System:
-          format: int32
-          type: integer
-        Date:
-          format: date-time
-          type: string
-        DateStr:
-          type: string
-        Unlisted:
-          default: false
-          type: boolean
-        CheckListItemImpact:
-          type: string
-        UseNumericRatingSystem:
-          default: false
-          type: boolean
-        PassThreshold:
-          format: int32
-          type: integer
-        Range:
-          type: array
-          items:
-            format: int32
-            type: integer
-        Issues:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueExternal'
-        WorkOrderIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        Quantity:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditQuantityExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.LocationExternal:
-      description: Object containing location details.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of the location — generated by the system.
-          type: integer
-        SubscriberId:
-          format: int32
-          description: Unique numeric identifier of the subscriber.
-          type: integer
-        StoreId:
-          description: Unique numeric identifier of the location — specified by the user.
-          type: string
-        Name:
-          description: Location name.
-          type: string
-        ShortName:
-          description: Short name of the location.
-          type: string
-        Address:
-          description: Location address.
-          type: string
-        City:
-          description: Location city.
-          type: string
-        State:
-          description: Location state.
-          type: string
-        Country:
-          description: Location country.
-          type: string
-        Zip:
-          description: Location ZIP code.
-          type: string
-    ServiceChannel.Services.Messaging.SiteAudit.AuditAreaWeightedExternal:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-        SortOrder:
-          format: int32
-          type: integer
-        CheckLists:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListWeightedExternal'
-        WorkOrderIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListExternal:
-      description: Information on the checklists.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of the checklist.
-          type: integer
-        Name:
-          description: Checklist name, for example, *Restroom* or *Dining room*.
-          type: string
-        Unlisted:
-          default: false
-          type: boolean
-        SortOrder:
-          format: int32
-          description: Sorting order of the checklist.
-          type: integer
-        CheckListItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListItemExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditListResponse:
-      description: Object containing general info on completed audits.
-      type: object
-      properties:
-        UserName:
-          description: Username of the person who has authorized and is sending the API request.
-          type: string
-        Locations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.LocationExternal'
-        TemplateTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditTypeExternal'
-        CompletedAudits:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditInfoExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditQuantityExternal:
-      description: Quantity or dollar cost of the inspected checklist items.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Quantity record ID.
-          type: integer
         Value:
           format: int32
-          description: Value showing either the quantity or the dollar amount of the items that have been inspected.
           type: integer
         Unit:
-          description: 'Shows whether the auditor captured the **Quantity** or the **Dollar Cost** of the inspected item. Possible response values: `Quantity` and `Dollars`.'
-          type: string
-    ServiceChannel.Services.Messaging.SiteAudit.AuditReportIssueExternal:
-      description: The details of issues created by the auditor for the inspected checklist item. Issues are also known as action items.
-      type: object
-      properties:
-        IssueType:
-          description: The type of the action item, either `WO` or `Comment`.
-          type: string
-        IssueDescription:
-          description: '`Comment type`: auditor''s comment added to the action item or its attachment. `WO type`: work order description that includes the area, problem type, asset, problem, and auditor’s description of the problem.'
-          type: string
-        AttachmentPaths:
-          description: The paths to the attachments added to the checklist item.
-          type: array
-          items:
-            type: string
-        IssueId:
-          format: int32
-          description: '`Comment type`: numeric identifier of the action item. `WO type`: numeric identifier of the work order, also known as WO tracking number.'
-          type: integer
-        WorkOrderPriority:
-          description: The name of the work order priority if the action item belongs to the WO type.
-          type: string
-        Date:
-          format: date-time
-          description: The date and time when the auditor created the action item.
-          type: string
-    ServiceChannel.Services.Messaging.SiteAudit.AuditInfoExternal:
-      description: Object containing audit details.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of the completed audit.
-          type: integer
-        LocationId:
-          format: int32
-          description: Unique numeric identifier of the location — generated by the system.
-          type: integer
-        StartDate:
-          format: date-time
-          description: Date and time when the site audit was started. The format is YYYY-MM-DDThh:mm:ss.sss.
-          type: string
-        EndDate:
-          format: date-time
-          description: Date and time when the site audit was completed. The format is YYYY-MM-DDThh:mm:ss.sss.
-          type: string
-        Status:
-          description: Unique numeric identifier of the status. The response value `2` stands for the *Completed* status.
-          enum:
-          - Undefined
-          - Open
-          - Completed
-          type: string
-        TemplateTypeId:
-          format: int32
-          description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
-          type: integer
-        UserName:
-          description: Username of the person who conducted the audit.
-          type: string
-        UnauditedItems:
-          format: int32
-          description: Number of checklist items that were not audited.
-          type: integer
-    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternal:
-      type: object
-      properties:
-        Name:
-          type: string
-        Description:
-          type: string
-        Score:
-          format: int32
-          type: integer
-        System:
-          enum:
-          - PassFail
-          - Numeric
-          - Weighted
-          - Percentage
-          type: string
-        Date:
-          format: date-time
-          type: string
-        Unlisted:
-          default: false
-          type: boolean
-        Issues:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
-        Quantity:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
-        CheckListItemImpact:
-          type: string
-        PassThreshold:
-          format: int32
-          type: integer
-        Range:
-          type: array
-          items:
-            format: int32
-            type: integer
-        StatisticItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticWeightedExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticWeightedExternal:
-      type: object
-      properties:
-        CheckListItemId:
-          format: int32
-          type: integer
-        Date:
-          format: date-time
-          type: string
-        Score:
-          format: int32
-          type: integer
-        System:
-          format: int32
-          type: integer
-        Range:
-          type: array
-          items:
-            format: int32
-            type: integer
-        PassThreshold:
-          format: int32
-          type: integer
-        WorkOrdersCount:
-          format: int32
-          type: integer
-        CommentsCount:
-          format: int32
-          type: integer
-        AttachmentsCount:
-          format: int32
-          type: integer
-        QuantityCount:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.SiteAudit.WorkOrder:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        ProblemCode:
-          type: string
-        Priority:
-          type: string
-        ScheduledDate:
-          format: date-time
-          type: string
-        Description:
-          type: string
-    ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueModelExternal:
-      type: object
-      properties:
-        Date:
-          type: string
-        Comment:
-          type: string
-        UserName:
-          type: string
-        Attachments:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueAttachmentModelExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternalOld:
-      type: object
-      properties:
-        StartDate:
-          format: date-time
-          type: string
-        FinishDate:
-          format: date-time
-          type: string
-        Areas:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternalOld'
-        WorkOrderIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        Emails:
-          type: string
-        SendEmails:
-          default: false
-          type: boolean
-        Source:
-          type: string
-    ServiceChannel.Services.Messaging.SiteAudit.UpdatedCheckListItemExternal:
-      description: Parameters for updating the checklist items.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of the checklist item.
-          type: integer
-        Name:
-          description: Checklist item name, for example, *Hand dryer* or *Sink*.
-          type: string
-        Description:
-          description: Detailed description/instruction for the checklist item.
-          type: string
-        Score:
-          format: int32
-          description: "Shows how the checklist item was rated. The response value depends on the rating system applied:\n             • `1`: In the **Pass/Fail** rating system, it stands for the **Fail** answer.\n             • `2`: In the **Pass/Fail** rating system, it stands for the **Pass** answer. \n             • `numeric value`: In the **Weighted** rating system, a custom numeric value is assigned to each option: **Good**, **Fair**, and **Fail**.\n             • `0–10`: In the **Numeric** rating system, a value from 0 to 10 can be used to rate the item.\n             • `0–100`: In the **Percentage** rating system, a value from 0% to 100% can be used to rate the item."
-          type: integer
-        System:
-          format: int32
-          description: "Rating system that was applied to the checklist item. Possible values:\n             • `1`: For the **Pass/Fail** rating system\n             • `2`: For the **Numeric** rating system\n             • `3`: For the **Weighted** rating system\n             • `4`: For the **Percentage** rating system. When this rating system is used, the `Score` value is displayed in percentages.\n            <br />Learn more about each rating system in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/550928611/Building+a+Site+Audit+in+an+Excel+Template)."
-          type: integer
-        Date:
-          format: date-time
-          description: Date and time when the checklist item was inspected and rated. The format is YYYY-MM-DDThh:mm:ss.sssZ.
-          type: string
-        Unlisted:
-          default: false
-          type: boolean
-        CheckListItemImpact:
-          description: "Checklist item’s impact on the total audit score. Possible input values:\n             • `Veto`: Means that this item has the highest impact on the audit score. When at least one of the veto checklist items is rated as **Fail**, the total score of the audit drops to 1%.\n             • `Ignore`: Means that this item is ignored when the audit score is calculated.\n             • `Empty value`: Means that this checklist item is counted as a regular item."
-          type: string
-        UseNumericRatingSystem:
-          default: false
-          type: boolean
-        PassThreshold:
-          format: int32
-          description: Minimum rating value that is sufficient to pass the audit. Can be in numbers or in percentages based on the rating system applied to the checklist item. See the `System` parameter.
-          type: integer
-        Range:
-          description: Range of numbers displayed to the user during the audit, allowing the auditor to rate the item. Permits selecting a score on a 0–10 scale or from 0% to 100%.
-          type: array
-          items:
-            format: int32
-            type: integer
-        Issues:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditIssueExternal'
-        WorkOrderIds:
-          description: Tracking numbers of the work orders created in the event of the checklist item inspection.
-          type: array
-          items:
-            format: int32
-            type: integer
-        Quantity:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditQuantityExternal'
-          description: Quantity of items that have been inspected.
-    ServiceChannel.Services.Messaging.SiteAudit.AuditTypeExternal:
-      description: Object containing information on audit template types.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of the template. The template determines the audit type.
-          type: integer
-        SubscriberId:
-          format: int32
-          description: Unique numeric identifier of the subscriber.
-          type: integer
-        Name:
-          description: Template name.
-          type: string
-    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditAreaExternal:
-      description: Information on the inspected areas.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of the area that was inspected.
-          type: integer
-        Name:
-          description: Area name, for example, *Exterior* or *Interior*.
-          type: string
-        SortOrder:
-          format: int32
-          description: Sorting order of the area.
-          type: integer
-        CheckLists:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListExternal'
-    ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckList:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-        Unlisted:
-          default: false
-          type: boolean
-        SortOrder:
-          format: int32
-          type: integer
-        CheckListItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckListItem'
-    ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternal:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-        SortOrder:
-          format: int32
-          type: integer
-        CheckLists:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternalOld:
-      type: object
-      properties:
-        Name:
-          type: string
-        Description:
-          type: string
-        Status:
-          format: int32
-          type: integer
-        StatusNumeric:
-          format: int32
-          type: integer
-        UseNumericRatingSystem:
-          default: false
-          type: boolean
-        Date:
-          format: date-time
-          type: string
-        Unlisted:
-          default: false
-          type: boolean
-        WorkOrderIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        Issues:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
-        Quantity:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
-        CheckListItemImpact:
-          type: string
-        StatisticItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditInfoExternal:
-      description: Object containing audit details.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of the completed audit.
-          type: integer
-        LocationId:
-          format: int32
-          description: Unique numeric identifier of the location — generated by the system.
-          type: integer
-        StartDate:
-          format: date-time
-          description: Date and time when the site audit was started. The format is YYYY-MM-DDThh:mm:ss.sss.
-          type: string
-        EndDate:
-          format: date-time
-          description: Date and time when the site audit was completed. The format is YYYY-MM-DDThh:mm:ss.sss.
-          type: string
-        TemplateTypeId:
-          format: int32
-          description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
-          type: integer
-        UserName:
-          description: Username of the person who conducted the audit.
-          type: string
-    ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditDataExternal:
-      description: Parameters for updating general audit info.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of the completed site audit.
-          type: integer
-        StoreId:
-          format: int32
-          description: Unique numeric identifier of the location where the site audit was conducted.
-          type: integer
-        TemplateTypeId:
-          format: int32
-          description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
-          type: integer
-        Language:
-          description: Language that was used to conduct the audit. Use the two-letter abbreviation, for example, **EN**.
-          type: string
-        SendEmails:
-          description: "Specifies whether an email notification was sent out upon completing the site audit. Possible input values:\n             • `true`: The audit results were sent to the specified recipient(s). Use the `Emails` parameter to add the recipients.\n             • `false`: The audit results were not emailed to anyone."
-          default: false
-          type: boolean
-        Emails:
-          description: "Email address(es) to which the audit results were sent out upon completing the audit. Check the `Sent` parameter in the response to see whether the audit results were successfully sent out to the specified recipients.\n            <br />Learn more about the email list for site audits in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/552173744/Configuring+an+Email+List+for+Site+Audit+Reports)."
-          type: string
-        Status:
-          description: Site audit status. Set the status value to `2` (`Completed`).
-          enum:
-          - Undefined
-          - Open
-          - Completed
-          type: string
-        Source:
-          type: string
-        Areas:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditAreaExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.AuditAreaRequest:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-        SortOrder:
-          format: int32
-          type: integer
-        CheckLists:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListRequest'
-    ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditArea:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-        SortOrder:
-          format: int32
-          type: integer
-        CheckLists:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckList'
-    ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternal:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        StoreId:
-          format: int32
-          type: integer
-        TemplateTypeId:
-          format: int32
-          type: integer
-        StartDate:
-          format: date-time
-          type: string
-        FinishDate:
-          format: date-time
-          type: string
-        SendEmails:
-          default: false
-          type: boolean
-        Emails:
-          type: string
-        Areas:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaRequest'
-        Language:
-          type: string
-        Status:
-          enum:
-          - Undefined
-          - Open
-          - Completed
-          type: string
-        Source:
           type: string
     ServiceChannel.Services.Messaging.SiteAudit.AuditReportExternal:
       description: The site audit report object. Depending on the features enabled for your company, the object structure may differ from the example below.
@@ -2241,10 +1450,38 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditReportIssueExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.CheckListRequest:
+    ServiceChannel.Services.Messaging.SiteAudit.WorkOrder:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        ProblemCode:
+          type: string
+        Priority:
+          type: string
+        ScheduledDate:
+          format: date-time
+          type: string
+        Description:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.SaveAuditDataResponse:
+      type: object
+      properties:
+        Saved:
+          default: false
+          type: boolean
+        Sent:
+          type: string
+        AuditId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListExternalOld:
       type: object
       properties:
         Name:
+          type: string
+        TemplateName:
           type: string
         Unlisted:
           default: false
@@ -2252,10 +1489,208 @@ components:
         SortOrder:
           format: int32
           type: integer
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
         CheckListItems:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemRequest'
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternalOld'
+    ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Description:
+          type: string
+        Date:
+          format: date-time
+          type: string
+        Attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.IssueAttachmentExternal'
+        Persistent:
+          default: false
+          type: boolean
+        UserName:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditQuantityExternal:
+      description: Quantity or dollar cost of the inspected checklist items.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Quantity record ID.
+          type: integer
+        Value:
+          format: int32
+          description: Value showing either the quantity or the dollar amount of the items that have been inspected.
+          type: integer
+        Unit:
+          description: 'Shows whether the auditor captured the **Quantity** or the **Dollar Cost** of the inspected item. Possible response values: `Quantity` and `Dollars`.'
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternalOld:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        SortOrder:
+          format: int32
+          type: integer
+        CheckLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListExternalOld'
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.SiteAudit.AuditInfoExternal:
+      description: Object containing audit details.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the completed audit.
+          type: integer
+        LocationId:
+          format: int32
+          description: Unique numeric identifier of the location — generated by the system.
+          type: integer
+        StartDate:
+          format: date-time
+          description: Date and time when the site audit was started. The format is YYYY-MM-DDThh:mm:ss.sss.
+          type: string
+        EndDate:
+          format: date-time
+          description: Date and time when the site audit was completed. The format is YYYY-MM-DDThh:mm:ss.sss.
+          type: string
+        Status:
+          description: Unique numeric identifier of the status. The response value `2` stands for the *Completed* status.
+          enum:
+          - Undefined
+          - Open
+          - Completed
+          type: string
+        TemplateTypeId:
+          format: int32
+          description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
+          type: integer
+        UserName:
+          description: Username of the person who conducted the audit.
+          type: string
+        UnauditedItems:
+          format: int32
+          description: Number of checklist items that were not audited.
+          type: integer
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditQuantityExternal:
+      description: Parameters for updating the quantity or dollar cost of the inspected checklist items.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Quantity record ID.
+          type: integer
+        Value:
+          format: int32
+          description: Value showing either the quantity or the dollar cost of the inspected items. Check the `Type` parameter’s value.
+          type: integer
+        Type:
+          description: 'Value type. Possible values: `Quantity` and `Dollar`.'
+          enum:
+          - Dollar
+          - Quantity
+          type: string
+        Unit:
+          description: 'Shows whether the auditor captured the **Quantity** or the **Dollar cost** of the inspected item. Possible values: `Quantity` and `Dollar`.'
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.LocationExternal:
+      description: Object containing location details.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the location — generated by the system.
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Unique numeric identifier of the subscriber.
+          type: integer
+        StoreId:
+          description: Unique numeric identifier of the location — specified by the user.
+          type: string
+        Name:
+          description: Location name.
+          type: string
+        ShortName:
+          description: Short name of the location.
+          type: string
+        Address:
+          description: Location address.
+          type: string
+        City:
+          description: Location city.
+          type: string
+        State:
+          description: Location state.
+          type: string
+        Country:
+          description: Location country.
+          type: string
+        Zip:
+          description: Location ZIP code.
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedOpenAuditResponse:
+      type: object
+      properties:
+        IsSuccess:
+          default: false
+          type: boolean
+        Sent:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueModelExternal:
+      type: object
+      properties:
+        Date:
+          type: string
+        Comment:
+          type: string
+        UserName:
+          type: string
+        Attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueAttachmentModelExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListWeightedExternal:
+      type: object
+      properties:
+        Name:
+          type: string
+        TemplateName:
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          type: integer
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        CheckListItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemWeightedExternal'
     ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditIssueExternal:
       description: Parameters for updating the comment added to the checklist item.
       type: object
@@ -2280,8 +1715,81 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditIssueAttachmentExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueAttachmentExternal:
-      description: Checklist item attachments.
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListRequest:
+      type: object
+      properties:
+        Name:
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          type: integer
+        CheckListItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemRequest'
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedCheckListItemExternal:
+      description: Parameters for updating the checklist items.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the checklist item.
+          type: integer
+        Name:
+          description: Checklist item name, for example, *Hand dryer* or *Sink*.
+          type: string
+        Description:
+          description: Detailed description/instruction for the checklist item.
+          type: string
+        Score:
+          format: int32
+          description: "Shows how the checklist item was rated. The response value depends on the rating system applied:\n             • `1`: In the **Pass/Fail** rating system, it stands for the **Fail** answer.\n             • `2`: In the **Pass/Fail** rating system, it stands for the **Pass** answer. \n             • `numeric value`: In the **Weighted** rating system, a custom numeric value is assigned to each option: **Good**, **Fair**, and **Fail**.\n             • `0–10`: In the **Numeric** rating system, a value from 0 to 10 can be used to rate the item.\n             • `0–100`: In the **Percentage** rating system, a value from 0% to 100% can be used to rate the item."
+          type: integer
+        System:
+          format: int32
+          description: "Rating system that was applied to the checklist item. Possible values:\n             • `1`: For the **Pass/Fail** rating system\n             • `2`: For the **Numeric** rating system\n             • `3`: For the **Weighted** rating system\n             • `4`: For the **Percentage** rating system. When this rating system is used, the `Score` value is displayed in percentages.\n            <br />Learn more about each rating system in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/550928611/Building+a+Site+Audit+in+an+Excel+Template)."
+          type: integer
+        Date:
+          format: date-time
+          description: Date and time when the checklist item was inspected and rated. The format is YYYY-MM-DDThh:mm:ss.sssZ.
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        CheckListItemImpact:
+          description: "Checklist item’s impact on the total audit score. Possible input values:\n             • `Veto`: Means that this item has the highest impact on the audit score. When at least one of the veto checklist items is rated as **Fail**, the total score of the audit drops to 1%.\n             • `Ignore`: Means that this item is ignored when the audit score is calculated.\n             • `Empty value`: Means that this checklist item is counted as a regular item."
+          type: string
+        UseNumericRatingSystem:
+          default: false
+          type: boolean
+        PassThreshold:
+          format: int32
+          description: Minimum rating value that is sufficient to pass the audit. Can be in numbers or in percentages based on the rating system applied to the checklist item. See the `System` parameter.
+          type: integer
+        Range:
+          description: Range of numbers displayed to the user during the audit, allowing the auditor to rate the item. Permits selecting a score on a 0–10 scale or from 0% to 100%.
+          type: array
+          items:
+            format: int32
+            type: integer
+        Issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditIssueExternal'
+        WorkOrderIds:
+          description: Tracking numbers of the work orders created in the event of the checklist item inspection.
+          type: array
+          items:
+            format: int32
+            type: integer
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditQuantityExternal'
+          description: Quantity of items that have been inspected.
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditIssueAttachmentExternal:
+      description: Parameters for updating the attachments added to the checklist item.
       type: object
       properties:
         Id:
@@ -2295,68 +1803,128 @@ components:
           description: Remote name of the attached file.
           type: string
         RemoteNameResized:
-          description: Attachment file name that has been resized.
+          description: File name that has been resized.
           type: string
-        ContentType:
-          description: Type of the attached file, for example, *image* or *video*.
-          type: string
-        ContentUrl:
-          description: Web address (or Uniform Resource Locator) that points to the attached file.
-          type: string
-        ContentUrlResized:
-          description: Web address (or Uniform Resource Locator) that points to the resized version of the original image.
-          type: string
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.SiteAudit.AuditDataWeightedExternal:
+    ServiceChannel.Services.RequestHandlers.SiteAudit.GetFilteredAuditListResponse:
       type: object
       properties:
+        UserName:
+          type: string
+        Locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.LocationExternal'
+        TemplateTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditTypeExternal'
+        FilteredAudits:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditInfoExternal'
+    ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckList:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          type: integer
+        CheckListItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckListItem'
+    ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternal:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        StoreId:
+          format: int32
+          type: integer
+        TemplateTypeId:
+          format: int32
+          type: integer
         StartDate:
           format: date-time
           type: string
         FinishDate:
           format: date-time
           type: string
-        Areas:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaWeightedExternal'
-        WorkOrderIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        Emails:
-          type: string
         SendEmails:
           default: false
           type: boolean
+        Emails:
+          type: string
+        Areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaRequest'
         Language:
+          type: string
+        Status:
+          enum:
+          - Undefined
+          - Open
+          - Completed
           type: string
         Source:
           type: string
-    ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditQuantityExternal:
-      description: Parameters for updating the quantity or dollar cost of the inspected checklist items.
+    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueExternal:
+      description: Comment added to the checklist item.
       type: object
       properties:
         Id:
           format: int32
-          description: Quantity record ID.
+          description: Comment ID.
           type: integer
-        Value:
+        Date:
+          format: date-time
+          description: Date and time when the comment was added to the checklist item. The format is `YYYY-MM-DDThh:mm:ss.ss`.
+          type: string
+        DateStr:
+          description: Date when the comment was added to the checklist item. The format is `MMM DD, YYYY`.
+          type: string
+        Description:
+          description: Comment added to the checklist item during the audit.
+          type: string
+        Persistent:
+          description: "Shows whether or not the comment should be saved for future audits. Possible response values:\n             • `true`: When the auditor sets the corresponding toggle in the SC Mobile app or in Service Automation to save the checklist item comment for future audits.\n             • `false`: When the comment should not be preserved and displayed for future audits."
+          default: false
+          type: boolean
+        UserName:
+          description: Username of the auditor who added the comment to the checklist item during the inspection.
+          type: string
+        Attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueAttachmentExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditAreaExternal:
+      description: Information on the inspected areas.
+      type: object
+      properties:
+        Id:
           format: int32
-          description: Value showing either the quantity or the dollar cost of the inspected items. Check the `Type` parameter’s value.
+          description: Unique numeric identifier of the area that was inspected.
           type: integer
-        Type:
-          description: 'Value type. Possible values: `Quantity` and `Dollar`.'
-          enum:
-          - Dollar
-          - Quantity
+        Name:
+          description: Area name, for example, *Exterior* or *Interior*.
           type: string
-        Unit:
-          description: 'Shows whether the auditor captured the **Quantity** or the **Dollar cost** of the inspected item. Possible values: `Quantity` and `Dollar`.'
-          type: string
+        SortOrder:
+          format: int32
+          description: Sorting order of the area.
+          type: integer
+        CheckLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListExternal'
     ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListItemExternal:
       description: Information on the inspected checklist items.
       type: object
@@ -2421,6 +1989,251 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditInfoModelExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditInfoModelExternal:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Date:
+          type: string
+        Score:
+          format: int32
+          type: integer
+        AreaName:
+          type: string
+        CheckListName:
+          type: string
+        ItemName:
+          type: string
+        Range:
+          type: array
+          items:
+            format: int32
+            type: integer
+        PassThreshold:
+          format: int32
+          type: integer
+        System:
+          format: int32
+          type: integer
+        Comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueModelExternal'
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditQuantityModelExternal'
+        CanBeExpanded:
+          default: false
+          type: boolean
+          readOnly: true
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListTemplateExternal:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        SortOrder:
+          format: int32
+          type: integer
+    ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckListItem:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        Description:
+          type: string
+        Score:
+          format: int32
+          type: integer
+        System:
+          format: int32
+          type: integer
+        Date:
+          format: date-time
+          type: string
+        DateStr:
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        CheckListItemImpact:
+          type: string
+        UseNumericRatingSystem:
+          default: false
+          type: boolean
+        PassThreshold:
+          format: int32
+          type: integer
+        Range:
+          type: array
+          items:
+            format: int32
+            type: integer
+        Issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditIssueExternal'
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditQuantityExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueAttachmentModelExternal:
+      type: object
+      properties:
+        RemoteName:
+          type: string
+        RemoteNameResized:
+          type: string
+        FileName:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternalOld:
+      type: object
+      properties:
+        Name:
+          type: string
+        Description:
+          type: string
+        Status:
+          format: int32
+          type: integer
+        StatusNumeric:
+          format: int32
+          type: integer
+        UseNumericRatingSystem:
+          default: false
+          type: boolean
+        Date:
+          format: date-time
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        Issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
+        CheckListItemImpact:
+          type: string
+        StatisticItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.IssueAttachmentExternal:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        RemoteName:
+          type: string
+        RemoteNameResized:
+          type: string
+        FileName:
+          type: string
+        ContentUrl:
+          type: string
+        ContentUrlResized:
+          type: string
+        ContentType:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListExternal:
+      description: Information on the checklists.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the checklist.
+          type: integer
+        Name:
+          description: Checklist name, for example, *Restroom* or *Dining room*.
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          description: Sorting order of the checklist.
+          type: integer
+        CheckListItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedCheckListItemExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.AuditDataExternalOld:
+      type: object
+      properties:
+        StartDate:
+          format: date-time
+          type: string
+        FinishDate:
+          format: date-time
+          type: string
+        Areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternalOld'
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        Emails:
+          type: string
+        SendEmails:
+          default: false
+          type: boolean
+        Source:
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListExternal:
+      type: object
+      properties:
+        Name:
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          type: integer
+        CheckListItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.AuditTypeExternal:
+      description: Object containing information on audit template types.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the template. The template determines the audit type.
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Unique numeric identifier of the subscriber.
+          type: integer
+        Name:
+          description: Template name.
+          type: string
     ServiceChannel.Services.Messaging.SiteAudit.CheckListItemRequest:
       type: object
       properties:
@@ -2465,250 +2278,26 @@ components:
           items:
             format: int32
             type: integer
-    ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditInfoModelExternal:
+    ServiceChannel.Services.Messaging.SiteAudit.AuditAreaWeightedExternal:
       type: object
       properties:
         Id:
           format: int32
           type: integer
-        Date:
-          type: string
-        Score:
-          format: int32
-          type: integer
-        AreaName:
-          type: string
-        CheckListName:
-          type: string
-        ItemName:
-          type: string
-        Range:
-          type: array
-          items:
-            format: int32
-            type: integer
-        PassThreshold:
-          format: int32
-          type: integer
-        System:
-          format: int32
-          type: integer
-        Comments:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditIssueModelExternal'
-        WorkOrderIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        Quantity:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditQuantityModelExternal'
-        CanBeExpanded:
-          default: false
-          type: boolean
-          readOnly: true
-    ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal:
-      type: object
-      properties:
-        Value:
-          format: int32
-          type: integer
-        Type:
-          enum:
-          - Dollar
-          - Quantity
-          type: string
-        Unit:
-          type: string
-    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemWeightedExternal:
-      type: object
-      properties:
         Name:
           type: string
-        Description:
-          type: string
-        Score:
-          format: int32
-          type: integer
-        System:
-          enum:
-          - PassFail
-          - Numeric
-          - Weighted
-          - Percentage
-          type: string
-        Date:
-          format: date-time
-          type: string
-        Unlisted:
-          default: false
-          type: boolean
-        WorkOrderIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        Issues:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
-        Quantity:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
-        CheckListItemImpact:
-          type: string
-        PassThreshold:
-          format: int32
-          type: integer
-        Range:
-          type: array
-          items:
-            format: int32
-            type: integer
-        StatisticItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticWeightedExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemDetailsResponse:
-      type: object
-      properties:
-        CheckListItemId:
-          format: int32
-          type: integer
-        Workorders:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.WorkOrder'
-        Comments:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
-        Quantity:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
-    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticExternal:
-      type: object
-      properties:
-        CheckListItemId:
-          format: int32
-          type: integer
-        Date:
-          format: date-time
-          type: string
-        Status:
-          format: int32
-          type: integer
-        StatusNumeric:
-          format: int32
-          type: integer
-        UseNumericRatingSystem:
-          default: false
-          type: boolean
-        WorkOrdersCount:
-          format: int32
-          type: integer
-        CommentsCount:
-          format: int32
-          type: integer
-        AttachmentsCount:
-          format: int32
-          type: integer
-        QuantityCount:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.SiteAudit.UpdatedOpenAuditResponse:
-      type: object
-      properties:
-        IsSuccess:
-          default: false
-          type: boolean
-        Sent:
-          type: string
-    ServiceChannel.Services.Messaging.SiteAudit.CheckListExternalOld:
-      type: object
-      properties:
-        Name:
-          type: string
-        TemplateName:
-          type: string
-        Unlisted:
-          default: false
-          type: boolean
         SortOrder:
           format: int32
           type: integer
+        CheckLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListWeightedExternal'
         WorkOrderIds:
           type: array
           items:
             format: int32
             type: integer
-        CheckListItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternalOld'
-    ServiceChannel.Services.Messaging.SiteAudit.IssueAttachmentExternal:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        RemoteName:
-          type: string
-        RemoteNameResized:
-          type: string
-        FileName:
-          type: string
-        ContentUrl:
-          type: string
-        ContentUrlResized:
-          type: string
-        ContentType:
-          type: string
-    ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditInfo:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        StoreId:
-          format: int32
-          type: integer
-        UserId:
-          format: int32
-          type: integer
-        TemplateTypeId:
-          format: int32
-          type: integer
-        StartDate:
-          format: date-time
-          type: string
-        FinishDate:
-          format: date-time
-          type: string
-        FinishDateStr:
-          type: string
-        Status:
-          enum:
-          - Undefined
-          - Open
-          - Completed
-          type: string
-        Emails:
-          type: string
-        Areas:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditArea'
-    ServiceChannel.Services.Messaging.SiteAudit.SaveAuditDataResponse:
-      type: object
-      properties:
-        Saved:
-          default: false
-          type: boolean
-        Sent:
-          type: string
-        AuditId:
-          format: int32
-          type: integer
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -4346,14 +3935,174 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.SiteAudit.PreviousAuditQuantityModelExternal:
+    ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal:
       type: object
       properties:
         Value:
           format: int32
           type: integer
+        Type:
+          enum:
+          - Dollar
+          - Quantity
+          type: string
         Unit:
           type: string
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditInfoExternal:
+      description: Object containing audit details.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the completed audit.
+          type: integer
+        LocationId:
+          format: int32
+          description: Unique numeric identifier of the location — generated by the system.
+          type: integer
+        StartDate:
+          format: date-time
+          description: Date and time when the site audit was started. The format is YYYY-MM-DDThh:mm:ss.sss.
+          type: string
+        EndDate:
+          format: date-time
+          description: Date and time when the site audit was completed. The format is YYYY-MM-DDThh:mm:ss.sss.
+          type: string
+        TemplateTypeId:
+          format: int32
+          description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
+          type: integer
+        UserName:
+          description: Username of the person who conducted the audit.
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditListResponse:
+      description: Object containing general info on completed audits.
+      type: object
+      properties:
+        UserName:
+          description: Username of the person who has authorized and is sending the API request.
+          type: string
+        Locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.LocationExternal'
+        TemplateTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditTypeExternal'
+        CompletedAudits:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CompletedAuditInfoExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticWeightedExternal:
+      type: object
+      properties:
+        CheckListItemId:
+          format: int32
+          type: integer
+        Date:
+          format: date-time
+          type: string
+        Score:
+          format: int32
+          type: integer
+        System:
+          format: int32
+          type: integer
+        Range:
+          type: array
+          items:
+            format: int32
+            type: integer
+        PassThreshold:
+          format: int32
+          type: integer
+        WorkOrdersCount:
+          format: int32
+          type: integer
+        CommentsCount:
+          format: int32
+          type: integer
+        AttachmentsCount:
+          format: int32
+          type: integer
+        QuantityCount:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternal:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        SortOrder:
+          format: int32
+          type: integer
+        CheckLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.AuditAreaRequest:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        SortOrder:
+          format: int32
+          type: integer
+        CheckLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListRequest'
+    ServiceChannel.Services.Messaging.SiteAudit.AuditReportIssueExternal:
+      description: The details of issues created by the auditor for the inspected checklist item. Issues are also known as action items.
+      type: object
+      properties:
+        IssueType:
+          description: The type of the action item, either `WO` or `Comment`.
+          type: string
+        IssueDescription:
+          description: '`Comment type`: auditor''s comment added to the action item or its attachment. `WO type`: work order description that includes the area, problem type, asset, problem, and auditor’s description of the problem.'
+          type: string
+        AttachmentPaths:
+          description: The paths to the attachments added to the checklist item.
+          type: array
+          items:
+            type: string
+        IssueId:
+          format: int32
+          description: '`Comment type`: numeric identifier of the action item. `WO type`: numeric identifier of the work order, also known as WO tracking number.'
+          type: integer
+        WorkOrderPriority:
+          description: The name of the work order priority if the action item belongs to the WO type.
+          type: string
+        Date:
+          format: date-time
+          description: The date and time when the auditor created the action item.
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.GetAuditInfo:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        StartDate:
+          format: date-time
+          type: string
+        Emails:
+          type: string
+        Areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditAreaExternal'
     ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditAreaExternal:
       description: Parameters for updating the areas.
       type: object
@@ -4373,6 +4122,257 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedCheckListExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.SavedAuditInfoExternal:
+      description: General details of a completed audit.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the site audit.
+          type: integer
+        StoreId:
+          format: int32
+          description: Unique numeric identifier of the location where the site audit was conducted.
+          type: integer
+        UserId:
+          format: int32
+          description: Unique numeric identifier of the user (auditor) who conducted the site audit.
+          type: integer
+        UserName:
+          description: Display name of the user (auditor) who conducted the site audit.
+          type: string
+        TemplateTypeId:
+          format: int32
+          description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
+          type: integer
+        StartDate:
+          format: date-time
+          description: Date and time when the user started the audit in the SC Mobile app or in Service Automation. The format is `YYYY-MM-DDThh:mm:ss.ss`.
+          type: string
+        FinishDate:
+          format: date-time
+          description: Date and time when the site audit was completed. The format is `YYYY-MM-DDThh:mm:ss.ss`.
+          type: string
+        FinishDateStr:
+          description: Date when the site audit was completed. The format is `MMM DD, YYYY`.
+          type: string
+        Status:
+          description: "Unique numeric identifier of the status. Possible response values:\n             • `1`: The site audit status is *Open*.\n             • `2`: The site audit status is *Completed*."
+          enum:
+          - Undefined
+          - Open
+          - Completed
+          type: string
+        Emails:
+          description: Email address(es) to which the audit results were sent out by the auditor upon completing the audit.
+          type: string
+        Areas:
+          description: List of areas that were inspected during the site audit, for example, *Interior* or *Exterior*.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.SavedAuditAreaExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemWeightedExternal:
+      type: object
+      properties:
+        Name:
+          type: string
+        Description:
+          type: string
+        Score:
+          format: int32
+          type: integer
+        System:
+          enum:
+          - PassFail
+          - Numeric
+          - Weighted
+          - Percentage
+          type: string
+        Date:
+          format: date-time
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        Issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
+        CheckListItemImpact:
+          type: string
+        PassThreshold:
+          format: int32
+          type: integer
+        Range:
+          type: array
+          items:
+            format: int32
+            type: integer
+        StatisticItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticWeightedExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedCompletedAuditResponse:
+      description: Object containing response parameters.
+      type: object
+      properties:
+        IsSuccess:
+          description: Returns `true` when the completed audit details have been successfully updated.
+          default: false
+          type: boolean
+        Sent:
+          description: Returns the success message when the updated site audit information is sent out to the specified email address.
+          type: string
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemExternal:
+      type: object
+      properties:
+        Name:
+          type: string
+        Description:
+          type: string
+        Score:
+          format: int32
+          type: integer
+        System:
+          enum:
+          - PassFail
+          - Numeric
+          - Weighted
+          - Percentage
+          type: string
+        Date:
+          format: date-time
+          type: string
+        Unlisted:
+          default: false
+          type: boolean
+        Issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
+        CheckListItemImpact:
+          type: string
+        PassThreshold:
+          format: int32
+          type: integer
+        Range:
+          type: array
+          items:
+            format: int32
+            type: integer
+        StatisticItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticWeightedExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemStatisticExternal:
+      type: object
+      properties:
+        CheckListItemId:
+          format: int32
+          type: integer
+        Date:
+          format: date-time
+          type: string
+        Status:
+          format: int32
+          type: integer
+        StatusNumeric:
+          format: int32
+          type: integer
+        UseNumericRatingSystem:
+          default: false
+          type: boolean
+        WorkOrdersCount:
+          format: int32
+          type: integer
+        CommentsCount:
+          format: int32
+          type: integer
+        AttachmentsCount:
+          format: int32
+          type: integer
+        QuantityCount:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.SiteAudit.CheckListItemDetailsResponse:
+      type: object
+      properties:
+        CheckListItemId:
+          format: int32
+          type: integer
+        Workorders:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.WorkOrder'
+        Comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.AuditIssueExternal'
+        Quantity:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.QuantityExternal'
+    ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditDataExternal:
+      description: Parameters for updating general audit info.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the completed site audit.
+          type: integer
+        StoreId:
+          format: int32
+          description: Unique numeric identifier of the location where the site audit was conducted.
+          type: integer
+        TemplateTypeId:
+          format: int32
+          description: Unique numeric identifier of the template that was used to complete the site audit. The template determines the audit type.
+          type: integer
+        Language:
+          description: Language that was used to conduct the audit. Use the two-letter abbreviation, for example, **EN**.
+          type: string
+        SendEmails:
+          description: "Specifies whether an email notification was sent out upon completing the site audit. Possible input values:\n             • `true`: The audit results were sent to the specified recipient(s). Use the `Emails` parameter to add the recipients.\n             • `false`: The audit results were not emailed to anyone."
+          default: false
+          type: boolean
+        Emails:
+          description: "Email address(es) to which the audit results were sent out upon completing the audit. Check the `Sent` parameter in the response to see whether the audit results were successfully sent out to the specified recipients.\n            <br />Learn more about the email list for site audits in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/552173744/Configuring+an+Email+List+for+Site+Audit+Reports)."
+          type: string
+        Status:
+          description: Site audit status. Set the status value to `2` (`Completed`).
+          enum:
+          - Undefined
+          - Open
+          - Completed
+          type: string
+        Source:
+          type: string
+        Areas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.SiteAudit.UpdatedAuditAreaExternal'
+    ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditArea:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        SortOrder:
+          format: int32
+          type: integer
+        CheckLists:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.RequestHandlers.SiteAudit.CompletedAuditCheckList'
   securitySchemes:
     oauth2:
       type: oauth2

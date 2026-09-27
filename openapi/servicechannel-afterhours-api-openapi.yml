@@ -399,11 +399,24 @@ paths:
       x-access: Subscribers
 components:
   schemas:
-    ServiceChannel.Services.Messaging.AfterHours.BusinessHourApiResponse:
+    ServiceChannel.Services.Messaging.AfterHours.UpdateLocationBusinessHoursApiModelRequest:
+      description: Request object to update business hours for a location.
       type: object
       properties:
-        DayOfWeek:
-          description: Day of the week.
+        businessHours:
+          description: Business hours details to add to the location.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.AfterHours.LocationBusinessHoursApiModel'
+    ServiceChannel.Services.Messaging.AfterHours.HolidayApiResponse:
+      type: object
+      properties:
+        HolidayName:
+          description: Holiday name.
+          type: string
+        StartDate:
+          format: date-time
+          description: Holiday date.
           type: string
         OpenTime:
           description: Location opening hours.
@@ -415,6 +428,26 @@ components:
           description: Defines whether the location is closed on the specified day.
           default: false
           type: boolean
+        Frequency:
+          description: 'Defines how often the holiday occurs. Valid values: Singular, Weekly, Monthly, Yearly.'
+          type: string
+        RepeatEvery:
+          format: byte
+          description: 'Defines intervals for the holiday to repeat. Valid values: a number from 1 to 60. Used in combination with the `Frequency` values: Yearly, Monthly, Weekly.'
+          type: string
+        RepeatBy:
+          description: 'Defines whether the holiday repeats on days of the month or week. Valid values: DaysOfWeek, DaysOfMonth.'
+          type: string
+        RepeatOnDays:
+          description: Days when the holiday occurs. Used in combination with the `Frequency` value ‘Weekly’.
+          type: array
+          items:
+            type: string
+        RepeatOnMonths:
+          description: Months when the holiday occurs. Used in combination with the `Frequency` value ‘Yearly’.
+          type: array
+          items:
+            type: string
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2052,93 +2085,6 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.AfterHours.HolidayIdsApiResponse:
-      type: object
-      properties:
-        HolidayIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.AfterHours.LocationBusinessHoursApiModel:
-      description: Business hours object.
-      type: object
-      properties:
-        DayOfWeek:
-          description: Day of the week.
-          enum:
-          - Sunday
-          - Monday
-          - Tuesday
-          - Wednesday
-          - Thursday
-          - Friday
-          - Saturday
-          type: string
-        OpenTime:
-          description: Location opening hours.
-          type: string
-        CloseTime:
-          description: Location closing hours.
-          type: string
-        ClosedAllDay:
-          description: Defines whether the location is closed on the specified day.
-          default: false
-          type: boolean
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.AfterHours.HolidayApiResponse:
-      type: object
-      properties:
-        HolidayName:
-          description: Holiday name.
-          type: string
-        StartDate:
-          format: date-time
-          description: Holiday date.
-          type: string
-        OpenTime:
-          description: Location opening hours.
-          type: string
-        CloseTime:
-          description: Location closing hours.
-          type: string
-        ClosedAllDay:
-          description: Defines whether the location is closed on the specified day.
-          default: false
-          type: boolean
-        Frequency:
-          description: 'Defines how often the holiday occurs. Valid values: Singular, Weekly, Monthly, Yearly.'
-          type: string
-        RepeatEvery:
-          format: byte
-          description: 'Defines intervals for the holiday to repeat. Valid values: a number from 1 to 60. Used in combination with the `Frequency` values: Yearly, Monthly, Weekly.'
-          type: string
-        RepeatBy:
-          description: 'Defines whether the holiday repeats on days of the month or week. Valid values: DaysOfWeek, DaysOfMonth.'
-          type: string
-        RepeatOnDays:
-          description: Days when the holiday occurs. Used in combination with the `Frequency` value ‘Weekly’.
-          type: array
-          items:
-            type: string
-        RepeatOnMonths:
-          description: Months when the holiday occurs. Used in combination with the `Frequency` value ‘Yearly’.
-          type: array
-          items:
-            type: string
-    ServiceChannel.Services.Messaging.AfterHours.HolidaysApiResponse:
-      description: Object containing the details of a location holiday.
-      type: object
-      properties:
-        TimeZoneShortDescription:
-          description: Location’s timezone abbreviation.
-          type: string
-        Holidays:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.AfterHours.HolidayApiResponse'
     ServiceChannel.Services.Messaging.AfterHours.AddHolidayApiModelRequest:
       description: Object request to add a holiday to a location.
       type: object
@@ -2209,15 +2155,69 @@ components:
             - November
             - December
             type: string
-    ServiceChannel.Services.Messaging.AfterHours.UpdateLocationBusinessHoursApiModelRequest:
-      description: Request object to update business hours for a location.
+    ServiceChannel.Services.Messaging.AfterHours.HolidaysApiResponse:
+      description: Object containing the details of a location holiday.
       type: object
       properties:
-        businessHours:
-          description: Business hours details to add to the location.
+        TimeZoneShortDescription:
+          description: Location’s timezone abbreviation.
+          type: string
+        Holidays:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.AfterHours.LocationBusinessHoursApiModel'
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.AfterHours.HolidayApiResponse'
+    ServiceChannel.Services.Messaging.AfterHours.HolidayIdsApiResponse:
+      type: object
+      properties:
+        HolidayIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.AfterHours.BusinessHourApiResponse:
+      type: object
+      properties:
+        DayOfWeek:
+          description: Day of the week.
+          type: string
+        OpenTime:
+          description: Location opening hours.
+          type: string
+        CloseTime:
+          description: Location closing hours.
+          type: string
+        ClosedAllDay:
+          description: Defines whether the location is closed on the specified day.
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.AfterHours.LocationBusinessHoursApiModel:
+      description: Business hours object.
+      type: object
+      properties:
+        DayOfWeek:
+          description: Day of the week.
+          enum:
+          - Sunday
+          - Monday
+          - Tuesday
+          - Wednesday
+          - Thursday
+          - Friday
+          - Saturday
+          type: string
+        OpenTime:
+          description: Location opening hours.
+          type: string
+        CloseTime:
+          description: Location closing hours.
+          type: string
+        ClosedAllDay:
+          description: Defines whether the location is closed on the specified day.
+          default: false
+          type: boolean
+    System.Object:
+      type: object
+      properties: {}
     ServiceChannel.Services.Messaging.AfterHours.BusinessHoursApiResponse:
       description: Business hours object.
       type: object

@@ -159,6 +159,49 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ServiceChannel.Services.WebApi.Models.Response.Priorities.PriorityResponse:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          description: Priority name
+          type: string
+        SubscriberId:
+          format: int32
+          description: UID of subscriber. Can be null
+          type: integer
+        Eta:
+          description: ETA
+          type: string
+        SkipNights:
+          description: Skip nights while calculating scheduled date
+          default: false
+          type: boolean
+        SkipWeekends:
+          description: Skip weekends while calculating scheduled date
+          default: false
+          type: boolean
+        LocationId:
+          format: int32
+          description: If priority is associated with location - assiciated location
+          type: integer
+        Trade:
+          description: If priority is associated with trade - assiciated trade
+          type: string
+        ScheduledDate:
+          format: date-time
+          description: Calculated WO Scheduled Date
+          type: string
+        ScheduledDate_DTO:
+          format: date-time
+          description: Calculated WO Scheduled Date with time zone offset
+          type: string
+        IsSelectable:
+          description: IsSelectable
+          default: false
+          type: boolean
     ServiceChannel.Services.WebApi.Models.Response.Priorities.AddPriorityRequest:
       description: Holds request.
       required:
@@ -1841,49 +1884,6 @@ components:
     System.Object:
       type: object
       properties: {}
-    ServiceChannel.Services.WebApi.Models.Response.Priorities.PriorityResponse:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          description: Priority name
-          type: string
-        SubscriberId:
-          format: int32
-          description: UID of subscriber. Can be null
-          type: integer
-        Eta:
-          description: ETA
-          type: string
-        SkipNights:
-          description: Skip nights while calculating scheduled date
-          default: false
-          type: boolean
-        SkipWeekends:
-          description: Skip weekends while calculating scheduled date
-          default: false
-          type: boolean
-        LocationId:
-          format: int32
-          description: If priority is associated with location - assiciated location
-          type: integer
-        Trade:
-          description: If priority is associated with trade - assiciated trade
-          type: string
-        ScheduledDate:
-          format: date-time
-          description: Calculated WO Scheduled Date
-          type: string
-        ScheduledDate_DTO:
-          format: date-time
-          description: Calculated WO Scheduled Date with time zone offset
-          type: string
-        IsSelectable:
-          description: IsSelectable
-          default: false
-          type: boolean
   securitySchemes:
     oauth2:
       type: oauth2

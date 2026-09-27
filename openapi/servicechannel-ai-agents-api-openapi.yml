@@ -494,57 +494,6 @@ paths:
         required: true
 components:
   schemas:
-    ServiceChannel.Services.WebApi.Models.Request.DashboardAiAgents.WoAiAddFeedbackRequest:
-      description: Model for adding feedback to an existing WoAI feedback session.
-      required:
-      - SessionId
-      - AssistantStep
-      - ThreadId
-      type: object
-      properties:
-        SessionId:
-          description: SessionId of the existing feedback session to which the feedback will be added.
-          type: string
-        Rating:
-          format: int32
-          description: Rating provided by the user for the assistant's response, typically on a scale (e.g., 1-5).
-          maximum: 5
-          minimum: 1
-          type: integer
-        Reaction:
-          description: Reaction provided by the user, indicating their sentiment towards the assistant's response (e.g., Positive = 3, Negative = 1, Neutral = 2).
-          enum:
-          - Negative
-          - Neutral
-          - Positive
-          type: string
-        Feedback:
-          description: Textual feedback provided by the user, offering more detailed insights into their experience with the assistant's response.
-          type: string
-        AssistantStep:
-          description: Step of the assistant's response of creating work order process (issueChoice, assets, duplicates, troubleshooting, summary)
-          type: string
-        ThreadId:
-          description: Identifier for the conversation thread, allowing feedback to be associated with a specific interaction session with the assistant.
-          type: string
-        TotalTokens:
-          format: int32
-          description: Total number of tokens used in the assistant's response
-          maximum: 2147483647
-          minimum: 1
-          type: integer
-        ElapsedSeconds:
-          format: int32
-          description: Time taken in seconds for the assistant to generate the response
-          maximum: 2147483647
-          minimum: 0
-          type: integer
-        LocationId:
-          format: int32
-          description: LocationId associated with the work order
-          maximum: 2147483647
-          minimum: 1
-          type: integer
     ServiceChannel.Api.Model.Dashboard.Assistant.AssistantMetrics:
       type: object
       properties:
@@ -604,6 +553,79 @@ components:
           maximum: 2147483647
           minimum: 1
           type: integer
+    ServiceChannel.Services.WebApi.Models.Request.DashboardAiAgents.WoAiAddFeedbackRequest:
+      description: Model for adding feedback to an existing WoAI feedback session.
+      required:
+      - SessionId
+      - AssistantStep
+      - ThreadId
+      type: object
+      properties:
+        SessionId:
+          description: SessionId of the existing feedback session to which the feedback will be added.
+          type: string
+        Rating:
+          format: int32
+          description: Rating provided by the user for the assistant's response, typically on a scale (e.g., 1-5).
+          maximum: 5
+          minimum: 1
+          type: integer
+        Reaction:
+          description: Reaction provided by the user, indicating their sentiment towards the assistant's response (e.g., Positive = 3, Negative = 1, Neutral = 2).
+          enum:
+          - Negative
+          - Neutral
+          - Positive
+          type: string
+        Feedback:
+          description: Textual feedback provided by the user, offering more detailed insights into their experience with the assistant's response.
+          type: string
+        AssistantStep:
+          description: Step of the assistant's response of creating work order process (issueChoice, assets, duplicates, troubleshooting, summary)
+          type: string
+        ThreadId:
+          description: Identifier for the conversation thread, allowing feedback to be associated with a specific interaction session with the assistant.
+          type: string
+        TotalTokens:
+          format: int32
+          description: Total number of tokens used in the assistant's response
+          maximum: 2147483647
+          minimum: 1
+          type: integer
+        ElapsedSeconds:
+          format: int32
+          description: Time taken in seconds for the assistant to generate the response
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        LocationId:
+          format: int32
+          description: LocationId associated with the work order
+          maximum: 2147483647
+          minimum: 1
+          type: integer
+    ServiceChannel.Api.Model.Dashboard.Assistant.UsageTokens:
+      type: object
+      properties:
+        PromptTokens:
+          format: int32
+          type: integer
+        CompletionTokens:
+          format: int32
+          type: integer
+        TotalTokens:
+          format: int32
+          type: integer
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Api.Model.Dashboard.Assistant.AssistantResponse_System.String:
+      type: object
+      properties:
+        Result:
+          type: string
+        Metrics:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.Assistant.AssistantMetrics'
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2241,52 +2263,6 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Api.Model.Dashboard.Assistant.AssistantResponse_System.String:
-      type: object
-      properties:
-        Result:
-          type: string
-        Metrics:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.Assistant.AssistantMetrics'
-    ServiceChannel.Api.Model.Dashboard.Assistant.UsageTokens:
-      type: object
-      properties:
-        PromptTokens:
-          format: int32
-          type: integer
-        CompletionTokens:
-          format: int32
-          type: integer
-        TotalTokens:
-          format: int32
-          type: integer
-    ServiceChannel.Api.Model.Dashboard.WorkOrdersAi.WoAiFeedbackEntryResponse:
-      type: object
-      properties:
-        Sequence:
-          format: int32
-          type: integer
-        SubmittedAt:
-          format: date-time
-          type: string
-        Rating:
-          format: int32
-          type: integer
-        Reaction:
-          enum:
-          - Negative
-          - Neutral
-          - Positive
-          type: string
-        Feedback:
-          type: string
-        Extensions:
-          type: object
-          additionalProperties:
-            type: string
     ServiceChannel.Api.Model.Dashboard.WorkOrdersAi.WoAiFeedbackSessionResponse:
       type: object
       properties:
@@ -2311,6 +2287,30 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.WorkOrdersAi.WoAiFeedbackEntryResponse'
+    ServiceChannel.Api.Model.Dashboard.WorkOrdersAi.WoAiFeedbackEntryResponse:
+      type: object
+      properties:
+        Sequence:
+          format: int32
+          type: integer
+        SubmittedAt:
+          format: date-time
+          type: string
+        Rating:
+          format: int32
+          type: integer
+        Reaction:
+          enum:
+          - Negative
+          - Neutral
+          - Positive
+          type: string
+        Feedback:
+          type: string
+        Extensions:
+          type: object
+          additionalProperties:
+            type: string
     ServiceChannel.Services.Messaging.AzureOpenAI.Assistant.ChatSessionModel:
       type: object
       properties:

@@ -263,6 +263,68 @@ paths:
       x-access: Subscribers
 components:
   schemas:
+    ServiceChannel.Services.Messaging.Category.AddCategoryResponse:
+      description: Category object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Category ID.
+          type: integer
+        ErrorCode:
+          format: int32
+          description: 'Numeric identifier that determines the nature of an error. Possible values: `0` - success, otherwise - error.'
+          type: integer
+        Message:
+          description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
+          type: string
+    ServiceChannel.Api.Model.Proposals.CategoryGLCode:
+      type: object
+      properties:
+        CategoryId:
+          format: int32
+          type: integer
+        CategoryName:
+          type: string
+        GLCode:
+          type: string
+    ServiceChannel.Services.Messaging.Category.PrimaryCategoryResponse:
+      description: Object containing the details of the available primary categories.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Primary category ID.
+          type: integer
+        Name:
+          description: Primary category name.
+          type: string
+    ServiceChannel.Services.Messaging.Category.CategoryResponse:
+      description: Object containing the details of the available categories.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Category ID.
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Unique numeric subscriber ID.
+          type: integer
+        Name:
+          description: Category name.
+          type: string
+        HasDependency:
+          description: Parameter is not populated. The only value is "false".
+          default: false
+          type: boolean
+        PrimaryCategoryID:
+          format: int32
+          description: Primary category ID.
+          type: integer
+        PrimaryCategoryName:
+          description: Primary category name.
+          type: string
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -1900,56 +1962,9 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.Category.CategoryResponse:
-      description: Object containing the details of the available categories.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Category ID.
-          type: integer
-        SubscriberId:
-          format: int32
-          description: Unique numeric subscriber ID.
-          type: integer
-        Name:
-          description: Category name.
-          type: string
-        HasDependency:
-          description: Parameter is not populated. The only value is "false".
-          default: false
-          type: boolean
-        PrimaryCategoryID:
-          format: int32
-          description: Primary category ID.
-          type: integer
-        PrimaryCategoryName:
-          description: Primary category name.
-          type: string
     System.Object:
       type: object
       properties: {}
-    ServiceChannel.Services.Messaging.Category.PrimaryCategoryResponse:
-      description: Object containing the details of the available primary categories.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Primary category ID.
-          type: integer
-        Name:
-          description: Primary category name.
-          type: string
-    ServiceChannel.Api.Model.Proposals.CategoryGLCode:
-      type: object
-      properties:
-        CategoryId:
-          format: int32
-          type: integer
-        CategoryName:
-          type: string
-        GLCode:
-          type: string
     ServiceChannel.Services.Messaging.Category.AddCategoryRequest:
       description: Object containing the details of the new category.
       type: object
@@ -1961,21 +1976,6 @@ components:
           format: int32
           description: Primary category ID.
           type: integer
-    ServiceChannel.Services.Messaging.Category.AddCategoryResponse:
-      description: Category object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Category ID.
-          type: integer
-        ErrorCode:
-          format: int32
-          description: 'Numeric identifier that determines the nature of an error. Possible values: `0` - success, otherwise - error.'
-          type: integer
-        Message:
-          description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
-          type: string
   securitySchemes:
     oauth2:
       type: oauth2

@@ -882,69 +882,76 @@ paths:
       x-access: Any
 components:
   schemas:
-    ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateAttachmentRequest:
-      description: An attachment information to be added or updated to a checklist response.
+    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListWithTasksExtendedResponse:
+      description: Represents an extended response containing the details of a checklist with associated asset tasks.
       type: object
       properties:
-        ChecklistResponsePictureId:
-          format: int32
-          description: ID of the file attached to the checklist response to update.
-          type: integer
-        DocumentName:
-          description: The name of the document.
-          type: string
-        DocumentPath:
-          description: Document path in the storage.
-          type: string
-    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.CreateChecklistResponseWithPicture:
-      description: Object for a submitted checklist response and attachment.
-      type: object
-      properties:
-        CheckListResponse:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponse'
-          description: Response submitted for a checklist question.
-        CheckListResponsePicture:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistPictureResponse'
-          description: File attached to a checklist response.
-    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponseWithPictures:
-      description: Object for a checklist response with attachments.
-      type: object
-      properties:
-        ChecklistResponse:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponse'
-          description: Response submitted for a checklist question.
-        ChecklistResponsePictures:
-          description: Files attached to a checklist response.
+        ChecklistWithTasks:
+          description: "Gets or sets a collection of asset task checklists.\n            Each checklist contains details about its parameters and the configured asset-related tasks."
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistPictureResponse'
-    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListQuestionNumericTypeResponse:
-      description: Represents an answer option configured for a checklist question of the Numeric type.
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListWithTasksResponse'
+    ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.CheckListResponseRequest:
+      required:
+      - CheckListQuestionId
+      - CheckListQuestionOptionID
+      - EntityId
       type: object
       properties:
-        Id:
+        CheckListQuestionId:
           format: int32
-          description: Gets or sets the unique identifier of the answer option for a checklist question of the Numeric type.
           type: integer
-        Type:
-          description: Gets or sets the type value which represents the configuration for numeric options.
-          enum:
-          - LessThan
-          - MoreThan
-          - InBetween
+        ChecklistQuestionOptionIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        CheckListQuestionOptionID:
+          format: int32
+          type: integer
+        Answer:
           type: string
-        SingleValue:
+        FreeTextAnswer:
+          type: string
+        EntityId:
           format: int32
-          description: Gets or sets the single numeric value for the checklist question, if applicable.
           type: integer
-        MinValue:
+        EntityTypeId:
           format: int32
-          description: Gets or sets the minimum numeric value for the checklist question, if a range is applicable.
           type: integer
-        MaxValue:
+        ProviderId:
           format: int32
-          description: Gets or sets the maximum numeric value for the checklist question, if a range is applicable.
           type: integer
+        Attempt:
+          format: int32
+          type: integer
+        TechnicianId:
+          format: int32
+          type: integer
+        AuthUserId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListAcknowledgeUrlResponse:
+      type: object
+      properties:
+        Url:
+          type: string
+        Required:
+          default: false
+          type: boolean
+    ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateBulkChecklistResponseRequest:
+      description: Request to update checklist responses in bulk.
+      type: object
+      properties:
+        ChecklistResponseIds:
+          description: Checklist identifiers to be updated
+          type: array
+          items:
+            format: int32
+            type: integer
+        ChecklistResponseRequest:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateBulkChecklistResponseRequestItem'
+          description: Request to update a checklist response
     ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListDetailQuestionsResponse:
       description: Represents the details of a checklist question, including its properties and configuration options.
       type: object
@@ -1022,76 +1029,97 @@ components:
         CheckListQuestionNumericType:
           $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListQuestionNumericTypeResponse'
           description: Gets or sets the answer option of the Numeric type question.
-    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponse:
-      description: Checklist response object.
+    ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateAttachmentRequest:
+      description: An attachment information to be added or updated to a checklist response.
+      type: object
+      properties:
+        ChecklistResponsePictureId:
+          format: int32
+          description: ID of the file attached to the checklist response to update.
+          type: integer
+        DocumentName:
+          description: The name of the document.
+          type: string
+        DocumentPath:
+          description: Document path in the storage.
+          type: string
+    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListQuestionOptionResponse:
+      description: Represents an answer option configured for a checklist question of the Selector type.
       type: object
       properties:
         Id:
           format: int32
-          description: Checklist response ID.
+          description: Gets or sets the unique identifier of the answer option for a checklist question of the Selector type.
           type: integer
         Answer:
-          description: Answer to a checklist question.
+          description: "Gets or sets the answer option for a checklist question of the Selector type.\n            A technician can select from a list of configured options when answering the question."
           type: string
-        FreeTextAnswer:
-          description: Comment to an answer option with the `IsConditionalFollowUp` attribute. Answer options are configured for questions of the **Selector** type.
-          type: string
-        EntityId:
+        Sequence:
           format: int32
-          description: ID of the work order the response was submitted for.
+          description: Gets or sets the sequence number. This property is not applicable to checklists.
           type: integer
-        EntityTypeId:
-          format: int32
-          description: ID of the entity the response was submitted for. 0 is returned for work orders.
-          type: integer
-        Attempt:
-          format: int32
-          description: Order of a technician’s on-site visit when the response was submitted.
-          type: integer
-        ProviderId:
-          format: int32
-          description: ID of the provider on whose behalf the response was submitted.
-          type: integer
-        TechnicianId:
-          format: int32
-          description: ID of the technician on whose behalf the response was submitted.
-          type: integer
-        UpdatedDate:
-          format: date-time
-          description: Date and time when the response was last updated set in EST. The format is `YYYY-MM-DDThh:mm:ss.sss`.
-          type: string
-        UpdatedDateStr:
-          description: Date and time when the response was last updated set in the location’s time zone. The format is `Month Day Year hh:mm`.
-          type: string
-        UpdatedDateDto:
-          format: date-time
-          description: Date and time when the response was last updated set in the location’s time zone with the UTC offset. The format is `YYYY-MM-DDThh:mm:ss.sss±hh:mm`.
-          type: string
-        CheckListQuestionId:
-          format: int32
-          description: ID of the checklist question the response was submitted for.
-          type: integer
-        QuestionOptions:
-          description: List of the answer options configured for a checklist question of the **Selector** type where multiple options can be selected.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistQuestionOptionResponse'
-        CheckListQuestionOptionId:
-          format: int32
-          description: ID of the answer option configured for a checklist question of the **Selector** type.
-          type: integer
-        AssetId:
-          format: int32
-          description: ID of the asset for which the response was submitted.
-          type: integer
-        IsPassed:
-          description: Indicates whether the response avoids the failure criteria.
+        IsConditionalFollowUp:
+          description: "Gets or sets a value indicating whether a technician is prompted to add a comment to the selected answer option.\n            A comment is mandatory if answering the checklist question is required."
           default: false
           type: boolean
-        LinkedWorkOrderId:
+        ResponseResultInFailure:
+          description: Gets or sets a value indicating whether the option for a checklist question of the Selector type results in failure.
+          default: false
+          type: boolean
+        GenerateFollowUpWo:
+          description: Generates a follow-up work order.
+          default: false
+          type: boolean
+    ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.AttachmentInfo:
+      description: An attachment information to be added to a checklist response.
+      type: object
+      properties:
+        DocumentName:
+          description: The name of the document.
+          type: string
+        DocumentPath:
+          description: Document path in the storage.
+          type: string
+    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListDetailResponse:
+      description: Represents the parameters of a standard checklist, including details and configuration options.
+      type: object
+      properties:
+        ChecklistName:
+          description: Gets or sets the name of the checklist.
+          type: string
+        Id:
           format: int32
-          description: "ID of the linked work order if the response results in a failure and generates a linked work order.\n            Null if the response does not result in a failure or if the failure does not generate a linked work order."
+          description: Gets or sets the unique identifier of the checklist.
           type: integer
+        IsActive:
+          description: Gets or sets a value indicating whether the checklist is active.
+          default: false
+          type: boolean
+        CreatedDate:
+          format: date-time
+          description: Gets or sets the date and time when the checklist was created.
+          type: string
+        UpdatedDate:
+          format: date-time
+          description: Gets or sets the date and time when the checklist was last updated.
+          type: string
+        CreatedBy:
+          format: int32
+          description: Gets or sets the user ID of the employee who created the checklist.
+          type: integer
+        UpdatedBy:
+          format: int32
+          description: Gets or sets the user ID of the employee who last updated the checklist.
+          type: integer
+        Questions:
+          description: Gets or sets a collection of questions configured for the checklist.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListDetailQuestionsResponse'
+        DisplayForEachAsset:
+          description: Gets or sets a value indicating whether the checklist allows each question to be answered multiple times for each asset on the work order.
+          default: false
+          type: boolean
     ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListWithTasksResponse:
       description: Represents the parameters of a checklist that includes asset tasks.
       type: object
@@ -1128,13 +1156,112 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.ChecklistTaskResponse'
-    ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.CheckListResponseRequest:
+    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistPictureResponse:
+      description: Object for an attachment added to a checklist response.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: ID of the file attached to the checklist response.
+          type: integer
+        CheckListResponseId:
+          format: int32
+          description: ID of the checklist response the attachment is submitted for.
+          type: integer
+        DocumentName:
+          description: Attachment name.
+          type: string
+        DocumentPath:
+          description: Attachment path.
+          type: string
+        ThumbnailPath:
+          description: Attachment thumbnail path.
+          type: string
+        HasThumbnail:
+          description: Defines whether a thumbnail is available for the attachment.
+          default: false
+          type: boolean
+        UpdatedBy:
+          format: int32
+          description: User Id.
+          type: integer
+    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListQuestionNumericTypeResponse:
+      description: Represents an answer option configured for a checklist question of the Numeric type.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Gets or sets the unique identifier of the answer option for a checklist question of the Numeric type.
+          type: integer
+        Type:
+          description: Gets or sets the type value which represents the configuration for numeric options.
+          enum:
+          - LessThan
+          - MoreThan
+          - InBetween
+          type: string
+        SingleValue:
+          format: int32
+          description: Gets or sets the single numeric value for the checklist question, if applicable.
+          type: integer
+        MinValue:
+          format: int32
+          description: Gets or sets the minimum numeric value for the checklist question, if a range is applicable.
+          type: integer
+        MaxValue:
+          format: int32
+          description: Gets or sets the maximum numeric value for the checklist question, if a range is applicable.
+          type: integer
+    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.CreateChecklistResponseWithPicture:
+      description: Object for a submitted checklist response and attachment.
+      type: object
+      properties:
+        CheckListResponse:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponse'
+          description: Response submitted for a checklist question.
+        CheckListResponsePicture:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistPictureResponse'
+          description: File attached to a checklist response.
+    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistQuestionOptionResponse:
+      description: Answer option configured for a checklist question of the **Selector** type.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: ID of the answer option for a checklist question of the **Selector** type.
+          type: integer
+        Answer:
+          description: Answer option for a checklist question of the **Selector** type. A technician can select from a list of configured options when answering the question.
+          type: string
+        Sequence:
+          format: int32
+          description: Not applicable to checklists.
+          type: integer
+        IsConditionalFollowUp:
+          description: Defines whether a technician is prompted to add a comment to the selected answer option. A comment is mandatory if answering the checklist question is required.
+          default: false
+          type: boolean
+        ResponseResultInFailure:
+          description: Option for a checklist question of the **Selector** type.
+          default: false
+          type: boolean
+    ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateBulkChecklistResponseRequestItem:
+      description: Request to update checklist responses in bulk.
       required:
       - CheckListQuestionId
       - CheckListQuestionOptionID
       - EntityId
       type: object
       properties:
+        OverrideAttachments:
+          description: Specifies whether to override existing attachments with the provided attachments.
+          default: false
+          type: boolean
+        Attachments:
+          description: List of attachment information to be added to the checklist response.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateAttachmentRequest'
         CheckListQuestionId:
           format: int32
           type: integer
@@ -1168,178 +1295,6 @@ components:
         AuthUserId:
           format: int32
           type: integer
-    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListAcknowledgeUrlResponse:
-      type: object
-      properties:
-        Url:
-          type: string
-        Required:
-          default: false
-          type: boolean
-    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.UpdateChecklistResponseWithPicture:
-      description: Object for an updated checklist response and attachment.
-      type: object
-      properties:
-        CheckListResponse:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponse'
-          description: Response submitted for a checklist question.
-        CheckListResponsePicture:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistPictureResponse'
-          description: File attached to a checklist response.
-    ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateBulkChecklistResponseRequest:
-      description: Request to update checklist responses in bulk.
-      type: object
-      properties:
-        ChecklistResponseIds:
-          description: Checklist identifiers to be updated
-          type: array
-          items:
-            format: int32
-            type: integer
-        ChecklistResponseRequest:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateBulkChecklistResponseRequestItem'
-          description: Request to update a checklist response
-    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListWithTasksExtendedResponse:
-      description: Represents an extended response containing the details of a checklist with associated asset tasks.
-      type: object
-      properties:
-        ChecklistWithTasks:
-          description: "Gets or sets a collection of asset task checklists.\n            Each checklist contains details about its parameters and the configured asset-related tasks."
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListWithTasksResponse'
-    ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.CreateBulkChecklistResponseRequest:
-      description: Request to submit checklist responses in bulk.
-      required:
-      - CheckListResponseRequest
-      type: object
-      properties:
-        AssetIds:
-          description: List of asset identifiers to be associated with the checklist responses
-          type: array
-          items:
-            format: int32
-            type: integer
-        Attachments:
-          description: List of attachment information to be added to the checklist responses
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.AttachmentInfo'
-        CheckListResponseRequest:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.CheckListResponseRequest'
-          description: Request to submit a checklist response
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListTypesExtendedResponse:
-      description: Represents an extended response containing a list of checklist types.
-      type: object
-      properties:
-        ChecklistTypes:
-          description: Gets or sets a collection of checklist types, each including an identifier and type information.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.ChecklistTypesResponse'
-    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.ChecklistTaskResponse:
-      description: Represents the details of an asset task associated with a checklist.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Gets or sets the unique identifier of the asset task.
-          type: integer
-        CheckListId:
-          format: int32
-          description: Gets or sets the identifier of the checklist to which the asset task belongs.
-          type: integer
-        TypeId:
-          format: int32
-          description: Gets or sets the identifier of the asset type for which the task is configured.
-          type: integer
-        TaskTypeId:
-          description: Gets or sets the identifier of the asset task type.
-          enum:
-          - AssetTask
-          type: string
-        TaskTypeName:
-          description: Gets or sets the name of the asset task type.
-          type: string
-        Name:
-          description: Gets or sets the name of the asset task.
-          type: string
-        Description:
-          description: Gets or sets the description of the asset task.
-          type: string
-        IsActive:
-          description: Gets or sets a value indicating whether the asset task is active.
-          default: false
-          type: boolean
-    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistPictureResponse:
-      description: Object for an attachment added to a checklist response.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: ID of the file attached to the checklist response.
-          type: integer
-        CheckListResponseId:
-          format: int32
-          description: ID of the checklist response the attachment is submitted for.
-          type: integer
-        DocumentName:
-          description: Attachment name.
-          type: string
-        DocumentPath:
-          description: Attachment path.
-          type: string
-        ThumbnailPath:
-          description: Attachment thumbnail path.
-          type: string
-        HasThumbnail:
-          description: Defines whether a thumbnail is available for the attachment.
-          default: false
-          type: boolean
-        UpdatedBy:
-          format: int32
-          description: User Id.
-          type: integer
-    ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.AttachmentInfo:
-      description: An attachment information to be added to a checklist response.
-      type: object
-      properties:
-        DocumentName:
-          description: The name of the document.
-          type: string
-        DocumentPath:
-          description: Document path in the storage.
-          type: string
-    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListQuestionOptionResponse:
-      description: Represents an answer option configured for a checklist question of the Selector type.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Gets or sets the unique identifier of the answer option for a checklist question of the Selector type.
-          type: integer
-        Answer:
-          description: "Gets or sets the answer option for a checklist question of the Selector type.\n            A technician can select from a list of configured options when answering the question."
-          type: string
-        Sequence:
-          format: int32
-          description: Gets or sets the sequence number. This property is not applicable to checklists.
-          type: integer
-        IsConditionalFollowUp:
-          description: "Gets or sets a value indicating whether a technician is prompted to add a comment to the selected answer option.\n            A comment is mandatory if answering the checklist question is required."
-          default: false
-          type: boolean
-        ResponseResultInFailure:
-          description: Gets or sets a value indicating whether the option for a checklist question of the Selector type results in failure.
-          default: false
-          type: boolean
-        GenerateFollowUpWo:
-          description: Generates a follow-up work order.
-          default: false
-          type: boolean
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2977,36 +2932,43 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistQuestionOptionResponse:
-      description: Answer option configured for a checklist question of the **Selector** type.
+    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.ChecklistTaskResponse:
+      description: Represents the details of an asset task associated with a checklist.
       type: object
       properties:
         Id:
           format: int32
-          description: ID of the answer option for a checklist question of the **Selector** type.
+          description: Gets or sets the unique identifier of the asset task.
           type: integer
-        Answer:
-          description: Answer option for a checklist question of the **Selector** type. A technician can select from a list of configured options when answering the question.
-          type: string
-        Sequence:
+        CheckListId:
           format: int32
-          description: Not applicable to checklists.
+          description: Gets or sets the identifier of the checklist to which the asset task belongs.
           type: integer
-        IsConditionalFollowUp:
-          description: Defines whether a technician is prompted to add a comment to the selected answer option. A comment is mandatory if answering the checklist question is required.
-          default: false
-          type: boolean
-        ResponseResultInFailure:
-          description: Option for a checklist question of the **Selector** type.
-          default: false
-          type: boolean
-    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.UploadedAttachmentResponse:
-      description: Uploaded file information.
-      type: object
-      properties:
-        DocumentPath:
-          description: Document path in the storage.
+        TypeId:
+          format: int32
+          description: Gets or sets the identifier of the asset type for which the task is configured.
+          type: integer
+        TaskTypeId:
+          description: Gets or sets the identifier of the asset task type.
+          enum:
+          - AssetTask
           type: string
+        TaskTypeName:
+          description: Gets or sets the name of the asset task type.
+          type: string
+        Name:
+          description: Gets or sets the name of the asset task.
+          type: string
+        Description:
+          description: Gets or sets the description of the asset task.
+          type: string
+        IsActive:
+          description: Gets or sets a value indicating whether the asset task is active.
+          default: false
+          type: boolean
+    System.Object:
+      type: object
+      properties: {}
     ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.ChecklistTypesResponse:
       description: Represents a response object containing the checklist ID and its type.
       type: object
@@ -3023,96 +2985,86 @@ components:
           - AssetTask
           - PlannedMaintenance
           type: string
-    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListDetailResponse:
-      description: Represents the parameters of a standard checklist, including details and configuration options.
+    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponse:
+      description: Checklist response object.
       type: object
       properties:
-        ChecklistName:
-          description: Gets or sets the name of the checklist.
-          type: string
         Id:
           format: int32
-          description: Gets or sets the unique identifier of the checklist.
-          type: integer
-        IsActive:
-          description: Gets or sets a value indicating whether the checklist is active.
-          default: false
-          type: boolean
-        CreatedDate:
-          format: date-time
-          description: Gets or sets the date and time when the checklist was created.
-          type: string
-        UpdatedDate:
-          format: date-time
-          description: Gets or sets the date and time when the checklist was last updated.
-          type: string
-        CreatedBy:
-          format: int32
-          description: Gets or sets the user ID of the employee who created the checklist.
-          type: integer
-        UpdatedBy:
-          format: int32
-          description: Gets or sets the user ID of the employee who last updated the checklist.
-          type: integer
-        Questions:
-          description: Gets or sets a collection of questions configured for the checklist.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListDetailQuestionsResponse'
-        DisplayForEachAsset:
-          description: Gets or sets a value indicating whether the checklist allows each question to be answered multiple times for each asset on the work order.
-          default: false
-          type: boolean
-    ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateBulkChecklistResponseRequestItem:
-      description: Request to update checklist responses in bulk.
-      required:
-      - CheckListQuestionId
-      - CheckListQuestionOptionID
-      - EntityId
-      type: object
-      properties:
-        OverrideAttachments:
-          description: Specifies whether to override existing attachments with the provided attachments.
-          default: false
-          type: boolean
-        Attachments:
-          description: List of attachment information to be added to the checklist response.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.UpdateAttachmentRequest'
-        CheckListQuestionId:
-          format: int32
-          type: integer
-        ChecklistQuestionOptionIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        CheckListQuestionOptionID:
-          format: int32
+          description: Checklist response ID.
           type: integer
         Answer:
+          description: Answer to a checklist question.
           type: string
         FreeTextAnswer:
+          description: Comment to an answer option with the `IsConditionalFollowUp` attribute. Answer options are configured for questions of the **Selector** type.
           type: string
         EntityId:
           format: int32
+          description: ID of the work order the response was submitted for.
           type: integer
         EntityTypeId:
           format: int32
-          type: integer
-        ProviderId:
-          format: int32
+          description: ID of the entity the response was submitted for. 0 is returned for work orders.
           type: integer
         Attempt:
           format: int32
+          description: Order of a technician’s on-site visit when the response was submitted.
+          type: integer
+        ProviderId:
+          format: int32
+          description: ID of the provider on whose behalf the response was submitted.
           type: integer
         TechnicianId:
           format: int32
+          description: ID of the technician on whose behalf the response was submitted.
           type: integer
-        AuthUserId:
+        UpdatedDate:
+          format: date-time
+          description: Date and time when the response was last updated set in EST. The format is `YYYY-MM-DDThh:mm:ss.sss`.
+          type: string
+        UpdatedDateStr:
+          description: Date and time when the response was last updated set in the location’s time zone. The format is `Month Day Year hh:mm`.
+          type: string
+        UpdatedDateDto:
+          format: date-time
+          description: Date and time when the response was last updated set in the location’s time zone with the UTC offset. The format is `YYYY-MM-DDThh:mm:ss.sss±hh:mm`.
+          type: string
+        CheckListQuestionId:
           format: int32
+          description: ID of the checklist question the response was submitted for.
           type: integer
+        QuestionOptions:
+          description: List of the answer options configured for a checklist question of the **Selector** type where multiple options can be selected.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistQuestionOptionResponse'
+        CheckListQuestionOptionId:
+          format: int32
+          description: ID of the answer option configured for a checklist question of the **Selector** type.
+          type: integer
+        AssetId:
+          format: int32
+          description: ID of the asset for which the response was submitted.
+          type: integer
+        IsPassed:
+          description: Indicates whether the response avoids the failure criteria.
+          default: false
+          type: boolean
+        LinkedWorkOrderId:
+          format: int32
+          description: "ID of the linked work order if the response results in a failure and generates a linked work order.\n            Null if the response does not result in a failure or if the failure does not generate a linked work order."
+          type: integer
+    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.UpdateChecklistResponseWithPicture:
+      description: Object for an updated checklist response and attachment.
+      type: object
+      properties:
+        CheckListResponse:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponse'
+          description: Response submitted for a checklist question.
+        CheckListResponsePicture:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistPictureResponse'
+          description: File attached to a checklist response.
     ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListDetailExtendedResponse:
       description: Represents an extended response containing the details of a standard checklist.
       type: object
@@ -3126,6 +3078,54 @@ components:
           description: Gets or sets a value indicating whether there is a transferred checklist.
           default: false
           type: boolean
+    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.UploadedAttachmentResponse:
+      description: Uploaded file information.
+      type: object
+      properties:
+        DocumentPath:
+          description: Document path in the storage.
+          type: string
+    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponseWithPictures:
+      description: Object for a checklist response with attachments.
+      type: object
+      properties:
+        ChecklistResponse:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistResponse'
+          description: Response submitted for a checklist question.
+        ChecklistResponsePictures:
+          description: Files attached to a checklist response.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistResponses.ChecklistPictureResponse'
+    ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.CheckListTypesExtendedResponse:
+      description: Represents an extended response containing a list of checklist types.
+      type: object
+      properties:
+        ChecklistTypes:
+          description: Gets or sets a collection of checklist types, each including an identifier and type information.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Checklists.ChecklistSettingsResponses.ChecklistTypesResponse'
+    ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.CreateBulkChecklistResponseRequest:
+      description: Request to submit checklist responses in bulk.
+      required:
+      - CheckListResponseRequest
+      type: object
+      properties:
+        AssetIds:
+          description: List of asset identifiers to be associated with the checklist responses
+          type: array
+          items:
+            format: int32
+            type: integer
+        Attachments:
+          description: List of attachment information to be added to the checklist responses
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.AttachmentInfo'
+        CheckListResponseRequest:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.Checklists.ChecklistResponses.CheckListResponseRequest'
+          description: Request to submit a checklist response
   securitySchemes:
     oauth2:
       type: oauth2

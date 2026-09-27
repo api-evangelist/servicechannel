@@ -433,67 +433,95 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyCategory:
+    ServiceChannel.Services.Messaging.Feedback.FeedbackReviewsForWorkOrdersResponse:
+      type: object
+      properties:
+        Reviews:
+          description: User reviews for work orders
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.FeedbackReview'
+    ServiceChannel.Services.Messaging.Feedback.ReviewProviderRequest:
+      type: object
+      properties:
+        LocationId:
+          format: int32
+          description: Location Id
+          type: integer
+        ProviderId:
+          format: int32
+          description: Provider Id
+          type: integer
+        StarScore:
+          format: int32
+          description: Review star score. From 1 to 5
+          type: integer
+        Comment:
+          description: User comment
+          type: string
+        Id:
+          format: int32
+          description: Provide review Id to update Comment and StarScore (optional)
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Subscriber Id
+          type: integer
+    ServiceChannel.Services.Messaging.Feedback.FeedbackReview:
       type: object
       properties:
         Id:
           format: int32
+          description: Entity Id
           type: integer
-        Name:
+        TrackingNumber:
+          format: int32
+          description: Work order tracking number. For provider reviews it is null
+          type: integer
+        SubscriberName:
+          description: Subscriber display name
           type: string
-    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyAnswer:
+        LocationName:
+          description: Location name (Store Id)
+          type: string
+        UserFullName:
+          description: User name who submit a review
+          type: string
+        ReviewedDate:
+          format: date-time
+          description: Date when user posted or updated a review
+          type: string
+        StarScore:
+          format: int32
+          description: Review star score. From 1 to 5
+          type: integer
+        Comment:
+          description: User comment
+          type: string
+    ServiceChannel.Services.Messaging.Feedback.FeedbackRequest:
       type: object
       properties:
-        Id:
+        SetupId:
+          format: int32
+          description: Dashboard SetupId (optional)
+          type: integer
+        LocationId:
           format: int32
           type: integer
         Answer:
+          description: "Satisfactory answer.\n            Supported values: satisfactory, unsatisfactory"
           type: string
-        SortOrder:
-          format: int32
-          type: integer
-    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyPriority:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
+        Comment:
+          description: "User text comment.\n            Required if answer is \"unsatisfactory\".\n            Required if score lower than 3"
           type: string
-    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestionWithAnswers:
-      type: object
-      properties:
-        SurveyQuestion:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestion'
-        SurveyAnswers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyAnswer'
-        LocationIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        TradeIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        CategoryIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        PriorityIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        ProviderIds:
-          type: array
-          items:
-            format: int32
-            type: integer
+        StarScore:
+          format: int32
+          description: Star scrore. The integer value from 1 to 5 (Required for satisfactory answer)
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Subscriber Id
+          type: integer
     ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestion:
       type: object
       properties:
@@ -531,6 +559,102 @@ components:
         UserId:
           format: int32
           type: integer
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestionWithAnswers:
+      type: object
+      properties:
+        SurveyQuestion:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestion'
+        SurveyAnswers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyAnswer'
+        LocationIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        TradeIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        CategoryIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        PriorityIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        ProviderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.Feedback.WorkorderFeedback:
+      type: object
+      properties:
+        TrackingNumber:
+          format: int32
+          type: integer
+        Description:
+          type: string
+        Caller:
+          type: string
+        CallDateString:
+          type: string
+        CallDate_DTO:
+          format: date-time
+          type: string
+        ScheduledDateString:
+          type: string
+        ScheduledDate_DTO:
+          format: date-time
+          type: string
+        CreatedBy:
+          type: string
+        Vendor:
+          type: string
+        VendorPhone:
+          type: string
+        PrioritySub:
+          type: string
+        Trade:
+          type: string
+        Category:
+          type: string
+        Review:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.FeedbackReview'
+        Status:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Workorders.WorkorderStatusDescriptor'
+        Area:
+          type: string
+        CompletedDate:
+          format: date-time
+          type: string
+        NotesCount:
+          format: int32
+          type: integer
+        TradeId:
+          format: int32
+          type: integer
+        CategoryId:
+          format: int32
+          type: integer
+        PriorityId:
+          format: int32
+          type: integer
+        ProviderId:
+          format: int32
+          type: integer
+        Resolution:
+          type: string
+        Questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestionWithAnswers'
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2168,6 +2292,35 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyLocation:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyTrade:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+    ServiceChannel.Services.Messaging.Workorders.WorkorderStatusDescriptor:
+      type: object
+      properties:
+        Primary:
+          description: Primary work order status value, you can pass status id or its name here. To get all subscriber's statuses see [Statuses] in Statuses section
+          type: string
+        Extended:
+          description: Extended status value
+          type: string
+        CanCreateInvoice:
+          description: True if invoice creation is allowed
+          default: false
+          type: boolean
     ServiceChannel.Services.Messaging.Feedback.FeedbackReviewsForProviderResponse:
       type: object
       properties:
@@ -2188,47 +2341,18 @@ components:
         PageOffset:
           format: int32
           type: integer
-    ServiceChannel.Services.Messaging.Feedback.FeedbackRequest:
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyPriority:
       type: object
       properties:
-        SetupId:
-          format: int32
-          description: Dashboard SetupId (optional)
-          type: integer
-        LocationId:
+        Id:
           format: int32
           type: integer
-        Answer:
-          description: "Satisfactory answer.\n            Supported values: satisfactory, unsatisfactory"
+        Name:
           type: string
-        Comment:
-          description: "User text comment.\n            Required if answer is \"unsatisfactory\".\n            Required if score lower than 3"
-          type: string
-        StarScore:
-          format: int32
-          description: Star scrore. The integer value from 1 to 5 (Required for satisfactory answer)
-          type: integer
-        SubscriberId:
-          format: int32
-          description: Subscriber Id
-          type: integer
     System.Object:
       type: object
       properties: {}
-    ServiceChannel.Services.Messaging.Workorders.WorkorderStatusDescriptor:
-      type: object
-      properties:
-        Primary:
-          description: Primary work order status value, you can pass status id or its name here. To get all subscriber's statuses see [Statuses] in Statuses section
-          type: string
-        Extended:
-          description: Extended status value
-          type: string
-        CanCreateInvoice:
-          description: True if invoice creation is allowed
-          default: false
-          type: boolean
-    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyTrade:
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyCategory:
       type: object
       properties:
         Id:
@@ -2236,141 +2360,17 @@ components:
           type: integer
         Name:
           type: string
-    ServiceChannel.Services.Messaging.Feedback.FeedbackReviewsForWorkOrdersResponse:
-      type: object
-      properties:
-        Reviews:
-          description: User reviews for work orders
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.FeedbackReview'
-    ServiceChannel.Services.Messaging.Feedback.FeedbackReview:
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Entity Id
-          type: integer
-        TrackingNumber:
-          format: int32
-          description: Work order tracking number. For provider reviews it is null
-          type: integer
-        SubscriberName:
-          description: Subscriber display name
-          type: string
-        LocationName:
-          description: Location name (Store Id)
-          type: string
-        UserFullName:
-          description: User name who submit a review
-          type: string
-        ReviewedDate:
-          format: date-time
-          description: Date when user posted or updated a review
-          type: string
-        StarScore:
-          format: int32
-          description: Review star score. From 1 to 5
-          type: integer
-        Comment:
-          description: User comment
-          type: string
-    ServiceChannel.Services.Messaging.Feedback.ReviewProviderRequest:
-      type: object
-      properties:
-        LocationId:
-          format: int32
-          description: Location Id
-          type: integer
-        ProviderId:
-          format: int32
-          description: Provider Id
-          type: integer
-        StarScore:
-          format: int32
-          description: Review star score. From 1 to 5
-          type: integer
-        Comment:
-          description: User comment
-          type: string
-        Id:
-          format: int32
-          description: Provide review Id to update Comment and StarScore (optional)
-          type: integer
-        SubscriberId:
-          format: int32
-          description: Subscriber Id
-          type: integer
-    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyLocation:
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyAnswer:
       type: object
       properties:
         Id:
           format: int32
           type: integer
-        Name:
+        Answer:
           type: string
-    ServiceChannel.Services.Messaging.Feedback.WorkorderFeedback:
-      type: object
-      properties:
-        TrackingNumber:
+        SortOrder:
           format: int32
           type: integer
-        Description:
-          type: string
-        Caller:
-          type: string
-        CallDateString:
-          type: string
-        CallDate_DTO:
-          format: date-time
-          type: string
-        ScheduledDateString:
-          type: string
-        ScheduledDate_DTO:
-          format: date-time
-          type: string
-        CreatedBy:
-          type: string
-        Vendor:
-          type: string
-        VendorPhone:
-          type: string
-        PrioritySub:
-          type: string
-        Trade:
-          type: string
-        Category:
-          type: string
-        Review:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Feedback.FeedbackReview'
-        Status:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Workorders.WorkorderStatusDescriptor'
-        Area:
-          type: string
-        CompletedDate:
-          format: date-time
-          type: string
-        NotesCount:
-          format: int32
-          type: integer
-        TradeId:
-          format: int32
-          type: integer
-        CategoryId:
-          format: int32
-          type: integer
-        PriorityId:
-          format: int32
-          type: integer
-        ProviderId:
-          format: int32
-          type: integer
-        Resolution:
-          type: string
-        Questions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestionWithAnswers'
     ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyProvider:
       type: object
       properties:

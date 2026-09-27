@@ -44,6 +44,27 @@ paths:
       x-access: Subscribers
 components:
   schemas:
+    ProviderContactInfo:
+      description: Object containing details about providers in subscriber’s private network
+      type: object
+      properties:
+        ProviderName:
+          description: Provider name
+          type: string
+        ProviderId:
+          format: int32
+          description: Unique numeric identifier of the provider in the ServiceChannel system
+          type: integer
+        VendorId:
+          description: Unique identification number of the provider assigned by the subscriber
+          type: string
+        SubscriberId:
+          format: int64
+          description: Unique numeric identifier of the subscriber in the ServiceChannel system
+          type: integer
+        MainContact:
+          $ref: '#/components/schemas/ContactDetails'
+          description: Object containing provider contact information
     ContactDetails:
       description: Object containing provider contact information
       type: object
@@ -75,27 +96,6 @@ components:
         Fax:
           description: Fax number
           type: string
-    ProviderContactInfo:
-      description: Object containing details about providers in subscriber’s private network
-      type: object
-      properties:
-        ProviderName:
-          description: Provider name
-          type: string
-        ProviderId:
-          format: int32
-          description: Unique numeric identifier of the provider in the ServiceChannel system
-          type: integer
-        VendorId:
-          description: Unique identification number of the provider assigned by the subscriber
-          type: string
-        SubscriberId:
-          format: int64
-          description: Unique numeric identifier of the subscriber in the ServiceChannel system
-          type: integer
-        MainContact:
-          $ref: '#/components/schemas/ContactDetails'
-          description: Object containing provider contact information
   securitySchemes:
     oauth2:
       type: oauth2
