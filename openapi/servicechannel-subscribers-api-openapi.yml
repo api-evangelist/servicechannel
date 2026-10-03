@@ -467,66 +467,102 @@ components:
           type: object
           additionalProperties:
             type: string
-    ServiceChannel.Services.Messaging.Subscribers.GetSubscriberPropertyResponse:
-      description: Defines subscriber's property response structure
+    ServiceChannel.Services.Messaging.Subscribers.SysadminContactFixxbook:
+      description: SysadminContactFixxbook
       type: object
       properties:
-        Id:
-          format: int32
-          description: Property identifier
-          type: integer
         Name:
-          description: Property name
+          description: Name
           type: string
-        Value:
-          $ref: '#/components/schemas/System.Object'
-          description: Property value
-    ServiceChannel.Services.Messaging.Subscribers.UpdateSubscriberInfoRequest:
-      description: UpdateSubscriberInfoRequest
+        JobTitle:
+          description: JobTitle
+          type: string
+        Email:
+          description: Email is used for Login in Fixxbook
+          type: string
+        WorkPhone:
+          description: WorkPhone
+          type: string
+        MobilePhone:
+          description: MobilePhone
+          type: string
+        Fax:
+          description: Fax
+          type: string
+    ServiceChannel.Services.Messaging.Subscribers.RegisterSubscriberRequest:
+      description: RegisterSubscriberRequest
       required:
       - Name
+      - Address1
+      - Country
+      - State
+      - City
+      - Zip
       - Email
+      - Phone
+      - TaxId
+      - IsPersonalTaxId
       type: object
       properties:
         Name:
           description: "Required Name\n            Name - name of the subscriber"
           type: string
         Address1:
-          description: Optional
+          description: Subscriber Address1
           type: string
         Address2:
-          description: Optional
+          description: Subscriber Address2
           type: string
         Country:
-          description: Optional
+          description: Subscriber Country
           type: string
         State:
-          description: Optional
+          description: Subscriber  State
           type: string
         City:
-          description: Optional
+          description: Subscriber City
           type: string
         Zip:
-          description: Optional
+          description: Subscriber Zip
           type: string
         Email:
-          description: Email Required
+          description: Subscriber Email
           type: string
         Phone:
-          description: Optional
+          description: Subscriber Phone
           type: string
         Fax:
-          description: Optional
+          description: Subscriber Fax
           type: string
         ContactName:
-          description: Optional
+          description: Subscriber ContactName
           type: string
+        TaxId:
+          description: TaxId
+          type: string
+        IsPersonalTaxId:
+          description: IsPersonalTaxId
+          default: false
+          type: boolean
+        SysadminContactFixxbook:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Subscribers.SysadminContactFixxbook'
         TimeFormat:
           type: string
         DateFormat:
           type: string
         DecimalSeparator:
           type: string
+    ServiceChannel.Services.Messaging.Subscribers.DashboardInfo:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+    System.Object:
+      type: object
+      properties: {}
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2164,102 +2200,66 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.Subscribers.DashboardInfo:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-    ServiceChannel.Services.Messaging.Subscribers.SysadminContactFixxbook:
-      description: SysadminContactFixxbook
-      type: object
-      properties:
-        Name:
-          description: Name
-          type: string
-        JobTitle:
-          description: JobTitle
-          type: string
-        Email:
-          description: Email is used for Login in Fixxbook
-          type: string
-        WorkPhone:
-          description: WorkPhone
-          type: string
-        MobilePhone:
-          description: MobilePhone
-          type: string
-        Fax:
-          description: Fax
-          type: string
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.Subscribers.RegisterSubscriberRequest:
-      description: RegisterSubscriberRequest
+    ServiceChannel.Services.Messaging.Subscribers.UpdateSubscriberInfoRequest:
+      description: UpdateSubscriberInfoRequest
       required:
       - Name
-      - Address1
-      - Country
-      - State
-      - City
-      - Zip
       - Email
-      - Phone
-      - TaxId
-      - IsPersonalTaxId
       type: object
       properties:
         Name:
           description: "Required Name\n            Name - name of the subscriber"
           type: string
         Address1:
-          description: Subscriber Address1
+          description: Optional
           type: string
         Address2:
-          description: Subscriber Address2
+          description: Optional
           type: string
         Country:
-          description: Subscriber Country
+          description: Optional
           type: string
         State:
-          description: Subscriber  State
+          description: Optional
           type: string
         City:
-          description: Subscriber City
+          description: Optional
           type: string
         Zip:
-          description: Subscriber Zip
+          description: Optional
           type: string
         Email:
-          description: Subscriber Email
+          description: Email Required
           type: string
         Phone:
-          description: Subscriber Phone
+          description: Optional
           type: string
         Fax:
-          description: Subscriber Fax
+          description: Optional
           type: string
         ContactName:
-          description: Subscriber ContactName
+          description: Optional
           type: string
-        TaxId:
-          description: TaxId
-          type: string
-        IsPersonalTaxId:
-          description: IsPersonalTaxId
-          default: false
-          type: boolean
-        SysadminContactFixxbook:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Subscribers.SysadminContactFixxbook'
         TimeFormat:
           type: string
         DateFormat:
           type: string
         DecimalSeparator:
           type: string
+    ServiceChannel.Services.Messaging.Subscribers.GetSubscriberPropertyResponse:
+      description: Defines subscriber's property response structure
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Property identifier
+          type: integer
+        Name:
+          description: Property name
+          type: string
+        Value:
+          $ref: '#/components/schemas/System.Object'
+          description: Property value
   securitySchemes:
     oauth2:
       type: oauth2

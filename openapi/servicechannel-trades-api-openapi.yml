@@ -639,21 +639,6 @@ paths:
       x-access: Any
 components:
   schemas:
-    ServiceChannel.Services.Messaging.Trade.Trade:
-      description: Trade object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Numeric identifier of the trade.
-          type: integer
-        Name:
-          description: Trade name.
-          type: string
-        SubscriberId:
-          format: int32
-          description: Unique subscriber ID.
-          type: integer
     ServiceChannel.Services.WebApi.Models.Response.Trades.TradeResponse:
       description: Represents a trade with primary trade.
       type: object
@@ -672,23 +657,6 @@ components:
         PrimaryTrade:
           description: Primary trade name.
           type: string
-    ServiceChannel.Services.Messaging.Trade.AddTradeRequest:
-      description: Add Trade Request
-      type: object
-      properties:
-        Name:
-          type: string
-        Nte:
-          format: float
-          type: number
-        PrimaryTrade:
-          type: string
-        AutoReassign:
-          default: false
-          type: boolean
-        SkipPrimaryTradeCheck:
-          default: false
-          type: boolean
     Amazon.Runtime.Internal.ErrorResponse:
       type: object
       properties:
@@ -756,6 +724,15 @@ components:
           - GatewayTimeout
           - HttpVersionNotSupported
           type: string
+    ServiceChannel.Services.WebApi.Models.Response.Trades.CheckTradeLocationExclusionResponse:
+      type: object
+      properties:
+        IsLocationExcluded:
+          default: false
+          type: boolean
+    System.Object:
+      type: object
+      properties: {}
     ServiceChannel.Services.Messaging.Trade.TradeWithPrimaryTrade:
       type: object
       properties:
@@ -2409,6 +2386,21 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    ServiceChannel.Services.Messaging.Trade.Trade:
+      description: Trade object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Numeric identifier of the trade.
+          type: integer
+        Name:
+          description: Trade name.
+          type: string
+        SubscriberId:
+          format: int32
+          description: Unique subscriber ID.
+          type: integer
     ServiceChannel.Services.Messaging.Trade.GetLocationProviderTradesRequest:
       type: object
       properties:
@@ -2418,22 +2410,21 @@ components:
         ProviderId:
           format: int32
           type: integer
-    ServiceChannel.Services.WebApi.Models.Response.Trades.GetTradesResponse:
-      description: Represents the response trades with primary trade
+    ServiceChannel.Services.Messaging.Trade.AddTradeRequest:
+      description: Add Trade Request
       type: object
       properties:
-        Trades:
-          description: Gets or sets trades.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Trades.TradeResponse'
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.WebApi.Models.Response.Trades.CheckTradeLocationExclusionResponse:
-      type: object
-      properties:
-        IsLocationExcluded:
+        Name:
+          type: string
+        Nte:
+          format: float
+          type: number
+        PrimaryTrade:
+          type: string
+        AutoReassign:
+          default: false
+          type: boolean
+        SkipPrimaryTradeCheck:
           default: false
           type: boolean
     ServiceChannel.Services.Messaging.Trade.AddTradeResponse:
@@ -2450,6 +2441,15 @@ components:
         Message:
           description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
           type: string
+    ServiceChannel.Services.WebApi.Models.Response.Trades.GetTradesResponse:
+      description: Represents the response trades with primary trade
+      type: object
+      properties:
+        Trades:
+          description: Gets or sets trades.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Trades.TradeResponse'
   securitySchemes:
     oauth2:
       type: oauth2

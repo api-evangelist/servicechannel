@@ -66,73 +66,16 @@ paths:
         required: true
 components:
   schemas:
-    ServiceChannel.Services.Messaging.BatchRfp.BatchCreateRfp:
-      required:
-      - TradeId
-      - Description
-      - LocationId
-      - LocationName
-      - ProviderId
+    ServiceChannel.Services.Messaging.BatchWorkOrder.BatchCreateRfpResponse:
+      description: The BatchCreateRfpResponse.
       type: object
       properties:
-        RfpNumber:
-          description: The non-unique RFP identifier. The value is generated automatically if not provided. It cannot be modified.
+        SessionId:
+          description: Session generated in batch handler during batch Rfp creation process
           type: string
-        TradeId:
-          format: int32
-          description: The unique trade identifier.
-          type: integer
-        Description:
-          description: RFP description.
-          type: string
-        Date:
-          format: date-time
-          description: The RFP creation date and time. The format is `YYYY-MM-DDThh:mm:ss.sssZ`. The default is the current date and time.
-          type: string
-        DueHrs:
-          format: double
-          description: Due time in hours for the provider to respond to the RFP and submit a proposal. The default is 48 hours unless a different value is specified in the `UiCreationRfpDefaultTime` settings group. Shouldn't exceed 99999 hours
-          type: number
-        DueDate:
-          format: date-time
-          description: "Due date and time for the provider to respond to the RFP and submit a proposal. The format is `YYYY-MM-DDThh:mm:ss.sssZ`. If `DueHrs` is passed, the `DueDate` value is `Date` plus `DueHrs`.\n            The default is the current date and time plus 48 hours unless a different value is specified in the `UiCreationRfpDefaultTime` settings group."
-          type: string
-        LocationId:
-          format: int32
-          description: Location identifier
-          type: integer
-        CreateRequestId:
-          description: Create Request Id from project module
-          type: string
-        LocationName:
-          description: Store ID
-          type: string
-        ProviderId:
-          format: int32
-          description: The unique provider identifier.
-          type: integer
-        ProjectId:
-          format: int32
-          description: The unique project identifier.
-          type: integer
-        PurchaseOrder:
-          description: The Purchase Order.
-          type: string
-        ProviderEmail:
-          description: Provider's email
-          type: string
-        WaitingForPrpEmail:
-          description: User's email
-          type: string
-    ServiceChannel.Api.Model.Entities.BatchRfpAttachment:
+    System.Object:
       type: object
-      properties:
-        OriginalFileName:
-          type: string
-        RemotePath:
-          type: string
-        Description:
-          type: string
+      properties: {}
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -1770,13 +1713,6 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.BatchWorkOrder.BatchCreateRfpResponse:
-      description: The BatchCreateRfpResponse.
-      type: object
-      properties:
-        SessionId:
-          description: Session generated in batch handler during batch Rfp creation process
-          type: string
     ServiceChannel.Services.Messaging.BatchRfp.BatchRfpRequest:
       required:
       - BatchCreateRfps
@@ -1812,9 +1748,73 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.BatchRfpAttachment'
-    System.Object:
+    ServiceChannel.Api.Model.Entities.BatchRfpAttachment:
       type: object
-      properties: {}
+      properties:
+        OriginalFileName:
+          type: string
+        RemotePath:
+          type: string
+        Description:
+          type: string
+    ServiceChannel.Services.Messaging.BatchRfp.BatchCreateRfp:
+      required:
+      - TradeId
+      - Description
+      - LocationId
+      - LocationName
+      - ProviderId
+      type: object
+      properties:
+        RfpNumber:
+          description: The non-unique RFP identifier. The value is generated automatically if not provided. It cannot be modified.
+          type: string
+        TradeId:
+          format: int32
+          description: The unique trade identifier.
+          type: integer
+        Description:
+          description: RFP description.
+          type: string
+        Date:
+          format: date-time
+          description: The RFP creation date and time. The format is `YYYY-MM-DDThh:mm:ss.sssZ`. The default is the current date and time.
+          type: string
+        DueHrs:
+          format: double
+          description: Due time in hours for the provider to respond to the RFP and submit a proposal. The default is 48 hours unless a different value is specified in the `UiCreationRfpDefaultTime` settings group. Shouldn't exceed 99999 hours
+          type: number
+        DueDate:
+          format: date-time
+          description: "Due date and time for the provider to respond to the RFP and submit a proposal. The format is `YYYY-MM-DDThh:mm:ss.sssZ`. If `DueHrs` is passed, the `DueDate` value is `Date` plus `DueHrs`.\n            The default is the current date and time plus 48 hours unless a different value is specified in the `UiCreationRfpDefaultTime` settings group."
+          type: string
+        LocationId:
+          format: int32
+          description: Location identifier
+          type: integer
+        CreateRequestId:
+          description: Create Request Id from project module
+          type: string
+        LocationName:
+          description: Store ID
+          type: string
+        ProviderId:
+          format: int32
+          description: The unique provider identifier.
+          type: integer
+        ProjectId:
+          format: int32
+          description: The unique project identifier.
+          type: integer
+        PurchaseOrder:
+          description: The Purchase Order.
+          type: string
+        ProviderEmail:
+          description: Provider's email
+          type: string
+        WaitingForPrpEmail:
+          description: User's email
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2

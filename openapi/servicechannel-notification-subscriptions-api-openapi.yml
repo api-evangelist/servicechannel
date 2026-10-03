@@ -609,13 +609,17 @@ components:
           type: array
           items:
             type: string
-    ServiceChannel.Services.Messaging.Notifications.AddHttpNotificationSubscriptionRequest:
+    ServiceChannel.Services.Messaging.Notifications.HttpNotificationSubscription:
       required:
       - Url
       - Name
       - EventTypes
       type: object
       properties:
+        Id:
+          format: int32
+          description: The unique subscription ID. Generated automatically and cannot be modified.
+          type: integer
         Url:
           description: The URL to which the events should be delivered.
           type: string
@@ -792,17 +796,13 @@ components:
         ConversationReference:
           $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.MSBotConversationReference'
           description: Conversation Reference
-    ServiceChannel.Services.Messaging.Notifications.HttpNotificationSubscription:
+    ServiceChannel.Services.Messaging.Notifications.AddHttpNotificationSubscriptionRequest:
       required:
       - Url
       - Name
       - EventTypes
       type: object
       properties:
-        Id:
-          format: int32
-          description: The unique subscription ID. Generated automatically and cannot be modified.
-          type: integer
         Url:
           description: The URL to which the events should be delivered.
           type: string
@@ -949,14 +949,6 @@ components:
             type: string
         Rules:
           $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionsRules'
-    ServiceChannel.Services.Messaging.Notifications.AddNotificationSubsciptionResponse:
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: The unique subscription ID. Generated automatically and cannot be modified.
-          type: integer
-          readOnly: true
     ServiceChannel.Services.Messaging.Notifications.MSBotConversationReference:
       description: MSBotConversationReference
       type: object
@@ -975,6 +967,45 @@ components:
           type: string
         ServiceUrl:
           description: Gets or sets (Optional) Service endpoint where operations referenced
+          type: string
+    ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionRequest:
+      description: NotificationSubscriptionRequest
+      required:
+      - Type
+      - Content
+      type: object
+      properties:
+        Name:
+          description: The user-friendly name for the subscription.
+          type: string
+        IsEnabled:
+          description: Defines if the subscription is active or inactive.
+          default: false
+          type: boolean
+        Type:
+          description: Notification Subscription Type
+          enum:
+          - MSTeams
+          type: string
+        Content:
+          $ref: '#/components/schemas/System.Object'
+          description: Content
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Services.Messaging.Notifications.AddNotificationSubsciptionResponse:
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: The unique subscription ID. Generated automatically and cannot be modified.
+          type: integer
+          readOnly: true
+    ServiceChannel.Services.Messaging.Notifications.SigningKeyResponse:
+      type: object
+      properties:
+        Key:
+          description: The current subscriber's or provider's signing key.
           type: string
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
@@ -2613,15 +2644,6 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.Notifications.SigningKeyResponse:
-      type: object
-      properties:
-        Key:
-          description: The current subscriber's or provider's signing key.
-          type: string
-    System.Object:
-      type: object
-      properties: {}
     ServiceChannel.Services.Messaging.Permission.ProvidersExclusionListResponse:
       description: ProvidersExclusionListResponse
       type: object
@@ -2632,28 +2654,6 @@ components:
           items:
             format: int32
             type: integer
-    ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionRequest:
-      description: NotificationSubscriptionRequest
-      required:
-      - Type
-      - Content
-      type: object
-      properties:
-        Name:
-          description: The user-friendly name for the subscription.
-          type: string
-        IsEnabled:
-          description: Defines if the subscription is active or inactive.
-          default: false
-          type: boolean
-        Type:
-          description: Notification Subscription Type
-          enum:
-          - MSTeams
-          type: string
-        Content:
-          $ref: '#/components/schemas/System.Object'
-          description: Content
   securitySchemes:
     oauth2:
       type: oauth2

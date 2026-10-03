@@ -189,24 +189,6 @@ paths:
       x-access: Subscribers
 components:
   schemas:
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.Notifications.NotificationRulesRequest:
-      description: Rules for Notification Request model
-      type: object
-      properties:
-        Rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.Rule'
-    ServiceChannel.Services.Messaging.Notifications.Rule:
-      type: object
-      properties:
-        Field:
-          type: string
-        Value:
-          type: string
     ServiceChannel.Services.Messaging.Notifications.PushNotificationSubscriptionRequest:
       description: Subscribe Push Notification Request model
       required:
@@ -241,6 +223,24 @@ components:
         NotificationRules:
           $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.NotificationRulesRequest'
           description: Filter for Notification Request
+    ServiceChannel.Services.Messaging.Notifications.NotificationRulesRequest:
+      description: Rules for Notification Request model
+      type: object
+      properties:
+        Rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.Rule'
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Services.Messaging.Notifications.Rule:
+      type: object
+      properties:
+        Field:
+          type: string
+        Value:
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2

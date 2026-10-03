@@ -1950,70 +1950,40 @@ paths:
       x-access: Any
 components:
   schemas:
-    ServiceChannel.Services.Messaging.IssueLists.GetIssueEquipmentTypesResponse:
+    ServiceChannel.Services.Messaging.IssueLists.IssueArea:
+      description: The issue area.
       type: object
       properties:
-        IssueEquipmentTypes:
-          type: array
-          items:
-            type: string
-    ServiceChannel.Services.Messaging.IssueLists.GetIssueChoiceRequest:
-      description: Get Issue Choice request
+        ID:
+          format: int32
+          description: Area ID.
+          type: integer
+        Name:
+          description: Area Name.
+          type: string
+    ServiceChannel.Services.Messaging.IssueLists.PostIssueListRequest:
       type: object
       properties:
+        IssueListData:
+          type: string
+        IssueListName:
+          type: string
         SubscriberId:
-          format: int32
-          description: The subsriber id.
-          type: integer
-        SetupId:
-          format: int32
-          description: The dashboard Id.
-          type: integer
-        ProblemType:
-          description: The problem type.
-          type: string
-        EquipmentType:
-          description: The equipment type.
-          type: string
-        ProblemCode:
-          description: The problem code
-          type: string
-        LocationId:
-          format: int32
-          description: Location Id
-          type: integer
-        AreaName:
-          description: Name of the area
-          type: string
-    ServiceChannel.Services.Messaging.IssueLists.GetProblemTypesResponse:
-      type: object
-      properties:
-        ProblemGroupNames:
-          type: array
-          items:
-            type: string
-    ServiceChannel.Services.Messaging.IssueLists.GetIssueAreasResponse:
-      type: object
-      properties:
-        IssueAreas:
-          description: The List of issue areas.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.IssueArea'
-    ServiceChannel.Services.Messaging.IssueLists.SetIssueListForDashboardRequest:
-      type: object
-      properties:
-        IssueListId:
-          format: int32
-          type: integer
-        SubscriberId:
-          format: int32
-          type: integer
-        DashboardId:
           format: int32
           type: integer
         UserName:
           type: string
+    ServiceChannel.Services.Messaging.IssueLists.GetProblemsFilteredByAreaTypeAndLocationResponse:
+      type: object
+      properties:
+        Problems:
+          description: List of Problems
+          type: array
+          items:
+            type: string
+    System.Object:
+      type: object
+      properties: {}
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -3651,40 +3621,70 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.IssueLists.GetProblemsFilteredByAreaTypeAndLocationResponse:
+    ServiceChannel.Services.Messaging.IssueLists.GetIssueEquipmentTypesResponse:
       type: object
       properties:
-        Problems:
-          description: List of Problems
+        IssueEquipmentTypes:
           type: array
           items:
             type: string
-    ServiceChannel.Services.Messaging.IssueLists.IssueArea:
-      description: The issue area.
+    ServiceChannel.Services.Messaging.IssueLists.SetIssueListForDashboardRequest:
       type: object
       properties:
-        ID:
+        IssueListId:
           format: int32
-          description: Area ID.
           type: integer
-        Name:
-          description: Area Name.
-          type: string
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.IssueLists.PostIssueListRequest:
-      type: object
-      properties:
-        IssueListData:
-          type: string
-        IssueListName:
-          type: string
         SubscriberId:
+          format: int32
+          type: integer
+        DashboardId:
           format: int32
           type: integer
         UserName:
           type: string
+    ServiceChannel.Services.Messaging.IssueLists.GetProblemTypesResponse:
+      type: object
+      properties:
+        ProblemGroupNames:
+          type: array
+          items:
+            type: string
+    ServiceChannel.Services.Messaging.IssueLists.GetIssueChoiceRequest:
+      description: Get Issue Choice request
+      type: object
+      properties:
+        SubscriberId:
+          format: int32
+          description: The subsriber id.
+          type: integer
+        SetupId:
+          format: int32
+          description: The dashboard Id.
+          type: integer
+        ProblemType:
+          description: The problem type.
+          type: string
+        EquipmentType:
+          description: The equipment type.
+          type: string
+        ProblemCode:
+          description: The problem code
+          type: string
+        LocationId:
+          format: int32
+          description: Location Id
+          type: integer
+        AreaName:
+          description: Name of the area
+          type: string
+    ServiceChannel.Services.Messaging.IssueLists.GetIssueAreasResponse:
+      type: object
+      properties:
+        IssueAreas:
+          description: The List of issue areas.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.IssueArea'
   securitySchemes:
     oauth2:
       type: oauth2

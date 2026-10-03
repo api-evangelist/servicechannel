@@ -122,27 +122,6 @@ paths:
         required: true
 components:
   schemas:
-    ServiceChannel.Api.Model.ContractService.ApplicableRateForWOCreationRequest:
-      type: object
-      properties:
-        ProviderId:
-          format: int32
-          type: integer
-        TradeId:
-          format: int32
-          type: integer
-        CategoryId:
-          format: int32
-          type: integer
-        LocationId:
-          format: int32
-          type: integer
-        CallDate:
-          format: date-time
-          type: string
-        ContractedServiceId:
-          format: int32
-          type: integer
     ServiceChannel.Api.Model.ContractService.ApplicableRateForWOEditRequest:
       type: object
       properties:
@@ -158,13 +137,45 @@ components:
         LocationId:
           format: int32
           type: integer
-    ServiceChannel.Api.Model.ContractService.ApplicableContractServiceRateResponse:
+    ServiceChannel.Api.Model.ContractService.ApplicableContractServiceRateModel:
       type: object
       properties:
-        Rates:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.ContractService.ApplicableContractServiceRateModel'
+        RateId:
+          format: int32
+          type: integer
+        RateName:
+          type: string
+        ContractedServiceId:
+          format: int32
+          type: integer
+        ContractedServiceName:
+          type: string
+        TradeId:
+          format: int32
+          type: integer
+        CategoryId:
+          format: int32
+          type: integer
+        RateType:
+          format: byte
+          type: string
+        BaseAmount:
+          format: double
+          type: number
+        VariableAmount:
+          format: double
+          type: number
+        NteAmount:
+          format: double
+          type: number
+        CurrencyId:
+          format: int32
+          type: integer
+        CurrencyAlphabeticCode:
+          type: string
+    System.Object:
+      type: object
+      properties: {}
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -1802,45 +1813,34 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Api.Model.ContractService.ApplicableContractServiceRateModel:
+    ServiceChannel.Api.Model.ContractService.ApplicableRateForWOCreationRequest:
       type: object
       properties:
-        RateId:
+        ProviderId:
           format: int32
           type: integer
-        RateName:
-          type: string
-        ContractedServiceId:
-          format: int32
-          type: integer
-        ContractedServiceName:
-          type: string
         TradeId:
           format: int32
           type: integer
         CategoryId:
           format: int32
           type: integer
-        RateType:
-          format: byte
-          type: string
-        BaseAmount:
-          format: double
-          type: number
-        VariableAmount:
-          format: double
-          type: number
-        NteAmount:
-          format: double
-          type: number
-        CurrencyId:
+        LocationId:
           format: int32
           type: integer
-        CurrencyAlphabeticCode:
+        CallDate:
+          format: date-time
           type: string
+        ContractedServiceId:
+          format: int32
+          type: integer
+    ServiceChannel.Api.Model.ContractService.ApplicableContractServiceRateResponse:
+      type: object
+      properties:
+        Rates:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.ContractService.ApplicableContractServiceRateModel'
   securitySchemes:
     oauth2:
       type: oauth2

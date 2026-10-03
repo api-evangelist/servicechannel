@@ -261,13 +261,6 @@ paths:
       x-access: Any
 components:
   schemas:
-    ServiceChannel.Services.Messaging.SurveyQuestion.WorkorderAnsweredQuestionResponse:
-      type: object
-      properties:
-        Question:
-          type: string
-        Answer:
-          type: string
     ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestion:
       type: object
       properties:
@@ -305,7 +298,14 @@ components:
         UserId:
           format: int32
           type: integer
-    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyTrade:
+    ServiceChannel.Services.Messaging.SurveyQuestion.WorkorderAnsweredQuestionResponse:
+      type: object
+      properties:
+        Question:
+          type: string
+        Answer:
+          type: string
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyCategory:
       type: object
       properties:
         Id:
@@ -313,14 +313,21 @@ components:
           type: integer
         Name:
           type: string
-    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyLocation:
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyAnsweredQuestion:
       type: object
       properties:
-        Id:
+        WorkorderId:
           format: int32
           type: integer
-        Name:
-          type: string
+        QuestionId:
+          format: int32
+          type: integer
+        AnswerId:
+          format: int32
+          type: integer
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -1958,6 +1965,30 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyLocation:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyProvider:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyTrade:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
     ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyQuestionWithAnswers:
       type: object
       properties:
@@ -1992,16 +2023,15 @@ components:
           items:
             format: int32
             type: integer
-    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyAnsweredQuestion:
+    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyAnswer:
       type: object
       properties:
-        WorkorderId:
+        Id:
           format: int32
           type: integer
-        QuestionId:
-          format: int32
-          type: integer
-        AnswerId:
+        Answer:
+          type: string
+        SortOrder:
           format: int32
           type: integer
     ServiceChannel.Services.Messaging.SurveyQuestion.GetSurveyQuestionsResponse:
@@ -2025,36 +2055,6 @@ components:
           description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
           type: string
     ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyPriority:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyCategory:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyAnswer:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Answer:
-          type: string
-        SortOrder:
-          format: int32
-          type: integer
-    ServiceChannel.Api.Model.Entities.SurveyQuestions.SurveyProvider:
       type: object
       properties:
         Id:

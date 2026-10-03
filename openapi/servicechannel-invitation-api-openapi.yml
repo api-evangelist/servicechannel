@@ -42,39 +42,33 @@ paths:
         required: true
 components:
   schemas:
-    PaymentTermsModel:
+    AddressInformationModel:
       type: object
       properties:
-        Period:
-          format: int32
-          type: integer
-        Description:
+        Address1:
           maxLength: 50
           minLength: 0
           type: string
-    Object:
-      type: object
-      properties: {}
-    CreateInvitationModel:
-      required:
-      - ScSubscriberId
-      type: object
-      properties:
-        ScSubscriberId:
-          format: int32
-          maximum: 2147483647
-          minimum: 1
-          type: integer
-        Provider:
-          $ref: '#/components/schemas/CompanyModel'
-        VendorId:
+        Address2:
           maxLength: 50
           minLength: 0
           type: string
-        Invitation:
-          $ref: '#/components/schemas/InvitationModel'
-        PaymentTerms:
-          $ref: '#/components/schemas/PaymentTermsModel'
+        City:
+          maxLength: 50
+          minLength: 0
+          type: string
+        Country:
+          maxLength: 50
+          minLength: 0
+          type: string
+        State:
+          maxLength: 100
+          minLength: 0
+          type: string
+        PostalCode:
+          maxLength: 10
+          minLength: 0
+          type: string
     InvitationModel:
       type: object
       properties:
@@ -112,33 +106,39 @@ components:
           type: boolean
         AddressInformation:
           $ref: '#/components/schemas/AddressInformationModel'
-    AddressInformationModel:
+    PaymentTermsModel:
       type: object
       properties:
-        Address1:
+        Period:
+          format: int32
+          type: integer
+        Description:
           maxLength: 50
           minLength: 0
           type: string
-        Address2:
+    Object:
+      type: object
+      properties: {}
+    CreateInvitationModel:
+      required:
+      - ScSubscriberId
+      type: object
+      properties:
+        ScSubscriberId:
+          format: int32
+          maximum: 2147483647
+          minimum: 1
+          type: integer
+        Provider:
+          $ref: '#/components/schemas/CompanyModel'
+        VendorId:
           maxLength: 50
           minLength: 0
           type: string
-        City:
-          maxLength: 50
-          minLength: 0
-          type: string
-        Country:
-          maxLength: 50
-          minLength: 0
-          type: string
-        State:
-          maxLength: 100
-          minLength: 0
-          type: string
-        PostalCode:
-          maxLength: 10
-          minLength: 0
-          type: string
+        Invitation:
+          $ref: '#/components/schemas/InvitationModel'
+        PaymentTerms:
+          $ref: '#/components/schemas/PaymentTermsModel'
   securitySchemes:
     oauth2:
       type: oauth2

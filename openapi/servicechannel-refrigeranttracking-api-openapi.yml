@@ -2384,38 +2384,171 @@ components:
           description: Defines whether the rack asset is active or deactivated.
           default: false
           type: boolean
-    ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.RetrofitRetirePlanRefrigerantEnterdDataWeb:
+    ServiceChannel.Services.WebApi.Models.Response.RefrigerantSettingsWithFF:
       type: object
       properties:
+        RefrigerantTSettings:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.IRefrigerantSettings'
+        FFSubRefCertSCP:
+          default: false
+          type: boolean
+        FFSubRTMultiLeakFlow:
+          default: false
+          type: boolean
+        FFSubRefValidatelogOn:
+          default: false
+          type: boolean
+        FFSubNoRefrigerantAsset:
+          default: false
+          type: boolean
+        FFRTLeakDateEmpty:
+          default: false
+          type: boolean
+        FFRTMultiLeakFollowUp:
+          default: false
+          type: boolean
+        FFRefLeakInspectionAcknowledgementAll:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Equipments.GetAvailableRacksRequest:
+      description: Object containing the request parameters for retrieving rack assets.
+      required:
+      - SubscriberId
+      - LocationId
+      type: object
+      properties:
+        SubscriberId:
+          format: int32
+          description: Unique numeric identifier of the subscriber.
+          type: integer
+        LocationId:
+          format: int32
+          description: Unique numeric identifier of the location to get rack assets for. One location ID is allowed per request.
+          type: integer
+        IncludeInactive:
+          description: "Allows including/excluding deactivated rack assets. Possible input values:\n             • `true`: Deactivated rack assets will be included in the response.\n             • `false`: Deactivated rack assets will be excluded from the response."
+          default: false
+          type: boolean
+        SelectInactiveRackId:
+          format: int32
+          description: To get a specific rack asset in the response, enter the asset ID.
+          type: integer
+    ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.OpenLeakNotificationSettings:
+      description: Object containing the settings for configuring email alerts about open leaks.
+      type: object
+      properties:
+        NotificationInterval:
+          format: int32
+          description: How many days should pass before sending the next notification about the open leak event.
+          type: integer
+        RecipientsEmails:
+          description: Email address(es) of people who get notified about the open leak.
+          type: string
+        UpdatedDate:
+          format: date-time
+          description: Date when the open leak notification settings were last updated by the subscriber. The format is YYYY-MM-DDThh:mm:ss.sssZ.
+          type: string
+    ServiceChannel.Services.Messaging.RetrofitRetirement.UpdateRetrofitRetirePlanRefrigerantEnteredData:
+      description: Refrigerant entered/added data for updating a Retrofit/Retire plan
+      type: object
+      properties:
+        PartId:
+          format: int32
+          description: Part usage record ID to update
+          type: integer
         Date:
           format: date-time
+          description: Updated date when refrigerant was entered/added
           type: string
         Qty:
           format: double
+          description: Updated quantity of refrigerant entered/added
           type: number
-        PartNumber:
-          type: string
-        PartGroupId:
+    ServiceChannel.Services.Messaging.RefrigerantTracking.AssetRackConnection:
+      type: object
+      properties:
+        RackId:
           format: int32
           type: integer
-        InventoryLocationGuid:
+        AssetId:
+          format: int32
+          type: integer
+        AssetType:
           type: string
-        IsInventoryPart:
+        ConnectionDate:
+          format: date-time
+          type: string
+        DisconnectDate:
+          format: date-time
+          type: string
+        IsActiveConnection:
           default: false
           type: boolean
-        InventoryPartId:
+        AssetTag:
+          type: string
+        Brand:
+          type: string
+        ModelNumber:
+          type: string
+        SerialNumber:
+          type: string
+        TotalRows:
           format: int32
           type: integer
-        PartGroup:
-          type: string
-        RefrigerantChargeOptionsId:
+        AssetCircuitId:
           format: int32
           type: integer
-        RefrigerantChargeVendor:
+        AssetCircuitTag:
           type: string
-        IsNewCharge:
+    ServiceChannel.Services.Messaging.RefrigerantTracking.PlanNote:
+      type: object
+      properties:
+        RetrofitRetirePlanId:
+          format: int32
+          type: integer
+        Id:
+          format: int32
+          type: integer
+        Note:
+          type: string
+        CreateDate:
+          type: string
+        UserName:
+          type: string
+        CreateDateValue:
+          format: date-time
+          type: string
+    ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.RetrofitRetirePlanDataWeb:
+      type: object
+      properties:
+        StartDate:
+          format: date-time
+          type: string
+        EndDate:
+          format: date-time
+          type: string
+        Description:
+          type: string
+        PlanNotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.PlanNote'
+        PlanType:
+          enum:
+          - Retrofit
+          - Retire
+          - All
+          type: string
+        Location:
+          type: string
+        ProviderName:
+          type: string
+        CheckLeak:
           default: false
           type: boolean
+        PlanProviderId:
+          format: int32
+          type: integer
     ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.RefrigerantSettingByLocationItem:
       description: Object containing subscriber’s locations with refrigerant tracking enabled.
       type: object
@@ -2432,146 +2565,387 @@ components:
           format: int32
           description: "Unit of measure for tracking refrigerant use. Possible response values:\n             • `0`: Pounds and decimals of pounds\n             • `1`: Pounds and ounces\n             • `2`: Kilograms and grams"
           type: integer
-    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableAndAuditBulkUpdateRequest:
+    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableResponse:
+      description: Object containig the details of a leak record
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the leak record.
+          type: integer
+        AssetId:
+          format: int32
+          description: Unique numeric identifier of the asset.
+          type: integer
+        AssetTagId:
+          description: Unique numeric identifier of the asset tag.
+          type: string
+        RecId:
+          format: int32
+          description: Unique numeric identifier of the work order.
+          type: integer
+        RepairDate:
+          format: date-time
+          description: Date when the repair was completed.
+          type: string
+        RepairDateFormatted:
+          type: string
+        RepairDateStr:
+          type: string
+        InitialVerificationDate:
+          format: date-time
+          description: Date when the first verification took place.
+          type: string
+        InitialVerificationDateFormatted:
+          type: string
+        InitialVerificationDateStr:
+          type: string
+        InitialVerificationMethod:
+          format: int32
+          description: Method that was used during the first verification to make sure the leak had been fixed.
+          type: integer
+        InitialVerificationMethodName:
+          type: string
+        FollowUpVerificationDate:
+          format: date-time
+          description: Date of the second verification.
+          type: string
+        FollowUpVerificationDateFormatted:
+          type: string
+        FollowUpVerificationStr:
+          type: string
+        FollowUpVerificationMethod:
+          format: int32
+          description: Method of the second verification.
+          type: integer
+        FollowUpVerificationMethodName:
+          type: string
+        ActionCodeId:
+          format: int32
+          description: Unique numeric identifier of the action that a technician took to fix the leak.
+          type: integer
+        ActionCode:
+          type: string
+        FaultCodeId:
+          format: int32
+          description: Unique numeric identifier of the reason why the problem occurred.
+          type: integer
+        FaultCode:
+          type: string
+        LeakEventId:
+          format: int32
+          description: Unique numeric identifier of the leak event to which the leak record is associated.
+          type: integer
+        LeakLocationId:
+          format: int32
+          description: 'Unique numeric identifier of the location where the leak occurred: more specific place within the particular area, for example, level indicator/alarm/splitting valve.'
+          type: integer
+        LeakAreaId:
+          format: int32
+          description: 'Unique numeric identifier of the area where the leak occurred: more general place, for example, receiver/condensor.'
+          type: integer
+        LeakLocationName:
+          type: string
+        LeakAreaName:
+          type: string
+        ModifiedBy:
+          format: int32
+          description: User who modified the leak record.
+          type: integer
+        ModifiedByUserId:
+          type: string
+        ModifiedByUserName:
+          type: string
+        LeakNotes:
+          description: Notes that were added by users to a leak record.
+          type: array
+          items:
+            type: string
+        Actor:
+          description: Name of the technician who performed the fix of the leak.
+          type: string
+        LeakLocation:
+          description: Location where the leak occured, including more general and more specific name, for example, splitting valve - condensor.
+          type: string
+          readOnly: true
+        LeakStatusStr:
+          description: Status of the leak event.
+          type: string
+          readOnly: true
+        NotesTotalCount:
+          format: int32
+          description: Total number of leak notes.
+          type: integer
+        LeakImmeasurableNotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableNote'
+        OriginalTrackingNumber:
+          format: int32
+          type: integer
+        LeakStatus:
+          default: false
+          type: boolean
+        InitialVerificationPassed:
+          default: false
+          type: boolean
+        FollowUpVerificationPassed:
+          default: false
+          type: boolean
+        LeakInspections:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakInspectionComplianceAcknowledgementResponseItemWithMethods'
+    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakArea:
+      description: Object containing refrigerant leak areas.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the leak area.
+          type: integer
+        Name:
+          description: "Leak area name. Possible response values:\n             • `Compressor`\n             • `Discharge Line`\n             • `Condensor`\n             • `Receiver`\n             • `Liquid Line`\n             • `Evaporator`\n             • `Suction line`\n             • `Other`"
+          type: string
+    ServiceChannel.Services.Core.InternalRequests.RefrigerantTracking.LeakImmeasurableBulkChangeRequestInternal:
+      type: object
+      properties:
+        RequestData:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableBulkChangeRequest'
+          readOnly: true
+        UserData:
+          $ref: '#/components/schemas/ServiceChannel.Services.Core.InternalRequests.UserInfo'
+    ServiceChannel.Services.Messaging.Equipments.AddUpdatePmLeakVerificationsRequest:
+      description: Request to add or update PmLeakVerifications
+      type: object
+      properties:
+        RecId:
+          format: int32
+          type: integer
+        Actor:
+          type: string
+        VerificationMethodsIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        CertifiedTechnicianId:
+          format: int32
+          type: integer
+        TechnicianCertificateId:
+          type: string
+        CertificateId:
+          format: int32
+          type: integer
+        AssetId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.RefrigerantTracking.MultiLeakInspectionComplianceAcknowledgement:
+      type: object
+      properties:
+        AssetLeakVerificationItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.AssetLeakVerificationItem'
+        TrackingNumber:
+          format: int32
+          type: integer
+        CertifiedTechnicianId:
+          format: int32
+          type: integer
+        TechnicianCertificateId:
+          type: string
+        CertificateId:
+          format: int32
+          type: integer
+        Actor:
+          type: string
+    ServiceChannel.Services.Messaging.RefrigerantTracking.MaxThreshold:
       type: object
       properties:
         Id:
           format: int32
           type: integer
-        RepairDate:
+        ChargeThreshold:
+          format: double
+          type: number
+        ComercialRefTriggerRate:
+          format: double
+          type: number
+        IndustrialRefTriggerRate:
+          format: double
+          type: number
+        HVACTriggerRate:
+          format: double
+          type: number
+        OthersTriggerRate:
+          format: double
+          type: number
+        ApplyDate:
           format: date-time
           type: string
-        ActionCodeId:
-          format: int32
-          description: Date when the first verification took place.
-          type: integer
-        FaultCodeId:
-          format: int32
-          description: Unique numeric identifier of the reason why the problem occurred.
-          type: integer
-        LeakLocationId:
-          format: int32
-          description: 'Unique numeric identifier of the location where the leak occurred: more specific place within the particular area, for example, level indicator/alarm/splitting valve.'
-          type: integer
-        LeakAreaId:
-          format: int32
-          description: 'Unique numeric identifier of the area where the leak occurred: more general place, for example, receiver/condensor.'
-          type: integer
-        Notes:
-          description: Leak record notes.
-          type: array
-          items:
-            type: string
-        LeakVerifications:
-          description: Unique numeric identifier of the work order to add the leak record to.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakRecordVerificationAddRequest'
-    ServiceChannel.Api.Model.RefrigerantTracking.LeakVerification:
+        Announcement:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.ThresholdAnnouncement'
+    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableAndAuditBulkChangeRequest:
       type: object
       properties:
-        RecId:
-          format: int32
-          type: integer
-        VerificationMethodId:
-          format: byte
-          type: string
-        VerificationMethodName:
-          type: string
-        UserId:
-          format: int32
-          type: integer
-        UserName:
-          type: string
-        Actor:
-          type: string
-        ModifiedDate:
-          format: date-time
-          type: string
-    ServiceChannel.Services.Messaging.RefrigerantTracking.AddLeakImmeasurableRequest:
-      description: Request model to create a leak record for the work order and asset.
-      type: object
-      properties:
-        RepairDate:
-          format: date-time
-          description: Date and time when the repair was completed. ***Note:*** It cannot be earlier than the work order call date. The date format is `YYYY-MM-DDThh:mm:ss.sssZ`.
-          type: string
-        InitialVerificationDate:
-          format: date-time
-          description: Date when the first verification took place. ***Note:*** The initial verification date cannot be in the future and cannot be less than the repair date. It should be either a current date or a date in the past.
-          type: string
-        InitialVerificationMethod:
-          format: int32
-          description: "Method that was used during the first verification to make sure the leak had been fixed. \n            <br />Possible values:\n             • `0`: Unknown\n             • `1`: Soap Bubble Test\n             • `2`: Electronic Leak Detection\n             • `3`: Ultrasonic Leak Detection\n             • `4`: Pressure Test\n             • `5`: Vacuum Test\n             • `6`: Fluorescent Dye Test\n             • `7`: Infrared Test\n             • `8`: Near Infrared Test\n             • `9`: Halon Gas Detection"
-          type: integer
-        FollowUpVerificationDate:
-          format: date-time
-          description: Date of the second verification. The date format is `YYYY-MM-DDThh:mm:ss.sssZ`. ***Note:*** The follow-up verification date cannot be earlier than the initial verification date and cannot be in the future. It should be either a current date or a date in the past.
-          type: string
-        FollowUpVerificationMethod:
-          format: int32
-          description: Method of the second verification. The list of available verification methods is the same as for the `InitialVerificationMethod`.
-          type: integer
-        ActionCodeId:
-          format: int32
-          description: Unique numeric identifier of the action that a technician took to fix the leak. Use the [GET/refrigeranttracking/leakRecord/actionCodes](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_leakRecord_actionCodes) method to get available action codes and their IDs.
-          type: integer
-        FaultCodeId:
-          format: int32
-          description: "Unique numeric identifier of the reason why the problem occurred. Use the [GET/refrigeranttracking/leakRecord/faultCodes](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_leakRecord_faultCodes) method to get available fault codes and their IDs.\n            <br />Possible values:\n             • `1`: Accidental Damage\n             • `2`: Braze or Joint Failure\n             • `3`: Corrosion\n             • `4`: Defrost Heater Failure\n             • `5`: Faulty Part\n             • `6`: Forklift Damage\n             • `7`: Gasket Seal Failure\n             • `8`: Ice Build Up\n             • `9`: Line Break\n             • `10`: Manufacture Defect\n             • `11`: Missing Part\n             • `12`: Natural Disaster\n             • `13`: Normal Mechanical Wear\n             • `14`: Other (Must Explain in Comments)\n             • `15`: Vandalism\n             • `16`: Vibration Related\n             • `17`: Project Related Loss"
-          type: integer
-        LeakLocationId:
-          format: int32
-          description: 'Unique numeric identifier of the location where the leak occurred: more specific place within the particular area, for example, *Coil*, *Level Indicator/Alarm*, *Splitting Valve*. Use the [GET/refrigeranttracking/{subscriberId}/leaklocations](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_%7BsubscriberId%7D_leaklocations) method to get the list of available leak locations.'
-          type: integer
-        Notes:
-          description: Leak record notes.
+        AddItems:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableAndAuditBulkAddRequest'
+        UpdateItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableAndAuditBulkUpdateRequest'
+        DeleteItems:
+          type: array
+          items:
+            format: int32
+            type: integer
         RecId:
           format: int32
-          description: Unique numeric identifier of the work order to add the leak record to.
           type: integer
         AssetId:
           format: int32
-          description: Unique numeric identifier of the asset to add the leak record to.
           type: integer
-        Actor:
-          description: Name of the technician who performed the fix of the leak.
+        Technician:
           type: string
-    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableAndAuditBulkAddRequest:
+        CertificateId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.IRefrigerantSettings:
       type: object
       properties:
-        RepairDate:
-          format: date-time
+        UnitsOfMeasure:
+          format: byte
           type: string
-        ActionCodeId:
+        SubscriberId:
           format: int32
-          description: Date when the first verification took place.
           type: integer
-        FaultCodeId:
+        InventoryLocation:
+          format: byte
+          type: string
+        CalculationMethod:
+          format: byte
+          type: string
+        RefrigerationPriorityName:
+          type: string
+        EmailNotificationEnable:
+          default: false
+          type: boolean
+        EmailNotification:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.EmailNotification'
+        GenerateFollowUpWorkOrder:
+          format: byte
+          type: string
+        Compliance:
+          type: string
+        MaxLocCount:
           format: int32
-          description: Unique numeric identifier of the reason why the problem occurred.
           type: integer
-        LeakLocationId:
+        RtLimitedAppliance:
+          format: byte
+          type: string
+        Settings:
+          type: string
+        RefrigerantTrackingProviderId:
           format: int32
-          description: 'Unique numeric identifier of the location where the leak occurred: more specific place within the particular area, for example, level indicator/alarm/splitting valve.'
           type: integer
-        LeakAreaId:
-          format: int32
-          description: 'Unique numeric identifier of the area where the leak occurred: more general place, for example, receiver/condensor.'
-          type: integer
-        Notes:
-          description: Leak record notes.
+        GenerateLeakInspectionOption:
+          format: byte
+          type: string
+        OpenLeakNotificationSettings:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.OpenLeakNotificationSettings'
+        CertificationExceptionRecipients:
+          type: string
+        CertificationExceptionRecipientEmails:
           type: array
           items:
             type: string
-        LeakVerifications:
-          description: Unique numeric identifier of the work order to add the leak record to.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakRecordVerificationAddRequest'
+          readOnly: true
+        HVACDelayDays:
+          format: int32
+          type: integer
+        DelayedSecondaryVerification:
+          default: false
+          type: boolean
+        IndustrialRefrigerationDelayDays:
+          format: int32
+          type: integer
+        CommercialRefrigerationDelayDays:
+          format: int32
+          type: integer
+        OtherTypesDelayDays:
+          format: int32
+          type: integer
+        RefrigerationPriorityId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.RetrofitRetirePlanWebRequest:
+      type: object
+      properties:
+        MoeNumber:
+          type: string
+        RecId:
+          format: int32
+          type: integer
+        AssetId:
+          format: int32
+          type: integer
+        RetrofitRetirePlanData:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.RetrofitRetirePlanDataWeb'
+        RefrigerantRemovalData:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.RetrofitRetirePlanRefrigerantRemovalDataWeb'
+        RefrigerantEnteredData:
+          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.RetrofitRetirePlanRefrigerantEnterdDataWeb'
+    ServiceChannel.Services.Messaging.LeakRecord.LeakVerifyMethod:
+      description: Leak verification method
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Method's id
+          type: integer
+        Name:
+          description: Method's name
+          type: string
+    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakRecordVerificationResponse:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Technician:
+          type: string
+        LeakImmeasurableId:
+          format: int32
+          type: integer
+        VerificationDate:
+          format: date-time
+          type: string
+        VerificationMethod:
+          format: byte
+          type: string
+        VerificationMethodType:
+          format: byte
+          type: string
+        VerificationStatus:
+          default: false
+          type: boolean
+        Reason:
+          type: string
+    ServiceChannel.Services.Messaging.RetrofitRetirement.UpdateRetrofitRetirePlanRequest:
+      description: Request to update an existing Retrofit/Retire plan
+      type: object
+      properties:
+        RetrofitRetirePlanData:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RetrofitRetirement.UpdateRetrofitRetirePlanGeneralData'
+        RefrigerantRemovalData:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RetrofitRetirement.UpdateRetrofitRetirePlanRefrigerantRemovalData'
+          description: Updated refrigerant removal data
+        RefrigerantEnteredData:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RetrofitRetirement.UpdateRetrofitRetirePlanRefrigerantEnteredData'
+          description: Updated refrigerant entered/added data (for Retrofit plans)
     ServiceChannel.Services.Messaging.RefrigerantTracking.PreferencesRequest:
       type: object
       properties:
@@ -2680,43 +3054,207 @@ components:
         EnableCARBInspections:
           default: false
           type: boolean
-    ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.RetrofitRetirePlanDataWeb:
+    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakInspectionComplianceAcknowledgement:
       type: object
       properties:
-        StartDate:
-          format: date-time
-          type: string
-        EndDate:
-          format: date-time
-          type: string
-        Description:
-          type: string
-        PlanNotes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.PlanNote'
-        PlanType:
-          enum:
-          - Retrofit
-          - Retire
-          - All
-          type: string
-        Location:
-          type: string
-        ProviderName:
-          type: string
-        CheckLeak:
-          default: false
-          type: boolean
-        PlanProviderId:
+        AssetId:
           format: int32
           type: integer
-    System.Web.Http.Results.NotFoundResult:
+        VerificationMethodsIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        TrackingNumber:
+          format: int32
+          type: integer
+        CertifiedTechnicianId:
+          format: int32
+          type: integer
+        TechnicianCertificateId:
+          type: string
+        CertificateId:
+          format: int32
+          type: integer
+        Actor:
+          type: string
+    ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.RefrigerantSettingsUS:
+      description: Object containing refrigerant tracking settings for US companies
       type: object
       properties:
-        Request:
-          $ref: '#/components/schemas/System.Object'
+        UnitsOfMeasure:
+          format: byte
+          description: "Unit of measure for tracking refrigerant use.\n            <br />The possible response values:\n             • `0`: Pounds and decimals of pounds\n             • `1`: Pounds and ounces\n             • `2`: Kilograms and grams\n            <br />***Note***: To use kilograms and grams as a unit of measure, turn on the  *RefrigerantSettingsEU* feature flag."
+          type: string
+        SubscriberId:
+          format: int32
+          description: Unique numeric identifier of the subscriber.
+          type: integer
+        InventoryLocation:
+          format: byte
+          description: "Defines whether technicians can take refrigerant from any inventory location or from the locations in the technician's area only.\n            <br />The possible response values:\n             • `0`: Only in technician’s area\n             • `1`: Any location"
+          type: string
+        CalculationMethod:
+          format: byte
+          description: "Preferred method of refrigerant leak calculation:\n             • `0`: Annualized\n             • `1`: Rolling Average\n            <br />Check how each calculation method works in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/2789703925/Refrigerant+Tracking#RefrigerantTracking)."
+          type: string
+        ChargeThreshold:
+          format: double
+          description: Minimum amount of refrigerant that a system can contain for leak tracking to occur. The charge threshold value is displayed in the specified unit of measure. Check the `UnitsOfMeasure` parameter value.
+          type: number
+        ComercialRefTriggerRate:
+          format: double
+          description: "Minimum percentage of the total system charge that can be lost before refrigerant tracking to occur. This rate is set for commercial refrigeration appliances.\n            <br />It applies to asset types with the refrigerant use purpose set to *Commercial Refrigeration*."
+          type: number
+        IndustrialRefTriggerRate:
+          format: double
+          description: "Minimum percentage of the total system charge that can be lost before refrigerant tracking to occur. This rate is set for industrial refrigeration appliances.\n            <br />It applies to asset types with the refrigerant use purpose set to *Industrial Refrigeration*."
+          type: number
+        HVACTriggerRate:
+          format: double
+          description: "Minimum percentage of the total system charge that can be lost before refrigerant tracking to occur. This rate is set for HVAC appliances.\n            <br />It applies to asset types with the refrigerant use purpose set to *Comfort Cooling (AC)*."
+          type: number
+        OthersTriggerRate:
+          format: double
+          description: "Minimum percentage of the total system charge that can be lost before refrigerant tracking to occur. This trigger rate is set for appliances that don’t fall under any of the following groups: commercial appliances, industrial appliances, HVAC appliances.\n            <br />It applies to asset types with the refrigerant use purpose set to *Other Types of Refrigerated Asset*."
+          type: number
+        Yearly:
+          format: double
+          description: "Minimum threshold for annual leak inspections. The value defines the minimum system charge required to create an annual PM leak inspection work order if a leak has met or exceeded the EPA leak threshold.\n            <br />Check the `UnitsOfMeasure` parameter value to see the corresponding unit of measure."
+          type: number
+        Quarterly:
+          format: double
+          description: "Minimum threshold for quarterly leak inspections. The value defines the minimum system charge required to create quarterly PM leak inspection work orders if a leak has met or exceeded the EPA leak threshold. \n            <br />Check the `UnitsOfMeasure` parameter value to see the corresponding unit of measure."
+          type: number
+        RunCARBReport:
+          description: "Refrigerant tracking preference that allows subscribers to run the California Air Resources Board report.\n            <br />The possible response values:\n             • `true`: The CARB reporting is activated for the subscriber.\n             • `false`: The CARB reporting is deactivated for the subscriber.\n            <br />Learn about the CARB reporting in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/710148264/California+Air+Resource+Board+CARB+Reporting)."
+          default: false
+          type: boolean
+        ComplianceAcknowledgmentForAllLeaksRefrigerantUse:
+          description: "Compliance acknowledgement message that gets triggered for every reported leak or refrigerant use to confirm that a full inspection has been conducted. \n            <br />The possible response values:\n             • `true`: The compliance acknowledgement message is enabled in the SC Provider mobile app, Service Automation, and Provider Automation.\n             • `false`: The compliance acknowledgement message is deactivated.\n            <br />***Note***: The *RefLeakInspectionAcknowledgementAll* feature flag should be turned on."
+          default: false
+          type: boolean
+        DelayedSecondaryVerification:
+          description: "Allows subscribers to enforce a time delay between the initial and the secondary verifications when a leak event takes place.\n            <br />The possible response values:\n             • `true`: Time delay is activated by the subscriber. The number of days is specified for each refrigerant type:\n               * `HVACDelayDays`\n               * `IndustrialRefrigerationDelayDays`\n               * `CommercialRefrigerationDelayDays`\n               * `OtherTypesDelayDays`\n             • `false`: Time delay is not enabled by the subscriber.\n            <br />***Note***: The subscriber should have the *RefrigerationTrackingDelayedSecondaryVerification* feature flag enabled.\n            <br />Read more about this feature in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/2789703925/Refrigerant+Tracking#RefrigerantTracking-DelayedSecondaryVerificationDelayedSecondaryVerification)."
+          default: false
+          type: boolean
+        LeakInspectionNTE:
+          format: double
+          description: Default not-to-exceed (NTE) amount for all PM work orders generated for quarterly and annual follow-up leak inspections.
+          type: number
+        RefrigerationPriorityName:
+          description: Priority name for Planned Maintenance work orders that are automatically generated for follow-up leak inspections.
+          type: string
+        EmailNotificationEnable:
+          description: "Allows subscribers to create an email notification that will be sent to the specified recipients when the amount of refrigerant added by a technician meets or exceeds the system total charge.\n            <br />The possible response values:\n             • `false`: The email notification is not enabled by the subscriber.\n             • `true`: The email notification is enabled. The recipients and the message text are specified in the response. When the response value is `true`, check the `EmailNotification` object."
+          default: false
+          type: boolean
+        EmailNotification:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.EmailNotification'
+        GenerateFollowUpWorkOrder:
+          format: byte
+          description: "Defines whether a follow-up work order should be generated when there is an open leak, and the provider wants to close the original work order.\n            <br />The possible response values:\n             • `0`: No follow-up work orders should be generated. The work order cannot be closed and invoiced until the leak record is closed. The *Never* option is set by the subscriber for the **Follow-Up Work Order** setting in Refrigerant Tracking Admin.\n             • `1`: A follow-up work order can be generated for the provider to close the leak record. The *Open Leak* option is set by the subscriber for the **Follow-Up Work Order** setting in Refrigerant Tracking Admin.\n            <br />***Note***: If the *Open Leak* option is not available for the subscriber, try turning the *RTMultiLeakFollowUp* feature flag on."
+          type: string
+        Compliance:
+          description: "Shows the region to which the configured refrigerant tracking settings get applied, following the compliance requirements.\n            <br />The possible response values:\n             • `US`: Refrigerant tracking compliance for the USA\n             • `EU`: Refrigerant tracking compliance for the European Union\n             • `CA`: Refrigerant tracking compliance for Canada"
+          type: string
+        MaxLocCount:
+          format: int32
+          description: Maximum number of locations where refrigerant tracking should be recorded. It relates to the `RtLimitedAppliance` parameter.
+          type: integer
+        RtLimitedAppliance:
+          format: byte
+          description: "Specifies whether refrigerant tracking should happen across all locations or at those where it’s required.\n            <br />The possible response values:\n             • `0`: Across all locations\n             • `1`: For limited locations only\n            <br />When the response returns `1`, check the related `MaxLocCount` parameter to learn the max number of locations."
+          type: string
+        Settings:
+          description: Refrigerant tracking preferences configured for the subscriber.
+          type: string
+        RefrigerantTrackingProviderId:
+          format: int32
+          description: Unique numeric identifier of the provider who is assigned retrofit and retirement work orders, as well as work orders created in the event of adding a refrigerant part use record from the asset details page.
+          type: integer
+        GenerateLeakInspectionOption:
+          format: byte
+          description: "Specifies which refrigerant types require PM leak inspection work orders: only ODS (Ozone Depleting Substance) refrigerant types or all refrigerant types.\n            <br />The possible response values:\n             • `0`: For all refrigerant types\n             • `1`: For ODS refrigerant types"
+          type: string
+        OpenLeakNotificationSettings:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.OpenLeakNotificationSettings'
+          description: Settings for configuring email alerts about open leaks.
+        EnableCARBInspections:
+          description: "Shows whether the subscriber has activated PM leak inspections for appliances tracked by CARB (California Air Resources Board).\n            <br />The possible response values:\n             • `true`: PM leak inspections are enabled for appliances tracked by CARB. When the parameter is `true`, check the related parameters:\n               * `DateFormat`\n               * `CalendarStartDate`\n               * `CalendarStartDateStr`\n             • `false`: PM leak inspections are deactivated for appliances tracked by CARB."
+          default: false
+          type: boolean
+        DateFormat:
+          description: Date format applied to the `CalendarStartDate` parameter.
+          type: string
+        CalendarStartDate:
+          format: date-time
+          description: "Date that becomes a call date for all CARB leak inspection PM work orders. The date format is YYYY-MM-DDThh:mm:ss.\n            <br />Check the `EnableCARBInspections` parameter for more information."
+          type: string
+        CalendarStartDateStr:
+          description: Date that becomes a call date for all CARB leak inspection PM work orders. The date format is MMM DD, YYYY.
+          type: string
           readOnly: true
+        LeakInspectionPMGenerationAdvanceTimeframe:
+          format: int32
+          description: Number of days to generate PM leak inspection work orders in advance upon identifying a leak. The default value is 7 days.
+          type: integer
+        LeakInspectionPMGenerationAdvanceAppliedToExistingPMs:
+          format: byte
+          type: string
+        LeakInspectionCategoryId:
+          format: int32
+          description: Unique numeric identifier of the category for PM leak inspection work orders.
+          type: integer
+        SCProviderMessageEnable:
+          description: "Shows whether the subscriber has enabled the compliance acknowledgment message to be displayed for providers in the SC Provider mobile app. Providers receive the message when checking out of PM leak inspection work orders with at least one refrigerated asset.\n            <br />The possible response values:\n             • `true`: The acknowledgement message is enabled.\n             • `false`: The acknowledgement message is deactivated.\n            <br />Read about the related `SCProviderMessage` parameter to view the message text.\n            <br />***Note***: The *RefLeakInspectionAcknowledgement* and *RTMultiLeakFlow* feature flags should be turned on."
+          default: false
+          type: boolean
+        ServiceAutomationMessageEnable:
+          description: "Shows whether the subscriber has enabled the compliance acknowledgment message to be displayed for subscribers in Service Automation. The message appears when subscribers are entering leak verification information for PM leak inspection work orders with at least one refrigerated asset.\n            <br />The possible response values:\n             • `true`: The message is enabled.\n             • `false`: The message is deactivated.\n            <br />Check the related `ServiceAutomationMessage` parameter to view the message text.\n            <br />***Note***: The *RefLeakInspectionAcknowledgement* and *RTMultiLeakFlow* feature flags should be turned on."
+          default: false
+          type: boolean
+        ProviderAutomationMessageEnable:
+          description: "Shows whether the subscriber has enabled the compliance acknowledgment message to be displayed for providers in Provider Automation. The message is displayed when providers are entering leak verification information for PM leak inspection work orders with at least one refrigerated asset.\n            <br />The possible response values:\n             • `true`: The acknowledgment message is enabled.\n             • `false`: The acknowledgment message is deactivated.\n            <br />Check the related `ProviderAutomationMessage` parameter to view the message text.\n            <br />***Note***: The *RefLeakInspectionAcknowledgement* and *RTMultiLeakFlow* feature flags should be turned on."
+          default: false
+          type: boolean
+        SCProviderMessage:
+          description: Compliance acknowledgement message that is displayed for providers in SC Provider upon checking out of PM leak inspection work orders with at least one refrigerated asset. See the parent `SCProviderMessageEnable` parameter for more details.
+          type: string
+        ServiceAutomationMessage:
+          description: Compliance acknowledgement message that is displayed for subscribers in Service Automation. Subscribers see the message when they are entering leak verification information for PM leak inspection work orders with at least one refrigerated asset.
+          type: string
+        ProviderAutomationMessage:
+          description: Compliance acknowledgement message that is displayed for providers in Provider Automation. Providers see the message when they are entering leak verification information for PM leak inspection work orders with at least one refrigerated asset.
+          type: string
+        CertificationExceptionRecipients:
+          description: "Email addresses of people to be notified whenever technicians specify that they don’t have the required trade certification/license while completing a refrigerant or HVAC work order via SC Provider.\n            <br />***Note***: Available with the *RefCertSCP* feature flag."
+          type: string
+        CertificationExceptionRecipientEmails:
+          description: Email addresses of people to be notified whenever technicians specify that they don’t have the required trade certification/license while completing a refrigerant or HVAC work order via SC Provider. Available with the RefCertSCP feature flag.
+          type: array
+          items:
+            type: string
+          readOnly: true
+        HVACDelayDays:
+          format: int32
+          description: Time delay between the initial and the secondary verifications for HVAC assets. Specified in days.
+          type: integer
+        IndustrialRefrigerationDelayDays:
+          format: int32
+          description: Time delay between the initial and the secondary verifications for assets of the industrial refrigeration group. Specified in days.
+          type: integer
+        CommercialRefrigerationDelayDays:
+          format: int32
+          description: Time delay between the initial and the secondary verifications for assets of the commercial refrigeration type. Specified in days.
+          type: integer
+        OtherTypesDelayDays:
+          format: int32
+          description: Time delay between the initial and the secondary verifications for other types of assets that don’t fall under the industrial refrigeration, commercial refrigeration, or HVAC groups. Specified in days.
+          type: integer
+        RefrigerationPriorityId:
+          format: int32
+          type: integer
     ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.ThresholdAnnouncement:
       type: object
       properties:
@@ -2734,225 +3272,14 @@ components:
         FeatureId:
           format: int32
           type: integer
-    ServiceChannel.Services.Messaging.RefrigerantTracking.MultiLeakInspectionComplianceAcknowledgement:
+    ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.GetLeakRecordsVerificationHistoryRequest:
       type: object
       properties:
-        AssetLeakVerificationItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.AssetLeakVerificationItem'
-        TrackingNumber:
-          format: int32
-          type: integer
-        CertifiedTechnicianId:
-          format: int32
-          type: integer
-        TechnicianCertificateId:
-          type: string
-        CertificateId:
-          format: int32
-          type: integer
-        Actor:
-          type: string
-    ServiceChannel.Api.Model.RefrigerantTracking.WOLeakVerificationResponse:
-      type: object
-      properties:
-        LeakVerifications:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.RefrigerantTracking.LeakVerification'
-    ServiceChannel.Services.Messaging.RefrigerantTracking.AssetLeakVerificationItem:
-      type: object
-      properties:
-        VerificationMethodsIds:
+        LeakImmeasurableIds:
           type: array
           items:
             format: int32
             type: integer
-        AssetId:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.RefrigerantTracking.MaxThreshold:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        ChargeThreshold:
-          format: double
-          type: number
-        ComercialRefTriggerRate:
-          format: double
-          type: number
-        IndustrialRefTriggerRate:
-          format: double
-          type: number
-        HVACTriggerRate:
-          format: double
-          type: number
-        OthersTriggerRate:
-          format: double
-          type: number
-        ApplyDate:
-          format: date-time
-          type: string
-        Announcement:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.ThresholdAnnouncement'
-    ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.IRefrigerantSettings:
-      type: object
-      properties:
-        UnitsOfMeasure:
-          format: byte
-          type: string
-        SubscriberId:
-          format: int32
-          type: integer
-        InventoryLocation:
-          format: byte
-          type: string
-        CalculationMethod:
-          format: byte
-          type: string
-        RefrigerationPriorityName:
-          type: string
-        EmailNotificationEnable:
-          default: false
-          type: boolean
-        EmailNotification:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.EmailNotification'
-        GenerateFollowUpWorkOrder:
-          format: byte
-          type: string
-        Compliance:
-          type: string
-        MaxLocCount:
-          format: int32
-          type: integer
-        RtLimitedAppliance:
-          format: byte
-          type: string
-        Settings:
-          type: string
-        RefrigerantTrackingProviderId:
-          format: int32
-          type: integer
-        GenerateLeakInspectionOption:
-          format: byte
-          type: string
-        OpenLeakNotificationSettings:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.OpenLeakNotificationSettings'
-        CertificationExceptionRecipients:
-          type: string
-        CertificationExceptionRecipientEmails:
-          type: array
-          items:
-            type: string
-          readOnly: true
-        HVACDelayDays:
-          format: int32
-          type: integer
-        DelayedSecondaryVerification:
-          default: false
-          type: boolean
-        IndustrialRefrigerationDelayDays:
-          format: int32
-          type: integer
-        CommercialRefrigerationDelayDays:
-          format: int32
-          type: integer
-        OtherTypesDelayDays:
-          format: int32
-          type: integer
-        RefrigerationPriorityId:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.EmailNotification:
-      description: Object defining the system charge exceeded notification. The email notification is sent to the specified recipients when the amount of refrigerant added by a technician meets or exceeds the system total charge.
-      type: object
-      properties:
-        EmailAddresses:
-          description: Email addresses of the recipients who receive the system charge exceeded notification.
-          type: string
-        EmailText:
-          description: Text of the email.
-          type: string
-    ServiceChannel.Services.WebApi.Models.Response.AssetManager.RefrigerantChargeOptionResponseItem:
-      description: Object containing refrigerant charge descriptions and their IDs.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Charge description ID.
-          type: integer
-        OptionName:
-          description: "Charge method name:\n             • `Calculation`\n             • `Established`\n             • `Manufacturer Tag`\n             • `Measurement`\n             • `MFG Info (Established Range)`\n             • `Onsite Documentation`\n             • `Approximate`"
-          type: string
-    ServiceChannel.Services.Core.InternalRequests.RefrigerantTracking.GetAvailableRacksResponse:
-      type: object
-      properties:
-        RefrigerantRack:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantRack'
-    ServiceChannel.Services.Messaging.RetrofitRetirement.UpdateRetrofitRetirePlanRefrigerantEnteredData:
-      description: Refrigerant entered/added data for updating a Retrofit/Retire plan
-      type: object
-      properties:
-        PartId:
-          format: int32
-          description: Part usage record ID to update
-          type: integer
-        Date:
-          format: date-time
-          description: Updated date when refrigerant was entered/added
-          type: string
-        Qty:
-          format: double
-          description: Updated quantity of refrigerant entered/added
-          type: number
-    ServiceChannel.Services.Messaging.RefrigerantTracking.AddLeakNoteRequest:
-      type: object
-      properties:
-        LeakRecordId:
-          format: int32
-          type: integer
-        Note:
-          type: string
-        Autogenerated:
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.RetrofitRetirement.UpdateRetrofitRetirePlanRefrigerantRemovalData:
-      description: Refrigerant removal data for updating a Retrofit/Retire plan
-      type: object
-      properties:
-        PartId:
-          format: int32
-          description: Part usage record ID to update
-          type: integer
-        Date:
-          format: date-time
-          description: Updated date when refrigerant was removed
-          type: string
-        Qty:
-          format: double
-          description: Updated quantity of refrigerant removed
-          type: number
-        RefrigerantRemovalStatus:
-          format: byte
-          description: Updated refrigerant removal status (e.g., Disposed, Reused)
-          type: string
-    ServiceChannel.Services.Messaging.RefrigerantTracking.CreateUpdateRackConnectionRequest:
-      type: object
-      properties:
-        RackId:
-          format: int32
-          type: integer
-        AssetId:
-          format: int32
-          type: integer
-        LocationId:
-          format: int32
-          type: integer
     ServiceChannel.Services.Messaging.RefrigerantTracking.UpdateLeakRecordRequest:
       description: Object containing information about the leak event.
       required:
@@ -3010,68 +3337,125 @@ components:
           format: date-time
           description: Date and time when the leak event was completed. The date format is `YYYY-MM-DDThh:mm:ss.sssZ`. ***Note:*** The leak event completion date cannot be earlier than the leak event repair date and later than the work order completion date.
           type: string
-    ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.OpenLeakNotificationSettings:
-      description: Object containing the settings for configuring email alerts about open leaks.
+    ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.EmailNotification:
+      description: Object defining the system charge exceeded notification. The email notification is sent to the specified recipients when the amount of refrigerant added by a technician meets or exceeds the system total charge.
       type: object
       properties:
-        NotificationInterval:
+        EmailAddresses:
+          description: Email addresses of the recipients who receive the system charge exceeded notification.
+          type: string
+        EmailText:
+          description: Text of the email.
+          type: string
+    ServiceChannel.Services.Messaging.RefrigerantTracking.AssetLeakHistoryResponse:
+      description: Object containing the details of a leak event.
+      type: object
+      properties:
+        Id:
           format: int32
-          description: How many days should pass before sending the next notification about the open leak event.
+          description: Unique numeric identifier of the leak event.
           type: integer
-        RecipientsEmails:
-          description: Email address(es) of people who get notified about the open leak.
-          type: string
-        UpdatedDate:
-          format: date-time
-          description: Date when the open leak notification settings were last updated by the subscriber. The format is YYYY-MM-DDThh:mm:ss.sssZ.
-          type: string
-    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakInspectionComplianceAcknowledgement:
-      type: object
-      properties:
         AssetId:
           format: int32
+          description: Unique numeric identifier of the asset.
           type: integer
-        VerificationMethodsIds:
+        RecId:
+          format: int32
+          description: Unique numeric identifier of the work order.
+          type: integer
+        TriggerDate:
+          format: date-time
+          description: Date when the leak event was created. The format is YYYY-MM-DDThh:mm:ss.sss.
+          type: string
+        RepairDate:
+          description: Date when the repair was completed.
+          type: string
+        TriggerDateStr:
+          description: Date when the leak event was created. The format is YYYY-MM-DD.
+          type: string
+        InitialVerificationDate:
+          description: Date when the first verification took place.
+          type: string
+        FollowUpDate:
+          description: Date of the second verification.
+          type: string
+        InitialVerificationMethod:
+          format: int32
+          description: Method that was used during the first verification to make sure the leak had been fixed.
+          type: integer
+        CalculationMethod:
+          format: byte
+          description: Method of leak calculating, for example, rolling average.
+          type: string
+        FollowUpMethod:
+          format: int32
+          description: Method of the second verification.
+          type: integer
+        LeakStatus:
+          format: byte
+          description: Status of the leak event.
+          type: string
+        LeakRate:
+          format: double
+          description: Result of the leak calculation in percentage.
+          type: number
+        Charge:
+          format: double
+          description: Total system charge of the asset.
+          type: number
+        ChargeMetrics:
+          format: double
+          description: Metrics of the asset’s charge.
+          type: number
+        TriggerQty:
+          format: double
+          description: Trigger quantity.
+          type: number
+        TriggerQtyMetrics:
+          format: double
+          description: Trigger quantity metrics.
+          type: number
+        LeakAreaId:
+          format: int32
+          description: 'Unique numeric identifier of the area where the leak occurred: more general place, for example, receiver/condensor.'
+          type: integer
+        LeakLocationId:
+          format: int32
+          description: 'Unique numeric identifier of the location where the leak occurred: more specific place within the particular area, for example, level indicator/alarm/splitting valve.'
+          type: integer
+        Step:
+          format: byte
+          description: Step.
+          type: string
+          readOnly: true
+        FaultCodeId:
+          format: int32
+          description: Unique numeric identifier of the reason why the problem occurred.
+          type: integer
+        ActionCodeId:
+          format: int32
+          description: Unique numeric identifier of the action that a technician took to fix the leak.
+          type: integer
+        FaultCodeName:
+          type: string
+        ActionCodeName:
+          type: string
+        GeneratedDate:
+          format: date-time
+          description: Generated date. The format is YYYY-MM-DDThh:mm:ss.sss.
+          type: string
+        LeakImmeasurableList:
+          description: Object containing the list of leak records
           type: array
           items:
-            format: int32
-            type: integer
-        TrackingNumber:
-          format: int32
-          type: integer
-        CertifiedTechnicianId:
-          format: int32
-          type: integer
-        TechnicianCertificateId:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableResponse'
+        CompletedDate:
+          format: date-time
+          description: Date when the leak event was completed.
           type: string
-        CertificateId:
-          format: int32
-          type: integer
-        Actor:
-          type: string
-    ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantType:
+    ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.RetrofitRetirePlanRefrigerantEnterdDataWeb:
       type: object
       properties:
-        InventoryId:
-          format: int32
-          type: integer
-        SubscriberId:
-          format: int32
-          type: integer
-        Name:
-          type: string
-        IsODS:
-          default: false
-          type: boolean
-        GwpRefrigerantId:
-          format: int32
-          type: integer
-    ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.RetrofitRetirePlanRefrigerantRemovalDataWeb:
-      type: object
-      properties:
-        RefrigerantRemovalStatus:
-          format: byte
-          type: string
         Date:
           format: date-time
           type: string
@@ -3091,111 +3475,40 @@ components:
         InventoryPartId:
           format: int32
           type: integer
-    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakDetectorAuditAddUpdateRequest:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        LeakDetectorId:
-          format: int32
-          type: integer
-        AlarmSetPoint:
-          format: double
-          type: number
-        DetectionLimit:
-          format: double
-          type: number
-        RecId:
-          format: int32
-          type: integer
-        ServiceDate:
-          format: date-time
+        PartGroup:
           type: string
-        ServiceType:
-          enum:
-          - Audit
-          - Inspection
-          type: string
-        ServiceDescription:
-          type: string
-        LocationId:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.Equipments.GetAvailableRacksRequest:
-      description: Object containing the request parameters for retrieving rack assets.
-      required:
-      - SubscriberId
-      - LocationId
-      type: object
-      properties:
-        SubscriberId:
-          format: int32
-          description: Unique numeric identifier of the subscriber.
-          type: integer
-        LocationId:
-          format: int32
-          description: Unique numeric identifier of the location to get rack assets for. One location ID is allowed per request.
-          type: integer
-        IncludeInactive:
-          description: "Allows including/excluding deactivated rack assets. Possible input values:\n             • `true`: Deactivated rack assets will be included in the response.\n             • `false`: Deactivated rack assets will be excluded from the response."
-          default: false
-          type: boolean
-        SelectInactiveRackId:
-          format: int32
-          description: To get a specific rack asset in the response, enter the asset ID.
-          type: integer
-    ServiceChannel.Services.Messaging.RefrigerantTracking.GetConnectedRackResponse:
-      type: object
-      properties:
-        AssetRackConnection:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.AssetRackConnection'
-    ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.GetLeakRecordsVerificationHistoryRequest:
-      type: object
-      properties:
-        LeakImmeasurableIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.RefrigerantTracking.ChargeHistoryRequest:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        AssetId:
-          format: int32
-          type: integer
-        TagId:
-          type: string
-        TotalCharge:
-          format: double
-          type: number
-        TotalChargeStr:
-          type: string
-        ProviderName:
-          type: string
-        EffectiveDate:
-          format: date-time
-          type: string
-        InitialCharge:
-          default: false
-          type: boolean
         RefrigerantChargeOptionsId:
           format: int32
           type: integer
-        TotalRows:
-          format: int32
-          type: integer
-        RefrigerantPartNumber:
+        RefrigerantChargeVendor:
           type: string
-        PartNumberId:
+        IsNewCharge:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableNote:
+      type: object
+      properties:
+        ID:
           format: int32
           type: integer
-        TotalChargeMetrics:
-          format: double
-          type: number
+        LeakImmeasurableId:
+          format: int32
+          type: integer
+        Note:
+          type: string
+        CreateDate:
+          format: date-time
+          type: string
+        CreateDateFormated:
+          type: string
+        UserId:
+          format: int32
+          type: integer
+        AutoGenerated:
+          default: false
+          type: boolean
+        CreatedByUserName:
+          type: string
     ServiceChannel.Services.Messaging.RefrigerantTracking.LeakRecordVerificationAddRequest:
       type: object
       properties:
@@ -3213,63 +3526,33 @@ components:
           type: boolean
         Reason:
           type: string
-    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableBulkChangeRequest:
-      description: Request model to perform bulk operations with multiple leak records for the work order and an asset.
+    ServiceChannel.Api.Model.RefrigerantTracking.WOLeakVerificationResponse:
       type: object
       properties:
-        AddItems:
+        LeakVerifications:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.AddLeakImmeasurableRequest'
-        UpdateItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.UpdateLeakImmeasurable'
-        DeleteItems:
-          description: List of leak records IDs to remove.
-          type: array
-          items:
-            format: int32
-            type: integer
-        RecId:
-          format: int32
-          description: Unique numeric identifier of the work order.
-          type: integer
-        AssetId:
-          format: int32
-          description: Unique numeric identifier of the asset.
-          type: integer
-    ServiceChannel.Services.Messaging.RefrigerantTracking.UpdateLeakImmeasurable:
-      description: Object containing information about the leak record
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.RefrigerantTracking.LeakVerification'
+    ServiceChannel.Services.Messaging.Assets.SystemLocationResponse:
+      description: Object containing physical locations of refrigeration systems
       type: object
       properties:
         Id:
           format: int32
-          description: Unique numeric identifier of the leak record.
+          description: "Unique numeric identifier of the physical location:\n             • `1` = `Indoors`. Applicable to refrigeration or HVAC units installed inside the building, for example, in the restaurant kitchen.\n             • `2` = `Outdoors`. Applicable to units positioned outside the building, for example, at the back of the store or on the roof.\n             • `3` = `Partially Indoors/Outdoors`. Applicable to a split system where components are installed in different environments. For example, the condenser is located indoors, while the evaporator is located outdoors."
           type: integer
+        Name:
+          description: 'Name of the physical location where the refrigeration system is positioned: *Indoors*, *Outdoors*, or *Partially Indoors/Outdoors*.'
+          type: string
+    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableAndAuditBulkAddRequest:
+      type: object
+      properties:
         RepairDate:
           format: date-time
-          description: Date when the repair was completed.
           type: string
-        InitialVerificationDate:
-          format: date-time
-          description: Date when the first verification took place.
-          type: string
-        InitialVerificationMethod:
-          format: int32
-          description: Method that was used during the first verification to make sure the leak had been fixed.
-          type: integer
-        FollowUpVerificationDate:
-          format: date-time
-          description: Date of the second verification.
-          type: string
-        FollowUpVerificationMethod:
-          format: int32
-          description: Method of the second verification.
-          type: integer
         ActionCodeId:
           format: int32
-          description: Unique numeric identifier of the action that a technician took to fix the leak.
+          description: Date when the first verification took place.
           type: integer
         FaultCodeId:
           format: int32
@@ -3279,14 +3562,20 @@ components:
           format: int32
           description: 'Unique numeric identifier of the location where the leak occurred: more specific place within the particular area, for example, level indicator/alarm/splitting valve.'
           type: integer
+        LeakAreaId:
+          format: int32
+          description: 'Unique numeric identifier of the area where the leak occurred: more general place, for example, receiver/condensor.'
+          type: integer
         Notes:
           description: Leak record notes.
           type: array
           items:
             type: string
-        Actor:
-          description: Name of the technician who performed the fix of the leak.
-          type: string
+        LeakVerifications:
+          description: Unique numeric identifier of the work order to add the leak record to.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakRecordVerificationAddRequest'
     ServiceChannel.Services.Core.InternalRequests.UserInfo:
       type: object
       properties:
@@ -3325,201 +3614,45 @@ components:
           $ref: '#/components/schemas/System.Object'
         RegionAccess:
           $ref: '#/components/schemas/System.Object'
-    ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.RetrofitRetirePlanWebRequest:
+    System.Object:
       type: object
-      properties:
-        MoeNumber:
-          type: string
-        RecId:
-          format: int32
-          type: integer
-        AssetId:
-          format: int32
-          type: integer
-        RetrofitRetirePlanData:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.RetrofitRetirePlanDataWeb'
-        RefrigerantRemovalData:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.RetrofitRetirePlanRefrigerantRemovalDataWeb'
-        RefrigerantEnteredData:
-          $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.RetrofitRetirePlanRefrigerantEnterdDataWeb'
-    ServiceChannel.Services.Messaging.RetrofitRetirement.UpdateRetrofitRetirePlanRequest:
-      description: Request to update an existing Retrofit/Retire plan
-      type: object
-      properties:
-        RetrofitRetirePlanData:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RetrofitRetirement.UpdateRetrofitRetirePlanGeneralData'
-        RefrigerantRemovalData:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RetrofitRetirement.UpdateRetrofitRetirePlanRefrigerantRemovalData'
-          description: Updated refrigerant removal data
-        RefrigerantEnteredData:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RetrofitRetirement.UpdateRetrofitRetirePlanRefrigerantEnteredData'
-          description: Updated refrigerant entered/added data (for Retrofit plans)
-    ServiceChannel.Services.Messaging.RefrigerantTracking.AssetRackConnection:
-      type: object
-      properties:
-        RackId:
-          format: int32
-          type: integer
-        AssetId:
-          format: int32
-          type: integer
-        AssetType:
-          type: string
-        ConnectionDate:
-          format: date-time
-          type: string
-        DisconnectDate:
-          format: date-time
-          type: string
-        IsActiveConnection:
-          default: false
-          type: boolean
-        AssetTag:
-          type: string
-        Brand:
-          type: string
-        ModelNumber:
-          type: string
-        SerialNumber:
-          type: string
-        TotalRows:
-          format: int32
-          type: integer
-        AssetCircuitId:
-          format: int32
-          type: integer
-        AssetCircuitTag:
-          type: string
-    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableAndAuditBulkChangeRequest:
-      type: object
-      properties:
-        AddItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableAndAuditBulkAddRequest'
-        UpdateItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableAndAuditBulkUpdateRequest'
-        DeleteItems:
-          type: array
-          items:
-            format: int32
-            type: integer
-        RecId:
-          format: int32
-          type: integer
-        AssetId:
-          format: int32
-          type: integer
-        Technician:
-          type: string
-        CertificateId:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakInspectionComplianceAcknowledgementResponseItemWithMethods:
-      type: object
-      properties:
-        VerificationMethodsString:
-          type: string
-        UpdatedDateString:
-          type: string
-        TrackingNumber:
-          format: int32
-          type: integer
-        TechnicianName:
-          type: string
-        AssetId:
-          format: int32
-          type: integer
-        CertifiedTechnicianId:
-          format: int32
-          type: integer
-        TechnicianCertificateId:
-          type: string
-        CertificateId:
-          format: int32
-          type: integer
-        Actor:
-          type: string
-        Message:
-          type: string
-        UpdatedDate:
-          format: date-time
-          type: string
-        VerificationMethodsIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.RefrigerantTracking.EditAssetRefrigerantRequest:
+      properties: {}
+    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakDetectorAuditAddUpdateRequest:
       type: object
       properties:
         Id:
           format: int32
           type: integer
-        AssetId:
+        LeakDetectorId:
           format: int32
           type: integer
-        RefrigerantUsageType:
-          format: int32
-          type: integer
-        RackId:
-          type: string
-        RackEntityId:
-          format: int32
-          type: integer
-        CarbID:
-          type: string
-        IsCarbReporting:
-          default: false
-          type: boolean
-        SystemLocation:
-          format: byte
-          type: string
-        OperationalStatus:
-          format: byte
-          type: string
-        PartNumberId:
-          format: int32
-          type: integer
-        RackTypeId:
-          format: int32
-          type: integer
-        CurrentCharge:
+        AlarmSetPoint:
           format: double
           type: number
-        CurrentChargeOunces:
+        DetectionLimit:
           format: double
           type: number
-        ChargeDescriptionId:
+        RecId:
           format: int32
           type: integer
-        ChargeProviderName:
-          type: string
-        EffectiveChargeDate:
+        ServiceDate:
           format: date-time
           type: string
-        HasLeakDetector:
-          default: false
-          type: boolean
-        NeedsRetrofitRetirement:
-          default: false
-          type: boolean
-        RequiresAutomaticLeakDetector:
-          default: false
-          type: boolean
-        AssetLeakDetectorId:
+        ServiceType:
+          enum:
+          - Audit
+          - Inspection
+          type: string
+        ServiceDescription:
+          type: string
+        LocationId:
           format: int32
           type: integer
-        RefrigerantPartNumber:
-          type: string
-        ProcessCharge:
-          enum:
-          - None
-          - Create
-          - Update
-          type: string
+    ServiceChannel.Services.Messaging.RefrigerantTracking.GetConnectedRackResponse:
+      type: object
+      properties:
+        AssetRackConnection:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.AssetRackConnection'
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -5157,152 +5290,450 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakArea:
-      description: Object containing refrigerant leak areas.
+    ServiceChannel.Services.Messaging.RefrigerantTracking.UpdateLeakImmeasurable:
+      description: Object containing information about the leak record
       type: object
       properties:
         Id:
           format: int32
-          description: Unique numeric identifier of the leak area.
+          description: Unique numeric identifier of the leak record.
           type: integer
-        Name:
-          description: "Leak area name. Possible response values:\n             • `Compressor`\n             • `Discharge Line`\n             • `Condensor`\n             • `Receiver`\n             • `Liquid Line`\n             • `Evaporator`\n             • `Suction line`\n             • `Other`"
-          type: string
-    ServiceChannel.Services.Messaging.RefrigerantTracking.AssetLeakHistoryResponse:
-      description: Object containing the details of a leak event.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of the leak event.
-          type: integer
-        AssetId:
-          format: int32
-          description: Unique numeric identifier of the asset.
-          type: integer
-        RecId:
-          format: int32
-          description: Unique numeric identifier of the work order.
-          type: integer
-        TriggerDate:
-          format: date-time
-          description: Date when the leak event was created. The format is YYYY-MM-DDThh:mm:ss.sss.
-          type: string
         RepairDate:
+          format: date-time
           description: Date when the repair was completed.
           type: string
-        TriggerDateStr:
-          description: Date when the leak event was created. The format is YYYY-MM-DD.
-          type: string
         InitialVerificationDate:
+          format: date-time
           description: Date when the first verification took place.
-          type: string
-        FollowUpDate:
-          description: Date of the second verification.
           type: string
         InitialVerificationMethod:
           format: int32
           description: Method that was used during the first verification to make sure the leak had been fixed.
           type: integer
-        CalculationMethod:
-          format: byte
-          description: Method of leak calculating, for example, rolling average.
+        FollowUpVerificationDate:
+          format: date-time
+          description: Date of the second verification.
           type: string
-        FollowUpMethod:
+        FollowUpVerificationMethod:
           format: int32
           description: Method of the second verification.
-          type: integer
-        LeakStatus:
-          format: byte
-          description: Status of the leak event.
-          type: string
-        LeakRate:
-          format: double
-          description: Result of the leak calculation in percentage.
-          type: number
-        Charge:
-          format: double
-          description: Total system charge of the asset.
-          type: number
-        ChargeMetrics:
-          format: double
-          description: Metrics of the asset’s charge.
-          type: number
-        TriggerQty:
-          format: double
-          description: Trigger quantity.
-          type: number
-        TriggerQtyMetrics:
-          format: double
-          description: Trigger quantity metrics.
-          type: number
-        LeakAreaId:
-          format: int32
-          description: 'Unique numeric identifier of the area where the leak occurred: more general place, for example, receiver/condensor.'
-          type: integer
-        LeakLocationId:
-          format: int32
-          description: 'Unique numeric identifier of the location where the leak occurred: more specific place within the particular area, for example, level indicator/alarm/splitting valve.'
-          type: integer
-        Step:
-          format: byte
-          description: Step.
-          type: string
-          readOnly: true
-        FaultCodeId:
-          format: int32
-          description: Unique numeric identifier of the reason why the problem occurred.
           type: integer
         ActionCodeId:
           format: int32
           description: Unique numeric identifier of the action that a technician took to fix the leak.
           type: integer
-        FaultCodeName:
-          type: string
-        ActionCodeName:
-          type: string
-        GeneratedDate:
-          format: date-time
-          description: Generated date. The format is YYYY-MM-DDThh:mm:ss.sss.
-          type: string
-        LeakImmeasurableList:
-          description: Object containing the list of leak records
+        FaultCodeId:
+          format: int32
+          description: Unique numeric identifier of the reason why the problem occurred.
+          type: integer
+        LeakLocationId:
+          format: int32
+          description: 'Unique numeric identifier of the location where the leak occurred: more specific place within the particular area, for example, level indicator/alarm/splitting valve.'
+          type: integer
+        Notes:
+          description: Leak record notes.
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableResponse'
-        CompletedDate:
-          format: date-time
-          description: Date when the leak event was completed.
+            type: string
+        Actor:
+          description: Name of the technician who performed the fix of the leak.
           type: string
-    ServiceChannel.Services.WebApi.Models.Response.RefrigerantSettingsWithFF:
+    ServiceChannel.Services.Messaging.RefrigerantTracking.EditAssetRefrigerantRequest:
       type: object
       properties:
-        RefrigerantTSettings:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.IRefrigerantSettings'
-        FFSubRefCertSCP:
+        Id:
+          format: int32
+          type: integer
+        AssetId:
+          format: int32
+          type: integer
+        RefrigerantUsageType:
+          format: int32
+          type: integer
+        RackId:
+          type: string
+        RackEntityId:
+          format: int32
+          type: integer
+        CarbID:
+          type: string
+        IsCarbReporting:
           default: false
           type: boolean
-        FFSubRTMultiLeakFlow:
+        SystemLocation:
+          format: byte
+          type: string
+        OperationalStatus:
+          format: byte
+          type: string
+        PartNumberId:
+          format: int32
+          type: integer
+        RackTypeId:
+          format: int32
+          type: integer
+        CurrentCharge:
+          format: double
+          type: number
+        CurrentChargeOunces:
+          format: double
+          type: number
+        ChargeDescriptionId:
+          format: int32
+          type: integer
+        ChargeProviderName:
+          type: string
+        EffectiveChargeDate:
+          format: date-time
+          type: string
+        HasLeakDetector:
           default: false
           type: boolean
-        FFSubRefValidatelogOn:
+        NeedsRetrofitRetirement:
           default: false
           type: boolean
-        FFSubNoRefrigerantAsset:
+        RequiresAutomaticLeakDetector:
           default: false
           type: boolean
-        FFRTLeakDateEmpty:
-          default: false
-          type: boolean
-        FFRTMultiLeakFollowUp:
-          default: false
-          type: boolean
-        FFRefLeakInspectionAcknowledgementAll:
-          default: false
-          type: boolean
-    System.Object:
+        AssetLeakDetectorId:
+          format: int32
+          type: integer
+        RefrigerantPartNumber:
+          type: string
+        ProcessCharge:
+          enum:
+          - None
+          - Create
+          - Update
+          type: string
+    ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantType:
       type: object
-      properties: {}
+      properties:
+        InventoryId:
+          format: int32
+          type: integer
+        SubscriberId:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        IsODS:
+          default: false
+          type: boolean
+        GwpRefrigerantId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.RefrigerantTracking.CreateUpdateRackConnectionRequest:
+      type: object
+      properties:
+        RackId:
+          format: int32
+          type: integer
+        AssetId:
+          format: int32
+          type: integer
+        LocationId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakInspectionComplianceAcknowledgementResponseItemWithMethods:
+      type: object
+      properties:
+        VerificationMethodsString:
+          type: string
+        UpdatedDateString:
+          type: string
+        TrackingNumber:
+          format: int32
+          type: integer
+        TechnicianName:
+          type: string
+        AssetId:
+          format: int32
+          type: integer
+        CertifiedTechnicianId:
+          format: int32
+          type: integer
+        TechnicianCertificateId:
+          type: string
+        CertificateId:
+          format: int32
+          type: integer
+        Actor:
+          type: string
+        Message:
+          type: string
+        UpdatedDate:
+          format: date-time
+          type: string
+        VerificationMethodsIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    System.Web.Http.Results.NotFoundResult:
+      type: object
+      properties:
+        Request:
+          $ref: '#/components/schemas/System.Object'
+          readOnly: true
+    ServiceChannel.Services.Messaging.RetrofitRetirement.UpdateRetrofitRetirePlanRefrigerantRemovalData:
+      description: Refrigerant removal data for updating a Retrofit/Retire plan
+      type: object
+      properties:
+        PartId:
+          format: int32
+          description: Part usage record ID to update
+          type: integer
+        Date:
+          format: date-time
+          description: Updated date when refrigerant was removed
+          type: string
+        Qty:
+          format: double
+          description: Updated quantity of refrigerant removed
+          type: number
+        RefrigerantRemovalStatus:
+          format: byte
+          description: Updated refrigerant removal status (e.g., Disposed, Reused)
+          type: string
+    ServiceChannel.Services.Messaging.RefrigerantTracking.AddLeakImmeasurableRequest:
+      description: Request model to create a leak record for the work order and asset.
+      type: object
+      properties:
+        RepairDate:
+          format: date-time
+          description: Date and time when the repair was completed. ***Note:*** It cannot be earlier than the work order call date. The date format is `YYYY-MM-DDThh:mm:ss.sssZ`.
+          type: string
+        InitialVerificationDate:
+          format: date-time
+          description: Date when the first verification took place. ***Note:*** The initial verification date cannot be in the future and cannot be less than the repair date. It should be either a current date or a date in the past.
+          type: string
+        InitialVerificationMethod:
+          format: int32
+          description: "Method that was used during the first verification to make sure the leak had been fixed. \n            <br />Possible values:\n             • `0`: Unknown\n             • `1`: Soap Bubble Test\n             • `2`: Electronic Leak Detection\n             • `3`: Ultrasonic Leak Detection\n             • `4`: Pressure Test\n             • `5`: Vacuum Test\n             • `6`: Fluorescent Dye Test\n             • `7`: Infrared Test\n             • `8`: Near Infrared Test\n             • `9`: Halon Gas Detection"
+          type: integer
+        FollowUpVerificationDate:
+          format: date-time
+          description: Date of the second verification. The date format is `YYYY-MM-DDThh:mm:ss.sssZ`. ***Note:*** The follow-up verification date cannot be earlier than the initial verification date and cannot be in the future. It should be either a current date or a date in the past.
+          type: string
+        FollowUpVerificationMethod:
+          format: int32
+          description: Method of the second verification. The list of available verification methods is the same as for the `InitialVerificationMethod`.
+          type: integer
+        ActionCodeId:
+          format: int32
+          description: Unique numeric identifier of the action that a technician took to fix the leak. Use the [GET/refrigeranttracking/leakRecord/actionCodes](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_leakRecord_actionCodes) method to get available action codes and their IDs.
+          type: integer
+        FaultCodeId:
+          format: int32
+          description: "Unique numeric identifier of the reason why the problem occurred. Use the [GET/refrigeranttracking/leakRecord/faultCodes](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_leakRecord_faultCodes) method to get available fault codes and their IDs.\n            <br />Possible values:\n             • `1`: Accidental Damage\n             • `2`: Braze or Joint Failure\n             • `3`: Corrosion\n             • `4`: Defrost Heater Failure\n             • `5`: Faulty Part\n             • `6`: Forklift Damage\n             • `7`: Gasket Seal Failure\n             • `8`: Ice Build Up\n             • `9`: Line Break\n             • `10`: Manufacture Defect\n             • `11`: Missing Part\n             • `12`: Natural Disaster\n             • `13`: Normal Mechanical Wear\n             • `14`: Other (Must Explain in Comments)\n             • `15`: Vandalism\n             • `16`: Vibration Related\n             • `17`: Project Related Loss"
+          type: integer
+        LeakLocationId:
+          format: int32
+          description: 'Unique numeric identifier of the location where the leak occurred: more specific place within the particular area, for example, *Coil*, *Level Indicator/Alarm*, *Splitting Valve*. Use the [GET/refrigeranttracking/{subscriberId}/leaklocations](https://developer.servicechannel.com/swagger/index.html#/RefrigerantTracking/GETv3_refrigeranttracking_%7BsubscriberId%7D_leaklocations) method to get the list of available leak locations.'
+          type: integer
+        Notes:
+          description: Leak record notes.
+          type: array
+          items:
+            type: string
+        RecId:
+          format: int32
+          description: Unique numeric identifier of the work order to add the leak record to.
+          type: integer
+        AssetId:
+          format: int32
+          description: Unique numeric identifier of the asset to add the leak record to.
+          type: integer
+        Actor:
+          description: Name of the technician who performed the fix of the leak.
+          type: string
+    ServiceChannel.Services.WebApi.Models.Request.RefrigerantTracking.RetrofitRetirePlanRefrigerantRemovalDataWeb:
+      type: object
+      properties:
+        RefrigerantRemovalStatus:
+          format: byte
+          type: string
+        Date:
+          format: date-time
+          type: string
+        Qty:
+          format: double
+          type: number
+        PartNumber:
+          type: string
+        PartGroupId:
+          format: int32
+          type: integer
+        InventoryLocationGuid:
+          type: string
+        IsInventoryPart:
+          default: false
+          type: boolean
+        InventoryPartId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Core.InternalRequests.RefrigerantTracking.CheckRefrigerantTrackingRequest:
+      type: object
+      properties:
+        LocationIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.RefrigerantTracking.GetLeakAreaListResponse:
+      description: Object containing refrigerant leak areas.
+      type: object
+      properties:
+        LeakAreas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakArea'
+    ServiceChannel.Services.Core.InternalRequests.RefrigerantTracking.GetAvailableRacksResponse:
+      type: object
+      properties:
+        RefrigerantRack:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantRack'
+    ServiceChannel.Api.Model.RefrigerantTracking.LeakVerification:
+      type: object
+      properties:
+        RecId:
+          format: int32
+          type: integer
+        VerificationMethodId:
+          format: byte
+          type: string
+        VerificationMethodName:
+          type: string
+        UserId:
+          format: int32
+          type: integer
+        UserName:
+          type: string
+        Actor:
+          type: string
+        ModifiedDate:
+          format: date-time
+          type: string
+    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableAndAuditBulkUpdateRequest:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        RepairDate:
+          format: date-time
+          type: string
+        ActionCodeId:
+          format: int32
+          description: Date when the first verification took place.
+          type: integer
+        FaultCodeId:
+          format: int32
+          description: Unique numeric identifier of the reason why the problem occurred.
+          type: integer
+        LeakLocationId:
+          format: int32
+          description: 'Unique numeric identifier of the location where the leak occurred: more specific place within the particular area, for example, level indicator/alarm/splitting valve.'
+          type: integer
+        LeakAreaId:
+          format: int32
+          description: 'Unique numeric identifier of the area where the leak occurred: more general place, for example, receiver/condensor.'
+          type: integer
+        Notes:
+          description: Leak record notes.
+          type: array
+          items:
+            type: string
+        LeakVerifications:
+          description: Unique numeric identifier of the work order to add the leak record to.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakRecordVerificationAddRequest'
+    ServiceChannel.Services.Messaging.RefrigerantTracking.AddLeakNoteRequest:
+      type: object
+      properties:
+        LeakRecordId:
+          format: int32
+          type: integer
+        Note:
+          type: string
+        Autogenerated:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.RetrofitRetirement.UpdateRetrofitRetirePlanGeneralData:
+      description: General data for updating an existing Retrofit/Retire plan
+      type: object
+      properties:
+        PlanId:
+          format: int32
+          description: Unique identifier of the plan to update
+          type: integer
+        StartDate:
+          format: date-time
+          description: Updated start date of the plan
+          type: string
+        EndDate:
+          format: date-time
+          description: Updated end date of the plan
+          type: string
+        Description:
+          description: Updated description of the plan
+          type: string
+        ProviderName:
+          description: Updated provider/vendor name
+          type: string
+    ServiceChannel.Services.Messaging.RefrigerantTracking.ChargeHistoryRequest:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        AssetId:
+          format: int32
+          type: integer
+        TagId:
+          type: string
+        TotalCharge:
+          format: double
+          type: number
+        TotalChargeStr:
+          type: string
+        ProviderName:
+          type: string
+        EffectiveDate:
+          format: date-time
+          type: string
+        InitialCharge:
+          default: false
+          type: boolean
+        RefrigerantChargeOptionsId:
+          format: int32
+          type: integer
+        TotalRows:
+          format: int32
+          type: integer
+        RefrigerantPartNumber:
+          type: string
+        PartNumberId:
+          format: int32
+          type: integer
+        TotalChargeMetrics:
+          format: double
+          type: number
+    ServiceChannel.Services.Messaging.RefrigerantTracking.AssetLeakVerificationItem:
+      type: object
+      properties:
+        VerificationMethodsIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        AssetId:
+          format: int32
+          type: integer
     ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantUseReasonCode:
       description: Object containing refrigerant use reasons.
       type: object
@@ -5330,474 +5761,43 @@ components:
           description: "Defines whether a user can select a reason code when capturing refrigerant use. Possible response values:\n             • `true`: Reason code is enabled.\n             • `false`: Reason code is disabled."
           default: false
           type: boolean
-    ServiceChannel.Services.Messaging.RefrigerantTracking.GetLeakAreaListResponse:
-      description: Object containing refrigerant leak areas.
+    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableBulkChangeRequest:
+      description: Request model to perform bulk operations with multiple leak records for the work order and an asset.
       type: object
       properties:
-        LeakAreas:
+        AddItems:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakArea'
-    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableResponse:
-      description: Object containig the details of a leak record
-      type: object
-      properties:
-        Id:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.AddLeakImmeasurableRequest'
+        UpdateItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.UpdateLeakImmeasurable'
+        DeleteItems:
+          description: List of leak records IDs to remove.
+          type: array
+          items:
+            format: int32
+            type: integer
+        RecId:
           format: int32
-          description: Unique numeric identifier of the leak record.
+          description: Unique numeric identifier of the work order.
           type: integer
         AssetId:
           format: int32
           description: Unique numeric identifier of the asset.
           type: integer
-        AssetTagId:
-          description: Unique numeric identifier of the asset tag.
-          type: string
-        RecId:
-          format: int32
-          description: Unique numeric identifier of the work order.
-          type: integer
-        RepairDate:
-          format: date-time
-          description: Date when the repair was completed.
-          type: string
-        RepairDateFormatted:
-          type: string
-        RepairDateStr:
-          type: string
-        InitialVerificationDate:
-          format: date-time
-          description: Date when the first verification took place.
-          type: string
-        InitialVerificationDateFormatted:
-          type: string
-        InitialVerificationDateStr:
-          type: string
-        InitialVerificationMethod:
-          format: int32
-          description: Method that was used during the first verification to make sure the leak had been fixed.
-          type: integer
-        InitialVerificationMethodName:
-          type: string
-        FollowUpVerificationDate:
-          format: date-time
-          description: Date of the second verification.
-          type: string
-        FollowUpVerificationDateFormatted:
-          type: string
-        FollowUpVerificationStr:
-          type: string
-        FollowUpVerificationMethod:
-          format: int32
-          description: Method of the second verification.
-          type: integer
-        FollowUpVerificationMethodName:
-          type: string
-        ActionCodeId:
-          format: int32
-          description: Unique numeric identifier of the action that a technician took to fix the leak.
-          type: integer
-        ActionCode:
-          type: string
-        FaultCodeId:
-          format: int32
-          description: Unique numeric identifier of the reason why the problem occurred.
-          type: integer
-        FaultCode:
-          type: string
-        LeakEventId:
-          format: int32
-          description: Unique numeric identifier of the leak event to which the leak record is associated.
-          type: integer
-        LeakLocationId:
-          format: int32
-          description: 'Unique numeric identifier of the location where the leak occurred: more specific place within the particular area, for example, level indicator/alarm/splitting valve.'
-          type: integer
-        LeakAreaId:
-          format: int32
-          description: 'Unique numeric identifier of the area where the leak occurred: more general place, for example, receiver/condensor.'
-          type: integer
-        LeakLocationName:
-          type: string
-        LeakAreaName:
-          type: string
-        ModifiedBy:
-          format: int32
-          description: User who modified the leak record.
-          type: integer
-        ModifiedByUserId:
-          type: string
-        ModifiedByUserName:
-          type: string
-        LeakNotes:
-          description: Notes that were added by users to a leak record.
-          type: array
-          items:
-            type: string
-        Actor:
-          description: Name of the technician who performed the fix of the leak.
-          type: string
-        LeakLocation:
-          description: Location where the leak occured, including more general and more specific name, for example, splitting valve - condensor.
-          type: string
-          readOnly: true
-        LeakStatusStr:
-          description: Status of the leak event.
-          type: string
-          readOnly: true
-        NotesTotalCount:
-          format: int32
-          description: Total number of leak notes.
-          type: integer
-        LeakImmeasurableNotes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableNote'
-        OriginalTrackingNumber:
-          format: int32
-          type: integer
-        LeakStatus:
-          default: false
-          type: boolean
-        InitialVerificationPassed:
-          default: false
-          type: boolean
-        FollowUpVerificationPassed:
-          default: false
-          type: boolean
-        LeakInspections:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakInspectionComplianceAcknowledgementResponseItemWithMethods'
-    ServiceChannel.Services.Messaging.LeakRecord.LeakVerifyMethod:
-      description: Leak verification method
+    ServiceChannel.Services.WebApi.Models.Response.AssetManager.RefrigerantChargeOptionResponseItem:
+      description: Object containing refrigerant charge descriptions and their IDs.
       type: object
       properties:
         Id:
           format: int32
-          description: Method's id
+          description: Charge description ID.
           type: integer
-        Name:
-          description: Method's name
+        OptionName:
+          description: "Charge method name:\n             • `Calculation`\n             • `Established`\n             • `Manufacturer Tag`\n             • `Measurement`\n             • `MFG Info (Established Range)`\n             • `Onsite Documentation`\n             • `Approximate`"
           type: string
-    ServiceChannel.Services.Core.InternalRequests.RefrigerantTracking.LeakImmeasurableBulkChangeRequestInternal:
-      type: object
-      properties:
-        RequestData:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableBulkChangeRequest'
-          readOnly: true
-        UserData:
-          $ref: '#/components/schemas/ServiceChannel.Services.Core.InternalRequests.UserInfo'
-    ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.RefrigerantSettingsUS:
-      description: Object containing refrigerant tracking settings for US companies
-      type: object
-      properties:
-        UnitsOfMeasure:
-          format: byte
-          description: "Unit of measure for tracking refrigerant use.\n            <br />The possible response values:\n             • `0`: Pounds and decimals of pounds\n             • `1`: Pounds and ounces\n             • `2`: Kilograms and grams\n            <br />***Note***: To use kilograms and grams as a unit of measure, turn on the  *RefrigerantSettingsEU* feature flag."
-          type: string
-        SubscriberId:
-          format: int32
-          description: Unique numeric identifier of the subscriber.
-          type: integer
-        InventoryLocation:
-          format: byte
-          description: "Defines whether technicians can take refrigerant from any inventory location or from the locations in the technician's area only.\n            <br />The possible response values:\n             • `0`: Only in technician’s area\n             • `1`: Any location"
-          type: string
-        CalculationMethod:
-          format: byte
-          description: "Preferred method of refrigerant leak calculation:\n             • `0`: Annualized\n             • `1`: Rolling Average\n            <br />Check how each calculation method works in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/2789703925/Refrigerant+Tracking#RefrigerantTracking)."
-          type: string
-        ChargeThreshold:
-          format: double
-          description: Minimum amount of refrigerant that a system can contain for leak tracking to occur. The charge threshold value is displayed in the specified unit of measure. Check the `UnitsOfMeasure` parameter value.
-          type: number
-        ComercialRefTriggerRate:
-          format: double
-          description: "Minimum percentage of the total system charge that can be lost before refrigerant tracking to occur. This rate is set for commercial refrigeration appliances.\n            <br />It applies to asset types with the refrigerant use purpose set to *Commercial Refrigeration*."
-          type: number
-        IndustrialRefTriggerRate:
-          format: double
-          description: "Minimum percentage of the total system charge that can be lost before refrigerant tracking to occur. This rate is set for industrial refrigeration appliances.\n            <br />It applies to asset types with the refrigerant use purpose set to *Industrial Refrigeration*."
-          type: number
-        HVACTriggerRate:
-          format: double
-          description: "Minimum percentage of the total system charge that can be lost before refrigerant tracking to occur. This rate is set for HVAC appliances.\n            <br />It applies to asset types with the refrigerant use purpose set to *Comfort Cooling (AC)*."
-          type: number
-        OthersTriggerRate:
-          format: double
-          description: "Minimum percentage of the total system charge that can be lost before refrigerant tracking to occur. This trigger rate is set for appliances that don’t fall under any of the following groups: commercial appliances, industrial appliances, HVAC appliances.\n            <br />It applies to asset types with the refrigerant use purpose set to *Other Types of Refrigerated Asset*."
-          type: number
-        Yearly:
-          format: double
-          description: "Minimum threshold for annual leak inspections. The value defines the minimum system charge required to create an annual PM leak inspection work order if a leak has met or exceeded the EPA leak threshold.\n            <br />Check the `UnitsOfMeasure` parameter value to see the corresponding unit of measure."
-          type: number
-        Quarterly:
-          format: double
-          description: "Minimum threshold for quarterly leak inspections. The value defines the minimum system charge required to create quarterly PM leak inspection work orders if a leak has met or exceeded the EPA leak threshold. \n            <br />Check the `UnitsOfMeasure` parameter value to see the corresponding unit of measure."
-          type: number
-        RunCARBReport:
-          description: "Refrigerant tracking preference that allows subscribers to run the California Air Resources Board report.\n            <br />The possible response values:\n             • `true`: The CARB reporting is activated for the subscriber.\n             • `false`: The CARB reporting is deactivated for the subscriber.\n            <br />Learn about the CARB reporting in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/710148264/California+Air+Resource+Board+CARB+Reporting)."
-          default: false
-          type: boolean
-        ComplianceAcknowledgmentForAllLeaksRefrigerantUse:
-          description: "Compliance acknowledgement message that gets triggered for every reported leak or refrigerant use to confirm that a full inspection has been conducted. \n            <br />The possible response values:\n             • `true`: The compliance acknowledgement message is enabled in the SC Provider mobile app, Service Automation, and Provider Automation.\n             • `false`: The compliance acknowledgement message is deactivated.\n            <br />***Note***: The *RefLeakInspectionAcknowledgementAll* feature flag should be turned on."
-          default: false
-          type: boolean
-        DelayedSecondaryVerification:
-          description: "Allows subscribers to enforce a time delay between the initial and the secondary verifications when a leak event takes place.\n            <br />The possible response values:\n             • `true`: Time delay is activated by the subscriber. The number of days is specified for each refrigerant type:\n               * `HVACDelayDays`\n               * `IndustrialRefrigerationDelayDays`\n               * `CommercialRefrigerationDelayDays`\n               * `OtherTypesDelayDays`\n             • `false`: Time delay is not enabled by the subscriber.\n            <br />***Note***: The subscriber should have the *RefrigerationTrackingDelayedSecondaryVerification* feature flag enabled.\n            <br />Read more about this feature in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/2789703925/Refrigerant+Tracking#RefrigerantTracking-DelayedSecondaryVerificationDelayedSecondaryVerification)."
-          default: false
-          type: boolean
-        LeakInspectionNTE:
-          format: double
-          description: Default not-to-exceed (NTE) amount for all PM work orders generated for quarterly and annual follow-up leak inspections.
-          type: number
-        RefrigerationPriorityName:
-          description: Priority name for Planned Maintenance work orders that are automatically generated for follow-up leak inspections.
-          type: string
-        EmailNotificationEnable:
-          description: "Allows subscribers to create an email notification that will be sent to the specified recipients when the amount of refrigerant added by a technician meets or exceeds the system total charge.\n            <br />The possible response values:\n             • `false`: The email notification is not enabled by the subscriber.\n             • `true`: The email notification is enabled. The recipients and the message text are specified in the response. When the response value is `true`, check the `EmailNotification` object."
-          default: false
-          type: boolean
-        EmailNotification:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.EmailNotification'
-        GenerateFollowUpWorkOrder:
-          format: byte
-          description: "Defines whether a follow-up work order should be generated when there is an open leak, and the provider wants to close the original work order.\n            <br />The possible response values:\n             • `0`: No follow-up work orders should be generated. The work order cannot be closed and invoiced until the leak record is closed. The *Never* option is set by the subscriber for the **Follow-Up Work Order** setting in Refrigerant Tracking Admin.\n             • `1`: A follow-up work order can be generated for the provider to close the leak record. The *Open Leak* option is set by the subscriber for the **Follow-Up Work Order** setting in Refrigerant Tracking Admin.\n            <br />***Note***: If the *Open Leak* option is not available for the subscriber, try turning the *RTMultiLeakFollowUp* feature flag on."
-          type: string
-        Compliance:
-          description: "Shows the region to which the configured refrigerant tracking settings get applied, following the compliance requirements.\n            <br />The possible response values:\n             • `US`: Refrigerant tracking compliance for the USA\n             • `EU`: Refrigerant tracking compliance for the European Union\n             • `CA`: Refrigerant tracking compliance for Canada"
-          type: string
-        MaxLocCount:
-          format: int32
-          description: Maximum number of locations where refrigerant tracking should be recorded. It relates to the `RtLimitedAppliance` parameter.
-          type: integer
-        RtLimitedAppliance:
-          format: byte
-          description: "Specifies whether refrigerant tracking should happen across all locations or at those where it’s required.\n            <br />The possible response values:\n             • `0`: Across all locations\n             • `1`: For limited locations only\n            <br />When the response returns `1`, check the related `MaxLocCount` parameter to learn the max number of locations."
-          type: string
-        Settings:
-          description: Refrigerant tracking preferences configured for the subscriber.
-          type: string
-        RefrigerantTrackingProviderId:
-          format: int32
-          description: Unique numeric identifier of the provider who is assigned retrofit and retirement work orders, as well as work orders created in the event of adding a refrigerant part use record from the asset details page.
-          type: integer
-        GenerateLeakInspectionOption:
-          format: byte
-          description: "Specifies which refrigerant types require PM leak inspection work orders: only ODS (Ozone Depleting Substance) refrigerant types or all refrigerant types.\n            <br />The possible response values:\n             • `0`: For all refrigerant types\n             • `1`: For ODS refrigerant types"
-          type: string
-        OpenLeakNotificationSettings:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.RefrigerantTracking.RefrigerantSettings.OpenLeakNotificationSettings'
-          description: Settings for configuring email alerts about open leaks.
-        EnableCARBInspections:
-          description: "Shows whether the subscriber has activated PM leak inspections for appliances tracked by CARB (California Air Resources Board).\n            <br />The possible response values:\n             • `true`: PM leak inspections are enabled for appliances tracked by CARB. When the parameter is `true`, check the related parameters:\n               * `DateFormat`\n               * `CalendarStartDate`\n               * `CalendarStartDateStr`\n             • `false`: PM leak inspections are deactivated for appliances tracked by CARB."
-          default: false
-          type: boolean
-        DateFormat:
-          description: Date format applied to the `CalendarStartDate` parameter.
-          type: string
-        CalendarStartDate:
-          format: date-time
-          description: "Date that becomes a call date for all CARB leak inspection PM work orders. The date format is YYYY-MM-DDThh:mm:ss.\n            <br />Check the `EnableCARBInspections` parameter for more information."
-          type: string
-        CalendarStartDateStr:
-          description: Date that becomes a call date for all CARB leak inspection PM work orders. The date format is MMM DD, YYYY.
-          type: string
-          readOnly: true
-        LeakInspectionPMGenerationAdvanceTimeframe:
-          format: int32
-          description: Number of days to generate PM leak inspection work orders in advance upon identifying a leak. The default value is 7 days.
-          type: integer
-        LeakInspectionPMGenerationAdvanceAppliedToExistingPMs:
-          format: byte
-          type: string
-        LeakInspectionCategoryId:
-          format: int32
-          description: Unique numeric identifier of the category for PM leak inspection work orders.
-          type: integer
-        SCProviderMessageEnable:
-          description: "Shows whether the subscriber has enabled the compliance acknowledgment message to be displayed for providers in the SC Provider mobile app. Providers receive the message when checking out of PM leak inspection work orders with at least one refrigerated asset.\n            <br />The possible response values:\n             • `true`: The acknowledgement message is enabled.\n             • `false`: The acknowledgement message is deactivated.\n            <br />Read about the related `SCProviderMessage` parameter to view the message text.\n            <br />***Note***: The *RefLeakInspectionAcknowledgement* and *RTMultiLeakFlow* feature flags should be turned on."
-          default: false
-          type: boolean
-        ServiceAutomationMessageEnable:
-          description: "Shows whether the subscriber has enabled the compliance acknowledgment message to be displayed for subscribers in Service Automation. The message appears when subscribers are entering leak verification information for PM leak inspection work orders with at least one refrigerated asset.\n            <br />The possible response values:\n             • `true`: The message is enabled.\n             • `false`: The message is deactivated.\n            <br />Check the related `ServiceAutomationMessage` parameter to view the message text.\n            <br />***Note***: The *RefLeakInspectionAcknowledgement* and *RTMultiLeakFlow* feature flags should be turned on."
-          default: false
-          type: boolean
-        ProviderAutomationMessageEnable:
-          description: "Shows whether the subscriber has enabled the compliance acknowledgment message to be displayed for providers in Provider Automation. The message is displayed when providers are entering leak verification information for PM leak inspection work orders with at least one refrigerated asset.\n            <br />The possible response values:\n             • `true`: The acknowledgment message is enabled.\n             • `false`: The acknowledgment message is deactivated.\n            <br />Check the related `ProviderAutomationMessage` parameter to view the message text.\n            <br />***Note***: The *RefLeakInspectionAcknowledgement* and *RTMultiLeakFlow* feature flags should be turned on."
-          default: false
-          type: boolean
-        SCProviderMessage:
-          description: Compliance acknowledgement message that is displayed for providers in SC Provider upon checking out of PM leak inspection work orders with at least one refrigerated asset. See the parent `SCProviderMessageEnable` parameter for more details.
-          type: string
-        ServiceAutomationMessage:
-          description: Compliance acknowledgement message that is displayed for subscribers in Service Automation. Subscribers see the message when they are entering leak verification information for PM leak inspection work orders with at least one refrigerated asset.
-          type: string
-        ProviderAutomationMessage:
-          description: Compliance acknowledgement message that is displayed for providers in Provider Automation. Providers see the message when they are entering leak verification information for PM leak inspection work orders with at least one refrigerated asset.
-          type: string
-        CertificationExceptionRecipients:
-          description: "Email addresses of people to be notified whenever technicians specify that they don’t have the required trade certification/license while completing a refrigerant or HVAC work order via SC Provider.\n            <br />***Note***: Available with the *RefCertSCP* feature flag."
-          type: string
-        CertificationExceptionRecipientEmails:
-          description: Email addresses of people to be notified whenever technicians specify that they don’t have the required trade certification/license while completing a refrigerant or HVAC work order via SC Provider. Available with the RefCertSCP feature flag.
-          type: array
-          items:
-            type: string
-          readOnly: true
-        HVACDelayDays:
-          format: int32
-          description: Time delay between the initial and the secondary verifications for HVAC assets. Specified in days.
-          type: integer
-        IndustrialRefrigerationDelayDays:
-          format: int32
-          description: Time delay between the initial and the secondary verifications for assets of the industrial refrigeration group. Specified in days.
-          type: integer
-        CommercialRefrigerationDelayDays:
-          format: int32
-          description: Time delay between the initial and the secondary verifications for assets of the commercial refrigeration type. Specified in days.
-          type: integer
-        OtherTypesDelayDays:
-          format: int32
-          description: Time delay between the initial and the secondary verifications for other types of assets that don’t fall under the industrial refrigeration, commercial refrigeration, or HVAC groups. Specified in days.
-          type: integer
-        RefrigerationPriorityId:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakRecordVerificationResponse:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Technician:
-          type: string
-        LeakImmeasurableId:
-          format: int32
-          type: integer
-        VerificationDate:
-          format: date-time
-          type: string
-        VerificationMethod:
-          format: byte
-          type: string
-        VerificationMethodType:
-          format: byte
-          type: string
-        VerificationStatus:
-          default: false
-          type: boolean
-        Reason:
-          type: string
-    ServiceChannel.Services.Messaging.RetrofitRetirement.UpdateRetrofitRetirePlanGeneralData:
-      description: General data for updating an existing Retrofit/Retire plan
-      type: object
-      properties:
-        PlanId:
-          format: int32
-          description: Unique identifier of the plan to update
-          type: integer
-        StartDate:
-          format: date-time
-          description: Updated start date of the plan
-          type: string
-        EndDate:
-          format: date-time
-          description: Updated end date of the plan
-          type: string
-        Description:
-          description: Updated description of the plan
-          type: string
-        ProviderName:
-          description: Updated provider/vendor name
-          type: string
-    ServiceChannel.Services.Messaging.RefrigerantTracking.PlanNote:
-      type: object
-      properties:
-        RetrofitRetirePlanId:
-          format: int32
-          type: integer
-        Id:
-          format: int32
-          type: integer
-        Note:
-          type: string
-        CreateDate:
-          type: string
-        UserName:
-          type: string
-        CreateDateValue:
-          format: date-time
-          type: string
-    ServiceChannel.Services.Messaging.Assets.SystemLocationResponse:
-      description: Object containing physical locations of refrigeration systems
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: "Unique numeric identifier of the physical location:\n             • `1` = `Indoors`. Applicable to refrigeration or HVAC units installed inside the building, for example, in the restaurant kitchen.\n             • `2` = `Outdoors`. Applicable to units positioned outside the building, for example, at the back of the store or on the roof.\n             • `3` = `Partially Indoors/Outdoors`. Applicable to a split system where components are installed in different environments. For example, the condenser is located indoors, while the evaporator is located outdoors."
-          type: integer
-        Name:
-          description: 'Name of the physical location where the refrigeration system is positioned: *Indoors*, *Outdoors*, or *Partially Indoors/Outdoors*.'
-          type: string
-    ServiceChannel.Services.Messaging.RefrigerantTracking.LeakImmeasurableNote:
-      type: object
-      properties:
-        ID:
-          format: int32
-          type: integer
-        LeakImmeasurableId:
-          format: int32
-          type: integer
-        Note:
-          type: string
-        CreateDate:
-          format: date-time
-          type: string
-        CreateDateFormated:
-          type: string
-        UserId:
-          format: int32
-          type: integer
-        AutoGenerated:
-          default: false
-          type: boolean
-        CreatedByUserName:
-          type: string
-    ServiceChannel.Services.Core.InternalRequests.RefrigerantTracking.CheckRefrigerantTrackingRequest:
-      type: object
-      properties:
-        LocationIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.Equipments.AddUpdatePmLeakVerificationsRequest:
-      description: Request to add or update PmLeakVerifications
-      type: object
-      properties:
-        RecId:
-          format: int32
-          type: integer
-        Actor:
-          type: string
-        VerificationMethodsIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        CertifiedTechnicianId:
-          format: int32
-          type: integer
-        TechnicianCertificateId:
-          type: string
-        CertificateId:
-          format: int32
-          type: integer
-        AssetId:
-          format: int32
-          type: integer
   securitySchemes:
     oauth2:
       type: oauth2

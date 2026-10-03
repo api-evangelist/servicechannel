@@ -137,117 +137,20 @@ paths:
       x-access: Any
 components:
   schemas:
-    ServiceChannel.Services.Messaging.LocationNote.LocationNote:
-      description: Object with the location note details.
+    ServiceChannel.Services.Messaging.Providers.ProviderInfo:
       type: object
       properties:
         Id:
           format: int32
-          description: Location note numeric identifier.
-          type: integer
-        HeaderId:
-          format: int32
-          description: Unique location note header identifier.
-          type: integer
-        Value:
-          description: Location note content.
-          type: string
-        Header:
-          description: Name of the note.
-          type: string
-    ServiceChannel.Services.Messaging.Trade.Trade:
-      description: Trade object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Numeric identifier of the trade.
+          description: Id
           type: integer
         Name:
-          description: Trade name.
+          description: Name
           type: string
-        SubscriberId:
-          format: int32
-          description: Unique subscriber ID.
-          type: integer
-    ServiceChannel.Services.Messaging.Users.User:
-      description: User details object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique user identifier.
-          type: integer
-        SubscriberId:
-          format: int32
-          description: Unique subscriber ID.
-          type: integer
-        UserName:
-          description: Username of the user.<br /> • For subscriber users, the username appears as **User Id** on the "General Info" tab of the user profile page.<br /> • For provider users, the username is listed as **UserID** under "Access" on the "General" tab of the user profile page.
-          pattern: ^$|(^\S+).(\S).(\S)$
-          type: string
-        FullName:
-          description: Full name of the user.<br /> • For subscriber users, the full name appears as **User Name** on the "General Info" tab of the user profile page.<br /> • For provider users, you can see their first and last name under "Basic" on the "General" tab of the user profile page.
-          type: string
-        Email:
-          description: User’s email address.
-          type: string
-        PsmEmail:
-          description: Email address through which a user can reset their password.
-          type: string
-        Disabled:
-          description: Defines if a user is deactivated.
+        DoNotDispatch:
+          description: DoNotDispatch enabled?
           default: false
           type: boolean
-        IsLocked:
-          description: Defines if a user is locked.
-          default: false
-          type: boolean
-        Roles:
-          description: Secondary roles assigned to a subscriber user that determine their permissions and level of access to various Service Automation modules.
-          type: array
-          items:
-            type: string
-        Permissions:
-          description: Permissions assigned to a subscriber user that determine whether they have full or read-only access to various Service Automation modules.
-          type: array
-          items:
-            type: string
-        UserType:
-          description: Subscriber user type defining their level of access to ServiceChannel:<br /> • `Corporate` — a user can work in Service Automation.<br /> • `Dashboard` — a user can only access the dashboard assigned to them.<br />`0` is returned for provider users.
-          enum:
-          - Corporate
-          - Dashboard
-          - ServiceChannel
-          type: string
-        Dashboard:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.DashboardInfo'
-          description: Dashboard a subscriber user has access to.
-        Access:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.AccessOptions'
-          description: List of locations, districts, regions, and trades a subscriber user has access to.
-        Limits:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.LimitOptions'
-          description: NTE, proposal, and invoice limits set for a subscriber user.
-        FeedRole:
-          type: string
-        MliUserInfo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MliUserInfo'
-          description: ''
-        MlpUserInfo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MlpUserInfo'
-    ServiceChannel.Services.Messaging.Users.Limit:
-      description: Object for limit details set for a subscriber user.
-      type: object
-      properties:
-        Amount:
-          format: double
-          description: Limit amount.
-          type: number
-        CurrencyId:
-          format: int32
-          description: Identifier of the currency the limit is set in.
-          type: integer
     ServiceChannel.Services.Messaging.Users.AccessOptions:
       description: Object listing locations, districts, regions, and trades a subscriber user has access to. Learn more about [granting access based on locations, districts, and regions](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/585107276/Location+District+Region+Access+Tab) in ServiceChannel University.
       type: object
@@ -272,6 +175,162 @@ components:
           type: array
           items:
             type: string
+    ServiceChannel.Services.Messaging.Users.LimitOptions:
+      description: Object for NTE, proposal, and invoice limits set for a subscriber user.
+      type: object
+      properties:
+        NteLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
+        ProposalLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
+        InvoiceLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
+    ServiceChannel.Services.Messaging.Subscribers.Subscriber:
+      required:
+      - Name
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        ShortName:
+          type: string
+        Email:
+          type: string
+        Users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.User'
+        PrimaryCurrency:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
+        IsOutsourcedWorkOn:
+          default: false
+          type: boolean
+        Name:
+          description: "Required Name\n            Name - name of the subscriber"
+          type: string
+        Address1:
+          description: Optional
+          type: string
+        Address2:
+          description: Optional
+          type: string
+        Country:
+          description: Optional
+          type: string
+        State:
+          description: Optional
+          type: string
+        City:
+          description: Optional
+          type: string
+        Zip:
+          description: Optional
+          type: string
+        Phone:
+          description: Optional
+          type: string
+        Fax:
+          description: Optional
+          type: string
+        ContactName:
+          description: Optional
+          type: string
+        TimeFormat:
+          type: string
+        DateFormat:
+          type: string
+        DecimalSeparator:
+          type: string
+    ServiceChannel.Services.Messaging.Users.MlpUserInfo:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        MlpLevel:
+          type: string
+        MlpLocations:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.LocationNote.LocationNote:
+      description: Object with the location note details.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Location note numeric identifier.
+          type: integer
+        HeaderId:
+          format: int32
+          description: Unique location note header identifier.
+          type: integer
+        Value:
+          description: Location note content.
+          type: string
+        Header:
+          description: Name of the note.
+          type: string
+    ServiceChannel.Services.Messaging.Users.MliUserInfo:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        MliLevel:
+          type: string
+        MliLocations:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.Trade.Trade:
+      description: Trade object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Numeric identifier of the trade.
+          type: integer
+        Name:
+          description: Trade name.
+          type: string
+        SubscriberId:
+          format: int32
+          description: Unique subscriber ID.
+          type: integer
+    ServiceChannel.Services.Messaging.Users.DashboardInfo:
+      description: Dashboard details object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique dashboard identifier.
+          type: integer
+        Name:
+          description: Dashboard name.
+          type: string
+        RedirectToDashboard:
+          description: Defines whether a subscriber user is redirected to a dashboard once they log in.
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Users.Limit:
+      description: Object for limit details set for a subscriber user.
+      type: object
+      properties:
+        Amount:
+          format: double
+          description: Limit amount.
+          type: number
+        CurrencyId:
+          format: int32
+          description: Identifier of the currency the limit is set in.
+          type: integer
     ServiceChannel.Services.Messaging.Location.Location:
       description: General location details object.
       type: object
@@ -448,74 +507,6 @@ components:
           $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Trade.Trade'
         Location:
           $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Location.Location'
-    ServiceChannel.Services.Messaging.Users.MliUserInfo:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        MliLevel:
-          type: string
-        MliLocations:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.Providers.ProviderInfo:
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Id
-          type: integer
-        Name:
-          description: Name
-          type: string
-        DoNotDispatch:
-          description: DoNotDispatch enabled?
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Users.MlpUserInfo:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        MlpLevel:
-          type: string
-        MlpLocations:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.Users.DashboardInfo:
-      description: Dashboard details object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique dashboard identifier.
-          type: integer
-        Name:
-          description: Dashboard name.
-          type: string
-        RedirectToDashboard:
-          description: Defines whether a subscriber user is redirected to a dashboard once they log in.
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Users.LimitOptions:
-      description: Object for NTE, proposal, and invoice limits set for a subscriber user.
-      type: object
-      properties:
-        NteLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
-        ProposalLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
-        InvoiceLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
     ServiceChannel.Services.Messaging.Currencies.Currency:
       type: object
       properties:
@@ -536,6 +527,72 @@ components:
         Rate:
           format: double
           type: number
+    ServiceChannel.Services.Messaging.Users.User:
+      description: User details object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique user identifier.
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Unique subscriber ID.
+          type: integer
+        UserName:
+          description: Username of the user.<br /> • For subscriber users, the username appears as **User Id** on the "General Info" tab of the user profile page.<br /> • For provider users, the username is listed as **UserID** under "Access" on the "General" tab of the user profile page.
+          pattern: ^$|(^\S+).(\S).(\S)$
+          type: string
+        FullName:
+          description: Full name of the user.<br /> • For subscriber users, the full name appears as **User Name** on the "General Info" tab of the user profile page.<br /> • For provider users, you can see their first and last name under "Basic" on the "General" tab of the user profile page.
+          type: string
+        Email:
+          description: User’s email address.
+          type: string
+        PsmEmail:
+          description: Email address through which a user can reset their password.
+          type: string
+        Disabled:
+          description: Defines if a user is deactivated.
+          default: false
+          type: boolean
+        IsLocked:
+          description: Defines if a user is locked.
+          default: false
+          type: boolean
+        Roles:
+          description: Secondary roles assigned to a subscriber user that determine their permissions and level of access to various Service Automation modules.
+          type: array
+          items:
+            type: string
+        Permissions:
+          description: Permissions assigned to a subscriber user that determine whether they have full or read-only access to various Service Automation modules.
+          type: array
+          items:
+            type: string
+        UserType:
+          description: Subscriber user type defining their level of access to ServiceChannel:<br /> • `Corporate` — a user can work in Service Automation.<br /> • `Dashboard` — a user can only access the dashboard assigned to them.<br />`0` is returned for provider users.
+          enum:
+          - Corporate
+          - Dashboard
+          - ServiceChannel
+          type: string
+        Dashboard:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.DashboardInfo'
+          description: Dashboard a subscriber user has access to.
+        Access:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.AccessOptions'
+          description: List of locations, districts, regions, and trades a subscriber user has access to.
+        Limits:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.LimitOptions'
+          description: NTE, proposal, and invoice limits set for a subscriber user.
+        FeedRole:
+          type: string
+        MliUserInfo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MliUserInfo'
+          description: ''
+        MlpUserInfo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MlpUserInfo'
     ServiceChannel.Services.Messaging.Providers.Provider:
       type: object
       properties:
@@ -649,63 +706,6 @@ components:
           description: DoNotDispatch enabled?
           default: false
           type: boolean
-    ServiceChannel.Services.Messaging.Subscribers.Subscriber:
-      required:
-      - Name
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        ShortName:
-          type: string
-        Email:
-          type: string
-        Users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.User'
-        PrimaryCurrency:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
-        IsOutsourcedWorkOn:
-          default: false
-          type: boolean
-        Name:
-          description: "Required Name\n            Name - name of the subscriber"
-          type: string
-        Address1:
-          description: Optional
-          type: string
-        Address2:
-          description: Optional
-          type: string
-        Country:
-          description: Optional
-          type: string
-        State:
-          description: Optional
-          type: string
-        City:
-          description: Optional
-          type: string
-        Zip:
-          description: Optional
-          type: string
-        Phone:
-          description: Optional
-          type: string
-        Fax:
-          description: Optional
-          type: string
-        ContactName:
-          description: Optional
-          type: string
-        TimeFormat:
-          type: string
-        DateFormat:
-          type: string
-        DecimalSeparator:
-          type: string
   securitySchemes:
     oauth2:
       type: oauth2
