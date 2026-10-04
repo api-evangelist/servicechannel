@@ -980,98 +980,62 @@ paths:
       x-access: Subscribers
 components:
   schemas:
-    ServiceChannel.Services.Messaging.Users.AccessOptions:
-      description: Object listing locations, districts, regions, and trades a subscriber user has access to. Learn more about [granting access based on locations, districts, and regions](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/585107276/Location+District+Region+Access+Tab) in ServiceChannel University.
+    ServiceChannel.Services.WebApi.Models.Request.Invoices.Tax2Details:
+      description: Information on the additional tax. Only invoices for Canadian locations can have Tax2Details.
       type: object
       properties:
-        Locations:
-          description: Locations a user has access to.
-          type: array
-          items:
-            type: string
-        Districts:
-          description: Districts a user has access to.
-          type: array
-          items:
-            type: string
-        Regions:
-          description: Regions a user has access to.
-          type: array
-          items:
-            type: string
-        Trades:
-          description: Trades a user is permitted to work with.
-          type: array
-          items:
-            type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceMaterial:
-      description: Information on the materials used. Add a separate object for each material.
+        Tax2Amount:
+          format: double
+          description: Amount of the additional tax.
+          type: number
+        Tax2Name:
+          description: Name of the additional tax, for example, *VAT*, *HST*, *PST*, or *QST*.
+          type: string
+    AddInvoiceAttachmentRequest:
+      type: object
+      properties:
+        Name:
+          type: string
+        Description:
+          type: string
+        Path:
+          type: string
+        Visibility:
+          format: int32
+          description: 'Note visibility - valid values: null, 1, 2, 3'
+          type: integer
+        IsInvoiceDigitalCopy:
+          description: Mark attachment as Invoice Digital Copy
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Users.MlpUserInfo:
       type: object
       properties:
         Id:
           format: int32
           type: integer
-        InvoiceId:
+        MlpLevel:
+          type: string
+        MlpLocations:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.Invoices.Api.SingleUpdateGlCodeRequest:
+      type: object
+      properties:
+        Category:
+          type: string
+        ApprovalCode:
+          type: string
+        ProjectId:
           format: int32
-          description: Invoice identifier.
           type: integer
-        Description:
-          description: Name or description of the material. Length limit is 100 symbols.
-          type: string
-        PartNum:
-          description: Part, serial, or manufacturer number of the material. Length limit is 100 symbols.
-          type: string
-        UnitType:
-          format: byte
-          description: 'Unit of measurement. Valid values: 1 — Each; 2 — Box; 3 — Feet; 4 — Sqft; 5 — Lbs; 6 — Gal; 7 — Oz. Default value: 1.'
-          type: string
-        UnitPrice:
-          format: double
-          description: Price per unit.
-          type: number
-        PartName:
-          description: Part name.
-          type: string
-        MarkUpPercent:
-          format: double
-          description: Markup percent.
-          type: number
-        AgreedMarkUpPercent:
-          format: double
-          description: Agreed markup percent.
-          type: number
-        MarkUpDiscrepancyReason:
-          description: Mark up discrepancy reason.
-          type: string
-        AgreedPartPrice:
-          format: double
-          description: Agreed part price.
-          type: number
-        Quantity:
-          format: double
-          description: Quantity of the material.
-          type: number
-        Amount:
-          format: double
-          description: The amount of the material cost. The sum of all `Amount` parameters in the `Materials` array must equal `InvoiceAmountsDetails.MaterialAmount`.
-          type: number
-        ApprovalCodeGroup:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
-        IsMarkUpDiscrepancy:
-          description: Markup discrepancy.
-          default: false
-          type: boolean
-        IsPartPriceDiscrepancy:
-          description: Part price discrepancy.
-          default: false
-          type: boolean
-        PriceDiscrepancyReason:
-          description: Price discrepancy reason.
-          type: string
-        isNontaxableVATEU:
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Invoices.InvoiceTravel:
+        AdditionalApprovalCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.Api.AdditionalApprovalCodeRequest'
+    ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceTravel:
       description: Information on the trip.
       type: object
       properties:
@@ -1105,208 +1069,46 @@ components:
           description: Type of the shore (`1` - Onshore, `2` - Offshore).
           default: false
           type: boolean
-        ApprovalCodeGroup:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
         isNontaxableVATEU:
           default: false
           type: boolean
-    ServiceChannel.Services.Messaging.Invoices.Localizations:
-      description: The object for UI labels that appear in the "Invoice Number" section on the "General" tab of the "Admin - Invoices" page in Service Automation. Note that only subscriber users with the Super Admin secondary role can access this page.
+    ServiceChannel.Services.Messaging.Invoices.RateDiscrepancy:
+      description: Rate Discrepancy Item
       type: object
       properties:
-        InvoiceNumberLabel:
-          description: Label for the "Invoice Number" section name.
-          type: string
-        LastModifiedLabel:
-          description: The "Last modified" label for details about who last updated the invoice requirements and when.
-          type: string
-        RestrictionLabel:
-          description: Label for the "Restrictions" drop-down list where a subscriber admin selects which restriction should apply to the numbers of manually created invoices.
-          type: string
-        GenerationRuleLabel:
-          description: Label for the "Generation uniqueness rule" drop-down list where a subscriber admin selects which rule should apply to the numbers of automatically generated invoices.
-          type: string
-        HelpStringLabel:
-          description: The "Help string (to show vendors)" label for the field containing comments shown to a provider when they try to submit an invoice whose number does not meet the restrictions specified by a subscriber.
-          type: string
-        PatternPlaceHolder:
-          description: A placeholder text shown in the field where a subscriber admin enters a regular expression pattern to set restrictions for the numbers of manually created invoices.
-          type: string
-        CommentPlaceHolder:
-          description: A placeholder text shown in the field where a subscriber admin enters a comment for the restriction applied to the numbers of manually created invoices based on the selected restriction type.
-          type: string
-    ServiceChannel.Services.Messaging.Invoices.AddInvoicePaymentResponse:
-      description: Object details of the added payment.
-      type: object
-      properties:
-        PaymentDate:
-          format: date-time
-          description: Date and time when the specified invoice is paid.
-          type: string
-        PaymentId:
+        SkillLevel:
           format: int32
-          description: Unique numeric invoice payment ID.
+          description: Get or set skill level (1 - Supervisor, 2 - Technician, 3 - Helper).
           type: integer
-        Error:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.ResponseError'
-        InvoiceId:
-          format: int32
-          description: Unique numeric invoice identifier.
-          type: integer
-        PaymentNumber:
-          description: Number provided by a user when adding a payment record.
+        SkillLevelName:
+          description: Get or set skill level name
           type: string
-        PaymentAmount:
+        LaborType:
+          format: int32
+          description: Get or set type of the labor (1 - Regular, 2 - Overtime, 3 - Double Time).
+          type: integer
+        LaborTypeName:
+          description: Get or set labor type name.
+          type: string
+        HourlyRate:
           format: double
-          description: Amount of the payment. Cannot exceed the total amount of the invoice. If it’s a credited invoice, a single payment is required with a minus before the payment amount.
+          description: Get or set hourly rate.
           type: number
-    ServiceChannel.Services.WebApi.Models.Request.Invoices.CreatingInvoiceTaxIncludedRequest:
-      type: object
-      properties:
-        LaborTaxIncluded:
-          format: byte
-          type: string
-        TravelTaxIncluded:
-          format: byte
-          type: string
-        MaterialTaxIncluded:
-          format: byte
-          type: string
-        FreightTaxIncluded:
-          format: byte
-          type: string
-        OtherTaxIncluded:
-          format: byte
-          type: string
-    ServiceChannel.Services.Messaging.Subscribers.Subscriber:
-      required:
-      - Name
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        ShortName:
-          type: string
-        Email:
-          type: string
-        Users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.User'
-        PrimaryCurrency:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
-        IsOutsourcedWorkOn:
-          default: false
-          type: boolean
-        Name:
-          description: "Required Name\n            Name - name of the subscriber"
-          type: string
-        Address1:
-          description: Optional
-          type: string
-        Address2:
-          description: Optional
-          type: string
-        Country:
-          description: Optional
-          type: string
-        State:
-          description: Optional
-          type: string
-        City:
-          description: Optional
-          type: string
-        Zip:
-          description: Optional
-          type: string
-        Phone:
-          description: Optional
-          type: string
-        Fax:
-          description: Optional
-          type: string
-        ContactName:
-          description: Optional
-          type: string
-        TimeFormat:
-          type: string
-        DateFormat:
-          type: string
-        DecimalSeparator:
-          type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoicePaymentBulkResponse:
-      description: Invoice payments response object.
-      type: object
-      properties:
-        Payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.AddInvoicePaymentResponse'
-    ServiceChannel.Services.WebApi.Models.Request.Invoices.Tax2Details:
-      description: Information on the additional tax. Only invoices for Canadian locations can have Tax2Details.
-      type: object
-      properties:
-        Tax2Amount:
+        AgreedRate:
           format: double
-          description: Amount of the additional tax.
+          description: Get or set agreed hourly rate.
           type: number
-        Tax2Name:
-          description: Name of the additional tax, for example, *VAT*, *HST*, *PST*, or *QST*.
+        NumOfTech:
+          format: byte
+          description: Get or set number of techs.
           type: string
-    ServiceChannel.Services.Messaging.Invoices.ProjectsInvoicesIgnoreAccessRightsRequest:
-      type: object
-      properties:
-        StartingDate:
-          format: date-time
+        LaborHours:
+          format: double
+          description: Get or set spent hours.
+          type: number
+        RateDiscrepancyReason:
+          description: Get or set rate discrepancy reason.
           type: string
-        EndingDate:
-          format: date-time
-          type: string
-        Statuses:
-          type: array
-          items:
-            type: string
-        Projects:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.Invoices.NumberRequirementsModel:
-      description: Invoice number requirements object.
-      type: object
-      properties:
-        AutoGenerationTypesSelect:
-          description: A list of options in the "Generation uniqueness rule" drop-down list a subscriber admin can choose from when configuring invoice number rules for automatically generated invoices.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.SelectItem'
-        RestrictionTypesSelect:
-          description: A list of options in the "Restrictions" drop-down list a subscriber admin can choose from when configuring invoice number restrictions for manually created invoices.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.SelectItem'
-        ReuseInvoiceNumbersSelect:
-          description: A list of options in the "ReuseInvoiceNumber" drop-down list a subscriber admin can choose from when configuring invoice number.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.SelectItem'
-        InvoiceNumberRequirement:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceNumberRequirement'
-          description: Detailed info about the invoice number requirements set up for the subscriber listing the selected requirements and rules, users who submitted and updated them, when these actions took place, etc.
-        DefaultRestrictionComments:
-          description: 'A list of default explanatory comments on the invoice number format for the corresponding restrictions. A comment is displayed to a provider user in a tooltip when they try to submit an invoice whose number does not meet the restrictions specified by their subscriber. See `RestrictionTypesSelect` to identify which number (`Value`) corresponds to which restriction type: `2` — *Digits Only*, `3` — *Alphanumeric Only*.'
-          type: object
-          additionalProperties:
-            type: string
-        DefaultRestrictionPatterns:
-          description: 'A list of default regular expressions that define search patterns used to validate the number format of invoices created manually. See `RestrictionTypesSelect` to identify which number (`Value`) corresponds to which restriction type: `2` — *Digits Only*, `3` — *Alphanumeric Only*.'
-          type: object
-          additionalProperties:
-            type: string
-        Resources:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.Localizations'
-          description: A list of UI labels that appear in the "Invoice Number" section on the "General" tab of the "Admin - Invoices" page in Service Automation.
     ServiceChannel.Services.Messaging.Invoices.Tax2Details:
       description: Information on the additional tax. Only invoices for Canadian locations can have Tax2Details.
       type: object
@@ -1318,244 +1120,297 @@ components:
         Tax2Name:
           description: Name of the additional tax, for example, *VAT*, *HST*, *PST*, or *QST*.
           type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceRejectionReasonResponse:
+    ServiceChannel.Services.Messaging.Invoices.InvoicePaymentBulkResponse:
+      description: Invoice payments response object.
       type: object
       properties:
-        Id:
-          format: int32
-          type: integer
-        SubscriberId:
-          format: int32
-          type: integer
-        Description:
-          type: string
-        Retired:
-          default: false
-          type: boolean
-        ReasonType:
-          enum:
-          - Custom
-          - WorkOrderNotInvoiceable
-          - InvoiceRequiresCorrection
-          - Other
-          type: string
-    ServiceChannel.Services.Messaging.Invoices.AddInvoicePaymentRequest:
-      description: Object details to add payment to an invoice.
+        Payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.AddInvoicePaymentResponse'
+    ServiceChannel.Services.Messaging.Invoices.Api.AdditionalApprovalCodeRequest:
       type: object
       properties:
-        InvoiceId:
+        Header:
+          type: string
+        Value:
+          type: string
+        SetupId:
           format: int32
-          description: Unique numeric invoice identifier.
           type: integer
+    ServiceChannel.Services.Messaging.Invoices.InvoicePaymentRequest:
+      description: Request object to add a payment to an invoice.
+      type: object
+      properties:
         PaymentDate:
           format: date-time
-          description: Date and time when the specified invoice is paid. Cannot be prior to the invoice creation date.
+          description: Date and time when the specified invoice is paid. Cannot be earlier than the invoice approval date.
           type: string
         PaymentNumber:
-          description: Number provided by a user when adding a payment record.
+          description: Order number of payment for the invoice.
           type: string
         PaymentAmount:
           format: double
-          description: Amount of the payment. Cannot exceed the total amount of the invoice. If it’s a credited invoice, a single payment is required with a minus before the payment amount.
+          description: Amount you want to pay. Cannot exceed the invoice total amount. If it’s a credited invoice, a single payment is required with a minus before the payment amount.
           type: number
-    ServiceChannel.Services.Messaging.Users.MlpUserInfo:
+    ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceTaxesDetails:
+      description: Object containing the list of taxes. You can add taxes as a fixed amount or as a percentage.
       type: object
       properties:
+        LaborTaxPercent:
+          format: double
+          description: Amount of the labor tax in percentage (for countries other than USA and Canada).
+          type: number
+        MaterialTaxPercent:
+          format: double
+          description: Amount of the material tax in percentage (for countries other than USA and Canada).
+          type: number
+        TravelTaxPercent:
+          format: double
+          description: Amount of the travel tax in percentage (for countries other than USA and Canada).
+          type: number
+        FreightTaxPercent:
+          format: double
+          description: Amount of the freight tax in percentage (for countries other than USA and Canada).
+          type: number
+        OtherTaxPercent:
+          format: double
+          description: Amount of other taxes in percentage (for countries other than USA and Canada).
+          type: number
+        LaborTax:
+          format: double
+          description: Amount of the labor tax.
+          type: number
+        MaterialTax:
+          format: double
+          description: Amount of the material tax.
+          type: number
+        TravelTax:
+          format: double
+          description: Amount of the travel tax.
+          type: number
+        FreightTax:
+          format: double
+          description: Amount of the freight tax.
+          type: number
+        OtherTax:
+          format: double
+          description: Amount of other taxes.
+          type: number
+    ServiceChannel.Services.Messaging.Invoices.OData.ODataInvoice:
+      type: object
+      properties:
+        Provider:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.Provider'
+        Subscriber:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Subscribers.Subscriber'
+        Location:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Location.Location'
         Id:
           format: int32
           type: integer
-        MlpLevel:
+        Number:
+          description: Gets or sets invoice number.
           type: string
-        MlpLocations:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.Invoices.ProjectsInvoicesItem:
-      type: object
-      properties:
-        Id:
+        BatchNumber:
+          description: Gets or sets Batch number.
+          type: string
+        InvoiceTax:
+          format: double
+          type: number
+        PostedTaxRate:
+          format: float
+          type: number
+        PostedTax2Rate:
+          format: float
+          type: number
+        VendorPayeeId:
           format: int32
           type: integer
-        InvoiceNumber:
-          type: string
-        Tax:
-          format: double
-          type: number
-        Tax2:
-          format: double
-          type: number
-        Tax2Name:
-          type: string
         InvoiceTotal:
           format: double
+          description: Gets or sets total with tax amounts.
           type: number
-        LaborAmount:
+        InvoiceBalance:
           format: double
           type: number
-        MaterialAmount:
-          format: double
-          type: number
-        FreightAmount:
-          format: double
-          type: number
-        TravelAmount:
-          format: double
-          type: number
-        OtherAmount:
-          format: double
-          type: number
-        OtherDescription:
+        Currency:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
+        ApprovedDate:
+          format: date-time
           type: string
+        ApprovalCode:
+          type: string
+        EditableAdditionalApprovalCode:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ApprovalCodes.EditableAdditionalApprovalCode'
+        PostedDate:
+          format: date-time
+          type: string
+        PostedBy:
+          type: string
+        Subtotal:
+          format: double
+          type: number
         Status:
+          type: string
+        Trade:
+          type: string
+        InvoiceAmountsDetails:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceAmountsDetails'
+        InvoiceTaxesDetails:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceTaxesDetails'
+        Tax2Details:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.Tax2Details'
+        Labors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceLabor'
+        Materials:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceMaterial'
+        Travels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceTravel'
+        Others:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceOther'
+        TaxApprovalCodeGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+        Tax2ApprovalCodeGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+        FreightApprovalCodeGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+        WithMismatchedRates:
+          default: false
+          type: boolean
+        IsOutsourced:
+          default: false
+          type: boolean
+        StarredBy:
+          type: string
+        IsStarred:
+          default: false
+          type: boolean
+        IsTransferred:
+          default: false
+          type: boolean
+          readOnly: true
+        StarredDate:
+          format: date-time
+          type: string
+        Description:
           type: string
         InvoiceDate:
           format: date-time
           type: string
-        InvoiceDateDTO:
+        LaborTaxIncluded:
+          default: false
+          type: boolean
+        TravelTaxIncluded:
+          default: false
+          type: boolean
+        MaterialsTaxIncluded:
+          default: false
+          type: boolean
+        FreightTaxIncluded:
+          default: false
+          type: boolean
+        OtherTaxIncluded:
+          default: false
+          type: boolean
+        NonTaxableLabor:
+          format: int32
+          type: integer
+        NonTaxableTravel:
+          format: int32
+          type: integer
+        NonTaxableMaterial:
+          format: int32
+          type: integer
+        NonTaxableFreight:
+          format: int32
+          type: integer
+        NonTaxableOther:
+          format: int32
+          type: integer
+        IsExists:
+          default: false
+          type: boolean
+          readOnly: true
+        StatusChangeDate:
           format: date-time
           type: string
-        PostedDate:
-          format: date-time
+        StatusChangeUser:
           type: string
-        PostedDateDTO:
-          format: date-time
+        StatusChangeUserid:
           type: string
-        Currency:
-          type: string
-        AlphabeticCode:
-          type: string
+        IsDuplicate:
+          default: false
+          type: boolean
         WoTrackingNumber:
           format: int32
+          description: Gets or sets work order tracking number.
           type: integer
-        ProviderId:
-          format: int32
-          type: integer
-        ProviderName:
+        Terms:
+          description: terms
           type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup:
-      type: object
-      properties:
-        ApprovalCodeType:
-          enum:
-          - Labor
-          - Travel
-          - Material
-          - Freight
-          - Other
-          - Tax
-          - Tax2
-          - LineItem
-          - FreightGenerated
+        Comments:
           type: string
-        ApprovalCode:
+        PaidDate:
+          format: date-time
           type: string
-        AdditionalApprovalCode:
+        TransferredDate:
+          format: date-time
           type: string
-        Amount:
-          format: double
-          type: number
+        LastActionDate:
+          format: date-time
+          type: string
+        UpdatedDate:
+          format: date-time
+          description: Updated Date
+          type: string
+        StatusHistoryShort:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.StatusHistoryShort'
+        WoAssignedTo:
+          description: Gets or sets WO Assignee
+          type: string
         ApprovalCodes:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeChild'
-    ServiceChannel.Services.Messaging.Invoices.ApiVendorPayee:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCode'
+        IsChargesApprovalCodesDefault:
+          default: false
+          type: boolean
+        Payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoicePaymentResponse'
+        StoredFeatures:
+          type: array
+          items:
+            type: string
+    ServiceChannel.Services.Messaging.Users.Limit:
+      description: Object for limit details set for a subscriber user.
       type: object
       properties:
-        Id:
-          format: int32
-          type: integer
-        VendorNumber:
-          type: string
-        FullName:
-          type: string
-        Address1:
-          type: string
-        Address2:
-          type: string
-        City:
-          type: string
-        State:
-          type: string
-        Zip:
-          type: string
-        Country:
-          type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceStatisticsResponse:
-      description: Invoice statistics response class
-      type: object
-      properties:
-        DaysPeriod:
-          format: int32
-          description: Gets or sets the period in days, last X days for which Invoices statistics was collected
-          type: integer
-        WoReadyForInvoices:
-          format: int32
-          description: Gets or sets the count of Work Orders ready for Invoices
-          type: integer
-        OpenInvoices:
-          format: int32
-          description: Gets or sets the count of open Invoices
-          type: integer
-        ApprovedInvoicesDaysPeriod:
-          format: int32
-          description: Gets or sets the period in days, last X days during which Invoices are approved
-          type: integer
-        ApprovedInvoices:
-          format: int32
-          description: Gets or sets the count of Invoices approved in the past <ApprovedInvoicesDaysPeriod /> days
-          type: integer
-    ServiceChannel.Services.Messaging.Invoices.InvoiceAmountsDetails:
-      description: Object containing the list of the invoice charges.
-      type: object
-      properties:
-        LaborAmount:
+        Amount:
           format: double
-          description: Amount of the labor charge. Must equal `Labors.Amount`.
+          description: Limit amount.
           type: number
-        MaterialAmount:
-          format: double
-          description: Amount of the material charge. Must equal `Materials.Amount`.
-          type: number
-        TravelAmount:
-          format: double
-          description: Amount of the trip charge.
-          type: number
-        FreightAmount:
-          format: double
-          description: Amount of the freight charge.
-          type: number
-        OtherAmount:
-          format: double
-          description: Amount of other charges. When you add this parameter, also specify `InvoiceAmountsDetails.OtherDescription`.
-          type: number
-        OtherDescription:
-          type: string
-    ServiceChannel.Services.Messaging.Users.LimitOptions:
-      description: Object for NTE, proposal, and invoice limits set for a subscriber user.
-      type: object
-      properties:
-        NteLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
-        ProposalLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
-        InvoiceLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
-    ServiceChannel.Api.Model.Invoices.WeatherEventTypeForInvoice:
-      type: object
-      properties:
-        Id:
+        CurrencyId:
           format: int32
-          type: integer
-        Name:
-          type: string
-        Description:
-          type: string
-        InvoiceId:
-          format: int32
+          description: Identifier of the currency the limit is set in.
           type: integer
     ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceOther:
       description: The invoices other item
@@ -1602,6 +1457,214 @@ components:
           description: Get or set the PriceListOtherChargeId
           type: integer
         isNontaxableVATEU:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Invoices.InvoicePaymentBulkRequest:
+      description: Request model to add payment records in bulk.
+      type: object
+      properties:
+        Payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.AddInvoicePaymentRequest'
+    ServiceChannel.Services.Messaging.Invoices.InvoiceOther:
+      description: The invoices material
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        InvoiceId:
+          format: int32
+          description: Invoice identifier.
+          type: integer
+        Description:
+          description: Get or set description.
+          type: string
+        Type:
+          description: Get or set type of charge.
+          type: string
+        Amount:
+          format: double
+          description: Get or set the amount of money that is charged.
+          type: number
+        UnitType:
+          format: byte
+          description: Get or set the unit of measure
+          type: string
+        UnitPrice:
+          format: double
+          description: Get or set the price of unit
+          type: number
+        Quantity:
+          format: double
+          description: Get or set the quantity
+          type: number
+        AgreedUnitPrice:
+          format: double
+          description: Get or set the AgreedUnitPrice
+          type: number
+        UnitPriceDiscrepancyReason:
+          description: UnitPriceDiscrepancyReason
+          type: string
+        PriceListOtherChargeId:
+          format: int32
+          description: Get or set the PriceListOtherChargeId
+          type: integer
+        IsUnitPriceDiscrepancy:
+          description: Get IsUnitPriceDiscrepancy
+          default: false
+          type: boolean
+          readOnly: true
+        ApprovalCodeGroup:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+        isNontaxableVATEU:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Invoices.AddInvoicePaymentRequest:
+      description: Object details to add payment to an invoice.
+      type: object
+      properties:
+        InvoiceId:
+          format: int32
+          description: Unique numeric invoice identifier.
+          type: integer
+        PaymentDate:
+          format: date-time
+          description: Date and time when the specified invoice is paid. Cannot be prior to the invoice creation date.
+          type: string
+        PaymentNumber:
+          description: Number provided by a user when adding a payment record.
+          type: string
+        PaymentAmount:
+          format: double
+          description: Amount of the payment. Cannot exceed the total amount of the invoice. If it’s a credited invoice, a single payment is required with a minus before the payment amount.
+          type: number
+    ServiceChannel.Api.Model.Workorders.Label:
+      type: object
+      properties:
+        LabelText:
+          type: string
+        InvoiceId:
+          format: int32
+          type: integer
+        LabelId:
+          format: int32
+          type: integer
+        IsActive:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Providers.Provider:
+      type: object
+      properties:
+        Phone:
+          type: string
+        FullName:
+          description: Full Name
+          type: string
+        Address1:
+          description: Address1
+          type: string
+        Address2:
+          description: Adress2
+          type: string
+        City:
+          description: City
+          type: string
+        State:
+          description: State
+          type: string
+        Zip:
+          description: Zip
+          type: string
+        Country:
+          description: Country
+          type: string
+        MainContact:
+          description: Main Contact
+          type: string
+        DateCreated:
+          format: date-time
+          description: Date Created
+          type: string
+        LastUserDate:
+          description: Last User Date
+          type: string
+        SuperUser:
+          description: SuperUser
+          type: string
+        WebSite:
+          description: WebSite
+          type: string
+        Email:
+          description: Email
+          type: string
+        TaxId:
+          description: Tax Id
+          type: string
+        Trade:
+          description: Trade
+          type: string
+        ProcessingEmail:
+          description: Processing Email
+          type: string
+        FaxNumber:
+          description: Fax Number
+          type: string
+        SuiteFloor:
+          description: Suite Floor
+          type: string
+        MailInfo:
+          description: Mail Info
+          type: string
+        ImageFile:
+          description: Image File
+          type: string
+        ReturnMail:
+          description: Return Mail
+          type: string
+        MailFrequency:
+          format: int32
+          description: Mail Frequency
+          type: integer
+        FormId:
+          format: int32
+          description: Form Id
+          type: integer
+        Pager:
+          description: Pager
+          type: string
+        NightRequest:
+          format: int32
+          description: NightRequest
+          type: integer
+        ShortFormatEmail:
+          description: Short Format Email
+          type: string
+        LastTrainingDate:
+          format: date-time
+          description: Last Training Date
+          type: string
+        LastTrainingDateStr:
+          description: Last Training Date as a string
+          type: string
+        IsInternal:
+          description: Is Internal
+          default: false
+          type: boolean
+        IsOnOffShoreFeatureEnabled:
+          description: Is OnOffShoreFeature Enabled
+          default: false
+          type: boolean
+        Id:
+          format: int32
+          description: Id
+          type: integer
+        Name:
+          description: Name
+          type: string
+        DoNotDispatch:
+          description: DoNotDispatch enabled?
           default: false
           type: boolean
     ServiceChannel.Services.WebApi.Models.Request.Invoices.CreateInvoiceRequest:
@@ -1702,68 +1765,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AddInvoiceAttachmentRequest'
-    ServiceChannel.Services.Messaging.Invoices.InvoicePaymentRequest:
-      description: Request object to add a payment to an invoice.
-      type: object
-      properties:
-        PaymentDate:
-          format: date-time
-          description: Date and time when the specified invoice is paid. Cannot be earlier than the invoice approval date.
-          type: string
-        PaymentNumber:
-          description: Order number of payment for the invoice.
-          type: string
-        PaymentAmount:
-          format: double
-          description: Amount you want to pay. Cannot exceed the invoice total amount. If it’s a credited invoice, a single payment is required with a minus before the payment amount.
-          type: number
-    ServiceChannel.Services.Messaging.Invoices.Api.AdditionalApprovalCodeRequest:
-      type: object
-      properties:
-        Header:
-          type: string
-        Value:
-          type: string
-        SetupId:
-          format: int32
-          type: integer
-    ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceTravel:
-      description: Information on the trip.
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        InvoiceId:
-          format: int32
-          description: Invoice identifier.
-          type: integer
-        Description:
-          description: Description of the trip.
-          type: string
-        UnitType:
-          format: byte
-          description: Unit of measurement.
-          type: string
-        UnitPrice:
-          format: double
-          description: Price per unit.
-          type: number
-        Quantity:
-          format: double
-          description: Quantity.
-          type: number
-        Amount:
-          format: double
-          description: The amount of the trip cost. The sum of all `Amount` parameters in the `Travels` array must equal `InvoiceAmountsDetails.TravelAmount`.
-          type: number
-        IsOffShore:
-          description: Type of the shore (`1` - Onshore, `2` - Offshore).
-          default: false
-          type: boolean
-        isNontaxableVATEU:
-          default: false
-          type: boolean
     ServiceChannel.Services.Messaging.Invoices.InvoiceCategoryMessaging:
       type: object
       properties:
@@ -1772,259 +1773,130 @@ components:
           type: integer
         Name:
           type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceSettingsGeneral:
-      description: General invoice settings object.
+    ServiceChannel.Services.Messaging.Invoices.AddInvoicePaymentResponse:
+      description: Object details of the added payment.
       type: object
       properties:
-        DaysBeforePostingDate:
-          format: int32
-          description: The number of days prior to the invoice posting date within which the invoice creation date can be set. Providers can not create invoices for a date in the past that is older than the specified number of days from the invoice posting date.
-          type: integer
-        MaxDaysAfterPostingDate:
-          format: int32
-          description: The number of days after the invoice posting date within which the invoice creation date can be set. Providers can not generate invoices for a date in the future that is greater than the specified number of days from the invoice posting date.
-          type: integer
-        RequireResolutionText:
-          description: Defines whether providers are required to enter a resolution when creating an invoice.
-          default: false
-          type: boolean
-        RequireApprovalText:
-          description: Defines whether subscriber’s employees are required to enter a comment when approving invoices.
-          default: false
-          type: boolean
-        IsInvoiceApprovalCommentFeatureEnabled:
-          description: Defines whether the feature that prompts subscriber’s employees to enter a comment when approving invoices is turned on.
-          default: false
-          type: boolean
-        IsInvoiceNumberValidationFeatureEnabled:
-          description: Defines whether the feature that enables the invoice number validation is turned on.
-          default: false
-          type: boolean
-        IsInvoiceNegativeFeatureEnabled:
-          description: Defines whether the feature that enables the invoice negative amounts for the required line items.
-          default: false
-          type: boolean
-        IsInvoiceZeroVATEU:
-          description: Use Us UI model in international locations.
-          default: false
-          type: boolean
-        AvailableTrades:
-          description: A list of trades configured for the subscriber. The following parameters are returned for each trade:<br /> • `Id` — trade ID.<br /> • `Name` — trade name.<br /> • `PrimaryTradeName` — name of the primary trade for this trade.
+        PaymentDate:
+          format: date-time
+          description: Date and time when the specified invoice is paid.
           type: string
-        AvailableCategories:
-          description: A list of categories set up for the subscriber. The following parameters are returned for each category:<br /> • `Id` — category ID.<br /> • `SubscriberId` — subscriber ID.<br /> • `Name` — category name.<br /> • `HasDependency` — defines whether the category has dependent categories.<br /> • `PrimaryCategoryID` — ID of the primary category for this category.<br /> • `PrimaryCategoryName` — name of the primary category for this category.
+        PaymentId:
+          format: int32
+          description: Unique numeric invoice payment ID.
+          type: integer
+        Error:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.ResponseError'
+        InvoiceId:
+          format: int32
+          description: Unique numeric invoice identifier.
+          type: integer
+        PaymentNumber:
+          description: Number provided by a user when adding a payment record.
           type: string
-        LaborTradeIds:
-          description: Trade IDs for which providers must itemize Labor charges when creating a line-item invoice.
-          type: array
-          items:
-            format: int32
-            type: integer
-        MaterialsTradeIds:
-          description: Trade IDs for which providers must itemize Material charges when creating a line-item invoice.
-          type: array
-          items:
-            format: int32
-            type: integer
-        TravelTradeIds:
-          description: Trade IDs for which providers must itemize Travel charges when creating a line-item invoice.
-          type: array
-          items:
-            format: int32
-            type: integer
-        OtherTradeIds:
-          description: Trade IDs for which providers must itemize Other charges when creating a line-item invoice.
-          type: array
-          items:
-            format: int32
-            type: integer
-        LaborCategoryIds:
-          description: Category IDs for which providers must itemize Labor charges when creating a line-item invoice.
-          type: array
-          items:
-            format: int32
-            type: integer
-        MaterialsCategoryIds:
-          description: Category IDs for which providers must itemize Material charges when creating a line-item invoice.
-          type: array
-          items:
-            format: int32
-            type: integer
-        TravelCategoryIds:
-          description: Category IDs for which providers must itemize Travel charges when creating a line-item invoice.
-          type: array
-          items:
-            format: int32
-            type: integer
-        OtherCategoryIds:
-          description: Category IDs for which providers must itemize Other charges when creating a line-item invoice.
-          type: array
-          items:
-            format: int32
-            type: integer
-        NumberRequirementsModel:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.NumberRequirementsModel'
-          description: Parameters defining requirements for invoice numbers.
-        IsProviderAbleToAddSalesTax:
-          description: Defines whether the provider can add sales tax to its ivoices
-          default: false
-          type: boolean
-        RequireProviderDigitalCopy:
-          description: Specified is Provider Digital Copy requirement set for the provider
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Users.MliUserInfo:
+        PaymentAmount:
+          format: double
+          description: Amount of the payment. Cannot exceed the total amount of the invoice. If it’s a credited invoice, a single payment is required with a minus before the payment amount.
+          type: number
+    ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup:
       type: object
       properties:
-        Id:
-          format: int32
-          type: integer
-        MliLevel:
-          type: string
-        MliLocations:
-          type: array
-          items:
-            format: int32
-            type: integer
-    AddInvoiceAttachmentRequest:
-      type: object
-      properties:
-        Name:
-          type: string
-        Description:
-          type: string
-        Path:
-          type: string
-        Visibility:
-          format: int32
-          description: 'Note visibility - valid values: null, 1, 2, 3'
-          type: integer
-        IsInvoiceDigitalCopy:
-          description: Mark attachment as Invoice Digital Copy
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Invoices.Api.SingleUpdateGlCodeRequest:
-      type: object
-      properties:
-        Category:
+        ApprovalCodeType:
+          enum:
+          - Labor
+          - Travel
+          - Material
+          - Freight
+          - Other
+          - Tax
+          - Tax2
+          - LineItem
+          - FreightGenerated
           type: string
         ApprovalCode:
           type: string
-        ProjectId:
-          format: int32
-          type: integer
-        AdditionalApprovalCodes:
+        AdditionalApprovalCode:
+          type: string
+        Amount:
+          format: double
+          type: number
+        ApprovalCodes:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.Api.AdditionalApprovalCodeRequest'
-    ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceTaxesDetails:
-      description: Object containing the list of taxes. You can add taxes as a fixed amount or as a percentage.
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeChild'
+    ServiceChannel.Services.Messaging.Invoices.StatusHistoryShort:
       type: object
       properties:
-        LaborTaxPercent:
-          format: double
-          description: Amount of the labor tax in percentage (for countries other than USA and Canada).
-          type: number
-        MaterialTaxPercent:
-          format: double
-          description: Amount of the material tax in percentage (for countries other than USA and Canada).
-          type: number
-        TravelTaxPercent:
-          format: double
-          description: Amount of the travel tax in percentage (for countries other than USA and Canada).
-          type: number
-        FreightTaxPercent:
-          format: double
-          description: Amount of the freight tax in percentage (for countries other than USA and Canada).
-          type: number
-        OtherTaxPercent:
-          format: double
-          description: Amount of other taxes in percentage (for countries other than USA and Canada).
-          type: number
-        LaborTax:
-          format: double
-          description: Amount of the labor tax.
-          type: number
-        MaterialTax:
-          format: double
-          description: Amount of the material tax.
-          type: number
-        TravelTax:
-          format: double
-          description: Amount of the travel tax.
-          type: number
-        FreightTax:
-          format: double
-          description: Amount of the freight tax.
-          type: number
-        OtherTax:
-          format: double
-          description: Amount of other taxes.
-          type: number
-    ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCodeWithoutOptions:
+        CreatedBy:
+          type: string
+        CreatedById:
+          format: int32
+          type: integer
+        Status:
+          type: string
+        InvId:
+          format: int32
+          type: integer
+        ActionDate:
+          type: string
+    ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceLaborWithPriceList:
+      description: "Invoice labor with price list details.\n            This class is used to return invoice labor details with price list information in the response of GetInvoiceDetails operation."
       type: object
       properties:
-        Header:
+        PriceListId:
+          format: int32
+          description: "Price list identifier.\n            This parameter is returned only if the invoice labor details are retrieved with price list information.\n            Otherwise, this parameter is not returned."
+          type: integer
+        PriceListName:
+          description: "Price list name.\n            This parameter is returned only if the invoice labor details are retrieved with price list information."
           type: string
-        Value:
+        SkillLevelName:
+          description: "Skill level name.\n            This parameter is returned only if the invoice labor details are retrieved with price list information."
           type: string
-        SetupId:
-          format: int32
-          type: integer
-        LocationId:
-          format: int32
-          type: integer
-        DefaultOptionId:
-          format: int32
-          type: integer
-        ValueFormat:
-          format: int32
-          type: integer
-        EditableAtLineItemLevel:
-          format: int32
-          type: integer
-        IsDeleted:
+        LaborTypeName:
+          description: "Labor type name.\n            This parameter is returned only if the invoice labor details are retrieved with price list information."
+          type: string
+        SkillLevel:
+          format: byte
+          description: 'The skill level of a worker. Valid values: `1` - Supervisor, `2` - Technician, `3` - Helper.'
+          type: string
+        LaborType:
+          format: byte
+          description: 'The type of the pay rate. Valid values: `1` - Regular, `2` - Overtime, `3` - Double time.'
+          type: string
+        NumOfTech:
+          format: byte
+          description: Number of workers.
+          type: string
+        HourlyRate:
+          format: double
+          description: Worker hourly rate.
+          type: number
+        Hours:
+          format: double
+          description: Total hours the worker spent to complete the work order.
+          type: number
+        Amount:
+          format: double
+          description: The amount of the labor charge. The sum of all `Amount` parameters in the `Labors` array must equal `InvoiceAmountsDetails.LaborAmount`.
+          type: number
+        IsOffShore:
+          description: Type of the shore (`1` - Onshore, `2` - Offshore).
           default: false
           type: boolean
-    ServiceChannel.Services.Messaging.Currencies.Currency:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        AlphabeticalCode:
+        ServiceType:
+          format: byte
+          description: Type of the service (`1` - Design Engineering, Architecture, Technical Service, `2` - Installation and Supervision, `3` - Survey and Troubleshooting).
           type: string
-        DecimalCount:
-          format: int32
-          type: integer
-        Entity:
+        CityPerformed:
+          description: City where services are performed.
           type: string
-        CurrencyName:
+        RateDiscrepancyReason:
+          description: Rate discrepancy reason.
           type: string
-        NumericCode:
-          type: string
-        Rate:
-          format: double
-          type: number
-    ServiceChannel.Services.Messaging.Invoices.OtherPriceDiscrepancy:
-      description: OtherPriceDiscrepancies
-      type: object
-      properties:
-        LineItemId:
-          format: int32
-          description: Get or set LineItemId
-          type: integer
-        AppliedUnitPrice:
-          format: double
-          description: Get or set AppliedUnitPrice
-          type: number
-        AgreedUnitPrice:
-          format: double
-          description: Get or set AgreedUnitPrice
-          type: number
-        DiscrepancyReason:
-          description: Get or set DiscrepancyReason
-          type: string
+        isNontaxableVATEU:
+          default: false
+          type: boolean
     ServiceChannel.Services.Messaging.Invoices.InvoiceTaxesDetails:
       description: Object containing the list of taxes. You can add taxes as a fixed amount or as a percentage.
       type: object
@@ -2069,35 +1941,72 @@ components:
           format: double
           description: Amount of other taxes.
           type: number
-    ServiceChannel.Services.Messaging.Invoices.StatusHistoryShort:
+    ServiceChannel.Services.Messaging.Users.User:
+      description: User details object.
       type: object
       properties:
-        CreatedBy:
-          type: string
-        CreatedById:
+        Id:
           format: int32
+          description: Unique user identifier.
           type: integer
-        Status:
-          type: string
-        InvId:
+        SubscriberId:
           format: int32
+          description: Unique subscriber ID.
           type: integer
-        ActionDate:
+        UserName:
+          description: Username of the user.<br /> • For subscriber users, the username appears as **User Id** on the "General Info" tab of the user profile page.<br /> • For provider users, the username is listed as **UserID** under "Access" on the "General" tab of the user profile page.
+          pattern: ^$|(^\S+).(\S).(\S)$
           type: string
-    ServiceChannel.Api.Model.Workorders.Label:
-      type: object
-      properties:
-        LabelText:
+        FullName:
+          description: Full name of the user.<br /> • For subscriber users, the full name appears as **User Name** on the "General Info" tab of the user profile page.<br /> • For provider users, you can see their first and last name under "Basic" on the "General" tab of the user profile page.
           type: string
-        InvoiceId:
-          format: int32
-          type: integer
-        LabelId:
-          format: int32
-          type: integer
-        IsActive:
+        Email:
+          description: User’s email address.
+          type: string
+        PsmEmail:
+          description: Email address through which a user can reset their password.
+          type: string
+        Disabled:
+          description: Defines if a user is deactivated.
           default: false
           type: boolean
+        IsLocked:
+          description: Defines if a user is locked.
+          default: false
+          type: boolean
+        Roles:
+          description: Secondary roles assigned to a subscriber user that determine their permissions and level of access to various Service Automation modules.
+          type: array
+          items:
+            type: string
+        Permissions:
+          description: Permissions assigned to a subscriber user that determine whether they have full or read-only access to various Service Automation modules.
+          type: array
+          items:
+            type: string
+        UserType:
+          description: Subscriber user type defining their level of access to ServiceChannel:<br /> • `Corporate` — a user can work in Service Automation.<br /> • `Dashboard` — a user can only access the dashboard assigned to them.<br />`0` is returned for provider users.
+          enum:
+          - Corporate
+          - Dashboard
+          - ServiceChannel
+          type: string
+        Dashboard:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.DashboardInfo'
+          description: Dashboard a subscriber user has access to.
+        Access:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.AccessOptions'
+          description: List of locations, districts, regions, and trades a subscriber user has access to.
+        Limits:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.LimitOptions'
+          description: NTE, proposal, and invoice limits set for a subscriber user.
+        FeedRole:
+          type: string
+        MliUserInfo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MliUserInfo'
+          description: ''
+        MlpUserInfo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MlpUserInfo'
     ServiceChannel.Services.Messaging.Invoices.InvoiceDiscrepancy:
       type: object
       properties:
@@ -2114,53 +2023,315 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.OtherPriceDiscrepancy'
-    ServiceChannel.Services.Messaging.Invoices.RateDiscrepancy:
-      description: Rate Discrepancy Item
+    ServiceChannel.Services.Messaging.Invoices.SelectItem:
+      description: Object containing options a subscriber admin can choose from when configuring restrictions and rules for invoice numbers.
       type: object
       properties:
-        SkillLevel:
+        Value:
           format: int32
-          description: Get or set skill level (1 - Supervisor, 2 - Technician, 3 - Helper).
+          description: Number indicating the order of the option in the corresponding drop-down list for configuring invoice number restrictions and rules. The count starts from 0.<br /> • Check `RestrictionTypesSelect` to find out which options are available in the "Restrictions" drop-down list where a subscriber admin can set up number restrictions for manually created invoices.<br /> • See `AutoGenerationTypesSelect` for options in the "Generation uniqueness rule" drop-down list used for configuring number generation rules for automatically created invoices.
           type: integer
-        SkillLevelName:
-          description: Get or set skill level name
+        Name:
+          description: Name of the option in the corresponding drop-down list — "Restrictions" or "Generation uniqueness rule".
           type: string
-        LaborType:
+    ServiceChannel.Services.Messaging.Invoices.InvoicePaymentResponse:
+      description: Object containing the invoice payment details.
+      type: object
+      properties:
+        Id:
           format: int32
-          description: Get or set type of the labor (1 - Regular, 2 - Overtime, 3 - Double Time).
+          description: Numeric identifier of the payment.
           type: integer
-        LaborTypeName:
-          description: Get or set labor type name.
+        PaymentDate:
+          format: date-time
+          description: Date and time when the specified invoice was paid.
           type: string
-        HourlyRate:
+        PaidBy:
+          description: Username of the employee who made the payment.
+          type: string
+        PaymentNumber:
+          description: Order number of payment.
+          type: string
+        PaymentAmount:
           format: double
-          description: Get or set hourly rate.
+          description: Amount paid for the invoice. The value is negative if it’s a credited invoice.
           type: number
-        AgreedRate:
-          format: double
-          description: Get or set agreed hourly rate.
-          type: number
-        NumOfTech:
+    ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCodeWithoutOptions:
+      type: object
+      properties:
+        Header:
+          type: string
+        Value:
+          type: string
+        SetupId:
+          format: int32
+          type: integer
+        LocationId:
+          format: int32
+          type: integer
+        DefaultOptionId:
+          format: int32
+          type: integer
+        ValueFormat:
+          format: int32
+          type: integer
+        EditableAtLineItemLevel:
+          format: int32
+          type: integer
+        IsDeleted:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Invoices.InvoiceTravel:
+      description: Information on the trip.
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        InvoiceId:
+          format: int32
+          description: Invoice identifier.
+          type: integer
+        Description:
+          description: Description of the trip.
+          type: string
+        UnitType:
           format: byte
-          description: Get or set number of techs.
+          description: Unit of measurement.
           type: string
-        LaborHours:
+        UnitPrice:
           format: double
-          description: Get or set spent hours.
+          description: Price per unit.
           type: number
-        RateDiscrepancyReason:
-          description: Get or set rate discrepancy reason.
-          type: string
-    ServiceChannel.Services.Messaging.Invoices.ResponseError:
-      description: Object details of the response error.
+        Quantity:
+          format: double
+          description: Quantity.
+          type: number
+        Amount:
+          format: double
+          description: The amount of the trip cost. The sum of all `Amount` parameters in the `Travels` array must equal `InvoiceAmountsDetails.TravelAmount`.
+          type: number
+        IsOffShore:
+          description: Type of the shore (`1` - Onshore, `2` - Offshore).
+          default: false
+          type: boolean
+        ApprovalCodeGroup:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+        isNontaxableVATEU:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Location.Location:
+      description: General location details object.
       type: object
       properties:
-        Code:
+        Id:
           format: int32
-          description: Code of an error that shows why the request has failed.
+          description: Unique location identifier.
           type: integer
-        Message:
-          description: Reason for the request failure.
+        SubscriberId:
+          format: int32
+          description: Unique subscriber identifier.
+          type: integer
+        SubscriberName:
+          type: string
+        StoreId:
+          description: Alphanumeric identifier of the store in the client's system. Assigned by and unique per subscriber.
+          type: string
+        Name:
+          description: Location name.
+          type: string
+        ShortName:
+          description: Shortened location name.
+          type: string
+        Latitude:
+          format: double
+          description: Global position. Latitude.
+          type: number
+        Longitude:
+          format: double
+          description: Global position. Longitude.
+          type: number
+        Distance:
+          format: double
+          description: Distance from GPS coordinate to this location
+          type: number
+        Radius:
+          format: double
+          description: GPS radius for the location.
+          type: number
+        LocationTypeId:
+          format: int32
+          description: Numeric identifier of the location type.
+          type: integer
+        Address1:
+          description: Additional location address.
+          type: string
+        Address2:
+          description: Main location address.
+          type: string
+        City:
+          description: Location city.
+          type: string
+        State:
+          description: State where the location is situated.
+          type: string
+        StateId:
+          format: int32
+          description: Numeric identifier of the location’s state.
+          type: integer
+        Region:
+          description: Part of the country where the location is situated.
+          type: string
+        District:
+          description: Abbreviation of the town or country area where the location is situated.
+          type: string
+        Zip:
+          description: Location ZIP or postal code.
+          type: string
+        Country:
+          description: Abbreviation of the country name where the location is situated.
+          type: string
+        CountryId:
+          format: int32
+          description: Numeric identifier of the country of the location.
+          type: integer
+        ClosedDate:
+          format: date-time
+          description: Last day when the location is open for business.
+          type: string
+        OpenDate:
+          format: date-time
+          description: First day when the location is open for business.
+          type: string
+        Status:
+          description: 'Status of the location. Possible values: *open*, *closed*.'
+          type: string
+        Email:
+          description: Email the location can be contacted at.
+          type: string
+        FaxNumber:
+          description: Fax number the location can be contacted at.
+          type: string
+        Phone:
+          description: Contact phone number of the location.
+          type: string
+        Contact:
+          description: Name of the main person to contact at the location.
+          type: string
+        HasInventory:
+          description: 'Indicates whether it’s an inventory location or not. Possible values: *true*, *false*.'
+          default: false
+          type: boolean
+        SquareValue:
+          format: double
+          description: Square value of the facility.
+          type: number
+        SquareMeasure:
+          description: Unit or system of units for measuring location area.
+          type: string
+        TimeZoneInfoId:
+          format: int32
+          description: Numeric identifier of the location time zone.
+          type: integer
+        TimeZoneShortDescription:
+          description: Location time zone abbreviation.
+          type: string
+        TimeZoneMsName:
+          description: Location time zone Microsoft Name. e.g "Eastern Standard Time"
+          type: string
+        TimeZoneIanaName:
+          description: Location time zone Iana Name. e.g. "America/New_York"
+          type: string
+        TypeLabel:
+          description: '[Inventory location type](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/1209106525/Creating+Inventory+Locations?preview=%2F1209106525%2F1205830388%2FSupply-House-Type.png). Possible values: *Location*, *Warehouse*, *Supply House*, *Truck*.'
+          type: string
+        Supplier:
+          description: Supplier’s location name.
+          type: string
+        CountyId:
+          format: int32
+          description: County numeric identifier.
+          type: integer
+        Notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.LocationNote.LocationNote'
+        TimeShiftToEST:
+          format: int32
+          type: integer
+        AddressTypeId:
+          format: int32
+          description: Address format pattern Id
+          type: integer
+        FormattedAddress:
+          type: string
+        LocationFormattedAddressTail:
+          type: string
+        IsInternational:
+          default: false
+          type: boolean
+          readOnly: true
+        Address:
+          type: string
+    ServiceChannel.Services.Messaging.Invoices.NumberRequirementsModel:
+      description: Invoice number requirements object.
+      type: object
+      properties:
+        AutoGenerationTypesSelect:
+          description: A list of options in the "Generation uniqueness rule" drop-down list a subscriber admin can choose from when configuring invoice number rules for automatically generated invoices.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.SelectItem'
+        RestrictionTypesSelect:
+          description: A list of options in the "Restrictions" drop-down list a subscriber admin can choose from when configuring invoice number restrictions for manually created invoices.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.SelectItem'
+        ReuseInvoiceNumbersSelect:
+          description: A list of options in the "ReuseInvoiceNumber" drop-down list a subscriber admin can choose from when configuring invoice number.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.SelectItem'
+        InvoiceNumberRequirement:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceNumberRequirement'
+          description: Detailed info about the invoice number requirements set up for the subscriber listing the selected requirements and rules, users who submitted and updated them, when these actions took place, etc.
+        DefaultRestrictionComments:
+          description: 'A list of default explanatory comments on the invoice number format for the corresponding restrictions. A comment is displayed to a provider user in a tooltip when they try to submit an invoice whose number does not meet the restrictions specified by their subscriber. See `RestrictionTypesSelect` to identify which number (`Value`) corresponds to which restriction type: `2` — *Digits Only*, `3` — *Alphanumeric Only*.'
+          type: object
+          additionalProperties:
+            type: string
+        DefaultRestrictionPatterns:
+          description: 'A list of default regular expressions that define search patterns used to validate the number format of invoices created manually. See `RestrictionTypesSelect` to identify which number (`Value`) corresponds to which restriction type: `2` — *Digits Only*, `3` — *Alphanumeric Only*.'
+          type: object
+          additionalProperties:
+            type: string
+        Resources:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.Localizations'
+          description: A list of UI labels that appear in the "Invoice Number" section on the "General" tab of the "Admin - Invoices" page in Service Automation.
+    ServiceChannel.Services.Messaging.Invoices.Localizations:
+      description: The object for UI labels that appear in the "Invoice Number" section on the "General" tab of the "Admin - Invoices" page in Service Automation. Note that only subscriber users with the Super Admin secondary role can access this page.
+      type: object
+      properties:
+        InvoiceNumberLabel:
+          description: Label for the "Invoice Number" section name.
+          type: string
+        LastModifiedLabel:
+          description: The "Last modified" label for details about who last updated the invoice requirements and when.
+          type: string
+        RestrictionLabel:
+          description: Label for the "Restrictions" drop-down list where a subscriber admin selects which restriction should apply to the numbers of manually created invoices.
+          type: string
+        GenerationRuleLabel:
+          description: Label for the "Generation uniqueness rule" drop-down list where a subscriber admin selects which rule should apply to the numbers of automatically generated invoices.
+          type: string
+        HelpStringLabel:
+          description: The "Help string (to show vendors)" label for the field containing comments shown to a provider when they try to submit an invoice whose number does not meet the restrictions specified by a subscriber.
+          type: string
+        PatternPlaceHolder:
+          description: A placeholder text shown in the field where a subscriber admin enters a regular expression pattern to set restrictions for the numbers of manually created invoices.
+          type: string
+        CommentPlaceHolder:
+          description: A placeholder text shown in the field where a subscriber admin enters a comment for the restriction applied to the numbers of manually created invoices based on the selected restriction type.
           type: string
     ServiceChannel.Services.Messaging.ApprovalCodes.EditableAdditionalApprovalCode:
       type: object
@@ -2191,17 +2362,433 @@ components:
         DefaultValue:
           type: string
           readOnly: true
+    ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCode:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        InvoiceId:
+          format: int32
+          type: integer
+        InvoiceChargeId:
+          format: int32
+          type: integer
+        ApprovalCodeType:
+          enum:
+          - Labor
+          - Travel
+          - Material
+          - Freight
+          - Other
+          - Tax
+          - Tax2
+          - LineItem
+          - FreightGenerated
+          type: string
+        ApprovalCode:
+          type: string
+        AdditionalApprovalCode:
+          type: string
+        ParentId:
+          format: int32
+          type: integer
+        InternalId:
+          format: int32
+          type: integer
+        InternalParentId:
+          format: int32
+          type: integer
+        IsDefault:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Invoices.ProjectsInvoicesIgnoreAccessRightsRequest:
+      type: object
+      properties:
+        StartingDate:
+          format: date-time
+          type: string
+        EndingDate:
+          format: date-time
+          type: string
+        Statuses:
+          type: array
+          items:
+            type: string
+        Projects:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.Invoices.ProjectsInvoices:
+      type: object
+      properties:
+        InvoicesTotal:
+          format: double
+          type: number
+        TaxTotal:
+          format: double
+          type: number
+        Tax2Total:
+          format: double
+          type: number
+        Currency:
+          type: string
+        Count:
+          format: int32
+          type: integer
+        Invoices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.ProjectsInvoicesItem'
+    ServiceChannel.Services.Messaging.Invoices.InvoiceStatisticsResponse:
+      description: Invoice statistics response class
+      type: object
+      properties:
+        DaysPeriod:
+          format: int32
+          description: Gets or sets the period in days, last X days for which Invoices statistics was collected
+          type: integer
+        WoReadyForInvoices:
+          format: int32
+          description: Gets or sets the count of Work Orders ready for Invoices
+          type: integer
+        OpenInvoices:
+          format: int32
+          description: Gets or sets the count of open Invoices
+          type: integer
+        ApprovedInvoicesDaysPeriod:
+          format: int32
+          description: Gets or sets the period in days, last X days during which Invoices are approved
+          type: integer
+        ApprovedInvoices:
+          format: int32
+          description: Gets or sets the count of Invoices approved in the past <ApprovedInvoicesDaysPeriod /> days
+          type: integer
+    ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCodeOption:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Value:
+          type: string
+    ServiceChannel.Services.WebApi.Models.Request.Invoices.CreatingInvoiceTaxIncludedRequest:
+      type: object
+      properties:
+        LaborTaxIncluded:
+          format: byte
+          type: string
+        TravelTaxIncluded:
+          format: byte
+          type: string
+        MaterialTaxIncluded:
+          format: byte
+          type: string
+        FreightTaxIncluded:
+          format: byte
+          type: string
+        OtherTaxIncluded:
+          format: byte
+          type: string
+    ServiceChannel.Services.Messaging.Invoices.MaterialMarkupDiscrepancy:
+      type: object
+      properties:
+        LineItemId:
+          format: int32
+          type: integer
+        AppliedMarkupPercent:
+          format: double
+          type: number
+        AgreedMarkupPercent:
+          format: double
+          type: number
+        DiscrepancyReason:
+          type: string
+    ServiceChannel.Services.Messaging.Invoices.InvoiceNumberRequirement:
+      description: Invoice number requirements object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: ID of the regular expression pattern used to validate the numbers of invoices created manually.
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Unique ID of the subscriber whose invoice number requirements are returned.
+          type: integer
+        Pattern:
+          description: Regular expression pattern used to validate the numbers of invoices created manually.<br />A value is returned even if the selected `RestrictionType` is `0` — *None*. In this case, it’s the last pattern entered in the field.
+          type: string
+        Comment:
+          description: Comment on the invoice number format displayed to a provider user in a tooltip when they try to submit an invoice whose number does not meet the specified restrictions. Invoice numbers are validated by the regular expression pattern specified in `Pattern`.<br />A value is returned even if the selected `RestrictionType` is `0` — *None*. In this case, it’s the last comment entered in the field.
+          type: string
+        RestrictionType:
+          description: Selected restriction for the numbers of invoices created manually. See `RestrictionTypesSelect` to identify which number (`Value`) corresponds to which restriction type.
+          enum:
+          - None
+          - Custom
+          - DigitsOnly
+          - AlphaNumericOnly
+          type: string
+        AutoGenerationType:
+          description: Selected rule for the numbers of invoices generated automatically. See `AutoGenerationTypesSelect` to identify which number (`Value`) corresponds to which rule.
+          enum:
+          - None
+          - CurrentDate
+          type: string
+        CreatedDate:
+          format: date-time
+          description: Date and time when the invoice number requirements were created.
+          type: string
+        UpdatedDate:
+          format: date-time
+          description: Date and time when the invoice number requirements were last updated.
+          type: string
+        CreatedByUserId:
+          format: int32
+          description: Unique ID of the subscriber admin user who created the invoice number requirements.
+          type: integer
+        UpdatedByUserId:
+          format: int32
+          description: Unique ID of the subscriber admin user who last updated the invoice number requirements.
+          type: integer
+        CreatedByUser:
+          description: Username of the subscriber admin who created the invoice number requirements.
+          type: string
+        UpdatedByUser:
+          description: Username of the subscriber admin who last updated the invoice number requirements. The username appears in the **Invoice Number** section next to **Last modified**.
+          type: string
+        ReuseInvoiceNumber:
+          format: byte
+          description: Reuse invoice number
+          type: string
+        IsNew:
+          description: Defines whether a default restriction pattern is used.
+          default: false
+          type: boolean
+          readOnly: true
+        CreatedDateString:
+          description: Date when the invoice number requirements were created.
+          type: string
+          readOnly: true
+        UpdatedDateString:
+          description: Date when the invoice number requirements were last updated. The date appears in the **Invoice Number** section next to **Last modified**.
+          type: string
+          readOnly: true
+    ServiceChannel.Services.Messaging.Invoices.ApiVendorPayee:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        VendorNumber:
+          type: string
+        FullName:
+          type: string
+        Address1:
+          type: string
+        Address2:
+          type: string
+        City:
+          type: string
+        State:
+          type: string
+        Zip:
+          type: string
+        Country:
+          type: string
+    ServiceChannel.Services.Messaging.LocationNote.LocationNote:
+      description: Object with the location note details.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Location note numeric identifier.
+          type: integer
+        HeaderId:
+          format: int32
+          description: Unique location note header identifier.
+          type: integer
+        Value:
+          description: Location note content.
+          type: string
+        Header:
+          description: Name of the note.
+          type: string
+    ServiceChannel.Services.Messaging.Users.LimitOptions:
+      description: Object for NTE, proposal, and invoice limits set for a subscriber user.
+      type: object
+      properties:
+        NteLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
+        ProposalLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
+        InvoiceLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
+    ServiceChannel.Services.Messaging.Invoices.ProjectsInvoicesItem:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        InvoiceNumber:
+          type: string
+        Tax:
+          format: double
+          type: number
+        Tax2:
+          format: double
+          type: number
+        Tax2Name:
+          type: string
+        InvoiceTotal:
+          format: double
+          type: number
+        LaborAmount:
+          format: double
+          type: number
+        MaterialAmount:
+          format: double
+          type: number
+        FreightAmount:
+          format: double
+          type: number
+        TravelAmount:
+          format: double
+          type: number
+        OtherAmount:
+          format: double
+          type: number
+        OtherDescription:
+          type: string
+        Status:
+          type: string
+        InvoiceDate:
+          format: date-time
+          type: string
+        InvoiceDateDTO:
+          format: date-time
+          type: string
+        PostedDate:
+          format: date-time
+          type: string
+        PostedDateDTO:
+          format: date-time
+          type: string
+        Currency:
+          type: string
+        AlphabeticCode:
+          type: string
+        WoTrackingNumber:
+          format: int32
+          type: integer
+        ProviderId:
+          format: int32
+          type: integer
+        ProviderName:
+          type: string
+    ServiceChannel.Services.Messaging.Users.MliUserInfo:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        MliLevel:
+          type: string
+        MliLocations:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.Invoices.InvoiceMaterial:
+      description: Information on the materials used. Add a separate object for each material.
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        InvoiceId:
+          format: int32
+          description: Invoice identifier.
+          type: integer
+        Description:
+          description: Name or description of the material. Length limit is 100 symbols.
+          type: string
+        PartNum:
+          description: Part, serial, or manufacturer number of the material. Length limit is 100 symbols.
+          type: string
+        UnitType:
+          format: byte
+          description: 'Unit of measurement. Valid values: 1 — Each; 2 — Box; 3 — Feet; 4 — Sqft; 5 — Lbs; 6 — Gal; 7 — Oz. Default value: 1.'
+          type: string
+        UnitPrice:
+          format: double
+          description: Price per unit.
+          type: number
+        PartName:
+          description: Part name.
+          type: string
+        MarkUpPercent:
+          format: double
+          description: Markup percent.
+          type: number
+        AgreedMarkUpPercent:
+          format: double
+          description: Agreed markup percent.
+          type: number
+        MarkUpDiscrepancyReason:
+          description: Mark up discrepancy reason.
+          type: string
+        AgreedPartPrice:
+          format: double
+          description: Agreed part price.
+          type: number
+        Quantity:
+          format: double
+          description: Quantity of the material.
+          type: number
+        Amount:
+          format: double
+          description: The amount of the material cost. The sum of all `Amount` parameters in the `Materials` array must equal `InvoiceAmountsDetails.MaterialAmount`.
+          type: number
+        ApprovalCodeGroup:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+        IsMarkUpDiscrepancy:
+          description: Markup discrepancy.
+          default: false
+          type: boolean
+        IsPartPriceDiscrepancy:
+          description: Part price discrepancy.
+          default: false
+          type: boolean
+        PriceDiscrepancyReason:
+          description: Price discrepancy reason.
+          type: string
+        isNontaxableVATEU:
+          default: false
+          type: boolean
     System.Object:
       type: object
       properties: {}
-    ServiceChannel.Services.Messaging.Invoices.InvoicePaymentBulkRequest:
-      description: Request model to add payment records in bulk.
+    ServiceChannel.Services.Messaging.Users.DashboardInfo:
+      description: Dashboard details object.
       type: object
       properties:
-        Payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.AddInvoicePaymentRequest'
+        Id:
+          format: int32
+          description: Unique dashboard identifier.
+          type: integer
+        Name:
+          description: Dashboard name.
+          type: string
+        RedirectToDashboard:
+          description: Defines whether a subscriber user is redirected to a dashboard once they log in.
+          default: false
+          type: boolean
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -3839,271 +4426,6 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceLaborWithPriceList:
-      description: "Invoice labor with price list details.\n            This class is used to return invoice labor details with price list information in the response of GetInvoiceDetails operation."
-      type: object
-      properties:
-        PriceListId:
-          format: int32
-          description: "Price list identifier.\n            This parameter is returned only if the invoice labor details are retrieved with price list information.\n            Otherwise, this parameter is not returned."
-          type: integer
-        PriceListName:
-          description: "Price list name.\n            This parameter is returned only if the invoice labor details are retrieved with price list information."
-          type: string
-        SkillLevelName:
-          description: "Skill level name.\n            This parameter is returned only if the invoice labor details are retrieved with price list information."
-          type: string
-        LaborTypeName:
-          description: "Labor type name.\n            This parameter is returned only if the invoice labor details are retrieved with price list information."
-          type: string
-        SkillLevel:
-          format: byte
-          description: 'The skill level of a worker. Valid values: `1` - Supervisor, `2` - Technician, `3` - Helper.'
-          type: string
-        LaborType:
-          format: byte
-          description: 'The type of the pay rate. Valid values: `1` - Regular, `2` - Overtime, `3` - Double time.'
-          type: string
-        NumOfTech:
-          format: byte
-          description: Number of workers.
-          type: string
-        HourlyRate:
-          format: double
-          description: Worker hourly rate.
-          type: number
-        Hours:
-          format: double
-          description: Total hours the worker spent to complete the work order.
-          type: number
-        Amount:
-          format: double
-          description: The amount of the labor charge. The sum of all `Amount` parameters in the `Labors` array must equal `InvoiceAmountsDetails.LaborAmount`.
-          type: number
-        IsOffShore:
-          description: Type of the shore (`1` - Onshore, `2` - Offshore).
-          default: false
-          type: boolean
-        ServiceType:
-          format: byte
-          description: Type of the service (`1` - Design Engineering, Architecture, Technical Service, `2` - Installation and Supervision, `3` - Survey and Troubleshooting).
-          type: string
-        CityPerformed:
-          description: City where services are performed.
-          type: string
-        RateDiscrepancyReason:
-          description: Rate discrepancy reason.
-          type: string
-        isNontaxableVATEU:
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Invoices.InvoiceOther:
-      description: The invoices material
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        InvoiceId:
-          format: int32
-          description: Invoice identifier.
-          type: integer
-        Description:
-          description: Get or set description.
-          type: string
-        Type:
-          description: Get or set type of charge.
-          type: string
-        Amount:
-          format: double
-          description: Get or set the amount of money that is charged.
-          type: number
-        UnitType:
-          format: byte
-          description: Get or set the unit of measure
-          type: string
-        UnitPrice:
-          format: double
-          description: Get or set the price of unit
-          type: number
-        Quantity:
-          format: double
-          description: Get or set the quantity
-          type: number
-        AgreedUnitPrice:
-          format: double
-          description: Get or set the AgreedUnitPrice
-          type: number
-        UnitPriceDiscrepancyReason:
-          description: UnitPriceDiscrepancyReason
-          type: string
-        PriceListOtherChargeId:
-          format: int32
-          description: Get or set the PriceListOtherChargeId
-          type: integer
-        IsUnitPriceDiscrepancy:
-          description: Get IsUnitPriceDiscrepancy
-          default: false
-          type: boolean
-          readOnly: true
-        ApprovalCodeGroup:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
-        isNontaxableVATEU:
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Location.Location:
-      description: General location details object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique location identifier.
-          type: integer
-        SubscriberId:
-          format: int32
-          description: Unique subscriber identifier.
-          type: integer
-        SubscriberName:
-          type: string
-        StoreId:
-          description: Alphanumeric identifier of the store in the client's system. Assigned by and unique per subscriber.
-          type: string
-        Name:
-          description: Location name.
-          type: string
-        ShortName:
-          description: Shortened location name.
-          type: string
-        Latitude:
-          format: double
-          description: Global position. Latitude.
-          type: number
-        Longitude:
-          format: double
-          description: Global position. Longitude.
-          type: number
-        Distance:
-          format: double
-          description: Distance from GPS coordinate to this location
-          type: number
-        Radius:
-          format: double
-          description: GPS radius for the location.
-          type: number
-        LocationTypeId:
-          format: int32
-          description: Numeric identifier of the location type.
-          type: integer
-        Address1:
-          description: Additional location address.
-          type: string
-        Address2:
-          description: Main location address.
-          type: string
-        City:
-          description: Location city.
-          type: string
-        State:
-          description: State where the location is situated.
-          type: string
-        StateId:
-          format: int32
-          description: Numeric identifier of the location’s state.
-          type: integer
-        Region:
-          description: Part of the country where the location is situated.
-          type: string
-        District:
-          description: Abbreviation of the town or country area where the location is situated.
-          type: string
-        Zip:
-          description: Location ZIP or postal code.
-          type: string
-        Country:
-          description: Abbreviation of the country name where the location is situated.
-          type: string
-        CountryId:
-          format: int32
-          description: Numeric identifier of the country of the location.
-          type: integer
-        ClosedDate:
-          format: date-time
-          description: Last day when the location is open for business.
-          type: string
-        OpenDate:
-          format: date-time
-          description: First day when the location is open for business.
-          type: string
-        Status:
-          description: 'Status of the location. Possible values: *open*, *closed*.'
-          type: string
-        Email:
-          description: Email the location can be contacted at.
-          type: string
-        FaxNumber:
-          description: Fax number the location can be contacted at.
-          type: string
-        Phone:
-          description: Contact phone number of the location.
-          type: string
-        Contact:
-          description: Name of the main person to contact at the location.
-          type: string
-        HasInventory:
-          description: 'Indicates whether it’s an inventory location or not. Possible values: *true*, *false*.'
-          default: false
-          type: boolean
-        SquareValue:
-          format: double
-          description: Square value of the facility.
-          type: number
-        SquareMeasure:
-          description: Unit or system of units for measuring location area.
-          type: string
-        TimeZoneInfoId:
-          format: int32
-          description: Numeric identifier of the location time zone.
-          type: integer
-        TimeZoneShortDescription:
-          description: Location time zone abbreviation.
-          type: string
-        TimeZoneMsName:
-          description: Location time zone Microsoft Name. e.g "Eastern Standard Time"
-          type: string
-        TimeZoneIanaName:
-          description: Location time zone Iana Name. e.g. "America/New_York"
-          type: string
-        TypeLabel:
-          description: '[Inventory location type](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/1209106525/Creating+Inventory+Locations?preview=%2F1209106525%2F1205830388%2FSupply-House-Type.png). Possible values: *Location*, *Warehouse*, *Supply House*, *Truck*.'
-          type: string
-        Supplier:
-          description: Supplier’s location name.
-          type: string
-        CountyId:
-          format: int32
-          description: County numeric identifier.
-          type: integer
-        Notes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.LocationNote.LocationNote'
-        TimeShiftToEST:
-          format: int32
-          type: integer
-        AddressTypeId:
-          format: int32
-          description: Address format pattern Id
-          type: integer
-        FormattedAddress:
-          type: string
-        LocationFormattedAddressTail:
-          type: string
-        IsInternational:
-          default: false
-          type: boolean
-          readOnly: true
-        Address:
-          type: string
     ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceMaterial:
       type: object
       properties:
@@ -4160,540 +4482,6 @@ components:
         isNontaxableVATEU:
           default: false
           type: boolean
-    ServiceChannel.Services.Messaging.Providers.Provider:
-      type: object
-      properties:
-        Phone:
-          type: string
-        FullName:
-          description: Full Name
-          type: string
-        Address1:
-          description: Address1
-          type: string
-        Address2:
-          description: Adress2
-          type: string
-        City:
-          description: City
-          type: string
-        State:
-          description: State
-          type: string
-        Zip:
-          description: Zip
-          type: string
-        Country:
-          description: Country
-          type: string
-        MainContact:
-          description: Main Contact
-          type: string
-        DateCreated:
-          format: date-time
-          description: Date Created
-          type: string
-        LastUserDate:
-          description: Last User Date
-          type: string
-        SuperUser:
-          description: SuperUser
-          type: string
-        WebSite:
-          description: WebSite
-          type: string
-        Email:
-          description: Email
-          type: string
-        TaxId:
-          description: Tax Id
-          type: string
-        Trade:
-          description: Trade
-          type: string
-        ProcessingEmail:
-          description: Processing Email
-          type: string
-        FaxNumber:
-          description: Fax Number
-          type: string
-        SuiteFloor:
-          description: Suite Floor
-          type: string
-        MailInfo:
-          description: Mail Info
-          type: string
-        ImageFile:
-          description: Image File
-          type: string
-        ReturnMail:
-          description: Return Mail
-          type: string
-        MailFrequency:
-          format: int32
-          description: Mail Frequency
-          type: integer
-        FormId:
-          format: int32
-          description: Form Id
-          type: integer
-        Pager:
-          description: Pager
-          type: string
-        NightRequest:
-          format: int32
-          description: NightRequest
-          type: integer
-        ShortFormatEmail:
-          description: Short Format Email
-          type: string
-        LastTrainingDate:
-          format: date-time
-          description: Last Training Date
-          type: string
-        LastTrainingDateStr:
-          description: Last Training Date as a string
-          type: string
-        IsInternal:
-          description: Is Internal
-          default: false
-          type: boolean
-        IsOnOffShoreFeatureEnabled:
-          description: Is OnOffShoreFeature Enabled
-          default: false
-          type: boolean
-        Id:
-          format: int32
-          description: Id
-          type: integer
-        Name:
-          description: Name
-          type: string
-        DoNotDispatch:
-          description: DoNotDispatch enabled?
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Invoices.SelectItem:
-      description: Object containing options a subscriber admin can choose from when configuring restrictions and rules for invoice numbers.
-      type: object
-      properties:
-        Value:
-          format: int32
-          description: Number indicating the order of the option in the corresponding drop-down list for configuring invoice number restrictions and rules. The count starts from 0.<br /> • Check `RestrictionTypesSelect` to find out which options are available in the "Restrictions" drop-down list where a subscriber admin can set up number restrictions for manually created invoices.<br /> • See `AutoGenerationTypesSelect` for options in the "Generation uniqueness rule" drop-down list used for configuring number generation rules for automatically created invoices.
-          type: integer
-        Name:
-          description: Name of the option in the corresponding drop-down list — "Restrictions" or "Generation uniqueness rule".
-          type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoicePaymentResponse:
-      description: Object containing the invoice payment details.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Numeric identifier of the payment.
-          type: integer
-        PaymentDate:
-          format: date-time
-          description: Date and time when the specified invoice was paid.
-          type: string
-        PaidBy:
-          description: Username of the employee who made the payment.
-          type: string
-        PaymentNumber:
-          description: Order number of payment.
-          type: string
-        PaymentAmount:
-          format: double
-          description: Amount paid for the invoice. The value is negative if it’s a credited invoice.
-          type: number
-    ServiceChannel.Services.Messaging.Invoices.MaterialMarkupDiscrepancy:
-      type: object
-      properties:
-        LineItemId:
-          format: int32
-          type: integer
-        AppliedMarkupPercent:
-          format: double
-          type: number
-        AgreedMarkupPercent:
-          format: double
-          type: number
-        DiscrepancyReason:
-          type: string
-    ServiceChannel.Services.Messaging.Invoices.OData.ODataInvoice:
-      type: object
-      properties:
-        Provider:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.Provider'
-        Subscriber:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Subscribers.Subscriber'
-        Location:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Location.Location'
-        Id:
-          format: int32
-          type: integer
-        Number:
-          description: Gets or sets invoice number.
-          type: string
-        BatchNumber:
-          description: Gets or sets Batch number.
-          type: string
-        InvoiceTax:
-          format: double
-          type: number
-        PostedTaxRate:
-          format: float
-          type: number
-        PostedTax2Rate:
-          format: float
-          type: number
-        VendorPayeeId:
-          format: int32
-          type: integer
-        InvoiceTotal:
-          format: double
-          description: Gets or sets total with tax amounts.
-          type: number
-        InvoiceBalance:
-          format: double
-          type: number
-        Currency:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
-        ApprovedDate:
-          format: date-time
-          type: string
-        ApprovalCode:
-          type: string
-        EditableAdditionalApprovalCode:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ApprovalCodes.EditableAdditionalApprovalCode'
-        PostedDate:
-          format: date-time
-          type: string
-        PostedBy:
-          type: string
-        Subtotal:
-          format: double
-          type: number
-        Status:
-          type: string
-        Trade:
-          type: string
-        InvoiceAmountsDetails:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceAmountsDetails'
-        InvoiceTaxesDetails:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceTaxesDetails'
-        Tax2Details:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.Tax2Details'
-        Labors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceLabor'
-        Materials:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceMaterial'
-        Travels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceTravel'
-        Others:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceOther'
-        TaxApprovalCodeGroups:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
-        Tax2ApprovalCodeGroups:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
-        FreightApprovalCodeGroups:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
-        WithMismatchedRates:
-          default: false
-          type: boolean
-        IsOutsourced:
-          default: false
-          type: boolean
-        StarredBy:
-          type: string
-        IsStarred:
-          default: false
-          type: boolean
-        IsTransferred:
-          default: false
-          type: boolean
-          readOnly: true
-        StarredDate:
-          format: date-time
-          type: string
-        Description:
-          type: string
-        InvoiceDate:
-          format: date-time
-          type: string
-        LaborTaxIncluded:
-          default: false
-          type: boolean
-        TravelTaxIncluded:
-          default: false
-          type: boolean
-        MaterialsTaxIncluded:
-          default: false
-          type: boolean
-        FreightTaxIncluded:
-          default: false
-          type: boolean
-        OtherTaxIncluded:
-          default: false
-          type: boolean
-        NonTaxableLabor:
-          format: int32
-          type: integer
-        NonTaxableTravel:
-          format: int32
-          type: integer
-        NonTaxableMaterial:
-          format: int32
-          type: integer
-        NonTaxableFreight:
-          format: int32
-          type: integer
-        NonTaxableOther:
-          format: int32
-          type: integer
-        IsExists:
-          default: false
-          type: boolean
-          readOnly: true
-        StatusChangeDate:
-          format: date-time
-          type: string
-        StatusChangeUser:
-          type: string
-        StatusChangeUserid:
-          type: string
-        IsDuplicate:
-          default: false
-          type: boolean
-        WoTrackingNumber:
-          format: int32
-          description: Gets or sets work order tracking number.
-          type: integer
-        Terms:
-          description: terms
-          type: string
-        Comments:
-          type: string
-        PaidDate:
-          format: date-time
-          type: string
-        TransferredDate:
-          format: date-time
-          type: string
-        LastActionDate:
-          format: date-time
-          type: string
-        UpdatedDate:
-          format: date-time
-          description: Updated Date
-          type: string
-        StatusHistoryShort:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.StatusHistoryShort'
-        WoAssignedTo:
-          description: Gets or sets WO Assignee
-          type: string
-        ApprovalCodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCode'
-        IsChargesApprovalCodesDefault:
-          default: false
-          type: boolean
-        Payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoicePaymentResponse'
-        StoredFeatures:
-          type: array
-          items:
-            type: string
-    ServiceChannel.Services.Messaging.Users.User:
-      description: User details object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique user identifier.
-          type: integer
-        SubscriberId:
-          format: int32
-          description: Unique subscriber ID.
-          type: integer
-        UserName:
-          description: Username of the user.<br /> • For subscriber users, the username appears as **User Id** on the "General Info" tab of the user profile page.<br /> • For provider users, the username is listed as **UserID** under "Access" on the "General" tab of the user profile page.
-          pattern: ^$|(^\S+).(\S).(\S)$
-          type: string
-        FullName:
-          description: Full name of the user.<br /> • For subscriber users, the full name appears as **User Name** on the "General Info" tab of the user profile page.<br /> • For provider users, you can see their first and last name under "Basic" on the "General" tab of the user profile page.
-          type: string
-        Email:
-          description: User’s email address.
-          type: string
-        PsmEmail:
-          description: Email address through which a user can reset their password.
-          type: string
-        Disabled:
-          description: Defines if a user is deactivated.
-          default: false
-          type: boolean
-        IsLocked:
-          description: Defines if a user is locked.
-          default: false
-          type: boolean
-        Roles:
-          description: Secondary roles assigned to a subscriber user that determine their permissions and level of access to various Service Automation modules.
-          type: array
-          items:
-            type: string
-        Permissions:
-          description: Permissions assigned to a subscriber user that determine whether they have full or read-only access to various Service Automation modules.
-          type: array
-          items:
-            type: string
-        UserType:
-          description: Subscriber user type defining their level of access to ServiceChannel:<br /> • `Corporate` — a user can work in Service Automation.<br /> • `Dashboard` — a user can only access the dashboard assigned to them.<br />`0` is returned for provider users.
-          enum:
-          - Corporate
-          - Dashboard
-          - ServiceChannel
-          type: string
-        Dashboard:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.DashboardInfo'
-          description: Dashboard a subscriber user has access to.
-        Access:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.AccessOptions'
-          description: List of locations, districts, regions, and trades a subscriber user has access to.
-        Limits:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.LimitOptions'
-          description: NTE, proposal, and invoice limits set for a subscriber user.
-        FeedRole:
-          type: string
-        MliUserInfo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MliUserInfo'
-          description: ''
-        MlpUserInfo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MlpUserInfo'
-    ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceAmountsDetails:
-      description: Object containing the list of the invoice charges.
-      type: object
-      properties:
-        LaborAmount:
-          format: double
-          description: Amount of the labor charge. Must equal `Labors.Amount`.
-          type: number
-        MaterialAmount:
-          format: double
-          description: Amount of the material charge. Must equal `Materials.Amount`.
-          type: number
-        TravelAmount:
-          format: double
-          description: Amount of the trip charge.
-          type: number
-        FreightAmount:
-          format: double
-          description: Amount of the freight charge.
-          type: number
-        OtherAmount:
-          format: double
-          description: Amount of other charges. When you add this parameter, also specify `InvoiceAmountsDetails.OtherDescription`.
-          type: number
-        OtherDescription:
-          type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCode:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        InvoiceId:
-          format: int32
-          type: integer
-        InvoiceChargeId:
-          format: int32
-          type: integer
-        ApprovalCodeType:
-          enum:
-          - Labor
-          - Travel
-          - Material
-          - Freight
-          - Other
-          - Tax
-          - Tax2
-          - LineItem
-          - FreightGenerated
-          type: string
-        ApprovalCode:
-          type: string
-        AdditionalApprovalCode:
-          type: string
-        ParentId:
-          format: int32
-          type: integer
-        InternalId:
-          format: int32
-          type: integer
-        InternalParentId:
-          format: int32
-          type: integer
-        IsDefault:
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Invoices.ProjectsInvoices:
-      type: object
-      properties:
-        InvoicesTotal:
-          format: double
-          type: number
-        TaxTotal:
-          format: double
-          type: number
-        Tax2Total:
-          format: double
-          type: number
-        Currency:
-          type: string
-        Count:
-          format: int32
-          type: integer
-        Invoices:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.ProjectsInvoicesItem'
-    ServiceChannel.Services.Messaging.LocationNote.LocationNote:
-      description: Object with the location note details.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Location note numeric identifier.
-          type: integer
-        HeaderId:
-          format: int32
-          description: Unique location note header identifier.
-          type: integer
-        Value:
-          description: Location note content.
-          type: string
-        Header:
-          description: Name of the note.
-          type: string
     ServiceChannel.Services.Messaging.Invoices.InvoiceLabor:
       description: Information on labor. Add a separate object for each worker. When two or more workers have the same `SkillLevel`,`LaborType`, and `HourlyRate`, use one object and specify `NumOfTech`.
       type: object
@@ -4756,110 +4544,140 @@ components:
         isNontaxableVATEU:
           default: false
           type: boolean
-    ServiceChannel.Services.Messaging.Users.Limit:
-      description: Object for limit details set for a subscriber user.
+    ServiceChannel.Services.Messaging.Invoices.OtherPriceDiscrepancy:
+      description: OtherPriceDiscrepancies
+      type: object
+      properties:
+        LineItemId:
+          format: int32
+          description: Get or set LineItemId
+          type: integer
+        AppliedUnitPrice:
+          format: double
+          description: Get or set AppliedUnitPrice
+          type: number
+        AgreedUnitPrice:
+          format: double
+          description: Get or set AgreedUnitPrice
+          type: number
+        DiscrepancyReason:
+          description: Get or set DiscrepancyReason
+          type: string
+    ServiceChannel.Services.Messaging.Invoices.InvoiceAmountsDetails:
+      description: Object containing the list of the invoice charges.
+      type: object
+      properties:
+        LaborAmount:
+          format: double
+          description: Amount of the labor charge. Must equal `Labors.Amount`.
+          type: number
+        MaterialAmount:
+          format: double
+          description: Amount of the material charge. Must equal `Materials.Amount`.
+          type: number
+        TravelAmount:
+          format: double
+          description: Amount of the trip charge.
+          type: number
+        FreightAmount:
+          format: double
+          description: Amount of the freight charge.
+          type: number
+        OtherAmount:
+          format: double
+          description: Amount of other charges. When you add this parameter, also specify `InvoiceAmountsDetails.OtherDescription`.
+          type: number
+        OtherDescription:
+          type: string
+    ServiceChannel.Services.Messaging.Users.AccessOptions:
+      description: Object listing locations, districts, regions, and trades a subscriber user has access to. Learn more about [granting access based on locations, districts, and regions](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/585107276/Location+District+Region+Access+Tab) in ServiceChannel University.
+      type: object
+      properties:
+        Locations:
+          description: Locations a user has access to.
+          type: array
+          items:
+            type: string
+        Districts:
+          description: Districts a user has access to.
+          type: array
+          items:
+            type: string
+        Regions:
+          description: Regions a user has access to.
+          type: array
+          items:
+            type: string
+        Trades:
+          description: Trades a user is permitted to work with.
+          type: array
+          items:
+            type: string
+    ServiceChannel.Api.Model.Invoices.WeatherEventTypeForInvoice:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        Description:
+          type: string
+        InvoiceId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.Invoices.ResponseError:
+      description: Object details of the response error.
+      type: object
+      properties:
+        Code:
+          format: int32
+          description: Code of an error that shows why the request has failed.
+          type: integer
+        Message:
+          description: Reason for the request failure.
+          type: string
+    ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeChild:
       type: object
       properties:
         Amount:
           format: double
-          description: Limit amount.
           type: number
-        CurrencyId:
-          format: int32
-          description: Identifier of the currency the limit is set in.
-          type: integer
-    ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCodeOption:
-      type: object
-      properties:
         Id:
           format: int32
           type: integer
-        Value:
-          type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceNumberRequirement:
-      description: Invoice number requirements object.
-      type: object
-      properties:
-        Id:
+        InvoiceId:
           format: int32
-          description: ID of the regular expression pattern used to validate the numbers of invoices created manually.
           type: integer
-        SubscriberId:
+        InvoiceChargeId:
           format: int32
-          description: Unique ID of the subscriber whose invoice number requirements are returned.
           type: integer
-        Pattern:
-          description: Regular expression pattern used to validate the numbers of invoices created manually.<br />A value is returned even if the selected `RestrictionType` is `0` — *None*. In this case, it’s the last pattern entered in the field.
-          type: string
-        Comment:
-          description: Comment on the invoice number format displayed to a provider user in a tooltip when they try to submit an invoice whose number does not meet the specified restrictions. Invoice numbers are validated by the regular expression pattern specified in `Pattern`.<br />A value is returned even if the selected `RestrictionType` is `0` — *None*. In this case, it’s the last comment entered in the field.
-          type: string
-        RestrictionType:
-          description: Selected restriction for the numbers of invoices created manually. See `RestrictionTypesSelect` to identify which number (`Value`) corresponds to which restriction type.
+        ApprovalCodeType:
           enum:
-          - None
-          - Custom
-          - DigitsOnly
-          - AlphaNumericOnly
+          - Labor
+          - Travel
+          - Material
+          - Freight
+          - Other
+          - Tax
+          - Tax2
+          - LineItem
+          - FreightGenerated
           type: string
-        AutoGenerationType:
-          description: Selected rule for the numbers of invoices generated automatically. See `AutoGenerationTypesSelect` to identify which number (`Value`) corresponds to which rule.
-          enum:
-          - None
-          - CurrentDate
+        ApprovalCode:
           type: string
-        CreatedDate:
-          format: date-time
-          description: Date and time when the invoice number requirements were created.
+        AdditionalApprovalCode:
           type: string
-        UpdatedDate:
-          format: date-time
-          description: Date and time when the invoice number requirements were last updated.
-          type: string
-        CreatedByUserId:
+        ParentId:
           format: int32
-          description: Unique ID of the subscriber admin user who created the invoice number requirements.
           type: integer
-        UpdatedByUserId:
+        InternalId:
           format: int32
-          description: Unique ID of the subscriber admin user who last updated the invoice number requirements.
           type: integer
-        CreatedByUser:
-          description: Username of the subscriber admin who created the invoice number requirements.
-          type: string
-        UpdatedByUser:
-          description: Username of the subscriber admin who last updated the invoice number requirements. The username appears in the **Invoice Number** section next to **Last modified**.
-          type: string
-        ReuseInvoiceNumber:
-          format: byte
-          description: Reuse invoice number
-          type: string
-        IsNew:
-          description: Defines whether a default restriction pattern is used.
-          default: false
-          type: boolean
-          readOnly: true
-        CreatedDateString:
-          description: Date when the invoice number requirements were created.
-          type: string
-          readOnly: true
-        UpdatedDateString:
-          description: Date when the invoice number requirements were last updated. The date appears in the **Invoice Number** section next to **Last modified**.
-          type: string
-          readOnly: true
-    ServiceChannel.Services.Messaging.Users.DashboardInfo:
-      description: Dashboard details object.
-      type: object
-      properties:
-        Id:
+        InternalParentId:
           format: int32
-          description: Unique dashboard identifier.
           type: integer
-        Name:
-          description: Dashboard name.
-          type: string
-        RedirectToDashboard:
-          description: Defines whether a subscriber user is redirected to a dashboard once they log in.
+        IsDefault:
           default: false
           type: boolean
     ServiceChannel.Services.Messaging.Invoices.ApiGetInvoiceResponse:
@@ -5162,49 +4980,231 @@ components:
           type: array
           items:
             type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeChild:
+    ServiceChannel.Services.Messaging.Currencies.Currency:
       type: object
       properties:
-        Amount:
-          format: double
-          type: number
         Id:
           format: int32
           type: integer
-        InvoiceId:
-          format: int32
-          type: integer
-        InvoiceChargeId:
-          format: int32
-          type: integer
-        ApprovalCodeType:
-          enum:
-          - Labor
-          - Travel
-          - Material
-          - Freight
-          - Other
-          - Tax
-          - Tax2
-          - LineItem
-          - FreightGenerated
+        AlphabeticalCode:
           type: string
-        ApprovalCode:
+        DecimalCount:
+          format: int32
+          type: integer
+        Entity:
           type: string
-        AdditionalApprovalCode:
+        CurrencyName:
           type: string
-        ParentId:
+        NumericCode:
+          type: string
+        Rate:
+          format: double
+          type: number
+    ServiceChannel.Services.WebApi.Models.Request.Invoices.InvoiceAmountsDetails:
+      description: Object containing the list of the invoice charges.
+      type: object
+      properties:
+        LaborAmount:
+          format: double
+          description: Amount of the labor charge. Must equal `Labors.Amount`.
+          type: number
+        MaterialAmount:
+          format: double
+          description: Amount of the material charge. Must equal `Materials.Amount`.
+          type: number
+        TravelAmount:
+          format: double
+          description: Amount of the trip charge.
+          type: number
+        FreightAmount:
+          format: double
+          description: Amount of the freight charge.
+          type: number
+        OtherAmount:
+          format: double
+          description: Amount of other charges. When you add this parameter, also specify `InvoiceAmountsDetails.OtherDescription`.
+          type: number
+        OtherDescription:
+          type: string
+    ServiceChannel.Services.Messaging.Invoices.InvoiceSettingsGeneral:
+      description: General invoice settings object.
+      type: object
+      properties:
+        DaysBeforePostingDate:
           format: int32
+          description: The number of days prior to the invoice posting date within which the invoice creation date can be set. Providers can not create invoices for a date in the past that is older than the specified number of days from the invoice posting date.
           type: integer
-        InternalId:
+        MaxDaysAfterPostingDate:
           format: int32
+          description: The number of days after the invoice posting date within which the invoice creation date can be set. Providers can not generate invoices for a date in the future that is greater than the specified number of days from the invoice posting date.
           type: integer
-        InternalParentId:
-          format: int32
-          type: integer
-        IsDefault:
+        RequireResolutionText:
+          description: Defines whether providers are required to enter a resolution when creating an invoice.
           default: false
           type: boolean
+        RequireApprovalText:
+          description: Defines whether subscriber’s employees are required to enter a comment when approving invoices.
+          default: false
+          type: boolean
+        IsInvoiceApprovalCommentFeatureEnabled:
+          description: Defines whether the feature that prompts subscriber’s employees to enter a comment when approving invoices is turned on.
+          default: false
+          type: boolean
+        IsInvoiceNumberValidationFeatureEnabled:
+          description: Defines whether the feature that enables the invoice number validation is turned on.
+          default: false
+          type: boolean
+        IsInvoiceNegativeFeatureEnabled:
+          description: Defines whether the feature that enables the invoice negative amounts for the required line items.
+          default: false
+          type: boolean
+        IsInvoiceZeroVATEU:
+          description: Use Us UI model in international locations.
+          default: false
+          type: boolean
+        AvailableTrades:
+          description: A list of trades configured for the subscriber. The following parameters are returned for each trade:<br /> • `Id` — trade ID.<br /> • `Name` — trade name.<br /> • `PrimaryTradeName` — name of the primary trade for this trade.
+          type: string
+        AvailableCategories:
+          description: A list of categories set up for the subscriber. The following parameters are returned for each category:<br /> • `Id` — category ID.<br /> • `SubscriberId` — subscriber ID.<br /> • `Name` — category name.<br /> • `HasDependency` — defines whether the category has dependent categories.<br /> • `PrimaryCategoryID` — ID of the primary category for this category.<br /> • `PrimaryCategoryName` — name of the primary category for this category.
+          type: string
+        LaborTradeIds:
+          description: Trade IDs for which providers must itemize Labor charges when creating a line-item invoice.
+          type: array
+          items:
+            format: int32
+            type: integer
+        MaterialsTradeIds:
+          description: Trade IDs for which providers must itemize Material charges when creating a line-item invoice.
+          type: array
+          items:
+            format: int32
+            type: integer
+        TravelTradeIds:
+          description: Trade IDs for which providers must itemize Travel charges when creating a line-item invoice.
+          type: array
+          items:
+            format: int32
+            type: integer
+        OtherTradeIds:
+          description: Trade IDs for which providers must itemize Other charges when creating a line-item invoice.
+          type: array
+          items:
+            format: int32
+            type: integer
+        LaborCategoryIds:
+          description: Category IDs for which providers must itemize Labor charges when creating a line-item invoice.
+          type: array
+          items:
+            format: int32
+            type: integer
+        MaterialsCategoryIds:
+          description: Category IDs for which providers must itemize Material charges when creating a line-item invoice.
+          type: array
+          items:
+            format: int32
+            type: integer
+        TravelCategoryIds:
+          description: Category IDs for which providers must itemize Travel charges when creating a line-item invoice.
+          type: array
+          items:
+            format: int32
+            type: integer
+        OtherCategoryIds:
+          description: Category IDs for which providers must itemize Other charges when creating a line-item invoice.
+          type: array
+          items:
+            format: int32
+            type: integer
+        NumberRequirementsModel:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.NumberRequirementsModel'
+          description: Parameters defining requirements for invoice numbers.
+        IsProviderAbleToAddSalesTax:
+          description: Defines whether the provider can add sales tax to its ivoices
+          default: false
+          type: boolean
+        RequireProviderDigitalCopy:
+          description: Specified is Provider Digital Copy requirement set for the provider
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Subscribers.Subscriber:
+      required:
+      - Name
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        ShortName:
+          type: string
+        Email:
+          type: string
+        Users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.User'
+        PrimaryCurrency:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
+        IsOutsourcedWorkOn:
+          default: false
+          type: boolean
+        Name:
+          description: "Required Name\n            Name - name of the subscriber"
+          type: string
+        Address1:
+          description: Optional
+          type: string
+        Address2:
+          description: Optional
+          type: string
+        Country:
+          description: Optional
+          type: string
+        State:
+          description: Optional
+          type: string
+        City:
+          description: Optional
+          type: string
+        Zip:
+          description: Optional
+          type: string
+        Phone:
+          description: Optional
+          type: string
+        Fax:
+          description: Optional
+          type: string
+        ContactName:
+          description: Optional
+          type: string
+        TimeFormat:
+          type: string
+        DateFormat:
+          type: string
+        DecimalSeparator:
+          type: string
+    ServiceChannel.Services.Messaging.Invoices.InvoiceRejectionReasonResponse:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        SubscriberId:
+          format: int32
+          type: integer
+        Description:
+          type: string
+        Retired:
+          default: false
+          type: boolean
+        ReasonType:
+          enum:
+          - Custom
+          - WorkOrderNotInvoiceable
+          - InvoiceRequiresCorrection
+          - Other
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2

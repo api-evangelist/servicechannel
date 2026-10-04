@@ -2167,64 +2167,73 @@ paths:
       x-access: Any
 components:
   schemas:
-    ServiceChannel.Api.Model.Proposals.MlpRuleAction:
+    ServiceChannel.Services.Messaging.Proposals.EscalateTo:
       type: object
       properties:
-        Name:
+        Action:
           type: string
-        Limit:
-          format: double
-          type: number
-        ForwardTo:
+        EscalateToLevel:
+          type: string
+        EscalateToLevelId:
           format: int32
           type: integer
-        ForwardToLevelName:
-          type: string
-        EndStatus:
-          type: string
-        AutoEscalateInDays:
-          format: int32
-          type: integer
-        EntryLevel:
+        SkippedOverLimit:
           default: false
           type: boolean
-        CodeChange:
+        HasActiveUsers:
           default: false
           type: boolean
-        CategoryChange:
-          default: false
-          type: boolean
-        LevelId:
-          format: int32
-          type: integer
-        LevelName:
-          type: string
-        RuleNumber:
-          format: int32
-          type: integer
-        RuleOrder:
-          format: int32
-          type: integer
+        DisabledUserIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        EscalateToLevelRule:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.MlpLevelRule'
+    ServiceChannel.Services.Messaging.Users.MlpUserInfo:
+      type: object
+      properties:
         Id:
           format: int32
           type: integer
-        RuleSetId:
+        MlpLevel:
+          type: string
+        MlpLocations:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.Proposals.ProposalStatisticsResponse:
+      description: Object of statistics on RFPs and proposals.
+      type: object
+      properties:
+        DaysPeriod:
           format: int32
+          description: Time period set as the number of days prior to the current date for which statistics on RFPs and proposals are returned.
           type: integer
-        Override:
-          default: false
-          type: boolean
-        SkipOverLimit:
-          default: false
-          type: boolean
-        ActionNotification:
-          default: false
-          type: boolean
-        LocationId:
+        RFPsWaitingForApproval:
           format: int32
+          description: The total number of RFPs awaiting response for the specified time period.
           type: integer
-        UserId:
+        OpenProposals:
           format: int32
+          description: The total number of proposals in the _Open_ status for the specified time period.
+          type: integer
+        ApprovedProposalsDaysPeriod:
+          format: int32
+          description: Time period set as the number of days prior to the current date for which statistics on approved proposals are returned in `ApprovedProposals`.
+          type: integer
+        ApprovedProposals:
+          format: int32
+          description: The total number of proposals in the _Approved_ status for the specified time period.
+          type: integer
+        WaitingReviewProposals:
+          format: int32
+          description: The total number of proposals in the _On Hold_ and _Reviewed_ statuses for the specified time period.
+          type: integer
+        RejectedProposals:
+          format: int32
+          description: The total number of proposals in the _Rejected_ status for the specified time period.
           type: integer
     ServiceChannel.Services.Messaging.Invoices.Tax2Details:
       description: Information on the additional tax. Only invoices for Canadian locations can have Tax2Details.
@@ -2237,107 +2246,319 @@ components:
         Tax2Name:
           description: Name of the additional tax, for example, *VAT*, *HST*, *PST*, or *QST*.
           type: string
-    ServiceChannel.Services.Messaging.Rfp.Rfp:
+    ServiceChannel.Api.Model.KeyValue_System.String_System.String:
+      type: object
+      properties:
+        Key:
+          type: string
+        Value:
+          type: string
+    ServiceChannel.Services.Messaging.IdentityObject:
       type: object
       properties:
         Id:
           format: int32
-          description: Gets or sets Id.
           type: integer
-        Number:
-          description: Gets or sets Rfp Number.
+    ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup:
+      type: object
+      properties:
+        ApprovalCodeType:
+          enum:
+          - Labor
+          - Travel
+          - Material
+          - Freight
+          - Other
+          - Tax
+          - Tax2
+          - LineItem
+          - FreightGenerated
           type: string
-        CreatedDate:
-          format: date-time
-          description: Gets or sets Rfp Created Date.
+        ApprovalCode:
           type: string
-        CreatedDateDTO:
-          format: date-time
+        AdditionalApprovalCode:
           type: string
-        Date:
-          format: date-time
-          description: Gets or sets Rfp Date.
-          type: string
-        DateDTO:
-          format: date-time
-          type: string
-        UpdatedDate:
-          format: date-time
-          description: Last Update Date
-          type: string
-        UpdatedDateDTO:
-          format: date-time
-          type: string
-        UserId:
+        Amount:
+          format: double
+          type: number
+        ApprovalCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeChild'
+    ServiceChannel.Services.Messaging.IssueLists.IssueTicketInformation:
+      type: object
+      properties:
+        Id:
           format: int32
-          description: Gets or sets UserId.
           type: integer
-        WaitingForPrpEmail:
-          description: Gets or sets WaitingForPrpEmail.
+        AreaId:
+          format: int32
+          type: integer
+        AreaName:
           type: string
-        ProviderEmail:
-          description: Gets or sets ProviderEmail.
+        ProblemGroup:
+          type: string
+        Equipment:
+          type: string
+        ProblemCode:
+          type: string
+        TicketType:
+          type: string
+        SetupId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.Projects.Project:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
           type: string
         Description:
-          description: Gets or sets Description.
           type: string
-        DueHrs:
-          format: double
-          description: Gets or sets DueHrs.
-          type: number
-        DueDate:
+    ServiceChannel.Services.Messaging.Proposals.SearchProposalModel:
+      type: object
+      properties:
+        UserId:
+          type: string
+        CurrentLevelProposal:
+          default: false
+          type: boolean
+        WorkOrderId:
+          type: string
+        WorkOrderIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        ProposalId:
+          type: string
+        PurchaseOrderId:
+          type: string
+        ProjectId:
+          type: string
+        Projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Projects.Project'
+        DateType:
+          enum:
+          - PastMonth
+          - PastThreeMonths
+          - PastYear
+          - Custom
+          - Yesterday
+          - Today
+          - PastWeek
+          type: string
+        ProposalFilterDateType:
+          enum:
+          - ProposalDate
+          - ScheduledDate
+          - ActionDate
+          type: string
+        ProposalDateFrom:
           format: date-time
-          description: Gets or sets DueDate.
           type: string
-        DueDateDTO:
+        ProposalDateTo:
           format: date-time
           type: string
-        Status:
-          description: Gets or sets Status.
-          type: string
-        Location:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Location.Location'
-        Provider:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.Provider'
-          description: provider
-        Subscriber:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Subscribers.Subscriber'
-        Trade:
-          type: string
-        TradeId:
+        PastValue:
           format: int32
           type: integer
-        WorkOrder:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Workorders.WorkOrder'
-        Proposals:
-          description: Gets or sets proposal collection.
+        PastRange:
+          enum:
+          - Select
+          - Hours
+          - Days
+          - Weeks
+          type: string
+        ProposalDateFromString:
+          type: string
+        ProposalDateToString:
+          type: string
+        DatesWereClamped:
+          default: false
+          type: boolean
+        DatesRangeInvalid:
+          default: false
+          type: boolean
+        DatesRangeInvalidReason:
+          type: string
+        SortBy:
+          enum:
+          - DateDesc
+          - DateAsc
+          - ProposalNumber
+          - Trade
+          - LocationId
+          - Provider
+          - Status
+          type: string
+        WithWorkOrder:
+          enum:
+          - NA
+          - 'Yes'
+          - 'No'
+          type: string
+        WithAttachments:
+          enum:
+          - NA
+          - 'Yes'
+          - 'No'
+          type: string
+        WithRelated:
+          enum:
+          - NA
+          - 'Yes'
+          - 'No'
+          type: string
+        Report:
+          enum:
+          - Viewable
+          - Printable
+          - Excel
+          type: string
+        Priorities:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalInfo'
-        Attachments:
+            type: string
+        ProposalStatuses:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Attachments.Attachment'
-        BatchRfpNumber:
+            enum:
+            - All
+            - Open
+            - OnHold
+            - Reviewed
+            - ApprovedNotScheduled
+            - ApprovedScheduled
+            - Rejected
+            - PendingExt
+            type: string
+        CategoriesIdName:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.KeyValue_System.String_System.String'
+        TradesIdName:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.KeyValue_System.String_System.String'
+        PrioritiesIdName:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.KeyValue_System.String_System.String'
+        Locations:
+          type: array
+          items:
+            type: string
+        LocationShortNames:
+          type: array
+          items:
+            type: string
+        LocationShortAddresses:
+          type: array
+          items:
+            type: string
+        LocationCities:
+          type: array
+          items:
+            type: string
+        StateIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        CountryIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        Regions:
+          type: array
+          items:
+            type: string
+        Districts:
+          type: array
+          items:
+            type: string
+        States:
+          type: array
+          items:
+            type: string
+        Countries:
+          type: array
+          items:
+            type: string
+        Attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.IdNameValue'
+        LocationNoteHeaders:
+          type: array
+          items:
+            type: string
+        LineItemReport:
+          default: false
+          type: boolean
+        Provider:
           type: string
-    ServiceChannel.Services.Messaging.Proposals.ProposalStatus:
-      type: object
-      properties:
-        Primary:
+        ChangedProposals:
+          type: array
+          items:
+            format: int32
+            type: integer
+        ProposalIids:
           type: string
-        Extended:
+        ProposalNumber:
           type: string
-        ModifiedDate:
-          format: date-time
+        ProposalWO:
           type: string
-        ModifiedDate_dto:
-          format: date-time
+        ProviderId:
+          format: int32
+          type: integer
+        LocationId:
+          format: int32
+          type: integer
+        SaveReport:
           type: string
-        ModifiedBy:
+        ALP:
+          format: int32
+          type: integer
+        Labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.KeyValue_System.String_System.String'
+        IncludeMlpCategory:
+          default: false
+          type: boolean
+        SubscribersIdName:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.KeyValue_System.Int32_System.String'
+        IsAssignedToMe:
+          default: false
+          type: boolean
+        HasAssignee:
+          default: false
+          type: boolean
+        IncludeOverrideProposals:
+          default: false
+          type: boolean
+        AmountFrom:
+          format: double
+          type: number
+        AmountTo:
+          format: double
+          type: number
+        StatusesActiveTab:
           type: string
-    ServiceChannel.Services.Messaging.Proposals.SortCustom:
-      type: object
-      properties:
+        ProposalsIds:
+          type: array
+          items:
+            format: int32
+            type: integer
         SortField:
           enum:
           - LocDate
@@ -2354,42 +2575,108 @@ components:
           - ASC
           - DESC
           type: string
-    ServiceChannel.Services.Messaging.Proposals.UpdateProposalStatusRequest:
-      description: The request object to update a proposal status.
+        SortCustom:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.SortCustom'
+        Currency:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Currency.Currency'
+        Offset:
+          format: int32
+          type: integer
+        Count:
+          format: int32
+          type: integer
+        Language:
+          type: string
+        AllUsers:
+          default: false
+          type: boolean
+        IsLanding:
+          default: false
+          type: boolean
+        IsEmergency:
+          default: false
+          type: boolean
+        DefaultEmergencyCutOffMinutes:
+          format: int32
+          type: integer
+        IsPendingStatusFilter:
+          default: false
+          type: boolean
+        GlCodes:
+          type: array
+          items:
+            type: string
+        AdditionalApprovalCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.AdditionalApprovalCodeFilter'
+        ExtendedWoStatuses:
+          type: array
+          items:
+            type: string
+        PrimaryWoStatuses:
+          type: array
+          items:
+            type: string
+    ServiceChannel.Services.Messaging.Equipments.EquipmentAttributeDescription:
       type: object
       properties:
-        Comment:
-          description: Comment on the proposal status update. The comment is added to the work order note.
-          type: string
-        ProviderEmail:
-          description: Provider’s email address to which a notification about the proposal status change is sent. The default is the email address of the provider the proposal is assigned to.
-          type: string
-        UserEmail:
-          description: User’s email address to which a notification about the proposal status change is sent. The default is the email address of the current user.
-          type: string
-        RejectReasonCodeId:
+        EquipmentAttributeId:
           format: int32
-          description: "Numeric identifier of the reason for rejecting the proposal.\n            Pass value to this parameter when sending the *PUT /proposals/{proposalId}/reject* request. To retrieve a list of rejection reason codes and their descriptions, use the *GET /proposals/RejectionReasons* method."
           type: integer
-        ActionSource:
-          enum:
-          - Standard
-          - DecisionEngine
+        EquipmentTypeAttributeId:
+          format: int32
+          type: integer
+        ValueType:
+          format: int32
+          type: integer
+        EquipmentId:
+          format: int32
+          type: integer
+        Value:
+          $ref: '#/components/schemas/System.Object'
+        ValueText:
           type: string
-        ReasonString:
-          description: "Reason for approving the proposal.\n            Pass value to this parameter when sending the *PUT /proposals/{proposalId}/approve* request. The entered reason is added to the work order note."
+        SelectedOptionsText:
           type: string
-        Actor:
-          description: The Actor is added to the work order note.
-          type: string
-        AttachmentstoWO:
-          description: Move Approved Proposal attachments to WO.
+        Visible:
           default: false
           type: boolean
-        PinNote:
-          description: Pin Work Order Note.
+        Editable:
           default: false
           type: boolean
+        Required:
+          default: false
+          type: boolean
+        Name:
+          type: string
+        Custom:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Invoices.InvoicePaymentResponse:
+      description: Object containing the invoice payment details.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Numeric identifier of the payment.
+          type: integer
+        PaymentDate:
+          format: date-time
+          description: Date and time when the specified invoice was paid.
+          type: string
+        PaidBy:
+          description: Username of the employee who made the payment.
+          type: string
+        PaymentNumber:
+          description: Order number of payment.
+          type: string
+        PaymentAmount:
+          format: double
+          description: Amount paid for the invoice. The value is negative if it’s a credited invoice.
+          type: number
     ServiceChannel.Services.Messaging.Proposals.ProposalQuestion:
       description: Object containing questions configured in the proposal.
       type: object
@@ -2426,46 +2713,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalQuestionOption'
-    ServiceChannel.Services.Messaging.Users.MliUserInfo:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        MliLevel:
-          type: string
-        MliLocations:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.Currencies.Currency:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        AlphabeticalCode:
-          type: string
-        DecimalCount:
-          format: int32
-          type: integer
-        Entity:
-          type: string
-        CurrencyName:
-          type: string
-        NumericCode:
-          type: string
-        Rate:
-          format: double
-          type: number
-    ServiceChannel.Api.Model.KeyValue_System.String_System.String:
-      type: object
-      properties:
-        Key:
-          type: string
-        Value:
-          type: string
     ServiceChannel.Services.Messaging.Location.Location:
       description: General location details object.
       type: object
@@ -2619,36 +2866,667 @@ components:
           readOnly: true
         Address:
           type: string
-    ServiceChannel.Services.Messaging.Workorders.AssigneeUser:
+    ServiceChannel.Services.Messaging.Assets.AssetAttributesMap:
       type: object
       properties:
-        UserId:
+        StandardAttributesMap:
           format: int32
           type: integer
-        UserName:
+        ViewableForProvidersAttributesMap:
+          format: int32
+          type: integer
+        EditableForProvidersAttributesMap:
+          format: int32
+          type: integer
+        RequiredStandardAttributesMap:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.Workorders.WorkorderStatusDescriptor:
+      type: object
+      properties:
+        Primary:
+          description: Primary work order status value, you can pass status id or its name here. To get all subscriber's statuses see [Statuses] in Statuses section
           type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoicePaymentResponse:
-      description: Object containing the invoice payment details.
+        Extended:
+          description: Extended status value
+          type: string
+        CanCreateInvoice:
+          description: True if invoice creation is allowed
+          default: false
+          type: boolean
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Services.Messaging.Rfp.Rfp:
       type: object
       properties:
         Id:
           format: int32
-          description: Numeric identifier of the payment.
+          description: Gets or sets Id.
           type: integer
-        PaymentDate:
+        Number:
+          description: Gets or sets Rfp Number.
+          type: string
+        CreatedDate:
           format: date-time
-          description: Date and time when the specified invoice was paid.
+          description: Gets or sets Rfp Created Date.
           type: string
-        PaidBy:
-          description: Username of the employee who made the payment.
+        CreatedDateDTO:
+          format: date-time
           type: string
-        PaymentNumber:
-          description: Order number of payment.
+        Date:
+          format: date-time
+          description: Gets or sets Rfp Date.
           type: string
-        PaymentAmount:
+        DateDTO:
+          format: date-time
+          type: string
+        UpdatedDate:
+          format: date-time
+          description: Last Update Date
+          type: string
+        UpdatedDateDTO:
+          format: date-time
+          type: string
+        UserId:
+          format: int32
+          description: Gets or sets UserId.
+          type: integer
+        WaitingForPrpEmail:
+          description: Gets or sets WaitingForPrpEmail.
+          type: string
+        ProviderEmail:
+          description: Gets or sets ProviderEmail.
+          type: string
+        Description:
+          description: Gets or sets Description.
+          type: string
+        DueHrs:
           format: double
-          description: Amount paid for the invoice. The value is negative if it’s a credited invoice.
+          description: Gets or sets DueHrs.
           type: number
+        DueDate:
+          format: date-time
+          description: Gets or sets DueDate.
+          type: string
+        DueDateDTO:
+          format: date-time
+          type: string
+        Status:
+          description: Gets or sets Status.
+          type: string
+        Location:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Location.Location'
+        Provider:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.Provider'
+          description: provider
+        Subscriber:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Subscribers.Subscriber'
+        Trade:
+          type: string
+        TradeId:
+          format: int32
+          type: integer
+        WorkOrder:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Workorders.WorkOrder'
+        Proposals:
+          description: Gets or sets proposal collection.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalInfo'
+        Attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Attachments.Attachment'
+        BatchRfpNumber:
+          type: string
+    ServiceChannel.Services.Messaging.CountDescriptor:
+      type: object
+      properties:
+        Total:
+          format: int32
+          type: integer
+        Own:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.Proposals.ProposalStatus:
+      type: object
+      properties:
+        Primary:
+          type: string
+        Extended:
+          type: string
+        ModifiedDate:
+          format: date-time
+          type: string
+        ModifiedDate_dto:
+          format: date-time
+          type: string
+        ModifiedBy:
+          type: string
+    ServiceChannel.Services.Messaging.Proposals.ProposalAssociatedWithWorkOder:
+      description: Object containing associated proposal details.
+      type: object
+      properties:
+        ID:
+          format: int32
+          description: Unique numeric identifier of the proposal associated with the specified work order.
+          type: integer
+        ProposalNumber:
+          description: Proposal number — as specified by the user who created the proposal.
+          type: string
+        CreatedDateDto:
+          format: date-time
+          description: Date and time when the proposal was created. The format is `YYYY-MM-DDThh:mm:ss.sssssss[±hh:mm]`, where `[±hh:mm]` represents the time zone offset from UTC.
+          type: string
+        Status:
+          description: Proposal status, for example, *Approved*, *Open*, *Reviewed*, etc.
+          type: string
+        WorkOrder:
+          format: int32
+          description: Work order tracking number.
+          type: integer
+    ServiceChannel.Api.Model.Label:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        WoUrl:
+          type: string
+    ServiceChannel.Services.Messaging.Proposals.ProposalCategoryInfo:
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the proposal category.
+          type: integer
+        Name:
+          description: Type of proposal categories, for example, *Materials*, *Installation Labor*, *Non-Installation Expenses*, etc.
+          type: string
+        TotalCost:
+          format: double
+          description: Subtotal for the specific cost type, for example, materials.
+          type: number
+    ServiceChannel.Api.Model.Proposals.AdditionalApprovalCodeFilter:
+      type: object
+      properties:
+        Header:
+          type: string
+        Values:
+          type: array
+          items:
+            type: string
+    ServiceChannel.Services.Messaging.Invoices.StatusHistoryShort:
+      type: object
+      properties:
+        CreatedBy:
+          type: string
+        CreatedById:
+          format: int32
+          type: integer
+        Status:
+          type: string
+        InvId:
+          format: int32
+          type: integer
+        ActionDate:
+          type: string
+    ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCode:
+      type: object
+      properties:
+        Value:
+          type: string
+        Options:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCodeOption'
+        DefaultValue:
+          type: string
+          readOnly: true
+        Header:
+          type: string
+        SetupId:
+          format: int32
+          type: integer
+        LocationId:
+          format: int32
+          type: integer
+        DefaultOptionId:
+          format: int32
+          type: integer
+        ValueFormat:
+          format: int32
+          type: integer
+        EditableAtLineItemLevel:
+          format: int32
+          type: integer
+        IsDeleted:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Invoices.InvoiceTravel:
+      description: Information on the trip.
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        InvoiceId:
+          format: int32
+          description: Invoice identifier.
+          type: integer
+        Description:
+          description: Description of the trip.
+          type: string
+        UnitType:
+          format: byte
+          description: Unit of measurement.
+          type: string
+        UnitPrice:
+          format: double
+          description: Price per unit.
+          type: number
+        Quantity:
+          format: double
+          description: Quantity.
+          type: number
+        Amount:
+          format: double
+          description: The amount of the trip cost. The sum of all `Amount` parameters in the `Travels` array must equal `InvoiceAmountsDetails.TravelAmount`.
+          type: number
+        IsOffShore:
+          description: Type of the shore (`1` - Onshore, `2` - Offshore).
+          default: false
+          type: boolean
+        ApprovalCodeGroup:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+        isNontaxableVATEU:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Assets.WarrantyProvider:
+      description: Object containing warranty provider details.
+      type: object
+      properties:
+        Type:
+          description: 'Defines the provider type responsible for warranty services. **Possible values**: `0` - Fixed provider, `1`- Primary rank provider, `2` - Fixed rank provider.'
+          enum:
+          - Fixed
+          - PrimaryRanked
+          - FixedRanked
+          type: string
+        Value:
+          format: int32
+          description: Provider type value. Displays provider ID for the fixed provider type; provider rank number — from 1 to 100 — for the fixed rank type; 1 for a primary rank provider.
+          type: integer
+        ProviderName:
+          description: Name of the provider who is in charge of warranty services.
+          type: string
+    ServiceChannel.Api.Model.Proposals.ProposalProjectSimpleModel:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+    ServiceChannel.Services.Messaging.Attachments.Attachment:
+      description: Object containing information about an attachment.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the attachment.
+          type: integer
+        Description:
+          description: Optional text that a user added when uploading the attachment. The maximum character count is 200.
+          type: string
+        Name:
+          description: Attachment name.
+          type: string
+        TimeStamp:
+          format: date-time
+          description: Date and time when the attachment was uploaded. The format is `YYYY-MM-DDThh:mm:ss.sss±hh:mm`, where `±hh:mm` represents the time zone offset from UTC.
+          type: string
+        Uri:
+          description: Link address to the attachment in the ServiceChannel system.
+          type: string
+        NoteId:
+          format: int64
+          description: Unique numeric identifier of the note to which a user added the attachment.
+          type: integer
+        Visibility:
+          format: int32
+          description: "Visibility status of the attachment. Defines which parties can view the attachment. The *PrivateProviderNotesAndAttachments* feature should be enabled. For subscribers who are using Universal Connector, the *PrivateClientNotesAndAttachments* feature should be enabled.\n            <br />Possible values:\n             • `0`: No restrictions on visibility. Visible to everyone.\n             • `1`: Not visible to the client. The subscriber deselected the “Visible to Client” checkmark when uploading an attachment or adding a note with an attachment. \n             • `2`: Not visible to the provider. The subscriber deselected the “Visible to Provider” checkmark when uploading an attachment or adding a note with an attachment. \n             • `3`: Visible to the subscriber only. The subscriber deselected the “Visible to Client” and “Visible to Provider” checkmarks when uploading an attachment or adding a note with an attachment."
+          type: integer
+        IsInvoiceDigitalCopy:
+          description: "Defines if the attachment is a digital copy of the provider’s invoice. According to subscriber configurations, some providers should attach digital copies of invoices.\n            Possible values: \n             • `true`: The attachment is an invoice digital copy. \n             • `false`: The attachment is not an invoice digital copy. \n            <br />***Note:*** Subscribers can set the requirement of a digital invoice copy from providers when the *InvoiceRequireDigitalCopy* feature is turned on."
+          default: false
+          type: boolean
+        UploadBy:
+          description: User who uploaded the attachment.
+          type: string
+    ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCode:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        InvoiceId:
+          format: int32
+          type: integer
+        InvoiceChargeId:
+          format: int32
+          type: integer
+        ApprovalCodeType:
+          enum:
+          - Labor
+          - Travel
+          - Material
+          - Freight
+          - Other
+          - Tax
+          - Tax2
+          - LineItem
+          - FreightGenerated
+          type: string
+        ApprovalCode:
+          type: string
+        AdditionalApprovalCode:
+          type: string
+        ParentId:
+          format: int32
+          type: integer
+        InternalId:
+          format: int32
+          type: integer
+        InternalParentId:
+          format: int32
+          type: integer
+        IsDefault:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Proposals.ProposalCategoryRow:
+      description: Object containing cost types broken down into the rows.
+      type: object
+      properties:
+        Required:
+          description: Defines whether the data entry is mandatory.
+          default: false
+          type: boolean
+        HideDetails:
+          description: "Controls whether only the total row is displayed for the proposal cost type in the proposal form.\n             • When it returns `true` and the template contains more than one column, only the total row is shown. Other details are hidden.\n             • When it returns `false`, cost type details are not hidden."
+          default: false
+          type: boolean
+        TotalCost:
+          format: double
+          description: Total cost for all the units of the specified type.
+          type: number
+        ServiceType:
+          description: Similar to the `FeesType` parameter; specifies the type of service for Excel reporting purposes.
+          type: string
+        Name:
+          description: Description of the proposal charge type.
+          type: string
+        Description:
+          description: No longer in use.
+          type: string
+        IsActive:
+          description: Shows whether the data is active.
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          description: Order of appearance.
+          type: integer
+        Quantity1:
+          format: double
+          description: Quantity of units.
+          type: number
+        Quantity2:
+          format: int32
+          description: 'An auxiliary quantity field used in multi-column templates. Enables extended cost calculations such as: Total = Quantity1 × Quantity2 × UnitCost. If `Quantity2` is missing, a default value of 1 is used.'
+          type: integer
+        UnitCost:
+          format: double
+          description: Cost of a single unit.
+          type: number
+        UnitOfMeasure:
+          description: 'Unit of measure: each, sq. ft, feet, linear feet, etc.'
+          type: string
+        ExtendedCost:
+          format: double
+          description: Represents the sum of individual row costs. Calculated per row and aggregated into the category total.
+          type: number
+        Craft:
+          description: Craft information.
+          type: string
+        RepairCategory:
+          description: Repair category.
+          type: string
+        RepairType:
+          description: Type of repair work.
+          type: string
+        MaterialThickness:
+          description: Material thickness.
+          type: string
+        Markup:
+          format: double
+          description: Material markup percentage. Available on the proposal behind the *ProposalMaterialMarkup* feature flag.
+          type: number
+        PriceList:
+          description: Negotiated price list. Learn more in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/2856484865/Negotiated+Price+Lists).
+          type: string
+        PartNumber:
+          description: Part number as specified in the negotiated price list.
+          type: string
+        PartName:
+          description: Part name as specified in the negotiated price list.
+          type: string
+        VAT:
+          description: Value-added tax.
+          type: string
+        FeesType:
+          description: Defines the type of fee applied. Used exclusively in Excel report generation. For example, the "VAT" type will be rendered as "VAT%" in the report.
+          type: string
+        DoNotApplyMarkup:
+          description: Shows whether the material markup should be applied.
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.RefrigerantTracking.AssetRefrigerant:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        AssetId:
+          format: int32
+          type: integer
+        RefrigerantUsageType:
+          format: int32
+          type: integer
+        RackId:
+          type: string
+        RackEntityId:
+          format: int32
+          type: integer
+        CarbID:
+          type: string
+        IsCarbReporting:
+          default: false
+          type: boolean
+        SystemLocation:
+          format: byte
+          type: string
+        OperationalStatus:
+          format: byte
+          type: string
+        RefrigerantPartNumber:
+          type: string
+        PartNumberId:
+          format: int32
+          type: integer
+        RackTypeId:
+          format: int32
+          type: integer
+        CurrentCharge:
+          format: double
+          type: number
+        CurrentChargeMetrics:
+          format: double
+          type: number
+        CurrentChargeOunces:
+          format: double
+          type: number
+        ChargeDescriptionId:
+          format: int32
+          type: integer
+        ChargeProviderName:
+          type: string
+        EffectiveChargeDate:
+          format: date-time
+          type: string
+        RefrigerantChargeOptionId:
+          format: int32
+          type: integer
+        RackTypeName:
+          type: string
+        UserId:
+          format: int32
+          type: integer
+        TagId:
+          type: string
+        AssetTypeId:
+          format: int32
+          type: integer
+        RefrigerantPurposeId:
+          format: int32
+          type: integer
+        RefrigerantPurposeName:
+          type: string
+        ParentId:
+          format: int32
+          type: integer
+        CreateOperationalStatusHistory:
+          default: false
+          type: boolean
+        OperationStatusDate:
+          format: date-time
+          type: string
+        HasLeakDetector:
+          default: false
+          type: boolean
+        AssetLeakDetectorId:
+          format: int32
+          type: integer
+        InitialCharge:
+          default: false
+          type: boolean
+        RackType:
+          format: byte
+          type: string
+        NeedsRetrofitRetirement:
+          default: false
+          type: boolean
+        RequiresAutomaticLeakDetector:
+          default: false
+          type: boolean
+        ConnectedRackId:
+          format: int32
+          type: integer
+        PreviousConnectedRackId:
+          format: int32
+          type: integer
+        UpdatedDate:
+          format: date-time
+          type: string
+    ServiceChannel.Services.Messaging.Invoices.InvoiceMaterial:
+      description: Information on the materials used. Add a separate object for each material.
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        InvoiceId:
+          format: int32
+          description: Invoice identifier.
+          type: integer
+        Description:
+          description: Name or description of the material. Length limit is 100 symbols.
+          type: string
+        PartNum:
+          description: Part, serial, or manufacturer number of the material. Length limit is 100 symbols.
+          type: string
+        UnitType:
+          format: byte
+          description: 'Unit of measurement. Valid values: 1 — Each; 2 — Box; 3 — Feet; 4 — Sqft; 5 — Lbs; 6 — Gal; 7 — Oz. Default value: 1.'
+          type: string
+        UnitPrice:
+          format: double
+          description: Price per unit.
+          type: number
+        PartName:
+          description: Part name.
+          type: string
+        MarkUpPercent:
+          format: double
+          description: Markup percent.
+          type: number
+        AgreedMarkUpPercent:
+          format: double
+          description: Agreed markup percent.
+          type: number
+        MarkUpDiscrepancyReason:
+          description: Mark up discrepancy reason.
+          type: string
+        AgreedPartPrice:
+          format: double
+          description: Agreed part price.
+          type: number
+        Quantity:
+          format: double
+          description: Quantity of the material.
+          type: number
+        Amount:
+          format: double
+          description: The amount of the material cost. The sum of all `Amount` parameters in the `Materials` array must equal `InvoiceAmountsDetails.MaterialAmount`.
+          type: number
+        ApprovalCodeGroup:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+        IsMarkUpDiscrepancy:
+          description: Markup discrepancy.
+          default: false
+          type: boolean
+        IsPartPriceDiscrepancy:
+          description: Part price discrepancy.
+          default: false
+          type: boolean
+        PriceDiscrepancyReason:
+          description: Price discrepancy reason.
+          type: string
+        isNontaxableVATEU:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Proposals.SortCustom:
+      type: object
+      properties:
+        SortField:
+          enum:
+          - LocDate
+          - ProposalNumber
+          - Trade
+          - StoreId
+          - ProviderName
+          - Status
+          - SubscriberName
+          - CustomSort
+          type: string
+        SortOrder:
+          enum:
+          - ASC
+          - DESC
+          type: string
     ServiceChannel.Services.Messaging.Notes.NotesDescriptor:
       type: object
       properties:
@@ -2659,64 +3537,122 @@ components:
           $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notes.NoteInfo'
         Count:
           $ref: '#/components/schemas/ServiceChannel.Services.Messaging.CountDescriptor'
-    ServiceChannel.Api.Model.Proposals.AdditionalApprovalCodeFilter:
+    ServiceChannel.Services.Messaging.Invoices.InvoiceLabor:
+      description: Information on labor. Add a separate object for each worker. When two or more workers have the same `SkillLevel`,`LaborType`, and `HourlyRate`, use one object and specify `NumOfTech`.
       type: object
       properties:
-        Header:
-          type: string
-        Values:
-          type: array
-          items:
-            type: string
-    ServiceChannel.Services.Messaging.Proposals.AssignUserToProposalRequest:
-      description: The request object to assign a proposal to a user.
-      required:
-      - UserId
-      type: object
-      properties:
-        UserId:
-          format: int32
-          description: The unique numeric identifier of the user to assign the proposal to.
-          type: integer
-        Comments:
-          description: Your comment describing why you are assigning or reassigning the proposal to the specified user.
-          type: string
-        UserEmail:
-          description: The email address to send a notification about the assigned proposal to. The default is the email address of the user who is assigned the proposal.
-          type: string
-        ReasonString:
-          description: Reason for approving the proposal. Don’t pass when assigning the proposal to a user.
-          type: string
-        Note:
-          description: Note added upon assigning or reassigning the proposal.
-          type: string
-        PinNote:
-          description: Pin note on linked workorder
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Proposals.EscalateTo:
-      type: object
-      properties:
-        Action:
-          type: string
-        EscalateToLevel:
-          type: string
-        EscalateToLevelId:
+        Id:
           format: int32
           type: integer
-        SkippedOverLimit:
+        InvoiceId:
+          format: int32
+          description: Invoice identifier.
+          type: integer
+        SkillLevel:
+          format: byte
+          description: 'The skill level of a worker. Valid values: `1` - Supervisor, `2` - Technician, `3` - Helper.'
+          type: string
+        LaborType:
+          format: byte
+          description: 'The type of the pay rate. Valid values: `1` - Regular, `2` - Overtime, `3` - Double time.'
+          type: string
+        NumOfTech:
+          format: byte
+          description: Number of workers.
+          type: string
+        HourlyRate:
+          format: double
+          description: Worker hourly rate.
+          type: number
+        Hours:
+          format: double
+          description: Total hours the worker spent to complete the work order.
+          type: number
+        Amount:
+          format: double
+          description: The amount of the labor charge. The sum of all `Amount` parameters in the `Labors` array must equal `InvoiceAmountsDetails.LaborAmount`.
+          type: number
+        IsOffShore:
+          description: Type of the shore (`1` - Onshore, `2` - Offshore).
           default: false
           type: boolean
-        HasActiveUsers:
+        ServiceType:
+          format: byte
+          description: Type of the service (`1` - Design Engineering, Architecture, Technical Service, `2` - Installation and Supervision, `3` - Survey and Troubleshooting).
+          type: string
+        CityPerformed:
+          description: City where services are performed.
+          type: string
+        RateDiscrepancyReason:
+          description: Rate discrepancy reason.
+          type: string
+        AgreedRate:
+          format: double
+          description: Agreed rate.
+          type: number
+        ApprovalCodeGroup:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+        IsRateDiscrepancy:
           default: false
           type: boolean
-        DisabledUserIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        EscalateToLevelRule:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.MlpLevelRule'
+          readOnly: true
+        isNontaxableVATEU:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Currencies.Currency:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        AlphabeticalCode:
+          type: string
+        DecimalCount:
+          format: int32
+          type: integer
+        Entity:
+          type: string
+        CurrencyName:
+          type: string
+        NumericCode:
+          type: string
+        Rate:
+          format: double
+          type: number
+    ServiceChannel.Services.Messaging.Assets.Warranty:
+      description: Object containing warranty parameters.
+      type: object
+      properties:
+        ExpirationDate:
+          format: date-time
+          description: Warranty expiration date based on the warranty expiration settings.
+          type: string
+        ProviderId:
+          format: int32
+          description: ID of a provider who is in charge of warranty services.
+          type: integer
+        NTE:
+          format: double
+          description: Maximum amount of money to be spent on warranty services in USD. Value -1  means that the amount is not applicable.
+          type: number
+        Priority:
+          description: Defines how quickly warranty services should be provided, for example, *Emergency-4 Hours*, *Normal-48 Hours*, *7 Days*.
+          type: string
+        PriorityId:
+          format: int32
+          type: integer
+        Category:
+          description: Warranty category, for example, *ADVISE ONLY*, *REPAIR*, *DISASTER*.
+          type: string
+        CategoryId:
+          format: int32
+          type: integer
+        Provider:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.WarrantyProvider'
+          description: Rules to choose Warranty Provider
+        Expiration:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.WarrantyExpiration'
+          description: Rules for Warranty Expiration
     ServiceChannel.Services.Messaging.Trade.Trade:
       description: Trade object.
       type: object
@@ -2744,29 +3680,330 @@ components:
           format: int32
           description: Identifier of the currency the limit is set in.
           type: integer
-    ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCodeOption:
+    ServiceChannel.Services.Messaging.Workorders.AssigneeUser:
+      type: object
+      properties:
+        UserId:
+          format: int32
+          type: integer
+        UserName:
+          type: string
+    ServiceChannel.Services.Messaging.Invoices.InvoiceCategoryMessaging:
       type: object
       properties:
         Id:
           format: int32
           type: integer
-        Value:
+        Name:
           type: string
-    ServiceChannel.Services.Messaging.Assets.AssetAttributesMap:
+    ServiceChannel.Services.Messaging.Proposals.MlpWoRecommendationRequest:
+      description: The request object to escalate a proposal.
+      required:
+      - Action
       type: object
       properties:
-        StandardAttributesMap:
+        Action:
+          description: 'Proposal escalation action. **Valid values**: *Approve*, *Reject*, *OnHold*, *Return*.'
+          type: string
+        WoType:
+          format: int32
+          description: 'Work order type. **Valid values**: 0 — *Origin*, 1 — *New*, 2 — *Existing*.'
+          type: integer
+        TrackingNumber:
+          format: int32
+          description: The unique numeric identifier of the work order. Required if the `WoType` is 2 — *Existing*.
+          type: integer
+        PoNumber:
+          description: Purchase order number.
+          type: string
+        ExistingPoNumber:
+          description: The existing purchase order number. If the `PoNumber` parameter is passed, its value is used instead of `ExistingPoNumber`.
+          type: string
+        Category:
+          description: "The overall classification of a WO, such as *Maintenance*, *Repair*, or *CAPEX*. Required if the `WoType` is 1 — *New*.\n            The value you enter must be a valid category."
+          type: string
+        CategoryId:
+          format: int32
+          description: Numeric identifier of the category.
+          type: integer
+        ApprovalCode:
+          description: Approval code, or GL code, used when approving an invoice.
+          type: string
+        Priority:
+          description: "Period during which a service provider should check in to perform the requested service. Required if the `WoType` is 1 — *New*.\n            The value you enter must be a valid priority."
+          type: string
+        PriorityId:
+          format: int32
+          description: Numeric identifier of the Priority.
+          type: integer
+        WoRecall:
+          description: The WO has been marked as recall.
+          default: false
+          type: boolean
+        AttachmentsToWO:
+          description: Move Approved Proposal attachments to WO.
+          default: false
+          type: boolean
+        Comment:
+          description: Your comment describing why you are escalating the proposal.
+          type: string
+        RejectReasonCodeId:
+          format: int32
+          description: Numeric identifier of the reason for rejecting the proposal. Don’t pass when escalating the proposal.
+          type: integer
+        ReasonString:
+          description: Reason for approving the proposal.
+          type: string
+        EmailsToNotify:
+          description: The email address of the user to notify about the proposal escalation. When entering multiple addresses, separate them with a comma or semicolon.
+          type: string
+        EmailMyself:
+          description: Defines if the proposal escalation notification is sent to the current user.
+          default: false
+          type: boolean
+        MyEmail:
+          description: The email address of the current user to which a proposal escalation notification is sent.
+          type: string
+        ProposalId:
+          format: int32
+          description: The unique numeric identifier of the proposal to escalate.
+          type: integer
+        WorkOrderLabel:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Label'
+          description: WorkOrder Label.
+        DeleteLabel:
+          description: Is WorkOrder Label to delete.
+          default: false
+          type: boolean
+        Actor:
+          description: The Actor is added to the work order note.
+          type: string
+        AdditionalApprovalCodes:
+          description: The Additional Approval Codes.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCode'
+        WorkOrderLabels:
+          description: WorkOrder Labels.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Label'
+        IsLinkToOriginatingWorkOrder:
+          description: Link To Originating WorkOrder flag
+          default: false
+          type: boolean
+        PinNote:
+          description: Pin User note on WorkOrder
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Proposals.UpdateProposalsStatusRequest:
+      type: object
+      properties:
+        ProposalId:
           format: int32
           type: integer
-        ViewableForProvidersAttributesMap:
+        Comments:
+          type: string
+        RejectReasonCode:
           format: int32
           type: integer
-        EditableForProvidersAttributesMap:
+        Email:
+          type: string
+    ServiceChannel.Services.Messaging.Notes.EmailRecipientResponse:
+      description: The email notification recipient object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: The unique numeric identifier of the user who can be added to the list of email notification recipients.
+          type: integer
+        UserName:
+          description: The username of the email notification recipient.
+          type: string
+        Email:
+          description: The email address of the notification recipient.
+          type: string
+        RecipientType:
+          description: Defines the type of the email notification recipient.
+          enum:
+          - Undefined
+          - RegularRecipient
+          - Provider
+          - Follower
+          - LocationNoteRecipient
+          type: string
+    ServiceChannel.Services.Messaging.Users.User:
+      description: User details object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique user identifier.
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Unique subscriber ID.
+          type: integer
+        UserName:
+          description: Username of the user.<br /> • For subscriber users, the username appears as **User Id** on the "General Info" tab of the user profile page.<br /> • For provider users, the username is listed as **UserID** under "Access" on the "General" tab of the user profile page.
+          pattern: ^$|(^\S+).(\S).(\S)$
+          type: string
+        FullName:
+          description: Full name of the user.<br /> • For subscriber users, the full name appears as **User Name** on the "General Info" tab of the user profile page.<br /> • For provider users, you can see their first and last name under "Basic" on the "General" tab of the user profile page.
+          type: string
+        Email:
+          description: User’s email address.
+          type: string
+        PsmEmail:
+          description: Email address through which a user can reset their password.
+          type: string
+        Disabled:
+          description: Defines if a user is deactivated.
+          default: false
+          type: boolean
+        IsLocked:
+          description: Defines if a user is locked.
+          default: false
+          type: boolean
+        Roles:
+          description: Secondary roles assigned to a subscriber user that determine their permissions and level of access to various Service Automation modules.
+          type: array
+          items:
+            type: string
+        Permissions:
+          description: Permissions assigned to a subscriber user that determine whether they have full or read-only access to various Service Automation modules.
+          type: array
+          items:
+            type: string
+        UserType:
+          description: Subscriber user type defining their level of access to ServiceChannel:<br /> • `Corporate` — a user can work in Service Automation.<br /> • `Dashboard` — a user can only access the dashboard assigned to them.<br />`0` is returned for provider users.
+          enum:
+          - Corporate
+          - Dashboard
+          - ServiceChannel
+          type: string
+        Dashboard:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.DashboardInfo'
+          description: Dashboard a subscriber user has access to.
+        Access:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.AccessOptions'
+          description: List of locations, districts, regions, and trades a subscriber user has access to.
+        Limits:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.LimitOptions'
+          description: NTE, proposal, and invoice limits set for a subscriber user.
+        FeedRole:
+          type: string
+        MliUserInfo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MliUserInfo'
+          description: ''
+        MlpUserInfo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MlpUserInfo'
+    ServiceChannel.Services.Messaging.ApprovalCodes.EditableAdditionalApprovalCode:
+      type: object
+      properties:
+        Header:
+          type: string
+        Value:
+          type: string
+        SetupId:
           format: int32
           type: integer
-        RequiredStandardAttributesMap:
+        LocationId:
           format: int32
           type: integer
+        DefaultOptionId:
+          format: int32
+          type: integer
+        ValueFormat:
+          format: int32
+          type: integer
+        EditableAtLineItemLevel:
+          format: int32
+          type: integer
+        Options:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCodeOption'
+        DefaultValue:
+          type: string
+          readOnly: true
+    ServiceChannel.Services.Messaging.Proposals.ProposalCategory:
+      description: Object featuring proposal categories.
+      type: object
+      properties:
+        IsLocked:
+          description: "Controls the visibility of the category section, for example, *Materials*, *Installation Labor*, in the proposal form. Possible values: \n             • `true`: The section (category) is hidden from the user interface.\n             • `false`: The section (category) is visible in the user interface."
+          default: false
+          type: boolean
+        DefaultHideDetails:
+          description: "Determines whether the category displays a standard template or extended rows. Possible values:\n             • `true`: Shows the default template without additional rows.\n             • `false`: Displays extended rows based on the template configuration."
+          default: false
+          type: boolean
+        Description:
+          description: No longer in use.
+          type: string
+        IsActive:
+          description: Shows whether the category is active.
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          description: Predefined order of appearance for a category.
+          type: integer
+        Columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalCategoryColumn'
+        Rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalCategoryRow'
+        Questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalQuestion'
+        Id:
+          format: int32
+          description: Unique numeric identifier of the proposal category.
+          type: integer
+        Name:
+          description: Type of proposal categories, for example, *Materials*, *Installation Labor*, *Non-Installation Expenses*, etc.
+          type: string
+        TotalCost:
+          format: double
+          description: Subtotal for the specific cost type, for example, materials.
+          type: number
+    ServiceChannel.Services.Messaging.LocationNote.LocationNote:
+      description: Object with the location note details.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Location note numeric identifier.
+          type: integer
+        HeaderId:
+          format: int32
+          description: Unique location note header identifier.
+          type: integer
+        Value:
+          description: Location note content.
+          type: string
+        Header:
+          description: Name of the note.
+          type: string
+    ServiceChannel.Services.Messaging.Users.MliUserInfo:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        MliLevel:
+          type: string
+        MliLocations:
+          type: array
+          items:
+            format: int32
+            type: integer
     ServiceChannel.Services.Messaging.Proposals.IdNameValue:
       type: object
       properties:
@@ -2776,14 +4013,337 @@ components:
           type: string
         Value:
           type: string
-    ServiceChannel.Api.Model.Workorders.WorkOrderLabel:
+    ServiceChannel.Services.Messaging.Proposals.ProposalRecommendation:
+      type: object
+      properties:
+        RecommendationType:
+          enum:
+          - None
+          - StrongApprove
+          - Approve
+          - Reject
+          - StrongReject
+          type: string
+        RecommendationAmounts:
+          type: array
+          items:
+            format: int64
+            type: integer
+        Currency:
+          type: string
+        Score:
+          enum:
+          - None
+          - APlus
+          - A
+          - B
+          - C
+          - D
+          type: string
+        NegativeFeedbacksRecallsPercent:
+          format: double
+          type: number
+        ProviderCompliancePercent:
+          format: double
+          type: number
+        ProposalId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.Users.DashboardInfo:
+      description: Dashboard details object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique dashboard identifier.
+          type: integer
+        Name:
+          description: Dashboard name.
+          type: string
+        RedirectToDashboard:
+          description: Defines whether a subscriber user is redirected to a dashboard once they log in.
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Proposals.ProposalInfo:
       type: object
       properties:
         Id:
           format: int32
           type: integer
-        Label:
+        Number:
           type: string
+        Description:
+          type: string
+        Description2:
+          type: string
+        Comments:
+          type: string
+        Location:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Location.Location'
+        Provider:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.Provider'
+        Subscriber:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Subscribers.Subscriber'
+        Trade:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Trade.Trade'
+        WorkOrder:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Workorders.WorkOrder'
+        Currency:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
+        RFP:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Rfp.Rfp'
+        CreatedDate:
+          format: date-time
+          type: string
+        CreatedDate_dto:
+          format: date-time
+          type: string
+        CreatedBy:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.UserInfo'
+        SubmittedTo:
+          type: string
+        Status:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalStatus'
+        Attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Attachments.Attachment'
+        AssignedTo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.UserInfo'
+        ScheduledDate:
+          format: date-time
+          type: string
+        ScheduledDateDto:
+          format: date-time
+          type: string
+        AmountCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalCategoryInfo'
+        UpdatedDate:
+          format: date-time
+          description: Updated Date
+          type: string
+        UpdatedDateDto:
+          format: date-time
+          type: string
+        Recommendation:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalRecommendation'
+        Amount:
+          format: double
+          type: number
+        AssignedFromLevel:
+          type: string
+        AssignedToLevel:
+          type: string
+        LevelsEscalateTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.EscalateTo'
+        Actions:
+          type: array
+          items:
+            type: string
+        MlpRecommendations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.MlpRecommendation'
+        MlpRecommendation:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.MlpRecommendation'
+        CurrentProposalMlpRuleSetId:
+          format: int32
+          type: integer
+        CurrentProposalMlpRuleSetName:
+          type: string
+        CurrentProposalMlpLevelId:
+          format: int32
+          type: integer
+        CurrentProposalMlpLevelName:
+          type: string
+        PoNumber:
+          type: string
+        IsMlpLimitOverrun:
+          default: false
+          type: boolean
+        NextLevelEmpty:
+          default: false
+          type: boolean
+        Project:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.ProposalProjectSimpleModel'
+    ServiceChannel.Services.Messaging.Attachments.AttachmentsDescriptor:
+      type: object
+      properties:
+        Count:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.CountDescriptor'
+    ServiceChannel.Services.Messaging.Notes.NoteInfo:
+      type: object
+      properties:
+        Id:
+          format: int64
+          type: integer
+        DocumentId:
+          type: string
+        Number:
+          format: int32
+          type: integer
+        NoteData:
+          type: string
+        DateCreated:
+          format: date-time
+          type: string
+        DateCreated_DTO:
+          format: date-time
+          type: string
+        ActionRequired:
+          default: false
+          type: boolean
+        MailedTo:
+          type: string
+        CreatedBy:
+          type: string
+    ServiceChannel.Services.Messaging.Proposals.UpdateProposalStatusRequest:
+      description: The request object to update a proposal status.
+      type: object
+      properties:
+        Comment:
+          description: Comment on the proposal status update. The comment is added to the work order note.
+          type: string
+        ProviderEmail:
+          description: Provider’s email address to which a notification about the proposal status change is sent. The default is the email address of the provider the proposal is assigned to.
+          type: string
+        UserEmail:
+          description: User’s email address to which a notification about the proposal status change is sent. The default is the email address of the current user.
+          type: string
+        RejectReasonCodeId:
+          format: int32
+          description: "Numeric identifier of the reason for rejecting the proposal.\n            Pass value to this parameter when sending the *PUT /proposals/{proposalId}/reject* request. To retrieve a list of rejection reason codes and their descriptions, use the *GET /proposals/RejectionReasons* method."
+          type: integer
+        ActionSource:
+          enum:
+          - Standard
+          - DecisionEngine
+          type: string
+        ReasonString:
+          description: "Reason for approving the proposal.\n            Pass value to this parameter when sending the *PUT /proposals/{proposalId}/approve* request. The entered reason is added to the work order note."
+          type: string
+        Actor:
+          description: The Actor is added to the work order note.
+          type: string
+        AttachmentstoWO:
+          description: Move Approved Proposal attachments to WO.
+          default: false
+          type: boolean
+        PinNote:
+          description: Pin Work Order Note.
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Invoices.InvoiceAmountsDetails:
+      description: Object containing the list of the invoice charges.
+      type: object
+      properties:
+        LaborAmount:
+          format: double
+          description: Amount of the labor charge. Must equal `Labors.Amount`.
+          type: number
+        MaterialAmount:
+          format: double
+          description: Amount of the material charge. Must equal `Materials.Amount`.
+          type: number
+        TravelAmount:
+          format: double
+          description: Amount of the trip charge.
+          type: number
+        FreightAmount:
+          format: double
+          description: Amount of the freight charge.
+          type: number
+        OtherAmount:
+          format: double
+          description: Amount of other charges. When you add this parameter, also specify `InvoiceAmountsDetails.OtherDescription`.
+          type: number
+        OtherDescription:
+          type: string
+    ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeChild:
+      type: object
+      properties:
+        Amount:
+          format: double
+          type: number
+        Id:
+          format: int32
+          type: integer
+        InvoiceId:
+          format: int32
+          type: integer
+        InvoiceChargeId:
+          format: int32
+          type: integer
+        ApprovalCodeType:
+          enum:
+          - Labor
+          - Travel
+          - Material
+          - Freight
+          - Other
+          - Tax
+          - Tax2
+          - LineItem
+          - FreightGenerated
+          type: string
+        ApprovalCode:
+          type: string
+        AdditionalApprovalCode:
+          type: string
+        ParentId:
+          format: int32
+          type: integer
+        InternalId:
+          format: int32
+          type: integer
+        InternalParentId:
+          format: int32
+          type: integer
+        IsDefault:
+          default: false
+          type: boolean
+    ServiceChannel.Api.Model.Proposals.MlpLevelSimpleModel:
+      type: object
+      properties:
+        UserId:
+          format: int32
+          type: integer
+        LocationIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        LevelId:
+          format: int32
+          type: integer
+        LevelName:
+          type: string
+        Order:
+          format: int32
+          type: integer
+        UsersLocations:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              format: int32
+              type: integer
+        CategoryChange:
+          default: false
+          type: boolean
+        PriorityChange:
+          default: false
+          type: boolean
+        CodeChange:
+          default: false
+          type: boolean
+        DivisionId:
+          format: int32
+          type: integer
     ServiceChannel.Services.Messaging.Workorders.WorkOrder:
       description: Workorder object for Messages exchenge.
       type: object
@@ -3026,94 +4586,320 @@ components:
         OriginalProjectedCompletionDate_DTO:
           format: date-time
           type: string
-    ServiceChannel.Services.Messaging.Users.MlpUserInfo:
+    ServiceChannel.Api.Model.Workorders.WorkOrderLabel:
       type: object
       properties:
         Id:
           format: int32
           type: integer
-        MlpLevel:
+        Label:
           type: string
-        MlpLocations:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.Notes.EmailRecipientResponse:
-      description: The email notification recipient object.
+    ServiceChannel.Services.Messaging.Proposals.ProposalCategoryColumn:
+      description: Object containing column headers defined in the proposal form.
+      type: object
+      properties:
+        DataField:
+          description: Database field associated with the column header in the proposal form.
+          type: string
+        DataType:
+          description: Data type, for example, `string`, `integer`, `double`.
+          type: string
+        IsDescriptionColumn:
+          description: Points to the description column in the proposal form.
+          default: false
+          type: boolean
+        IsMarkUpColumn:
+          description: Shows whether the column accepts the material markup percentage. Available with the *ProposalMaterialMarkup* feature flag.
+          default: false
+          type: boolean
+        IsUserReservedColumn:
+          description: Defines whether the column is used for user-specific input.
+          default: false
+          type: boolean
+        Name:
+          description: Title of the column header in the proposal form.
+          type: string
+        Description:
+          description: No longer in use.
+          type: string
+        IsActive:
+          description: Shows whether the column is active.
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          description: Order of appearance for column headers in the proposal form.
+          type: integer
+    ServiceChannel.Services.Messaging.Invoices.InvoiceOther:
+      description: The invoices material
       type: object
       properties:
         Id:
           format: int32
-          description: The unique numeric identifier of the user who can be added to the list of email notification recipients.
           type: integer
-        UserName:
-          description: The username of the email notification recipient.
+        InvoiceId:
+          format: int32
+          description: Invoice identifier.
+          type: integer
+        Description:
+          description: Get or set description.
           type: string
-        Email:
-          description: The email address of the notification recipient.
-          type: string
-        RecipientType:
-          description: Defines the type of the email notification recipient.
-          enum:
-          - Undefined
-          - RegularRecipient
-          - Provider
-          - Follower
-          - LocationNoteRecipient
-          type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup:
-      type: object
-      properties:
-        ApprovalCodeType:
-          enum:
-          - Labor
-          - Travel
-          - Material
-          - Freight
-          - Other
-          - Tax
-          - Tax2
-          - LineItem
-          - FreightGenerated
-          type: string
-        ApprovalCode:
-          type: string
-        AdditionalApprovalCode:
+        Type:
+          description: Get or set type of charge.
           type: string
         Amount:
           format: double
+          description: Get or set the amount of money that is charged.
           type: number
-        ApprovalCodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeChild'
-    ServiceChannel.Services.Messaging.Invoices.InvoiceAmountsDetails:
-      description: Object containing the list of the invoice charges.
+        UnitType:
+          format: byte
+          description: Get or set the unit of measure
+          type: string
+        UnitPrice:
+          format: double
+          description: Get or set the price of unit
+          type: number
+        Quantity:
+          format: double
+          description: Get or set the quantity
+          type: number
+        AgreedUnitPrice:
+          format: double
+          description: Get or set the AgreedUnitPrice
+          type: number
+        UnitPriceDiscrepancyReason:
+          description: UnitPriceDiscrepancyReason
+          type: string
+        PriceListOtherChargeId:
+          format: int32
+          description: Get or set the PriceListOtherChargeId
+          type: integer
+        IsUnitPriceDiscrepancy:
+          description: Get IsUnitPriceDiscrepancy
+          default: false
+          type: boolean
+          readOnly: true
+        ApprovalCodeGroup:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+        isNontaxableVATEU:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Providers.Provider:
       type: object
       properties:
-        LaborAmount:
-          format: double
-          description: Amount of the labor charge. Must equal `Labors.Amount`.
-          type: number
-        MaterialAmount:
-          format: double
-          description: Amount of the material charge. Must equal `Materials.Amount`.
-          type: number
-        TravelAmount:
-          format: double
-          description: Amount of the trip charge.
-          type: number
-        FreightAmount:
-          format: double
-          description: Amount of the freight charge.
-          type: number
-        OtherAmount:
-          format: double
-          description: Amount of other charges. When you add this parameter, also specify `InvoiceAmountsDetails.OtherDescription`.
-          type: number
-        OtherDescription:
+        Phone:
           type: string
+        FullName:
+          description: Full Name
+          type: string
+        Address1:
+          description: Address1
+          type: string
+        Address2:
+          description: Adress2
+          type: string
+        City:
+          description: City
+          type: string
+        State:
+          description: State
+          type: string
+        Zip:
+          description: Zip
+          type: string
+        Country:
+          description: Country
+          type: string
+        MainContact:
+          description: Main Contact
+          type: string
+        DateCreated:
+          format: date-time
+          description: Date Created
+          type: string
+        LastUserDate:
+          description: Last User Date
+          type: string
+        SuperUser:
+          description: SuperUser
+          type: string
+        WebSite:
+          description: WebSite
+          type: string
+        Email:
+          description: Email
+          type: string
+        TaxId:
+          description: Tax Id
+          type: string
+        Trade:
+          description: Trade
+          type: string
+        ProcessingEmail:
+          description: Processing Email
+          type: string
+        FaxNumber:
+          description: Fax Number
+          type: string
+        SuiteFloor:
+          description: Suite Floor
+          type: string
+        MailInfo:
+          description: Mail Info
+          type: string
+        ImageFile:
+          description: Image File
+          type: string
+        ReturnMail:
+          description: Return Mail
+          type: string
+        MailFrequency:
+          format: int32
+          description: Mail Frequency
+          type: integer
+        FormId:
+          format: int32
+          description: Form Id
+          type: integer
+        Pager:
+          description: Pager
+          type: string
+        NightRequest:
+          format: int32
+          description: NightRequest
+          type: integer
+        ShortFormatEmail:
+          description: Short Format Email
+          type: string
+        LastTrainingDate:
+          format: date-time
+          description: Last Training Date
+          type: string
+        LastTrainingDateStr:
+          description: Last Training Date as a string
+          type: string
+        IsInternal:
+          description: Is Internal
+          default: false
+          type: boolean
+        IsOnOffShoreFeatureEnabled:
+          description: Is OnOffShoreFeature Enabled
+          default: false
+          type: boolean
+        Id:
+          format: int32
+          description: Id
+          type: integer
+        Name:
+          description: Name
+          type: string
+        DoNotDispatch:
+          description: DoNotDispatch enabled?
+          default: false
+          type: boolean
+    ServiceChannel.Api.Model.Proposals.MlpRuleAction:
+      type: object
+      properties:
+        Name:
+          type: string
+        Limit:
+          format: double
+          type: number
+        ForwardTo:
+          format: int32
+          type: integer
+        ForwardToLevelName:
+          type: string
+        EndStatus:
+          type: string
+        AutoEscalateInDays:
+          format: int32
+          type: integer
+        EntryLevel:
+          default: false
+          type: boolean
+        CodeChange:
+          default: false
+          type: boolean
+        CategoryChange:
+          default: false
+          type: boolean
+        LevelId:
+          format: int32
+          type: integer
+        LevelName:
+          type: string
+        RuleNumber:
+          format: int32
+          type: integer
+        RuleOrder:
+          format: int32
+          type: integer
+        Id:
+          format: int32
+          type: integer
+        RuleSetId:
+          format: int32
+          type: integer
+        Override:
+          default: false
+          type: boolean
+        SkipOverLimit:
+          default: false
+          type: boolean
+        ActionNotification:
+          default: false
+          type: boolean
+        LocationId:
+          format: int32
+          type: integer
+        UserId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.Invoices.InvoiceTaxesDetails:
+      description: Object containing the list of taxes. You can add taxes as a fixed amount or as a percentage.
+      type: object
+      properties:
+        LaborTaxPercent:
+          format: double
+          description: Amount of the labor tax in percentage (for countries other than USA and Canada).
+          type: number
+        MaterialTaxPercent:
+          format: double
+          description: Amount of the material tax in percentage (for countries other than USA and Canada).
+          type: number
+        TravelTaxPercent:
+          format: double
+          description: Amount of the travel tax in percentage (for countries other than USA and Canada).
+          type: number
+        FreightTaxPercent:
+          format: double
+          description: Amount of the freight tax in percentage (for countries other than USA and Canada).
+          type: number
+        OtherTaxPercent:
+          format: double
+          description: Amount of other taxes in percentage (for countries other than USA and Canada).
+          type: number
+        LaborTax:
+          format: double
+          description: Amount of the labor tax.
+          type: number
+        MaterialTax:
+          format: double
+          description: Amount of the material tax.
+          type: number
+        TravelTax:
+          format: double
+          description: Amount of the travel tax.
+          type: number
+        FreightTax:
+          format: double
+          description: Amount of the freight tax.
+          type: number
+        OtherTax:
+          format: double
+          description: Amount of other taxes.
+          type: number
     ServiceChannel.Services.Messaging.Assets.AssetResponse:
       description: Object details of an asset.
       type: object
@@ -3371,151 +5157,419 @@ components:
           format: date-time
           description: Date and time of the asset deactivation.
           type: string
-    ServiceChannel.Services.Messaging.Proposals.UpdateProposalsStatusRequest:
+    ServiceChannel.Services.Messaging.Invoices.Invoice:
       type: object
       properties:
+        Provider:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.Provider'
+          description: Gets or sets Provider.
+        Subscriber:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Subscribers.Subscriber'
+          description: Gets or sets Subscriber.
+        Location:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Location.Location'
+          description: Gets or sets Location.
+        Id:
+          format: int32
+          type: integer
+        Number:
+          description: Gets or sets invoice number.
+          type: string
+        BatchNumber:
+          description: Gets or sets Batch number.
+          type: string
+        InvoiceTax:
+          format: double
+          type: number
+        PostedTaxRate:
+          format: float
+          type: number
+        PostedTax2Rate:
+          format: float
+          type: number
+        VendorPayeeId:
+          format: int32
+          type: integer
+        InvoiceTotal:
+          format: double
+          description: Gets or sets total with tax amounts.
+          type: number
+        InvoiceBalance:
+          format: double
+          type: number
+        Currency:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
+        ApprovedDate:
+          format: date-time
+          type: string
+        ApprovalCode:
+          type: string
+        EditableAdditionalApprovalCode:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ApprovalCodes.EditableAdditionalApprovalCode'
+        PostedDate:
+          format: date-time
+          type: string
+        PostedBy:
+          type: string
+        Subtotal:
+          format: double
+          type: number
+        Status:
+          type: string
+        Trade:
+          type: string
+        TradeId:
+          format: int32
+          type: integer
+        Category:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceCategoryMessaging'
+        InvoiceAmountsDetails:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceAmountsDetails'
+        InvoiceTaxesDetails:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceTaxesDetails'
+        Tax2Details:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.Tax2Details'
+        Labors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceLabor'
+        Materials:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceMaterial'
+        Travels:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceTravel'
+        Others:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceOther'
+        TaxApprovalCodeGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+        Tax2ApprovalCodeGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+        FreightApprovalCodeGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
+        WithMismatchedRates:
+          default: false
+          type: boolean
+        IsOutsourced:
+          default: false
+          type: boolean
+        StarredBy:
+          type: string
+        IsStarred:
+          default: false
+          type: boolean
+        IsTransferred:
+          default: false
+          type: boolean
+          readOnly: true
+        StarredDate:
+          format: date-time
+          type: string
+        Description:
+          type: string
+        InvoiceDate:
+          format: date-time
+          type: string
+        LaborTaxIncluded:
+          default: false
+          type: boolean
+        TravelTaxIncluded:
+          default: false
+          type: boolean
+        MaterialsTaxIncluded:
+          default: false
+          type: boolean
+        FreightTaxIncluded:
+          default: false
+          type: boolean
+        OtherTaxIncluded:
+          default: false
+          type: boolean
+        NonTaxableLabor:
+          format: int32
+          type: integer
+        NonTaxableTravel:
+          format: int32
+          type: integer
+        NonTaxableMaterial:
+          format: int32
+          type: integer
+        NonTaxableFreight:
+          format: int32
+          type: integer
+        NonTaxableOther:
+          format: int32
+          type: integer
+        IsExists:
+          default: false
+          type: boolean
+          readOnly: true
+        StatusChangeDate:
+          format: date-time
+          type: string
+        StatusChangeUser:
+          type: string
+        StatusChangeUserid:
+          type: string
+        IsDuplicate:
+          default: false
+          type: boolean
+        WoTrackingNumber:
+          format: int32
+          description: Gets or sets work order tracking number.
+          type: integer
+        Terms:
+          description: terms
+          type: string
+        Comments:
+          type: string
+        PaidDate:
+          format: date-time
+          type: string
+        TransferredDate:
+          format: date-time
+          type: string
+        LastActionDate:
+          format: date-time
+          type: string
+        UpdatedDate:
+          format: date-time
+          description: Updated Date
+          type: string
+        StatusHistoryShort:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.StatusHistoryShort'
+        WoAssignedTo:
+          description: Gets or sets WO Assignee
+          type: string
+        ApprovalCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCode'
+        IsChargesApprovalCodesDefault:
+          default: false
+          type: boolean
+        Payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoicePaymentResponse'
+        StoredFeatures:
+          type: array
+          items:
+            type: string
+    ServiceChannel.Services.Messaging.Proposals.AssignUserToProposalRequest:
+      description: The request object to assign a proposal to a user.
+      required:
+      - UserId
+      type: object
+      properties:
+        UserId:
+          format: int32
+          description: The unique numeric identifier of the user to assign the proposal to.
+          type: integer
+        Comments:
+          description: Your comment describing why you are assigning or reassigning the proposal to the specified user.
+          type: string
+        UserEmail:
+          description: The email address to send a notification about the assigned proposal to. The default is the email address of the user who is assigned the proposal.
+          type: string
+        ReasonString:
+          description: Reason for approving the proposal. Don’t pass when assigning the proposal to a user.
+          type: string
+        Note:
+          description: Note added upon assigning or reassigning the proposal.
+          type: string
+        PinNote:
+          description: Pin note on linked workorder
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCodeOption:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Value:
+          type: string
+    ServiceChannel.Services.Messaging.Proposals.ProposalQuestionOption:
+      description: Object containing the possible answers.
+      type: object
+      properties:
+        IsDefault:
+          description: 'Defines which answer is pre-selected by default. Possible values: `true` and `false`.'
+          default: false
+          type: boolean
+        AnswerTextValue:
+          description: No longer in use.
+          type: string
+        IsChosen:
+          description: Shows which answer option was chosen upon creating the proposal.
+          default: false
+          type: boolean
+        Name:
+          description: Answer option.
+          type: string
+        Description:
+          description: No longer in use.
+          type: string
+        IsActive:
+          description: Shows whether the answer option is active.
+          default: false
+          type: boolean
+        SortOrder:
+          format: int32
+          description: Order of appearance.
+          type: integer
+    ServiceChannel.Services.Messaging.Assets.WarrantyExpiration:
+      description: Object containing warranty expiration details.
+      type: object
+      properties:
+        Type:
+          description: 'Warranty expiration calculation type. **Possible values**: 0 - the expiration date is calculated starting from the asset purchase data; 1 - the expiration date is calculated starting from the asset installation date.'
+          enum:
+          - FromPurchaseDate
+          - FromInstallDate
+          type: string
+        Period:
+          format: int32
+          description: Warranty period in months.
+          type: integer
+    ServiceChannel.Services.Messaging.Users.LimitOptions:
+      description: Object for NTE, proposal, and invoice limits set for a subscriber user.
+      type: object
+      properties:
+        NteLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
+        ProposalLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
+        InvoiceLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
+    ServiceChannel.Services.Messaging.Workorders.WeatherEvent:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+    ServiceChannel.Api.Model.KeyValue_System.Int32_System.String:
+      type: object
+      properties:
+        Key:
+          format: int32
+          type: integer
+        Value:
+          type: string
+    ServiceChannel.Services.Messaging.Users.UserInfo:
+      description: The user details object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: The unique numeric identifier of the user.
+          type: integer
+        UserName:
+          description: The username of the user.
+          type: string
+        UserNameOrFullName:
+          description: The username if fullname is null or empty
+          type: string
+          readOnly: true
+        FullName:
+          description: The full name of the user.
+          type: string
+        Email:
+          description: The email address of the user.
+          type: string
+        LevelInfo:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.MlpLevelSimpleModel'
+          description: The information on the MLP level the user belongs to.
+    ServiceChannel.Api.Model.Proposals.MlpRecommendation:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
         ProposalId:
           format: int32
           type: integer
-        Comments:
-          type: string
-        RejectReasonCode:
-          format: int32
-          type: integer
-        Email:
-          type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceTaxesDetails:
-      description: Object containing the list of taxes. You can add taxes as a fixed amount or as a percentage.
-      type: object
-      properties:
-        LaborTaxPercent:
-          format: double
-          description: Amount of the labor tax in percentage (for countries other than USA and Canada).
-          type: number
-        MaterialTaxPercent:
-          format: double
-          description: Amount of the material tax in percentage (for countries other than USA and Canada).
-          type: number
-        TravelTaxPercent:
-          format: double
-          description: Amount of the travel tax in percentage (for countries other than USA and Canada).
-          type: number
-        FreightTaxPercent:
-          format: double
-          description: Amount of the freight tax in percentage (for countries other than USA and Canada).
-          type: number
-        OtherTaxPercent:
-          format: double
-          description: Amount of other taxes in percentage (for countries other than USA and Canada).
-          type: number
-        LaborTax:
-          format: double
-          description: Amount of the labor tax.
-          type: number
-        MaterialTax:
-          format: double
-          description: Amount of the material tax.
-          type: number
-        TravelTax:
-          format: double
-          description: Amount of the travel tax.
-          type: number
-        FreightTax:
-          format: double
-          description: Amount of the freight tax.
-          type: number
-        OtherTax:
-          format: double
-          description: Amount of other taxes.
-          type: number
-    ServiceChannel.Services.Messaging.Invoices.StatusHistoryShort:
-      type: object
-      properties:
-        CreatedBy:
-          type: string
-        CreatedById:
+        UserId:
           format: int32
           type: integer
         Status:
           type: string
-        InvId:
+        WoType:
+          enum:
+          - Origin
+          - New
+          - Existing
+          type: string
+        OriginalTrackingNumber:
           format: int32
           type: integer
-        ActionDate:
+        SelectedTrackingNumber:
+          format: int32
+          type: integer
+        GeneratedTrackingNumber:
+          format: int32
+          type: integer
+        PoNumber:
           type: string
-    ServiceChannel.Services.Messaging.Proposals.ProposalRecommendation:
-      type: object
-      properties:
-        RecommendationType:
-          enum:
-          - None
-          - StrongApprove
-          - Approve
-          - Reject
-          - StrongReject
+        Category:
           type: string
-        RecommendationAmounts:
+        CategoryId:
+          format: int32
+          type: integer
+        ApprovalCode:
+          type: string
+        Priority:
+          type: string
+        PriorityId:
+          format: int32
+          type: integer
+        RejectCodeId:
+          format: int32
+          type: integer
+        ApprovalReason:
+          type: string
+        EmailsToNotify:
+          type: string
+        Applied:
+          default: false
+          type: boolean
+        AttachmentsToWO:
+          default: false
+          type: boolean
+        EmailMyself:
+          default: false
+          type: boolean
+        MyEmail:
+          type: string
+        NotSavedRecommendation:
+          default: false
+          type: boolean
+        WorkOrderLabel:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Label'
+        WorkOrderLabels:
           type: array
           items:
-            format: int64
-            type: integer
-        Currency:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Label'
+        Comment:
           type: string
-        Score:
-          enum:
-          - None
-          - APlus
-          - A
-          - B
-          - C
-          - D
-          type: string
-        NegativeFeedbacksRecallsPercent:
-          format: double
-          type: number
-        ProviderCompliancePercent:
-          format: double
-          type: number
-        ProposalId:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.Attachments.AttachmentsDescriptor:
-      type: object
-      properties:
-        Count:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.CountDescriptor'
-    ServiceChannel.Services.Messaging.ApprovalCodes.EditableAdditionalApprovalCode:
-      type: object
-      properties:
-        Header:
-          type: string
-        Value:
-          type: string
-        SetupId:
-          format: int32
-          type: integer
-        LocationId:
-          format: int32
-          type: integer
-        DefaultOptionId:
-          format: int32
-          type: integer
-        ValueFormat:
-          format: int32
-          type: integer
-        EditableAtLineItemLevel:
-          format: int32
-          type: integer
-        Options:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCodeOption'
-        DefaultValue:
-          type: string
-          readOnly: true
-    System.Object:
-      type: object
-      properties: {}
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -5153,306 +7207,27 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.Proposals.SearchProposalModel:
+    ServiceChannel.Services.Messaging.Users.AccessOptions:
+      description: Object listing locations, districts, regions, and trades a subscriber user has access to. Learn more about [granting access based on locations, districts, and regions](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/585107276/Location+District+Region+Access+Tab) in ServiceChannel University.
       type: object
       properties:
-        UserId:
-          type: string
-        CurrentLevelProposal:
-          default: false
-          type: boolean
-        WorkOrderId:
-          type: string
-        WorkOrderIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        ProposalId:
-          type: string
-        PurchaseOrderId:
-          type: string
-        ProjectId:
-          type: string
-        Projects:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Projects.Project'
-        DateType:
-          enum:
-          - PastMonth
-          - PastThreeMonths
-          - PastYear
-          - Custom
-          - Yesterday
-          - Today
-          - PastWeek
-          type: string
-        ProposalFilterDateType:
-          enum:
-          - ProposalDate
-          - ScheduledDate
-          - ActionDate
-          type: string
-        ProposalDateFrom:
-          format: date-time
-          type: string
-        ProposalDateTo:
-          format: date-time
-          type: string
-        PastValue:
-          format: int32
-          type: integer
-        PastRange:
-          enum:
-          - Select
-          - Hours
-          - Days
-          - Weeks
-          type: string
-        ProposalDateFromString:
-          type: string
-        ProposalDateToString:
-          type: string
-        DatesWereClamped:
-          default: false
-          type: boolean
-        DatesRangeInvalid:
-          default: false
-          type: boolean
-        DatesRangeInvalidReason:
-          type: string
-        SortBy:
-          enum:
-          - DateDesc
-          - DateAsc
-          - ProposalNumber
-          - Trade
-          - LocationId
-          - Provider
-          - Status
-          type: string
-        WithWorkOrder:
-          enum:
-          - NA
-          - 'Yes'
-          - 'No'
-          type: string
-        WithAttachments:
-          enum:
-          - NA
-          - 'Yes'
-          - 'No'
-          type: string
-        WithRelated:
-          enum:
-          - NA
-          - 'Yes'
-          - 'No'
-          type: string
-        Report:
-          enum:
-          - Viewable
-          - Printable
-          - Excel
-          type: string
-        Priorities:
-          type: array
-          items:
-            type: string
-        ProposalStatuses:
-          type: array
-          items:
-            enum:
-            - All
-            - Open
-            - OnHold
-            - Reviewed
-            - ApprovedNotScheduled
-            - ApprovedScheduled
-            - Rejected
-            - PendingExt
-            type: string
-        CategoriesIdName:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.KeyValue_System.String_System.String'
-        TradesIdName:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.KeyValue_System.String_System.String'
-        PrioritiesIdName:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.KeyValue_System.String_System.String'
         Locations:
-          type: array
-          items:
-            type: string
-        LocationShortNames:
-          type: array
-          items:
-            type: string
-        LocationShortAddresses:
-          type: array
-          items:
-            type: string
-        LocationCities:
-          type: array
-          items:
-            type: string
-        StateIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        CountryIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        Regions:
+          description: Locations a user has access to.
           type: array
           items:
             type: string
         Districts:
+          description: Districts a user has access to.
           type: array
           items:
             type: string
-        States:
+        Regions:
+          description: Regions a user has access to.
           type: array
           items:
             type: string
-        Countries:
-          type: array
-          items:
-            type: string
-        Attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.IdNameValue'
-        LocationNoteHeaders:
-          type: array
-          items:
-            type: string
-        LineItemReport:
-          default: false
-          type: boolean
-        Provider:
-          type: string
-        ChangedProposals:
-          type: array
-          items:
-            format: int32
-            type: integer
-        ProposalIids:
-          type: string
-        ProposalNumber:
-          type: string
-        ProposalWO:
-          type: string
-        ProviderId:
-          format: int32
-          type: integer
-        LocationId:
-          format: int32
-          type: integer
-        SaveReport:
-          type: string
-        ALP:
-          format: int32
-          type: integer
-        Labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.KeyValue_System.String_System.String'
-        IncludeMlpCategory:
-          default: false
-          type: boolean
-        SubscribersIdName:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.KeyValue_System.Int32_System.String'
-        IsAssignedToMe:
-          default: false
-          type: boolean
-        HasAssignee:
-          default: false
-          type: boolean
-        IncludeOverrideProposals:
-          default: false
-          type: boolean
-        AmountFrom:
-          format: double
-          type: number
-        AmountTo:
-          format: double
-          type: number
-        StatusesActiveTab:
-          type: string
-        ProposalsIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        SortField:
-          enum:
-          - LocDate
-          - ProposalNumber
-          - Trade
-          - StoreId
-          - ProviderName
-          - Status
-          - SubscriberName
-          - CustomSort
-          type: string
-        SortOrder:
-          enum:
-          - ASC
-          - DESC
-          type: string
-        SortCustom:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.SortCustom'
-        Currency:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Currency.Currency'
-        Offset:
-          format: int32
-          type: integer
-        Count:
-          format: int32
-          type: integer
-        Language:
-          type: string
-        AllUsers:
-          default: false
-          type: boolean
-        IsLanding:
-          default: false
-          type: boolean
-        IsEmergency:
-          default: false
-          type: boolean
-        DefaultEmergencyCutOffMinutes:
-          format: int32
-          type: integer
-        IsPendingStatusFilter:
-          default: false
-          type: boolean
-        GlCodes:
-          type: array
-          items:
-            type: string
-        AdditionalApprovalCodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.AdditionalApprovalCodeFilter'
-        ExtendedWoStatuses:
-          type: array
-          items:
-            type: string
-        PrimaryWoStatuses:
+        Trades:
+          description: Trades a user is permitted to work with.
           type: array
           items:
             type: string
@@ -5476,339 +7251,46 @@ components:
         DecimalCount:
           format: int32
           type: integer
-    ServiceChannel.Services.Messaging.Proposals.ProposalStatisticsResponse:
-      description: Object of statistics on RFPs and proposals.
+    ServiceChannel.Api.Model.Proposals.MlpLevelRule:
       type: object
       properties:
-        DaysPeriod:
-          format: int32
-          description: Time period set as the number of days prior to the current date for which statistics on RFPs and proposals are returned.
-          type: integer
-        RFPsWaitingForApproval:
-          format: int32
-          description: The total number of RFPs awaiting response for the specified time period.
-          type: integer
-        OpenProposals:
-          format: int32
-          description: The total number of proposals in the _Open_ status for the specified time period.
-          type: integer
-        ApprovedProposalsDaysPeriod:
-          format: int32
-          description: Time period set as the number of days prior to the current date for which statistics on approved proposals are returned in `ApprovedProposals`.
-          type: integer
-        ApprovedProposals:
-          format: int32
-          description: The total number of proposals in the _Approved_ status for the specified time period.
-          type: integer
-        WaitingReviewProposals:
-          format: int32
-          description: The total number of proposals in the _On Hold_ and _Reviewed_ statuses for the specified time period.
-          type: integer
-        RejectedProposals:
-          format: int32
-          description: The total number of proposals in the _Rejected_ status for the specified time period.
-          type: integer
-    ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCode:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        InvoiceId:
-          format: int32
-          type: integer
-        InvoiceChargeId:
-          format: int32
-          type: integer
-        ApprovalCodeType:
-          enum:
-          - Labor
-          - Travel
-          - Material
-          - Freight
-          - Other
-          - Tax
-          - Tax2
-          - LineItem
-          - FreightGenerated
-          type: string
-        ApprovalCode:
-          type: string
-        AdditionalApprovalCode:
-          type: string
-        ParentId:
-          format: int32
-          type: integer
-        InternalId:
-          format: int32
-          type: integer
-        InternalParentId:
-          format: int32
-          type: integer
-        IsDefault:
-          default: false
-          type: boolean
-    ServiceChannel.Api.Model.Proposals.MlpLevelSimpleModel:
-      type: object
-      properties:
-        UserId:
-          format: int32
-          type: integer
-        LocationIds:
-          type: array
-          items:
-            format: int32
-            type: integer
         LevelId:
           format: int32
           type: integer
+        Actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.MlpRuleAction'
         LevelName:
           type: string
-        Order:
+        ForwardTo:
           format: int32
           type: integer
-        UsersLocations:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              format: int32
-              type: integer
-        CategoryChange:
-          default: false
-          type: boolean
-        PriorityChange:
-          default: false
-          type: boolean
-        CodeChange:
-          default: false
-          type: boolean
-        DivisionId:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.LocationNote.LocationNote:
-      description: Object with the location note details.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Location note numeric identifier.
-          type: integer
-        HeaderId:
-          format: int32
-          description: Unique location note header identifier.
-          type: integer
-        Value:
-          description: Location note content.
-          type: string
-        Header:
-          description: Name of the note.
-          type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceLabor:
-      description: Information on labor. Add a separate object for each worker. When two or more workers have the same `SkillLevel`,`LaborType`, and `HourlyRate`, use one object and specify `NumOfTech`.
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        InvoiceId:
-          format: int32
-          description: Invoice identifier.
-          type: integer
-        SkillLevel:
-          format: byte
-          description: 'The skill level of a worker. Valid values: `1` - Supervisor, `2` - Technician, `3` - Helper.'
-          type: string
-        LaborType:
-          format: byte
-          description: 'The type of the pay rate. Valid values: `1` - Regular, `2` - Overtime, `3` - Double time.'
-          type: string
-        NumOfTech:
-          format: byte
-          description: Number of workers.
-          type: string
-        HourlyRate:
-          format: double
-          description: Worker hourly rate.
-          type: number
-        Hours:
-          format: double
-          description: Total hours the worker spent to complete the work order.
-          type: number
-        Amount:
-          format: double
-          description: The amount of the labor charge. The sum of all `Amount` parameters in the `Labors` array must equal `InvoiceAmountsDetails.LaborAmount`.
-          type: number
-        IsOffShore:
-          description: Type of the shore (`1` - Onshore, `2` - Offshore).
-          default: false
-          type: boolean
-        ServiceType:
-          format: byte
-          description: Type of the service (`1` - Design Engineering, Architecture, Technical Service, `2` - Installation and Supervision, `3` - Survey and Troubleshooting).
-          type: string
-        CityPerformed:
-          description: City where services are performed.
-          type: string
-        RateDiscrepancyReason:
-          description: Rate discrepancy reason.
-          type: string
-        AgreedRate:
-          format: double
-          description: Agreed rate.
-          type: number
-        ApprovalCodeGroup:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
-        IsRateDiscrepancy:
-          default: false
-          type: boolean
           readOnly: true
-        isNontaxableVATEU:
+        Override:
           default: false
           type: boolean
-    ServiceChannel.Services.Messaging.Workorders.WeatherEvent:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-    ServiceChannel.Services.Messaging.Equipments.EquipmentAttributeDescription:
-      type: object
-      properties:
-        EquipmentAttributeId:
-          format: int32
-          type: integer
-        EquipmentTypeAttributeId:
-          format: int32
-          type: integer
-        ValueType:
-          format: int32
-          type: integer
-        EquipmentId:
-          format: int32
-          type: integer
-        Value:
-          $ref: '#/components/schemas/System.Object'
-        ValueText:
-          type: string
-        SelectedOptionsText:
-          type: string
-        Visible:
+        SkipOverLimit:
           default: false
           type: boolean
-        Editable:
+        ActionNotification:
           default: false
           type: boolean
-        Required:
-          default: false
-          type: boolean
-        Name:
-          type: string
-        Custom:
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Proposals.MlpWoRecommendationRequest:
-      description: The request object to escalate a proposal.
-      required:
-      - Action
-      type: object
-      properties:
         Action:
-          description: 'Proposal escalation action. **Valid values**: *Approve*, *Reject*, *OnHold*, *Return*.'
           type: string
-        WoType:
+        StatusTo:
+          type: string
+        AutoEscalate:
           format: int32
-          description: 'Work order type. **Valid values**: 0 — *Origin*, 1 — *New*, 2 — *Existing*.'
           type: integer
-        TrackingNumber:
+        Limit:
+          format: double
+          type: number
+        RuleOrder:
           format: int32
-          description: The unique numeric identifier of the work order. Required if the `WoType` is 2 — *Existing*.
           type: integer
-        PoNumber:
-          description: Purchase order number.
+        ForwardToName:
           type: string
-        ExistingPoNumber:
-          description: The existing purchase order number. If the `PoNumber` parameter is passed, its value is used instead of `ExistingPoNumber`.
-          type: string
-        Category:
-          description: "The overall classification of a WO, such as *Maintenance*, *Repair*, or *CAPEX*. Required if the `WoType` is 1 — *New*.\n            The value you enter must be a valid category."
-          type: string
-        CategoryId:
-          format: int32
-          description: Numeric identifier of the category.
-          type: integer
-        ApprovalCode:
-          description: Approval code, or GL code, used when approving an invoice.
-          type: string
-        Priority:
-          description: "Period during which a service provider should check in to perform the requested service. Required if the `WoType` is 1 — *New*.\n            The value you enter must be a valid priority."
-          type: string
-        PriorityId:
-          format: int32
-          description: Numeric identifier of the Priority.
-          type: integer
-        WoRecall:
-          description: The WO has been marked as recall.
-          default: false
-          type: boolean
-        AttachmentsToWO:
-          description: Move Approved Proposal attachments to WO.
-          default: false
-          type: boolean
-        Comment:
-          description: Your comment describing why you are escalating the proposal.
-          type: string
-        RejectReasonCodeId:
-          format: int32
-          description: Numeric identifier of the reason for rejecting the proposal. Don’t pass when escalating the proposal.
-          type: integer
-        ReasonString:
-          description: Reason for approving the proposal.
-          type: string
-        EmailsToNotify:
-          description: The email address of the user to notify about the proposal escalation. When entering multiple addresses, separate them with a comma or semicolon.
-          type: string
-        EmailMyself:
-          description: Defines if the proposal escalation notification is sent to the current user.
-          default: false
-          type: boolean
-        MyEmail:
-          description: The email address of the current user to which a proposal escalation notification is sent.
-          type: string
-        ProposalId:
-          format: int32
-          description: The unique numeric identifier of the proposal to escalate.
-          type: integer
-        WorkOrderLabel:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Label'
-          description: WorkOrder Label.
-        DeleteLabel:
-          description: Is WorkOrder Label to delete.
-          default: false
-          type: boolean
-        Actor:
-          description: The Actor is added to the work order note.
-          type: string
-        AdditionalApprovalCodes:
-          description: The Additional Approval Codes.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCode'
-        WorkOrderLabels:
-          description: WorkOrder Labels.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.Label'
-        IsLinkToOriginatingWorkOrder:
-          description: Link To Originating WorkOrder flag
-          default: false
-          type: boolean
-        PinNote:
-          description: Pin User note on WorkOrder
-          default: false
-          type: boolean
     ServiceChannel.Services.Messaging.Subscribers.Subscriber:
       required:
       - Name
@@ -5865,1488 +7347,6 @@ components:
         DateFormat:
           type: string
         DecimalSeparator:
-          type: string
-    ServiceChannel.Services.Messaging.Proposals.ProposalCategory:
-      description: Object featuring proposal categories.
-      type: object
-      properties:
-        IsLocked:
-          description: "Controls the visibility of the category section, for example, *Materials*, *Installation Labor*, in the proposal form. Possible values: \n             • `true`: The section (category) is hidden from the user interface.\n             • `false`: The section (category) is visible in the user interface."
-          default: false
-          type: boolean
-        DefaultHideDetails:
-          description: "Determines whether the category displays a standard template or extended rows. Possible values:\n             • `true`: Shows the default template without additional rows.\n             • `false`: Displays extended rows based on the template configuration."
-          default: false
-          type: boolean
-        Description:
-          description: No longer in use.
-          type: string
-        IsActive:
-          description: Shows whether the category is active.
-          default: false
-          type: boolean
-        SortOrder:
-          format: int32
-          description: Predefined order of appearance for a category.
-          type: integer
-        Columns:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalCategoryColumn'
-        Rows:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalCategoryRow'
-        Questions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalQuestion'
-        Id:
-          format: int32
-          description: Unique numeric identifier of the proposal category.
-          type: integer
-        Name:
-          description: Type of proposal categories, for example, *Materials*, *Installation Labor*, *Non-Installation Expenses*, etc.
-          type: string
-        TotalCost:
-          format: double
-          description: Subtotal for the specific cost type, for example, materials.
-          type: number
-    ServiceChannel.Services.Messaging.IssueLists.IssueTicketInformation:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        AreaId:
-          format: int32
-          type: integer
-        AreaName:
-          type: string
-        ProblemGroup:
-          type: string
-        Equipment:
-          type: string
-        ProblemCode:
-          type: string
-        TicketType:
-          type: string
-        SetupId:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.CountDescriptor:
-      type: object
-      properties:
-        Total:
-          format: int32
-          type: integer
-        Own:
-          format: int32
-          type: integer
-    ServiceChannel.Api.Model.Label:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-        WoUrl:
-          type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceCategoryMessaging:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-    ServiceChannel.Services.Messaging.Proposals.ProposalCategoryColumn:
-      description: Object containing column headers defined in the proposal form.
-      type: object
-      properties:
-        DataField:
-          description: Database field associated with the column header in the proposal form.
-          type: string
-        DataType:
-          description: Data type, for example, `string`, `integer`, `double`.
-          type: string
-        IsDescriptionColumn:
-          description: Points to the description column in the proposal form.
-          default: false
-          type: boolean
-        IsMarkUpColumn:
-          description: Shows whether the column accepts the material markup percentage. Available with the *ProposalMaterialMarkup* feature flag.
-          default: false
-          type: boolean
-        IsUserReservedColumn:
-          description: Defines whether the column is used for user-specific input.
-          default: false
-          type: boolean
-        Name:
-          description: Title of the column header in the proposal form.
-          type: string
-        Description:
-          description: No longer in use.
-          type: string
-        IsActive:
-          description: Shows whether the column is active.
-          default: false
-          type: boolean
-        SortOrder:
-          format: int32
-          description: Order of appearance for column headers in the proposal form.
-          type: integer
-    ServiceChannel.Services.Messaging.Proposals.ProposalAssociatedWithWorkOder:
-      description: Object containing associated proposal details.
-      type: object
-      properties:
-        ID:
-          format: int32
-          description: Unique numeric identifier of the proposal associated with the specified work order.
-          type: integer
-        ProposalNumber:
-          description: Proposal number — as specified by the user who created the proposal.
-          type: string
-        CreatedDateDto:
-          format: date-time
-          description: Date and time when the proposal was created. The format is `YYYY-MM-DDThh:mm:ss.sssssss[±hh:mm]`, where `[±hh:mm]` represents the time zone offset from UTC.
-          type: string
-        Status:
-          description: Proposal status, for example, *Approved*, *Open*, *Reviewed*, etc.
-          type: string
-        WorkOrder:
-          format: int32
-          description: Work order tracking number.
-          type: integer
-    ServiceChannel.Services.Messaging.Assets.Warranty:
-      description: Object containing warranty parameters.
-      type: object
-      properties:
-        ExpirationDate:
-          format: date-time
-          description: Warranty expiration date based on the warranty expiration settings.
-          type: string
-        ProviderId:
-          format: int32
-          description: ID of a provider who is in charge of warranty services.
-          type: integer
-        NTE:
-          format: double
-          description: Maximum amount of money to be spent on warranty services in USD. Value -1  means that the amount is not applicable.
-          type: number
-        Priority:
-          description: Defines how quickly warranty services should be provided, for example, *Emergency-4 Hours*, *Normal-48 Hours*, *7 Days*.
-          type: string
-        PriorityId:
-          format: int32
-          type: integer
-        Category:
-          description: Warranty category, for example, *ADVISE ONLY*, *REPAIR*, *DISASTER*.
-          type: string
-        CategoryId:
-          format: int32
-          type: integer
-        Provider:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.WarrantyProvider'
-          description: Rules to choose Warranty Provider
-        Expiration:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.WarrantyExpiration'
-          description: Rules for Warranty Expiration
-    ServiceChannel.Services.Messaging.IdentityObject:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.Users.UserInfo:
-      description: The user details object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: The unique numeric identifier of the user.
-          type: integer
-        UserName:
-          description: The username of the user.
-          type: string
-        UserNameOrFullName:
-          description: The username if fullname is null or empty
-          type: string
-          readOnly: true
-        FullName:
-          description: The full name of the user.
-          type: string
-        Email:
-          description: The email address of the user.
-          type: string
-        LevelInfo:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.MlpLevelSimpleModel'
-          description: The information on the MLP level the user belongs to.
-    ServiceChannel.Services.Messaging.Projects.Project:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-        Description:
-          type: string
-    ServiceChannel.Services.Messaging.Proposals.ProposalCategoryRow:
-      description: Object containing cost types broken down into the rows.
-      type: object
-      properties:
-        Required:
-          description: Defines whether the data entry is mandatory.
-          default: false
-          type: boolean
-        HideDetails:
-          description: "Controls whether only the total row is displayed for the proposal cost type in the proposal form.\n             • When it returns `true` and the template contains more than one column, only the total row is shown. Other details are hidden.\n             • When it returns `false`, cost type details are not hidden."
-          default: false
-          type: boolean
-        TotalCost:
-          format: double
-          description: Total cost for all the units of the specified type.
-          type: number
-        ServiceType:
-          description: Similar to the `FeesType` parameter; specifies the type of service for Excel reporting purposes.
-          type: string
-        Name:
-          description: Description of the proposal charge type.
-          type: string
-        Description:
-          description: No longer in use.
-          type: string
-        IsActive:
-          description: Shows whether the data is active.
-          default: false
-          type: boolean
-        SortOrder:
-          format: int32
-          description: Order of appearance.
-          type: integer
-        Quantity1:
-          format: double
-          description: Quantity of units.
-          type: number
-        Quantity2:
-          format: int32
-          description: 'An auxiliary quantity field used in multi-column templates. Enables extended cost calculations such as: Total = Quantity1 × Quantity2 × UnitCost. If `Quantity2` is missing, a default value of 1 is used.'
-          type: integer
-        UnitCost:
-          format: double
-          description: Cost of a single unit.
-          type: number
-        UnitOfMeasure:
-          description: 'Unit of measure: each, sq. ft, feet, linear feet, etc.'
-          type: string
-        ExtendedCost:
-          format: double
-          description: Represents the sum of individual row costs. Calculated per row and aggregated into the category total.
-          type: number
-        Craft:
-          description: Craft information.
-          type: string
-        RepairCategory:
-          description: Repair category.
-          type: string
-        RepairType:
-          description: Type of repair work.
-          type: string
-        MaterialThickness:
-          description: Material thickness.
-          type: string
-        Markup:
-          format: double
-          description: Material markup percentage. Available on the proposal behind the *ProposalMaterialMarkup* feature flag.
-          type: number
-        PriceList:
-          description: Negotiated price list. Learn more in [SCU](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/2856484865/Negotiated+Price+Lists).
-          type: string
-        PartNumber:
-          description: Part number as specified in the negotiated price list.
-          type: string
-        PartName:
-          description: Part name as specified in the negotiated price list.
-          type: string
-        VAT:
-          description: Value-added tax.
-          type: string
-        FeesType:
-          description: Defines the type of fee applied. Used exclusively in Excel report generation. For example, the "VAT" type will be rendered as "VAT%" in the report.
-          type: string
-        DoNotApplyMarkup:
-          description: Shows whether the material markup should be applied.
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCode:
-      type: object
-      properties:
-        Value:
-          type: string
-        Options:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ApprovalCodes.AdditionalApprovalCodeOption'
-        DefaultValue:
-          type: string
-          readOnly: true
-        Header:
-          type: string
-        SetupId:
-          format: int32
-          type: integer
-        LocationId:
-          format: int32
-          type: integer
-        DefaultOptionId:
-          format: int32
-          type: integer
-        ValueFormat:
-          format: int32
-          type: integer
-        EditableAtLineItemLevel:
-          format: int32
-          type: integer
-        IsDeleted:
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Providers.Provider:
-      type: object
-      properties:
-        Phone:
-          type: string
-        FullName:
-          description: Full Name
-          type: string
-        Address1:
-          description: Address1
-          type: string
-        Address2:
-          description: Adress2
-          type: string
-        City:
-          description: City
-          type: string
-        State:
-          description: State
-          type: string
-        Zip:
-          description: Zip
-          type: string
-        Country:
-          description: Country
-          type: string
-        MainContact:
-          description: Main Contact
-          type: string
-        DateCreated:
-          format: date-time
-          description: Date Created
-          type: string
-        LastUserDate:
-          description: Last User Date
-          type: string
-        SuperUser:
-          description: SuperUser
-          type: string
-        WebSite:
-          description: WebSite
-          type: string
-        Email:
-          description: Email
-          type: string
-        TaxId:
-          description: Tax Id
-          type: string
-        Trade:
-          description: Trade
-          type: string
-        ProcessingEmail:
-          description: Processing Email
-          type: string
-        FaxNumber:
-          description: Fax Number
-          type: string
-        SuiteFloor:
-          description: Suite Floor
-          type: string
-        MailInfo:
-          description: Mail Info
-          type: string
-        ImageFile:
-          description: Image File
-          type: string
-        ReturnMail:
-          description: Return Mail
-          type: string
-        MailFrequency:
-          format: int32
-          description: Mail Frequency
-          type: integer
-        FormId:
-          format: int32
-          description: Form Id
-          type: integer
-        Pager:
-          description: Pager
-          type: string
-        NightRequest:
-          format: int32
-          description: NightRequest
-          type: integer
-        ShortFormatEmail:
-          description: Short Format Email
-          type: string
-        LastTrainingDate:
-          format: date-time
-          description: Last Training Date
-          type: string
-        LastTrainingDateStr:
-          description: Last Training Date as a string
-          type: string
-        IsInternal:
-          description: Is Internal
-          default: false
-          type: boolean
-        IsOnOffShoreFeatureEnabled:
-          description: Is OnOffShoreFeature Enabled
-          default: false
-          type: boolean
-        Id:
-          format: int32
-          description: Id
-          type: integer
-        Name:
-          description: Name
-          type: string
-        DoNotDispatch:
-          description: DoNotDispatch enabled?
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Proposals.ProposalQuestionOption:
-      description: Object containing the possible answers.
-      type: object
-      properties:
-        IsDefault:
-          description: 'Defines which answer is pre-selected by default. Possible values: `true` and `false`.'
-          default: false
-          type: boolean
-        AnswerTextValue:
-          description: No longer in use.
-          type: string
-        IsChosen:
-          description: Shows which answer option was chosen upon creating the proposal.
-          default: false
-          type: boolean
-        Name:
-          description: Answer option.
-          type: string
-        Description:
-          description: No longer in use.
-          type: string
-        IsActive:
-          description: Shows whether the answer option is active.
-          default: false
-          type: boolean
-        SortOrder:
-          format: int32
-          description: Order of appearance.
-          type: integer
-    ServiceChannel.Services.Messaging.Assets.WarrantyExpiration:
-      description: Object containing warranty expiration details.
-      type: object
-      properties:
-        Type:
-          description: 'Warranty expiration calculation type. **Possible values**: 0 - the expiration date is calculated starting from the asset purchase data; 1 - the expiration date is calculated starting from the asset installation date.'
-          enum:
-          - FromPurchaseDate
-          - FromInstallDate
-          type: string
-        Period:
-          format: int32
-          description: Warranty period in months.
-          type: integer
-    ServiceChannel.Api.Model.Proposals.MlpRecommendation:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        ProposalId:
-          format: int32
-          type: integer
-        UserId:
-          format: int32
-          type: integer
-        Status:
-          type: string
-        WoType:
-          enum:
-          - Origin
-          - New
-          - Existing
-          type: string
-        OriginalTrackingNumber:
-          format: int32
-          type: integer
-        SelectedTrackingNumber:
-          format: int32
-          type: integer
-        GeneratedTrackingNumber:
-          format: int32
-          type: integer
-        PoNumber:
-          type: string
-        Category:
-          type: string
-        CategoryId:
-          format: int32
-          type: integer
-        ApprovalCode:
-          type: string
-        Priority:
-          type: string
-        PriorityId:
-          format: int32
-          type: integer
-        RejectCodeId:
-          format: int32
-          type: integer
-        ApprovalReason:
-          type: string
-        EmailsToNotify:
-          type: string
-        Applied:
-          default: false
-          type: boolean
-        AttachmentsToWO:
-          default: false
-          type: boolean
-        EmailMyself:
-          default: false
-          type: boolean
-        MyEmail:
-          type: string
-        NotSavedRecommendation:
-          default: false
-          type: boolean
-        WorkOrderLabel:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Label'
-        WorkOrderLabels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.Label'
-        Comment:
-          type: string
-    ServiceChannel.Api.Model.Proposals.MlpLevelRule:
-      type: object
-      properties:
-        LevelId:
-          format: int32
-          type: integer
-        Actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.MlpRuleAction'
-        LevelName:
-          type: string
-        ForwardTo:
-          format: int32
-          type: integer
-          readOnly: true
-        Override:
-          default: false
-          type: boolean
-        SkipOverLimit:
-          default: false
-          type: boolean
-        ActionNotification:
-          default: false
-          type: boolean
-        Action:
-          type: string
-        StatusTo:
-          type: string
-        AutoEscalate:
-          format: int32
-          type: integer
-        Limit:
-          format: double
-          type: number
-        RuleOrder:
-          format: int32
-          type: integer
-        ForwardToName:
-          type: string
-    ServiceChannel.Services.Messaging.Users.User:
-      description: User details object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique user identifier.
-          type: integer
-        SubscriberId:
-          format: int32
-          description: Unique subscriber ID.
-          type: integer
-        UserName:
-          description: Username of the user.<br /> • For subscriber users, the username appears as **User Id** on the "General Info" tab of the user profile page.<br /> • For provider users, the username is listed as **UserID** under "Access" on the "General" tab of the user profile page.
-          pattern: ^$|(^\S+).(\S).(\S)$
-          type: string
-        FullName:
-          description: Full name of the user.<br /> • For subscriber users, the full name appears as **User Name** on the "General Info" tab of the user profile page.<br /> • For provider users, you can see their first and last name under "Basic" on the "General" tab of the user profile page.
-          type: string
-        Email:
-          description: User’s email address.
-          type: string
-        PsmEmail:
-          description: Email address through which a user can reset their password.
-          type: string
-        Disabled:
-          description: Defines if a user is deactivated.
-          default: false
-          type: boolean
-        IsLocked:
-          description: Defines if a user is locked.
-          default: false
-          type: boolean
-        Roles:
-          description: Secondary roles assigned to a subscriber user that determine their permissions and level of access to various Service Automation modules.
-          type: array
-          items:
-            type: string
-        Permissions:
-          description: Permissions assigned to a subscriber user that determine whether they have full or read-only access to various Service Automation modules.
-          type: array
-          items:
-            type: string
-        UserType:
-          description: Subscriber user type defining their level of access to ServiceChannel:<br /> • `Corporate` — a user can work in Service Automation.<br /> • `Dashboard` — a user can only access the dashboard assigned to them.<br />`0` is returned for provider users.
-          enum:
-          - Corporate
-          - Dashboard
-          - ServiceChannel
-          type: string
-        Dashboard:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.DashboardInfo'
-          description: Dashboard a subscriber user has access to.
-        Access:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.AccessOptions'
-          description: List of locations, districts, regions, and trades a subscriber user has access to.
-        Limits:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.LimitOptions'
-          description: NTE, proposal, and invoice limits set for a subscriber user.
-        FeedRole:
-          type: string
-        MliUserInfo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MliUserInfo'
-          description: ''
-        MlpUserInfo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.MlpUserInfo'
-    ServiceChannel.Services.Messaging.RefrigerantTracking.AssetRefrigerant:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        AssetId:
-          format: int32
-          type: integer
-        RefrigerantUsageType:
-          format: int32
-          type: integer
-        RackId:
-          type: string
-        RackEntityId:
-          format: int32
-          type: integer
-        CarbID:
-          type: string
-        IsCarbReporting:
-          default: false
-          type: boolean
-        SystemLocation:
-          format: byte
-          type: string
-        OperationalStatus:
-          format: byte
-          type: string
-        RefrigerantPartNumber:
-          type: string
-        PartNumberId:
-          format: int32
-          type: integer
-        RackTypeId:
-          format: int32
-          type: integer
-        CurrentCharge:
-          format: double
-          type: number
-        CurrentChargeMetrics:
-          format: double
-          type: number
-        CurrentChargeOunces:
-          format: double
-          type: number
-        ChargeDescriptionId:
-          format: int32
-          type: integer
-        ChargeProviderName:
-          type: string
-        EffectiveChargeDate:
-          format: date-time
-          type: string
-        RefrigerantChargeOptionId:
-          format: int32
-          type: integer
-        RackTypeName:
-          type: string
-        UserId:
-          format: int32
-          type: integer
-        TagId:
-          type: string
-        AssetTypeId:
-          format: int32
-          type: integer
-        RefrigerantPurposeId:
-          format: int32
-          type: integer
-        RefrigerantPurposeName:
-          type: string
-        ParentId:
-          format: int32
-          type: integer
-        CreateOperationalStatusHistory:
-          default: false
-          type: boolean
-        OperationStatusDate:
-          format: date-time
-          type: string
-        HasLeakDetector:
-          default: false
-          type: boolean
-        AssetLeakDetectorId:
-          format: int32
-          type: integer
-        InitialCharge:
-          default: false
-          type: boolean
-        RackType:
-          format: byte
-          type: string
-        NeedsRetrofitRetirement:
-          default: false
-          type: boolean
-        RequiresAutomaticLeakDetector:
-          default: false
-          type: boolean
-        ConnectedRackId:
-          format: int32
-          type: integer
-        PreviousConnectedRackId:
-          format: int32
-          type: integer
-        UpdatedDate:
-          format: date-time
-          type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeChild:
-      type: object
-      properties:
-        Amount:
-          format: double
-          type: number
-        Id:
-          format: int32
-          type: integer
-        InvoiceId:
-          format: int32
-          type: integer
-        InvoiceChargeId:
-          format: int32
-          type: integer
-        ApprovalCodeType:
-          enum:
-          - Labor
-          - Travel
-          - Material
-          - Freight
-          - Other
-          - Tax
-          - Tax2
-          - LineItem
-          - FreightGenerated
-          type: string
-        ApprovalCode:
-          type: string
-        AdditionalApprovalCode:
-          type: string
-        ParentId:
-          format: int32
-          type: integer
-        InternalId:
-          format: int32
-          type: integer
-        InternalParentId:
-          format: int32
-          type: integer
-        IsDefault:
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Users.AccessOptions:
-      description: Object listing locations, districts, regions, and trades a subscriber user has access to. Learn more about [granting access based on locations, districts, and regions](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/585107276/Location+District+Region+Access+Tab) in ServiceChannel University.
-      type: object
-      properties:
-        Locations:
-          description: Locations a user has access to.
-          type: array
-          items:
-            type: string
-        Districts:
-          description: Districts a user has access to.
-          type: array
-          items:
-            type: string
-        Regions:
-          description: Regions a user has access to.
-          type: array
-          items:
-            type: string
-        Trades:
-          description: Trades a user is permitted to work with.
-          type: array
-          items:
-            type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceMaterial:
-      description: Information on the materials used. Add a separate object for each material.
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        InvoiceId:
-          format: int32
-          description: Invoice identifier.
-          type: integer
-        Description:
-          description: Name or description of the material. Length limit is 100 symbols.
-          type: string
-        PartNum:
-          description: Part, serial, or manufacturer number of the material. Length limit is 100 symbols.
-          type: string
-        UnitType:
-          format: byte
-          description: 'Unit of measurement. Valid values: 1 — Each; 2 — Box; 3 — Feet; 4 — Sqft; 5 — Lbs; 6 — Gal; 7 — Oz. Default value: 1.'
-          type: string
-        UnitPrice:
-          format: double
-          description: Price per unit.
-          type: number
-        PartName:
-          description: Part name.
-          type: string
-        MarkUpPercent:
-          format: double
-          description: Markup percent.
-          type: number
-        AgreedMarkUpPercent:
-          format: double
-          description: Agreed markup percent.
-          type: number
-        MarkUpDiscrepancyReason:
-          description: Mark up discrepancy reason.
-          type: string
-        AgreedPartPrice:
-          format: double
-          description: Agreed part price.
-          type: number
-        Quantity:
-          format: double
-          description: Quantity of the material.
-          type: number
-        Amount:
-          format: double
-          description: The amount of the material cost. The sum of all `Amount` parameters in the `Materials` array must equal `InvoiceAmountsDetails.MaterialAmount`.
-          type: number
-        ApprovalCodeGroup:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
-        IsMarkUpDiscrepancy:
-          description: Markup discrepancy.
-          default: false
-          type: boolean
-        IsPartPriceDiscrepancy:
-          description: Part price discrepancy.
-          default: false
-          type: boolean
-        PriceDiscrepancyReason:
-          description: Price discrepancy reason.
-          type: string
-        isNontaxableVATEU:
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Invoices.InvoiceTravel:
-      description: Information on the trip.
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        InvoiceId:
-          format: int32
-          description: Invoice identifier.
-          type: integer
-        Description:
-          description: Description of the trip.
-          type: string
-        UnitType:
-          format: byte
-          description: Unit of measurement.
-          type: string
-        UnitPrice:
-          format: double
-          description: Price per unit.
-          type: number
-        Quantity:
-          format: double
-          description: Quantity.
-          type: number
-        Amount:
-          format: double
-          description: The amount of the trip cost. The sum of all `Amount` parameters in the `Travels` array must equal `InvoiceAmountsDetails.TravelAmount`.
-          type: number
-        IsOffShore:
-          description: Type of the shore (`1` - Onshore, `2` - Offshore).
-          default: false
-          type: boolean
-        ApprovalCodeGroup:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
-        isNontaxableVATEU:
-          default: false
-          type: boolean
-    ServiceChannel.Api.Model.Proposals.ProposalProjectSimpleModel:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
-          type: string
-    ServiceChannel.Services.Messaging.Assets.WarrantyProvider:
-      description: Object containing warranty provider details.
-      type: object
-      properties:
-        Type:
-          description: 'Defines the provider type responsible for warranty services. **Possible values**: `0` - Fixed provider, `1`- Primary rank provider, `2` - Fixed rank provider.'
-          enum:
-          - Fixed
-          - PrimaryRanked
-          - FixedRanked
-          type: string
-        Value:
-          format: int32
-          description: Provider type value. Displays provider ID for the fixed provider type; provider rank number — from 1 to 100 — for the fixed rank type; 1 for a primary rank provider.
-          type: integer
-        ProviderName:
-          description: Name of the provider who is in charge of warranty services.
-          type: string
-    ServiceChannel.Services.Messaging.Users.LimitOptions:
-      description: Object for NTE, proposal, and invoice limits set for a subscriber user.
-      type: object
-      properties:
-        NteLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
-        ProposalLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
-        InvoiceLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
-    ServiceChannel.Services.Messaging.Proposals.ProposalInfo:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Number:
-          type: string
-        Description:
-          type: string
-        Description2:
-          type: string
-        Comments:
-          type: string
-        Location:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Location.Location'
-        Provider:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.Provider'
-        Subscriber:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Subscribers.Subscriber'
-        Trade:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Trade.Trade'
-        WorkOrder:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Workorders.WorkOrder'
-        Currency:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
-        RFP:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Rfp.Rfp'
-        CreatedDate:
-          format: date-time
-          type: string
-        CreatedDate_dto:
-          format: date-time
-          type: string
-        CreatedBy:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.UserInfo'
-        SubmittedTo:
-          type: string
-        Status:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalStatus'
-        Attachments:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Attachments.Attachment'
-        AssignedTo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.UserInfo'
-        ScheduledDate:
-          format: date-time
-          type: string
-        ScheduledDateDto:
-          format: date-time
-          type: string
-        AmountCategories:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalCategoryInfo'
-        UpdatedDate:
-          format: date-time
-          description: Updated Date
-          type: string
-        UpdatedDateDto:
-          format: date-time
-          type: string
-        Recommendation:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.ProposalRecommendation'
-        Amount:
-          format: double
-          type: number
-        AssignedFromLevel:
-          type: string
-        AssignedToLevel:
-          type: string
-        LevelsEscalateTo:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Proposals.EscalateTo'
-        Actions:
-          type: array
-          items:
-            type: string
-        MlpRecommendations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.MlpRecommendation'
-        MlpRecommendation:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.MlpRecommendation'
-        CurrentProposalMlpRuleSetId:
-          format: int32
-          type: integer
-        CurrentProposalMlpRuleSetName:
-          type: string
-        CurrentProposalMlpLevelId:
-          format: int32
-          type: integer
-        CurrentProposalMlpLevelName:
-          type: string
-        PoNumber:
-          type: string
-        IsMlpLimitOverrun:
-          default: false
-          type: boolean
-        NextLevelEmpty:
-          default: false
-          type: boolean
-        Project:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.ProposalProjectSimpleModel'
-    ServiceChannel.Services.Messaging.Proposals.ProposalCategoryInfo:
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of the proposal category.
-          type: integer
-        Name:
-          description: Type of proposal categories, for example, *Materials*, *Installation Labor*, *Non-Installation Expenses*, etc.
-          type: string
-        TotalCost:
-          format: double
-          description: Subtotal for the specific cost type, for example, materials.
-          type: number
-    ServiceChannel.Services.Messaging.Invoices.Invoice:
-      type: object
-      properties:
-        Provider:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.Provider'
-          description: Gets or sets Provider.
-        Subscriber:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Subscribers.Subscriber'
-          description: Gets or sets Subscriber.
-        Location:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Location.Location'
-          description: Gets or sets Location.
-        Id:
-          format: int32
-          type: integer
-        Number:
-          description: Gets or sets invoice number.
-          type: string
-        BatchNumber:
-          description: Gets or sets Batch number.
-          type: string
-        InvoiceTax:
-          format: double
-          type: number
-        PostedTaxRate:
-          format: float
-          type: number
-        PostedTax2Rate:
-          format: float
-          type: number
-        VendorPayeeId:
-          format: int32
-          type: integer
-        InvoiceTotal:
-          format: double
-          description: Gets or sets total with tax amounts.
-          type: number
-        InvoiceBalance:
-          format: double
-          type: number
-        Currency:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
-        ApprovedDate:
-          format: date-time
-          type: string
-        ApprovalCode:
-          type: string
-        EditableAdditionalApprovalCode:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.ApprovalCodes.EditableAdditionalApprovalCode'
-        PostedDate:
-          format: date-time
-          type: string
-        PostedBy:
-          type: string
-        Subtotal:
-          format: double
-          type: number
-        Status:
-          type: string
-        Trade:
-          type: string
-        TradeId:
-          format: int32
-          type: integer
-        Category:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceCategoryMessaging'
-        InvoiceAmountsDetails:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceAmountsDetails'
-        InvoiceTaxesDetails:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceTaxesDetails'
-        Tax2Details:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.Tax2Details'
-        Labors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceLabor'
-        Materials:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceMaterial'
-        Travels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceTravel'
-        Others:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceOther'
-        TaxApprovalCodeGroups:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
-        Tax2ApprovalCodeGroups:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
-        FreightApprovalCodeGroups:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
-        WithMismatchedRates:
-          default: false
-          type: boolean
-        IsOutsourced:
-          default: false
-          type: boolean
-        StarredBy:
-          type: string
-        IsStarred:
-          default: false
-          type: boolean
-        IsTransferred:
-          default: false
-          type: boolean
-          readOnly: true
-        StarredDate:
-          format: date-time
-          type: string
-        Description:
-          type: string
-        InvoiceDate:
-          format: date-time
-          type: string
-        LaborTaxIncluded:
-          default: false
-          type: boolean
-        TravelTaxIncluded:
-          default: false
-          type: boolean
-        MaterialsTaxIncluded:
-          default: false
-          type: boolean
-        FreightTaxIncluded:
-          default: false
-          type: boolean
-        OtherTaxIncluded:
-          default: false
-          type: boolean
-        NonTaxableLabor:
-          format: int32
-          type: integer
-        NonTaxableTravel:
-          format: int32
-          type: integer
-        NonTaxableMaterial:
-          format: int32
-          type: integer
-        NonTaxableFreight:
-          format: int32
-          type: integer
-        NonTaxableOther:
-          format: int32
-          type: integer
-        IsExists:
-          default: false
-          type: boolean
-          readOnly: true
-        StatusChangeDate:
-          format: date-time
-          type: string
-        StatusChangeUser:
-          type: string
-        StatusChangeUserid:
-          type: string
-        IsDuplicate:
-          default: false
-          type: boolean
-        WoTrackingNumber:
-          format: int32
-          description: Gets or sets work order tracking number.
-          type: integer
-        Terms:
-          description: terms
-          type: string
-        Comments:
-          type: string
-        PaidDate:
-          format: date-time
-          type: string
-        TransferredDate:
-          format: date-time
-          type: string
-        LastActionDate:
-          format: date-time
-          type: string
-        UpdatedDate:
-          format: date-time
-          description: Updated Date
-          type: string
-        StatusHistoryShort:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.StatusHistoryShort'
-        WoAssignedTo:
-          description: Gets or sets WO Assignee
-          type: string
-        ApprovalCodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCode'
-        IsChargesApprovalCodesDefault:
-          default: false
-          type: boolean
-        Payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoicePaymentResponse'
-        StoredFeatures:
-          type: array
-          items:
-            type: string
-    ServiceChannel.Services.Messaging.Invoices.InvoiceOther:
-      description: The invoices material
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        InvoiceId:
-          format: int32
-          description: Invoice identifier.
-          type: integer
-        Description:
-          description: Get or set description.
-          type: string
-        Type:
-          description: Get or set type of charge.
-          type: string
-        Amount:
-          format: double
-          description: Get or set the amount of money that is charged.
-          type: number
-        UnitType:
-          format: byte
-          description: Get or set the unit of measure
-          type: string
-        UnitPrice:
-          format: double
-          description: Get or set the price of unit
-          type: number
-        Quantity:
-          format: double
-          description: Get or set the quantity
-          type: number
-        AgreedUnitPrice:
-          format: double
-          description: Get or set the AgreedUnitPrice
-          type: number
-        UnitPriceDiscrepancyReason:
-          description: UnitPriceDiscrepancyReason
-          type: string
-        PriceListOtherChargeId:
-          format: int32
-          description: Get or set the PriceListOtherChargeId
-          type: integer
-        IsUnitPriceDiscrepancy:
-          description: Get IsUnitPriceDiscrepancy
-          default: false
-          type: boolean
-          readOnly: true
-        ApprovalCodeGroup:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Invoices.InvoiceApprovalCodeGroup'
-        isNontaxableVATEU:
-          default: false
-          type: boolean
-    ServiceChannel.Api.Model.KeyValue_System.Int32_System.String:
-      type: object
-      properties:
-        Key:
-          format: int32
-          type: integer
-        Value:
-          type: string
-    ServiceChannel.Services.Messaging.Notes.NoteInfo:
-      type: object
-      properties:
-        Id:
-          format: int64
-          type: integer
-        DocumentId:
-          type: string
-        Number:
-          format: int32
-          type: integer
-        NoteData:
-          type: string
-        DateCreated:
-          format: date-time
-          type: string
-        DateCreated_DTO:
-          format: date-time
-          type: string
-        ActionRequired:
-          default: false
-          type: boolean
-        MailedTo:
-          type: string
-        CreatedBy:
-          type: string
-    ServiceChannel.Services.Messaging.Workorders.WorkorderStatusDescriptor:
-      type: object
-      properties:
-        Primary:
-          description: Primary work order status value, you can pass status id or its name here. To get all subscriber's statuses see [Statuses] in Statuses section
-          type: string
-        Extended:
-          description: Extended status value
-          type: string
-        CanCreateInvoice:
-          description: True if invoice creation is allowed
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Users.DashboardInfo:
-      description: Dashboard details object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique dashboard identifier.
-          type: integer
-        Name:
-          description: Dashboard name.
-          type: string
-        RedirectToDashboard:
-          description: Defines whether a subscriber user is redirected to a dashboard once they log in.
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Attachments.Attachment:
-      description: Object containing information about an attachment.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of the attachment.
-          type: integer
-        Description:
-          description: Optional text that a user added when uploading the attachment. The maximum character count is 200.
-          type: string
-        Name:
-          description: Attachment name.
-          type: string
-        TimeStamp:
-          format: date-time
-          description: Date and time when the attachment was uploaded. The format is `YYYY-MM-DDThh:mm:ss.sss±hh:mm`, where `±hh:mm` represents the time zone offset from UTC.
-          type: string
-        Uri:
-          description: Link address to the attachment in the ServiceChannel system.
-          type: string
-        NoteId:
-          format: int64
-          description: Unique numeric identifier of the note to which a user added the attachment.
-          type: integer
-        Visibility:
-          format: int32
-          description: "Visibility status of the attachment. Defines which parties can view the attachment. The *PrivateProviderNotesAndAttachments* feature should be enabled. For subscribers who are using Universal Connector, the *PrivateClientNotesAndAttachments* feature should be enabled.\n            <br />Possible values:\n             • `0`: No restrictions on visibility. Visible to everyone.\n             • `1`: Not visible to the client. The subscriber deselected the “Visible to Client” checkmark when uploading an attachment or adding a note with an attachment. \n             • `2`: Not visible to the provider. The subscriber deselected the “Visible to Provider” checkmark when uploading an attachment or adding a note with an attachment. \n             • `3`: Visible to the subscriber only. The subscriber deselected the “Visible to Client” and “Visible to Provider” checkmarks when uploading an attachment or adding a note with an attachment."
-          type: integer
-        IsInvoiceDigitalCopy:
-          description: "Defines if the attachment is a digital copy of the provider’s invoice. According to subscriber configurations, some providers should attach digital copies of invoices.\n            Possible values: \n             • `true`: The attachment is an invoice digital copy. \n             • `false`: The attachment is not an invoice digital copy. \n            <br />***Note:*** Subscribers can set the requirement of a digital invoice copy from providers when the *InvoiceRequireDigitalCopy* feature is turned on."
-          default: false
-          type: boolean
-        UploadBy:
-          description: User who uploaded the attachment.
           type: string
   securitySchemes:
     oauth2:

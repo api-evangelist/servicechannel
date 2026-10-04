@@ -654,91 +654,94 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ServiceChannel.Api.Model.Workorders.OverrideProperties.ServiceProvider:
+    ServiceChannel.Services.Messaging.Assets.Warranty:
+      description: Object containing warranty parameters.
       type: object
       properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
+        ExpirationDate:
+          format: date-time
+          description: Warranty expiration date based on the warranty expiration settings.
           type: string
-        Rank:
+        ProviderId:
           format: int32
+          description: ID of a provider who is in charge of warranty services.
           type: integer
-        Default:
-          default: false
-          type: boolean
-        DoNotDispatch:
-          default: false
-          type: boolean
-        Pilot:
-          default: false
-          type: boolean
-        IsInternal:
-          default: false
-          type: boolean
-    ServiceChannel.Api.Model.Workorders.OverrideProperties.Trade:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Name:
+        NTE:
+          format: double
+          description: Maximum amount of money to be spent on warranty services in USD. Value -1  means that the amount is not applicable.
+          type: number
+        Priority:
+          description: Defines how quickly warranty services should be provided, for example, *Emergency-4 Hours*, *Normal-48 Hours*, *7 Days*.
           type: string
-    ServiceChannel.Services.RequestHandlers.WorkOrders.GetWorkOrderPropertiesWithOverridesResponse:
+        PriorityId:
+          format: int32
+          type: integer
+        Category:
+          description: Warranty category, for example, *ADVISE ONLY*, *REPAIR*, *DISASTER*.
+          type: string
+        CategoryId:
+          format: int32
+          type: integer
+        Provider:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.WarrantyProvider'
+          description: Rules to choose Warranty Provider
+        Expiration:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.WarrantyExpiration'
+          description: Rules for Warranty Expiration
+    ServiceChannel.Services.Messaging.Workorders.GetServiceRequestInfoResponse:
       type: object
       properties:
+        IssueChoice:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueChoiceResponse'
         Providers:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.Workorders.OverrideProperties.ServiceProvider'
-          readOnly: true
-        Trade:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Workorders.OverrideProperties.Trade'
-          readOnly: true
-        Category:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Workorders.OverrideProperties.Category'
-          readOnly: true
-        Priority:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.ServiceRequestProvider'
+        ProvidersNotFoundMessage:
           type: string
-          readOnly: true
-        Nte:
-          format: double
-          type: number
-          readOnly: true
-        WoLabels:
+        CallerName:
+          type: string
+        ScheduledDateOffsetFromCallDate:
+          format: int64
+          type: integer
+        AssetsInfo:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetsInfoResponse'
+        SetupRequestConfirm:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.DashboardSettings.SetupRequestConfirmResponse'
+        SetupRequest:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.DashboardSettings.SetupRequestResponse'
+        Categories:
           type: array
           items:
-            type: string
-          readOnly: true
-        AssetAssociatedWithTrade:
-          default: false
-          type: boolean
-          readOnly: true
-        LeaseNote:
-          type: string
-        ProviderFoundType:
-          enum:
-          - Found
-          - NotFound
-          - DoNotDispatch
-          - TradeExcluded
-          type: string
-        EtcMinutes:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Category.CategoryResponse'
+        Priorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Priorities.PriorityResponse'
+        SetupGeneral:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.DashboardSettings.SetupGeneralResponse'
+        UserSettings:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.DashboardSettings.UserSettingsResponse'
+        Currency:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
+        AreaId:
           format: int32
           type: integer
-        Anomaly:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Workorders.OverrideProperties.Anomaly'
-          readOnly: true
-        IsAnomalyProviderOverwritten:
-          default: false
-          type: boolean
-        EtcMinutesFromIssueChoice:
+        TradeId:
           format: int32
           type: integer
-        Asset:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.Assets.Asset'
-          readOnly: true
+        CategoryId:
+          format: int32
+          type: integer
+        SetupId:
+          format: int32
+          type: integer
+        EasierAssetAttachmentEnabled:
+          default: false
+          type: boolean
+        TradeExcluded:
+          default: false
+          type: boolean
     ServiceChannel.Services.Messaging.DashboardSettings.SetupRequestConfirmResponse:
       type: object
       properties:
@@ -814,6 +817,477 @@ components:
         ChangeableProjectedCompletionDate:
           default: false
           type: boolean
+    ServiceChannel.Api.Model.Dashboard.Assets.Asset:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        TagID:
+          type: string
+        Manufacturer:
+          type: string
+        ModelNo:
+          type: string
+        SerialNo:
+          type: string
+        Location:
+          type: string
+        WarrantyExpirationDate:
+          type: string
+        WarrantyCategory:
+          type: string
+        Nte:
+          format: double
+          type: number
+        WarrantyPriority:
+          type: string
+        WarrantyNTEHidden:
+          default: false
+          type: boolean
+        WarrantyNotExpired:
+          default: false
+          type: boolean
+        Type:
+          type: string
+        AssetTag:
+          type: string
+        Description:
+          type: string
+        StoreId:
+          type: string
+    ServiceChannel.Services.Messaging.Assets.AssetsInfoResponse:
+      type: object
+      properties:
+        Assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetResponse'
+        AssetRequired:
+          default: false
+          type: boolean
+        AssetEntry:
+          type: string
+    ServiceChannel.Services.Messaging.DashboardSettings.UserSettingsResponse:
+      type: object
+      properties:
+        MaximumNteAmount:
+          format: double
+          type: number
+    ServiceChannel.Api.Model.Workorders.OverrideProperties.ServiceProvider:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        Rank:
+          format: int32
+          type: integer
+        Default:
+          default: false
+          type: boolean
+        DoNotDispatch:
+          default: false
+          type: boolean
+        Pilot:
+          default: false
+          type: boolean
+        IsInternal:
+          default: false
+          type: boolean
+    ServiceChannel.Data.Provider:
+      type: object
+      properties:
+        ID:
+          format: int32
+          type: integer
+        ShortName:
+          type: string
+        FullName:
+          type: string
+        Address1:
+          type: string
+        Address2:
+          type: string
+        City:
+          type: string
+        State:
+          type: string
+        Zip:
+          type: string
+        Country:
+          type: string
+        WebSite:
+          type: string
+        Email:
+          type: string
+        PhoneNumber:
+          type: string
+        ProcEmail:
+          type: string
+        FaxNumber:
+          type: string
+        Pager:
+          type: string
+        Rank:
+          format: int32
+          type: integer
+        SpecificCategory:
+          type: string
+        SpecificPriority:
+          type: string
+        SpecificNte:
+          format: double
+          type: number
+        GeneralEmail:
+          type: string
+        DoNotDispatch:
+          default: false
+          type: boolean
+        IsInternal:
+          default: false
+          type: boolean
+    ServiceChannel.Api.Model.Workorders.OverrideProperties.Anomaly:
+      type: object
+      properties:
+        TradeAnomalous:
+          default: false
+          type: boolean
+        TradeScore:
+          format: double
+          type: number
+        NTEAnomalous:
+          default: false
+          type: boolean
+        NTEScore:
+          format: double
+          type: number
+        FirstTimeFixAnomalous:
+          default: false
+          type: boolean
+        FirstTimeFixScore:
+          format: double
+          type: number
+        Top1PrimaryTrade:
+          type: string
+        InvoiceTotalWithoutProposal25:
+          format: double
+          type: number
+        InvoiceTotalWithoutProposalMedian:
+          format: double
+          type: number
+        InvoiceTotalWithProposal75:
+          format: double
+          type: number
+        IsAnomaly:
+          default: false
+          type: boolean
+          readOnly: true
+    ServiceChannel.Services.Messaging.Category.CategoryResponse:
+      description: Object containing the details of the available categories.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Category ID.
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Unique numeric subscriber ID.
+          type: integer
+        Name:
+          description: Category name.
+          type: string
+        HasDependency:
+          description: Parameter is not populated. The only value is "false".
+          default: false
+          type: boolean
+        PrimaryCategoryID:
+          format: int32
+          description: Primary category ID.
+          type: integer
+        PrimaryCategoryName:
+          description: Primary category name.
+          type: string
+    ServiceChannel.Services.Messaging.Providers.ServiceRequestProvider:
+      type: object
+      properties:
+        Rank:
+          format: int32
+          description: Rank
+          type: integer
+        Category:
+          description: Category
+          type: string
+        Priority:
+          description: Priority
+          type: string
+        Nte:
+          format: double
+          description: Nte
+          type: number
+        GeneralEmail:
+          description: General Email
+          type: string
+        IsDefault:
+          description: Is Default
+          default: false
+          type: boolean
+        ServiceRequestEmails:
+          description: ServiceRequestEmails
+          type: string
+        Phone:
+          type: string
+        FullName:
+          description: Full Name
+          type: string
+        Address1:
+          description: Address1
+          type: string
+        Address2:
+          description: Adress2
+          type: string
+        City:
+          description: City
+          type: string
+        State:
+          description: State
+          type: string
+        Zip:
+          description: Zip
+          type: string
+        Country:
+          description: Country
+          type: string
+        MainContact:
+          description: Main Contact
+          type: string
+        DateCreated:
+          format: date-time
+          description: Date Created
+          type: string
+        LastUserDate:
+          description: Last User Date
+          type: string
+        SuperUser:
+          description: SuperUser
+          type: string
+        WebSite:
+          description: WebSite
+          type: string
+        Email:
+          description: Email
+          type: string
+        TaxId:
+          description: Tax Id
+          type: string
+        Trade:
+          description: Trade
+          type: string
+        ProcessingEmail:
+          description: Processing Email
+          type: string
+        FaxNumber:
+          description: Fax Number
+          type: string
+        SuiteFloor:
+          description: Suite Floor
+          type: string
+        MailInfo:
+          description: Mail Info
+          type: string
+        ImageFile:
+          description: Image File
+          type: string
+        ReturnMail:
+          description: Return Mail
+          type: string
+        MailFrequency:
+          format: int32
+          description: Mail Frequency
+          type: integer
+        FormId:
+          format: int32
+          description: Form Id
+          type: integer
+        Pager:
+          description: Pager
+          type: string
+        NightRequest:
+          format: int32
+          description: NightRequest
+          type: integer
+        ShortFormatEmail:
+          description: Short Format Email
+          type: string
+        LastTrainingDate:
+          format: date-time
+          description: Last Training Date
+          type: string
+        LastTrainingDateStr:
+          description: Last Training Date as a string
+          type: string
+        IsInternal:
+          description: Is Internal
+          default: false
+          type: boolean
+        IsOnOffShoreFeatureEnabled:
+          description: Is OnOffShoreFeature Enabled
+          default: false
+          type: boolean
+        Id:
+          format: int32
+          description: Id
+          type: integer
+        Name:
+          description: Name
+          type: string
+        DoNotDispatch:
+          description: DoNotDispatch enabled?
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.IssueLists.GetIssueChoiceResponse:
+      type: object
+      properties:
+        ProblemType:
+          type: string
+        EquipmentType:
+          type: string
+        ProblemCode:
+          type: string
+        Trade:
+          type: string
+        TradeId:
+          format: int32
+          type: integer
+        IsTradeDeleted:
+          default: false
+          type: boolean
+        Priority:
+          type: string
+        AllowPriorityUpgrade:
+          default: false
+          type: boolean
+        RequireAttachment:
+          default: false
+          type: boolean
+        EquipmentId:
+          type: string
+        EquipmentEntry:
+          type: string
+        Category:
+          type: string
+        Comments:
+          type: string
+        TroubleshootingMessage:
+          type: string
+        ProviderRank:
+          format: int32
+          type: integer
+        LabelRanks:
+          type: array
+          items:
+            format: int32
+            type: integer
+        Currency:
+          type: string
+        ApprovalCode:
+          type: string
+        LinkToMedia:
+          type: string
+        AdditionalFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.IssueFieldResponse'
+        AllAdditionalFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.IssueFieldResponse'
+        IsNewIssueList:
+          default: false
+          type: boolean
+        WoStatusId:
+          format: int32
+          type: integer
+        Note:
+          type: string
+        DashOverrideApplied:
+          default: false
+          type: boolean
+        Nte:
+          type: string
+        WoLabel:
+          type: string
+        AttachmentName:
+          type: string
+        PinWoNote:
+          default: false
+          type: boolean
+        EtcMinutes:
+          format: int32
+          type: integer
+        ProjComplDate:
+          format: date-time
+          type: string
+        CategoryId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.RequestHandlers.WorkOrders.GetWorkOrderPropertiesWithOverridesResponse:
+      type: object
+      properties:
+        Providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Workorders.OverrideProperties.ServiceProvider'
+          readOnly: true
+        Trade:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Workorders.OverrideProperties.Trade'
+          readOnly: true
+        Category:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Workorders.OverrideProperties.Category'
+          readOnly: true
+        Priority:
+          type: string
+          readOnly: true
+        Nte:
+          format: double
+          type: number
+          readOnly: true
+        WoLabels:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        AssetAssociatedWithTrade:
+          default: false
+          type: boolean
+          readOnly: true
+        LeaseNote:
+          type: string
+        ProviderFoundType:
+          enum:
+          - Found
+          - NotFound
+          - DoNotDispatch
+          - TradeExcluded
+          type: string
+        EtcMinutes:
+          format: int32
+          type: integer
+        Anomaly:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Workorders.OverrideProperties.Anomaly'
+          readOnly: true
+        IsAnomalyProviderOverwritten:
+          default: false
+          type: boolean
+        EtcMinutesFromIssueChoice:
+          format: int32
+          type: integer
+        Asset:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Dashboard.Assets.Asset'
+          readOnly: true
     ServiceChannel.Api.Model.Dashboard.WorkOrderViewModel:
       type: object
       properties:
@@ -977,208 +1451,49 @@ components:
           type: string
         CallDateISO:
           type: string
-    ServiceChannel.Services.Messaging.Providers.ServiceRequestProvider:
+    ServiceChannel.Services.Messaging.IssueLists.DecisionModelResponse:
+      description: Decision Model
       type: object
       properties:
-        Rank:
-          format: int32
-          description: Rank
-          type: integer
-        Category:
-          description: Category
+        OptionValue:
+          description: OptionValue
           type: string
-        Priority:
-          description: Priority
+        NextQuestion:
+          description: NextQuestion
           type: string
-        Nte:
-          format: double
-          description: Nte
-          type: number
-        GeneralEmail:
-          description: General Email
+        OriginalNextQuestion:
+          description: Original NextQuestion
           type: string
-        IsDefault:
-          description: Is Default
-          default: false
-          type: boolean
-        ServiceRequestEmails:
-          description: ServiceRequestEmails
+          readOnly: true
+        TradeOverride:
+          description: TradeOverride
           type: string
-        Phone:
+        CategoryOverride:
+          description: CategoryOverride
           type: string
-        FullName:
-          description: Full Name
+        PriorityOverride:
+          description: PriorityOverride
           type: string
-        Address1:
-          description: Address1
+        NTEOverride:
+          description: NTEOverride
           type: string
-        Address2:
-          description: Adress2
+        ProviderRankOverride:
+          description: ProviderRankOverride
           type: string
-        City:
-          description: City
+        WoLabelOverride:
+          description: WoLabelOverride
           type: string
-        State:
-          description: State
+        EtcOverride:
+          description: EtcOverride
           type: string
-        Zip:
-          description: Zip
-          type: string
-        Country:
-          description: Country
-          type: string
-        MainContact:
-          description: Main Contact
-          type: string
-        DateCreated:
-          format: date-time
-          description: Date Created
-          type: string
-        LastUserDate:
-          description: Last User Date
-          type: string
-        SuperUser:
-          description: SuperUser
-          type: string
-        WebSite:
-          description: WebSite
-          type: string
-        Email:
-          description: Email
-          type: string
-        TaxId:
-          description: Tax Id
-          type: string
-        Trade:
-          description: Trade
-          type: string
-        ProcessingEmail:
-          description: Processing Email
-          type: string
-        FaxNumber:
-          description: Fax Number
-          type: string
-        SuiteFloor:
-          description: Suite Floor
-          type: string
-        MailInfo:
-          description: Mail Info
-          type: string
-        ImageFile:
-          description: Image File
-          type: string
-        ReturnMail:
-          description: Return Mail
-          type: string
-        MailFrequency:
-          format: int32
-          description: Mail Frequency
-          type: integer
-        FormId:
-          format: int32
-          description: Form Id
-          type: integer
-        Pager:
-          description: Pager
-          type: string
-        NightRequest:
-          format: int32
-          description: NightRequest
-          type: integer
-        ShortFormatEmail:
-          description: Short Format Email
-          type: string
-        LastTrainingDate:
-          format: date-time
-          description: Last Training Date
-          type: string
-        LastTrainingDateStr:
-          description: Last Training Date as a string
-          type: string
-        IsInternal:
-          description: Is Internal
-          default: false
-          type: boolean
-        IsOnOffShoreFeatureEnabled:
-          description: Is OnOffShoreFeature Enabled
-          default: false
-          type: boolean
-        Id:
-          format: int32
-          description: Id
-          type: integer
-        Name:
-          description: Name
-          type: string
-        DoNotDispatch:
-          description: DoNotDispatch enabled?
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Assets.WarrantyProvider:
-      description: Object containing warranty provider details.
-      type: object
-      properties:
-        Type:
-          description: 'Defines the provider type responsible for warranty services. **Possible values**: `0` - Fixed provider, `1`- Primary rank provider, `2` - Fixed rank provider.'
-          enum:
-          - Fixed
-          - PrimaryRanked
-          - FixedRanked
-          type: string
-        Value:
-          format: int32
-          description: Provider type value. Displays provider ID for the fixed provider type; provider rank number — from 1 to 100 — for the fixed rank type; 1 for a primary rank provider.
-          type: integer
-        ProviderName:
-          description: Name of the provider who is in charge of warranty services.
-          type: string
-    ServiceChannel.Services.Messaging.Priorities.PriorityResponse:
+    ServiceChannel.Api.Model.Workorders.OverrideProperties.Trade:
       type: object
       properties:
         Id:
           format: int32
-          description: UID of priority. Can be null
           type: integer
         Name:
-          description: Priority name
           type: string
-        SubscriberId:
-          format: int32
-          description: UID of subscriber. Can be null
-          type: integer
-        Eta:
-          description: ETA
-          type: string
-        SkipNights:
-          description: Skip nights while calculating scheduled date
-          default: false
-          type: boolean
-        SkipWeekends:
-          description: Skip weekends while calculating scheduled date
-          default: false
-          type: boolean
-        LocationId:
-          format: int32
-          description: If priority is associated with location - assiciated location
-          type: integer
-        Trade:
-          description: If priority is associated with trade - assiciated trade
-          type: string
-        ScheduledDate:
-          format: date-time
-          description: Calculated WO Scheduled Date
-          type: string
-        ScheduledDate_DTO:
-          format: date-time
-          description: Calculated WO Scheduled Date with time zone offset
-          type: string
-        ProjectComplDate:
-          format: date-time
-          type: string
-        IsSelectable:
-          description: IsSelectable
-          default: false
-          type: boolean
     ServiceChannel.Services.Messaging.Assets.AssetResponse:
       description: Object details of an asset.
       type: object
@@ -1436,96 +1751,59 @@ components:
           format: date-time
           description: Date and time of the asset deactivation.
           type: string
-    ServiceChannel.Services.Messaging.Workorders.GetServiceRequestInfoResponse:
+    ServiceChannel.Services.Messaging.Equipments.EquipmentAttributeDescription:
       type: object
       properties:
-        IssueChoice:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.GetIssueChoiceResponse'
-        Providers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.ServiceRequestProvider'
-        ProvidersNotFoundMessage:
+        EquipmentAttributeId:
+          format: int32
+          type: integer
+        EquipmentTypeAttributeId:
+          format: int32
+          type: integer
+        ValueType:
+          format: int32
+          type: integer
+        EquipmentId:
+          format: int32
+          type: integer
+        Value:
+          $ref: '#/components/schemas/System.Object'
+        ValueText:
           type: string
-        CallerName:
+        SelectedOptionsText:
           type: string
-        ScheduledDateOffsetFromCallDate:
-          format: int64
-          type: integer
-        AssetsInfo:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetsInfoResponse'
-        SetupRequestConfirm:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.DashboardSettings.SetupRequestConfirmResponse'
-        SetupRequest:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.DashboardSettings.SetupRequestResponse'
-        Categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Category.CategoryResponse'
-        Priorities:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Priorities.PriorityResponse'
-        SetupGeneral:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.DashboardSettings.SetupGeneralResponse'
-        UserSettings:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.DashboardSettings.UserSettingsResponse'
-        Currency:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
-        AreaId:
-          format: int32
-          type: integer
-        TradeId:
-          format: int32
-          type: integer
-        CategoryId:
-          format: int32
-          type: integer
-        SetupId:
-          format: int32
-          type: integer
-        EasierAssetAttachmentEnabled:
+        Visible:
           default: false
           type: boolean
-        TradeExcluded:
+        Editable:
           default: false
           type: boolean
-    ServiceChannel.Api.Model.Workorders.OverrideProperties.Anomaly:
+        Required:
+          default: false
+          type: boolean
+        Name:
+          type: string
+        Custom:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Assets.WarrantyProvider:
+      description: Object containing warranty provider details.
       type: object
       properties:
-        TradeAnomalous:
-          default: false
-          type: boolean
-        TradeScore:
-          format: double
-          type: number
-        NTEAnomalous:
-          default: false
-          type: boolean
-        NTEScore:
-          format: double
-          type: number
-        FirstTimeFixAnomalous:
-          default: false
-          type: boolean
-        FirstTimeFixScore:
-          format: double
-          type: number
-        Top1PrimaryTrade:
+        Type:
+          description: 'Defines the provider type responsible for warranty services. **Possible values**: `0` - Fixed provider, `1`- Primary rank provider, `2` - Fixed rank provider.'
+          enum:
+          - Fixed
+          - PrimaryRanked
+          - FixedRanked
           type: string
-        InvoiceTotalWithoutProposal25:
-          format: double
-          type: number
-        InvoiceTotalWithoutProposalMedian:
-          format: double
-          type: number
-        InvoiceTotalWithProposal75:
-          format: double
-          type: number
-        IsAnomaly:
-          default: false
-          type: boolean
-          readOnly: true
+        Value:
+          format: int32
+          description: Provider type value. Displays provider ID for the fixed provider type; provider rank number — from 1 to 100 — for the fixed rank type; 1 for a primary rank provider.
+          type: integer
+        ProviderName:
+          description: Name of the provider who is in charge of warranty services.
+          type: string
     ServiceChannel.Services.Messaging.Providers.GetServiceRequestProvidersResponse:
       type: object
       properties:
@@ -1533,50 +1811,95 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Providers.ServiceRequestProvider'
-    ServiceChannel.Services.Messaging.Workorders.GetWorkOrderPropertiesRequest:
+    DecisionAnswer:
       type: object
       properties:
-        AreaName:
-          description: Name of the area
+        Id:
           type: string
-        ProblemType:
-          description: Problem type
+        Answer:
           type: string
-        EquipmentType:
-          description: Equipment type
+    ServiceChannel.Services.Messaging.Assets.AssetAttributesMap:
+      type: object
+      properties:
+        StandardAttributesMap:
+          format: int32
+          type: integer
+        ViewableForProvidersAttributesMap:
+          format: int32
+          type: integer
+        EditableForProvidersAttributesMap:
+          format: int32
+          type: integer
+        RequiredStandardAttributesMap:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.Assets.WarrantyExpiration:
+      description: Object containing warranty expiration details.
+      type: object
+      properties:
+        Type:
+          description: 'Warranty expiration calculation type. **Possible values**: 0 - the expiration date is calculated starting from the asset purchase data; 1 - the expiration date is calculated starting from the asset installation date.'
+          enum:
+          - FromPurchaseDate
+          - FromInstallDate
           type: string
-        ProblemCode:
-          description: Problem name
+        Period:
+          format: int32
+          description: Warranty period in months.
+          type: integer
+    ServiceChannel.Services.Messaging.DashboardSettings.SetupGeneralResponse:
+      type: object
+      properties:
+        AllowAddingAttachments:
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Priorities.PriorityResponse:
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: UID of priority. Can be null
+          type: integer
+        Name:
+          description: Priority name
           type: string
+        SubscriberId:
+          format: int32
+          description: UID of subscriber. Can be null
+          type: integer
+        Eta:
+          description: ETA
+          type: string
+        SkipNights:
+          description: Skip nights while calculating scheduled date
+          default: false
+          type: boolean
+        SkipWeekends:
+          description: Skip weekends while calculating scheduled date
+          default: false
+          type: boolean
         LocationId:
           format: int32
-          description: ID of a location
+          description: If priority is associated with location - assiciated location
           type: integer
-        SetupId:
-          format: int32
-          description: SetupId
-          type: integer
-        AssetId:
-          format: int32
-          description: Id of an Asset
-          type: integer
-        DecisionAnswers:
-          description: DescisionTree answers made by the user
-          type: array
-          items:
-            $ref: '#/components/schemas/DecisionAnswer'
-        CorrelationId:
-          description: Key to find the selected issue choice
+        Trade:
+          description: If priority is associated with trade - assiciated trade
           type: string
-    System.Web.HtmlString:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.DashboardSettings.UserSettingsResponse:
-      type: object
-      properties:
-        MaximumNteAmount:
-          format: double
-          type: number
+        ScheduledDate:
+          format: date-time
+          description: Calculated WO Scheduled Date
+          type: string
+        ScheduledDate_DTO:
+          format: date-time
+          description: Calculated WO Scheduled Date with time zone offset
+          type: string
+        ProjectComplDate:
+          format: date-time
+          type: string
+        IsSelectable:
+          description: IsSelectable
+          default: false
+          type: boolean
     ServiceChannel.Services.Messaging.RefrigerantTracking.AssetRefrigerant:
       type: object
       properties:
@@ -1684,243 +2007,10 @@ components:
         UpdatedDate:
           format: date-time
           type: string
-    ServiceChannel.Services.Messaging.Currencies.Currency:
+    System.Object:
       type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        AlphabeticalCode:
-          type: string
-        DecimalCount:
-          format: int32
-          type: integer
-        Entity:
-          type: string
-        CurrencyName:
-          type: string
-        NumericCode:
-          type: string
-        Rate:
-          format: double
-          type: number
-    ServiceChannel.Services.Messaging.Workorders.Dashboard.Requests.GetWarningTicketsPagedRequest:
-      type: object
-      properties:
-        LocationId:
-          format: int32
-          type: integer
-        SetupId:
-          format: int32
-          type: integer
-        AreaId:
-          format: int32
-          type: integer
-        ProblemType:
-          type: string
-        EquipmentType:
-          type: string
-        ProblemCode:
-          type: string
-        TradeId:
-          format: int32
-          type: integer
-        HideTroubleShooting:
-          default: false
-          type: boolean
-        DaysOfHistoryToDisplay:
-          format: int32
-          type: integer
-        SortBy:
-          type: string
-        PageIndex:
-          format: int32
-          type: integer
-        PageSize:
-          format: int32
-          type: integer
-        AscendingOrder:
-          default: false
-          type: boolean
-    ServiceChannel.Data.Provider:
-      type: object
-      properties:
-        ID:
-          format: int32
-          type: integer
-        ShortName:
-          type: string
-        FullName:
-          type: string
-        Address1:
-          type: string
-        Address2:
-          type: string
-        City:
-          type: string
-        State:
-          type: string
-        Zip:
-          type: string
-        Country:
-          type: string
-        WebSite:
-          type: string
-        Email:
-          type: string
-        PhoneNumber:
-          type: string
-        ProcEmail:
-          type: string
-        FaxNumber:
-          type: string
-        Pager:
-          type: string
-        Rank:
-          format: int32
-          type: integer
-        SpecificCategory:
-          type: string
-        SpecificPriority:
-          type: string
-        SpecificNte:
-          format: double
-          type: number
-        GeneralEmail:
-          type: string
-        DoNotDispatch:
-          default: false
-          type: boolean
-        IsInternal:
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Assets.Warranty:
-      description: Object containing warranty parameters.
-      type: object
-      properties:
-        ExpirationDate:
-          format: date-time
-          description: Warranty expiration date based on the warranty expiration settings.
-          type: string
-        ProviderId:
-          format: int32
-          description: ID of a provider who is in charge of warranty services.
-          type: integer
-        NTE:
-          format: double
-          description: Maximum amount of money to be spent on warranty services in USD. Value -1  means that the amount is not applicable.
-          type: number
-        Priority:
-          description: Defines how quickly warranty services should be provided, for example, *Emergency-4 Hours*, *Normal-48 Hours*, *7 Days*.
-          type: string
-        PriorityId:
-          format: int32
-          type: integer
-        Category:
-          description: Warranty category, for example, *ADVISE ONLY*, *REPAIR*, *DISASTER*.
-          type: string
-        CategoryId:
-          format: int32
-          type: integer
-        Provider:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.WarrantyProvider'
-          description: Rules to choose Warranty Provider
-        Expiration:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.WarrantyExpiration'
-          description: Rules for Warranty Expiration
-    ServiceChannel.Services.Messaging.DashboardSettings.SetupGeneralResponse:
-      type: object
-      properties:
-        AllowAddingAttachments:
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.IssueLists.GetIssueChoiceResponse:
-      type: object
-      properties:
-        ProblemType:
-          type: string
-        EquipmentType:
-          type: string
-        ProblemCode:
-          type: string
-        Trade:
-          type: string
-        TradeId:
-          format: int32
-          type: integer
-        IsTradeDeleted:
-          default: false
-          type: boolean
-        Priority:
-          type: string
-        AllowPriorityUpgrade:
-          default: false
-          type: boolean
-        RequireAttachment:
-          default: false
-          type: boolean
-        EquipmentId:
-          type: string
-        EquipmentEntry:
-          type: string
-        Category:
-          type: string
-        Comments:
-          type: string
-        TroubleshootingMessage:
-          type: string
-        ProviderRank:
-          format: int32
-          type: integer
-        LabelRanks:
-          type: array
-          items:
-            format: int32
-            type: integer
-        Currency:
-          type: string
-        ApprovalCode:
-          type: string
-        LinkToMedia:
-          type: string
-        AdditionalFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.IssueFieldResponse'
-        AllAdditionalFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.IssueLists.IssueFieldResponse'
-        IsNewIssueList:
-          default: false
-          type: boolean
-        WoStatusId:
-          format: int32
-          type: integer
-        Note:
-          type: string
-        DashOverrideApplied:
-          default: false
-          type: boolean
-        Nte:
-          type: string
-        WoLabel:
-          type: string
-        AttachmentName:
-          type: string
-        PinWoNote:
-          default: false
-          type: boolean
-        EtcMinutes:
-          format: int32
-          type: integer
-        ProjComplDate:
-          format: date-time
-          type: string
-        CategoryId:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.Workorders.GetServiceRequestInfoRequest:
+      properties: {}
+    ServiceChannel.Services.Messaging.Workorders.GetWorkOrderPropertiesRequest:
       type: object
       properties:
         AreaName:
@@ -1943,19 +2033,133 @@ components:
           format: int32
           description: SetupId
           type: integer
-        CallDate:
-          format: date-time
-          description: Call Date
+        AssetId:
+          format: int32
+          description: Id of an Asset
+          type: integer
+        DecisionAnswers:
+          description: DescisionTree answers made by the user
+          type: array
+          items:
+            $ref: '#/components/schemas/DecisionAnswer'
+        CorrelationId:
+          description: Key to find the selected issue choice
           type: string
-        Version:
-          enum:
-          - Undefined
-          - V1
-          - V2
-          type: string
-    System.Object:
+    ServiceChannel.Services.Messaging.DashboardSettings.SetupRequestResponse:
       type: object
-      properties: {}
+      properties:
+        SetupId:
+          format: int32
+          description: Store Dashboard Setup ID.
+          type: integer
+        EnableRequestWizard:
+          description: This flag enables/disables request wizard for the dashboard.
+          default: false
+          type: boolean
+        ShowPrivateStoreNotes:
+          description: Show/hide private store notes in the 'location notes' field on the first step of the service request wizard page.
+          default: false
+          type: boolean
+        ShowProviderPhoneNumber:
+          description: Show/hide provider phone number on the confirmation step after an issue has been submitted.
+          default: false
+          type: boolean
+        ShowLastServiceCall:
+          description: Show last service call and last description in the body of alert email.
+          default: false
+          type: boolean
+        SetOriginalVendorForRecalls:
+          description: This option controls whether original vendor is assigned to the work order in case of a recall.
+          default: false
+          type: boolean
+        NteToZeroForRecalls:
+          description: Set NTE to zero if a new service request is marked as a recall.
+          default: false
+          type: boolean
+        SendAlertToFM:
+          description: This flag controls whether service request email will be sent to the facility managers or not.
+          default: false
+          type: boolean
+        TurnOffDescription:
+          description: Show/hide problem description field.
+          default: false
+          type: boolean
+        DaysOfHistoryToDisplay:
+          format: int32
+          description: How many days of work order history to display on the dublicates warning report.
+          type: integer
+        ShowStoreWarrantyStr:
+          description: "There are three possible options: 1) 'none' hides a StoreWarrantyMessage on the first step of the Request Wizard;\n            2) 'show' shows a StoreWarrantyMessage on the first step of the Request Wizard;\n            3) 'stop' shows a StoreWarrantyMessage without a possibility to move to the next step."
+          type: string
+        StoreWarrantyMessage:
+          description: A store warranty message to show on the first step of the request wizard page.
+          type: string
+        ConfirmationMessage:
+          description: This message is shown on the confirmation page after the user submits their request.
+          type: string
+        ProviderNotFoundMessage:
+          description: An error message to show when provider is not found for the specified issue choice.
+          type: string
+        EnableEquipment:
+          description: Show equipment
+          default: false
+          type: boolean
+        DuplicateFilters:
+          type: array
+          items:
+            type: string
+        ExcludedCategoriesOpenDup:
+          type: array
+          items:
+            type: string
+        ExcludedCategoriesClosedDup:
+          type: array
+          items:
+            type: string
+        ExcludedStatuses:
+          type: array
+          items:
+            type: string
+        ExcludedTradesOpenDup:
+          type: array
+          items:
+            type: string
+        EnableEquipmentReplacementFlag:
+          default: false
+          type: boolean
+        EnableRequestWizardMobile:
+          description: This flag enables/disables request wizard for the SC Mobile.
+          default: false
+          type: boolean
+        EnableLocationNotes:
+          default: false
+          type: boolean
+        AlwaysShowLocationNotes:
+          default: false
+          type: boolean
+        SkipTroubleshootingStep:
+          default: false
+          type: boolean
+        HidePriority:
+          default: false
+          type: boolean
+        EnableIssueListKeywordSearch:
+          description: "This flag enables/disables the keyword search functionality on the request wizard.\n            When enabled, users can type keywords to more quickly identify issue list selections."
+          default: false
+          type: boolean
+        HideGPSRadius:
+          default: false
+          type: boolean
+        AssetFirstWorkOrderCreation:
+          description: Enables asset-first approach for work order creation.
+          default: false
+          type: boolean
+        EnableEquipmentReplacement:
+          default: false
+          type: boolean
+        AssetNotListedFlag:
+          default: false
+          type: boolean
     ServiceChannel.Services.Messaging.IssueLists.IssueFieldResponse:
       type: object
       properties:
@@ -2039,6 +2243,44 @@ components:
           default: false
           type: boolean
           readOnly: true
+    ServiceChannel.Services.Messaging.Workorders.Dashboard.Requests.GetWarningTicketsPagedRequest:
+      type: object
+      properties:
+        LocationId:
+          format: int32
+          type: integer
+        SetupId:
+          format: int32
+          type: integer
+        AreaId:
+          format: int32
+          type: integer
+        ProblemType:
+          type: string
+        EquipmentType:
+          type: string
+        ProblemCode:
+          type: string
+        TradeId:
+          format: int32
+          type: integer
+        HideTroubleShooting:
+          default: false
+          type: boolean
+        DaysOfHistoryToDisplay:
+          format: int32
+          type: integer
+        SortBy:
+          type: string
+        PageIndex:
+          format: int32
+          type: integer
+        PageSize:
+          format: int32
+          type: integer
+        AscendingOrder:
+          default: false
+          type: boolean
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -3699,228 +3941,62 @@ components:
         IsSelfReviewed:
           default: false
           type: boolean
-    ServiceChannel.Services.Messaging.IssueLists.DecisionModelResponse:
-      description: Decision Model
-      type: object
-      properties:
-        OptionValue:
-          description: OptionValue
-          type: string
-        NextQuestion:
-          description: NextQuestion
-          type: string
-        OriginalNextQuestion:
-          description: Original NextQuestion
-          type: string
-          readOnly: true
-        TradeOverride:
-          description: TradeOverride
-          type: string
-        CategoryOverride:
-          description: CategoryOverride
-          type: string
-        PriorityOverride:
-          description: PriorityOverride
-          type: string
-        NTEOverride:
-          description: NTEOverride
-          type: string
-        ProviderRankOverride:
-          description: ProviderRankOverride
-          type: string
-        WoLabelOverride:
-          description: WoLabelOverride
-          type: string
-        EtcOverride:
-          description: EtcOverride
-          type: string
-    DecisionAnswer:
-      type: object
-      properties:
-        Id:
-          type: string
-        Answer:
-          type: string
-    ServiceChannel.Services.Messaging.DashboardSettings.SetupRequestResponse:
-      type: object
-      properties:
-        SetupId:
-          format: int32
-          description: Store Dashboard Setup ID.
-          type: integer
-        EnableRequestWizard:
-          description: This flag enables/disables request wizard for the dashboard.
-          default: false
-          type: boolean
-        ShowPrivateStoreNotes:
-          description: Show/hide private store notes in the 'location notes' field on the first step of the service request wizard page.
-          default: false
-          type: boolean
-        ShowProviderPhoneNumber:
-          description: Show/hide provider phone number on the confirmation step after an issue has been submitted.
-          default: false
-          type: boolean
-        ShowLastServiceCall:
-          description: Show last service call and last description in the body of alert email.
-          default: false
-          type: boolean
-        SetOriginalVendorForRecalls:
-          description: This option controls whether original vendor is assigned to the work order in case of a recall.
-          default: false
-          type: boolean
-        NteToZeroForRecalls:
-          description: Set NTE to zero if a new service request is marked as a recall.
-          default: false
-          type: boolean
-        SendAlertToFM:
-          description: This flag controls whether service request email will be sent to the facility managers or not.
-          default: false
-          type: boolean
-        TurnOffDescription:
-          description: Show/hide problem description field.
-          default: false
-          type: boolean
-        DaysOfHistoryToDisplay:
-          format: int32
-          description: How many days of work order history to display on the dublicates warning report.
-          type: integer
-        ShowStoreWarrantyStr:
-          description: "There are three possible options: 1) 'none' hides a StoreWarrantyMessage on the first step of the Request Wizard;\n            2) 'show' shows a StoreWarrantyMessage on the first step of the Request Wizard;\n            3) 'stop' shows a StoreWarrantyMessage without a possibility to move to the next step."
-          type: string
-        StoreWarrantyMessage:
-          description: A store warranty message to show on the first step of the request wizard page.
-          type: string
-        ConfirmationMessage:
-          description: This message is shown on the confirmation page after the user submits their request.
-          type: string
-        ProviderNotFoundMessage:
-          description: An error message to show when provider is not found for the specified issue choice.
-          type: string
-        EnableEquipment:
-          description: Show equipment
-          default: false
-          type: boolean
-        DuplicateFilters:
-          type: array
-          items:
-            type: string
-        ExcludedCategoriesOpenDup:
-          type: array
-          items:
-            type: string
-        ExcludedCategoriesClosedDup:
-          type: array
-          items:
-            type: string
-        ExcludedStatuses:
-          type: array
-          items:
-            type: string
-        ExcludedTradesOpenDup:
-          type: array
-          items:
-            type: string
-        EnableEquipmentReplacementFlag:
-          default: false
-          type: boolean
-        EnableRequestWizardMobile:
-          description: This flag enables/disables request wizard for the SC Mobile.
-          default: false
-          type: boolean
-        EnableLocationNotes:
-          default: false
-          type: boolean
-        AlwaysShowLocationNotes:
-          default: false
-          type: boolean
-        SkipTroubleshootingStep:
-          default: false
-          type: boolean
-        HidePriority:
-          default: false
-          type: boolean
-        EnableIssueListKeywordSearch:
-          description: "This flag enables/disables the keyword search functionality on the request wizard.\n            When enabled, users can type keywords to more quickly identify issue list selections."
-          default: false
-          type: boolean
-        HideGPSRadius:
-          default: false
-          type: boolean
-        AssetFirstWorkOrderCreation:
-          description: Enables asset-first approach for work order creation.
-          default: false
-          type: boolean
-        EnableEquipmentReplacement:
-          default: false
-          type: boolean
-        AssetNotListedFlag:
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Assets.AssetsInfoResponse:
-      type: object
-      properties:
-        Assets:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Assets.AssetResponse'
-        AssetRequired:
-          default: false
-          type: boolean
-        AssetEntry:
-          type: string
-    ServiceChannel.Services.Messaging.Assets.WarrantyExpiration:
-      description: Object containing warranty expiration details.
-      type: object
-      properties:
-        Type:
-          description: 'Warranty expiration calculation type. **Possible values**: 0 - the expiration date is calculated starting from the asset purchase data; 1 - the expiration date is calculated starting from the asset installation date.'
-          enum:
-          - FromPurchaseDate
-          - FromInstallDate
-          type: string
-        Period:
-          format: int32
-          description: Warranty period in months.
-          type: integer
-    ServiceChannel.Api.Model.Dashboard.Assets.Asset:
+    ServiceChannel.Services.Messaging.Currencies.Currency:
       type: object
       properties:
         Id:
           format: int32
           type: integer
-        TagID:
+        AlphabeticalCode:
           type: string
-        Manufacturer:
+        DecimalCount:
+          format: int32
+          type: integer
+        Entity:
           type: string
-        ModelNo:
+        CurrencyName:
           type: string
-        SerialNo:
+        NumericCode:
           type: string
-        Location:
-          type: string
-        WarrantyExpirationDate:
-          type: string
-        WarrantyCategory:
-          type: string
-        Nte:
+        Rate:
           format: double
           type: number
-        WarrantyPriority:
+    ServiceChannel.Services.Messaging.Workorders.GetServiceRequestInfoRequest:
+      type: object
+      properties:
+        AreaName:
+          description: Name of the area
           type: string
-        WarrantyNTEHidden:
-          default: false
-          type: boolean
-        WarrantyNotExpired:
-          default: false
-          type: boolean
-        Type:
+        ProblemType:
+          description: Problem type
           type: string
-        AssetTag:
+        EquipmentType:
+          description: Equipment type
           type: string
-        Description:
+        ProblemCode:
+          description: Problem name
           type: string
-        StoreId:
+        LocationId:
+          format: int32
+          description: ID of a location
+          type: integer
+        SetupId:
+          format: int32
+          description: SetupId
+          type: integer
+        CallDate:
+          format: date-time
+          description: Call Date
           type: string
+        Version:
+          enum:
+          - Undefined
+          - V1
+          - V2
+          type: string
+    System.Web.HtmlString:
+      type: object
+      properties: {}
     ServiceChannel.Api.Model.Workorders.OverrideProperties.Category:
       type: object
       properties:
@@ -3929,82 +4005,6 @@ components:
           type: integer
         Name:
           type: string
-    ServiceChannel.Services.Messaging.Category.CategoryResponse:
-      description: Object containing the details of the available categories.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Category ID.
-          type: integer
-        SubscriberId:
-          format: int32
-          description: Unique numeric subscriber ID.
-          type: integer
-        Name:
-          description: Category name.
-          type: string
-        HasDependency:
-          description: Parameter is not populated. The only value is "false".
-          default: false
-          type: boolean
-        PrimaryCategoryID:
-          format: int32
-          description: Primary category ID.
-          type: integer
-        PrimaryCategoryName:
-          description: Primary category name.
-          type: string
-    ServiceChannel.Services.Messaging.Assets.AssetAttributesMap:
-      type: object
-      properties:
-        StandardAttributesMap:
-          format: int32
-          type: integer
-        ViewableForProvidersAttributesMap:
-          format: int32
-          type: integer
-        EditableForProvidersAttributesMap:
-          format: int32
-          type: integer
-        RequiredStandardAttributesMap:
-          format: int32
-          type: integer
-    ServiceChannel.Services.Messaging.Equipments.EquipmentAttributeDescription:
-      type: object
-      properties:
-        EquipmentAttributeId:
-          format: int32
-          type: integer
-        EquipmentTypeAttributeId:
-          format: int32
-          type: integer
-        ValueType:
-          format: int32
-          type: integer
-        EquipmentId:
-          format: int32
-          type: integer
-        Value:
-          $ref: '#/components/schemas/System.Object'
-        ValueText:
-          type: string
-        SelectedOptionsText:
-          type: string
-        Visible:
-          default: false
-          type: boolean
-        Editable:
-          default: false
-          type: boolean
-        Required:
-          default: false
-          type: boolean
-        Name:
-          type: string
-        Custom:
-          default: false
-          type: boolean
   securitySchemes:
     oauth2:
       type: oauth2

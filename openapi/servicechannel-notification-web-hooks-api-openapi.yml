@@ -340,25 +340,6 @@ paths:
       x-access: Any
 components:
   schemas:
-    ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionsRules:
-      description: The event rules used to receive events matching only certain criteria.
-      type: object
-      properties:
-        Trades:
-          description: The trades that the events should belong to.
-          type: array
-          items:
-            type: string
-        Categories:
-          description: The categories that the events should belong to.
-          type: array
-          items:
-            type: string
-        Statuses:
-          description: The statuses that the events should belong to.
-          type: array
-          items:
-            type: string
     ServiceChannel.Services.Messaging.Notifications.NotificationRequestBase:
       required:
       - Name
@@ -504,62 +485,6 @@ components:
             type: string
         Rules:
           $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionsRules'
-    ServiceChannel.Services.Messaging.Notifications.WebHooks.AddWebHookRequest:
-      required:
-      - Name
-      - Url
-      type: object
-      properties:
-        Subscriptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.NotificationRequestBase'
-        Enabled:
-          description: Defines if the webhook is active or inactive.
-          default: false
-          type: boolean
-        Name:
-          description: The user-friendly name for the webhook.
-          type: string
-        Description:
-          description: The description of the webhook.
-          type: string
-        Url:
-          description: The URL to which the events should be delivered.
-          type: string
-    ServiceChannel.Services.Messaging.Notifications.WebHooks.WebHook:
-      required:
-      - Name
-      - Url
-      type: object
-      properties:
-        Subscriptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.WebHookSubscription'
-        Id:
-          format: int32
-          description: The unique webhook ID. Generated automatically and cannot be modified.
-          type: integer
-        ResetOptions:
-          default: false
-          type: boolean
-        Enabled:
-          description: Defines if the webhook is active or inactive.
-          default: false
-          type: boolean
-        Name:
-          description: The user-friendly name for the webhook.
-          type: string
-        Description:
-          description: The description of the webhook.
-          type: string
-        Url:
-          description: The URL to which the events should be delivered.
-          type: string
-    System.Object:
-      type: object
-      properties: {}
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2210,6 +2135,78 @@ components:
           items:
             format: int32
             type: integer
+    ServiceChannel.Services.Messaging.Notifications.WebHooks.AddWebHookRequest:
+      required:
+      - Name
+      - Url
+      type: object
+      properties:
+        Subscriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.NotificationRequestBase'
+        Enabled:
+          description: Defines if the webhook is active or inactive.
+          default: false
+          type: boolean
+        Name:
+          description: The user-friendly name for the webhook.
+          type: string
+        Description:
+          description: The description of the webhook.
+          type: string
+        Url:
+          description: The URL to which the events should be delivered.
+          type: string
+    ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionsRules:
+      description: The event rules used to receive events matching only certain criteria.
+      type: object
+      properties:
+        Trades:
+          description: The trades that the events should belong to.
+          type: array
+          items:
+            type: string
+        Categories:
+          description: The categories that the events should belong to.
+          type: array
+          items:
+            type: string
+        Statuses:
+          description: The statuses that the events should belong to.
+          type: array
+          items:
+            type: string
+    ServiceChannel.Services.Messaging.Notifications.WebHooks.WebHook:
+      required:
+      - Name
+      - Url
+      type: object
+      properties:
+        Subscriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.WebHookSubscription'
+        Id:
+          format: int32
+          description: The unique webhook ID. Generated automatically and cannot be modified.
+          type: integer
+        ResetOptions:
+          default: false
+          type: boolean
+        Enabled:
+          description: Defines if the webhook is active or inactive.
+          default: false
+          type: boolean
+        Name:
+          description: The user-friendly name for the webhook.
+          type: string
+        Description:
+          description: The description of the webhook.
+          type: string
+        Url:
+          description: The URL to which the events should be delivered.
+          type: string
     ServiceChannel.Services.Messaging.Notifications.WebHookSubscription:
       required:
       - Name
@@ -2359,6 +2356,9 @@ components:
             type: string
         Rules:
           $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Notifications.NotificationSubscriptionsRules'
+    System.Object:
+      type: object
+      properties: {}
   securitySchemes:
     oauth2:
       type: oauth2

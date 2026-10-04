@@ -605,47 +605,6 @@ paths:
       x-access: Any
 components:
   schemas:
-    ServiceChannel.Api.Model.Proposals.MlpLevelSimpleModel:
-      type: object
-      properties:
-        UserId:
-          format: int32
-          type: integer
-        LocationIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-        LevelId:
-          format: int32
-          type: integer
-        LevelName:
-          type: string
-        Order:
-          format: int32
-          type: integer
-        UsersLocations:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              format: int32
-              type: integer
-        CategoryChange:
-          default: false
-          type: boolean
-        PriorityChange:
-          default: false
-          type: boolean
-        CodeChange:
-          default: false
-          type: boolean
-        DivisionId:
-          format: int32
-          type: integer
-    System.Object:
-      type: object
-      properties: {}
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2298,6 +2257,90 @@ components:
         Name:
           description: (*Optional*) The name of technician who worked on the service request.
           type: string
+    ServiceChannel.Services.Messaging.Workorders.WorkActivityPostRequest:
+      description: Request object to create a work activity.
+      type: object
+      properties:
+        WorkTypeId:
+          format: int32
+          description: 'The type of activity performed: 1 — *Repair*, 2 — *Travel*. You can pass other values if custom types are set up for the subscriber.'
+          type: integer
+        CheckInDate:
+          format: date-time
+          description: The date and time when a technician started work on the service request. The format is `YYYY-MM-DDThh:mm:ss.sssZ`. The default is the current date and time.
+          type: string
+        CheckOutDate:
+          format: date-time
+          description: The date and time when a technician finished work on the service request. The format is `YYYY-MM-DDThh:mm:ss.sssZ`. The default is the current date and time.
+          type: string
+        Name:
+          description: (*Optional*) The name of technician who worked on the service request.
+          type: string
+    ServiceChannel.Api.Model.Proposals.MlpLevelSimpleModel:
+      type: object
+      properties:
+        UserId:
+          format: int32
+          type: integer
+        LocationIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+        LevelId:
+          format: int32
+          type: integer
+        LevelName:
+          type: string
+        Order:
+          format: int32
+          type: integer
+        UsersLocations:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              format: int32
+              type: integer
+        CategoryChange:
+          default: false
+          type: boolean
+        PriorityChange:
+          default: false
+          type: boolean
+        CodeChange:
+          default: false
+          type: boolean
+        DivisionId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.Users.UserInfo:
+      description: The user details object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: The unique numeric identifier of the user.
+          type: integer
+        UserName:
+          description: The username of the user.
+          type: string
+        UserNameOrFullName:
+          description: The username if fullname is null or empty
+          type: string
+          readOnly: true
+        FullName:
+          description: The full name of the user.
+          type: string
+        Email:
+          description: The email address of the user.
+          type: string
+        LevelInfo:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.MlpLevelSimpleModel'
+          description: The information on the MLP level the user belongs to.
+    System.Object:
+      type: object
+      properties: {}
     ServiceChannel.Services.Messaging.Workorders.WorkActivity:
       description: Work activity object.
       type: object
@@ -2353,49 +2396,6 @@ components:
           format: int32
           description: The user who created the labor.
           type: integer
-    ServiceChannel.Services.Messaging.Users.UserInfo:
-      description: The user details object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: The unique numeric identifier of the user.
-          type: integer
-        UserName:
-          description: The username of the user.
-          type: string
-        UserNameOrFullName:
-          description: The username if fullname is null or empty
-          type: string
-          readOnly: true
-        FullName:
-          description: The full name of the user.
-          type: string
-        Email:
-          description: The email address of the user.
-          type: string
-        LevelInfo:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Proposals.MlpLevelSimpleModel'
-          description: The information on the MLP level the user belongs to.
-    ServiceChannel.Services.Messaging.Workorders.WorkActivityPostRequest:
-      description: Request object to create a work activity.
-      type: object
-      properties:
-        WorkTypeId:
-          format: int32
-          description: 'The type of activity performed: 1 — *Repair*, 2 — *Travel*. You can pass other values if custom types are set up for the subscriber.'
-          type: integer
-        CheckInDate:
-          format: date-time
-          description: The date and time when a technician started work on the service request. The format is `YYYY-MM-DDThh:mm:ss.sssZ`. The default is the current date and time.
-          type: string
-        CheckOutDate:
-          format: date-time
-          description: The date and time when a technician finished work on the service request. The format is `YYYY-MM-DDThh:mm:ss.sssZ`. The default is the current date and time.
-          type: string
-        Name:
-          description: (*Optional*) The name of technician who worked on the service request.
-          type: string
   securitySchemes:
     oauth2:
       type: oauth2

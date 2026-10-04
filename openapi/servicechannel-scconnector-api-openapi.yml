@@ -275,154 +275,6 @@ paths:
         required: true
 components:
   schemas:
-    ServiceChannel.Notifications.Objects.Location:
-      type: object
-      properties:
-        StoreId:
-          type: string
-        Id:
-          format: int32
-          type: integer
-        SubscriberId:
-          format: int32
-          type: integer
-        ShortName:
-          type: string
-        FullName:
-          type: string
-        Address1:
-          type: string
-        Address2:
-          type: string
-        Region:
-          type: string
-        District:
-          type: string
-        City:
-          type: string
-        State:
-          type: string
-        Country:
-          type: string
-        StoreOpenDTO:
-          format: date-time
-          type: string
-        StoreCloseDTO:
-          format: date-time
-          type: string
-        Zip:
-          type: string
-        MainContact:
-          type: string
-        PhoneNumber:
-          type: string
-        FaxNumber:
-          type: string
-        FacilityManager:
-          type: string
-        Email:
-          type: string
-        NotesCount:
-          format: int32
-          type: integer
-        LocationTypeId:
-          format: int32
-          type: integer
-        LocationType:
-          type: string
-        Latitude:
-          format: double
-          type: number
-        Longitude:
-          format: double
-          type: number
-        TimeZoneId:
-          type: string
-        TimeZoneInfoId:
-          format: int32
-          type: integer
-        TimeShiftToEst:
-          format: int32
-          type: integer
-        RetiredAllProvidersDate:
-          format: date-time
-          type: string
-        RetiredLogin:
-          type: string
-        UpdatedUserName:
-          type: string
-        UpdatedDate:
-          format: date-time
-          type: string
-        UpdatedLocationNotesUserName:
-          type: string
-        UpdatedLocationNotesDate:
-          format: date-time
-          type: string
-    ServiceChannel.Notifications.Objects.Technician:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        AuthUserId:
-          format: int64
-          type: integer
-        CertificateId:
-          type: string
-        NumericCertificateId:
-          format: int32
-          type: integer
-    ServiceChannel.Services.WebApi.Controllers.ScConnectorController.Data:
-      description: Wrapper for body parameter
-      type: object
-      properties:
-        Msg:
-          description: escaped Xml string
-          type: string
-    ServiceChannel.Notifications.Objects.User:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        AuthUserId:
-          format: int64
-          type: integer
-        UserName:
-          type: string
-        FullName:
-          type: string
-        Email:
-          type: string
-        LoginType:
-          enum:
-          - Credentials
-          - Pin
-          type: string
-        SubscriberId:
-          format: int32
-          type: integer
-        ProviderId:
-          format: int32
-          type: integer
-    ServiceChannel.Notifications.Objects.IssueChoice:
-      type: object
-      properties:
-        SetupId:
-          format: int32
-          type: integer
-        AreaId:
-          format: int32
-          type: integer
-        AreaName:
-          type: string
-        ProblemType:
-          type: string
-        EquipmentType:
-          type: string
-        ProblemCode:
-          type: string
     ServiceChannel.Notifications.Objects.AssetAttributesMap:
       type: object
       properties:
@@ -436,6 +288,120 @@ components:
           format: int32
           type: integer
         RequiredStandardAttributesMap:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.Workorders.WorkorderNotificationObject:
+      type: object
+      properties:
+        Object:
+          $ref: '#/components/schemas/ServiceChannel.Notifications.Objects.WorkOrder'
+        Type:
+          type: string
+        Action:
+          type: string
+        EventType:
+          type: string
+    ServiceChannel.Notifications.Objects.Note:
+      type: object
+      properties:
+        Id:
+          format: int64
+          type: integer
+        NoteType:
+          enum:
+          - SystemNote
+          - UsersNote
+          type: string
+        Number:
+          format: int32
+          type: integer
+        NoteData:
+          type: string
+        DateCreated:
+          format: date-time
+          type: string
+        ScheduledDate:
+          format: date-time
+          type: string
+        FollowUpDate:
+          format: date-time
+          type: string
+        ActionRequired:
+          default: false
+          type: boolean
+        MailedTo:
+          type: string
+        CreatedBy:
+          type: string
+        CreatedByUser:
+          $ref: '#/components/schemas/ServiceChannel.Notifications.Objects.User'
+        Visibility:
+          format: int32
+          type: integer
+        DateCreated_DTO:
+          format: date-time
+          type: string
+        ActionResolveDetails:
+          $ref: '#/components/schemas/ServiceChannel.Notifications.Objects.ActionResolveDetails'
+        DocumentId:
+          type: string
+        AttachmentIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Notifications.Objects.Attachment:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Description:
+          type: string
+        Name:
+          type: string
+        Date:
+          format: date-time
+          type: string
+        Uri:
+          type: string
+        CreatedBy:
+          $ref: '#/components/schemas/ServiceChannel.Notifications.Objects.User'
+        Visibility:
+          format: int32
+          type: integer
+        Type:
+          enum:
+          - Undefined
+          - WorkOrder
+          - Invoice
+          - Rfp
+          - Proposal
+          - Asset
+          type: string
+    ServiceChannel.Notifications.Objects.AssetWarrantyProvider:
+      type: object
+      properties:
+        Type:
+          enum:
+          - Fixed
+          - PrimaryRanked
+          - FixedRanked
+          type: string
+        Value:
+          format: int32
+          type: integer
+        ProviderName:
+          type: string
+    ServiceChannel.Notifications.Objects.ResolutionCodesAndRootCause:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        Text:
+          type: string
+        AssetCategoryId:
           format: int32
           type: integer
     ServiceChannel.Notifications.Objects.WorkOrder:
@@ -637,95 +603,28 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/System.Object'
-    ServiceChannel.Notifications.Objects.AssetTagScanAuditRecord:
-      type: object
-      properties:
-        AssetTagStatus:
-          type: string
-        ManuallyEntered:
-          default: false
-          type: boolean
-        AssetTagNotScannedReason:
-          type: string
-        UnableToValidateReasonId:
-          format: int32
-          type: integer
-        OtherReason:
-          type: string
-    ServiceChannel.Services.Messaging.Workorders.WorkorderNotificationObject:
-      type: object
-      properties:
-        Object:
-          $ref: '#/components/schemas/ServiceChannel.Notifications.Objects.WorkOrder'
-        Type:
-          type: string
-        Action:
-          type: string
-        EventType:
-          type: string
-    ServiceChannel.Notifications.Objects.Note:
+    ServiceChannel.Notifications.Objects.Technician:
       type: object
       properties:
         Id:
+          format: int32
+          type: integer
+        AuthUserId:
           format: int64
           type: integer
-        NoteType:
-          enum:
-          - SystemNote
-          - UsersNote
+        CertificateId:
           type: string
-        Number:
+        NumericCertificateId:
           format: int32
           type: integer
-        NoteData:
-          type: string
-        DateCreated:
-          format: date-time
-          type: string
-        ScheduledDate:
-          format: date-time
-          type: string
-        FollowUpDate:
-          format: date-time
-          type: string
-        ActionRequired:
+    ServiceChannel.Notifications.Objects.AssetAttachment:
+      type: object
+      properties:
+        IsPrimary:
           default: false
           type: boolean
-        MailedTo:
+        ThumbnailUri:
           type: string
-        CreatedBy:
-          type: string
-        CreatedByUser:
-          $ref: '#/components/schemas/ServiceChannel.Notifications.Objects.User'
-        Visibility:
-          format: int32
-          type: integer
-        DateCreated_DTO:
-          format: date-time
-          type: string
-        ActionResolveDetails:
-          $ref: '#/components/schemas/ServiceChannel.Notifications.Objects.ActionResolveDetails'
-        DocumentId:
-          type: string
-        AttachmentIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Notifications.Objects.AssetWarrantyExpiration:
-      type: object
-      properties:
-        Type:
-          enum:
-          - FromPurchaseDate
-          - FromInstallDate
-          type: string
-        Period:
-          format: int32
-          type: integer
-    ServiceChannel.Notifications.Objects.Attachment:
-      type: object
-      properties:
         Id:
           format: int32
           type: integer
@@ -751,38 +650,6 @@ components:
           - Rfp
           - Proposal
           - Asset
-          type: string
-    ServiceChannel.Notifications.Objects.WorkorderStatusDescriptor:
-      type: object
-      properties:
-        Primary:
-          type: string
-        Extended:
-          type: string
-    ServiceChannel.Notifications.Objects.ResolutionCodesAndRootCause:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Text:
-          type: string
-        AssetCategoryId:
-          format: int32
-          type: integer
-    ServiceChannel.Notifications.Objects.AssetWarrantyProvider:
-      type: object
-      properties:
-        Type:
-          enum:
-          - Fixed
-          - PrimaryRanked
-          - FixedRanked
-          type: string
-        Value:
-          format: int32
-          type: integer
-        ProviderName:
           type: string
     ServiceChannel.Notifications.Objects.CheckInOutActivity:
       type: object
@@ -852,54 +719,66 @@ components:
           - Ivr
           - Gps
           type: string
-    ServiceChannel.Services.WebApi.Models.CheckInOutNotificationObject:
+    ServiceChannel.Notifications.Objects.AssetTagScanAuditRecord:
       type: object
       properties:
-        Object:
-          $ref: '#/components/schemas/ServiceChannel.Notifications.Objects.CheckInOutActivity'
-        Type:
+        AssetTagStatus:
           type: string
-        Action:
-          type: string
-        EventType:
-          type: string
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Notifications.Objects.AssetAttachment:
-      type: object
-      properties:
-        IsPrimary:
+        ManuallyEntered:
           default: false
           type: boolean
-        ThumbnailUri:
+        AssetTagNotScannedReason:
           type: string
+        UnableToValidateReasonId:
+          format: int32
+          type: integer
+        OtherReason:
+          type: string
+    ServiceChannel.Notifications.Objects.ActionResolveDetails:
+      type: object
+      properties:
+        ResolvedByUserId:
+          format: int32
+          type: integer
+        ResolvedDate:
+          format: date-time
+          type: string
+        IsResolved:
+          default: false
+          type: boolean
+    ServiceChannel.Services.WebApi.Controllers.ScConnectorController.Data:
+      description: Wrapper for body parameter
+      type: object
+      properties:
+        Msg:
+          description: escaped Xml string
+          type: string
+    ServiceChannel.Notifications.Objects.User:
+      type: object
+      properties:
         Id:
           format: int32
           type: integer
-        Description:
+        AuthUserId:
+          format: int64
+          type: integer
+        UserName:
           type: string
-        Name:
+        FullName:
           type: string
-        Date:
-          format: date-time
+        Email:
           type: string
-        Uri:
+        LoginType:
+          enum:
+          - Credentials
+          - Pin
           type: string
-        CreatedBy:
-          $ref: '#/components/schemas/ServiceChannel.Notifications.Objects.User'
-        Visibility:
+        SubscriberId:
           format: int32
           type: integer
-        Type:
-          enum:
-          - Undefined
-          - WorkOrder
-          - Invoice
-          - Rfp
-          - Proposal
-          - Asset
-          type: string
+        ProviderId:
+          format: int32
+          type: integer
     ServiceChannel.Notifications.Objects.AssetWarranty:
       type: object
       properties:
@@ -920,6 +799,37 @@ components:
           $ref: '#/components/schemas/ServiceChannel.Notifications.Objects.AssetWarrantyProvider'
         Expiration:
           $ref: '#/components/schemas/ServiceChannel.Notifications.Objects.AssetWarrantyExpiration'
+    ServiceChannel.Notifications.Objects.AssetWarrantyExpiration:
+      type: object
+      properties:
+        Type:
+          enum:
+          - FromPurchaseDate
+          - FromInstallDate
+          type: string
+        Period:
+          format: int32
+          type: integer
+    ServiceChannel.Notifications.Objects.IssueChoice:
+      type: object
+      properties:
+        SetupId:
+          format: int32
+          type: integer
+        AreaId:
+          format: int32
+          type: integer
+        AreaName:
+          type: string
+        ProblemType:
+          type: string
+        EquipmentType:
+          type: string
+        ProblemCode:
+          type: string
+    System.Object:
+      type: object
+      properties: {}
     ServiceChannel.Notifications.Objects.Label:
       type: object
       properties:
@@ -1079,18 +989,108 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Notifications.Objects.AssetAttachment'
-    ServiceChannel.Notifications.Objects.ActionResolveDetails:
+    ServiceChannel.Notifications.Objects.WorkorderStatusDescriptor:
       type: object
       properties:
-        ResolvedByUserId:
+        Primary:
+          type: string
+        Extended:
+          type: string
+    ServiceChannel.Notifications.Objects.Location:
+      type: object
+      properties:
+        StoreId:
+          type: string
+        Id:
           format: int32
           type: integer
-        ResolvedDate:
+        SubscriberId:
+          format: int32
+          type: integer
+        ShortName:
+          type: string
+        FullName:
+          type: string
+        Address1:
+          type: string
+        Address2:
+          type: string
+        Region:
+          type: string
+        District:
+          type: string
+        City:
+          type: string
+        State:
+          type: string
+        Country:
+          type: string
+        StoreOpenDTO:
           format: date-time
           type: string
-        IsResolved:
-          default: false
-          type: boolean
+        StoreCloseDTO:
+          format: date-time
+          type: string
+        Zip:
+          type: string
+        MainContact:
+          type: string
+        PhoneNumber:
+          type: string
+        FaxNumber:
+          type: string
+        FacilityManager:
+          type: string
+        Email:
+          type: string
+        NotesCount:
+          format: int32
+          type: integer
+        LocationTypeId:
+          format: int32
+          type: integer
+        LocationType:
+          type: string
+        Latitude:
+          format: double
+          type: number
+        Longitude:
+          format: double
+          type: number
+        TimeZoneId:
+          type: string
+        TimeZoneInfoId:
+          format: int32
+          type: integer
+        TimeShiftToEst:
+          format: int32
+          type: integer
+        RetiredAllProvidersDate:
+          format: date-time
+          type: string
+        RetiredLogin:
+          type: string
+        UpdatedUserName:
+          type: string
+        UpdatedDate:
+          format: date-time
+          type: string
+        UpdatedLocationNotesUserName:
+          type: string
+        UpdatedLocationNotesDate:
+          format: date-time
+          type: string
+    ServiceChannel.Services.WebApi.Models.CheckInOutNotificationObject:
+      type: object
+      properties:
+        Object:
+          $ref: '#/components/schemas/ServiceChannel.Notifications.Objects.CheckInOutActivity'
+        Type:
+          type: string
+        Action:
+          type: string
+        EventType:
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2

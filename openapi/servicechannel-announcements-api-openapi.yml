@@ -95,9 +95,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    System.Object:
-      type: object
-      properties: {}
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -1735,6 +1732,29 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    ServiceChannel.Api.Model.Entities.UserAnnouncements:
+      type: object
+      properties:
+        ReadAnnouncements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.UserAnnouncement'
+        UnreadAnnouncements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.UserAnnouncement'
+    ServiceChannel.Services.Messaging.Announcements.GetUserAnnouncementsResponse:
+      type: object
+      properties:
+        UserAnnouncements:
+          $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.UserAnnouncements'
+        ErrorCode:
+          format: int32
+          description: 'Numeric identifier that determines the nature of an error. Possible values: `0` - success, otherwise - error.'
+          type: integer
+        Message:
+          description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
+          type: string
     ServiceChannel.Api.Model.Entities.UserAnnouncement:
       type: object
       properties:
@@ -1765,29 +1785,9 @@ components:
           type: string
         ImageName:
           type: string
-    ServiceChannel.Api.Model.Entities.UserAnnouncements:
+    System.Object:
       type: object
-      properties:
-        ReadAnnouncements:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.UserAnnouncement'
-        UnreadAnnouncements:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.UserAnnouncement'
-    ServiceChannel.Services.Messaging.Announcements.GetUserAnnouncementsResponse:
-      type: object
-      properties:
-        UserAnnouncements:
-          $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.UserAnnouncements'
-        ErrorCode:
-          format: int32
-          description: 'Numeric identifier that determines the nature of an error. Possible values: `0` - success, otherwise - error.'
-          type: integer
-        Message:
-          description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
-          type: string
+      properties: {}
   securitySchemes:
     oauth2:
       type: oauth2

@@ -639,116 +639,6 @@ paths:
       x-access: Any
 components:
   schemas:
-    ServiceChannel.Services.WebApi.Models.Response.Trades.TradeResponse:
-      description: Represents a trade with primary trade.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Numeric identifier of the trade.
-          type: integer
-        Name:
-          description: Trade name.
-          type: string
-        SubscriberId:
-          format: int32
-          description: Unique subscriber ID.
-          type: integer
-        PrimaryTrade:
-          description: Primary trade name.
-          type: string
-    Amazon.Runtime.Internal.ErrorResponse:
-      type: object
-      properties:
-        Type:
-          enum:
-          - Sender
-          - Receiver
-          - Unknown
-          type: string
-        Code:
-          type: string
-        Message:
-          type: string
-        RequestId:
-          type: string
-        InnerException:
-          $ref: '#/components/schemas/System.Object'
-        StatusCode:
-          enum:
-          - Continue
-          - SwitchingProtocols
-          - OK
-          - Created
-          - Accepted
-          - NonAuthoritativeInformation
-          - NoContent
-          - ResetContent
-          - PartialContent
-          - MultipleChoices
-          - Ambiguous
-          - MovedPermanently
-          - Moved
-          - Found
-          - Redirect
-          - SeeOther
-          - RedirectMethod
-          - NotModified
-          - UseProxy
-          - Unused
-          - TemporaryRedirect
-          - RedirectKeepVerb
-          - BadRequest
-          - Unauthorized
-          - PaymentRequired
-          - Forbidden
-          - NotFound
-          - MethodNotAllowed
-          - NotAcceptable
-          - ProxyAuthenticationRequired
-          - RequestTimeout
-          - Conflict
-          - Gone
-          - LengthRequired
-          - PreconditionFailed
-          - RequestEntityTooLarge
-          - RequestUriTooLong
-          - UnsupportedMediaType
-          - RequestedRangeNotSatisfiable
-          - ExpectationFailed
-          - UpgradeRequired
-          - InternalServerError
-          - NotImplemented
-          - BadGateway
-          - ServiceUnavailable
-          - GatewayTimeout
-          - HttpVersionNotSupported
-          type: string
-    ServiceChannel.Services.WebApi.Models.Response.Trades.CheckTradeLocationExclusionResponse:
-      type: object
-      properties:
-        IsLocationExcluded:
-          default: false
-          type: boolean
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Services.Messaging.Trade.TradeWithPrimaryTrade:
-      type: object
-      properties:
-        PrimaryTrade:
-          type: string
-        Id:
-          format: int32
-          description: Numeric identifier of the trade.
-          type: integer
-        Name:
-          description: Trade name.
-          type: string
-        SubscriberId:
-          format: int32
-          description: Unique subscriber ID.
-          type: integer
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2386,6 +2276,24 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    ServiceChannel.Services.WebApi.Models.Response.Trades.TradeResponse:
+      description: Represents a trade with primary trade.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Numeric identifier of the trade.
+          type: integer
+        Name:
+          description: Trade name.
+          type: string
+        SubscriberId:
+          format: int32
+          description: Unique subscriber ID.
+          type: integer
+        PrimaryTrade:
+          description: Primary trade name.
+          type: string
     ServiceChannel.Services.Messaging.Trade.Trade:
       description: Trade object.
       type: object
@@ -2410,6 +2318,21 @@ components:
         ProviderId:
           format: int32
           type: integer
+    ServiceChannel.Services.WebApi.Models.Response.Trades.CheckTradeLocationExclusionResponse:
+      type: object
+      properties:
+        IsLocationExcluded:
+          default: false
+          type: boolean
+    ServiceChannel.Services.WebApi.Models.Response.Trades.GetTradesResponse:
+      description: Represents the response trades with primary trade
+      type: object
+      properties:
+        Trades:
+          description: Gets or sets trades.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Trades.TradeResponse'
     ServiceChannel.Services.Messaging.Trade.AddTradeRequest:
       description: Add Trade Request
       type: object
@@ -2441,15 +2364,92 @@ components:
         Message:
           description: Defines that the file’s remote storage is unavailable or its URL cannot be found.
           type: string
-    ServiceChannel.Services.WebApi.Models.Response.Trades.GetTradesResponse:
-      description: Represents the response trades with primary trade
+    Amazon.Runtime.Internal.ErrorResponse:
       type: object
       properties:
-        Trades:
-          description: Gets or sets trades.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.Trades.TradeResponse'
+        Type:
+          enum:
+          - Sender
+          - Receiver
+          - Unknown
+          type: string
+        Code:
+          type: string
+        Message:
+          type: string
+        RequestId:
+          type: string
+        InnerException:
+          $ref: '#/components/schemas/System.Object'
+        StatusCode:
+          enum:
+          - Continue
+          - SwitchingProtocols
+          - OK
+          - Created
+          - Accepted
+          - NonAuthoritativeInformation
+          - NoContent
+          - ResetContent
+          - PartialContent
+          - MultipleChoices
+          - Ambiguous
+          - MovedPermanently
+          - Moved
+          - Found
+          - Redirect
+          - SeeOther
+          - RedirectMethod
+          - NotModified
+          - UseProxy
+          - Unused
+          - TemporaryRedirect
+          - RedirectKeepVerb
+          - BadRequest
+          - Unauthorized
+          - PaymentRequired
+          - Forbidden
+          - NotFound
+          - MethodNotAllowed
+          - NotAcceptable
+          - ProxyAuthenticationRequired
+          - RequestTimeout
+          - Conflict
+          - Gone
+          - LengthRequired
+          - PreconditionFailed
+          - RequestEntityTooLarge
+          - RequestUriTooLong
+          - UnsupportedMediaType
+          - RequestedRangeNotSatisfiable
+          - ExpectationFailed
+          - UpgradeRequired
+          - InternalServerError
+          - NotImplemented
+          - BadGateway
+          - ServiceUnavailable
+          - GatewayTimeout
+          - HttpVersionNotSupported
+          type: string
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Services.Messaging.Trade.TradeWithPrimaryTrade:
+      type: object
+      properties:
+        PrimaryTrade:
+          type: string
+        Id:
+          format: int32
+          description: Numeric identifier of the trade.
+          type: integer
+        Name:
+          description: Trade name.
+          type: string
+        SubscriberId:
+          format: int32
+          description: Unique subscriber ID.
+          type: integer
   securitySchemes:
     oauth2:
       type: oauth2

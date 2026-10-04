@@ -1968,104 +1968,6 @@ paths:
       x-access: Any
 components:
   schemas:
-    System.Collections.Generic.KeyValuePair_System.String_System.Collections.Generic.IEnumerable_System.String:
-      type: object
-      properties:
-        Key:
-          type: string
-          readOnly: true
-        Value:
-          type: array
-          items:
-            type: string
-          readOnly: true
-    ServiceChannel.Services.Messaging.RefrigerantTracking.AddRetrofitRetirePlanDocsRequest:
-      type: object
-      properties:
-        PlanId:
-          format: int32
-          type: integer
-        Description:
-          type: string
-        UploadedFileLinks:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Attachments.UploadRetrofitRetireAttachmentResponse'
-    System.Net.Http.ByteArrayContent:
-      type: object
-      properties:
-        Headers:
-          type: array
-          items:
-            $ref: '#/components/schemas/System.Collections.Generic.KeyValuePair_System.String_System.Collections.Generic.IEnumerable_System.String'
-          readOnly: true
-    ServiceChannel.Services.WebApi.Models.AssetAttachmentsRequest:
-      type: object
-      properties:
-        AssetIds:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.Assets.AssetAttachment:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        AssetId:
-          format: int32
-          type: integer
-        FileName:
-          type: string
-        Comment:
-          type: string
-        Date:
-          format: date-time
-          type: string
-        FilePath:
-          type: string
-        IsPrimary:
-          default: false
-          type: boolean
-        Uri:
-          type: string
-        ThumbnailPath:
-          type: string
-        ThumbnailUri:
-          type: string
-        UpladedByUserId:
-          format: int32
-          type: integer
-        UpladedByUserName:
-          type: string
-    ServiceChannel.Services.WebApi.Models.Response.Attachments.DeleteWorkOrderAttachmentResponse:
-      type: object
-      properties:
-        WorkOrderId:
-          format: int32
-          description: Unique numeric identifier of the work order the attachment was removed from.
-          type: integer
-    ServiceChannel.Services.Messaging.Attachments.UploadRetrofitRetireAttachmentResponse:
-      type: object
-      properties:
-        FileName:
-          type: string
-        FilePath:
-          type: string
-    System.Object:
-      type: object
-      properties: {}
-    ServiceChannel.Api.Model.SiteAudit.AttachmentInComment:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        Url:
-          type: string
-        UrlResized:
-          type: string
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -3703,6 +3605,87 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
+    System.Collections.Generic.KeyValuePair_System.String_System.Collections.Generic.IEnumerable_System.String:
+      type: object
+      properties:
+        Key:
+          type: string
+          readOnly: true
+        Value:
+          type: array
+          items:
+            type: string
+          readOnly: true
+    ServiceChannel.Services.Messaging.Attachments.RemoveRetrofitRetireDocRequest:
+      type: object
+      properties:
+        AttachmentId:
+          format: int32
+          type: integer
+    ServiceChannel.Services.Messaging.Attachments.Attachment:
+      description: Object containing information about an attachment.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of the attachment.
+          type: integer
+        Description:
+          description: Optional text that a user added when uploading the attachment. The maximum character count is 200.
+          type: string
+        Name:
+          description: Attachment name.
+          type: string
+        TimeStamp:
+          format: date-time
+          description: Date and time when the attachment was uploaded. The format is `YYYY-MM-DDThh:mm:ss.sss±hh:mm`, where `±hh:mm` represents the time zone offset from UTC.
+          type: string
+        Uri:
+          description: Link address to the attachment in the ServiceChannel system.
+          type: string
+        NoteId:
+          format: int64
+          description: Unique numeric identifier of the note to which a user added the attachment.
+          type: integer
+        Visibility:
+          format: int32
+          description: "Visibility status of the attachment. Defines which parties can view the attachment. The *PrivateProviderNotesAndAttachments* feature should be enabled. For subscribers who are using Universal Connector, the *PrivateClientNotesAndAttachments* feature should be enabled.\n            <br />Possible values:\n             • `0`: No restrictions on visibility. Visible to everyone.\n             • `1`: Not visible to the client. The subscriber deselected the “Visible to Client” checkmark when uploading an attachment or adding a note with an attachment. \n             • `2`: Not visible to the provider. The subscriber deselected the “Visible to Provider” checkmark when uploading an attachment or adding a note with an attachment. \n             • `3`: Visible to the subscriber only. The subscriber deselected the “Visible to Client” and “Visible to Provider” checkmarks when uploading an attachment or adding a note with an attachment."
+          type: integer
+        IsInvoiceDigitalCopy:
+          description: "Defines if the attachment is a digital copy of the provider’s invoice. According to subscriber configurations, some providers should attach digital copies of invoices.\n            Possible values: \n             • `true`: The attachment is an invoice digital copy. \n             • `false`: The attachment is not an invoice digital copy. \n            <br />***Note:*** Subscribers can set the requirement of a digital invoice copy from providers when the *InvoiceRequireDigitalCopy* feature is turned on."
+          default: false
+          type: boolean
+        UploadBy:
+          description: User who uploaded the attachment.
+          type: string
+    ServiceChannel.Services.Messaging.RefrigerantTracking.RetrofitRetireDoc:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        PlanId:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        Path:
+          type: string
+        Description:
+          type: string
+        CreatedDate:
+          format: date-time
+          type: string
+        UploadedBy:
+          type: string
+    System.Net.Http.ByteArrayContent:
+      type: object
+      properties:
+        Headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/System.Collections.Generic.KeyValuePair_System.String_System.Collections.Generic.IEnumerable_System.String'
+          readOnly: true
     ServiceChannel.Services.Messaging.Attachments.AddBase64AttachmentsRequest:
       type: object
       properties:
@@ -3728,6 +3711,18 @@ components:
           description: Mark attachment as Invoice Digital Copy
           default: false
           type: boolean
+    ServiceChannel.Services.Messaging.RefrigerantTracking.AddRetrofitRetirePlanDocsRequest:
+      type: object
+      properties:
+        PlanId:
+          format: int32
+          type: integer
+        Description:
+          type: string
+        UploadedFileLinks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Attachments.UploadRetrofitRetireAttachmentResponse'
     ServiceChannel.Services.WebApi.Models.Response.Attachments.UploadRetrofitRetireAttachmentsResponse:
       type: object
       properties:
@@ -3735,26 +3730,45 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Attachments.UploadRetrofitRetireAttachmentResponse'
-    ServiceChannel.Services.Messaging.RefrigerantTracking.RetrofitRetireDoc:
+    ServiceChannel.Services.Messaging.Assets.AssetAttachment:
       type: object
       properties:
         Id:
           format: int32
           type: integer
-        PlanId:
+        AssetId:
           format: int32
           type: integer
-        Name:
+        FileName:
           type: string
-        Path:
+        Comment:
           type: string
-        Description:
-          type: string
-        CreatedDate:
+        Date:
           format: date-time
           type: string
-        UploadedBy:
+        FilePath:
           type: string
+        IsPrimary:
+          default: false
+          type: boolean
+        Uri:
+          type: string
+        ThumbnailPath:
+          type: string
+        ThumbnailUri:
+          type: string
+        UpladedByUserId:
+          format: int32
+          type: integer
+        UpladedByUserName:
+          type: string
+    ServiceChannel.Services.WebApi.Models.Response.Attachments.DeleteWorkOrderAttachmentResponse:
+      type: object
+      properties:
+        WorkOrderId:
+          format: int32
+          description: Unique numeric identifier of the work order the attachment was removed from.
+          type: integer
     ServiceChannel.Services.Messaging.Assets.AddAssetAttachmentResponse:
       type: object
       properties:
@@ -3792,12 +3806,16 @@ components:
           type: integer
         UpladedByUserName:
           type: string
-    ServiceChannel.Services.Messaging.Attachments.RemoveRetrofitRetireDocRequest:
+    ServiceChannel.Api.Model.SiteAudit.AttachmentInComment:
       type: object
       properties:
-        AttachmentId:
+        Id:
           format: int32
           type: integer
+        Url:
+          type: string
+        UrlResized:
+          type: string
     ServiceChannel.Services.Messaging.Attachments.RemoveRetrofitRetireDocsRequest:
       type: object
       properties:
@@ -3805,41 +3823,23 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Attachments.RemoveRetrofitRetireDocRequest'
-    ServiceChannel.Services.Messaging.Attachments.Attachment:
-      description: Object containing information about an attachment.
+    System.Object:
+      type: object
+      properties: {}
+    ServiceChannel.Services.WebApi.Models.AssetAttachmentsRequest:
       type: object
       properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of the attachment.
-          type: integer
-        Description:
-          description: Optional text that a user added when uploading the attachment. The maximum character count is 200.
+        AssetIds:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.Attachments.UploadRetrofitRetireAttachmentResponse:
+      type: object
+      properties:
+        FileName:
           type: string
-        Name:
-          description: Attachment name.
-          type: string
-        TimeStamp:
-          format: date-time
-          description: Date and time when the attachment was uploaded. The format is `YYYY-MM-DDThh:mm:ss.sss±hh:mm`, where `±hh:mm` represents the time zone offset from UTC.
-          type: string
-        Uri:
-          description: Link address to the attachment in the ServiceChannel system.
-          type: string
-        NoteId:
-          format: int64
-          description: Unique numeric identifier of the note to which a user added the attachment.
-          type: integer
-        Visibility:
-          format: int32
-          description: "Visibility status of the attachment. Defines which parties can view the attachment. The *PrivateProviderNotesAndAttachments* feature should be enabled. For subscribers who are using Universal Connector, the *PrivateClientNotesAndAttachments* feature should be enabled.\n            <br />Possible values:\n             • `0`: No restrictions on visibility. Visible to everyone.\n             • `1`: Not visible to the client. The subscriber deselected the “Visible to Client” checkmark when uploading an attachment or adding a note with an attachment. \n             • `2`: Not visible to the provider. The subscriber deselected the “Visible to Provider” checkmark when uploading an attachment or adding a note with an attachment. \n             • `3`: Visible to the subscriber only. The subscriber deselected the “Visible to Client” and “Visible to Provider” checkmarks when uploading an attachment or adding a note with an attachment."
-          type: integer
-        IsInvoiceDigitalCopy:
-          description: "Defines if the attachment is a digital copy of the provider’s invoice. According to subscriber configurations, some providers should attach digital copies of invoices.\n            Possible values: \n             • `true`: The attachment is an invoice digital copy. \n             • `false`: The attachment is not an invoice digital copy. \n            <br />***Note:*** Subscribers can set the requirement of a digital invoice copy from providers when the *InvoiceRequireDigitalCopy* feature is turned on."
-          default: false
-          type: boolean
-        UploadBy:
-          description: User who uploaded the attachment.
+        FilePath:
           type: string
   securitySchemes:
     oauth2:

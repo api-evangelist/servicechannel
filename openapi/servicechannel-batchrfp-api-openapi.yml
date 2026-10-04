@@ -66,16 +66,6 @@ paths:
         required: true
 components:
   schemas:
-    ServiceChannel.Services.Messaging.BatchWorkOrder.BatchCreateRfpResponse:
-      description: The BatchCreateRfpResponse.
-      type: object
-      properties:
-        SessionId:
-          description: Session generated in batch handler during batch Rfp creation process
-          type: string
-    System.Object:
-      type: object
-      properties: {}
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -1713,41 +1703,13 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.BatchRfp.BatchRfpRequest:
-      required:
-      - BatchCreateRfps
-      - CallbackUri
-      - BatchName
-      - BatchNumber
-      - BatchTemplateFileName
-      - BatchTemplateRemotePath
+    ServiceChannel.Services.Messaging.BatchWorkOrder.BatchCreateRfpResponse:
+      description: The BatchCreateRfpResponse.
       type: object
       properties:
-        BatchCreateRfps:
-          description: Required, BatchCreateRfp to create the batch of Rfp's
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.BatchRfp.BatchCreateRfp'
-        CallbackUri:
-          description: Required, URL where callback method will post the result
+        SessionId:
+          description: Session generated in batch handler during batch Rfp creation process
           type: string
-        BatchName:
-          description: Optional Batch Name, project module's Name from which this Rfp was created
-          type: string
-        BatchNumber:
-          description: Optional Batch Number, project module's GUID from which this Rfp was created
-          type: string
-        BatchTemplateFileName:
-          description: Origin file name
-          type: string
-        BatchTemplateRemotePath:
-          description: Path to blob
-          type: string
-        Attachments:
-          description: Optional, Attachments.
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.BatchRfpAttachment'
     ServiceChannel.Api.Model.Entities.BatchRfpAttachment:
       type: object
       properties:
@@ -1815,6 +1777,44 @@ components:
         WaitingForPrpEmail:
           description: User's email
           type: string
+    ServiceChannel.Services.Messaging.BatchRfp.BatchRfpRequest:
+      required:
+      - BatchCreateRfps
+      - CallbackUri
+      - BatchName
+      - BatchNumber
+      - BatchTemplateFileName
+      - BatchTemplateRemotePath
+      type: object
+      properties:
+        BatchCreateRfps:
+          description: Required, BatchCreateRfp to create the batch of Rfp's
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.BatchRfp.BatchCreateRfp'
+        CallbackUri:
+          description: Required, URL where callback method will post the result
+          type: string
+        BatchName:
+          description: Optional Batch Name, project module's Name from which this Rfp was created
+          type: string
+        BatchNumber:
+          description: Optional Batch Number, project module's GUID from which this Rfp was created
+          type: string
+        BatchTemplateFileName:
+          description: Origin file name
+          type: string
+        BatchTemplateRemotePath:
+          description: Path to blob
+          type: string
+        Attachments:
+          description: Optional, Attachments.
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Api.Model.Entities.BatchRfpAttachment'
+    System.Object:
+      type: object
+      properties: {}
   securitySchemes:
     oauth2:
       type: oauth2

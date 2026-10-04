@@ -151,6 +151,34 @@ components:
           description: DoNotDispatch enabled?
           default: false
           type: boolean
+    ServiceChannel.Services.Messaging.Users.DashboardInfo:
+      description: Dashboard details object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique dashboard identifier.
+          type: integer
+        Name:
+          description: Dashboard name.
+          type: string
+        RedirectToDashboard:
+          description: Defines whether a subscriber user is redirected to a dashboard once they log in.
+          default: false
+          type: boolean
+    ServiceChannel.Services.Messaging.Users.MlpUserInfo:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        MlpLevel:
+          type: string
+        MlpLocations:
+          type: array
+          items:
+            format: int32
+            type: integer
     ServiceChannel.Services.Messaging.Users.AccessOptions:
       description: Object listing locations, districts, regions, and trades a subscriber user has access to. Learn more about [granting access based on locations, districts, and regions](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/585107276/Location+District+Region+Access+Tab) in ServiceChannel University.
       type: object
@@ -175,89 +203,21 @@ components:
           type: array
           items:
             type: string
-    ServiceChannel.Services.Messaging.Users.LimitOptions:
-      description: Object for NTE, proposal, and invoice limits set for a subscriber user.
-      type: object
-      properties:
-        NteLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
-        ProposalLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
-        InvoiceLimit:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
-          description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
-    ServiceChannel.Services.Messaging.Subscribers.Subscriber:
-      required:
-      - Name
+    ServiceChannel.Services.Messaging.Trade.Trade:
+      description: Trade object.
       type: object
       properties:
         Id:
           format: int32
+          description: Numeric identifier of the trade.
           type: integer
-        ShortName:
-          type: string
-        Email:
-          type: string
-        Users:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.User'
-        PrimaryCurrency:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
-        IsOutsourcedWorkOn:
-          default: false
-          type: boolean
         Name:
-          description: "Required Name\n            Name - name of the subscriber"
+          description: Trade name.
           type: string
-        Address1:
-          description: Optional
-          type: string
-        Address2:
-          description: Optional
-          type: string
-        Country:
-          description: Optional
-          type: string
-        State:
-          description: Optional
-          type: string
-        City:
-          description: Optional
-          type: string
-        Zip:
-          description: Optional
-          type: string
-        Phone:
-          description: Optional
-          type: string
-        Fax:
-          description: Optional
-          type: string
-        ContactName:
-          description: Optional
-          type: string
-        TimeFormat:
-          type: string
-        DateFormat:
-          type: string
-        DecimalSeparator:
-          type: string
-    ServiceChannel.Services.Messaging.Users.MlpUserInfo:
-      type: object
-      properties:
-        Id:
+        SubscriberId:
           format: int32
+          description: Unique subscriber ID.
           type: integer
-        MlpLevel:
-          type: string
-        MlpLocations:
-          type: array
-          items:
-            format: int32
-            type: integer
     ServiceChannel.Services.Messaging.LocationNote.LocationNote:
       description: Object with the location note details.
       type: object
@@ -275,214 +235,6 @@ components:
           type: string
         Header:
           description: Name of the note.
-          type: string
-    ServiceChannel.Services.Messaging.Users.MliUserInfo:
-      type: object
-      properties:
-        Id:
-          format: int32
-          type: integer
-        MliLevel:
-          type: string
-        MliLocations:
-          type: array
-          items:
-            format: int32
-            type: integer
-    ServiceChannel.Services.Messaging.Trade.Trade:
-      description: Trade object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Numeric identifier of the trade.
-          type: integer
-        Name:
-          description: Trade name.
-          type: string
-        SubscriberId:
-          format: int32
-          description: Unique subscriber ID.
-          type: integer
-    ServiceChannel.Services.Messaging.Users.DashboardInfo:
-      description: Dashboard details object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique dashboard identifier.
-          type: integer
-        Name:
-          description: Dashboard name.
-          type: string
-        RedirectToDashboard:
-          description: Defines whether a subscriber user is redirected to a dashboard once they log in.
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.Users.Limit:
-      description: Object for limit details set for a subscriber user.
-      type: object
-      properties:
-        Amount:
-          format: double
-          description: Limit amount.
-          type: number
-        CurrencyId:
-          format: int32
-          description: Identifier of the currency the limit is set in.
-          type: integer
-    ServiceChannel.Services.Messaging.Location.Location:
-      description: General location details object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique location identifier.
-          type: integer
-        SubscriberId:
-          format: int32
-          description: Unique subscriber identifier.
-          type: integer
-        SubscriberName:
-          type: string
-        StoreId:
-          description: Alphanumeric identifier of the store in the client's system. Assigned by and unique per subscriber.
-          type: string
-        Name:
-          description: Location name.
-          type: string
-        ShortName:
-          description: Shortened location name.
-          type: string
-        Latitude:
-          format: double
-          description: Global position. Latitude.
-          type: number
-        Longitude:
-          format: double
-          description: Global position. Longitude.
-          type: number
-        Distance:
-          format: double
-          description: Distance from GPS coordinate to this location
-          type: number
-        Radius:
-          format: double
-          description: GPS radius for the location.
-          type: number
-        LocationTypeId:
-          format: int32
-          description: Numeric identifier of the location type.
-          type: integer
-        Address1:
-          description: Additional location address.
-          type: string
-        Address2:
-          description: Main location address.
-          type: string
-        City:
-          description: Location city.
-          type: string
-        State:
-          description: State where the location is situated.
-          type: string
-        StateId:
-          format: int32
-          description: Numeric identifier of the location’s state.
-          type: integer
-        Region:
-          description: Part of the country where the location is situated.
-          type: string
-        District:
-          description: Abbreviation of the town or country area where the location is situated.
-          type: string
-        Zip:
-          description: Location ZIP or postal code.
-          type: string
-        Country:
-          description: Abbreviation of the country name where the location is situated.
-          type: string
-        CountryId:
-          format: int32
-          description: Numeric identifier of the country of the location.
-          type: integer
-        ClosedDate:
-          format: date-time
-          description: Last day when the location is open for business.
-          type: string
-        OpenDate:
-          format: date-time
-          description: First day when the location is open for business.
-          type: string
-        Status:
-          description: 'Status of the location. Possible values: *open*, *closed*.'
-          type: string
-        Email:
-          description: Email the location can be contacted at.
-          type: string
-        FaxNumber:
-          description: Fax number the location can be contacted at.
-          type: string
-        Phone:
-          description: Contact phone number of the location.
-          type: string
-        Contact:
-          description: Name of the main person to contact at the location.
-          type: string
-        HasInventory:
-          description: 'Indicates whether it’s an inventory location or not. Possible values: *true*, *false*.'
-          default: false
-          type: boolean
-        SquareValue:
-          format: double
-          description: Square value of the facility.
-          type: number
-        SquareMeasure:
-          description: Unit or system of units for measuring location area.
-          type: string
-        TimeZoneInfoId:
-          format: int32
-          description: Numeric identifier of the location time zone.
-          type: integer
-        TimeZoneShortDescription:
-          description: Location time zone abbreviation.
-          type: string
-        TimeZoneMsName:
-          description: Location time zone Microsoft Name. e.g "Eastern Standard Time"
-          type: string
-        TimeZoneIanaName:
-          description: Location time zone Iana Name. e.g. "America/New_York"
-          type: string
-        TypeLabel:
-          description: '[Inventory location type](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/1209106525/Creating+Inventory+Locations?preview=%2F1209106525%2F1205830388%2FSupply-House-Type.png). Possible values: *Location*, *Warehouse*, *Supply House*, *Truck*.'
-          type: string
-        Supplier:
-          description: Supplier’s location name.
-          type: string
-        CountyId:
-          format: int32
-          description: County numeric identifier.
-          type: integer
-        Notes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.LocationNote.LocationNote'
-        TimeShiftToEST:
-          format: int32
-          type: integer
-        AddressTypeId:
-          format: int32
-          description: Address format pattern Id
-          type: integer
-        FormattedAddress:
-          type: string
-        LocationFormattedAddressTail:
-          type: string
-        IsInternational:
-          default: false
-          type: boolean
-          readOnly: true
-        Address:
           type: string
     ServiceChannel.Services.Messaging.ProviderAssignments.ProviderAssignment:
       type: object
@@ -507,6 +259,31 @@ components:
           $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Trade.Trade'
         Location:
           $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Location.Location'
+    ServiceChannel.Services.Messaging.Users.LimitOptions:
+      description: Object for NTE, proposal, and invoice limits set for a subscriber user.
+      type: object
+      properties:
+        NteLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the NTE amount that a user can not exceed upon editing work orders. If a user who has permission to edit work orders tries to enter the NTE amount above the set limit, an error message will appear.
+        ProposalLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the proposal amount above which a user can not approve proposals — for users with the corresponding permission. The user can put on hold or reject proposals above their limit.
+        InvoiceLimit:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.Limit'
+          description: Limit for the invoice amount above which a user can not process invoices by changing their status. The user can view invoices above their limit if they have the corresponding permission.
+    ServiceChannel.Services.Messaging.Users.Limit:
+      description: Object for limit details set for a subscriber user.
+      type: object
+      properties:
+        Amount:
+          format: double
+          description: Limit amount.
+          type: number
+        CurrencyId:
+          format: int32
+          description: Identifier of the currency the limit is set in.
+          type: integer
     ServiceChannel.Services.Messaging.Currencies.Currency:
       type: object
       properties:
@@ -706,6 +483,229 @@ components:
           description: DoNotDispatch enabled?
           default: false
           type: boolean
+    ServiceChannel.Services.Messaging.Users.MliUserInfo:
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        MliLevel:
+          type: string
+        MliLocations:
+          type: array
+          items:
+            format: int32
+            type: integer
+    ServiceChannel.Services.Messaging.Subscribers.Subscriber:
+      required:
+      - Name
+      type: object
+      properties:
+        Id:
+          format: int32
+          type: integer
+        ShortName:
+          type: string
+        Email:
+          type: string
+        Users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Users.User'
+        PrimaryCurrency:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.Currencies.Currency'
+        IsOutsourcedWorkOn:
+          default: false
+          type: boolean
+        Name:
+          description: "Required Name\n            Name - name of the subscriber"
+          type: string
+        Address1:
+          description: Optional
+          type: string
+        Address2:
+          description: Optional
+          type: string
+        Country:
+          description: Optional
+          type: string
+        State:
+          description: Optional
+          type: string
+        City:
+          description: Optional
+          type: string
+        Zip:
+          description: Optional
+          type: string
+        Phone:
+          description: Optional
+          type: string
+        Fax:
+          description: Optional
+          type: string
+        ContactName:
+          description: Optional
+          type: string
+        TimeFormat:
+          type: string
+        DateFormat:
+          type: string
+        DecimalSeparator:
+          type: string
+    ServiceChannel.Services.Messaging.Location.Location:
+      description: General location details object.
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Unique location identifier.
+          type: integer
+        SubscriberId:
+          format: int32
+          description: Unique subscriber identifier.
+          type: integer
+        SubscriberName:
+          type: string
+        StoreId:
+          description: Alphanumeric identifier of the store in the client's system. Assigned by and unique per subscriber.
+          type: string
+        Name:
+          description: Location name.
+          type: string
+        ShortName:
+          description: Shortened location name.
+          type: string
+        Latitude:
+          format: double
+          description: Global position. Latitude.
+          type: number
+        Longitude:
+          format: double
+          description: Global position. Longitude.
+          type: number
+        Distance:
+          format: double
+          description: Distance from GPS coordinate to this location
+          type: number
+        Radius:
+          format: double
+          description: GPS radius for the location.
+          type: number
+        LocationTypeId:
+          format: int32
+          description: Numeric identifier of the location type.
+          type: integer
+        Address1:
+          description: Additional location address.
+          type: string
+        Address2:
+          description: Main location address.
+          type: string
+        City:
+          description: Location city.
+          type: string
+        State:
+          description: State where the location is situated.
+          type: string
+        StateId:
+          format: int32
+          description: Numeric identifier of the location’s state.
+          type: integer
+        Region:
+          description: Part of the country where the location is situated.
+          type: string
+        District:
+          description: Abbreviation of the town or country area where the location is situated.
+          type: string
+        Zip:
+          description: Location ZIP or postal code.
+          type: string
+        Country:
+          description: Abbreviation of the country name where the location is situated.
+          type: string
+        CountryId:
+          format: int32
+          description: Numeric identifier of the country of the location.
+          type: integer
+        ClosedDate:
+          format: date-time
+          description: Last day when the location is open for business.
+          type: string
+        OpenDate:
+          format: date-time
+          description: First day when the location is open for business.
+          type: string
+        Status:
+          description: 'Status of the location. Possible values: *open*, *closed*.'
+          type: string
+        Email:
+          description: Email the location can be contacted at.
+          type: string
+        FaxNumber:
+          description: Fax number the location can be contacted at.
+          type: string
+        Phone:
+          description: Contact phone number of the location.
+          type: string
+        Contact:
+          description: Name of the main person to contact at the location.
+          type: string
+        HasInventory:
+          description: 'Indicates whether it’s an inventory location or not. Possible values: *true*, *false*.'
+          default: false
+          type: boolean
+        SquareValue:
+          format: double
+          description: Square value of the facility.
+          type: number
+        SquareMeasure:
+          description: Unit or system of units for measuring location area.
+          type: string
+        TimeZoneInfoId:
+          format: int32
+          description: Numeric identifier of the location time zone.
+          type: integer
+        TimeZoneShortDescription:
+          description: Location time zone abbreviation.
+          type: string
+        TimeZoneMsName:
+          description: Location time zone Microsoft Name. e.g "Eastern Standard Time"
+          type: string
+        TimeZoneIanaName:
+          description: Location time zone Iana Name. e.g. "America/New_York"
+          type: string
+        TypeLabel:
+          description: '[Inventory location type](https://servicechannel.atlassian.net/wiki/spaces/SCU/pages/1209106525/Creating+Inventory+Locations?preview=%2F1209106525%2F1205830388%2FSupply-House-Type.png). Possible values: *Location*, *Warehouse*, *Supply House*, *Truck*.'
+          type: string
+        Supplier:
+          description: Supplier’s location name.
+          type: string
+        CountyId:
+          format: int32
+          description: County numeric identifier.
+          type: integer
+        Notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.LocationNote.LocationNote'
+        TimeShiftToEST:
+          format: int32
+          type: integer
+        AddressTypeId:
+          format: int32
+          description: Address format pattern Id
+          type: integer
+        FormattedAddress:
+          type: string
+        LocationFormattedAddressTail:
+          type: string
+        IsInternational:
+          default: false
+          type: boolean
+          readOnly: true
+        Address:
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2

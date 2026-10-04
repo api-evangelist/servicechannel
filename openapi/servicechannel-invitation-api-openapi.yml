@@ -69,21 +69,9 @@ components:
           maxLength: 10
           minLength: 0
           type: string
-    InvitationModel:
+    Object:
       type: object
-      properties:
-        LanguageCulture:
-          maxLength: 5
-          minLength: 0
-          type: string
-        ExpirationDate:
-          format: date-time
-          type: string
-        SenderEmail:
-          maxLength: 255
-          minLength: 0
-          pattern: ^[\w!#$%&'*+\-\/=?\^_`{|}~]+(\.[\w!#$%&'*+\-\/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,63})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$
-          type: string
+      properties: {}
     CompanyModel:
       required:
       - Email
@@ -116,9 +104,6 @@ components:
           maxLength: 50
           minLength: 0
           type: string
-    Object:
-      type: object
-      properties: {}
     CreateInvitationModel:
       required:
       - ScSubscriberId
@@ -139,6 +124,21 @@ components:
           $ref: '#/components/schemas/InvitationModel'
         PaymentTerms:
           $ref: '#/components/schemas/PaymentTermsModel'
+    InvitationModel:
+      type: object
+      properties:
+        LanguageCulture:
+          maxLength: 5
+          minLength: 0
+          type: string
+        ExpirationDate:
+          format: date-time
+          type: string
+        SenderEmail:
+          maxLength: 255
+          minLength: 0
+          pattern: ^[\w!#$%&'*+\-\/=?\^_`{|}~]+(\.[\w!#$%&'*+\-\/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,63})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2
