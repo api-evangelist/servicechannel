@@ -1,115 +1,53 @@
-generated: '2026-07-21'
+generated: '2026-09-23'
 method: generated
-source: openapi/servicechannel-fixxbook-openapi-original.json, openapi/servicechannel-service-automation-openapi-original.json
+source: openapi/servicechannel-afterhours-api-openapi.yml, openapi/servicechannel-ai-agents-api-openapi.yml,
+  openapi/servicechannel-announcements-api-openapi.yml, openapi/servicechannel-applicationaccess-api-openapi.yml,
+  openapi/servicechannel-asset-types-api-openapi.yml, openapi/servicechannel-assets-api-openapi.yml,
+  openapi/servicechannel-assettaskresponse-api-openapi.yml, openapi/servicechannel-attachments-api-openapi.yml,
+  openapi/servicechannel-batchrfp-api-openapi.yml, openapi/servicechannel-branding-api-openapi.yml,
+  openapi/servicechannel-categories-api-openapi.yml, openapi/servicechannel-checklists-api-openapi.yml,
+  openapi/servicechannel-classification-api-openapi.yml, openapi/servicechannel-client-api-openapi.yml,
+  openapi/servicechannel-compliance-api-openapi.yml, openapi/servicechannel-contracts-api-openapi.yml,
+  openapi/servicechannel-contractservicerates-api-openapi.yml, openapi/servicechannel-ctools-api-openapi.yml,
+  openapi/servicechannel-currencies-api-openapi.yml, openapi/servicechannel-dashboardsettings-api-openapi.yml,
+  openapi/servicechannel-donotdispatch-api-openapi.yml, openapi/servicechannel-email-notifications-api-openapi.yml,
+  openapi/servicechannel-eula-api-openapi.yml, openapi/servicechannel-feedback-api-openapi.yml,
+  openapi/servicechannel-gl-codes-api-openapi.yml, openapi/servicechannel-invitation-api-openapi.yml,
+  openapi/servicechannel-invoices-api-openapi.yml, openapi/servicechannel-issuelist-api-openapi.yml,
+  openapi/servicechannel-locationnotes-api-openapi.yml, openapi/servicechannel-locations-api-openapi.yml,
+  openapi/servicechannel-locationsupply-api-openapi.yml, openapi/servicechannel-mliconfiguration-api-openapi.yml,
+  openapi/servicechannel-mobiletheme-api-openapi.yml, openapi/servicechannel-notes-api-openapi.yml,
+  openapi/servicechannel-notification-subscriptions-api-openapi.yml, openapi/servicechannel-notification-web-hooks-api-openapi.yml,
+  openapi/servicechannel-outgoingxml-api-openapi.yml, openapi/servicechannel-parts-api-openapi.yml,
+  openapi/servicechannel-plannedmaintenance-api-openapi.yml, openapi/servicechannel-priorities-api-openapi.yml,
+  openapi/servicechannel-proposals-api-openapi.yml, openapi/servicechannel-providerassignment-api-openapi.yml,
+  openapi/servicechannel-providers-api-openapi.yml, openapi/servicechannel-push-notifications-api-openapi.yml,
+  openapi/servicechannel-refrigeranttracking-api-openapi.yml, openapi/servicechannel-resolutioncodes-api-openapi.yml,
+  openapi/servicechannel-rfps-api-openapi.yml, openapi/servicechannel-roles-api-openapi.yml,
+  openapi/servicechannel-scconnector-api-openapi.yml, openapi/servicechannel-servicerequest-api-openapi.yml,
+  openapi/servicechannel-single-sign-on-api-openapi.yml, openapi/servicechannel-site-audit-api-openapi.yml,
+  openapi/servicechannel-subscribers-api-openapi.yml, openapi/servicechannel-supplyclick-api-openapi.yml,
+  openapi/servicechannel-survey-questions-api-openapi.yml, openapi/servicechannel-templatefileshistory-api-openapi.yml,
+  openapi/servicechannel-trades-api-openapi.yml, openapi/servicechannel-tradesmen-api-openapi.yml,
+  openapi/servicechannel-training-api-openapi.yml, openapi/servicechannel-trucks-api-openapi.yml,
+  openapi/servicechannel-users-api-openapi.yml, openapi/servicechannel-weather-api-openapi.yml,
+  openapi/servicechannel-work-orders-api-openapi.yml, openapi/servicechannel-work-requests-api-openapi.yml,
+  openapi/servicechannel-workactivities-api-openapi.yml, openapi/servicechannel-workrequestnote-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 749
   by_action_class:
-    connected: 381
-    acting: 368
+    connected: 412
+    acting: 337
   by_consequence:
-    read: 381
-    safety-critical: 9
-    write: 222
-    physical: 137
-  human_in_the_loop_required: 9
+    read: 412
+    write: 199
+    physical: 131
+    safety-critical: 7
+  human_in_the_loop_required: 7
 operations:
-- path: /Clients/GetProvidersInfo
-  method: get
-  operationId: Client_GetProvidersInfo
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /doNotDispatch/addProvider/{providerId}
-  method: post
-  operationId: DoNotDispatch_AddProvider
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
-- path: /doNotDispatch/removeProvider/{providerId}
-  method: delete
-  operationId: DoNotDispatch_RemoveProvider
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
-- path: /doNotDispatch/getProviders
-  method: get
-  operationId: DoNotDispatch_GetProviders
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /invitation
-  method: post
-  operationId: Invitation_Create
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /providers/ProviderData
-  method: put
-  operationId: Providers_ProviderData
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /providers/subscribers
-  method: get
-  operationId: Providers_Subscribers
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
 - path: /locations/{locationId}/businesshours
   method: get
   operationId: GETv3_locations_{locationId}_businesshours
@@ -344,6 +282,306 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /AssetTypes
+  method: get
+  operationId: GETv3_AssetTypes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes
+  method: post
+  operationId: POSTv3_AssetTypes
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /AssetTypes/{assetTypeId}
+  method: get
+  operationId: GETv3_AssetTypes_{assetTypeId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/{assetTypeId}
+  method: put
+  operationId: PUTv3_AssetTypes_{assetTypeId}
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /AssetTypes/{assetTypeId}
+  method: delete
+  operationId: DELETEv3_AssetTypes_{assetTypeId}
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /AssetTypes/byids
+  method: get
+  operationId: GETv3_AssetTypes_byids?ids[0]={ids[0]}&ids[1]={ids[1]}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/GetAssetTypeAttributes/{assetTypeId}
+  method: get
+  operationId: GETv3_AssetTypes_GetAssetTypeAttributes_{assetTypeId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/GetAssetTypeTrades/{assetTypeId}
+  method: get
+  operationId: GETv3_AssetTypes_GetAssetTypeTrades_{assetTypeId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/GetAssetTypeGroups
+  method: get
+  operationId: GETv3_AssetTypes_GetAssetTypeGroups?subscriberId={subscriberId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/GetSubscriberAssetTypeCategories
+  method: post
+  operationId: POSTv3_AssetTypes_GetSubscriberAssetTypeCategories
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /AssetTypes/GetAssetTypeCategoriesByIds
+  method: post
+  operationId: POSTv3_AssetTypes_GetAssetTypeCategoriesByIds
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/GetAssetTypeCategoriesByAssetIds
+  method: post
+  operationId: POSTv3_AssetTypes_GetAssetTypeCategoriesByAssetIds
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/GetAssetTypesByLocation
+  method: post
+  operationId: POSTv3_AssetTypes_GetAssetTypesByLocation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /AssetTypes/assets/{assetGroupId}/groupattachments
+  method: post
+  operationId: POSTv3_AssetTypes_assets_{assetGroupId}_groupattachments
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /AssetTypes/AssetTypeMeters/{assetTypeId}
+  method: get
+  operationId: GETv3_AssetTypes_AssetTypeMeters_{assetTypeId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/AssetTypeMeter/{assetTypeMeterId}
+  method: get
+  operationId: GETv3_AssetTypes_AssetTypeMeter_{assetTypeMeterId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/AssetTypeMeter
+  method: put
+  operationId: PUTv3_AssetTypes_AssetTypeMeter
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /AssetTypes/AssetTypeMeter
+  method: post
+  operationId: POSTv3_AssetTypes_AssetTypeMeter
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /AssetTypes/GetAssetTypesAvailableForSubscriber/{subscriberId}
+  method: get
+  operationId: GETv3_AssetTypes_GetAssetTypesAvailableForSubscriber_{subscriberId}?tradeId={tradeId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/asettypes/GetAssetTypesWithCreatePermission
+  method: get
+  operationId: GETv3_AssetTypes_asettypes_GetAssetTypesWithCreatePermission?subscriberId={subscriberId}&tradeId={tradeId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/AssetTypes/AssetCategoriesByTradeId/{tradeId}
+  method: get
+  operationId: GETv3_AssetTypes_AssetTypes_AssetCategoriesByTradeId_{tradeId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/asettypes/AssetTypesForCreate
+  method: get
+  operationId: GETv3_AssetTypes_asettypes_AssetTypesForCreate?tradeId={tradeId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/asettypes/GetPrimaryAssetTypesAsync
+  method: get
+  operationId: GETv3_AssetTypes_asettypes_GetPrimaryAssetTypesAsync
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/asettypes/GetPrimaryAssetTypeBrandsAsync/{primaryAssetTypeId}
+  method: get
+  operationId: GETv3_AssetTypes_asettypes_GetPrimaryAssetTypeBrandsAsync_{primaryAssetTypeId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /AssetTypes/asettypes/GetAssetTypeBrandsAsync/{assetTypeId}
+  method: get
+  operationId: GETv3_AssetTypes_asettypes_GetAssetTypeBrandsAsync_{assetTypeId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /assets/{assetId}
   method: get
   operationId: GETv3_assets_{assetId}?locationId={locationId}&storeId={storeId}&tagId={tagId}&trackingNumber={trackingNumber}
@@ -374,34 +612,22 @@ operations:
   method: post
   operationId: POSTv3_assets_searchassets
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /assets/assetsforreplacement
   method: post
   operationId: POSTv3_assets_assetsforreplacement
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /assets/assetcomponents
   method: post
   operationId: POSTv3_assets_assetcomponents
@@ -422,34 +648,22 @@ operations:
   method: post
   operationId: POSTv3_assets_getfilteredassets
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /assets/getfilteredassetsV1
   method: post
   operationId: POSTv3_assets_getfilteredassetsV1?providerId={providerId}
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /assets/getfilteredassetleaks
   method: post
   operationId: POSTv3_assets_getfilteredassetleaks
@@ -470,18 +684,12 @@ operations:
   method: post
   operationId: POSTv3_assets_getwoassettracking?woId={woId}
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /assets/WoAssetTags
   method: get
   operationId: GETv3_assets_WoAssetTags?recIds[0]={recIds[0]}&recIds[1]={recIds[1]}
@@ -524,20 +732,12 @@ operations:
   method: post
   operationId: POSTv3_assets_getassetwohistory?workOrdersCount={workOrdersCount}
   x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /assets
   method: put
   operationId: PUTv3_assets
@@ -1049,13 +1249,11 @@ operations:
   operationId: POSTv3_assets_GetAssetValidationHistoryByTrackingNumber
   x-agentic-access:
     action-class: acting
-    consequence: physical
+    consequence: write
     subject: required
     audience: null
     token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
+      max-ttl: 900
     escalation:
       human-in-the-loop: conditional
       triggers:
@@ -1092,34 +1290,22 @@ operations:
   method: post
   operationId: POSTv3_assets_getPrimaryAttachmentsForAssetList
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /assets/getPrimaryAttachmentsForAssetList_v1
   method: post
   operationId: POSTv3_assets_getPrimaryAttachmentsForAssetList_v1
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /assets/{tradeId}/getAssetTypeGroupsByTradeId
   method: get
   operationId: GETv3_assets_{tradeId}_getAssetTypeGroupsByTradeId
@@ -1134,34 +1320,22 @@ operations:
   method: post
   operationId: POSTv3_assets_GetAssetTypeGroupsByAssetsIds
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /assets/searchassetsByGroupId
   method: post
   operationId: POSTv3_assets_searchassetsByGroupId
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /assets/CanUserEditAsset
   method: get
   operationId: GETv3_assets_CanUserEditAsset?assetTypeId={assetTypeId}
@@ -1494,6 +1668,66 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /odata/assets({assetId})
+  method: get
+  operationId: Assets_GetAsset
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/assets/Service.Search(locationId={locationId},code={code})
+  method: get
+  operationId: Assets_SearchAssets
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/assets/Service.AssociateAssetCode(equipmentId={equipmentId},code={code},processDuplicatedAssetTag={processDuplicatedAssetTag})
+  method: get
+  operationId: Assets_AssociateAssetCode
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/assets/Service.FindAssets(searchCriteria={searchCriteria})
+  method: get
+  operationId: Assets_FindAssets
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/assets/Service.FindAssetsBySubscriber(searchCriteria={searchCriteria},subscriberId={subscriberId})
+  method: get
+  operationId: Assets_FindAssetsBySubscriber
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/assets/Service.FindAssetsByLocation(searchCriteria={searchCriteria},locationId={locationId})
+  method: get
+  operationId: Assets_FindAssetsByLocation
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /workorders/{workOrderId}/asset-tasks/{responseId}
   method: get
   operationId: GETv3_workorders_{workOrderId}_asset-tasks_{responseId}
@@ -1568,318 +1802,6 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /AssetTypes
-  method: get
-  operationId: GETv3_AssetTypes
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /AssetTypes
-  method: post
-  operationId: POSTv3_AssetTypes
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /AssetTypes/{assetTypeId}
-  method: get
-  operationId: GETv3_AssetTypes_{assetTypeId}
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /AssetTypes/{assetTypeId}
-  method: put
-  operationId: PUTv3_AssetTypes_{assetTypeId}
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /AssetTypes/{assetTypeId}
-  method: delete
-  operationId: DELETEv3_AssetTypes_{assetTypeId}
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /AssetTypes/byids
-  method: get
-  operationId: GETv3_AssetTypes_byids?ids[0]={ids[0]}&ids[1]={ids[1]}
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /AssetTypes/GetAssetTypeAttributes/{assetTypeId}
-  method: get
-  operationId: GETv3_AssetTypes_GetAssetTypeAttributes_{assetTypeId}
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /AssetTypes/GetAssetTypeTrades/{assetTypeId}
-  method: get
-  operationId: GETv3_AssetTypes_GetAssetTypeTrades_{assetTypeId}
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /AssetTypes/GetAssetTypeGroups
-  method: get
-  operationId: GETv3_AssetTypes_GetAssetTypeGroups?subscriberId={subscriberId}
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /AssetTypes/GetSubscriberAssetTypeCategories
-  method: post
-  operationId: POSTv3_AssetTypes_GetSubscriberAssetTypeCategories
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /AssetTypes/GetAssetTypeCategoriesByIds
-  method: post
-  operationId: POSTv3_AssetTypes_GetAssetTypeCategoriesByIds
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /AssetTypes/GetAssetTypeCategoriesByAssetIds
-  method: post
-  operationId: POSTv3_AssetTypes_GetAssetTypeCategoriesByAssetIds
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /AssetTypes/GetAssetTypesByLocation
-  method: post
-  operationId: POSTv3_AssetTypes_GetAssetTypesByLocation
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /AssetTypes/assets/{assetGroupId}/groupattachments
-  method: post
-  operationId: POSTv3_AssetTypes_assets_{assetGroupId}_groupattachments
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /AssetTypes/AssetTypeMeters/{assetTypeId}
-  method: get
-  operationId: GETv3_AssetTypes_AssetTypeMeters_{assetTypeId}
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /AssetTypes/AssetTypeMeter/{assetTypeMeterId}
-  method: get
-  operationId: GETv3_AssetTypes_AssetTypeMeter_{assetTypeMeterId}
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /AssetTypes/AssetTypeMeter
-  method: put
-  operationId: PUTv3_AssetTypes_AssetTypeMeter
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /AssetTypes/AssetTypeMeter
-  method: post
-  operationId: POSTv3_AssetTypes_AssetTypeMeter
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /AssetTypes/GetAssetTypesAvailableForSubscriber/{subscriberId}
-  method: get
-  operationId: GETv3_AssetTypes_GetAssetTypesAvailableForSubscriber_{subscriberId}?tradeId={tradeId}
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /AssetTypes/asettypes/GetAssetTypesWithCreatePermission
-  method: get
-  operationId: GETv3_AssetTypes_asettypes_GetAssetTypesWithCreatePermission?subscriberId={subscriberId}&tradeId={tradeId}
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /AssetTypes/AssetTypes/AssetCategoriesByTradeId/{tradeId}
-  method: get
-  operationId: GETv3_AssetTypes_AssetTypes_AssetCategoriesByTradeId_{tradeId}
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /AssetTypes/asettypes/AssetTypesForCreate
-  method: get
-  operationId: GETv3_AssetTypes_asettypes_AssetTypesForCreate?tradeId={tradeId}
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /AssetTypes/asettypes/GetPrimaryAssetTypesAsync
-  method: get
-  operationId: GETv3_AssetTypes_asettypes_GetPrimaryAssetTypesAsync
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /AssetTypes/asettypes/GetPrimaryAssetTypeBrandsAsync/{primaryAssetTypeId}
-  method: get
-  operationId: GETv3_AssetTypes_asettypes_GetPrimaryAssetTypeBrandsAsync_{primaryAssetTypeId}
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /AssetTypes/asettypes/GetAssetTypeBrandsAsync/{assetTypeId}
-  method: get
-  operationId: GETv3_AssetTypes_asettypes_GetAssetTypeBrandsAsync_{assetTypeId}
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
 - path: /workorders/{workorderId}/notes/{noteId}/attachments
   method: post
   operationId: POSTv3_workorders_{workorderId}_notes_{noteId}_attachments
@@ -2006,34 +1928,22 @@ operations:
   method: post
   operationId: POSTv3_assets_getattachmentsbyassetids
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /assets/getattachmentsbyassetids_v1
   method: post
   operationId: POSTv3_assets_getattachmentsbyassetids_v1
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /assets/updateAssetAttachment
   method: put
   operationId: PUTv3_assets_updateAssetAttachment?attachmentId={attachmentId}&fileName={fileName}&description={description}
@@ -2160,6 +2070,148 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /workorders/{workorderId}/attachments
+  method: post
+  operationId: POSTv3_workorders_{workorderId}_attachments?actor={actor}
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /workorders/{poNumber}/attachmentsByPoNumber
+  method: post
+  operationId: POSTv3_workorders_{poNumber}_attachmentsByPoNumber?actor={actor}
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /workorders/attachmentAsBase64
+  method: post
+  operationId: POSTv3_workorders_attachmentAsBase64
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /workorders/{workorderId}/attachments/{attachmentId}/thumbnail
+  method: get
+  operationId: GETv3_workorders_{workorderId}_attachments_{attachmentId}_thumbnail?width={width}&height={height}&mode={mode}&imageFormat={imageFormat}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /workorders/{workOrderId}/attachments/{attachmentId}
+  method: delete
+  operationId: DELETEv3_workorders_{workOrderId}_attachments_{attachmentId}
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /odata/workorders({workorderId})/attachments
+  method: get
+  operationId: Attachments_GetWorkOrderAttachments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/workorders({workorderId})/notes({noteId})/attachments
+  method: get
+  operationId: Attachments_GetWorkOrderNotesAttachments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/workorders({workorderId})/attachments({attachmentId})/Service.GetThumbnail(width={width},height={height},mode={mode},imageFormat={imageFormat})
+  method: get
+  operationId: Attachments_GetWorkorderAttachmentThumbnail
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/proposals({proposalId})/attachments
+  method: get
+  operationId: Attachments_GetProposalAttachments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/proposals({proposalId})/attachments({attachmentId})/Service.GetThumbnail(width={width},height={height},mode={mode},imageFormat={imageFormat})
+  method: get
+  operationId: Attachments_GetProposalAttachmentThumbnail
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/rfps({rfpId})/attachments
+  method: get
+  operationId: Attachments_GetRFPAttachments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /BatchRfp/Create
   method: post
   operationId: POSTv3_BatchRfp_Create
@@ -2288,20 +2340,12 @@ operations:
   method: post
   operationId: POSTv3_checklists_ChecklistResponse_get?workOrderId={workOrderId}
   x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /checklists/ChecklistResponse/attachments
   method: post
   operationId: POSTv3_checklists_ChecklistResponse_attachments
@@ -2422,6 +2466,16 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /Clients/GetProvidersInfo
+  method: get
+  operationId: Client_GetProvidersInfo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /workorders/{workOrderId}/compliance
   method: get
   operationId: GETv3_workorders_{workOrderId}_compliance
@@ -2501,13 +2555,11 @@ operations:
   operationId: PUTv3_contracts_retire
   x-agentic-access:
     action-class: acting
-    consequence: physical
+    consequence: write
     subject: required
     audience: null
     token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
+      max-ttl: 900
     escalation:
       human-in-the-loop: conditional
       triggers:
@@ -2744,18 +2796,12 @@ operations:
   method: post
   operationId: POSTv3_dashboardsettings_requestsetup
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /dashboardsettings/requestsetupconfirm/{setupId}
   method: get
   operationId: GETv3_dashboardsettings_requestsetupconfirm_{setupId}
@@ -2770,18 +2816,12 @@ operations:
   method: post
   operationId: POSTv3_dashboardsettings_requestsetupconfirm
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /dashboardsettings/setupgeneral/{subscriberId}/{setupId}
   method: get
   operationId: GETv3_dashboardsettings_setupgeneral_{subscriberId}_{setupId}
@@ -2815,6 +2855,48 @@ operations:
 - path: /dashboardsettings/scintelligencesetup/{setupId}
   method: get
   operationId: GETv3_dashboardsettings_scintelligencesetup_{setupId}
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /doNotDispatch/addProvider/{providerId}
+  method: post
+  operationId: DoNotDispatch_AddProvider
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /doNotDispatch/removeProvider/{providerId}
+  method: delete
+  operationId: DoNotDispatch_RemoveProvider
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /doNotDispatch/getProviders
+  method: get
+  operationId: DoNotDispatch_GetProviders
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -3064,6 +3146,22 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /invitation
+  method: post
+  operationId: Invitation_Create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /invoices/{subscriberId}/InvoiceRequirements
   method: get
   operationId: GETv3_invoices_{subscriberId}_InvoiceRequirements
@@ -3264,20 +3362,12 @@ operations:
   method: post
   operationId: POSTv3_invoices_GetProjectsInvoicesIgnoreAccessRights
   x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /invoices/ping/{serviceName}
   method: get
   operationId: GETv3_invoices_ping_{serviceName}
@@ -3306,6 +3396,16 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /odata/invoices
+  method: get
+  operationId: Invoices_GetInvoices
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /api/subscribers/{subscriberId}/storedashboards/{dashboardId}/issuelist
   method: get
   operationId: GETv3_api_subscribers_{subscriberId}_storedashboards_{dashboardId}_issuelist
@@ -3482,18 +3582,12 @@ operations:
   method: post
   operationId: POSTv3_api_subscribers_{subscriberId}_storedashboards_{dashboardId}_issuelist_issuechoice
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /subscribers/current/storedashboards/current/issuelist/issuechoice
   method: get
   operationId: GETv3_subscribers_current_storedashboards_current_issuelist_issuechoice?problemType={problemType}&equipmentType={equipmentType}&problemCode={problemCode}&locationId={locationId}&setupId={setupId}
@@ -3708,18 +3802,12 @@ operations:
   method: post
   operationId: POSTv3_LocationNotes_GetLocationNoteHeaders
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /LocationNotes/GetLocationNoteWithValues
   method: get
   operationId: GETv3_LocationNotes_GetLocationNoteWithValues?headerId={headerId}
@@ -3862,18 +3950,12 @@ operations:
   method: post
   operationId: POSTv3_GetFilteredLocations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /locations/LocationWithNotes
   method: post
   operationId: POSTv3_locations_LocationWithNotes
@@ -3964,18 +4046,12 @@ operations:
   method: post
   operationId: POSTv3_filter
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /landlord-responsibilities-by-storeId
   method: get
   operationId: GETv3_landlord-responsibilities-by-storeId?storeId={storeId}
@@ -4090,50 +4166,32 @@ operations:
   method: post
   operationId: POSTv3_locations_GetExistsLocations
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /locations/GetExistsRegions
   method: post
   operationId: POSTv3_locations_GetExistsRegions
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /locations/GetExistsDistricts
   method: post
   operationId: POSTv3_locations_GetExistsDistricts
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /providers/current/locationsWithRetired
   method: get
   operationId: GETv3_providers_current_locationsWithRetired
@@ -4157,6 +4215,36 @@ operations:
 - path: /locations/{locationId}/locationAttachments
   method: get
   operationId: GETv3_locations_{locationId}_locationAttachments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/locations
+  method: get
+  operationId: Locations_GetLocations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/locations/Service.NearBy(latitude={latitude},longitude={longitude})
+  method: get
+  operationId: Locations_GetLocationsNearMe
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/locations/Service.ForServiceRequest()
+  method: get
+  operationId: Locations_GetServiceRequestLocations
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -4524,6 +4612,26 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /odata/workorders({workorderId})/notes
+  method: get
+  operationId: Notes_GetWorkOrderNotes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/workorders({workorderId})/notes({noteId})
+  method: get
+  operationId: Notes_GetWorkOrderNote
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /NotificationSubscriptions/Http
   method: get
   operationId: GETv3_NotificationSubscriptions_Http
@@ -5514,18 +5622,12 @@ operations:
   method: post
   operationId: POSTv3_proposals_GetProposals
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /proposals/{proposalId}/users
   method: get
   operationId: GETv3_proposals_{proposalId}_users
@@ -5754,6 +5856,82 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /odata/proposals
+  method: get
+  operationId: Proposals_GetProposals
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/rfps({rfpId})/proposals
+  method: get
+  operationId: Proposals_GetProposalsForRfp
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/proposals({proposalId})/Service.Categories()
+  method: get
+  operationId: Proposals_GetProposalCategories
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/providerassignment/Service.GetAssigned()
+  method: get
+  operationId: ProviderAssignment_GetAssigned
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/GetProviderAssignments
+  method: get
+  operationId: ProviderAssignment_GetProviderAssignments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /providers/ProviderData
+  method: put
+  operationId: Providers_ProviderData
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /providers/subscribers
+  method: get
+  operationId: Providers_Subscribers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /api/providers/info/{id}
   method: get
   operationId: GETv3_api_providers_info_{id}
@@ -5886,6 +6064,36 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /odata/locations({locationId})/providers/Service.GetRecent(days={days})
+  method: get
+  operationId: Providers_GetRecent
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/detailedProviders/Service.Get(providerId={providerId})
+  method: get
+  operationId: Providers_GetProvider
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/locations({locationId})/providers/Service.GetLast(days={days})
+  method: get
+  operationId: Providers_GetLast
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /locations/{locationId}/subscribe
   method: post
   operationId: POSTv3_locations_{locationId}_subscribe
@@ -5984,18 +6192,12 @@ operations:
   method: post
   operationId: POSTv3_refrigeranttracking
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /refrigeranttracking/rack
   method: get
   operationId: GETv3_refrigeranttracking_rack?id={id}
@@ -6560,18 +6762,12 @@ operations:
   method: post
   operationId: POSTv3_refrigeranttracking_GetLeakRecordsVerificationHistory
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /refrigeranttracking/LeakInspectionComplianceAcknowledgement
   method: post
   operationId: POSTv3_refrigeranttracking_LeakInspectionComplianceAcknowledgement
@@ -6848,6 +7044,26 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /odata/rfps
+  method: get
+  operationId: Rfps_GetRfps
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/rfps({rfpId})
+  method: get
+  operationId: Rfps_GetRfp
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /roles/FeedRoles
   method: get
   operationId: GETv3_roles_FeedRoles
@@ -7094,34 +7310,22 @@ operations:
   method: post
   operationId: POSTv3_subscribers_current_servicerequest_overrides_props
   x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /providers/current/subscribers/{subscriberId}/servicerequest/overrides/props
   method: post
   operationId: POSTv3_providers_current_subscribers_{subscriberId}_servicerequest_overrides_props
   x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /subscribers/current/servicerequest/duplicates/completed
   method: post
   operationId: POSTv3_subscribers_current_servicerequest_duplicates_completed
@@ -7802,6 +8006,26 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /odata/trades
+  method: get
+  operationId: Trades_GetTrades
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/locations({locationId})/trades
+  method: get
+  operationId: Trades_GetTradesByLocation
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /tradesmen
   method: post
   operationId: POSTv3_tradesmen
@@ -7952,6 +8176,16 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /odata/trucks
+  method: get
+  operationId: Trucks_GetTrucks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /users
   method: get
   operationId: GETv3_users?subscriberId={subscriberId}&startIndex={startIndex}&maxCount={maxCount}&userFilterType={userFilterType}&feedRolesFilter[0]={feedRolesFilter[0]}&feedRolesFilter[1]={feedRolesFilter[1]}&includeMliInfo={includeMliInfo}&includeMlpInfo={includeMlpInfo}&includeTotalCount={includeTotalCount}
@@ -8116,6 +8350,16 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /odata/users
+  method: get
+  operationId: Users_GetUsers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /weather/eventTypes
   method: get
   operationId: GETv3_weather_eventTypes?subscriberId={subscriberId}
@@ -8136,142 +8380,6 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /workorders/{workorderId}/attachments
-  method: post
-  operationId: POSTv3_workorders_{workorderId}_attachments?actor={actor}
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /workorders/{poNumber}/attachmentsByPoNumber
-  method: post
-  operationId: POSTv3_workorders_{poNumber}_attachmentsByPoNumber?actor={actor}
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /workorders/attachmentAsBase64
-  method: post
-  operationId: POSTv3_workorders_attachmentAsBase64
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /workorders/{workorderId}/attachments/{attachmentId}/thumbnail
-  method: get
-  operationId: GETv3_workorders_{workorderId}_attachments_{attachmentId}_thumbnail?width={width}&height={height}&mode={mode}&imageFormat={imageFormat}
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /workorders/{workOrderId}/attachments/{attachmentId}
-  method: delete
-  operationId: DELETEv3_workorders_{workOrderId}_attachments_{attachmentId}
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /workorders/{workorderId}/workactivities/{workactivityId}
-  method: put
-  operationId: PUTv3_workorders_{workorderId}_workactivities_{workactivityId}
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /workorders/{workorderId}/workactivities
-  method: post
-  operationId: POSTv3_workorders_{workorderId}_workactivities
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /workorders/{workorderId}/workactivities
-  method: delete
-  operationId: DELETEv3_workorders_{workorderId}_workactivities?workactivityIds[0]={workactivityIds[0]}&workactivityIds[1]={workactivityIds[1]}
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /workorders
   method: get
   operationId: GETv3_workorders?locationId={locationId}&storeId={storeId}
@@ -8742,20 +8850,12 @@ operations:
   method: post
   operationId: POSTv3_odata_workorders_filter
   x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /workorders/statistics
   method: get
   operationId: GETv3_workorders_statistics?daysPeriod={daysPeriod}
@@ -9296,9 +9396,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /workrequests/{workrequestId}/notes
+- path: /odata/workorders
   method: get
-  operationId: GETv3_workrequests_{workrequestId}_notes?pageNumber={pageNumber}&pageSize={pageSize}
+  operationId: WorkOrders_GetWorkOrders
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -9306,54 +9406,66 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /workrequests/{workrequestId}/notes
-  method: post
-  operationId: POSTv3_workrequests_{workrequestId}_notes
+- path: /odata/workorders({workorderId})
+  method: get
+  operationId: WorkOrders_Get
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /workrequests/{workrequestId}/notes/followers
-  method: post
-  operationId: POSTv3_workrequests_{workrequestId}_notes_followers
+      max-ttl: 3600
+    audit: none
+- path: /odata/workorders({workorderId})/Service.CheckInActivity(loadBlocked={loadBlocked})
+  method: get
+  operationId: WorkOrders_CheckInActivity
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /workrequests/{workrequestId}/notes/followers
-  method: delete
-  operationId: DELETEv3_workrequests_{workrequestId}_notes_followers?email={email}
+      max-ttl: 3600
+    audit: none
+- path: /odata/locations({locationId})/workorders
+  method: get
+  operationId: WorkOrders_GetWorkOrdersForLocation
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
+- path: /odata/locations({locationId})/workorders/Service.GetDuplicates()
+  method: get
+  operationId: WorkOrders_GetDuplicateWorkOrders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/locations({locationId})/workorders/Service.GetRecalls()
+  method: get
+  operationId: WorkOrders_GetRecallWorkOrders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /odata/workorders/Service.NearBy(latitude={latitude},longitude={longitude})
+  method: get
+  operationId: WorkOrders_GetWorkOrdersNearBy
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /workrequests
   method: post
   operationId: POSTv3_workrequests
@@ -9568,36 +9680,60 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /odata/rfps
-  method: get
-  operationId: Rfps_GetRfps
+- path: /workorders/{workorderId}/workactivities/{workactivityId}
+  method: put
+  operationId: PUTv3_workorders_{workorderId}_workactivities_{workactivityId}
   x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
     token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/rfps({rfpId})
-  method: get
-  operationId: Rfps_GetRfp
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /workorders/{workorderId}/workactivities
+  method: post
+  operationId: POSTv3_workorders_{workorderId}_workactivities
   x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
     token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/invoices
-  method: get
-  operationId: Invoices_GetInvoices
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /workorders/{workorderId}/workactivities
+  method: delete
+  operationId: DELETEv3_workorders_{workorderId}_workactivities?workactivityIds[0]={workactivityIds[0]}&workactivityIds[1]={workactivityIds[1]}
   x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
     token:
-      max-ttl: 3600
-    audit: none
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /odata/workorders({workorderId})/workactivities
   method: get
   operationId: WorkActivities_GetWorkActivities
@@ -9628,9 +9764,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /odata/trucks
+- path: /workrequests/{workrequestId}/notes
   method: get
-  operationId: Trucks_GetTrucks
+  operationId: GETv3_workrequests_{workrequestId}_notes?pageNumber={pageNumber}&pageSize={pageSize}
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -9638,353 +9774,51 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /odata/workorders({workorderId})/notes
-  method: get
-  operationId: Notes_GetWorkOrderNotes
+- path: /workrequests/{workrequestId}/notes
+  method: post
+  operationId: POSTv3_workrequests_{workrequestId}_notes
   x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
     token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/workorders({workorderId})/notes({noteId})
-  method: get
-  operationId: Notes_GetWorkOrderNote
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /workrequests/{workrequestId}/notes/followers
+  method: post
+  operationId: POSTv3_workrequests_{workrequestId}_notes_followers
   x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
     token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/locations({locationId})/providers/Service.GetRecent(days={days})
-  method: get
-  operationId: Providers_GetRecent
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /workrequests/{workrequestId}/notes/followers
+  method: delete
+  operationId: DELETEv3_workrequests_{workrequestId}_notes_followers?email={email}
   x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
     token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/detailedProviders/Service.Get(providerId={providerId})
-  method: get
-  operationId: Providers_GetProvider
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/locations({locationId})/providers/Service.GetLast(days={days})
-  method: get
-  operationId: Providers_GetLast
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/proposals
-  method: get
-  operationId: Proposals_GetProposals
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/rfps({rfpId})/proposals
-  method: get
-  operationId: Proposals_GetProposalsForRfp
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/proposals({proposalId})/Service.Categories()
-  method: get
-  operationId: Proposals_GetProposalCategories
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/providerassignment/Service.GetAssigned()
-  method: get
-  operationId: ProviderAssignment_GetAssigned
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/GetProviderAssignments
-  method: get
-  operationId: ProviderAssignment_GetProviderAssignments
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/locations
-  method: get
-  operationId: Locations_GetLocations
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/locations/Service.NearBy(latitude={latitude},longitude={longitude})
-  method: get
-  operationId: Locations_GetLocationsNearMe
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/locations/Service.ForServiceRequest()
-  method: get
-  operationId: Locations_GetServiceRequestLocations
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/trades
-  method: get
-  operationId: Trades_GetTrades
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/locations({locationId})/trades
-  method: get
-  operationId: Trades_GetTradesByLocation
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/users
-  method: get
-  operationId: Users_GetUsers
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/workorders
-  method: get
-  operationId: WorkOrders_GetWorkOrders
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/workorders({workorderId})
-  method: get
-  operationId: WorkOrders_Get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/workorders({workorderId})/Service.CheckInActivity(loadBlocked={loadBlocked})
-  method: get
-  operationId: WorkOrders_CheckInActivity
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/locations({locationId})/workorders
-  method: get
-  operationId: WorkOrders_GetWorkOrdersForLocation
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/locations({locationId})/workorders/Service.GetDuplicates()
-  method: get
-  operationId: WorkOrders_GetDuplicateWorkOrders
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/locations({locationId})/workorders/Service.GetRecalls()
-  method: get
-  operationId: WorkOrders_GetRecallWorkOrders
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/workorders/Service.NearBy(latitude={latitude},longitude={longitude})
-  method: get
-  operationId: WorkOrders_GetWorkOrdersNearBy
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/workorders({workorderId})/attachments
-  method: get
-  operationId: Attachments_GetWorkOrderAttachments
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/workorders({workorderId})/notes({noteId})/attachments
-  method: get
-  operationId: Attachments_GetWorkOrderNotesAttachments
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/workorders({workorderId})/attachments({attachmentId})/Service.GetThumbnail(width={width},height={height},mode={mode},imageFormat={imageFormat})
-  method: get
-  operationId: Attachments_GetWorkorderAttachmentThumbnail
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/proposals({proposalId})/attachments
-  method: get
-  operationId: Attachments_GetProposalAttachments
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/proposals({proposalId})/attachments({attachmentId})/Service.GetThumbnail(width={width},height={height},mode={mode},imageFormat={imageFormat})
-  method: get
-  operationId: Attachments_GetProposalAttachmentThumbnail
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/rfps({rfpId})/attachments
-  method: get
-  operationId: Attachments_GetRFPAttachments
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/assets({assetId})
-  method: get
-  operationId: Assets_GetAsset
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/assets/Service.Search(locationId={locationId},code={code})
-  method: get
-  operationId: Assets_SearchAssets
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/assets/Service.AssociateAssetCode(equipmentId={equipmentId},code={code},processDuplicatedAssetTag={processDuplicatedAssetTag})
-  method: get
-  operationId: Assets_AssociateAssetCode
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/assets/Service.FindAssets(searchCriteria={searchCriteria})
-  method: get
-  operationId: Assets_FindAssets
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/assets/Service.FindAssetsBySubscriber(searchCriteria={searchCriteria},subscriberId={subscriberId})
-  method: get
-  operationId: Assets_FindAssetsBySubscriber
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /odata/assets/Service.FindAssetsByLocation(searchCriteria={searchCriteria},locationId={locationId})
-  method: get
-  operationId: Assets_FindAssetsByLocation
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
