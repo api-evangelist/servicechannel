@@ -468,6 +468,20 @@ components:
           type: integer
         Name:
           type: string
+    ServiceChannel.Services.Messaging.Subscribers.GetSubscriberPropertyResponse:
+      description: Defines subscriber's property response structure
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Property identifier
+          type: integer
+        Name:
+          description: Property name
+          type: string
+        Value:
+          $ref: '#/components/schemas/System.Object'
+          description: Property value
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2127,13 +2141,52 @@ components:
         Fax:
           description: Fax
           type: string
-    ServiceChannel.Services.Messaging.Trade.GetSubscriberTradesResponse:
+    ServiceChannel.Services.Messaging.Subscribers.UpdateSubscriberInfoRequest:
+      description: UpdateSubscriberInfoRequest
+      required:
+      - Name
+      - Email
       type: object
       properties:
-        Trades:
-          type: object
-          additionalProperties:
-            type: string
+        Name:
+          description: "Required Name\n            Name - name of the subscriber"
+          type: string
+        Address1:
+          description: Optional
+          type: string
+        Address2:
+          description: Optional
+          type: string
+        Country:
+          description: Optional
+          type: string
+        State:
+          description: Optional
+          type: string
+        City:
+          description: Optional
+          type: string
+        Zip:
+          description: Optional
+          type: string
+        Email:
+          description: Email Required
+          type: string
+        Phone:
+          description: Optional
+          type: string
+        Fax:
+          description: Optional
+          type: string
+        ContactName:
+          description: Optional
+          type: string
+        TimeFormat:
+          type: string
+        DateFormat:
+          type: string
+        DecimalSeparator:
+          type: string
     ServiceChannel.Services.Messaging.Subscribers.RegisterSubscriberRequest:
       description: RegisterSubscriberRequest
       required:
@@ -2197,66 +2250,13 @@ components:
           type: string
         DecimalSeparator:
           type: string
-    ServiceChannel.Services.Messaging.Subscribers.UpdateSubscriberInfoRequest:
-      description: UpdateSubscriberInfoRequest
-      required:
-      - Name
-      - Email
+    ServiceChannel.Services.Messaging.Trade.GetSubscriberTradesResponse:
       type: object
       properties:
-        Name:
-          description: "Required Name\n            Name - name of the subscriber"
-          type: string
-        Address1:
-          description: Optional
-          type: string
-        Address2:
-          description: Optional
-          type: string
-        Country:
-          description: Optional
-          type: string
-        State:
-          description: Optional
-          type: string
-        City:
-          description: Optional
-          type: string
-        Zip:
-          description: Optional
-          type: string
-        Email:
-          description: Email Required
-          type: string
-        Phone:
-          description: Optional
-          type: string
-        Fax:
-          description: Optional
-          type: string
-        ContactName:
-          description: Optional
-          type: string
-        TimeFormat:
-          type: string
-        DateFormat:
-          type: string
-        DecimalSeparator:
-          type: string
-    ServiceChannel.Services.Messaging.Subscribers.GetSubscriberPropertyResponse:
-      description: Defines subscriber's property response structure
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Property identifier
-          type: integer
-        Name:
-          description: Property name
-          type: string
-        Value:
-          $ref: '#/components/schemas/System.Object'
-          description: Property value
+        Trades:
+          type: object
+          additionalProperties:
+            type: string
     System.Object:
       type: object
       properties: {}

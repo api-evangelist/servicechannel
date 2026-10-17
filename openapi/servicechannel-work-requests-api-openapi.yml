@@ -749,205 +749,40 @@ paths:
       x-access: Any
 components:
   schemas:
-    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestResponse:
-      description: Response for work request creation
+    ServiceChannel.Services.Messaging.WorkRequests.ReassignWorkRequestRequest:
+      description: Reassign Work Request to other Provider
       type: object
       properties:
-        Id:
+        ProviderId:
           format: int32
-          description: Id of the created work request
+          description: Provider id to assign.
           type: integer
-    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestNteRequest:
-      description: Request to set NTE for a work request
-      type: object
-      properties:
-        Value:
-          format: double
-          description: Value
-          type: number
-        CurrencyId:
-          format: int32
-          description: Currency Id
-          type: integer
-    ServiceChannel.Services.Messaging.Providers.ServiceRequestProvider:
-      type: object
-      properties:
-        Rank:
-          format: int32
-          description: Rank
-          type: integer
-        Category:
-          description: Category
-          type: string
-        Priority:
-          description: Priority
-          type: string
-        Nte:
-          format: double
-          description: Nte
-          type: number
-        GeneralEmail:
-          description: General Email
-          type: string
-        IsDefault:
-          description: Is Default
-          default: false
-          type: boolean
-        ServiceRequestEmails:
-          description: ServiceRequestEmails
-          type: string
-        Phone:
-          type: string
-        FullName:
-          description: Full Name
-          type: string
-        Address1:
-          description: Address1
-          type: string
-        Address2:
-          description: Adress2
-          type: string
-        City:
-          description: City
-          type: string
-        State:
-          description: State
-          type: string
-        Zip:
-          description: Zip
-          type: string
-        Country:
-          description: Country
-          type: string
-        MainContact:
-          description: Main Contact
-          type: string
-        DateCreated:
-          format: date-time
-          description: Date Created
-          type: string
-        LastUserDate:
-          description: Last User Date
-          type: string
-        SuperUser:
-          description: SuperUser
-          type: string
-        WebSite:
-          description: WebSite
-          type: string
-        Email:
-          description: Email
-          type: string
-        TaxId:
-          description: Tax Id
-          type: string
-        Trade:
-          description: Trade
-          type: string
-        ProcessingEmail:
-          description: Processing Email
-          type: string
-        FaxNumber:
-          description: Fax Number
-          type: string
-        SuiteFloor:
-          description: Suite Floor
-          type: string
-        MailInfo:
-          description: Mail Info
-          type: string
-        ImageFile:
-          description: Image File
-          type: string
-        ReturnMail:
-          description: Return Mail
-          type: string
-        MailFrequency:
-          format: int32
-          description: Mail Frequency
-          type: integer
-        FormId:
-          format: int32
-          description: Form Id
-          type: integer
-        Pager:
-          description: Pager
-          type: string
-        NightRequest:
-          format: int32
-          description: NightRequest
-          type: integer
-        ShortFormatEmail:
-          description: Short Format Email
-          type: string
-        LastTrainingDate:
-          format: date-time
-          description: Last Training Date
-          type: string
-        LastTrainingDateStr:
-          description: Last Training Date as a string
-          type: string
-        IsInternal:
-          description: Is Internal
-          default: false
-          type: boolean
-        IsOnOffShoreFeatureEnabled:
-          description: Is OnOffShoreFeature Enabled
-          default: false
-          type: boolean
-        Id:
-          format: int32
-          description: Id
-          type: integer
-        Name:
-          description: Name
-          type: string
-        DoNotDispatch:
-          description: DoNotDispatch enabled?
-          default: false
-          type: boolean
-    ServiceChannel.Services.Messaging.WorkRequests.UpdateWorkRequestRequest:
-      description: Request to update a work request properties
-      type: object
-      properties:
-        StatusId:
-          format: int32
-          description: Status Id
-          type: integer
-        ExtendedStatusId:
-          format: int32
-          description: Extended Status Id
-          type: integer
-        ClosedReasonId:
-          format: int32
-          description: Closed Reason Id
-          type: integer
-        WorkOrderId:
-          format: int32
-          description: Work Order Id
-          type: integer
-        PriorityId:
-          format: int32
-          description: Priority Id
-          type: integer
-        CategoryId:
-          format: int32
-          description: Category Id
-          type: integer
-        ScheduledDate:
-          description: Scheduled date
-          type: string
-        Description:
-          description: Description
-          type: string
         TradeId:
           format: int32
-          description: Trade Id
+          description: Optional, by default current Work Request Trade
           type: integer
-        NTE:
+        CurrencyId:
+          format: int32
+          description: Optional, by default current Work Request Currency
+          type: integer
+        Nte:
           format: double
-          description: NTE value
+          description: Optional Nte value, by default current Work Request NTE
           type: number
+        PriorityId:
+          format: int32
+          description: Optional, by default current Work Request Priority
+          type: integer
+        ScheduledDate:
+          description: Optional, by default current Work Request ScheduledDate
+          type: string
+        CategoryId:
+          format: int32
+          description: Optional, by default current Work Request Category
+          type: integer
+        Description:
+          description: Optional
+          type: string
     ServiceChannel.Services.Messaging.WorkRequests.WorkRequest:
       description: Work Request
       type: object
@@ -1054,6 +889,45 @@ components:
         Issue:
           $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.WorkRequestIssue'
           description: Issue information
+    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestNteRequest:
+      description: Request to set NTE for a work request
+      type: object
+      properties:
+        Value:
+          format: double
+          description: Value
+          type: number
+        CurrencyId:
+          format: int32
+          description: Currency Id
+          type: integer
+    ServiceChannel.Services.Messaging.WorkRequests.WorkRequestNte:
+      description: Work Request Nte
+      type: object
+      properties:
+        Value:
+          format: double
+          description: Value
+          type: number
+        CurrencyId:
+          format: int32
+          description: Currency Id
+          type: integer
+        CurrencyAlphabeticCode:
+          description: Currency Alphabetic Code
+          type: string
+    ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestStatusRequest:
+      description: Request to change a work request status
+      type: object
+      properties:
+        StatusId:
+          format: int32
+          description: WorkRequest status Id
+          type: integer
+        ExtendedStatusId:
+          format: int32
+          description: WorkRequest extended status Id
+          type: integer
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2691,217 +2565,146 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestNteRequest:
-      description: Request to change NTE for a work request
-      type: object
-      properties:
-        Value:
-          format: double
-          description: Value
-          type: number
-        CurrencyId:
-          format: int32
-          description: Currency Id
-          type: integer
-    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestIssueRequest:
-      description: Request to set issue parameters for a work request
-      type: object
-      properties:
-        AreaId:
-          format: int32
-          description: Area Id
-          type: integer
-        ProblemType:
-          description: Problem type
-          type: string
-        Equipment:
-          description: Equipment
-          type: string
-        ProblemCode:
-          description: Problem code
-          type: string
-        SetupId:
-          format: int32
-          description: Setup(dashboard) Id
-          type: integer
-    ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestStatusRequest:
-      description: Request to change a work request status
-      type: object
-      properties:
-        StatusId:
-          format: int32
-          description: WorkRequest status Id
-          type: integer
-        ExtendedStatusId:
-          format: int32
-          description: WorkRequest extended status Id
-          type: integer
-    ServiceChannel.Services.Messaging.WorkRequests.WorkRequestNte:
-      description: Work Request Nte
-      type: object
-      properties:
-        Value:
-          format: double
-          description: Value
-          type: number
-        CurrencyId:
-          format: int32
-          description: Currency Id
-          type: integer
-        CurrencyAlphabeticCode:
-          description: Currency Alphabetic Code
-          type: string
-    ServiceChannel.Services.Messaging.WorkRequests.WorkRequestIssue:
-      description: Work Request Issue
-      type: object
-      properties:
-        AreaId:
-          format: int32
-          description: Area Id
-          type: integer
-        AreaName:
-          description: Area Name
-          type: string
-        ProblemType:
-          description: Problem Type
-          type: string
-        Equipment:
-          description: Equipment
-          type: string
-        ProblemCode:
-          description: Problem Code
-          type: string
-        SetupId:
-          format: int32
-          description: Setup Id
-          type: integer
-    ServiceChannel.Services.Messaging.WorkRequests.ReassignWorkRequestRequest:
-      description: Reassign Work Request to other Provider
-      type: object
-      properties:
-        ProviderId:
-          format: int32
-          description: Provider id to assign.
-          type: integer
-        TradeId:
-          format: int32
-          description: Optional, by default current Work Request Trade
-          type: integer
-        CurrencyId:
-          format: int32
-          description: Optional, by default current Work Request Currency
-          type: integer
-        Nte:
-          format: double
-          description: Optional Nte value, by default current Work Request NTE
-          type: number
-        PriorityId:
-          format: int32
-          description: Optional, by default current Work Request Priority
-          type: integer
-        ScheduledDate:
-          description: Optional, by default current Work Request ScheduledDate
-          type: string
-        CategoryId:
-          format: int32
-          description: Optional, by default current Work Request Category
-          type: integer
-        Description:
-          description: Optional
-          type: string
-    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestRequest:
-      description: Request to create a work request
-      type: object
-      properties:
-        SubscriberId:
-          format: int32
-          description: Subscriber Id
-          type: integer
-        ProviderId:
-          format: int32
-          description: Provider Id
-          type: integer
-        EventId:
-          description: Optional. Guid of IoT event. For example, B216E711-420F-4D32-9080-762CBFD4E732
-          type: string
-        LocationId:
-          format: int32
-          description: Location Id
-          type: integer
-        StatusId:
-          format: int32
-          description: WorkRequest status Id
-          type: integer
-        ExtendedStatusId:
-          format: int32
-          description: WorkRequest extended status Id
-          type: integer
-        Description:
-          description: Description. Free text.
-          type: string
-        TradeId:
-          format: int32
-          description: Trade Id
-          type: integer
-        CategoryId:
-          format: int32
-          description: Catgory Id
-          type: integer
-        PriorityId:
-          format: int32
-          description: Priority Id
-          type: integer
-        Caller:
-          description: Optional. Caller
-          type: string
-        CallDate:
-          description: Call date. In UTC
-          type: string
-        ScheduledDate:
-          description: Optional. Scheduled date. In UTC
-          type: string
-        AssetId:
-          format: int32
-          description: Optional. Asset Id
-          type: integer
-        Nte:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestNteRequest'
-          description: Optional. NTE info
-        Issue:
-          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestIssueRequest'
-          description: Issue info
-        Attachments:
-          description: Optional. Attachments
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestAttachmentRequest'
-    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestAttachmentRequest:
-      description: Request to add attachments to a work request
-      type: object
-      properties:
-        Description:
-          description: Description
-          type: string
-        FileName:
-          description: 'File name of a uploaded attachment. For example, #workorders/0DD13443-EAF4-4A1D-930B-992EFC8ED3E0'
-          type: string
-        OriginalName:
-          description: Original file name. For example, my-file.pdf
-          type: string
-        Visibility:
-          format: int32
-          description: Visibility
-          type: integer
     System.Object:
       type: object
       properties: {}
-    ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestStringFieldsRequest:
-      description: Request to update the value of a work request parameter.
+    ServiceChannel.Services.Messaging.Providers.ServiceRequestProvider:
       type: object
       properties:
-        Value:
-          description: Value of the work request parameter to update.
+        Rank:
+          format: int32
+          description: Rank
+          type: integer
+        Category:
+          description: Category
           type: string
+        Priority:
+          description: Priority
+          type: string
+        Nte:
+          format: double
+          description: Nte
+          type: number
+        GeneralEmail:
+          description: General Email
+          type: string
+        IsDefault:
+          description: Is Default
+          default: false
+          type: boolean
+        ServiceRequestEmails:
+          description: ServiceRequestEmails
+          type: string
+        Phone:
+          type: string
+        FullName:
+          description: Full Name
+          type: string
+        Address1:
+          description: Address1
+          type: string
+        Address2:
+          description: Adress2
+          type: string
+        City:
+          description: City
+          type: string
+        State:
+          description: State
+          type: string
+        Zip:
+          description: Zip
+          type: string
+        Country:
+          description: Country
+          type: string
+        MainContact:
+          description: Main Contact
+          type: string
+        DateCreated:
+          format: date-time
+          description: Date Created
+          type: string
+        LastUserDate:
+          description: Last User Date
+          type: string
+        SuperUser:
+          description: SuperUser
+          type: string
+        WebSite:
+          description: WebSite
+          type: string
+        Email:
+          description: Email
+          type: string
+        TaxId:
+          description: Tax Id
+          type: string
+        Trade:
+          description: Trade
+          type: string
+        ProcessingEmail:
+          description: Processing Email
+          type: string
+        FaxNumber:
+          description: Fax Number
+          type: string
+        SuiteFloor:
+          description: Suite Floor
+          type: string
+        MailInfo:
+          description: Mail Info
+          type: string
+        ImageFile:
+          description: Image File
+          type: string
+        ReturnMail:
+          description: Return Mail
+          type: string
+        MailFrequency:
+          format: int32
+          description: Mail Frequency
+          type: integer
+        FormId:
+          format: int32
+          description: Form Id
+          type: integer
+        Pager:
+          description: Pager
+          type: string
+        NightRequest:
+          format: int32
+          description: NightRequest
+          type: integer
+        ShortFormatEmail:
+          description: Short Format Email
+          type: string
+        LastTrainingDate:
+          format: date-time
+          description: Last Training Date
+          type: string
+        LastTrainingDateStr:
+          description: Last Training Date as a string
+          type: string
+        IsInternal:
+          description: Is Internal
+          default: false
+          type: boolean
+        IsOnOffShoreFeatureEnabled:
+          description: Is OnOffShoreFeature Enabled
+          default: false
+          type: boolean
+        Id:
+          format: int32
+          description: Id
+          type: integer
+        Name:
+          description: Name
+          type: string
+        DoNotDispatch:
+          description: DoNotDispatch enabled?
+          default: false
+          type: boolean
     ServiceChannel.Services.Messaging.WorkRequests.SearchWorkRequestRequest:
       description: Object to perform search for work requests
       type: object
@@ -3023,6 +2826,203 @@ components:
           format: int32
           description: Page Size
           type: integer
+    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestResponse:
+      description: Response for work request creation
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Id of the created work request
+          type: integer
+    ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestNteRequest:
+      description: Request to change NTE for a work request
+      type: object
+      properties:
+        Value:
+          format: double
+          description: Value
+          type: number
+        CurrencyId:
+          format: int32
+          description: Currency Id
+          type: integer
+    ServiceChannel.Services.Messaging.WorkRequests.UpdateWorkRequestRequest:
+      description: Request to update a work request properties
+      type: object
+      properties:
+        StatusId:
+          format: int32
+          description: Status Id
+          type: integer
+        ExtendedStatusId:
+          format: int32
+          description: Extended Status Id
+          type: integer
+        ClosedReasonId:
+          format: int32
+          description: Closed Reason Id
+          type: integer
+        WorkOrderId:
+          format: int32
+          description: Work Order Id
+          type: integer
+        PriorityId:
+          format: int32
+          description: Priority Id
+          type: integer
+        CategoryId:
+          format: int32
+          description: Category Id
+          type: integer
+        ScheduledDate:
+          description: Scheduled date
+          type: string
+        Description:
+          description: Description
+          type: string
+        TradeId:
+          format: int32
+          description: Trade Id
+          type: integer
+        NTE:
+          format: double
+          description: NTE value
+          type: number
+    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestRequest:
+      description: Request to create a work request
+      type: object
+      properties:
+        SubscriberId:
+          format: int32
+          description: Subscriber Id
+          type: integer
+        ProviderId:
+          format: int32
+          description: Provider Id
+          type: integer
+        EventId:
+          description: Optional. Guid of IoT event. For example, B216E711-420F-4D32-9080-762CBFD4E732
+          type: string
+        LocationId:
+          format: int32
+          description: Location Id
+          type: integer
+        StatusId:
+          format: int32
+          description: WorkRequest status Id
+          type: integer
+        ExtendedStatusId:
+          format: int32
+          description: WorkRequest extended status Id
+          type: integer
+        Description:
+          description: Description. Free text.
+          type: string
+        TradeId:
+          format: int32
+          description: Trade Id
+          type: integer
+        CategoryId:
+          format: int32
+          description: Catgory Id
+          type: integer
+        PriorityId:
+          format: int32
+          description: Priority Id
+          type: integer
+        Caller:
+          description: Optional. Caller
+          type: string
+        CallDate:
+          description: Call date. In UTC
+          type: string
+        ScheduledDate:
+          description: Optional. Scheduled date. In UTC
+          type: string
+        AssetId:
+          format: int32
+          description: Optional. Asset Id
+          type: integer
+        Nte:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestNteRequest'
+          description: Optional. NTE info
+        Issue:
+          $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestIssueRequest'
+          description: Issue info
+        Attachments:
+          description: Optional. Attachments
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestAttachmentRequest'
+    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestAttachmentRequest:
+      description: Request to add attachments to a work request
+      type: object
+      properties:
+        Description:
+          description: Description
+          type: string
+        FileName:
+          description: 'File name of a uploaded attachment. For example, #workorders/0DD13443-EAF4-4A1D-930B-992EFC8ED3E0'
+          type: string
+        OriginalName:
+          description: Original file name. For example, my-file.pdf
+          type: string
+        Visibility:
+          format: int32
+          description: Visibility
+          type: integer
+    ServiceChannel.Services.Messaging.WorkRequests.WorkRequestIssue:
+      description: Work Request Issue
+      type: object
+      properties:
+        AreaId:
+          format: int32
+          description: Area Id
+          type: integer
+        AreaName:
+          description: Area Name
+          type: string
+        ProblemType:
+          description: Problem Type
+          type: string
+        Equipment:
+          description: Equipment
+          type: string
+        ProblemCode:
+          description: Problem Code
+          type: string
+        SetupId:
+          format: int32
+          description: Setup Id
+          type: integer
+    ServiceChannel.Services.Messaging.WorkRequests.CreateWorkRequestIssueRequest:
+      description: Request to set issue parameters for a work request
+      type: object
+      properties:
+        AreaId:
+          format: int32
+          description: Area Id
+          type: integer
+        ProblemType:
+          description: Problem type
+          type: string
+        Equipment:
+          description: Equipment
+          type: string
+        ProblemCode:
+          description: Problem code
+          type: string
+        SetupId:
+          format: int32
+          description: Setup(dashboard) Id
+          type: integer
+    ServiceChannel.Services.Messaging.WorkRequests.ChangeWorkRequestStringFieldsRequest:
+      description: Request to update the value of a work request parameter.
+      type: object
+      properties:
+        Value:
+          description: Value of the work request parameter to update.
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2

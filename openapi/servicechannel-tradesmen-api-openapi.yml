@@ -73,9 +73,25 @@ paths:
         required: true
 components:
   schemas:
-    System.Object:
+    ServiceChannel.Services.Messaging.Tradesmen.CreateTradesmenProfileRequest:
       type: object
-      properties: {}
+      properties:
+        FullName:
+          description: Full name of the technician
+          type: string
+        CompanyName:
+          description: Name of the provider company
+          type: string
+        FixxbookCompanyId:
+          format: int32
+          description: Optional.
+          type: integer
+        MobileNumber:
+          description: Mobile number of the technician
+          type: string
+        Email:
+          description: Email of the technician. Must be unique
+          type: string
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -1713,25 +1729,9 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.Tradesmen.CreateTradesmenProfileRequest:
+    System.Object:
       type: object
-      properties:
-        FullName:
-          description: Full name of the technician
-          type: string
-        CompanyName:
-          description: Name of the provider company
-          type: string
-        FixxbookCompanyId:
-          format: int32
-          description: Optional.
-          type: integer
-        MobileNumber:
-          description: Mobile number of the technician
-          type: string
-        Email:
-          description: Email of the technician. Must be unique
-          type: string
+      properties: {}
   securitySchemes:
     oauth2:
       type: oauth2

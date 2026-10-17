@@ -271,6 +271,36 @@ paths:
       x-access: Any
 components:
   schemas:
+    ServiceChannel.Services.WebApi.Models.Response.MobileThemes.ThemeResponse:
+      description: Theme response model
+      type: object
+      properties:
+        Id:
+          format: int32
+          description: Theme Id
+          type: integer
+        BackgroundColor:
+          description: 'String representation of hex argb color for Background (Example: #00FF9A01)'
+          type: string
+        MainColor:
+          description: 'String representation of hex argb color for Main (Example: #00FF9A01)'
+          type: string
+        Name:
+          description: Theme name
+          type: string
+    ServiceChannel.Services.WebApi.Models.Request.MobileThemes.UpdateThemeRequest:
+      description: Model for request to update existing theme
+      type: object
+      properties:
+        BackgroundColor:
+          description: 'String representation of hex argb color for Background (Example: #00FF9A01)'
+          type: string
+        MainColor:
+          description: 'String representation of hex argb color for Main (Example: #00FF9A01)'
+          type: string
+        Name:
+          description: Theme name
+          type: string
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -1908,19 +1938,6 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.WebApi.Models.Request.MobileThemes.UpdateThemeRequest:
-      description: Model for request to update existing theme
-      type: object
-      properties:
-        BackgroundColor:
-          description: 'String representation of hex argb color for Background (Example: #00FF9A01)'
-          type: string
-        MainColor:
-          description: 'String representation of hex argb color for Main (Example: #00FF9A01)'
-          type: string
-        Name:
-          description: Theme name
-          type: string
     ServiceChannel.Services.WebApi.Models.Request.MobileThemes.NewThemeRequest:
       description: Model for request to create new theme
       type: object
@@ -1943,26 +1960,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceChannel.Services.WebApi.Models.Response.MobileThemes.ThemeResponse'
-    ServiceChannel.Services.WebApi.Models.Response.MobileThemes.ThemeResponse:
-      description: Theme response model
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Theme Id
-          type: integer
-        BackgroundColor:
-          description: 'String representation of hex argb color for Background (Example: #00FF9A01)'
-          type: string
-        MainColor:
-          description: 'String representation of hex argb color for Main (Example: #00FF9A01)'
-          type: string
-        Name:
-          description: Theme name
-          type: string
-    System.Object:
-      type: object
-      properties: {}
     ServiceChannel.Services.WebApi.Models.Request.MobileThemes.AssignThemeRequest:
       description: Model for request to assign theme to subscriber(s) and/or provider(s)
       required:
@@ -1985,6 +1982,9 @@ components:
           items:
             format: int32
             type: integer
+    System.Object:
+      type: object
+      properties: {}
   securitySchemes:
     oauth2:
       type: oauth2

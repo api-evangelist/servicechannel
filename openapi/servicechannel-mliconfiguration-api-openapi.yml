@@ -424,9 +424,17 @@ paths:
       x-access: Subscribers
 components:
   schemas:
-    System.Object:
+    ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel:
+      description: MLI level object.
       type: object
-      properties: {}
+      properties:
+        Id:
+          format: int32
+          description: Unique numeric identifier of an MLI level.
+          type: integer
+        Name:
+          description: MLI level name.
+          type: string
     ServiceChannel.Services.Messaging.ErrorResponse:
       description: The error response object
       type: object
@@ -2064,17 +2072,6 @@ components:
         Data:
           $ref: '#/components/schemas/System.Object'
           description: "Optional\n            Gets or Sets the Data object."
-    ServiceChannel.Services.Messaging.MliConfiguration.Api.MLILevel:
-      description: MLI level object.
-      type: object
-      properties:
-        Id:
-          format: int32
-          description: Unique numeric identifier of an MLI level.
-          type: integer
-        Name:
-          description: MLI level name.
-          type: string
     ServiceChannel.Services.Messaging.User.Api.AssignedUser:
       description: Assigned user object details.
       type: object
@@ -2086,6 +2083,9 @@ components:
         UserId:
           description: Username to log into the system.
           type: string
+    System.Object:
+      type: object
+      properties: {}
   securitySchemes:
     oauth2:
       type: oauth2
